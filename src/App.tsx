@@ -1,10 +1,9 @@
 import "./styles/App.scss";
+import Login from './components/public-forms/Login';
 
 function App() {
   return (
-    <div className="App">
-      <div>Hello</div>
-    </div>
+    <Login />
   );
 }
 
