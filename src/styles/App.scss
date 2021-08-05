@@ -2,6 +2,8 @@
 @import "./shared/Mixins.scss";
 @import "./shared/Common.scss";
 
-.App {
-  color: red;
-}
+// Import screen's scss
+@import "../screens/PublicFormScreen/PublicFormScreen.scss";
+
+// Import component's scss
+@import "../components/PublicBanner/PublicBanner.scss";
