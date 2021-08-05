@@ -1,11 +1,9 @@
-import Alpha from "./components/Alpha";
 import "./styles/App.scss";
+import Login from './components/public-forms/Login';
 
 function App() {
   return (
-    <div className="App">
-      <Alpha name="Himanshu" role="User" />
-    </div>
+    <Login />
   );
 }
 
