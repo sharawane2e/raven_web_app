@@ -1,9 +1,10 @@
-export interface PublicBannerProps {}
-
-const PublicBanner: React.FC<PublicBannerProps> = () => {
+const PublicBanner: React.FC = () => {
   return (
     <div className="public-banner">
-      <div>Hello</div>
+      <div className="public-banner__title">
+        HFS
+        <br /> OneOffice Pulse
+      </div>
     </div>
   );
 };

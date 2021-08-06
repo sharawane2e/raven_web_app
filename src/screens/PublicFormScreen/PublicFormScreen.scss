@@ -1,3 +1,27 @@
 .public-form-screen {
-  height: 100vh;
+  position: relative;
+  .public-form-screen__brand-logo {
+    position: absolute;
+    top: 0.9375rem; //15px
+    left: 0.9375rem; //15px
+  }
+
+  .public-form {
+    height: 100vh;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    .public-form__form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .public-form__heading {
+      font-size: map-get($map: $heading-size, $key: small);
+      font-weight: bold;
+    }
+  }
 }

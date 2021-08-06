@@ -1,3 +1,4 @@
+import { StylesProvider } from "@material-ui/core";
 import React from "react";
 import ReactDOM from "react-dom";
 import { HashRouter } from "react-router-dom";
@@ -7,7 +8,9 @@ import reportWebVitals from "./reportWebVitals";
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>
-      <App />
+      <StylesProvider injectFirst>
+        <App />
+      </StylesProvider>
     </HashRouter>
   </React.StrictMode>,
   document.getElementById("root")

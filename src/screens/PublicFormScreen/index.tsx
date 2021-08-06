@@ -1,5 +1,6 @@
 import { Grid } from "@material-ui/core";
 import AppRouting from "../../AppRouting";
+import BrandLogo from "../../components/BrandLogo";
 import PublicBanner from "../../components/PublicBanner";
 import IRoute from "../../types/IRoute";
 
@@ -11,7 +12,8 @@ const PublicFormScreen: React.FC<PublicFormScreenProps> = (props) => {
   return (
     <div className="public-form-screen">
       <Grid container>
-        <Grid item md={6} sm={6}>
+        <Grid item md={6} sm={6} className="public-form-screen__form-area">
+          <BrandLogo className="public-form-screen__brand-logo" />
           <AppRouting routes={props.routes} />
         </Grid>
         <Grid item md={6} sm={6}>

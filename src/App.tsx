@@ -1,5 +1,4 @@
 import "./styles/App.scss";
-import Login from "./components/public-forms/Login";
 import AppRouting from "./AppRouting";
 import Routes from "./config/Routes";
 
