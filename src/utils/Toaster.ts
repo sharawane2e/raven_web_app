@@ -6,7 +6,7 @@ export type ToastTypes = "success" | "error" | "warn" | "info";
 class Toaster {
   static success = function (
     message: string,
-    position: ToastPosition = toast.POSITION.TOP_RIGHT
+    position: ToastPosition = toast.POSITION.BOTTOM_LEFT
   ) {
     toast.success(message, {
       position,
@@ -17,7 +17,7 @@ class Toaster {
 
   static error = function (
     message: string,
-    position: ToastPosition = toast.POSITION.TOP_RIGHT
+    position: ToastPosition = toast.POSITION.BOTTOM_LEFT
   ) {
     toast.error(message, {
       position,
@@ -28,7 +28,7 @@ class Toaster {
 
   static warn = function (
     message: string,
-    position: ToastPosition = toast.POSITION.TOP_RIGHT
+    position: ToastPosition = toast.POSITION.BOTTOM_LEFT
   ) {
     toast.warn(message, {
       position,
@@ -39,7 +39,7 @@ class Toaster {
 
   static info = function (
     message: string,
-    position: ToastPosition = toast.POSITION.TOP_RIGHT
+    position: ToastPosition = toast.POSITION.BOTTOM_LEFT
   ) {
     toast.info(message, {
       position,

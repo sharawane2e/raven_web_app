@@ -17,11 +17,19 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      width: 50%;
     }
 
     .public-form__heading {
       font-size: map-get($map: $heading-size, $key: small);
       font-weight: bold;
+      margin-bottom: 2.5rem; //40px;
     }
+  }
+
+  .public-form__link {
+    color: map-get($map: $text-color, $key: link);
+    margin-top: 30px;
+    text-decoration: none;
   }
 }

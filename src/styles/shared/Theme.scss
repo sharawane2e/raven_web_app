@@ -1,0 +1,47 @@
+// Input Field
+.input-field__label {
+  color: map-get($map: $text-color, $key: primary);
+  .input-field__required-asteric {
+    color: map-get($map: $text-color, $key: danger);
+  }
+}
+
+.MuiFormControl-root {
+  width: 100%;
+  margin: 15px 0;
+
+  .MuiInputBase-input {
+    background-color: map-get($map: $bg-color, $key: secondary-shade);
+    height: 10px;
+    padding: 15px;
+  }
+  .MuiFormHelperText-root {
+    height: 15px;
+    margin-left: 5px;
+  }
+}
+.MuiInputBase-root {
+  //   border: 1px solid map-get($map: $text-color, $key: border);
+  .MuiOutlinedInput-root.Mui-focused {
+    .MuiOutlinedInput-notchedOutline {
+      border: 1px solid map-get($map: $text-color, $key: border);
+    }
+  }
+  &:hover {
+    .MuiOutlinedInput-notchedOutline {
+      border: 1px solid map-get($map: $text-color, $key: border);
+    }
+  }
+}
+
+// Button
+.MuiButtonBase-root {
+  background-color: map-get($map: $bg-color, $key: accent);
+  color: map-get($map: $text-color, $key: light);
+
+  &:hover {
+    background-color: map-get($map: $bg-color, $key: accent);
+    color: map-get($map: $text-color, $key: light);
+    opacity: 0.8;
+  }
+}

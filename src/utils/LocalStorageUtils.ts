@@ -17,7 +17,7 @@ class LocalStorageUtils {
   static getToken() {
     const user = this.getUser();
     if (user) {
-      return user.token;
+      return user.accessToken;
     } else {
       return undefined;
     }
