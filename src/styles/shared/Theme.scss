@@ -5,7 +5,12 @@
     color: map-get($map: $text-color, $key: danger);
   }
 }
-
+.input-field__endontment-icon {
+  cursor: pointer;
+  font-size: map-get($map: $text-size, $key: regular);
+  color: map-get($map: $text-color, $key: "primary");
+  opacity: 0.8;
+}
 .MuiFormControl-root {
   width: 100%;
   margin: 15px 0;

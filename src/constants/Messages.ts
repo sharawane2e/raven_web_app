@@ -4,4 +4,5 @@ export const errorMessages = {
   CONFIRM_PASSWORD_REQUIRED: "Confirm password is required",
   EMAIL_INVALID: "Email is invalid",
   PASSWORD_INVALID: "Password doesn't match the criteria",
+  PASSWORD_MATCH: "Password did not match",
 };

@@ -3,10 +3,12 @@ import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
-import ForgotPasswordSchema from "../../../validation-schema/ForgotPasswordSchema";
+import SetPasswordSchema from "../../../validation-schema/SetPasswordSchema";
 import InputField from "../../widgets/InputFields";
 
-export interface SetPasswordProps extends WithLoaderProps {}
+export interface SetPasswordProps extends WithLoaderProps {
+  variant: "set" | "reset";
+}
 
 const SetPassword: React.FC<SetPasswordProps> = (props) => {
   const {
@@ -14,14 +16,25 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(ForgotPasswordSchema),
-    mode: "onBlur",
+    resolver: yupResolver(SetPasswordSchema),
+    mode: "all",
   });
+
+  const text =
+    props.variant === "set"
+      ? {
+          heading: "Set password",
+          button: "Activate account",
+        }
+      : {
+          heading: "Reset password",
+          button: "Save password",
+        };
 
   return (
     <div className="set-password public-form">
       <form className="public-form__form">
-        <div className="public-form__heading">Reset password</div>
+        <div className="public-form__heading">{text.heading}</div>
 
         <InputField
           {...register("password")}
@@ -37,16 +50,18 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           id="password"
           label="Confirm Password"
           required
-          error={!!errors.password}
-          helperText={errors?.password?.message}
+          error={!!errors.confirmPassword}
+          helperText={errors?.confirmPassword?.message}
           type="password"
         />
         <Button type="submit" className="button--primary">
-          Save password
+          {text.button}
         </Button>
-        <Link className="public-form__link" to="/login">
-          Back to login
-        </Link>
+        {props.variant === "reset" && (
+          <Link className="public-form__link" to="/login">
+            Back to login
+          </Link>
+        )}
       </form>
     </div>
   );

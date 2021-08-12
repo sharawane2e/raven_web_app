@@ -2,8 +2,9 @@ const PublicBanner: React.FC = () => {
   return (
     <div className="public-banner">
       <div className="public-banner__title">
-        HFS
-        <br /> OneOffice Pulse
+        <span>HFS</span>
+        <br />
+        <span>OneOffice Pulse</span>
       </div>
     </div>
   );
