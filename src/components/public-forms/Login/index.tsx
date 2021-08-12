@@ -19,10 +19,6 @@ const Login: React.FC<LoginProps> = (props) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
-    defaultValues: {
-      email: "himanshu.goswami@e2eresearch.com",
-      password: "Admin@123",
-    },
     mode: "onBlur",
   });
 

@@ -6,7 +6,7 @@ import IRoute from "../types/IRoute";
 
 const Routes: IRoute[] = [
   {
-    path: ["/login", "/forgot-password", "set-password"],
+    path: ["/login", "/forgot-password", "/set-password"],
     component: PublicFormScreen,
     exact: true,
     routes: [

@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
 import ForgotPasswordSchema from "../../../validation-schema/ForgotPasswordSchema";
 import InputField from "../../widgets/InputFields";
@@ -19,6 +21,8 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
   return (
     <div className="set-password public-form">
       <form className="public-form__form">
+        <div className="public-form__heading">Reset password</div>
+
         <InputField
           {...register("password")}
           id="password"
@@ -37,6 +41,12 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           helperText={errors?.password?.message}
           type="password"
         />
+        <Button type="submit" className="button--primary">
+          Save password
+        </Button>
+        <Link className="public-form__link" to="/login">
+          Back to login
+        </Link>
       </form>
     </div>
   );

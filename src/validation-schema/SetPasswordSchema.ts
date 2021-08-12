@@ -6,11 +6,11 @@ const SetPasswordSchema = yup.object().shape({
   password: yup
     .string()
     .required(errorMessages.PASSWORD_REQUIRED)
-    .matches(Regex.PASSWORD),
+    .matches(Regex.PASSWORD, errorMessages.PASSWORD_INVALID),
   confirmPassword: yup
     .string()
     .required(errorMessages.PASSWORD_REQUIRED)
-    .matches(Regex.PASSWORD),
+    .matches(Regex.PASSWORD, errorMessages.PASSWORD_INVALID),
 });
 
 export default SetPasswordSchema;
