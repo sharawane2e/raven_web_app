@@ -1,42 +1,51 @@
-import { SwipeableDrawer } from "@material-ui/core";
+import { Drawer, Hidden, SwipeableDrawer } from "@material-ui/core";
 import clsx from "clsx";
+import { useContext } from "react";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
 
 export interface SidebarProps {}
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
-  const mobileOpen = true;
+  const { open, toggleSidebarOpen } = useContext(SidebarContext);
 
   return (
     <div className="sidebar">
-      {/* 
-<SwipeableDrawer
-        // className="drawer"
-        className={clsx({
-          "sidenav mobile-sidenav sidenav--open": mobileOpen,
-          "sidenav  mobile-sidenav sidenav--close": !mobileOpen,
-        })}
-        variant="temporary"
-        anchor="left"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        classes={{
-          paper: "drawerPaper",
-        }}
-        ModalProps={{
-          keepMounted: true,
-        }}
-      >
-        <div className="sidenav__header">
-          <span>
-            <img src={LogoLarge} alt="" />
-          </span>
-          <span className="sidenav__close-icon" onClick={handleDrawerToggle}>
-            <CloseIcon />
-          </span>
-        </div>
- Hello
-      </SwipeableDrawer> */}
+      <Hidden smUp>
+        <SwipeableDrawer
+          // className={clsx({
+          //   sidenav: open,
+          //   sidenav: !open,
+          // })}
+          variant="temporary"
+          anchor="left"
+          classes={{
+            paper: "drawerPaper",
+          }}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          open={open}
+          onClose={() => toggleSidebarOpen(false)}
+          onOpen={() => toggleSidebarOpen(true)}
+        >
+          <div className="sidenav__header">Header Logo</div>
+        </SwipeableDrawer>
+      </Hidden>
+      <Hidden smDown>
+        <Drawer
+          className={clsx({
+            "sidenav--open": open,
+            "sidenav--close": !open,
+          })}
+          variant="permanent"
+          classes={{
+            paper: "sidenav__drawer-paper",
+          }}
+        >
+          <div className="sidenav__header">Header</div>
+        </Drawer>
+      </Hidden>
     </div>
   );
 };
