@@ -1,12 +1,24 @@
 .public-banner {
   height: 100vh;
-  background-color: map-get($map: $bg-color, $key: accent);
+  background: map-get($map: $bg-color, $key: accent) url(../../assets/svg/shape.png)  no-repeat;
+  background-position: bottom left;
   display: flex;
   align-items: center;
+  position: relative;
 
   .public-banner__title {
     font-size: map-get($map: $heading-size, $key: giant);
     color: map-get($map: $text-color, $key: light);
     margin-left: 35px;
+    .public-banner__title__logstext{
+      font-size: map-get($map: $text-size, $key: large);
+
+    }
+  } 
+  .public-banner__shape {
+    position: absolute;
+    top: 0px;
+    right: 0px;
   }
+
 }
