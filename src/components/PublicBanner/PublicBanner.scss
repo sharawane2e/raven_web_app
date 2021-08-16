@@ -5,20 +5,35 @@
   display: flex;
   align-items: center;
   position: relative;
+  overflow: hidden;
 
   .public-banner__title {
     font-size: map-get($map: $heading-size, $key: giant);
     color: map-get($map: $text-color, $key: light);
     margin-left: 35px;
+    line-height: 5rem;
+    font-weight: 700;
+    .public-banner__title__heading{
+      font-size: map-get($map: $text-size, $key: large);
+      font-size: map-get($map: $heading-size, $key: giant);
+      color: map-get($map: $text-color, $key: light);
+      margin-left: 10px;
+      line-height: 5rem;
+      font-weight: 700;
+      margin-bottom: 0px;
+
+    }
     .public-banner__title__logstext{
       font-size: map-get($map: $text-size, $key: large);
-
+      margin-left: 20px;
+      line-height: 3rem;
     }
   } 
   .public-banner__shape {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -4px;
+    right: -3px;
+    width: 18rem;
   }
 
 }

@@ -4,9 +4,7 @@ const PublicBanner: React.FC = () => {
     <div className="public-banner">
       <div className="public-banner__shape"><DesignTopShape /></div>
       <div className="public-banner__title">
-        <span>HFS</span>
-        <br />
-        <span>OneOffice Pulse</span>
+        <h1 className="public-banner__title__heading">HFS<br />OneOffice Pulse</h1>
         <div className="public-banner__title__logstext">
             Don't just react to demand. Anticipate it
         </div>

@@ -33,3 +33,9 @@
     text-decoration: none;
   }
 }
+.footerText{
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    font-size: map-get($map: $text-size, $key:xsmall )
+}
