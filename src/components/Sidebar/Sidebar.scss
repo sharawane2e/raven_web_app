@@ -1,0 +1,10 @@
+.sidebar {
+  .sidebar__drawer-paper {
+    width: 230px;
+  }
+
+  .sidebar__header {
+    padding: 10px 15px;
+    border-bottom: 1px solid map-get($map: $text-color, $key: border);
+  }
+}

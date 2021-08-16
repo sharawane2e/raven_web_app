@@ -4,18 +4,21 @@ import { useContext } from "react";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
 
-export interface SidebarProps {}
+export interface SidebarProps {
+  title?: string;
+}
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
+  const { title } = props;
   const { open, toggleSidebarOpen } = useContext(SidebarContext);
 
   return (
-    <div className="sidebar">
-      <Hidden smUp>
+    <div className="">
+      {/* <Hidden smUp>
         <SwipeableDrawer
           // className={clsx({
-          //   sidenav: open,
-          //   sidenav: !open,
+          //   sidebar: open,
+          //   sidebar: !open,
           // })}
           variant="temporary"
           anchor="left"
@@ -29,21 +32,23 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
           onClose={() => toggleSidebarOpen(false)}
           onOpen={() => toggleSidebarOpen(true)}
         >
-          <div className="sidenav__header">Header Logo</div>
+          <div className="sidebar__header">Header Logo</div>
         </SwipeableDrawer>
-      </Hidden>
+      </Hidden> */}
       <Hidden smDown>
         <Drawer
-          className={clsx({
-            "sidenav--open": open,
-            "sidenav--close": !open,
+          className={clsx("sidebar", {
+            "sidebar--open": open,
+            "sidebar--close": !open,
           })}
           variant="permanent"
           classes={{
-            paper: "sidenav__drawer-paper",
+            paper: "sidebar__drawer-paper",
           }}
         >
-          <div className="sidenav__header">Header</div>
+          <div className="sidebar__header">
+            <BrandLogo />
+          </div>
         </Drawer>
       </Hidden>
     </div>
