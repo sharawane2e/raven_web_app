@@ -40,7 +40,7 @@
 }
 
 // Button
-.MuiButtonBase-root {
+.MuiButtonBase-root.button--primary {
   background-color: map-get($map: $bg-color, $key: accent);
   color: map-get($map: $text-color, $key: light);
 

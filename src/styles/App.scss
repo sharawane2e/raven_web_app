@@ -5,8 +5,12 @@
 
 // Import screen's scss
 @import "../screens/PublicFormScreen/PublicFormScreen.scss";
+@import "../screens/AdminPanelScreen/AdminPanelScreen.scss";
+@import "../screens/StaticHomeScreen/StaticHomeScreen.scss";
 
 // Import component's scss
 @import "../components/PublicBanner/PublicBanner.scss";
 @import "../components/Sidebar/Sidebar.scss";
+@import "../components/Sidebar/sidebar-content/AdminSidebarContent/AdminSidebarContent.scss";
 @import "../components/Appbar/Appbar.scss";
+@import "../components/ProfileAvatar/ProfileAvatar.scss";

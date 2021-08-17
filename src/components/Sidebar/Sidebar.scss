@@ -4,7 +4,19 @@
   }
 
   .sidebar__header {
-    padding: 10px 15px;
+    padding: 10px;
     border-bottom: 1px solid map-get($map: $text-color, $key: border);
+    display: flex;
+    align-items: center;
+
+    svg {
+      height: 2.5rem; //40px;
+    }
+  }
+
+  .sidebar__label {
+    background-color: map-get($map: $bg-color, $key: "secondary-dark");
+    padding: 8px 10px;
+    font-weight: bold;
   }
 }

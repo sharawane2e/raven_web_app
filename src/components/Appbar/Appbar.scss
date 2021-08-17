@@ -1,0 +1,20 @@
+.appbar {
+  width: calc(100% - $drawer-width);
+  //   width: calc(100% - 230px);
+  margin-left: $drawer-width;
+  box-shadow: 0px 0px 5px #55555526;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 25px 15px;
+
+  .appbar__left-panel {
+    display: flex;
+    align-items: center;
+
+    .appbar__heading {
+      margin-left: 20px;
+      color: map-get($map: $text-color, $key: primary);
+      font-weight: bold;
+    }
+  }
+}

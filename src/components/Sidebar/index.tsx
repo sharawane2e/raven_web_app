@@ -1,19 +1,36 @@
 import { Drawer, Hidden, SwipeableDrawer } from "@material-ui/core";
 import clsx from "clsx";
-import { useContext } from "react";
+import { ComponentType, useContext } from "react";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
 
 export interface SidebarProps {
+  /**
+   * title of the sidebar rendered after brand logo
+   */
   title?: string;
+  /**
+   * content of the sidebar
+   */
+  content?: ComponentType<any>;
 }
 
 const Sidebar: React.FC<SidebarProps> = (props) => {
-  const { title } = props;
+  const { title, content: SidebarContent } = props;
   const { open, toggleSidebarOpen } = useContext(SidebarContext);
 
+  const sidebarContent = (
+    <>
+      <div className="sidebar__header">
+        <BrandLogo />
+      </div>
+      <div className="sidebar__label">{title}</div>
+      {SidebarContent ? <SidebarContent /> : null}
+    </>
+  );
+
   return (
-    <div className="">
+    <>
       {/* <Hidden smUp>
         <SwipeableDrawer
           // className={clsx({
@@ -46,12 +63,10 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
             paper: "sidebar__drawer-paper",
           }}
         >
-          <div className="sidebar__header">
-            <BrandLogo />
-          </div>
+          {sidebarContent}
         </Drawer>
       </Hidden>
-    </div>
+    </>
   );
 };
 
