@@ -56,9 +56,13 @@ const Routes: IRoute[] = [
     ],
   },
   {
-    path: "/",
+    path: "/home",
     component: StaticHomeScreen,
     isPrivate: true,
+  },
+  {
+    path: "/",
+    component: () => <Redirect to="/home" />,
   },
 ];
 export default Routes;

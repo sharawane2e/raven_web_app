@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = (props) => {
           Toaster.success(res.message);
           ApiRequest.setAuthToken(res.data?.accessToken);
           LocalStorageUtils.setUser(res.data);
-          // history.push("/home");
+          history.push("/home");
         } else {
           Toaster.error(res.message);
         }
