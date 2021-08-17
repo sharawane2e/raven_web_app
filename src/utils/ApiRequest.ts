@@ -8,7 +8,6 @@ type MethodType = "GET" | "POST" | "DELETE" | "PUT";
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
-console.log(process.env.REACT_APP_BASE_URL);
 
 const token = LocalStorageUtils.getToken();
 if (token) {
