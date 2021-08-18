@@ -111,11 +111,12 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     }
   };
 
-  const removeAdminAccess = (row: any) => {};
-
   return (
-    <div>
-      <CustomTable tableConfig={tableConfig} />
+    <div className="user-table">
+      <CustomTable
+        tableConfig={tableConfig}
+        classes={{ body: "user-table__body" }}
+      />
     </div>
   );
 };

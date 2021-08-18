@@ -1,62 +1,21 @@
 .rc-table {
+  border: 1px solid map-get($map: $text-color, $key: border);
   .rc__header {
     display: flex;
-    // margin-right: 10px;
     padding: 0 10px;
 
     > div {
       padding: 10px 0;
       flex: 1;
-      //   color: $tb-heder-color;
-
-      span {
-        font-size: 0.9em;
-        @media (min-width: 1025px) and (max-width: 1279px) {
-          font-size: 0.8em !important;
-        }
-        @media (min-width: 1280px) and (max-width: 1365px) {
-          font-size: 0.8em !important;
-        }
-        @media (min-width: 1366px) and (max-width: 1560px) {
-          font-size: 0.9em !important;
-        }
-      }
-      font-size: 0.9em;
-      @media (min-width: 1025px) and (max-width: 1279px) {
-        font-size: 0.8em !important;
-      }
-      @media (min-width: 1280px) and (max-width: 1365px) {
-        font-size: 0.8em !important;
-      }
-      @media (min-width: 1366px) and (max-width: 1560px) {
-        font-size: 0.9em !important;
-      }
+      font-size: map-get($map: $text-size, $key: small);
+      color: map-get($map: $text-color, $key: primary);
+      font-weight: bold;
 
       &.flex_auto {
         flex: auto;
       }
     }
-
-    font-weight: bold;
-    // background-color: $gray-accent;
-    .custom-cell {
-      padding: 18px 15px;
-      //   color: $sky-pearls;
-      font-size: 1em;
-      text-align: left;
-      @media (min-width: 1025px) and (max-width: 1279px) {
-        padding: 10px 15px;
-        font-size: 0.8em;
-      }
-      @media (min-width: 1280px) and (max-width: 1365px) {
-        padding: 10px 15px;
-        font-size: 0.9em;
-      }
-      @media (min-width: 1366px) and (max-width: 1560px) {
-        padding: 10px 15px;
-        font-size: 0.9em;
-      }
-    }
+    border-bottom: 1px solid map-get($map: $text-color, $key: border);
   }
   .table-action-icon {
     width: 15px;
@@ -66,20 +25,8 @@
       width: 18px;
       height: 18px;
     }
-
-    @media (min-width: 1025px) and (max-width: 1279px) {
-      width: 10px;
-      height: 10px;
-    }
-    @media (min-width: 1280px) and (max-width: 1365px) {
-      width: 12px;
-      height: 12px;
-    }
-    @media (min-width: 1366px) and (max-width: 1560px) {
-      width: 15px;
-      height: 15px;
-    }
   }
+
   .rc__body {
     width: 100%;
 
@@ -87,6 +34,7 @@
       display: flex;
       padding: 0 10px;
       transition: background 0.3s linear;
+      border-bottom: 1px solid map-get($map: $text-color, $key: border);
       &:nth-child(odd) {
         // background: $white-accent;
         &:hover {

@@ -26,6 +26,7 @@ export interface CustomTableProps {
     action: Function;
   }[];
   searchPlaceholder?: string;
+
   loaderSkeleton?: ComponentType;
 }
 
@@ -118,42 +119,43 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
       </div>
 
       <div
-        className={clsx("rc__body" /* , { [bodyClassName]: classes?.body } */)}
+        className={clsx("rc__body", {
+          [classes?.body || ""]: classes?.body,
+        })}
       >
         <CustomScrollbar>
-          {/* <CustomSkeleton
-            // loading={loadingData}
-            loading={false}
+          <CustomSkeleton
+            loading={loadingData}
             loaderSkeleton={loaderSkeleton}
             skeletonCount={10}
-          > */}
-          <div className="margin-remove">
-            {tableState.data.map((row, index) => (
-              <div key={index} className="rc__body-row">
-                {tableConfig.map((col, colIndex) => {
-                  const bodyClassName = col?.classes?.body || "";
-                  return (
-                    <div
-                      key={colIndex}
-                      style={{ width: col.minWidth }}
-                      className={clsx("rc__body-cell", {
-                        flex_auto: col.minWidth,
-                        [bodyClassName]: bodyClassName,
-                      })}
-                    >
-                      {/* {!col.format && col.key
+          >
+            <div className="margin-remove">
+              {tableState.data.map((row, index) => (
+                <div key={index} className="rc__body-row">
+                  {tableConfig.map((col, colIndex) => {
+                    const bodyClassName = col?.classes?.body || "";
+                    return (
+                      <div
+                        key={colIndex}
+                        style={{ width: col.minWidth }}
+                        className={clsx("rc__body-cell", {
+                          flex_auto: col.minWidth,
+                          [bodyClassName]: bodyClassName,
+                        })}
+                      >
+                        {/* {!col.format && col.key
                           ? row[col.key]
                           : col?.format(row)} */}
-                      {col.format
-                        ? col.format(row[col.key], row)
-                        : row[col.key]}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-          {/* </CustomSkeleton> */}
+                        {col.format
+                          ? col.format(row[col.key], row)
+                          : row[col.key]}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </CustomSkeleton>
         </CustomScrollbar>
       </div>
       {/* {!props.disablePagination ? Paginate : null} */}

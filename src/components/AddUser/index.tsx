@@ -37,7 +37,7 @@ const AddUser: React.FC<AddUserProps> = (props) => {
   const history = useHistory();
 
   const onSubmit = (data: any) => {
-    props.stopLoading();
+    props.startLoading();
 
     ApiRequest.request(ApiUrl.USER, "POST", data)
       .then((res) => {
