@@ -19,7 +19,7 @@ const PublicFormScreen: React.FC<PublicFormScreenProps> = (props) => {
           <AppRouting routes={props.routes} />
          <CopyrightFooter />
         </Grid>
-        <Grid item md={6} sm={6}>
+        <Grid item md={6} sm={6} className="public-banner__banner-area">
           <PublicBanner />
         </Grid>
       </Grid>

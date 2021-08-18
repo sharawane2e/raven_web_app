@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="424" height="396" viewBox="0 0 424 396">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff7322;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+      }
+
+      .cls-1, .cls-2, .cls-5 {
+        stroke-width: 4px;
+      }
+
+      .cls-2 {
+        fill: #323c4e;
+      }
+
+      .cls-3, .cls-4 {
+        fill: #fff;
+        font-family: NunitoSans-Regular, Nunito Sans;
+      }
+
+      .cls-3 {
+        font-size: 13px;
+      }
+
+      .cls-4 {
+        font-size: 10px;
+      }
+
+      .cls-5, .cls-7 {
+        fill: none;
+      }
+
+      .cls-5 {
+        stroke: #323c4e;
+      }
+
+      .cls-6 {
+        stroke: none;
+      }
+
+      .cls-8 {
+        filter: url(#Ellipse_66);
+      }
+
+      .cls-9 {
+        filter: url(#Ellipse_65);
+      }
+
+      .cls-10 {
+        filter: url(#Ellipse_64);
+      }
+
+      .cls-11 {
+        filter: url(#Ellipse_63);
+      }
+
+      .cls-12 {
+        filter: url(#Ellipse_62);
+      }
+
+      .cls-13 {
+        filter: url(#Ellipse_61);
+      }
+    </style>
+    <filter id="Ellipse_61" x="153" y="153" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_62" x="158" y="0" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_63" x="0" y="106" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_64" x="55" y="276" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-4"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_65" x="251" y="281" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-5"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Ellipse_66" x="309" y="114" width="115" height="115" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-6"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-6"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_3799" data-name="Group 3799" transform="translate(-202 -138)">
+    <g class="cls-13" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_61-2" data-name="Ellipse 61" class="cls-1" transform="translate(162 159)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <g class="cls-12" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_62-2" data-name="Ellipse 62" class="cls-2" transform="translate(167 6)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <g class="cls-11" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_63-2" data-name="Ellipse 63" class="cls-2" transform="translate(9 112)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <g class="cls-10" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_64-2" data-name="Ellipse 64" class="cls-2" transform="translate(64 282)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <g class="cls-9" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_65-2" data-name="Ellipse 65" class="cls-2" transform="translate(260 287)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <g class="cls-8" transform="matrix(1, 0, 0, 1, 202, 138)">
+      <g id="Ellipse_66-2" data-name="Ellipse 66" class="cls-2" transform="translate(318 120)">
+        <circle class="cls-6" cx="48.5" cy="48.5" r="48.5"/>
+        <circle class="cls-7" cx="48.5" cy="48.5" r="46.5"/>
+      </g>
+    </g>
+    <text id="HFS_OneOffice_Pulse" data-name="HFS
+OneOffice
+Pulse" class="cls-3" transform="translate(413 332)"><tspan x="-12.415" y="0">HFS</tspan><tspan x="-29.354" y="18">OneOffice</tspan><tspan x="-15.854" y="36">Pulse</tspan></text>
+    <text id="_1._Digital_strategy_and_emerging_tech._adoption" data-name="1. Digital
+strategy and
+emerging
+tech.
+adoption" class="cls-4" transform="translate(418 168)"><tspan x="-19.89" y="0">1. Digital</tspan><tspan x="-27.995" y="14">strategy and</tspan><tspan x="-21.105" y="28">emerging</tspan><tspan x="-10.715" y="42">tech.</tspan><tspan x="-19.715" y="56">adoption</tspan></text>
+    <text id="_5._Voice_of_the_customer" data-name="5. Voice of
+the customer" class="cls-4" transform="translate(260 295)"><tspan x="-23.275" y="0">5. Voice of</tspan><tspan x="-29.175" y="14">the customer</tspan></text>
+    <text id="_2._Shared_services_and_outsourcing" data-name="2. Shared
+services and
+outsourcing" class="cls-4" transform="translate(569 295)"><tspan x="-21.27" y="0">2. Shared</tspan><tspan x="-27.8" y="15">services and</tspan><tspan x="-26.3" y="30">outsourcing</tspan></text>
+    <text id="_3._Deep-dive_on_cloud" data-name="3. Deep-dive
+on cloud" class="cls-4" transform="translate(511 470)"><tspan x="-28.83" y="0">3. Deep-dive</tspan><tspan x="-18.95" y="14">on cloud</tspan></text>
+    <text id="_4._Industry_value_chain" data-name="4. Industry
+value chain" class="cls-4" transform="translate(315 465)"><tspan x="-23.83" y="0">4. Industry</tspan><tspan x="-24.95" y="14">value chain</tspan></text>
+    <line id="Line_124" data-name="Line 124" class="cls-5" x2="61" y2="17.5" transform="translate(304.5 316.5)"/>
+    <line id="Line_125" data-name="Line 125" class="cls-5" y1="49" x2="36.5" transform="translate(347.5 384.5)"/>
+    <line id="Line_126" data-name="Line 126" class="cls-5" x1="38" y1="51" transform="translate(440.5 385.5)"/>
+    <line id="Line_127" data-name="Line 127" class="cls-5" x1="62" y2="13" transform="translate(459.5 319.5)"/>
+    <line id="Line_128" data-name="Line 128" class="cls-5" x1="1" y2="56" transform="translate(414.5 241)"/>
+  </g>
+</svg>
