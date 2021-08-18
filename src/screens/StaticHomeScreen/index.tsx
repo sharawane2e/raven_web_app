@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import Appbar from "../../components/Appbar";
 import StaticDashboard from "../../components/dashboard";
 import Sidebar from "../../components/Sidebar";
@@ -14,7 +14,6 @@ const StaticHomeScreen: React.FC = () => {
       </SidebarContextProvider>
       <main className="admin-panel__content">
        <StaticDashboard />
-        <Link to="/admin">Go to admin panel</Link>
       </main>
       
     </div>

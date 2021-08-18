@@ -1,5 +1,6 @@
-import { Grid } from "@material-ui/core"
-import DoshboardChart from "../../assets/svg/dashboard-chart.svg"
+import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
 
 const StaticDashboard: React.FC = () => {
     return (
@@ -10,7 +11,7 @@ const StaticDashboard: React.FC = () => {
                     <li>Organizations that will thrive in the pandemic economy must be in step with and ultimately anticipate customer requirements and expectations. They will need to become pre-emptive in every sense of the word.</li>
                 </ul>
                 <Grid container>
-                <Grid item md={6} sm={6}><img src={DoshboardChart} /></Grid>
+                <Grid item md={6} sm={6} className="info-area__imgwider"><img src={DoshboardChart} /></Grid>
                 <Grid item md={6} sm={6}>
                     <h2>Demographics:</h2>
                         <ul>
@@ -22,6 +23,7 @@ const StaticDashboard: React.FC = () => {
                         </ul>
                 </Grid>
                 </Grid>
+                <Link to="/admin">Go to admin panel</Link>
       </div>
     );
   };
