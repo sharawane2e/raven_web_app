@@ -16,6 +16,8 @@ interface TableDataContextProps {
   searchText: string;
   handleSearch: (e: any) => void;
   setRecordsPerPage: (e: any) => void;
+  loadingData: boolean;
+  setLoadingData: (loadingData: boolean) => void;
 }
 
 const tableStateDefaultValue: ITableState = {
@@ -28,19 +30,13 @@ const tableStateDefaultValue: ITableState = {
 };
 
 const defaultValues: TableDataContextProps = {
-  fetchData: (
-    currentPage?: number,
-    recordsPerPage?: number,
-    searchText?: string,
-    sortBy?: string,
-    sortOrder?: SortOrder
-  ) => {
-    console.log("reaching to defualt");
-  },
+  fetchData: () => {},
   searchText: "",
   tableState: tableStateDefaultValue,
   handleSearch: (e: any) => {},
   setRecordsPerPage: (recordsPerPage: number) => {},
+  loadingData: false,
+  setLoadingData: (loadingData: boolean) => {},
 };
 
 export const TableDataContext =
@@ -74,8 +70,8 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
     currentPage = tableState.currentPage,
     recordsPerPage = tableState.recordsPerPage,
     search = searchText,
-    sortBy = tableState.sortBy,
-    sortOrder: SortOrder = undefined
+    sortBy?: string,
+    sortOrder?: SortOrder
   ) => {
     let sortByField;
     let sortByOrder;
@@ -126,6 +122,8 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
         handleSearch,
         searchText,
         setRecordsPerPage,
+        loadingData,
+        setLoadingData,
       }}
     >
       {props.children}

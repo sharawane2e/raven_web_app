@@ -1,6 +1,8 @@
 .sidebar {
   .sidebar__drawer-paper {
     width: 230px;
+    height: calc(100vh - 83px);
+    margin-top: 83px;
   }
 
   .sidebar__header {

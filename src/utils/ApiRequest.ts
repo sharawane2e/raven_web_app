@@ -3,7 +3,7 @@ import IApiResponse from "../types/IApiResponse";
 import LocalStorageUtils from "./LocalStorageUtils";
 import Toaster from "./Toaster";
 
-type MethodType = "GET" | "POST" | "DELETE" | "PUT";
+type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,

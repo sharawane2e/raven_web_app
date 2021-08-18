@@ -8,6 +8,16 @@ class ApiUrl {
   static RESET_PASSWORD = "/auth/reset-password";
 
   static USER = "/user";
+
+  static ACTIVATE_USER = "/user/activate";
+
+  static DEACTIVATE_USER = "/user/de-activate";
+
+  static GRANT_ADMIN_ACCESS = "/user/grant-admin";
+
+  static REMOVE_ADMIN_ACCESS = "/user/revoke-admin";
+
+  static IS_EMAIL_UNIQUE = "/user/is-email-unique";
 }
 
 export default ApiUrl;

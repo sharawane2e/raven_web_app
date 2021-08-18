@@ -28,6 +28,21 @@ interface ITableColumn {
    * enambles sorting on the givn field
    */
   hasSorting?: boolean;
+
+  /**
+   * classes passed to Custom table component
+   */
+  classes?: {
+    /**
+     * classes given to column heading
+     */
+    head?: string;
+
+    /**
+     * classes given to body heading
+     */
+    body?: string;
+  };
 }
 
 export default ITableColumn;

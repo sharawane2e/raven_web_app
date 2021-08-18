@@ -21,9 +21,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
   const sidebarContent = (
     <>
-      <div className="sidebar__header">
+      {/* <div className="sidebar__header">
         <BrandLogo />
-      </div>
+      </div> */}
       <div className="sidebar__label">{title}</div>
       {SidebarContent ? <SidebarContent /> : null}
     </>
