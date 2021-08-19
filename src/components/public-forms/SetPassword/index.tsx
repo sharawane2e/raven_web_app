@@ -19,6 +19,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm({
     resolver: yupResolver(SetPasswordSchema),
     mode: "all",
@@ -74,6 +75,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
+          onChange={() => clearErrors("password")}
         />
         <InputField
           {...register("confirmPassword")}
@@ -83,6 +85,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           error={!!errors.confirmPassword}
           helperText={errors?.confirmPassword?.message}
           type="password"
+          onChange={() => clearErrors("confirmPassword")}
         />
         <Button type="submit" className="button--primary">
           {text.button}

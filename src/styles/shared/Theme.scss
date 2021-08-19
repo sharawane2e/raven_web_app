@@ -26,15 +26,21 @@
   }
 }
 .MuiInputBase-root {
-  //   border: 1px solid map-get($map: $text-color, $key: border);
-  .MuiOutlinedInput-root.Mui-focused {
+  border: 1px solid map-get($map: $text-color, $key: border);
+
+  &:hover,
+  &.Mui-focused {
     .MuiOutlinedInput-notchedOutline {
-      border: 1px solid map-get($map: $text-color, $key: border);
+      border: 1px solid map-get($map: $text-color, $key: fade);
     }
   }
-  &:hover {
+
+  &.Mui-focused {
+  }
+
+  &.Mui-error {
     .MuiOutlinedInput-notchedOutline {
-      border: 1px solid map-get($map: $text-color, $key: border);
+      border: 1px solid map-get($map: $text-color, $key: danger);
     }
   }
 }

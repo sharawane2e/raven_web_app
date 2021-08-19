@@ -2,4 +2,36 @@
   a {
     text-decoration: none;
   }
+
+  .admin-sidebar__nav-item {
+    transition: background 300ms linear;
+
+    span:nth-child(1) {
+      flex: 1;
+    }
+
+    span:nth-child(2) {
+      flex: 6;
+      color: map-get($map: $text-color, $key: primary);
+    }
+
+    svg {
+      font-size: map-get($map: $text-size, $key: regular);
+      height: 14px;
+      // margin-right: 15px;
+    }
+
+    &.active-link {
+      span {
+        color: map-get($map: $text-color, $key: accent);
+      }
+      svg path {
+        fill: map-get($map: $text-color, $key: accent);
+      }
+    }
+
+    &:hover {
+      background-color: map-get($map: $bg-color, $key: secondary-shade);
+    }
+  }
 }

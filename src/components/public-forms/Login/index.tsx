@@ -16,6 +16,7 @@ const Login: React.FC<LoginProps> = (props) => {
   const {
     register,
     handleSubmit,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
@@ -54,6 +55,7 @@ const Login: React.FC<LoginProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
+          onChange={() => clearErrors("email")}
         />
         <InputField
           {...register("password")}
@@ -63,6 +65,7 @@ const Login: React.FC<LoginProps> = (props) => {
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
+          onChange={() => clearErrors("password")}
         />
 
         <Button type="submit" className="button--primary">

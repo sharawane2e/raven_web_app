@@ -1,10 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  Button,
-  FormControl,
-  FormControlLabel,
-  TextField,
-} from "@material-ui/core";
+import { Button, FormControlLabel } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import { useHistory } from "react-router";
 import ApiUrl from "../../config/ApiUrl";
@@ -22,10 +17,12 @@ const AddUser: React.FC<AddUserProps> = (props) => {
     register,
     handleSubmit,
     control,
+    clearErrors,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddUserSchema),
     mode: "onBlur",
+
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -64,6 +61,9 @@ const AddUser: React.FC<AddUserProps> = (props) => {
           label="First name"
           error={!!errors.firstName}
           helperText={errors?.firstName?.message}
+          onChange={() => {
+            clearErrors("firstName");
+          }}
         />
         <InputField
           {...register("lastName")}
@@ -79,17 +79,10 @@ const AddUser: React.FC<AddUserProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
+          onChange={() => {
+            clearErrors("email");
+          }}
         />
-
-        {/* <FormControlLabel
-          // value={option.id}
-          control={<Checkbox />}
-          label={"Is admin"}
-          // name="isAdmin"
-          // id="isAdmin"
-          {...register("isAdmin")}
-        /> */}
-        {/* <Checkbox {...register("isAdmin")} /> */}
 
         <Controller
           control={control}

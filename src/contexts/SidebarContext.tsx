@@ -4,7 +4,7 @@ export interface SidebarContextProviderProps {}
 
 export interface ISidebarContext {
   open: boolean;
-  toggleSidebarOpen: (openValue: boolean) => void;
+  toggleSidebarOpen: (openValue?: boolean) => void;
 }
 
 export const SidebarContext = createContext<ISidebarContext>({

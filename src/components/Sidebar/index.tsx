@@ -21,9 +21,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
   const sidebarContent = (
     <>
-      {/* <div className="sidebar__header">
-        <BrandLogo />
-      </div> */}
       <div className="sidebar__label">{title}</div>
       {SidebarContent ? <SidebarContent /> : null}
     </>
@@ -54,11 +51,14 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       </Hidden> */}
       <Hidden smDown>
         <Drawer
-          className={clsx("sidebar", {
+          className={clsx(
+            "sidebar" /* , {
             "sidebar--open": open,
             "sidebar--close": !open,
-          })}
-          variant="permanent"
+          } */
+          )}
+          open={open}
+          variant="persistent"
           classes={{
             paper: "sidebar__drawer-paper",
           }}
