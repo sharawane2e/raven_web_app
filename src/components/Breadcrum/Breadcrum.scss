@@ -1,0 +1,21 @@
+.breadcrum {
+  display: flex;
+  align-items: center;
+  font-size: map-get($map: $text-size, $key: small);
+  color: map-get($map: $text-color, $key: fade);
+
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  svg {
+    font-size: map-get($map: $text-size, $key: regular);
+    color: map-get($map: $text-color, $key: fade);
+  }
+
+  .breadcrum__separator {
+    margin: 0 10px;
+  }
+}

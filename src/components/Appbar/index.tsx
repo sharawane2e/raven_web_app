@@ -6,6 +6,7 @@ import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
 import ProfileAvatar from "../ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
+import { useHistory } from "react-router";
 
 export interface AppbarProps {
   removeToggleButton?: boolean;
@@ -17,6 +18,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);
+
+  const history = useHistory();
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -56,7 +59,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         open={Boolean(anchorEl)}
         onClose={closeMenu}
       >
-        <MenuItem>
+        <MenuItem onClick={() => history.push("/admin")}>
           <span></span>
           <span>Admin</span>
         </MenuItem>

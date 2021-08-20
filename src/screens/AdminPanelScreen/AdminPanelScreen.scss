@@ -4,7 +4,14 @@
     transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
 
     &.sidebar-open {
-      margin-left: 230px;
+      margin-left: 240px;
     }
+  }
+
+  .admin-panel__page-title {
+    margin: 15px 0;
+    color: map-get($map: $text-color, $key: primary);
+    font-size: map-get($map: $text-size, $key: large);
+    font-weight: 600;
   }
 }

@@ -5,7 +5,12 @@ import ITableColumn from "../../types/ITableColumn";
 import CustomScrollbar from "../CustomScrollbar";
 import CustomSkeleton from "../../skeletons/CustomSkeleton";
 import { SortOrder } from "../../types/UtilityTypes";
-import Pagination from "@material-ui/lab/Pagination";
+import ReactPaginate from "react-paginate";
+import { MenuItem, Select } from "@material-ui/core";
+import InputField from "../widgets/InputFields";
+import SwapVertIcon from "@material-ui/icons/SwapVert";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 
 export interface CustomTableProps {
   classes?: {
@@ -29,7 +34,14 @@ export interface CustomTableProps {
 const CustomTable: React.FC<CustomTableProps> = (props) => {
   const { classes, tableConfig, loaderSkeleton, disablePagination } = props;
   const {
-    tableState,
+    tableState: {
+      currentPage,
+      recordsPerPage,
+      totalRecords,
+      sortBy,
+      sortOrder,
+      data,
+    },
     fetchData,
     searchText,
     handleSearch,
@@ -41,30 +53,52 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
     index: -1,
     anchor: null,
   });
-
-  const tableWidth =
-    document.body.offsetWidth <= 768 ? document.body.offsetWidth - 30 : "100%";
+  const [anchorEl, setAnchorEl] = useState<
+    Element | ((element: Element) => Element) | null | undefined
+  >(null);
 
   useEffect(() => {
     fetchData(1, 10);
   }, []);
 
+  const minRecordsRange = (currentPage - 1) * recordsPerPage + 1;
+  let maxRecordsRange = currentPage * recordsPerPage;
+  maxRecordsRange =
+    maxRecordsRange > totalRecords ? totalRecords : maxRecordsRange;
+
   const sortTable = (key: string) => {
     fetchData(undefined, undefined, undefined, key);
   };
-  const handleSort = (sortBy: string, sortOrder: SortOrder) => {
-    fetchData(1, 10, undefined, sortBy, sortOrder);
-  };
 
-  const getSortingActiveClass = (headerId: string, sortOrder: SortOrder) => {
-    if (headerId === tableState.sortBy && sortOrder === tableState.sortOrder) {
-      return "sorting-active";
-    }
-    return "";
+  const handlePageLimitChange = (e: any) => {
+    fetchData(undefined, e.target.value);
   };
-
   return (
     <div className="custom-table">
+      <div className="custom-table__header">
+        <div className="custom-table__page-limiter">
+          <span className="limiter-label">Show</span>
+          <span>
+            <Select
+              labelId="demo-simple-select-outlined-label"
+              id="demo-simple-select-outlined"
+              value={recordsPerPage}
+              onChange={handlePageLimitChange}
+              disableUnderline
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={30}>30</MenuItem>
+            </Select>
+          </span>
+        </div>
+        <div className="custom-table__search-wrapper">
+          <span>Search:</span>
+          <span>
+            <InputField onChange={handleSearch} value={searchText} />
+          </span>
+        </div>
+      </div>
       <div className="rc-table">
         <div className="rc__header">
           {tableConfig.map((col, index) => {
@@ -80,36 +114,22 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                 })}
               >
                 <span>{col.label}</span>
-                <div className="cst-sort ">
-                  {col.hasSorting && (
-                    <>
-                      <div
-                        className={
-                          "icon-sort sort-asc " +
-                          getSortingActiveClass(col.key, "asc")
-                        }
-                        onClick={() => {
-                          return col.key == tableState.sortBy &&
-                            tableState.sortOrder == "asc"
-                            ? null
-                            : handleSort(col.key, "asc");
-                        }}
-                      ></div>
-                      <div
-                        className={
-                          "icon-sort sort-dsc " +
-                          getSortingActiveClass(col.key, "desc")
-                        }
-                        onClick={() => {
-                          return col.key == tableState.sortBy &&
-                            tableState.sortOrder == "desc"
-                            ? null
-                            : handleSort(col.key, "desc");
-                        }}
-                      ></div>
-                    </>
-                  )}
-                </div>
+                {col.hasSorting && (
+                  <span
+                    onClick={() => sortTable(col.key)}
+                    className="sort-icon-wrapper"
+                  >
+                    {sortBy === col.key ? (
+                      sortOrder === "asc" ? (
+                        <ArrowDownwardIcon />
+                      ) : (
+                        <ArrowUpwardIcon />
+                      )
+                    ) : (
+                      <SwapVertIcon />
+                    )}
+                  </span>
+                )}
               </div>
             );
           })}
@@ -121,66 +141,55 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
           })}
         >
           <CustomScrollbar>
-            <CustomSkeleton
+            {/* <CustomSkeleton
               loading={loadingData}
               loaderSkeleton={loaderSkeleton}
               skeletonCount={10}
-            >
-              <div className="margin-remove">
-                {tableState.data.map((row, index) => (
-                  <div key={index} className="rc__body-row">
-                    {tableConfig.map((col, colIndex) => {
-                      const bodyClassName = col?.classes?.body || "";
-                      return (
-                        <div
-                          key={colIndex}
-                          style={{ width: col.minWidth }}
-                          className={clsx("rc__body-cell", {
-                            flex_auto: col.minWidth,
-                            [bodyClassName]: bodyClassName,
-                          })}
-                        >
-                          {col.format
-                            ? col.format(row[col.key], row)
-                            : row[col.key]}
-                        </div>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-            </CustomSkeleton>
+            > */}
+            <div className="margin-remove">
+              {data.map((row, index) => (
+                <div key={index} className="rc__body-row">
+                  {tableConfig.map((col, colIndex) => {
+                    const bodyClassName = col?.classes?.body || "";
+                    return (
+                      <div
+                        key={colIndex}
+                        style={{ width: col.minWidth }}
+                        className={clsx("rc__body-cell", {
+                          flex_auto: col.minWidth,
+                          [bodyClassName]: bodyClassName,
+                        })}
+                      >
+                        {col.format
+                          ? col.format(row[col.key], row)
+                          : row[col.key]}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+            {/* </CustomSkeleton> */}
           </CustomScrollbar>
         </div>
       </div>
       {!disablePagination ? (
-        <Pagination
-          getItemAriaLabel={(type, page) => {
-            return type === "previous"
-              ? "Previous"
-              : type === "next"
-              ? "Next"
-              : String(page);
-          }}
-          count={Math.ceil(tableState.totalRecords / tableState.recordsPerPage)}
-          page={tableState.currentPage}
-          variant="outlined"
-          shape="rounded"
-          onChange={(_, nextPage: number) => {
-            fetchData(nextPage);
-          }}
-
-          // renderItem={(params) => {
-          //   const { type, page } = params;
-          //   const text =
-          //     type === "previous"
-          //       ? "Previous"
-          //       : type === "next"
-          //       ? "Next"
-          //       : String(page);
-          //   return <span {...params}>{text}</span>;
-          // }}
-        />
+        <div className="custom-table__paginate-wrapper">
+          <div>
+            Showing {minRecordsRange} to {maxRecordsRange} of {totalRecords}{" "}
+            entries
+          </div>
+          <ReactPaginate
+            pageCount={Math.ceil(totalRecords / recordsPerPage)}
+            pageRangeDisplayed={5}
+            marginPagesDisplayed={3}
+            onPageChange={({ selected }) => {
+              fetchData(selected + 1);
+            }}
+            pageClassName="custom-table__paginate-link"
+            containerClassName="custom-table__link-container"
+          />
+        </div>
       ) : null}
     </div>
   );

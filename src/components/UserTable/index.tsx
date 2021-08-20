@@ -15,9 +15,8 @@ const UserTable: React.FC<UserTableProps> = (props) => {
 
   const tableConfig: ITableColumn[] = [
     {
-      key: "firstName",
+      key: "name",
       label: "NAME",
-      format: (value, row) => `${row.firstName} ${row.lastName}`,
       hasSorting: true,
     },
     {
