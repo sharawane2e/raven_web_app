@@ -2,4 +2,24 @@
   .user-table__body {
     height: calc(100vh - 320px);
   }
+
+  .name {
+    flex: 1.25 !important;
+  }
+  .email {
+    flex: 1.5 !important;
+  }
+  .created-by {
+    flex: 1.25 !important;
+  }
+  .is-admin {
+    flex: 0.7 !important;
+  }
+
+  .active-status {
+    flex: 0.7 !important;
+  }
+  .action {
+    flex: 0.75 !important;
+  }
 }

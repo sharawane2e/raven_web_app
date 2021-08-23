@@ -13,14 +13,17 @@ const CustomSkeleton: React.FC<CustomSkeletonProps> = (props) => {
     loaderSkeleton: LoaderSekelton,
     skeletonCount = 1,
   } = props;
+  // debugger;
   let Loader: ComponentType[] | null = [];
   if (LoaderSekelton) {
     for (let index = 0; index < skeletonCount; index++) {
-      Loader.push(LoaderSekelton);
+      //@ts-ignore
+      Loader.push(<LoaderSekelton />);
     }
   } else {
     Loader = null;
   }
+
   return <div>{loading ? Loader : children}</div>;
 };
 

@@ -26,7 +26,7 @@ const EditUser: React.FC<EditUserProps> = (props) => {
   const fetchUserDetails = (id: string) => {
     const url = `${ApiUrl.USER}/${id}`;
 
-    props.startLoading();
+    props.startLoading("Fetching user data", true);
     ApiRequest.request(url, "GET")
       .then((res) => {
         if (res.success) {

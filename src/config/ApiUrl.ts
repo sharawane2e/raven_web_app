@@ -7,6 +7,8 @@ class ApiUrl {
 
   static RESET_PASSWORD = "/auth/reset-password";
 
+  static CHANGE_PASSWORD = "/auth/change-password";
+
   static USER = "/user";
 
   static ACTIVATE_USER = "/user/activate";

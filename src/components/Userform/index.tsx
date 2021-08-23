@@ -44,10 +44,10 @@ const UserForm: React.FC<UserFormProps> = (props) => {
       setValue("isAdmin", user.isAdmin);
     }
   }, [user]);
-  console.log(getValues());
+
   return (
     <div className="add-user">
-      <form className="" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           {...register("firstName")}
           id="firstName"

@@ -1,9 +1,10 @@
+import { Backdrop, CircularProgress } from "@material-ui/core";
 import React from "react";
 import LoadingOverlay from "react-loading-overlay-ts";
 import { Subtract } from "utility-types";
 
 export interface WithLoaderProps {
-  startLoading: (loadingText?: string) => void;
+  startLoading: (loadingText?: string, fullLoader?: boolean) => void;
   stopLoading: () => void;
 }
 
@@ -11,12 +12,13 @@ function withLoader<T extends WithLoaderProps>(
   Component: React.ComponentType<T>
 ) {
   return class extends React.Component<Subtract<T, WithLoaderProps>> {
-    state = { loading: false, loadingText: "Please wait" };
+    state = { loading: false, loadingText: "Please wait", fullLoader: false };
 
-    startLoading = (loadingText = "") => {
+    startLoading = (loadingText = "", fullLoader = false) => {
       this.setState({
         loading: true,
         loadingText: loadingText ? loadingText : this.state.loadingText,
+        fullLoader,
       });
     };
     stopLoading = () => {
@@ -24,7 +26,19 @@ function withLoader<T extends WithLoaderProps>(
     };
 
     render() {
-      return (
+      return this.state.fullLoader ? (
+        <>
+          <Backdrop open={this.state.loading}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
+
+          <Component
+            {...(this.props as T)}
+            startLoading={this.startLoading}
+            stopLoading={this.stopLoading}
+          />
+        </>
+      ) : (
         <LoadingOverlay
           active={this.state.loading}
           spinner

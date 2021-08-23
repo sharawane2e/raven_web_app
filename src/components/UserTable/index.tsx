@@ -5,6 +5,7 @@ import ApiUrl from "../../config/ApiUrl";
 import { TableDataContext } from "../../contexts/TableDataContext";
 import { UserDetailsContext } from "../../contexts/UserDetailsContext";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
+import UserTableSkeleton from "../../skeletons/UserTableSekeleton";
 import ITableColumn from "../../types/ITableColumn";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
@@ -22,16 +23,28 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       key: "name",
       label: "NAME",
       hasSorting: true,
+      classes: {
+        body: "name",
+        head: "name",
+      },
     },
     {
       key: "email",
       label: "EMAIL",
       hasSorting: true,
+      classes: {
+        body: "email",
+        head: "email",
+      },
     },
     {
       key: "createdBy",
       label: "CREATED BY",
       hasSorting: true,
+      classes: {
+        body: "created-by",
+        head: "created-by",
+      },
     },
     {
       key: "isAdmin",
@@ -43,6 +56,10 @@ const UserTable: React.FC<UserTableProps> = (props) => {
           onChange={() => changeAdminAccess(row)}
         />
       ),
+      classes: {
+        body: "is-admin center-align",
+        head: "is-admin center-align",
+      },
     },
     {
       key: "active",
@@ -54,11 +71,19 @@ const UserTable: React.FC<UserTableProps> = (props) => {
           disabled={row.isKeyAdmin}
         />
       ),
+      classes: {
+        body: "active-status center-align",
+        head: "active-status center-align",
+      },
     },
     {
       key: "",
       label: "ACTION",
       format: (value, row) => <div onClick={() => editUser(row._id)}>Edit</div>,
+      classes: {
+        body: "action center-align",
+        head: "action center-align",
+      },
     },
   ];
 
@@ -124,6 +149,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       <CustomTable
         tableConfig={tableConfig}
         classes={{ body: "user-table__body" }}
+        loaderSkeleton={UserTableSkeleton}
       />
     </div>
   );

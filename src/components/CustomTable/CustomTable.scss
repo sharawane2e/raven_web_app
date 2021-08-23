@@ -72,8 +72,8 @@
       padding: 10px 0;
       flex: 1;
       font-size: map-get($map: $text-size, $key: small);
-      color: map-get($map: $text-color, $key: primary);
-      font-weight: bold;
+      font-weight: 800;
+      color: map-get($map: $text-color, $key: "primary-fade");
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -117,26 +117,16 @@
     }
 
     .rc__body-cell {
-      //   color: $black-pearl;
-      font-size: 0.9em;
       padding: 10px 0;
-      // max-width: 400px;
       overflow: hidden;
       text-overflow: ellipsis;
-      @media (min-width: 1025px) and (max-width: 1279px) {
-        font-size: 0.7em;
-      }
-      @media (min-width: 1280px) and (max-width: 1365px) {
-        font-size: 0.8em;
-      }
-      @media (min-width: 1366px) and (max-width: 1560px) {
-        font-size: 0.8em;
-      }
+      font-size: map-get($map: $text-size, $key: small);
     }
   }
 
   .center-align {
     text-align: center;
+    justify-content: center !important;
   }
   .trackYVisible {
     .margin-remove {
@@ -156,5 +146,10 @@
     color: map-get($map: $text-color, $key: fade);
     margin-right: 20px;
     cursor: pointer;
+
+    .asc-icon,
+    .desc-icon {
+      font-size: map-get($map: $text-size, $key: large);
+    }
   }
 }

@@ -1,5 +1,5 @@
-.admin-panel {
-  .admin-panel__page-title {
+.user-panel {
+  .user-panel__page-title {
     margin: 15px 0;
     color: map-get($map: $text-color, $key: primary);
     font-size: map-get($map: $text-size, $key: large);

@@ -28,7 +28,7 @@ const AddUser: React.FC<AddUserProps> = (props) => {
 
   return (
     <div className="add-user">
-      <div className="add-user__heading">Add user</div>
+      <div className="admin-panel__page-title">Add user</div>
       <Userform onSubmit={onSubmit} />
     </div>
   );

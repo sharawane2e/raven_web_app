@@ -63,11 +63,11 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <span></span>
           <span>Admin</span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem disabled>
           <span></span>
           <span>Edit Profile</span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => history.push("/change-password")}>
           <span></span>
           <span>Change password</span>
         </MenuItem>

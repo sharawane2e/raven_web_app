@@ -121,12 +121,12 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                   >
                     {sortBy === col.key ? (
                       sortOrder === "asc" ? (
-                        <ArrowDownwardIcon />
+                        <ArrowDownwardIcon className="asc-icon" />
                       ) : (
-                        <ArrowUpwardIcon />
+                        <ArrowUpwardIcon className="desc-icon" />
                       )
                     ) : (
-                      <SwapVertIcon />
+                      <SwapVertIcon className="sort-icon" />
                     )}
                   </span>
                 )}
@@ -141,35 +141,36 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
           })}
         >
           <CustomScrollbar>
-            {/* <CustomSkeleton
+            <CustomSkeleton
               loading={loadingData}
+              // loading={true}
               loaderSkeleton={loaderSkeleton}
               skeletonCount={10}
-            > */}
-            <div className="margin-remove">
-              {data.map((row, index) => (
-                <div key={index} className="rc__body-row">
-                  {tableConfig.map((col, colIndex) => {
-                    const bodyClassName = col?.classes?.body || "";
-                    return (
-                      <div
-                        key={colIndex}
-                        style={{ width: col.minWidth }}
-                        className={clsx("rc__body-cell", {
-                          flex_auto: col.minWidth,
-                          [bodyClassName]: bodyClassName,
-                        })}
-                      >
-                        {col.format
-                          ? col.format(row[col.key], row)
-                          : row[col.key]}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-            {/* </CustomSkeleton> */}
+            >
+              <div className="margin-remove">
+                {data.map((row, index) => (
+                  <div key={index} className="rc__body-row">
+                    {tableConfig.map((col, colIndex) => {
+                      const bodyClassName = col?.classes?.body || "";
+                      return (
+                        <div
+                          key={colIndex}
+                          style={{ width: col.minWidth }}
+                          className={clsx("rc__body-cell", {
+                            flex_auto: col.minWidth,
+                            [bodyClassName]: bodyClassName,
+                          })}
+                        >
+                          {col.format
+                            ? col.format(row[col.key], row)
+                            : row[col.key]}
+                        </div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </CustomSkeleton>
           </CustomScrollbar>
         </div>
       </div>

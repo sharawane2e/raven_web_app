@@ -27,7 +27,7 @@ const AdminPanelScreen: React.FC<AdminPanelScreenProps> = (props) => {
             {({ open }) => {
               return (
                 <main
-                  className={clsx("admin-panel__content", {
+                  className={clsx("content-area admin-panel__content", {
                     "sidebar-open": open,
                   })}
                 >
