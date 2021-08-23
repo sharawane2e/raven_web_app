@@ -3,6 +3,7 @@ import ApiUrl from "../../config/ApiUrl";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
+import Breadcrum from "../Breadcrum";
 import Userform from "../Userform";
 
 export interface AddUserProps extends WithLoaderProps {}
@@ -28,6 +29,7 @@ const AddUser: React.FC<AddUserProps> = (props) => {
 
   return (
     <div className="add-user">
+      <Breadcrum pageTitle="Admin" />
       <div className="admin-panel__page-title">Add user</div>
       <Userform onSubmit={onSubmit} />
     </div>
