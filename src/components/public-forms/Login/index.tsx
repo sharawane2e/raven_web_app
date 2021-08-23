@@ -55,7 +55,7 @@ const Login: React.FC<LoginProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onChange={() => clearErrors("email")}
+          onKeyDown={() => clearErrors("email")}
         />
         <InputField
           {...register("password")}
@@ -65,7 +65,7 @@ const Login: React.FC<LoginProps> = (props) => {
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
-          onChange={() => clearErrors("password")}
+          onKeyDown={() => clearErrors("password")}
         />
 
         <Button type="submit" className="button--primary">

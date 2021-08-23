@@ -16,7 +16,6 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = (props) => {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors,
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema),
     mode: "onBlur",
@@ -37,6 +36,8 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = (props) => {
       .finally(() => props.stopLoading());
   };
 
+  // console.log(getValues());
+
   return (
     <div className="forgot-password public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
@@ -49,7 +50,9 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onChange={() => clearErrors("email")}
+          // onChange={async () => {
+          //   console.log(getValues());
+          // }}
         />
 
         <Button type="submit" className="button--primary">

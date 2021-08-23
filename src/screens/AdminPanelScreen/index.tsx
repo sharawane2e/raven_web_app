@@ -7,6 +7,7 @@ import AdminSidebarContent from "../../components/Sidebar/sidebar-content/AdminS
 import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
+import UserDetailsContextProvider from "../../contexts/UserDetailsContext";
 import IRoute from "../../types/IRoute";
 
 export interface AdminPanelScreenProps {
@@ -15,25 +16,27 @@ export interface AdminPanelScreenProps {
 
 const AdminPanelScreen: React.FC<AdminPanelScreenProps> = (props) => {
   const { routes } = props;
-  const { open: openSidebar } = useContext(SidebarContext);
+
   return (
     <div className="admin-panel">
       <SidebarContextProvider>
-        <Appbar />
-        <Sidebar title="Admin" content={AdminSidebarContent} />
-        <SidebarContext.Consumer>
-          {({ open }) => {
-            return (
-              <main
-                className={clsx("admin-panel__content", {
-                  "sidebar-open": open,
-                })}
-              >
-                <AppRouting routes={routes} />
-              </main>
-            );
-          }}
-        </SidebarContext.Consumer>
+        <UserDetailsContextProvider>
+          <Appbar />
+          <Sidebar title="Admin" content={AdminSidebarContent} />
+          <SidebarContext.Consumer>
+            {({ open }) => {
+              return (
+                <main
+                  className={clsx("admin-panel__content", {
+                    "sidebar-open": open,
+                  })}
+                >
+                  <AppRouting routes={routes} />
+                </main>
+              );
+            }}
+          </SidebarContext.Consumer>
+        </UserDetailsContextProvider>
       </SidebarContextProvider>
     </div>
   );

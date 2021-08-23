@@ -1,7 +1,9 @@
 import { Switch } from "@material-ui/core";
 import { useContext } from "react";
+import { useHistory } from "react-router";
 import ApiUrl from "../../config/ApiUrl";
 import { TableDataContext } from "../../contexts/TableDataContext";
+import { UserDetailsContext } from "../../contexts/UserDetailsContext";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ITableColumn from "../../types/ITableColumn";
 import ApiRequest from "../../utils/ApiRequest";
@@ -12,6 +14,8 @@ export interface UserTableProps extends WithLoaderProps {}
 
 const UserTable: React.FC<UserTableProps> = (props) => {
   const { fetchData } = useContext(TableDataContext);
+  const { setSelectedUserId } = useContext(UserDetailsContext);
+  const history = useHistory();
 
   const tableConfig: ITableColumn[] = [
     {
@@ -27,7 +31,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     {
       key: "createdBy",
       label: "CREATED BY",
-      format: (value, row) => "Tony Stark",
+      hasSorting: true,
     },
     {
       key: "isAdmin",
@@ -54,7 +58,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     {
       key: "",
       label: "ACTION",
-      format: (value, row) => "Tony Stark",
+      format: (value, row) => <div onClick={() => editUser(row._id)}>Edit</div>,
     },
   ];
 
@@ -108,6 +112,11 @@ const UserTable: React.FC<UserTableProps> = (props) => {
         .catch((error) => console.log(error))
         .finally(() => props.stopLoading());
     }
+  };
+
+  const editUser = (id: string) => {
+    setSelectedUserId(id);
+    history.push("/admin/edit-user");
   };
 
   return (

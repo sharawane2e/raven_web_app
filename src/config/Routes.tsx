@@ -1,5 +1,6 @@
 import { Redirect } from "react-router";
 import AddUser from "../components/AddUser";
+import EditUser from "../components/EditUser";
 import ForgotPassword from "../components/public-forms/ForgotPassword";
 import Login from "../components/public-forms/Login";
 import SetPassword from "../components/public-forms/SetPassword";
@@ -34,7 +35,12 @@ const Routes: IRoute[] = [
     ],
   },
   {
-    path: ["/admin", "/admin/add-user", "/admin/user-details"],
+    path: [
+      "/admin",
+      "/admin/add-user",
+      "/admin/user-details",
+      "admin/edit-user",
+    ],
     component: AdminPanelScreen,
     isPrivate: true,
     routes: [
@@ -46,6 +52,11 @@ const Routes: IRoute[] = [
       {
         path: "/admin/user-details",
         component: UserDetails,
+        exact: true,
+      },
+      {
+        path: "/admin/edit-user",
+        component: EditUser,
         exact: true,
       },
       {
