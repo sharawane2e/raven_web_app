@@ -9,17 +9,24 @@ import { logOutUser } from "../../services/AuthService";
 import { useHistory } from "react-router";
 
 export interface AppbarProps {
-  removeToggleButton?: boolean;
+  variant?: "fullWidth" | "partialWidth";
 }
 
 const Appbar: React.FC<AppbarProps> = (props) => {
-  const { removeToggleButton } = props;
-  const { open: sidebarOpen, toggleSidebarOpen } = useContext(SidebarContext);
+  const { variant = "partialWidth" } = props;
+  const {
+    open: sidebarOpen,
+    toggleSidebarOpen,
+    openMobileDrawer,
+    toggleMobileSidebar,
+  } = useContext(SidebarContext);
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);
 
   const history = useHistory();
+  const width = window.innerWidth;
+  console.log(width);
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -28,19 +35,27 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
+  const open = width > 768 ? sidebarOpen : openMobileDrawer;
+  console.log(open);
 
   return (
-    <div className="appbar">
+    <div
+      className={clsx("appbar", {
+        "full-width": variant === "fullWidth",
+        "sidebar-open": Boolean(open),
+      })}
+    >
       <BrandLogo className="appbar__brand-logo" />
       <div className="appbar__left-panel">
-        {!removeToggleButton && (
-          <div
-            className={clsx("menu-icon", { "sidebar-open": sidebarOpen })}
-            onClick={() => toggleSidebarOpen()}
-          >
-            <div></div>
-          </div>
-        )}
+        <div
+          className="menu-icon"
+          onClick={() => {
+            toggleSidebarOpen();
+            toggleMobileSidebar();
+          }}
+        >
+          <div></div>
+        </div>
 
         <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>

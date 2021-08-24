@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useContext } from "react";
 import AppRouting from "../../AppRouting";
 import Appbar from "../../components/Appbar";
 import Sidebar from "../../components/Sidebar";
