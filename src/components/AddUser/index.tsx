@@ -3,7 +3,7 @@ import ApiUrl from "../../config/ApiUrl";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
-import Breadcrum from "../Breadcrum";
+import Breadcrum from "../widgets/Breadcrum";
 import Userform from "../Userform";
 
 export interface AddUserProps extends WithLoaderProps {}

@@ -28,7 +28,7 @@ function withLoader<T extends WithLoaderProps>(
     render() {
       return this.state.fullLoader ? (
         <>
-          <Backdrop open={this.state.loading}>
+          <Backdrop open={this.state.loading} className="full-loader">
             <CircularProgress color="inherit" />
           </Backdrop>
 

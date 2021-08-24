@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
-import ProfileAvatar from "../ProfileAvatar";
+import ProfileAvatar from "../widgets/ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
 import { useHistory } from "react-router";
 
@@ -25,8 +25,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   >(null);
 
   const history = useHistory();
-  const width = window.innerWidth;
-  console.log(width);
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -35,14 +33,13 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
-  const open = width > 768 ? sidebarOpen : openMobileDrawer;
-  console.log(open);
 
   return (
     <div
       className={clsx("appbar", {
         "full-width": variant === "fullWidth",
-        "sidebar-open": Boolean(open),
+        "sidebar-open": sidebarOpen,
+        "mobile-sidebar-open": openMobileDrawer,
       })}
     >
       <BrandLogo className="appbar__brand-logo" />

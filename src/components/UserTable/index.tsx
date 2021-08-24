@@ -1,4 +1,5 @@
 import { Switch } from "@material-ui/core";
+import { useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router";
 import ApiUrl from "../../config/ApiUrl";
@@ -10,12 +11,19 @@ import ITableColumn from "../../types/ITableColumn";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
 import CustomTable from "../CustomTable";
+import ConfirmationDialog, {
+  IConfirmationActionConfig,
+} from "../widgets/ConfirmationDialog";
 
 export interface UserTableProps extends WithLoaderProps {}
 
 const UserTable: React.FC<UserTableProps> = (props) => {
   const { fetchData } = useContext(TableDataContext);
   const { setSelectedUserId } = useContext(UserDetailsContext);
+  const [confirmationText, setConfirmationText] = useState<any>(null);
+  const [openConfirmation, setOpenConfirmation] = useState<boolean>(false);
+  const [confirmActionConfig, setConfirmActionConfig] =
+    useState<IConfirmationActionConfig>([]);
   const history = useHistory();
 
   const tableConfig: ITableColumn[] = [
@@ -40,6 +48,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     {
       key: "createdBy",
       label: "CREATED BY",
+      format: (value) => value || "-",
       hasSorting: true,
       classes: {
         body: "created-by",
@@ -53,7 +62,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
         <Switch
           checked={value}
           disabled={row.isKeyAdmin}
-          onChange={() => changeAdminAccess(row)}
+          onChange={() => handleAdminAccessChange(row)}
         />
       ),
       classes: {
@@ -67,7 +76,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       format: (value, row) => (
         <Switch
           checked={value}
-          onChange={() => changeActiveStatus(row)}
+          onChange={() => handleUserActivateClick(row)}
           disabled={row.isKeyAdmin}
         />
       ),
@@ -88,6 +97,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
   ];
 
   const changeActiveStatus = (row: any) => {
+    closeConfirmation();
     const baseUrl =
       row.active === true
         ? ApiUrl.DEACTIVATE_USER
@@ -98,12 +108,19 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     const url = `${baseUrl}/${row._id}`;
 
     if (url && !row.isKeyAdmin) {
-      props.startLoading();
+      props.startLoading(undefined, true);
       ApiRequest.request(url, "PATCH")
         .then((res) => {
           if (res.success) {
             Toaster.success(res.message);
-            fetchData();
+            fetchData(
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              true
+            );
           } else {
             Toaster.error(res.message);
           }
@@ -114,6 +131,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
   };
 
   const changeAdminAccess = (row: any) => {
+    closeConfirmation();
     const baseUrl =
       row.isAdmin === true
         ? ApiUrl.REMOVE_ADMIN_ACCESS
@@ -124,12 +142,19 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     const url = `${baseUrl}/${row._id}`;
 
     if (url && !row.isKeyAdmin) {
-      props.startLoading();
+      props.startLoading(undefined, true);
       ApiRequest.request(url, "PATCH")
         .then((res) => {
           if (res.success) {
             Toaster.success(res.message);
-            fetchData();
+            fetchData(
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              true
+            );
           } else {
             Toaster.error(res.message);
           }
@@ -137,6 +162,57 @@ const UserTable: React.FC<UserTableProps> = (props) => {
         .catch((error) => console.log(error))
         .finally(() => props.stopLoading());
     }
+  };
+
+  const closeConfirmation = () => {
+    setConfirmationText("");
+    setConfirmActionConfig([]);
+    setOpenConfirmation(false);
+  };
+
+  const activateActionConfig: IConfirmationActionConfig = [
+    {
+      label: "Cancle",
+      className: "button--secondary",
+      onClick: closeConfirmation,
+    },
+    {
+      label: "Confirm",
+      className: "button--primary",
+      onClick: () => {},
+    },
+  ];
+  const adminAccessActionConfig: IConfirmationActionConfig = [
+    {
+      label: "Cancle",
+      className: "button--secondary",
+      onClick: closeConfirmation,
+    },
+    {
+      label: "Confirm",
+      className: "button--primary",
+      onClick: () => {},
+    },
+  ];
+
+  const handleAdminAccessChange = (row: any) => {
+    const confirmationText = row.isAdmin
+      ? `Are you sure, you want to revoke admin access for ${row.name}`
+      : `Are you sure, you want to grant admin access to ${row.name}`;
+    adminAccessActionConfig[1].onClick = () => changeAdminAccess(row);
+
+    setConfirmationText(confirmationText);
+    setConfirmActionConfig(adminAccessActionConfig);
+    setOpenConfirmation(true);
+  };
+  const handleUserActivateClick = (row: any) => {
+    const confirmationText = row.active
+      ? `Are you sure, you want to de-activate ${row.name}`
+      : `Are you sure, you want to activate ${row.name}`;
+    activateActionConfig[1].onClick = () => changeActiveStatus(row);
+    setConfirmationText(confirmationText);
+    setConfirmActionConfig(activateActionConfig);
+    setOpenConfirmation(true);
   };
 
   const editUser = (id: string) => {
@@ -150,6 +226,11 @@ const UserTable: React.FC<UserTableProps> = (props) => {
         tableConfig={tableConfig}
         classes={{ body: "user-table__body" }}
         loaderSkeleton={UserTableSkeleton}
+      />
+      <ConfirmationDialog
+        open={openConfirmation}
+        confirmationText={confirmationText}
+        actionConfig={confirmActionConfig}
       />
     </div>
   );

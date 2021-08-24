@@ -20,6 +20,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
     handleSubmit,
     formState: { errors },
     clearErrors,
+    setValue,
   } = useForm({
     resolver: yupResolver(SetPasswordSchema),
     mode: "all",
@@ -62,6 +63,11 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
       .finally(() => props.stopLoading());
   };
 
+  const handleChange = (event: any, field: string) => {
+    clearErrors(field);
+    setValue(field, event.target.value);
+  };
+
   return (
     <div className="set-password public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
@@ -75,7 +81,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
-          onChange={() => clearErrors("password")}
+          onChange={(e) => handleChange(e, "password")}
         />
         <InputField
           {...register("confirmPassword")}
@@ -85,7 +91,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           error={!!errors.confirmPassword}
           helperText={errors?.confirmPassword?.message}
           type="password"
-          onChange={() => clearErrors("confirmPassword")}
+          onChange={(e) => handleChange(e, "confirmPassword")}
         />
         <Button type="submit" className="button--primary">
           {text.button}

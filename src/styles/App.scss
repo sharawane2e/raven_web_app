@@ -3,6 +3,10 @@
 @import "./shared/Common.scss";
 @import "./shared/Theme.scss";
 
+// Import Widget's scss
+@import "../components/widgets/Breadcrum/Breadcrum.scss";
+@import "../components/widgets/ProfileAvatar/ProfileAvatar.scss";
+
 // Import screen's scss
 @import "../screens/PublicFormScreen/PublicFormScreen.scss";
 @import "../screens/AdminPanelScreen/AdminPanelScreen.scss";
@@ -15,8 +19,6 @@
 @import "../components/Sidebar/Sidebar.scss";
 @import "../components/Sidebar/sidebar-content/AdminSidebarContent/AdminSidebarContent.scss";
 @import "../components/Appbar/Appbar.scss";
-@import "../components/ProfileAvatar/ProfileAvatar.scss";
 @import "../components/AddUser/AddUser.scss";
 @import "../components/StaticDashboard/StaticDashboard.scss";
 @import "../components/UserTable/UserTable.scss";
-@import "../components/Breadcrum/Breadcrum.scss";

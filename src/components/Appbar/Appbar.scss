@@ -67,16 +67,19 @@
   &.sidebar-open {
     width: calc(100% - #{$sidebar-width});
     margin-left: $sidebar-width;
-    .menu-icon {
-      div {
-        transform: scale(0);
-      }
 
-      &::before {
-        transform: translateY(6px) rotate(135deg);
-      }
-      &::after {
-        transform: translateY(-6px) rotate(-135deg);
+    @media (min-width: 769px) {
+      .menu-icon {
+        div {
+          transform: scale(0);
+        }
+
+        &::before {
+          transform: translateY(6px) rotate(135deg);
+        }
+        &::after {
+          transform: translateY(-6px) rotate(-135deg);
+        }
       }
     }
   }
@@ -99,5 +102,19 @@
   @media (max-width: 768px) {
     width: 100% !important;
     margin-left: 0 !important;
+    .mobile-sidebar-open {
+      .menu-icon {
+        div {
+          transform: scale(0);
+        }
+
+        &::before {
+          transform: translateY(6px) rotate(135deg);
+        }
+        &::after {
+          transform: translateY(-6px) rotate(-135deg);
+        }
+      }
+    }
   }
 }

@@ -10,7 +10,8 @@ interface TableDataContextProps {
     recordsPerPage?: number,
     searchText?: string,
     sortBy?: string,
-    sortOrder?: SortOrder
+    sortOrder?: SortOrder,
+    stopLoading?: boolean
   ) => void;
   tableState: ITableState;
   searchText: string;
@@ -59,7 +60,7 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
   const handleSearch = (e: any) => {
     const value = e.target.value;
     setSearchText(value);
-    fetchData(1, 10, value);
+    fetchData(1, 10, value, undefined, undefined, true);
   };
 
   const setRecordsPerPage = (recordsPerPage: number) => {
@@ -71,7 +72,8 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
     recordsPerPage = tableState.recordsPerPage,
     search = searchText,
     sortBy?: string,
-    sortOrder?: SortOrder
+    sortOrder?: SortOrder,
+    stopLoading?: boolean
   ) => {
     let sortByField;
     let sortByOrder;
@@ -94,7 +96,7 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
       sortByField = tableState.sortBy;
       sortByOrder = tableState.sortOrder;
     }
-    setLoadingData(true);
+    if (!stopLoading) setLoadingData(true);
     ApiRequest.request(fetchUrl, "GET", null, {
       params: {
         currentPage,

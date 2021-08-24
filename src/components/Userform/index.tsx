@@ -12,7 +12,7 @@ export interface UserFormProps extends WithLoaderProps {
   user?: any | null;
   submitText?: string;
 }
-
+type FormType = "email" | "firstName" | "lastName" | "isAdmin";
 const UserForm: React.FC<UserFormProps> = (props) => {
   const { onSubmit, user, submitText } = props;
   const {
@@ -21,7 +21,6 @@ const UserForm: React.FC<UserFormProps> = (props) => {
     control,
     clearErrors,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddUserSchema),
@@ -45,6 +44,11 @@ const UserForm: React.FC<UserFormProps> = (props) => {
     }
   }, [user]);
 
+  const handleChange = (event: any, field: FormType) => {
+    clearErrors(field);
+    setValue(field, event.target.value);
+  };
+
   return (
     <div className="add-user">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -55,9 +59,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
           label="First name"
           error={!!errors.firstName}
           helperText={errors?.firstName?.message}
-          onChange={() => {
-            clearErrors("firstName");
-          }}
+          onChange={(e) => handleChange(e, "firstName")}
         />
         <InputField
           {...register("lastName")}
@@ -65,6 +67,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
           label="Last name"
           error={!!errors.lastName}
           helperText={errors?.lastName?.message}
+          onChange={(e) => handleChange(e, "lastName")}
         />
         <InputField
           {...register("email")}
@@ -73,9 +76,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onChange={() => {
-            clearErrors("email");
-          }}
+          onChange={(e) => handleChange(e, "email")}
           InputProps={{ readOnly: user && !user.pending }}
         />
 

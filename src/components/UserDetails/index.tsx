@@ -1,6 +1,6 @@
 import ApiUrl from "../../config/ApiUrl";
 import TableDataProvider from "../../contexts/TableDataContext";
-import Breadcrum from "../Breadcrum";
+import Breadcrum from "../widgets/Breadcrum";
 import UserTable from "../UserTable";
 
 export interface UserDetailsProps {}

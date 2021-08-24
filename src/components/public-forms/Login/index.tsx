@@ -17,6 +17,7 @@ const Login: React.FC<LoginProps> = (props) => {
     register,
     handleSubmit,
     clearErrors,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
@@ -43,11 +44,15 @@ const Login: React.FC<LoginProps> = (props) => {
       .finally(() => props.stopLoading());
   };
 
+  const handleChange = (event: any, field: string) => {
+    clearErrors(field);
+    setValue(field, event.target.value);
+  };
+
   return (
     <div className="login public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="public-form__heading">Login</div>
-
         <InputField
           {...register("email")}
           id="email"
@@ -55,7 +60,7 @@ const Login: React.FC<LoginProps> = (props) => {
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onKeyDown={() => clearErrors("email")}
+          onChange={(e) => handleChange(e, "email")}
         />
         <InputField
           {...register("password")}
@@ -65,7 +70,7 @@ const Login: React.FC<LoginProps> = (props) => {
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
-          onKeyDown={() => clearErrors("password")}
+          onChange={(e) => handleChange(e, "password")}
         />
 
         <Button type="submit" className="button--primary">

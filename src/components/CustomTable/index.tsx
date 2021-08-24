@@ -57,6 +57,8 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
     Element | ((element: Element) => Element) | null | undefined
   >(null);
 
+  const deviceWidth = window.innerWidth;
+
   useEffect(() => {
     fetchData(1, 10);
   }, []);
@@ -76,24 +78,57 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
   return (
     <div className="custom-table">
       <div className="custom-table__header">
-        <div className="custom-table__page-limiter">
-          <span className="limiter-label">Show</span>
-          <span>
+        <div className="custom-table__filter-wrapper">
+          <div className="custom-table__page-limiter">
+            <span className="label">Show</span>
             <Select
-              labelId="demo-simple-select-outlined-label"
-              id="demo-simple-select-outlined"
               value={recordsPerPage}
               onChange={handlePageLimitChange}
               disableUnderline
+              className="custom-table__limiter"
             >
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
+              <MenuItem value={10} className="menu-item">
+                10
+              </MenuItem>
+              <MenuItem value={20} className="menu-item">
+                20
+              </MenuItem>
+              <MenuItem value={30} className="menu-item">
+                30
+              </MenuItem>
             </Select>
-          </span>
+          </div>
+          <div className="custom-table__mobile-sort">
+            <span className="label">Sort</span>
+            <Select
+              value={sortBy}
+              onChange={(e: any) => sortTable(e.target.value)}
+              disableUnderline
+              className="custom-table__sort"
+            >
+              {tableConfig
+                .filter((col) => col.hasSorting)
+                .map((col) => (
+                  <MenuItem key={col.key} value={col.key} className="menu-item">
+                    <span>{col.label}</span>
+                    <span className="sort-icon-wrapper">
+                      {sortBy === col.key ? (
+                        sortOrder === "asc" ? (
+                          <ArrowDownwardIcon className="asc-icon" />
+                        ) : (
+                          <ArrowUpwardIcon className="desc-icon" />
+                        )
+                      ) : (
+                        <SwapVertIcon className="sort-icon" />
+                      )}
+                    </span>
+                  </MenuItem>
+                ))}
+            </Select>
+          </div>
         </div>
         <div className="custom-table__search-wrapper">
-          <span>Search:</span>
+          <span className="label">Search:</span>
           <span>
             <InputField onChange={handleSearch} value={searchText} />
           </span>
@@ -161,9 +196,12 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                             [bodyClassName]: bodyClassName,
                           })}
                         >
-                          {col.format
-                            ? col.format(row[col.key], row)
-                            : row[col.key]}
+                          <span className="cell-label">{col.label}:</span>
+                          <span className="cell-value">
+                            {col.format
+                              ? col.format(row[col.key], row)
+                              : row[col.key]}
+                          </span>
                         </div>
                       );
                     })}
