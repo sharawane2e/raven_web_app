@@ -118,3 +118,32 @@
     }
   }
 }
+.appbar__menu {
+  border-radius: 0;
+  border: 1px solid map-get($map: $text-color, $key: border);
+
+  ul {
+    padding: 0;
+  }
+
+  .appbar__menu-item {
+    display: flex;
+    align-items: center;
+    font-size: map-get($map: $text-size, $key: small);
+    border-bottom: 1px solid map-get($map: $text-color, $key: border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+    svg {
+      margin-right: 10px;
+    }
+
+    &.profile {
+      background-color: map-get($map: $bg-color, $key: "secondary-dark");
+      font-size: map-get($map: $text-color, $key: primary);
+      font-weight: 700;
+      opacity: 1;
+    }
+  }
+}

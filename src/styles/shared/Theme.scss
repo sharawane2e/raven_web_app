@@ -85,6 +85,10 @@
 }
 .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
   background-color: map-get($map: $bg-color, $key: success);
+  opacity: 1;
+}
+.MuiSwitch-colorSecondary.Mui-disabled + .MuiSwitch-track {
+  opacity: 0.5;
 }
 .MuiSwitch-thumb {
   width: 1rem;

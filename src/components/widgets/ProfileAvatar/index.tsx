@@ -2,7 +2,7 @@ import { MouseEvent, MouseEventHandler } from "react";
 
 export interface ProfileAvatarProps {
   text: string;
-  onClick: (e: MouseEvent<HTMLDivElement>) => void;
+  onClick?: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const ProfileAvatar: React.FC<ProfileAvatarProps> = (props) => {

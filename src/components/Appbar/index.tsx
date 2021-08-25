@@ -7,6 +7,11 @@ import BrandLogo from "../BrandLogo";
 import ProfileAvatar from "../widgets/ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
 import { useHistory } from "react-router";
+import { ReactComponent as LogOutIcon } from "../../assets/svg/logout-icon.svg";
+import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
+import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
+import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -25,6 +30,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   >(null);
 
   const history = useHistory();
+  const user = LocalStorageUtils.getUser();
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -33,6 +39,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
+
+  console.log(anchorEl);
 
   return (
     <div
@@ -57,34 +65,60 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
       <div className="appbar__right-panel">
-        <div className="appbar__profile-menu-wrapper">
-          <ProfileAvatar text="AB" onClick={opneMenu} />
-          <ExpandMoreIcon className="down-arrow-icon" onClick={opneMenu} />
+        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+          <ProfileAvatar text="AB" />
+          <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         id="menu"
         keepMounted
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        getContentAnchorEl={null}
         open={Boolean(anchorEl)}
         onClose={closeMenu}
+        disableAutoFocusItem
+        PaperProps={{ elevation: 0, className: "appbar__menu" }}
       >
-        <MenuItem onClick={() => history.push("/admin")}>
-          <span></span>
+        <MenuItem className="appbar__menu-item profile" disabled>
+          {user?.name}
+        </MenuItem>
+        <MenuItem
+          onClick={() => history.push("/admin")}
+          className="appbar__menu-item"
+        >
+          <span>
+            <AdminIcon />
+          </span>
           <span>Admin</span>
         </MenuItem>
-        <MenuItem disabled>
-          <span></span>
+        <MenuItem disabled className="appbar__menu-item">
+          <span>
+            <EditProfileIcon />
+          </span>
           <span>Edit Profile</span>
         </MenuItem>
-        <MenuItem onClick={() => history.push("/change-password")}>
-          <span></span>
+        <MenuItem
+          onClick={() => history.push("/change-password")}
+          className="appbar__menu-item"
+        >
+          <span>
+            <PasswordIcon />
+          </span>
           <span>Change password</span>
         </MenuItem>
-        <MenuItem onClick={logOutUser}>
-          <span></span>
+        <MenuItem onClick={logOutUser} className="appbar__menu-item">
+          <span>
+            <LogOutIcon />
+          </span>
           <span>Log out</span>
         </MenuItem>
       </Menu>

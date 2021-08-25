@@ -14,6 +14,7 @@ import CustomTable from "../CustomTable";
 import ConfirmationDialog, {
   IConfirmationActionConfig,
 } from "../widgets/ConfirmationDialog";
+import { ReactComponent as EditUserIcon } from "../../assets/svg/edit-user-icon.svg";
 
 export interface UserTableProps extends WithLoaderProps {}
 
@@ -88,7 +89,11 @@ const UserTable: React.FC<UserTableProps> = (props) => {
     {
       key: "",
       label: "ACTION",
-      format: (value, row) => <div onClick={() => editUser(row._id)}>Edit</div>,
+      format: (value, row) => (
+        <div onClick={() => editUser(row._id)}>
+          <EditUserIcon />
+        </div>
+      ),
       classes: {
         body: "action center-align",
         head: "action center-align",
