@@ -1,11 +1,15 @@
-import { TextFieldProps, TextField } from "@material-ui/core";
+import { TextFieldProps, TextField, Tooltip } from "@material-ui/core";
 import clsx from "clsx";
 import { forwardRef } from "react";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import { useState } from "react";
+import InfoIcon from "@material-ui/icons/Info";
+import PasswordCriteria from "../PasswordCriteria";
 
-export interface InputFieldProps {}
+export interface InputFieldProps {
+  showLabelInfo?: boolean;
+}
 
 const InputField = forwardRef<
   HTMLInputElement,
@@ -40,7 +44,13 @@ const InputField = forwardRef<
         {props.required && (
           <span className="input-field__required-asteric">*</span>
         )}
+        {props.showLabelInfo && (
+          <Tooltip title={<PasswordCriteria />} arrow placement="top">
+            <InfoIcon />
+          </Tooltip>
+        )}
       </label>
+
       <TextField
         inputRef={ref}
         variant="outlined"

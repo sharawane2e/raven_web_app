@@ -1,4 +1,10 @@
-import { Grid } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Tooltip,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
@@ -43,9 +49,20 @@ const StaticDashboard: React.FC = () => {
           </ul>
         </Grid>
       </Grid>
-      {user.isAdmin || user.isKeyAdmin ? (
-        <Link to="/admin">Go to admin panel</Link>
-      ) : null}
+      <Grid>
+        <Tooltip title="Feature under construction" arrow placement="top">
+          <>
+            <FormControlLabel
+              label="Don't show this page again?"
+              control={<Checkbox disabled />}
+            />
+
+            <Button className="button--primary" disabled>
+              Go to dashboard
+            </Button>
+          </>
+        </Tooltip>
+      </Grid>
     </div>
   );
 };

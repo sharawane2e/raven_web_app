@@ -17,6 +17,7 @@ import ConfirmationDialog, {
 import { ReactComponent as EditUserIcon } from "../../assets/svg/edit-user-icon.svg";
 import { ReactComponent as MailSendIcon } from "../../assets/svg/mail-send-icon.svg";
 import { ReactComponent as MailResendIcon } from "../../assets/svg/mail-resend-icon.svg";
+import clsx from "clsx";
 
 export interface UserTableProps extends WithLoaderProps {}
 
@@ -96,13 +97,20 @@ const UserTable: React.FC<UserTableProps> = (props) => {
           <Tooltip title="Edit user" arrow placement="top">
             <EditUserIcon onClick={() => editUser(row._id)} />
           </Tooltip>
+
           {row.isEmailSent ? (
             <Tooltip title="Resend activation mail" arrow placement="top">
-              <MailResendIcon onClick={() => handleMailResendClick(row)} />
+              <MailResendIcon
+                className={clsx({ "hide-action-icon": !row.pending })}
+                onClick={() => handleMailResendClick(row)}
+              />
             </Tooltip>
           ) : (
             <Tooltip title="Send activation mail" arrow placement="top">
-              <MailSendIcon onClick={() => handleMailResendClick(row)} />
+              <MailSendIcon
+                className={clsx({ "hide-action-icon": !row.pending })}
+                onClick={() => handleMailResendClick(row)}
+              />
             </Tooltip>
           )}
         </div>
@@ -297,6 +305,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
         open={openConfirmation}
         confirmationText={confirmationText}
         actionConfig={confirmActionConfig}
+        title="Are you sure?"
       />
     </div>
   );

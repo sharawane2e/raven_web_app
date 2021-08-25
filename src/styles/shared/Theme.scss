@@ -1,6 +1,15 @@
 // Input Field
 .input-field__label {
   color: map-get($map: $text-color, $key: primary);
+  display: flex;
+  align-items: center;
+
+  svg {
+    margin-left: 10px;
+    font-size: map-get($map: $text-size, $key: regular);
+    cursor: pointer;
+    color: map-get($map: $bg-color, $key: dark);
+  }
   .input-field__required-asteric {
     color: map-get($map: $text-color, $key: danger);
   }
@@ -43,14 +52,21 @@
 }
 
 // Button
-.MuiButtonBase-root.button--primary {
-  background-color: map-get($map: $bg-color, $key: accent);
-  color: map-get($map: $text-color, $key: light);
-
-  &:hover {
+.MuiButtonBase-root {
+  text-transform: none;
+  &.button--primary {
     background-color: map-get($map: $bg-color, $key: accent);
     color: map-get($map: $text-color, $key: light);
-    opacity: 0.8;
+
+    &:hover {
+      background-color: map-get($map: $bg-color, $key: accent);
+      color: map-get($map: $text-color, $key: light);
+      opacity: 0.8;
+    }
+  }
+
+  &.Mui-disabled {
+    opacity: 0.7;
   }
 }
 

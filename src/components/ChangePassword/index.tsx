@@ -78,6 +78,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           helperText={errors?.newPassword?.message}
           type="password"
           onChange={(e) => handleChange(e, "newPassword")}
+          showLabelInfo
         />
         <InputField
           {...register("confirmNewPassword")}
@@ -88,6 +89,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           helperText={errors?.confirmNewPassword?.message}
           type="password"
           onChange={(e) => handleChange(e, "confirmNewPassword")}
+          showLabelInfo
         />
         <Button type="submit" className="button--primary">
           Change password
