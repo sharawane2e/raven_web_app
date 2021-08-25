@@ -24,3 +24,9 @@ code {
     margin-left: 0 !important;
   }
 }
+
+html {
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+}
