@@ -1,8 +1,10 @@
 import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 const StaticDashboard: React.FC = () => {
+  const user = LocalStorageUtils.getUser();
   return (
     <div className="info-area">
       <h2>Don’t react, anticipate demand</h2>
@@ -41,7 +43,9 @@ const StaticDashboard: React.FC = () => {
           </ul>
         </Grid>
       </Grid>
-      <Link to="/admin">Go to admin panel</Link>
+      {user.isAdmin || user.isKeyAdmin ? (
+        <Link to="/admin">Go to admin panel</Link>
+      ) : null}
     </div>
   );
 };

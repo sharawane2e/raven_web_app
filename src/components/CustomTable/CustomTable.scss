@@ -37,6 +37,7 @@
     }
     .menu-item {
       font-size: map-get($map: $text-size, $key: small);
+      padding: 10px;
     }
 
     .label {
@@ -58,6 +59,14 @@
 
     .custom-table__sort {
       min-width: 5rem; //80px
+
+      .MuiSelect-selectMenu {
+        display: flex;
+
+        .sort-icon-wrapper {
+          margin-left: 5px;
+        }
+      }
     }
   }
   .custom-table__page-limiter {
@@ -74,6 +83,7 @@
     align-items: center;
     .MuiFormControl-root {
       margin: 0;
+      width: 14.375rem;
     }
     input {
       padding: 10px;
@@ -121,7 +131,7 @@
       color: map-get($map: $text-color, $key: "primary-fade");
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      // justify-content: space-between;
 
       &.flex_auto {
         flex: auto;
@@ -225,7 +235,7 @@
 .sort-icon-wrapper {
   font-size: map-get($map: $text-size, $key: small);
   color: map-get($map: $text-color, $key: fade);
-  margin-right: 20px;
+  margin-left: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -234,4 +244,8 @@
   .desc-icon {
     font-size: map-get($map: $text-size, $key: large);
   }
+}
+.menu-item {
+  font-size: map-get($map: $text-size, $key: small);
+  // padding: 10px;
 }

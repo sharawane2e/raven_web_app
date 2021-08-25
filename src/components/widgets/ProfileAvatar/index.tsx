@@ -7,10 +7,11 @@ export interface ProfileAvatarProps {
 
 const ProfileAvatar: React.FC<ProfileAvatarProps> = (props) => {
   const { text, onClick } = props;
-
+  const textArr = text.split(" ");
+  const textInitials = textArr.map((textItem) => textItem[0]).join("");
   return (
     <div className="profile-avatar" onClick={onClick}>
-      <span>{text}</span>
+      <span>{textInitials}</span>
     </div>
   );
 };

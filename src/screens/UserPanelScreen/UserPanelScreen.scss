@@ -5,4 +5,7 @@
     font-size: map-get($map: $text-size, $key: large);
     font-weight: 600;
   }
+  ._loading_overlay_wrapper {
+    height: 100%;
+  }
 }

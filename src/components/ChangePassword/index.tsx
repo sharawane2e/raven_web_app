@@ -7,23 +7,21 @@ import ApiRequest from "../../utils/ApiRequest";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
 import Toaster from "../../utils/Toaster";
 import ChangePasswordSchema from "../../validation-schema/ChangePasswordSchema";
+import Breadcrum from "../widgets/Breadcrum";
 import InputField from "../widgets/InputFields";
 
 export interface ChangePasswordProps extends WithLoaderProps {}
-
+type FormType = "oldPassword" | "newPassword" | "confirmNewPassword";
 const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   const {
     register,
     handleSubmit,
-    control,
     clearErrors,
     setValue,
-    getValues,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(ChangePasswordSchema),
     mode: "onBlur",
-
     defaultValues: {
       oldPassword: "",
       newPassword: "",
@@ -32,7 +30,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   });
 
   const onSubmit = (data: any) => {
-    debugger;
     const user = LocalStorageUtils.getUser();
     const url = `${ApiUrl.CHANGE_PASSWORD}/${user._id}`;
     props.startLoading();
@@ -51,8 +48,14 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
       .finally(() => props.stopLoading());
   };
 
+  const handleChange = (event: any, field: FormType) => {
+    clearErrors(field);
+    setValue(field, event.target.value);
+  };
+
   return (
     <div className="change-password">
+      <Breadcrum pageTitle="User" />
       <div className="user-panel__page-title">Change password</div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +67,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           error={!!errors.oldPassword}
           helperText={errors?.oldPassword?.message}
           type="password"
-          //   onChange={() => clearErrors("oldPassword")}
+          onChange={(e) => handleChange(e, "oldPassword")}
         />
         <InputField
           {...register("newPassword")}
@@ -74,7 +77,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           error={!!errors.newPassword}
           helperText={errors?.newPassword?.message}
           type="password"
-          //   onChange={() => clearErrors("newPassword")}
+          onChange={(e) => handleChange(e, "newPassword")}
         />
         <InputField
           {...register("confirmNewPassword")}
@@ -84,7 +87,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           error={!!errors.confirmNewPassword}
           helperText={errors?.confirmNewPassword?.message}
           type="password"
-          //   onChange={() => clearErrors("confirmNewPassword")}
+          onChange={(e) => handleChange(e, "confirmNewPassword")}
         />
         <Button type="submit" className="button--primary">
           Change password

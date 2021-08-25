@@ -3,17 +3,31 @@
   display: flex;
   justify-content: space-between;
   padding: 0.625rem 0; //10px 0px;
-  position: relative;
+  // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
 
   .appbar__left-panel {
-    padding-left: 0.9375rem; //15px
+    // padding-left: 0.9375rem; //15px
+    padding-left: calc(#{$sidebar-width} + 0.9375rem);
+    position: relative;
     .appbar__heading {
       margin-left: 20px;
       color: map-get($map: $text-color, $key: primary);
       font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: row-reverse;
+      padding-left: 0.9375rem;
+      .appbar__heading {
+        display: none;
+      }
+      .appbar__brand-logo {
+        transform: none;
+        position: static;
+      }
     }
   }
   .appbar__right-panel {
@@ -34,8 +48,9 @@
     height: 2.75rem; //44px;
     position: absolute;
     top: 50%;
+    left: 0;
     transform: translate(0, -50%);
-    display: none;
+    // display: none;
   }
 
   .appbar__profile-menu-wrapper {
@@ -65,8 +80,8 @@
   }
 
   &.sidebar-open {
-    width: calc(100% - #{$sidebar-width});
-    margin-left: $sidebar-width;
+    // width: calc(100% - #{$sidebar-width});
+    // margin-left: $sidebar-width;
 
     @media (min-width: 769px) {
       .menu-icon {
@@ -94,9 +109,9 @@
       display: block;
     }
 
-    .appbar__left-panel {
-      margin-left: $sidebar-width;
-    }
+    // .appbar__left-panel {
+    //   margin-left: $sidebar-width;
+    // }
   }
 
   @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-import { Switch } from "@material-ui/core";
+import { Switch, Tooltip } from "@material-ui/core";
 import { useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router";
@@ -15,6 +15,8 @@ import ConfirmationDialog, {
   IConfirmationActionConfig,
 } from "../widgets/ConfirmationDialog";
 import { ReactComponent as EditUserIcon } from "../../assets/svg/edit-user-icon.svg";
+import { ReactComponent as MailSendIcon } from "../../assets/svg/mail-send-icon.svg";
+import { ReactComponent as MailResendIcon } from "../../assets/svg/mail-resend-icon.svg";
 
 export interface UserTableProps extends WithLoaderProps {}
 
@@ -90,8 +92,19 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       key: "",
       label: "ACTION",
       format: (value, row) => (
-        <div onClick={() => editUser(row._id)}>
-          <EditUserIcon />
+        <div className="action-buttons-wrapper">
+          <Tooltip title="Edit user" arrow placement="top">
+            <EditUserIcon onClick={() => editUser(row._id)} />
+          </Tooltip>
+          {row.isEmailSent ? (
+            <Tooltip title="Resend activation mail" arrow placement="top">
+              <MailResendIcon onClick={() => handleMailResendClick(row)} />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Send activation mail" arrow placement="top">
+              <MailSendIcon onClick={() => handleMailResendClick(row)} />
+            </Tooltip>
+          )}
         </div>
       ),
       classes: {
@@ -100,6 +113,31 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       },
     },
   ];
+
+  const resendActivationMail = (row: any) => {
+    closeConfirmation();
+
+    const url = `${ApiUrl.RESEND_ACTIVATION_MAIL}/${row._id}`;
+    props.startLoading(undefined, true);
+    ApiRequest.request(url, "POST")
+      .then((res) => {
+        if (res.success) {
+          Toaster.success(res.message);
+          fetchData(
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true
+          );
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error))
+      .finally(() => props.stopLoading());
+  };
 
   const changeActiveStatus = (row: any) => {
     closeConfirmation();
@@ -177,7 +215,7 @@ const UserTable: React.FC<UserTableProps> = (props) => {
 
   const activateActionConfig: IConfirmationActionConfig = [
     {
-      label: "Cancle",
+      label: "Cancel",
       className: "button--secondary",
       onClick: closeConfirmation,
     },
@@ -187,9 +225,21 @@ const UserTable: React.FC<UserTableProps> = (props) => {
       onClick: () => {},
     },
   ];
+  const resendMailActionConfig: IConfirmationActionConfig = [
+    {
+      label: "Cancel",
+      className: "button--secondary",
+      onClick: closeConfirmation,
+    },
+    {
+      label: "Send",
+      className: "button--primary",
+      onClick: () => {},
+    },
+  ];
   const adminAccessActionConfig: IConfirmationActionConfig = [
     {
-      label: "Cancle",
+      label: "Cancel",
       className: "button--secondary",
       onClick: closeConfirmation,
     },
@@ -208,6 +258,17 @@ const UserTable: React.FC<UserTableProps> = (props) => {
 
     setConfirmationText(confirmationText);
     setConfirmActionConfig(adminAccessActionConfig);
+    setOpenConfirmation(true);
+  };
+
+  const handleMailResendClick = (row: any) => {
+    const confirmationText = row.isEmailSent
+      ? `Are you sure, you want to resend activation mail to ${row.name}`
+      : `Are you sure, you want to send activation mail to ${row.name}`;
+    resendMailActionConfig[1].onClick = () => resendActivationMail(row);
+
+    setConfirmationText(confirmationText);
+    setConfirmActionConfig(resendMailActionConfig);
     setOpenConfirmation(true);
   };
   const handleUserActivateClick = (row: any) => {

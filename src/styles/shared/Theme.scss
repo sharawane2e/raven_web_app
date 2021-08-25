@@ -94,3 +94,6 @@
   width: 1rem;
   height: 1rem;
 }
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: map-get($map: $bg-color, $key: accent);
+}

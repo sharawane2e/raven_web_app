@@ -22,4 +22,14 @@
   .action {
     flex: 0.75 !important;
   }
+
+  .action-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin: 0 5px;
+      cursor: pointer;
+    }
+  }
 }

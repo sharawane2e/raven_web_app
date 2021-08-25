@@ -50,8 +50,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         "mobile-sidebar-open": openMobileDrawer,
       })}
     >
-      <BrandLogo className="appbar__brand-logo" />
       <div className="appbar__left-panel">
+        <BrandLogo className="appbar__brand-logo" />
         <div
           className="menu-icon"
           onClick={() => {
@@ -66,7 +66,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <ProfileAvatar text="AB" />
+          <ProfileAvatar text={user.name} />
           <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
@@ -91,15 +91,17 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         <MenuItem className="appbar__menu-item profile" disabled>
           {user?.name}
         </MenuItem>
-        <MenuItem
-          onClick={() => history.push("/admin")}
-          className="appbar__menu-item"
-        >
-          <span>
-            <AdminIcon />
-          </span>
-          <span>Admin</span>
-        </MenuItem>
+        {user.isAdmin || user.isKeyAdmin ? (
+          <MenuItem
+            onClick={() => history.push("/admin")}
+            className="appbar__menu-item"
+          >
+            <span>
+              <AdminIcon />
+            </span>
+            <span>Admin</span>
+          </MenuItem>
+        ) : null}
         <MenuItem disabled className="appbar__menu-item">
           <span>
             <EditProfileIcon />

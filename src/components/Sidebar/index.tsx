@@ -22,9 +22,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
 
   const sidebarContent = (
     <>
-      <div className="sidebar__brand">
+      {/* <div className="sidebar__brand">
         <BrandLogo className="sidebar__brand-logo" />
-      </div>
+      </div> */}
       <div className="sidebar__label">{title}</div>
       {SidebarContent ? <SidebarContent /> : null}
     </>
@@ -55,6 +55,9 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
           paper: "drawer",
         }}
       >
+        <div className="sidebar__brand">
+          <BrandLogo className="sidebar__brand-logo" />
+        </div>
         {sidebarContent}
       </SwipeableDrawer>
     </div>
