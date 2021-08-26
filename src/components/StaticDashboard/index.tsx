@@ -9,8 +9,11 @@ import { Link } from "react-router-dom";
 import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
 import CustomScrollbar from "../CustomScrollbar";
-
-const StaticDashboard: React.FC = () => {
+export interface StaticDashboardProps {
+  onActionClick: () => void;
+}
+const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
+  const { onActionClick } = props;
   const user = LocalStorageUtils.getUser();
   return (
     <div className="info-area">
@@ -49,16 +52,6 @@ const StaticDashboard: React.FC = () => {
             </li>
           </ul>
         </Grid>
-      </Grid>
-      <Grid container className="home-modal__footer">
-        <FormControlLabel
-          label="Don't show this page again?"
-          control={<Checkbox disabled checked />}
-        />
-
-        <Button className="button--primary" disabled>
-          Go to dashboard
-        </Button>
       </Grid>
     </div>
   );
