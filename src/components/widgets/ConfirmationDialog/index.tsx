@@ -7,6 +7,7 @@ import {
   DialogTitle,
   Paper,
 } from "@material-ui/core";
+import { ReactComponent as InfoIcon } from "../../../assets/svg/information-icon.svg";
 
 export type IConfirmationActionConfig = {
   label: string;
@@ -25,8 +26,16 @@ export interface ConfirmationDialogProps {
 const ConfirmationDialog: React.FC<ConfirmationDialogProps> = (props) => {
   const { open, onClose, actionConfig, title, confirmationText } = props;
   return (
-    <Dialog open={open} onClose={onClose} PaperComponent={Paper}>
-      <DialogTitle>{title}</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      PaperComponent={Paper}
+      classes={{ paper: "confirmation-dialog" }}
+    >
+      <DialogTitle>
+        <InfoIcon />
+        <div>{title || "Are you sure?"}</div>
+      </DialogTitle>
       <DialogContent>
         <DialogContentText>{confirmationText}</DialogContentText>
       </DialogContent>

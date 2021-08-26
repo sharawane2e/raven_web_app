@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import ApiUrl from "../../config/ApiUrl";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ApiRequest from "../../utils/ApiRequest";
@@ -28,6 +29,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
       confirmNewPassword: "",
     },
   });
+  const history = useHistory();
 
   const onSubmit = (data: any) => {
     const user = LocalStorageUtils.getUser();
@@ -40,6 +42,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
       .then((res) => {
         if (res.success) {
           Toaster.success(res.message);
+          history.push("/home");
         } else {
           Toaster.error(res.message);
         }

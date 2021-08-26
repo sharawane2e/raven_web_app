@@ -36,4 +36,11 @@
   .hide-action-icon {
     visibility: hidden;
   }
+  .user-table__name-wrapper {
+    display: flex;
+    align-items: center;
+    .user-table__name {
+      margin-left: 10px;
+    }
+  }
 }

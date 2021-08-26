@@ -46,28 +46,34 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     <div
       className={clsx("appbar", {
         "full-width": variant === "fullWidth",
-        "sidebar-open": sidebarOpen,
+        "sidebar-open": !sidebarOpen,
         "mobile-sidebar-open": openMobileDrawer,
       })}
     >
-      <div className="appbar__left-panel">
-        <BrandLogo className="appbar__brand-logo" />
-        <div
-          className="menu-icon"
-          onClick={() => {
-            toggleSidebarOpen();
-            toggleMobileSidebar();
-          }}
-        >
-          <div></div>
+      <div className="appbar__left-section">
+        <div className="appbar__logo-wrapper">
+          <BrandLogo className="appbar__brand-logo" />
         </div>
-
-        <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
-      <div className="appbar__right-panel">
-        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <ProfileAvatar text={user.name} />
-          <ExpandMoreIcon className="down-arrow-icon" />
+      <div className="appbar__right-section">
+        <div className="appbar__left-panel">
+          <div
+            className="menu-icon"
+            onClick={() => {
+              toggleSidebarOpen();
+              toggleMobileSidebar();
+            }}
+          >
+            <div></div>
+          </div>
+
+          <div className="appbar__heading">HFS OneOffice Pulse</div>
+        </div>
+        <div className="appbar__right-panel">
+          <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+            <ProfileAvatar text={user.name} />
+            <ExpandMoreIcon className="down-arrow-icon" />
+          </div>
         </div>
       </div>
       <Menu
