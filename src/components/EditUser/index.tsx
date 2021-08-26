@@ -7,6 +7,7 @@ import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
 import Userform from "../Userform";
+import Breadcrum from "../widgets/Breadcrum";
 
 export interface EditUserProps extends WithLoaderProps {}
 
@@ -58,7 +59,9 @@ const EditUser: React.FC<EditUserProps> = (props) => {
   };
 
   return (
-    <div>
+    <div className="add-user">
+      <Breadcrum pageTitle="Admin" />
+      <div className="admin-panel__page-title">Edit user</div>
       <Userform onSubmit={onSubmit} user={user} submitText="Edit user" />
     </div>
   );
