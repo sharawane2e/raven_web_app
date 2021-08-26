@@ -52,7 +52,10 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     >
       <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper">
-          <BrandLogo className="appbar__brand-logo" />
+          <BrandLogo
+            className="appbar__brand-logo"
+            onClick={() => history.push("/home")}
+          />
         </div>
         <div
           className="menu-icon"
