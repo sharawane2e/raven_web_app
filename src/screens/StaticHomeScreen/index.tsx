@@ -18,7 +18,11 @@ const StaticHomeScreen: React.FC = () => {
               className="home-modal__close-icon"
               onClick={() => setOpenPopup(false)}
             />
-            <StaticDashboard />
+            <div className="home-modal__content">
+              <CustomScrollbar>
+                <StaticDashboard />
+              </CustomScrollbar>
+            </div>
             {/* <Paper elevation={4}>
             </Paper> */}
           </Dialog>

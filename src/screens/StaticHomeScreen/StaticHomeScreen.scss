@@ -2,6 +2,9 @@
   .home-screen__content {
     height: calc(100vh - 83px);
     background-color: map-get($map: $bg-color, $key: "secondary-shade");
+    img {
+      max-width: 100%;
+    }
   }
 }
 .home-modal {
@@ -26,6 +29,11 @@
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 9999999;
     cursor: pointer;
   }
+}
+
+.home-modal__content {
+  height: 80vh;
 }
