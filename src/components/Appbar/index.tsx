@@ -50,30 +50,26 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         "mobile-sidebar-open": openMobileDrawer,
       })}
     >
-      <div className="appbar__left-section">
+      <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper">
           <BrandLogo className="appbar__brand-logo" />
         </div>
-      </div>
-      <div className="appbar__right-section">
-        <div className="appbar__left-panel">
-          <div
-            className="menu-icon"
-            onClick={() => {
-              toggleSidebarOpen();
-              toggleMobileSidebar();
-            }}
-          >
-            <div></div>
-          </div>
-
-          <div className="appbar__heading">HFS OneOffice Pulse</div>
+        <div
+          className="menu-icon"
+          onClick={() => {
+            toggleSidebarOpen();
+            toggleMobileSidebar();
+          }}
+        >
+          <div></div>
         </div>
-        <div className="appbar__right-panel">
-          <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-            <ProfileAvatar text={user.name} />
-            <ExpandMoreIcon className="down-arrow-icon" />
-          </div>
+
+        <div className="appbar__heading">HFS OneOffice Pulse</div>
+      </div>
+      <div className="appbar__right-panel">
+        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+          <ProfileAvatar text={user.name} />
+          <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
       <Menu

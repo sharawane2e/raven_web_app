@@ -1,15 +1,17 @@
 .appbar {
   box-shadow: 0px 0px 5px #55555526;
   display: flex;
-  // justify-content: space-between;
-  // padding: 0.625rem 0; //10px 0px;
+  justify-content: space-between;
+
   // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
 
   .appbar__left-panel {
-    padding: 0.625rem 0; //10px 0px;
+    // padding-left: 0.9375rem; //15px
+    // padding-left: calc(#{$sidebar-width} + 0.9375rem);
+    position: relative;
     .appbar__heading {
       margin-left: 20px;
       color: map-get($map: $text-color, $key: primary);
@@ -28,23 +30,6 @@
       }
     }
   }
-  .appbar__right-section {
-    // width: 100%;
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
-  }
-  .appbar__left-section {
-    width: $sidebar-width;
-    display: flex;
-    align-items: center;
-    border-right: 1px solid map-get($map: $text-color, $key: border);
-    .appbar__brand-logo {
-      height: 4rem; //44px;
-      margin-left: 15px;
-      // display: none;
-    }
-  }
   .appbar__right-panel {
     padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
@@ -54,10 +39,30 @@
     cursor: pointer;
   }
 
+  .appbar__logo-wrapper {
+    width: $sidebar-width;
+    height: 3rem;
+    border-right: 1px solid map-get($map: $text-color, $key: border);
+    padding: 0.625rem 0; //10px 0px;
+
+    @media (max-width: 768px) {
+      border: none;
+    }
+  }
+
   .appbar__left-panel,
   .appbar__right-panel {
     display: flex;
     align-items: center;
+  }
+
+  .appbar__brand-logo {
+    height: 2.75rem; //44px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    // display: none;
   }
 
   .appbar__profile-menu-wrapper {
@@ -75,6 +80,7 @@
     width: 20px;
     cursor: pointer;
     margin-left: 0.9375rem;
+    padding: 0.625rem 0; //10px 0px;
     &::before,
     &::after,
     div {
