@@ -1,4 +1,5 @@
 .info-area {
+  height: 80vh;
   padding: 0 15px;
 
   & ul {
@@ -14,6 +15,10 @@
 .info-area__imgwider {
   text-align: center;
   & img {
-    width: 80%;
+    width: 75%;
   }
+}
+.home-modal__footer {
+  justify-content: space-between;
+  margin-bottom: 0.9375rem;
 }

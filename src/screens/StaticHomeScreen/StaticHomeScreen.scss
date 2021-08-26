@@ -7,14 +7,25 @@
 .home-modal {
   display: flex;
   justify-content: center;
-  max-height: 80vh;
+  position: relative;
+  // max-height: 80vh;
   align-items: center;
+  // width: 80%;
   &:nth-child(2) {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .MuiPaper-root {
+    max-width: 90%;
     width: 80%;
+    min-width: 80vw;
+  }
+
+  .home-modal__close-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
   }
 }
