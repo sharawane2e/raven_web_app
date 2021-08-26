@@ -31,6 +31,7 @@ const ApiRequest = {
       response = apiResponse.data;
     } catch (error) {
       console.log(error);
+      // debugger;
       if (error.response) {
         if (error.response.status === 401) {
           LocalStorageUtils.removeUser();
@@ -40,8 +41,9 @@ const ApiRequest = {
           response = error.response.data;
         } else if (error.response.status === 404) {
         } else {
-          Toaster.error("Something went wrong");
         }
+      } else {
+        Toaster.error("Something went wrong");
       }
     }
     return response;
