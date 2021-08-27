@@ -3,10 +3,26 @@
   border: 1px solid map-get($map: $text-color, $key: accent);
   border-radius: 50%;
   padding: 5px;
-  cursor: pointer;
+  // cursor: pointer;
+  min-width: 20px;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 
   span {
     color: map-get($map: $text-color, $key: accent);
     font-weight: bold;
+  }
+
+  .profile-avatar__badge {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: map-get($map: $bg-color, $key: accent);
+    top: 0;
+    right: 2px;
+    border-radius: 50%;
   }
 }

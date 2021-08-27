@@ -82,7 +82,9 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           helperText={errors?.password?.message}
           type="password"
           onChange={(e) => handleChange(e, "password")}
+          showLabelInfo
         />
+
         <InputField
           {...register("confirmPassword")}
           id="confirmPassword"
@@ -92,6 +94,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
           helperText={errors?.confirmPassword?.message}
           type="password"
           onChange={(e) => handleChange(e, "confirmPassword")}
+          showLabelInfo
         />
         <Button type="submit" className="button--primary">
           {text.button}

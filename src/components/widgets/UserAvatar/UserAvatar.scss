@@ -1,0 +1,15 @@
+.user-avatar {
+  border: 1px solid map-get($map: $text-color, $key: fade);
+  span {
+    color: map-get($map: $text-color, $key: primary);
+  }
+  .active {
+    background-color: map-get($map: $bg-color, $key: success);
+  }
+  .in-active {
+    background-color: map-get($map: $bg-color, $key: dark);
+  }
+  .pending {
+    background-color: map-get($map: $bg-color, $key: info);
+  }
+}

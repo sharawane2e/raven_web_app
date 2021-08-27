@@ -1,8 +1,20 @@
-import { Grid } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Tooltip,
+} from "@material-ui/core";
 import { Link } from "react-router-dom";
 import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
-
-const StaticDashboard: React.FC = () => {
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
+import CustomScrollbar from "../CustomScrollbar";
+export interface StaticDashboardProps {
+  onActionClick: () => void;
+}
+const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
+  const { onActionClick } = props;
+  const user = LocalStorageUtils.getUser();
   return (
     <div className="info-area">
       <h2>Don’t react, anticipate demand</h2>
@@ -41,7 +53,6 @@ const StaticDashboard: React.FC = () => {
           </ul>
         </Grid>
       </Grid>
-      <Link to="/admin">Go to admin panel</Link>
     </div>
   );
 };

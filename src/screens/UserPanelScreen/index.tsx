@@ -31,7 +31,7 @@ const UserPanelScreen: React.FC<UserPanelScreenProps> = (props) => {
             );
           }}
         </SidebarContext.Consumer>
-        <div>User Panel</div>
+        {/* <div>User Panel</div> */}
       </SidebarContextProvider>
     </div>
   );

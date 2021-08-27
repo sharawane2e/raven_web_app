@@ -50,7 +50,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
   };
 
   return (
-    <div className="add-user">
+    <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           {...register("firstName")}
@@ -86,7 +86,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
           render={({ field }) => (
             <FormControlLabel
               label="Is admin"
-              control={<Checkbox {...field} />}
+              control={<Checkbox {...field} disableRipple />}
               checked={field.value}
               disabled={user && user.isKeyAdmin}
             />

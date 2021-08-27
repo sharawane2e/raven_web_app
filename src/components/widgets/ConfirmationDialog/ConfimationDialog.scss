@@ -1,0 +1,23 @@
+.confirmation-dialog {
+  min-width: 25rem;
+  @media (max-width: 480px) {
+    min-width: auto;
+  }
+  .MuiDialogTitle-root {
+    text-align: center;
+
+    svg {
+      width: 3.125rem;
+    }
+    div {
+      color: map-get($map: $text-color, $key: primary);
+      font-weight: 600;
+    }
+  }
+  .MuiDialogContent-root {
+    .MuiTypography-root {
+      font-size: map-get($map: $text-size, $key: small);
+      text-align: center;
+    }
+  }
+}

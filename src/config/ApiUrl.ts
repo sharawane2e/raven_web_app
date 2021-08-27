@@ -20,6 +20,8 @@ class ApiUrl {
   static REMOVE_ADMIN_ACCESS = "/user/revoke-admin";
 
   static IS_EMAIL_UNIQUE = "/user/is-email-unique";
+
+  static RESEND_ACTIVATION_MAIL = "/user/resend-activation-email";
 }
 
 export default ApiUrl;

@@ -2,26 +2,52 @@
   box-shadow: 0px 0px 5px #55555526;
   display: flex;
   justify-content: space-between;
-  padding: 0.625rem 0; //10px 0px;
-  position: relative;
+
+  // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
 
   .appbar__left-panel {
-    padding-left: 0.9375rem; //15px
+    // padding-left: 0.9375rem; //15px
+    // padding-left: calc(#{$sidebar-width} + 0.9375rem);
+    position: relative;
     .appbar__heading {
       margin-left: 20px;
       color: map-get($map: $text-color, $key: primary);
       font-weight: bold;
     }
+
+    @media (max-width: 768px) {
+      flex-direction: row-reverse;
+      padding-left: 0.9375rem;
+      .appbar__heading {
+        display: none;
+      }
+      .appbar__brand-logo {
+        transform: none;
+        position: static;
+      }
+    }
   }
   .appbar__right-panel {
+    padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
   }
   .appbar__menu {
     color: map-get($map: $text-color, $key: fade);
     cursor: pointer;
+  }
+
+  .appbar__logo-wrapper {
+    width: $sidebar-width;
+    height: 3rem;
+    border-right: 1px solid map-get($map: $text-color, $key: border);
+    padding: 0.625rem 0; //10px 0px;
+
+    @media (max-width: 768px) {
+      border: none;
+    }
   }
 
   .appbar__left-panel,
@@ -34,23 +60,28 @@
     height: 2.75rem; //44px;
     position: absolute;
     top: 50%;
+    left: 0;
     transform: translate(0, -50%);
-    display: none;
+    cursor: pointer;
+    // display: none;
   }
 
   .appbar__profile-menu-wrapper {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     .down-arrow-icon {
       color: map-get($map: $text-color, $key: accent);
-      cursor: pointer;
+      // cursor: pointer;
     }
   }
 
   .menu-icon {
     width: 20px;
     cursor: pointer;
+    margin-left: 0.9375rem;
+    padding: 0.625rem 0; //10px 0px;
     &::before,
     &::after,
     div {
@@ -65,8 +96,8 @@
   }
 
   &.sidebar-open {
-    width: calc(100% - #{$sidebar-width});
-    margin-left: $sidebar-width;
+    // width: calc(100% - #{$sidebar-width});
+    // margin-left: $sidebar-width;
 
     @media (min-width: 769px) {
       .menu-icon {
@@ -94,9 +125,9 @@
       display: block;
     }
 
-    .appbar__left-panel {
-      margin-left: $sidebar-width;
-    }
+    // .appbar__left-panel {
+    //   margin-left: $sidebar-width;
+    // }
   }
 
   @media (max-width: 768px) {
@@ -115,6 +146,35 @@
           transform: translateY(-6px) rotate(-135deg);
         }
       }
+    }
+  }
+}
+.appbar__menu {
+  border-radius: 0;
+  border: 1px solid map-get($map: $text-color, $key: border);
+
+  ul {
+    padding: 0;
+  }
+
+  .appbar__menu-item {
+    display: flex;
+    align-items: center;
+    font-size: map-get($map: $text-size, $key: small);
+    border-bottom: 1px solid map-get($map: $text-color, $key: border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+    svg {
+      margin-right: 10px;
+    }
+
+    &.profile {
+      background-color: map-get($map: $bg-color, $key: "secondary-dark");
+      font-size: map-get($map: $text-color, $key: primary);
+      font-weight: 700;
+      opacity: 1;
     }
   }
 }

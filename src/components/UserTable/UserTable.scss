@@ -1,6 +1,6 @@
 .user-table {
   .user-table__body {
-    height: calc(100vh - 320px);
+    height: calc(100vh - 345px);
   }
 
   .name {
@@ -21,5 +21,26 @@
   }
   .action {
     flex: 0.75 !important;
+  }
+
+  .action-buttons-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg {
+      margin: 0 5px;
+      cursor: pointer;
+    }
+  }
+
+  .hide-action-icon {
+    visibility: hidden;
+  }
+  .user-table__name-wrapper {
+    display: flex;
+    align-items: center;
+    .user-table__name {
+      margin-left: 10px;
+    }
   }
 }
