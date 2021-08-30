@@ -1,12 +1,15 @@
 .appbar {
-  box-shadow: 0px 0px 5px #55555526;
-  display: flex;
+  /*box-shadow: 0px 0px 5px #55555526;*/
+  display: inline-flex;
   justify-content: space-between;
 
   // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
+-moz-box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
+box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
 
   .appbar__left-panel {
     // padding-left: 0.9375rem; //15px
@@ -42,9 +45,11 @@
   .appbar__logo-wrapper {
     width: $sidebar-width;
     height: 3rem;
-    border-right: 1px solid map-get($map: $text-color, $key: border);
+    //border-right: 1px solid map-get($map: $text-color, $key: border);
     padding: 0.625rem 0; //10px 0px;
-
+    -webkit-box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
+    -moz-box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
+    box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
     @media (max-width: 768px) {
       border: none;
     }
