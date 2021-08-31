@@ -6,9 +6,11 @@ import InputField from "../../widgets/InputFields";
 import { Link, useHistory } from "react-router-dom";
 import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
 import ApiRequest from "../../../utils/ApiRequest";
-import ApiUrl from "../../../config/ApiUrl";
+import ApiUrl from "../../../enums/ApiUrl";
 import Toaster from "../../../utils/Toaster";
 import LocalStorageUtils from "../../../utils/LocalStorageUtils";
+import { promptMessages } from "../../../constants/messages";
+import WebUrl from "../../../enums/WebUrl";
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -27,7 +29,7 @@ const Login: React.FC<LoginProps> = (props) => {
   const history = useHistory();
 
   const onSubmit = (data: any) => {
-    props.startLoading("Logging in");
+    props.startLoading(promptMessages.LOGGING_IN);
 
     ApiRequest.request(ApiUrl.LOGIN, "POST", data)
       .then((res) => {
@@ -35,7 +37,7 @@ const Login: React.FC<LoginProps> = (props) => {
           Toaster.success(res.message);
           ApiRequest.setAuthToken(res.data?.accessToken);
           LocalStorageUtils.setUser(res.data);
-          history.push("/home");
+          history.push(WebUrl.LOGIN);
         } else {
           Toaster.error(res.message);
         }
@@ -76,7 +78,7 @@ const Login: React.FC<LoginProps> = (props) => {
         <Button type="submit" className="button--primary">
           Login
         </Button>
-        <Link className="public-form__link" to="/forgot-password">
+        <Link className="public-form__link" to={WebUrl.FORGOT_PASSWORD}>
           Lost your password?
         </Link>
       </form>

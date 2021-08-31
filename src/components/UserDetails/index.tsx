@@ -1,4 +1,4 @@
-import ApiUrl from "../../config/ApiUrl";
+import ApiUrl from "../../enums/ApiUrl";
 import TableDataProvider from "../../contexts/TableDataContext";
 import Breadcrum from "../widgets/Breadcrum";
 import UserTable from "../UserTable";

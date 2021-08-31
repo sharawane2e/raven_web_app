@@ -2,7 +2,7 @@ import { Switch, Tooltip } from "@material-ui/core";
 import { useState } from "react";
 import { useContext } from "react";
 import { useHistory } from "react-router";
-import ApiUrl from "../../config/ApiUrl";
+import ApiUrl from "../../enums/ApiUrl";
 import { TableDataContext } from "../../contexts/TableDataContext";
 import { UserDetailsContext } from "../../contexts/UserDetailsContext";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";

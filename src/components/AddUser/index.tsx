@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import ApiUrl from "../../config/ApiUrl";
+import ApiUrl from "../../enums/ApiUrl";
 import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
