@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="380" height="320" viewBox="0 0 380 320">
+  <defs>
+    <filter id="Rectangle_2344" x="97" y="0" width="214" height="64" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2345" x="147" y="64" width="214" height="64" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2346" x="166" y="128" width="214" height="64" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2347" x="147" y="192" width="214" height="64" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-4"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2348" x="97" y="256" width="214" height="64" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-5"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_3965" data-name="Group 3965" transform="translate(-273 -385)">
+    <g id="Group_3964" data-name="Group 3964">
+      <g id="Ellipse_27" data-name="Ellipse 27" transform="translate(273 475)" fill="none" stroke="#e1e3e7" stroke-width="4">
+        <circle cx="67" cy="67" r="67" stroke="none"/>
+        <circle cx="67" cy="67" r="65" fill="none"/>
+      </g>
+      <circle id="Ellipse_26" data-name="Ellipse 26" cx="59" cy="59" r="59" transform="translate(281 483)" fill="#f47c3c"/>
+      <text id="HFS_OneOffice_Pulse" data-name="HFS 
+OneOffice 
+Pulse" transform="translate(340 523)" fill="#fff" font-size="16" font-family="NunitoSans-SemiBold, Nunito Sans" font-weight="600"><tspan x="-17.552" y="0">HFS </tspan><tspan x="-38.752" y="24">OneOffice </tspan><tspan x="-19.736" y="48">Pulse</tspan></text>
+    </g>
+    <g id="Group_3959" data-name="Group 3959">
+      <path id="Path_13100" data-name="Path 13100" d="M7888.831,476l15.438-41.822,23.09-19.885" transform="translate(-7550)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 273, 385)" filter="url(#Rectangle_2344)">
+        <g id="Rectangle_2344-2" data-name="Rectangle 2344" transform="translate(106 6)" fill="#fff" stroke="#f47c3c" stroke-width="1">
+          <rect width="196" height="46" rx="23" stroke="none"/>
+          <rect x="0.5" y="0.5" width="195" height="45" rx="22.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_28" data-name="Ellipse 28" cx="4" cy="4" r="4" transform="translate(375 410)" fill="#f47c3c"/>
+      <text id="_1._Digital_strategy_and_emerging_tech._adoption" data-name="1. Digital strategy and emerging tech. adoption" transform="translate(403 394)" fill="#f47c3c" font-size="14" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="0" y="14">1. Digital strategy and </tspan><tspan x="0" y="32">emerging tech. adoption</tspan></text>
+    </g>
+    <g id="Group_3960" data-name="Group 3960">
+      <path id="Path_13101" data-name="Path 13101" d="M7944.646,505.907l15.914-20.9,17.145-7.023" transform="translate(-7550)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 273, 385)" filter="url(#Rectangle_2345)">
+        <g id="Rectangle_2345-2" data-name="Rectangle 2345" transform="translate(156 70)" fill="#fff" stroke="#f47c3c" stroke-width="1">
+          <rect width="196" height="46" rx="23" stroke="none"/>
+          <rect x="0.5" y="0.5" width="195" height="45" rx="22.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_31" data-name="Ellipse 31" cx="4" cy="4" r="4" transform="translate(425 474)" fill="#f47c3c"/>
+      <text id="_2._Shared_service_and_outsourcing" data-name="2. Shared service and outsourcing" transform="translate(453 458)" fill="#f47c3c" font-size="14" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="0" y="14">2. Shared service and </tspan><tspan x="0" y="32">outsourcing</tspan></text>
+    </g>
+    <g id="Group_3961" data-name="Group 3961">
+      <path id="Path_13103" data-name="Path 13103" d="M7955.81,542.722h39.665" transform="translate(-7550 -0.222)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 273, 385)" filter="url(#Rectangle_2346)">
+        <g id="Rectangle_2346-2" data-name="Rectangle 2346" transform="translate(175 134)" fill="#fff" stroke="#f47c3c" stroke-width="1">
+          <rect width="196" height="46" rx="23" stroke="none"/>
+          <rect x="0.5" y="0.5" width="195" height="45" rx="22.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_32" data-name="Ellipse 32" cx="4" cy="4" r="4" transform="translate(444 538)" fill="#f47c3c"/>
+      <text id="_3._Deep-dive_on_cloud_" data-name="3. Deep-dive on cloud​" transform="translate(472 546)" fill="#f47c3c" font-size="14" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="0" y="0">3. Deep-dive on cloud​</tspan></text>
+    </g>
+    <g id="Group_3962" data-name="Group 3962">
+      <path id="Path_13102" data-name="Path 13102" d="M7944.646,479.306l15.914,20.9,16.539,7.067" transform="translate(-7550 99)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 273, 385)" filter="url(#Rectangle_2347)">
+        <g id="Rectangle_2347-2" data-name="Rectangle 2347" transform="translate(156 198)" fill="#fff" stroke="#f47c3c" stroke-width="1">
+          <rect width="196" height="46" rx="23" stroke="none"/>
+          <rect x="0.5" y="0.5" width="195" height="45" rx="22.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_30" data-name="Ellipse 30" cx="4" cy="4" r="4" transform="translate(425 602)" fill="#f47c3c"/>
+      <text id="_4._Industry_value_chain" data-name="4. Industry value chain" transform="translate(453 610)" fill="#f47c3c" font-size="14" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="0" y="0">4. Industry value chain</tspan></text>
+    </g>
+    <g id="Group_3963" data-name="Group 3963">
+      <path id="Path_13099" data-name="Path 13099" d="M7888.831,415.652l15.438,41.822,22.484,20.491" transform="translate(-7550 192)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <g transform="matrix(1, 0, 0, 1, 273, 385)" filter="url(#Rectangle_2348)">
+        <g id="Rectangle_2348-2" data-name="Rectangle 2348" transform="translate(106 262)" fill="#fff" stroke="#f47c3c" stroke-width="1">
+          <rect width="196" height="46" rx="23" stroke="none"/>
+          <rect x="0.5" y="0.5" width="195" height="45" rx="22.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_29" data-name="Ellipse 29" cx="4" cy="4" r="4" transform="translate(375 666)" fill="#f47c3c"/>
+      <text id="_5._Voice_of_the_customer" data-name="5. Voice of the customer" transform="translate(403 674)" fill="#f47c3c" font-size="14" font-family="NunitoSans-Regular, Nunito Sans"><tspan x="0" y="0">5. Voice of the customer</tspan></text>
+    </g>
+  </g>
+</svg>

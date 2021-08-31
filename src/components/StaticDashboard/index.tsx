@@ -6,7 +6,7 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import DoshboardChart from "../../assets/svg/dashboard-chart.svg";
+import DoshboardChart from "../../assets/svg/statics-chart.svg";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
 import CustomScrollbar from "../CustomScrollbar";
 export interface StaticDashboardProps {
@@ -17,7 +17,8 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
   const user = LocalStorageUtils.getUser();
   return (
     <div className="info-area">
-      <h2>Don’t react, anticipate demand</h2>
+      <h2 className="info-area__heading">HFS OneOffice Pulse</h2>
+      <h2 className="info-area__head">Don’t react, anticipate demand</h2>
       <ul>
         <li>
           “HFS OneOffice Pulse” is designed to focus on anticipated demand
@@ -35,7 +36,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
           <img src={DoshboardChart} />
         </Grid>
         <Grid item md={6} sm={6}>
-          <h2>Demographics:</h2>
+          <h3 className="info-area__subhead">Demographics:</h3>
           <ul>
             <li>
               800 respondents across the enterprises with more than $500M
