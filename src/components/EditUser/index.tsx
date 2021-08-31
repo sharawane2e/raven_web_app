@@ -8,6 +8,7 @@ import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
 import Userform from "../Userform";
 import Breadcrum from "../widgets/Breadcrum";
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 export interface EditUserProps extends WithLoaderProps {}
 
@@ -42,6 +43,11 @@ const EditUser: React.FC<EditUserProps> = (props) => {
     props.stopLoading();
 
     const editUrl = `${ApiUrl.USER}/${user?._id}`;
+
+    // const userFromLocalDB = LocalStorageUtils.getUser();
+    // if(userFromLocalDB && userFromLocalDB._id===selectedUserId){
+
+    // }
 
     ApiRequest.request(editUrl, "PATCH", data)
       .then((res) => {

@@ -113,3 +113,14 @@
 .MuiCheckbox-colorSecondary.Mui-checked {
   color: map-get($map: $bg-color, $key: accent);
 }
+
+.MuiCheckbox-root {
+  &.Mui-checked {
+    &:hover {
+      background: none;
+    }
+  }
+  &:hover {
+    background: none;
+  }
+}
