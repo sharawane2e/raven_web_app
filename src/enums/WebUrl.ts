@@ -10,6 +10,7 @@ enum WebUrl {
   ADD_USER = "/admin/add-user",
   EDIT_USER = "/admin/edit-user",
   USER_DETAILS = "/admin/user-details",
+  NOT_FOUND = "page-not-found",
 }
 
 export default WebUrl;
