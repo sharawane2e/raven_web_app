@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import ApiUrl from "../../../config/ApiUrl";
+import ApiUrl from "../../../enums/ApiUrl";
 import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
 import ApiRequest from "../../../utils/ApiRequest";
 import Toaster from "../../../utils/Toaster";

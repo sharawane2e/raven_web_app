@@ -22,6 +22,11 @@ interface IRoute {
    * array of nested routes
    */
   routes?: IRoute[];
+
+  /**
+   * tells whether the route is accessible only to admin or public
+   */
+  isAdmin?: boolean;
 }
 
 export default IRoute;

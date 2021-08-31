@@ -1,4 +1,5 @@
 import { Redirect } from "react-router";
+import WebUrl from "./enums/WebUrl";
 import IRoute from "./types/IRoute";
 import LocalStorageUtils from "./utils/LocalStorageUtils";
 
@@ -9,11 +10,16 @@ export interface PrivateRouteProps {
 
 const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
   const Component = props.component;
-
+  const user = LocalStorageUtils.getUser();
+  const isUserAdmin = user && user?.isAdmin ? true : false;
   return LocalStorageUtils.isUserLoggedIn() ? (
-    <Component {...props} />
+    props.route.isAdmin && !isUserAdmin ? (
+      <Redirect to={WebUrl.NOT_FOUND} />
+    ) : (
+      <Component {...props} />
+    )
   ) : (
-    <Redirect to="/login" />
+    <Redirect to={WebUrl.LOGIN} />
   );
 };
 

@@ -6,7 +6,9 @@ import ForgotPassword from "../components/public-forms/ForgotPassword";
 import Login from "../components/public-forms/Login";
 import SetPassword from "../components/public-forms/SetPassword";
 import UserDetails from "../components/UserDetails";
+import WebUrl from "../enums/WebUrl";
 import AdminPanelScreen from "../screens/AdminPanelScreen";
+import PageNotFoundScreen from "../screens/PageNotFoundScreen";
 import PublicFormScreen from "../screens/PublicFormScreen";
 import StaticHomeScreen from "../screens/StaticHomeScreen";
 import UserPanelScreen from "../screens/UserPanelScreen";
@@ -14,12 +16,13 @@ import IRoute from "../types/IRoute";
 
 const Routes: IRoute[] = [
   {
-    path: ["/change-password"],
+    path: [WebUrl.CHANGE_PASSWORD],
     component: UserPanelScreen,
     isPrivate: true,
+    exact: true,
     routes: [
       {
-        path: "/change-password",
+        path: WebUrl.CHANGE_PASSWORD,
         component: ChangePassword,
         exact: true,
       },
@@ -27,68 +30,81 @@ const Routes: IRoute[] = [
   },
   {
     path: [
-      "/admin",
-      "/admin/add-user",
-      "/admin/user-details",
-      "admin/edit-user",
+      WebUrl.ADMIN,
+      WebUrl.ADD_USER,
+      WebUrl.USER_DETAILS,
+      WebUrl.EDIT_USER,
     ],
     component: AdminPanelScreen,
     isPrivate: true,
+    exact: true,
+    isAdmin: true,
     routes: [
       {
-        path: "/admin/add-user",
+        path: WebUrl.ADD_USER,
         component: AddUser,
         exact: true,
       },
       {
-        path: "/admin/user-details",
+        path: WebUrl.USER_DETAILS,
         component: UserDetails,
         exact: true,
       },
       {
-        path: "/admin/edit-user",
+        path: WebUrl.EDIT_USER,
         component: EditUser,
         exact: true,
       },
       {
-        path: "/admin",
-        component: () => <Redirect to="/admin/user-details" />,
+        path: WebUrl.ADMIN,
+        component: () => <Redirect to={WebUrl.USER_DETAILS} />,
         exact: true,
       },
     ],
   },
   {
-    path: ["/login", "/forgot-password", "/set-password", "/reset-password"],
+    path: [
+      WebUrl.LOGIN,
+      WebUrl.FORGOT_PASSWORD,
+      WebUrl.SET_PASSWORD,
+      WebUrl.RESET_PASSWORD,
+    ],
     component: PublicFormScreen,
     exact: true,
     routes: [
       {
-        path: "/login",
+        path: WebUrl.LOGIN,
         component: Login,
       },
       {
-        path: "/forgot-password",
+        path: WebUrl.FORGOT_PASSWORD,
         component: ForgotPassword,
       },
       {
-        path: "/set-password",
+        path: WebUrl.SET_PASSWORD,
         component: () => <SetPassword variant="set" />,
       },
       {
-        path: "/reset-password",
+        path: WebUrl.RESET_PASSWORD,
         component: () => <SetPassword variant="reset" />,
       },
     ],
   },
 
   {
-    path: "/home",
+    path: WebUrl.HOME,
     component: StaticHomeScreen,
     isPrivate: true,
+    exact: true,
   },
   {
-    path: "/",
-    component: () => <Redirect to="/home" />,
+    path: WebUrl.BASE,
+    component: () => <Redirect to={WebUrl.HOME} />,
+    exact: true,
+  },
+  {
+    path: "*",
+    component: PageNotFoundScreen,
   },
 ];
 export default Routes;

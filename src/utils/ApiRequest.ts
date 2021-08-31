@@ -2,8 +2,9 @@ import axios, { AxiosRequestConfig } from "axios";
 import IApiResponse from "../types/IApiResponse";
 import LocalStorageUtils from "./LocalStorageUtils";
 import Toaster from "./Toaster";
+import { errorMessages } from "../constants/messages";
 
-type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
+export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -21,7 +22,11 @@ const ApiRequest = {
     data?: any,
     params?: AxiosRequestConfig
   ) {
-    let response: IApiResponse = { success: false, message: "", data: null };
+    let response: IApiResponse = {
+      success: false,
+      message: errorMessages.SERVER_ERROR,
+      data: null,
+    };
     try {
       const apiResponse = await axiosInstance(url, {
         data,
@@ -40,7 +45,7 @@ const ApiRequest = {
           response = error.response.data;
         } else if (error.response.status === 404) {
         } else {
-          Toaster.error("Something went wrong");
+          Toaster.error(errorMessages.SERVER_ERROR);
         }
       }
     }

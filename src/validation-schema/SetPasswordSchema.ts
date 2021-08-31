@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { errorMessages } from "../constants/Messages";
+import { errorMessages } from "../constants/messages";
 import Regex from "../constants/Regex";
 
 const SetPasswordSchema = yup.object().shape({
