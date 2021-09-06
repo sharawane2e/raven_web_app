@@ -21,8 +21,8 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
     <div className="chart-screen">
       <SidebarContextProvider>
         <Appbar />
-        <Sidebar title="Admin" content={ChartSidebarContent} />
         <FilterContextProvider>
+          <Sidebar title="Filters" content={ChartSidebarContent} />
           <SidebarContext.Consumer>
             {({ open }) => {
               return (

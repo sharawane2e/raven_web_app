@@ -6,6 +6,7 @@ interface FilterContextProviderProps {}
 export interface IFilterList {
   label: string;
   order: number;
+  qId: string;
   options: { labelText: string; labelCode: string; order: number }[];
 }
 
@@ -14,39 +15,45 @@ export interface IFilter {
   code: string;
   qId: string;
 }
-const defaultValues: {
+export interface IFilterContext {
   filterList: IFilterList[];
   filters: IFilter[];
   setFilterList: (filterList: IFilterList[]) => void;
   setFilters: (filters: IFilter[]) => void;
-} = {
+}
+
+const defaultValues: IFilterContext = {
   filterList: [],
   filters: [],
   setFilterList: (filterList: IFilterList[]) => {},
   setFilters: (filter: IFilter[]) => {},
 };
 
-export const FilterContext = createContext(defaultValues);
+export const FilterContext = createContext<IFilterContext>(defaultValues);
 
 const FilterContextProvider: React.FC<FilterContextProviderProps> = (props) => {
-  const [filterList, setFilterList] = useState<IFilterList[]>([]);
+  const [filterList, setFilterList] = useState<any[]>([]);
   const [filters, setFilters] = useState<IFilter[]>([]);
+
   useEffect(() => {
     ApiRequest.request(ApiUrl.FILTER, "GET").then((res) => {
       if (res.success) {
-        const filters: IFilterList[] = [];
+        const filterList: IFilterList[] = [];
         res.data?.forEach((filter: any) => {
           const { question: questionData } = filter;
-          filters.push({
+          filterList.push({
             label: questionData?.labelText,
             order: questionData?.order,
             options: questionData?.options,
+            qId: questionData?.qId,
           });
         });
-        setFilterList(filters);
+
+        setFilterList(filterList);
       }
     });
   }, []);
+
   return (
     <FilterContext.Provider
       value={{ filterList, setFilterList, filters, setFilters }}

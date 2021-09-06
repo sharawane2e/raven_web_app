@@ -1,7 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FilterContext } from "../../contexts/FilterContext";
 import ApiUrl from "../../enums/ApiUrl";
 import ApiRequest from "../../utils/ApiRequest";
 
@@ -10,6 +11,7 @@ interface ChartContentProps {}
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const [questions, setQuestions] = useState([]);
   const [selectedQuestion, setSelectedQuestion] = useState<any>(null);
+  const { filters } = useContext(FilterContext);
   const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
     title: {
       text: "My chart",
@@ -120,6 +122,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   return (
     <div className="chart-content">
+      <div>
+        {filters.map((filter, index) => (
+          <span>{filter.label + " | "}</span>
+        ))}
+      </div>
       <FormControl variant="outlined">
         <InputLabel id="demo-simple-select-outlined-label">
           Questions
@@ -132,7 +139,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             setSelectedQuestion(e.target.value);
             fetchChartData(e.target.value);
           }}
-          label="Age"
+          //   label="Age"
         >
           <MenuItem value="">
             <em>None</em>
