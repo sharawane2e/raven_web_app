@@ -22,6 +22,12 @@ enum ApiUrl {
   IS_EMAIL_UNIQUE = "/user/is-email-unique",
 
   RESEND_ACTIVATION_MAIL = "/user/resend-activation-email",
+
+  FILTER = "/filters",
+
+  QUESTION = "/question",
+
+  CHART = "/chart",
 }
 
 export default ApiUrl;

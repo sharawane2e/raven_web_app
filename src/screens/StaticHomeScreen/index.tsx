@@ -35,16 +35,12 @@ const StaticHomeScreen: React.FC = () => {
             {/* <Paper elevation={4}>
             </Paper> */}
             <Grid container className="home-modal__footer">
-              <FormControlLabel className="dn"
-               value="bottom"
-                label="Don't show this page again"
-                control={<Checkbox   />}
-              />
               <FormControlLabel
-          value="bottom"
-          control={<Checkbox  />}
-          label="Don't show this page again"
-        />
+                className=""
+                value="bottom"
+                label="Don't show thisd page again"
+                control={<Checkbox />}
+              />
 
               <Button
                 className="button--primary"

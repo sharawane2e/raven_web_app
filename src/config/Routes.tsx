@@ -1,6 +1,7 @@
 import { Redirect } from "react-router";
 import AddUser from "../components/AddUser";
 import ChangePassword from "../components/ChangePassword";
+import ChartContent from "../components/ChartContent";
 import EditUser from "../components/EditUser";
 import ForgotPassword from "../components/public-forms/ForgotPassword";
 import Login from "../components/public-forms/Login";
@@ -8,6 +9,7 @@ import SetPassword from "../components/public-forms/SetPassword";
 import UserDetails from "../components/UserDetails";
 import WebUrl from "../enums/WebUrl";
 import AdminPanelScreen from "../screens/AdminPanelScreen";
+import ChartScreen from "../screens/ChartScreen";
 import PageNotFoundScreen from "../screens/PageNotFoundScreen";
 import PublicFormScreen from "../screens/PublicFormScreen";
 import StaticHomeScreen from "../screens/StaticHomeScreen";
@@ -28,6 +30,19 @@ const Routes: IRoute[] = [
       },
     ],
   },
+  {
+    path: ["/charts"],
+    component: ChartScreen,
+    exact: true,
+    isPrivate: true,
+    routes: [
+      {
+        path: "/charts",
+        component: ChartContent,
+      },
+    ],
+  },
+
   {
     path: [
       WebUrl.ADMIN,
@@ -90,7 +105,6 @@ const Routes: IRoute[] = [
       },
     ],
   },
-
   {
     path: WebUrl.HOME,
     component: StaticHomeScreen,
