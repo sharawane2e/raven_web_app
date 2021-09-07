@@ -14,13 +14,23 @@ const ChartSidebarContent: React.FC = () => {
   const { filterList, filters, setFilters } = useContext(FilterContext);
 
   const handleFilterSelect = (qId: string, value: string[]) => {
-    const newFilters = filters.filter((filter) => {
-      //   console.log(qId, filter.code, value.indexOf(filter.code) > -1);
-      //   if()
+    const newFilters = [...filters];
+    const filterSpliceIndices = [];
 
-      return filter.qId !== qId || value.indexOf(filter.code) < 0;
+    for (let filterIndex = 0; filterIndex < filters.length; filterIndex++) {
+      const filter = filters[filterIndex];
+      if (filter.qId === qId) {
+        const codeIndex = value.indexOf(filter.code);
+        if (codeIndex < 0) {
+          filterSpliceIndices.push(filterIndex);
+        } else {
+          value.splice(codeIndex, 1);
+        }
+      }
+    }
+    filterSpliceIndices.forEach((index) => {
+      newFilters.splice(index, 1);
     });
-
     value.forEach((code) => {
       newFilters.push({
         //   @ts-ignore
