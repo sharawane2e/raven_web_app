@@ -4,17 +4,24 @@ import HighchartsReact from "highcharts-react-official";
 import { useContext, useEffect, useState } from "react";
 import { FilterContext } from "../../contexts/FilterContext";
 import ApiUrl from "../../enums/ApiUrl";
+import { ChartContext } from "../../screens/ChartScreen";
 import ApiRequest from "../../utils/ApiRequest";
 
 interface ChartContentProps {}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
-  const [questions, setQuestions] = useState([]);
-  const [selectedQuestion, setSelectedQuestion] = useState<any>(null);
   const { filters } = useContext(FilterContext);
+  const {
+    questionData,
+    chartData,
+    fetchChartData,
+    selectedQuestion,
+    questions,
+    setQuestions,
+  } = useContext(ChartContext);
   const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
     title: {
-      text: "My chart",
+      text: "HFS Chart",
     },
     chart: {
       type: "column",
@@ -22,52 +29,15 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     xAxis: {
       type: "category",
     },
-
     yAxis: {
-      //   range: 10,
-      //   minRange: 0,
-      //   maxRange: 100,
       min: 0,
       max: 100,
     },
     series: [
       // @ts-ignore
       {
-        // name: "Browsers",
-        // colorByPoint: true,
+        color: "#f47c3c",
         data: [],
-        // data: [
-        //   {
-        //     name: "Chrome",
-        //     y: 62.74,
-        //     drilldown: "Chrome",
-        //   },
-        //   {
-        //     name: "Firefox",
-        //     y: 10.57,
-        //     drilldown: "Firefox",
-        //   },
-        //   {
-        //     name: "Internet Explorer",
-        //     y: 7.23,
-        //     drilldown: "Internet Explorer",
-        //   },
-        //   {
-        //     name: "Safari",
-        //     y: 5.58,
-        //     drilldown: "Safari",
-        //   },
-        //   {
-        //     name: "Edge",
-        //     y: 4.02,
-        //     drilldown: "Edge",
-        //   },
-        //   {
-        //     name: "Opera",
-        //     y: 1.92,
-        //     drilldown: "Opera",
-        //   },
-        // ],
       },
     ],
   });
@@ -82,43 +52,32 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       .catch((error) => console.log(error));
   }, []);
 
-  const fetchChartData = (quesId: any) => {
-    const body = {
-      qId: quesId,
-      //   @ts-ignore
-      type: questions.find((ques: any) => ques.qId === quesId)?.type,
-      filters: [],
-    };
-    ApiRequest.request(ApiUrl.CHART, "POST", body)
-      .then((res) => {
-        if (res.success) {
-          console.log(res.data);
+  useEffect(() => {
+    let total = 0;
+    chartData.forEach((optionData: any) => {
+      total += optionData?.count;
+    });
 
-          const { chartData, questionData } = res.data;
-          let total = 0;
-          chartData.forEach((optionData: any) => {
-            total += optionData?.count;
-          });
-          const seriesData = questionData.options.map((option: any) => {
-            const optionData = chartData.find(
-              (opt: any) => opt._id === option.labelCode
-            );
-            return {
-              name: option.labelText,
-              y: (optionData?.count / total) * 100,
-              drilldown: option.labelText,
-            };
-          });
-          console.log(total, seriesData);
-          //   @ts-ignore
-          setChartOptinos((prevValue) => ({
-            ...prevValue,
-            series: [{ data: seriesData }],
-          }));
-        }
-      })
-      .catch((error) => console.log(error));
-  };
+    const seriesData =
+      // @ts-ignore
+      questionData?.options.map((option: any) => {
+        const optionData = chartData.find(
+          (opt: any) => opt._id === option.labelCode
+        );
+        return {
+          name: option.labelText,
+          // @ts-ignore
+          y: (optionData?.count / total) * 100,
+          drilldown: option.labelText,
+        };
+      }) || null;
+    console.log(total, seriesData);
+    //   @ts-ignore
+    setChartOptinos((prevValue) => ({
+      ...prevValue,
+      series: [{ data: seriesData }],
+    }));
+  }, [chartData]);
 
   return (
     <div className="chart-content">
@@ -136,7 +95,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           id="demo-simple-select-outlined"
           value={selectedQuestion}
           onChange={(e) => {
-            setSelectedQuestion(e.target.value);
+            // @ts-ignore
             fetchChartData(e.target.value);
           }}
           //   label="Age"

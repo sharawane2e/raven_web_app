@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   FormControl,
   Input,
@@ -9,9 +10,11 @@ import {
 } from "@material-ui/core";
 import { Fragment, useContext } from "react";
 import { FilterContext } from "../../../../contexts/FilterContext";
+import { ChartContext } from "../../../../screens/ChartScreen";
 
 const ChartSidebarContent: React.FC = () => {
   const { filterList, filters, setFilters } = useContext(FilterContext);
+  const { fetchChartData } = useContext(ChartContext);
 
   const handleFilterSelect = (qId: string, value: string[]) => {
     const newFilters = [...filters];
@@ -89,6 +92,11 @@ const ChartSidebarContent: React.FC = () => {
             </FormControl>
           </Fragment>
         ))}
+      </div>
+      <div>
+        <Button className="button--primary" onClick={() => fetchChartData()}>
+          Apply
+        </Button>
       </div>
     </div>
   );
