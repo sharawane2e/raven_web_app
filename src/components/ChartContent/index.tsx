@@ -6,6 +6,8 @@ import { FilterContext } from "../../contexts/FilterContext";
 import ApiUrl from "../../enums/ApiUrl";
 import { ChartContext } from "../../screens/ChartScreen";
 import ApiRequest from "../../utils/ApiRequest";
+import Breadcrum from "../widgets/Breadcrum";
+import Grid from '@material-ui/core/Grid';
 
 interface ChartContentProps {}
 
@@ -96,6 +98,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   return (
     <div className="chart-content">
+      <Grid container spacing={0}>
+          <Grid item xs={6}>
+              <Breadcrum pageTitle="Reports" />
+          </Grid>
+          <Grid item xs={6}>
+            <div>asdasd</div>
+          </Grid>
+      </Grid>
       <div>
         {filters.map((filter, index) => (
           <span>{filter.label + " | "}</span>
