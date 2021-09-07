@@ -53,14 +53,15 @@ const ChartSidebarContent: React.FC = () => {
       <div className="chart-sidebar__filter-wrapper">
         {filterList.map((filter, filterIndex) => (
           <Fragment key={filterIndex}>
-            <FormControl /* className={classes.formControl} */>
+            <FormControl /* className={classes.formControl} */ variant="outlined" >
               <InputLabel id="demo-mutiple-checkbox-label">
                 {filter.label}
               </InputLabel>
               <Select
                 labelId="demo-mutiple-checkbox-label"
                 id="demo-mutiple-checkbox"
-                multiple
+                // label="Hello"
+                // multiple
                 value={filters
                   .filter((selectedFilter) => selectedFilter.qId === filter.qId)
                   .map((selectedFilter) => selectedFilter.code)}
