@@ -32,14 +32,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     xAxis: {
       type: "category",
     },
-    plotOptions: {
-      series: {
-        // @ts-ignore
-        dataLabels: {
-          formatter: (value: number) => "fff" + value,
-        },
-      },
-    },
+    // plotOptions: {
+    //   series: {
+    //     // @ts-ignore
+    //     dataLabels: {
+    //       formatter: (value: number) => "fff" + value,
+    //     },
+    //   },
+    // },
     yAxis: {
       min: 0,
       max: 100,

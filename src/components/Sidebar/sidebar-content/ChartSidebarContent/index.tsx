@@ -53,7 +53,9 @@ const ChartSidebarContent: React.FC = () => {
       <div className="chart-sidebar__filter-wrapper">
         {filterList.map((filter, filterIndex) => (
           <Fragment key={filterIndex}>
-            <FormControl /* className={classes.formControl} */>
+            <FormControl
+              /* className={classes.formControl} */ variant="outlined"
+            >
               <InputLabel id={filter.qId}>{filter.label}</InputLabel>
               <Select
                 labelId={filter.qId}
