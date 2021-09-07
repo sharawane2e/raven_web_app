@@ -70,7 +70,15 @@ const ChartSidebarContent: React.FC = () => {
                   handleFilterSelect(filter.qId, e.target.value);
                 }}
                 input={<Input />}
-                renderValue={(selected) => (selected as string[]).join(", ")}
+                renderValue={(selected) =>
+                  filter.options
+                    .filter((option) =>
+                      // @ts-ignore
+                      (selected as string[]).includes(option.labelCode)
+                    )
+                    .map((option) => option.labelText)
+                    .join(", ")
+                }
                 // MenuProps={MenuProps}
               >
                 {filter.options.map((option, optionIndex) => (
