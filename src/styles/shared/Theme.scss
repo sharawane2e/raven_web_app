@@ -124,3 +124,15 @@
     background: none;
   }
 }
+
+// Chip
+.MuiChip-root {
+  border-radius: 3px;
+  border-color: map-get($map: $text-color, $key: radius);
+  color: map-get($map: $text-color, $key: primary);
+  margin: 3px;
+  svg {
+    width: map-get($map: $text-size, $key: regular);
+    color: map-get($map: $text-color, $key: primary);
+  }
+}

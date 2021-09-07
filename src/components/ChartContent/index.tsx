@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useContext, useEffect, useState } from "react";
@@ -6,6 +12,7 @@ import { FilterContext } from "../../contexts/FilterContext";
 import ApiUrl from "../../enums/ApiUrl";
 import { ChartContext } from "../../screens/ChartScreen";
 import ApiRequest from "../../utils/ApiRequest";
+import CloseIcon from "@material-ui/icons/Close";
 
 interface ChartContentProps {}
 
@@ -94,11 +101,19 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }));
   }, [chartData]);
 
+  const removeFilter = (filter: any) => {};
+
   return (
     <div className="chart-content">
       <div>
         {filters.map((filter, index) => (
-          <span>{filter.label + " | "}</span>
+          <Chip
+            key={index}
+            variant="outlined"
+            onDelete={() => removeFilter(filter)}
+            label={filter.label}
+            deleteIcon={<CloseIcon />}
+          />
         ))}
       </div>
       <FormControl variant="outlined">
