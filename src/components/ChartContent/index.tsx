@@ -21,13 +21,24 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   } = useContext(ChartContext);
   const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
     title: {
-      text: "HFS Chart",
+      text: "",
     },
     chart: {
       type: "column",
     },
+    legend: {
+      enabled: false,
+    },
     xAxis: {
       type: "category",
+    },
+    plotOptions: {
+      series: {
+        // @ts-ignore
+        dataLabels: {
+          formatter: (value: number) => "fff" + value,
+        },
+      },
     },
     yAxis: {
       min: 0,
@@ -75,7 +86,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     //   @ts-ignore
     setChartOptinos((prevValue) => ({
       ...prevValue,
-      series: [{ data: seriesData }],
+      series: [
+        {
+          data: seriesData,
+        },
+      ],
     }));
   }, [chartData]);
 

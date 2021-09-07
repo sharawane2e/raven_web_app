@@ -54,13 +54,12 @@ const ChartSidebarContent: React.FC = () => {
         {filterList.map((filter, filterIndex) => (
           <Fragment key={filterIndex}>
             <FormControl /* className={classes.formControl} */>
-              <InputLabel id="demo-mutiple-checkbox-label">
-                {filter.label}
-              </InputLabel>
+              <InputLabel id={filter.qId}>{filter.label}</InputLabel>
               <Select
-                labelId="demo-mutiple-checkbox-label"
-                id="demo-mutiple-checkbox"
+                labelId={filter.qId}
+                id={filter.qId + "ques"}
                 multiple
+                label={filter.label}
                 value={filters
                   .filter((selectedFilter) => selectedFilter.qId === filter.qId)
                   .map((selectedFilter) => selectedFilter.code)}
@@ -69,7 +68,15 @@ const ChartSidebarContent: React.FC = () => {
                   handleFilterSelect(filter.qId, e.target.value);
                 }}
                 input={<Input />}
-                renderValue={(selected) => (selected as string[]).join(", ")}
+                renderValue={(selected) =>
+                  filter.options
+                    .filter((option) =>
+                      // @ts-ignore
+                      (selected as string[]).includes(option.labelCode)
+                    )
+                    .map((option) => option.labelText)
+                    .join(", ")
+                }
                 // MenuProps={MenuProps}
               >
                 {filter.options.map((option, optionIndex) => (
