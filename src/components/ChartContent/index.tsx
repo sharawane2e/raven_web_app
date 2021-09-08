@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import { useContext, useEffect, useState } from "react";
@@ -8,6 +14,7 @@ import { ChartContext } from "../../screens/ChartScreen";
 import ApiRequest from "../../utils/ApiRequest";
 import Breadcrum from "../widgets/Breadcrum";
 import Grid from '@material-ui/core/Grid';
+import CloseIcon from "@material-ui/icons/Close";
 
 interface ChartContentProps {}
 
@@ -34,14 +41,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     xAxis: {
       type: "category",
     },
-    plotOptions: {
-      series: {
-        // @ts-ignore
-        dataLabels: {
-          formatter: (value: number) => "fff" + value,
-        },
-      },
-    },
+    // plotOptions: {
+    //   series: {
+    //     // @ts-ignore
+    //     dataLabels: {
+    //       formatter: (value: number) => "fff" + value,
+    //     },
+    //   },
+    // },
     yAxis: {
       min: 0,
       max: 100,
@@ -96,6 +103,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }));
   }, [chartData]);
 
+  const removeFilter = (filter: any) => {};
+
   return (
     <div className="chart-content">
       <Grid container spacing={0}>
@@ -108,7 +117,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </Grid>
       <div>
         {filters.map((filter, index) => (
-          <span>{filter.label + " | "}</span>
+          <Chip
+            key={index}
+            variant="outlined"
+            onDelete={() => removeFilter(filter)}
+            label={filter.label}
+            deleteIcon={<CloseIcon />}
+          />
         ))}
       </div>
       <FormControl variant="outlined">

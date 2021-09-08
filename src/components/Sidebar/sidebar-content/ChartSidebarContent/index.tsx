@@ -11,6 +11,7 @@ import {
 import { Fragment, useContext } from "react";
 import { FilterContext } from "../../../../contexts/FilterContext";
 import { ChartContext } from "../../../../screens/ChartScreen";
+import MultiSelect from "../../../widgets/MultiSelect";
 
 const ChartSidebarContent: React.FC = () => {
   const { filterList, filters, setFilters } = useContext(FilterContext);
@@ -53,10 +54,17 @@ const ChartSidebarContent: React.FC = () => {
       <div className="chart-sidebar__filter-wrapper">
         {filterList.map((filter, filterIndex) => (
           <Fragment key={filterIndex}>
+<<<<<<< HEAD
             <FormControl /* className={classes.formControl} */ variant="outlined" >
               <InputLabel id="demo-mutiple-checkbox-label">
                 {filter.label}
               </InputLabel>
+=======
+            <FormControl
+              /* className={classes.formControl} */ variant="outlined"
+            >
+              <InputLabel id={filter.qId}>{filter.label}</InputLabel>
+>>>>>>> 478763e92802b8b097f78d915a56a35c4fe9b01c
               <Select
                 labelId="demo-mutiple-checkbox-label"
                 id="demo-mutiple-checkbox"
@@ -101,10 +109,25 @@ const ChartSidebarContent: React.FC = () => {
             </FormControl>
           </Fragment>
         ))}
+
+        {filterList.map((filter, filterIndex) => (
+          <MultiSelect
+            key={filterIndex}
+            label={filter.label}
+            options={filter.options.map((option) => ({
+              value: option.labelCode,
+              label: option.labelText,
+            }))}
+            value={[]}
+          />
+        ))}
       </div>
-      <div>
+      <div className="chart-sidebar__footer">
         <Button className="button--primary" onClick={() => fetchChartData()}>
           Apply
+        </Button>
+        <Button className="" onClick={() => {}}>
+          Clear
         </Button>
       </div>
     </div>
