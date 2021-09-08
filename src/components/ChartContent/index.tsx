@@ -15,6 +15,8 @@ import ApiRequest from "../../utils/ApiRequest";
 import Breadcrum from "../widgets/Breadcrum";
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from "@material-ui/icons/Close";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface ChartContentProps {}
 
@@ -28,6 +30,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     questions,
     setQuestions,
   } = useContext(ChartContext);
+
+  const { appliedFilters } = useSelector((state: RootState) => state.filters);
+
   const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
     title: {
       text: "",
@@ -116,7 +121,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </Grid>
       </Grid>
       <div>
-        {filters.map((filter, index) => (
+        {appliedFilters.map((filter, index) => (
           <Chip
             key={index}
             variant="outlined"

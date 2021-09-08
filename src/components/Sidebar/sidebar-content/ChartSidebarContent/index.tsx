@@ -8,99 +8,107 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import { Fragment, useContext } from "react";
-import { FilterContext } from "../../../../contexts/FilterContext";
+import { Fragment, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchFilterList,
+  resetAppliedFilters,
+  setAppliedFilters,
+  setFilterQuestionList,
+} from "../../../../redux/actions/filterActions";
+import { RootState } from "../../../../redux/store";
 import { ChartContext } from "../../../../screens/ChartScreen";
+import { IQuestionOption } from "../../../../types/IQuestion";
 import MultiSelect from "../../../widgets/MultiSelect";
 
 const ChartSidebarContent: React.FC = () => {
-  const { filterList, filters, setFilters } = useContext(FilterContext);
+  const dispatch = useDispatch();
+  const { filterQuestionList, appliedFilters } = useSelector(
+    (state: RootState) => state.filters
+  );
+  useEffect(() => {
+    dispatch(fetchFilterList());
+  }, []);
+
   const { fetchChartData } = useContext(ChartContext);
 
-  const handleFilterSelect = (qId: string, value: string[]) => {
-    const newFilters = [...filters];
-    const filterSpliceIndices = [];
+  const handleFilterSelect = (qId: string, values: IQuestionOption[]) => {
+    const updatedAppliedFilters = [...appliedFilters];
 
-    for (let filterIndex = 0; filterIndex < filters.length; filterIndex++) {
-      const filter = filters[filterIndex];
-      if (filter.qId === qId) {
-        const codeIndex = value.indexOf(filter.code);
-        if (codeIndex < 0) {
-          filterSpliceIndices.push(filterIndex);
-        } else {
-          value.splice(codeIndex, 1);
+    for (let index = 0; index < values.length; index++) {
+      const filterValue = values[index];
+      let filterExists: boolean = false;
+
+      for (
+        let filterIndex = 0;
+        filterIndex < appliedFilters.length;
+        filterIndex++
+      ) {
+        const appliedFilter = appliedFilters[filterIndex];
+
+        if (
+          appliedFilter.qId === qId &&
+          appliedFilter.code === filterValue.labelCode
+        ) {
+          filterExists = true;
         }
       }
+      if (!filterExists) {
+        updatedAppliedFilters.push({
+          qId: qId,
+          code: filterValue?.labelCode || "",
+          label: filterValue?.labelText || "",
+        });
+      }
     }
-    filterSpliceIndices.forEach((index) => {
-      newFilters.splice(index, 1);
-    });
-    value.forEach((code) => {
-      newFilters.push({
-        //   @ts-ignore
-        label: filterList
-          .find((filter) => filter.qId === qId)
-          ?.options.find((option) => option.labelCode === code)?.labelText,
-        code,
-        qId,
-      });
-    });
 
-    setFilters(newFilters);
+    const updatedfilterQuestionList = filterQuestionList.map(
+      (filterQuestion) => {
+        if (filterQuestion.qId === qId) {
+          return { ...filterQuestion, value: values };
+        }
+        return filterQuestion;
+      }
+    );
+    dispatch(setFilterQuestionList(updatedfilterQuestionList));
+    dispatch(setAppliedFilters(updatedAppliedFilters));
   };
 
   return (
     <div className="chart-sidebar">
       <div className="chart-sidebar__filter-wrapper">
-        {filterList.map((filter, filterIndex) => (
+        {filterQuestionList.map((filterQuestion, filterIndex) => (
           <Fragment key={filterIndex}>
-<<<<<<< HEAD
-            <FormControl /* className={classes.formControl} */ variant="outlined" >
-              <InputLabel id="demo-mutiple-checkbox-label">
-                {filter.label}
+            <FormControl variant="outlined">
+              <InputLabel id={filterQuestion.qId}>
+                {filterQuestion.question.labelText}
               </InputLabel>
-=======
-            <FormControl
-              /* className={classes.formControl} */ variant="outlined"
-            >
-              <InputLabel id={filter.qId}>{filter.label}</InputLabel>
->>>>>>> 478763e92802b8b097f78d915a56a35c4fe9b01c
               <Select
-                labelId="demo-mutiple-checkbox-label"
-                id="demo-mutiple-checkbox"
-                // label="Hello"
-                // multiple
-                value={filters
-                  .filter((selectedFilter) => selectedFilter.qId === filter.qId)
-                  .map((selectedFilter) => selectedFilter.code)}
-                //   @ts-ignore
+                labelId={filterQuestion.qId}
+                id={filterQuestion.qId + "ques"}
+                multiple
+                label={filterQuestion.question.labelText}
+                value={filterQuestion?.value || []}
                 onChange={(e: any, d) => {
-                  handleFilterSelect(filter.qId, e.target.value);
+                  handleFilterSelect(filterQuestion.qId, e.target.value);
                 }}
                 input={<Input />}
-                renderValue={(selected) =>
-                  filter.options
-                    .filter((option) =>
-                      // @ts-ignore
-                      (selected as string[]).includes(option.labelCode)
-                    )
-                    .map((option) => option.labelText)
-                    .join(", ")
+                // @ts-ignore
+                renderValue={(selectedOptions: IQuestionOption[]) =>
+                  selectedOptions.map(
+                    (selectedOption) => selectedOption.labelText + ", "
+                  )
                 }
                 // MenuProps={MenuProps}
               >
-                {filter.options.map((option, optionIndex) => (
-                  <MenuItem key={optionIndex} value={option.labelCode}>
+                {filterQuestion.question.options.map((option, optionIndex) => (
+                  // @ts-ignore
+                  <MenuItem key={optionIndex} value={option}>
                     <Checkbox
-                      checked={
-                        filters
-                          .filter(
-                            (selectedFilter) =>
-                              selectedFilter.qId === filter.qId
-                          )
-                          .map((selectedFilter) => selectedFilter.code)
-                          .indexOf(option.labelCode) > -1
-                      }
+                      checked={filterQuestion?.value?.some(
+                        (filterValue) =>
+                          filterValue.labelCode === option.labelCode
+                      )}
                     />
                     <ListItemText primary={option.labelText} />
                   </MenuItem>
@@ -109,24 +117,17 @@ const ChartSidebarContent: React.FC = () => {
             </FormControl>
           </Fragment>
         ))}
-
-        {filterList.map((filter, filterIndex) => (
-          <MultiSelect
-            key={filterIndex}
-            label={filter.label}
-            options={filter.options.map((option) => ({
-              value: option.labelCode,
-              label: option.labelText,
-            }))}
-            value={[]}
-          />
-        ))}
       </div>
       <div className="chart-sidebar__footer">
         <Button className="button--primary" onClick={() => fetchChartData()}>
           Apply
         </Button>
-        <Button className="" onClick={() => {}}>
+        <Button
+          className=""
+          onClick={() => {
+            dispatch(resetAppliedFilters());
+          }}
+        >
           Clear
         </Button>
       </div>
