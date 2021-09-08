@@ -1,4 +1,4 @@
-import { useState, useContext, MouseEvent } from "react";
+import { useState, useContext, MouseEvent, useEffect } from "react";
 import { Menu, MenuItem } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
@@ -12,12 +12,19 @@ import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
 import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/actions/userActions";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
 }
 
 const Appbar: React.FC<AppbarProps> = (props) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setUser("Himanshu"));
+  }, []);
   const { variant = "partialWidth" } = props;
   const {
     open: sidebarOpen,
