@@ -4,12 +4,9 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { HashRouter } from "react-router-dom";
 import App from "./App";
-import { setUser } from "./redux/actions/userActions";
-import configureStore from "./redux/store";
+import store from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
 
-// store.dispatch(setUser("sdfsdfsdf"));
-const store = configureStore();
 ReactDOM.render(
   <React.StrictMode>
     <HashRouter>

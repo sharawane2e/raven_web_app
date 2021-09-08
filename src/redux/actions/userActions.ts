@@ -1,10 +1,3 @@
-import { SET_SELECTED_USER } from "./actionTypes/userActionTypes";
+import { createAction } from "@reduxjs/toolkit";
 
-export const setUser = (id: string) => {
-  return {
-    type: SET_SELECTED_USER,
-    payload: {
-      id,
-    },
-  };
-};
+export const setUser = createAction<string>("SET_USER");
