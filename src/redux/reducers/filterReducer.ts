@@ -5,13 +5,16 @@ import {
   resetAppliedFilters,
   setAppliedFilters,
   setFilterQuestionList,
+  setFilters,
 } from "../actions/filterActions";
 
 const initialState: {
   appliedFilters: IFilter[];
+  filters: IFilter[];
   filterQuestionList: IFilterQuestion[];
 } = {
   appliedFilters: [],
+  filters: [],
   filterQuestionList: [],
 };
 
@@ -21,14 +24,10 @@ const filterReducer = createReducer(initialState, (builder) => {
     filterQuestionList: action.payload,
   }));
 
-  builder.addCase(setAppliedFilters, (state, action) => {
-    if (action.type === setAppliedFilters.type) {
-    }
-    return {
-      ...state,
-      appliedFilters: action.payload,
-    };
-  });
+  builder.addCase(setFilters, (state, action) => ({
+    ...state,
+    filters: action.payload,
+  }));
 
   builder.addCase(resetAppliedFilters, (state) => {
     let filterQuestionList = JSON.parse(
@@ -45,6 +44,11 @@ const filterReducer = createReducer(initialState, (builder) => {
       appliedFilters: [],
     };
   });
+
+  builder.addCase(setAppliedFilters, (state, action) => ({
+    ...state,
+    appliedFilters: action.payload,
+  }));
 });
 
 export default filterReducer;

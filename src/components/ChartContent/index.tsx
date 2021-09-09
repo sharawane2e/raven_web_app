@@ -7,32 +7,27 @@ import {
 } from "@material-ui/core";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { useContext, useEffect, useState } from "react";
-import { FilterContext } from "../../contexts/FilterContext";
-import ApiUrl from "../../enums/ApiUrl";
-import { ChartContext } from "../../screens/ChartScreen";
-import ApiRequest from "../../utils/ApiRequest";
+import { ChangeEvent, useEffect, useState } from "react";
 import Breadcrum from "../widgets/Breadcrum";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import CloseIcon from "@material-ui/icons/Close";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import {
+  fetchQuestionList,
+  setSelectedQuestionId,
+} from "../../redux/actions/questionAction";
+import { setChartData } from "../../redux/actions/chartActions";
+import { fetchChartData } from "../../services/ChartService";
 
 interface ChartContentProps {}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
-  const { filters } = useContext(FilterContext);
   const {
-    questionData,
-    chartData,
-    fetchChartData,
-    selectedQuestion,
+    filters: { appliedFilters },
     questions,
-    setQuestions,
-  } = useContext(ChartContext);
-
-  const { appliedFilters } = useSelector((state: RootState) => state.filters);
-
+  } = useSelector((state: RootState) => state);
+  const dispatch: AppDispatch = useDispatch();
   const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
     title: {
       text: "",
@@ -67,58 +62,33 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     ],
   });
 
+  const { questionList, selectedQuestionId } = questions;
+
   useEffect(() => {
-    ApiRequest.request(ApiUrl.QUESTION, "GET")
-      .then((res) => {
-        if (res.success) {
-          setQuestions(res.data);
-        }
-      })
-      .catch((error) => console.log(error));
+    dispatch(fetchQuestionList());
   }, []);
 
-  useEffect(() => {
-    let total = 0;
-    chartData.forEach((optionData: any) => {
-      total += optionData?.count;
-    });
-
-    const seriesData =
-      // @ts-ignore
-      questionData?.options.map((option: any) => {
-        const optionData = chartData.find(
-          (opt: any) => opt._id === option.labelCode
-        );
-        return {
-          name: option.labelText,
-          // @ts-ignore
-          y: (optionData?.count / total) * 100,
-          drilldown: option.labelText,
-        };
-      }) || null;
-    console.log(total, seriesData);
-    //   @ts-ignore
-    setChartOptinos((prevValue) => ({
-      ...prevValue,
-      series: [
-        {
-          data: seriesData,
-        },
-      ],
-    }));
-  }, [chartData]);
+  const handleQuestionChange = (
+    event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>
+  ) => {
+    const value: string = (event.target.value as string) || "";
+    dispatch(setSelectedQuestionId(value));
+    fetchChartData(value)
+      .then((chartData) => dispatch(setChartData(chartData)))
+      .catch((error) => console.log(error));
+  };
 
   const removeFilter = (filter: any) => {};
 
   return (
     <div className="chart-content">
       <Grid container spacing={0}>
-          <Grid item xs={6}>
-              <Breadcrum pageTitle="Reports" />
-          </Grid>
-          <Grid item xs={6}>
-            <div>asdasd</div>
-          </Grid>
+        <Grid item xs={6}>
+          <Breadcrum pageTitle="Reports" />
+        </Grid>
+        <Grid item xs={6}>
+          <div>asdasd</div>
+        </Grid>
       </Grid>
       <div>
         {appliedFilters.map((filter, index) => (
@@ -138,17 +108,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={selectedQuestion}
-          onChange={(e) => {
-            // @ts-ignore
-            fetchChartData(e.target.value);
-          }}
-          //   label="Age"
+          value={selectedQuestionId}
+          onChange={handleQuestionChange}
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {questions.map((ques: any, index: number) => (
+          {questionList.map((ques: any, index: number) => (
             <MenuItem key={index} value={ques.qId}>
               {ques.questionText}
             </MenuItem>

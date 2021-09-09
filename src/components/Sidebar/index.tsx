@@ -1,11 +1,10 @@
-import { ComponentType, useContext, useEffect, useReducer } from "react";
+import { ComponentType, useContext } from "react";
 import Drawer from "@material-ui/core/Drawer";
 import clsx from "clsx";
 import { SwipeableDrawer } from "@material-ui/core";
 import BrandLogo from "../BrandLogo";
 import { SidebarContext } from "../../contexts/SidebarContext";
 import { useHistory } from "react-router";
-import { useSelector } from "react-redux";
 
 export interface SidebarProps {
   /**
@@ -31,14 +30,6 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
       {SidebarContent ? <SidebarContent /> : null}
     </>
   );
-
-  const selectedUser = useSelector(
-    (state: { selectedUser: string }) => state.selectedUser
-  );
-
-  useEffect(() => {
-    console.log("this is selected user", selectedUser);
-  }, [selectedUser]);
 
   return (
     <div className="sidebar">

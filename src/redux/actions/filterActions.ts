@@ -11,13 +11,21 @@ export const setFilterQuestionList = createAction<IFilterQuestion[]>(
 
 export const setAppliedFilters = createAction<IFilter[]>("SET_APPLIED_FILTERS");
 
+export const setFilters = createAction<IFilter[]>("SET_FILTERS");
+
 export const resetAppliedFilters = createAction("RESET_APPLIED_FILTERS");
 
 export const fetchFilterList = () => async (dispatch: AppDispatch) => {
   try {
     const res = await ApiRequest.request(ApiUrl.FILTER, "GET");
     if (res.success) {
-      dispatch(setFilterQuestionList(res.data));
+      const filterQuestionList: IFilterQuestion[] = res.data;
+      filterQuestionList.sort((a, b) => {
+        if (a.order > b.order) return 1;
+        else if (a.order < b.order) return -1;
+        else return 0;
+      });
+      dispatch(setFilterQuestionList(filterQuestionList));
     }
   } catch (error) {
     console.log(error);

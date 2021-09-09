@@ -47,8 +47,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     setAnchorEl(e.currentTarget);
   };
 
-  console.log(anchorEl);
-
   return (
     <div
       className={clsx("appbar", {

@@ -2,7 +2,6 @@ import {
   Checkbox,
   FormControl,
   Input,
-  InputLabel,
   ListItemText,
   MenuItem,
   Select,
@@ -36,24 +35,40 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const { options, value, label } = props;
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel>{label}</InputLabel>
+    <>
+      <label htmlFor="input-elem">hello</label>
+      <FormControl>
+        <Select
+          multiple
+          displayEmpty
+          native
+          value={value?.length ? value : []}
+          input={<Input id="input-elem" />}
+          renderValue={(selected) => {
+            if ((selected as string[]).length === 0) {
+              return <em>Placeholder</em>;
+            }
 
-      <Select
-        {...props}
-        input={<Input />}
-        renderValue={(selected) => (selected as string[]).join(", ")}
-        multiple
-        //   MenuProps={MenuProps}
-      >
-        {options.map((option, index: number) => (
-          <MenuItem key={index} value={option.value}>
-            <Checkbox checked={value?.indexOf(option.value) > -1} />
-            <ListItemText primary={option.label} />
+            return (selected as string[]).join(", ");
+          }}
+          // MenuProps={MenuProps}
+          inputProps={{ "aria-label": "Without label" }}
+        >
+          <MenuItem disabled value="">
+            <em>Placeholder</em>
           </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+          {options.map((option, index: number) => (
+            // @ts-ignore
+            <MenuItem key={index} value={option}>
+              <Checkbox checked={value?.indexOf(option.value) > -1} />
+              <ListItemText primary={option.label} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {/* <FormControl variant="outlined">
+      </FormControl> */}
+    </>
   );
 };
 

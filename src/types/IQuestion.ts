@@ -9,6 +9,7 @@ export interface IQuestion {
   labelText: string;
   questionText: string;
   type: QuestionType;
+  order: number;
 }
 
 export interface IQuestionOption {

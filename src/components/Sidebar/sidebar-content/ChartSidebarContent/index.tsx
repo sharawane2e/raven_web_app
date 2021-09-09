@@ -8,43 +8,41 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setChartData } from "../../../../redux/actions/chartActions";
 import {
   fetchFilterList,
   resetAppliedFilters,
   setAppliedFilters,
   setFilterQuestionList,
+  setFilters,
 } from "../../../../redux/actions/filterActions";
 import { RootState } from "../../../../redux/store";
-import { ChartContext } from "../../../../screens/ChartScreen";
+import { fetchChartData } from "../../../../services/ChartService";
 import { IQuestionOption } from "../../../../types/IQuestion";
+import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 
 const ChartSidebarContent: React.FC = () => {
   const dispatch = useDispatch();
-  const { filterQuestionList, appliedFilters } = useSelector(
+  const { filterQuestionList, filters } = useSelector(
     (state: RootState) => state.filters
   );
+
   useEffect(() => {
     dispatch(fetchFilterList());
   }, []);
 
-  const { fetchChartData } = useContext(ChartContext);
-
   const handleFilterSelect = (qId: string, values: IQuestionOption[]) => {
-    const updatedAppliedFilters = [...appliedFilters];
+    const updatedFilters = [...filters];
 
     for (let index = 0; index < values.length; index++) {
       const filterValue = values[index];
       let filterExists: boolean = false;
 
-      for (
-        let filterIndex = 0;
-        filterIndex < appliedFilters.length;
-        filterIndex++
-      ) {
-        const appliedFilter = appliedFilters[filterIndex];
+      for (let filterIndex = 0; filterIndex < filters.length; filterIndex++) {
+        const appliedFilter = filters[filterIndex];
 
         if (
           appliedFilter.qId === qId &&
@@ -54,7 +52,7 @@ const ChartSidebarContent: React.FC = () => {
         }
       }
       if (!filterExists) {
-        updatedAppliedFilters.push({
+        updatedFilters.push({
           qId: qId,
           code: filterValue?.labelCode || "",
           label: filterValue?.labelText || "",
@@ -71,55 +69,84 @@ const ChartSidebarContent: React.FC = () => {
       }
     );
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
-    dispatch(setAppliedFilters(updatedAppliedFilters));
+    dispatch(setFilters(updatedFilters));
+  };
+
+  const applyFilters = () => {
+    dispatch(setAppliedFilters(filters));
+    fetchChartData()
+      .then((chartData) => dispatch(setChartData(chartData)))
+      .catch((error) => console.log(error));
   };
 
   return (
     <div className="chart-sidebar">
       <div className="chart-sidebar__filter-wrapper">
-        {filterQuestionList.map((filterQuestion, filterIndex) => (
-          <Fragment key={filterIndex}>
-            <FormControl variant="outlined">
-              <InputLabel id={filterQuestion.qId}>
-                {filterQuestion.question.labelText}
-              </InputLabel>
-              <Select
-                labelId={filterQuestion.qId}
-                id={filterQuestion.qId + "ques"}
-                multiple
-                label={filterQuestion.question.labelText}
-                value={filterQuestion?.value || []}
-                onChange={(e: any, d) => {
-                  handleFilterSelect(filterQuestion.qId, e.target.value);
-                }}
-                input={<Input />}
-                // @ts-ignore
-                renderValue={(selectedOptions: IQuestionOption[]) =>
-                  selectedOptions.map(
-                    (selectedOption) => selectedOption.labelText + ", "
-                  )
-                }
-                // MenuProps={MenuProps}
-              >
-                {filterQuestion.question.options.map((option, optionIndex) => (
-                  // @ts-ignore
-                  <MenuItem key={optionIndex} value={option}>
-                    <Checkbox
-                      checked={filterQuestion?.value?.some(
-                        (filterValue) =>
-                          filterValue.labelCode === option.labelCode
+        <CustomScrollbar>
+          <div className="chart-sidebar__filter-questions">
+            {filterQuestionList.map((filterQuestion, filterIndex) => (
+              <>
+                <MultiSelect
+                  label={filterQuestion.question.labelText}
+                  options={filterQuestion.question.options.map((option) => ({
+                    label: option.labelText,
+                    value: option.labelCode,
+                  }))}
+                  value={filterQuestion.value}
+                  onChange={(e) =>
+                    handleFilterSelect(
+                      filterQuestion.qId,
+                      e.target.value as IQuestionOption[]
+                    )
+                  }
+                />
+                <Fragment key={filterIndex}>
+                  <FormControl variant="outlined">
+                    <InputLabel id={filterQuestion.qId}>
+                      {filterQuestion.question.labelText}
+                    </InputLabel>
+                    <Select
+                      labelId={filterQuestion.qId}
+                      id={filterQuestion.qId + "ques"}
+                      multiple
+                      label={filterQuestion.question.labelText}
+                      value={filterQuestion?.value || []}
+                      onChange={(e: any, d) => {
+                        handleFilterSelect(filterQuestion.qId, e.target.value);
+                      }}
+                      input={<Input />}
+                      // @ts-ignore
+                      renderValue={(selectedOptions: IQuestionOption[]) =>
+                        selectedOptions.map(
+                          (selectedOption) => selectedOption.labelText + ", "
+                        )
+                      }
+                      // MenuProps={MenuProps}
+                    >
+                      {filterQuestion.question.options.map(
+                        (option, optionIndex) => (
+                          // @ts-ignore
+                          <MenuItem key={optionIndex} value={option}>
+                            <Checkbox
+                              checked={filterQuestion?.value?.some(
+                                (filterValue) =>
+                                  filterValue.labelCode === option.labelCode
+                              )}
+                            />
+                            <ListItemText primary={option.labelText} />
+                          </MenuItem>
+                        )
                       )}
-                    />
-                    <ListItemText primary={option.labelText} />
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Fragment>
-        ))}
+                    </Select>
+                  </FormControl>
+                </Fragment>
+              </>
+            ))}
+          </div>
+        </CustomScrollbar>
       </div>
       <div className="chart-sidebar__footer">
-        <Button className="button--primary" onClick={() => fetchChartData()}>
+        <Button className="button--primary" onClick={applyFilters}>
           Apply
         </Button>
         <Button
