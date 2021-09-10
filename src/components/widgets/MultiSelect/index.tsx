@@ -7,7 +7,7 @@ import {
   Select,
   SelectProps,
 } from "@material-ui/core";
-import { memo, useRef } from "react";
+import { memo } from "react";
 import CustomScrollbar from "../../CustomScrollbar";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { IQuestionOption } from "../../../types/IQuestion";
@@ -47,7 +47,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         open={props.open}
         displayEmpty
         value={value}
-        // onChange={props.onChange}
         input={<Input />}
         renderValue={(selected) => {
           if ((selected as IQuestionOption[]).length === 0) {

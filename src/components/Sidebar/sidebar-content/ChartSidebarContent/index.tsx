@@ -26,7 +26,6 @@ const ChartSidebarContent: React.FC = () => {
   }, []);
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
-    // debugger;
     const updatedFilters = [...filters];
     let values = [
       ...(filterQuestionList.find((q) => q.qId === qId)?.value || []),
@@ -38,11 +37,9 @@ const ChartSidebarContent: React.FC = () => {
       }
     });
     if (index >= 0) {
-      // console.log(values);
       values.splice(index, 1);
     } else {
       values.push(value);
-      // values = [...values, value];
     }
 
     for (let index = 0; index < values.length; index++) {
@@ -95,7 +92,6 @@ const ChartSidebarContent: React.FC = () => {
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
                 key={filterIndex}
-                // open={filterIndex === 0}
                 label={filterQuestion.question.labelText}
                 options={filterQuestion.question.options}
                 value={filterQuestion.value}
