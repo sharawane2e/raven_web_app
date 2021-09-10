@@ -1,16 +1,24 @@
 .chart-sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   .chart-sidebar__filter-wrapper {
-    height: calc(100vh - 200px);
+    height: calc(100% - 80px);
   }
   .chart-sidebar__filter-questions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - 200px);
     padding-right: 15px;
 
     .MuiFormControl-root {
       width: 95%;
     }
+  }
+
+  .chart-sidebar__footer {
+    padding: 15px;
   }
 }

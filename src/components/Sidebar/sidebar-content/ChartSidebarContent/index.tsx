@@ -1,14 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  Input,
-  InputLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-} from "@material-ui/core";
-import { Fragment, useEffect } from "react";
+import { Button } from "@material-ui/core";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setChartData } from "../../../../redux/actions/chartActions";
 import {
@@ -34,8 +25,25 @@ const ChartSidebarContent: React.FC = () => {
     dispatch(fetchFilterList());
   }, []);
 
-  const handleFilterSelect = (qId: string, values: IQuestionOption[]) => {
+  const handleFilterSelect = (qId: string, value: IQuestionOption) => {
+    // debugger;
     const updatedFilters = [...filters];
+    let values = [
+      ...(filterQuestionList.find((q) => q.qId === qId)?.value || []),
+    ];
+    let index = -1;
+    values.forEach((v, i) => {
+      if (v.labelCode === value.labelCode) {
+        index = i;
+      }
+    });
+    if (index >= 0) {
+      // console.log(values);
+      values.splice(index, 1);
+    } else {
+      values.push(value);
+      // values = [...values, value];
+    }
 
     for (let index = 0; index < values.length; index++) {
       const filterValue = values[index];
@@ -85,62 +93,16 @@ const ChartSidebarContent: React.FC = () => {
         <CustomScrollbar>
           <div className="chart-sidebar__filter-questions">
             {filterQuestionList.map((filterQuestion, filterIndex) => (
-              <>
-                <MultiSelect
-                  label={filterQuestion.question.labelText}
-                  options={filterQuestion.question.options.map((option) => ({
-                    label: option.labelText,
-                    value: option.labelCode,
-                  }))}
-                  value={filterQuestion.value}
-                  onChange={(e) =>
-                    handleFilterSelect(
-                      filterQuestion.qId,
-                      e.target.value as IQuestionOption[]
-                    )
-                  }
-                />
-                <Fragment key={filterIndex}>
-                  <FormControl variant="outlined">
-                    <InputLabel id={filterQuestion.qId}>
-                      {filterQuestion.question.labelText}
-                    </InputLabel>
-                    <Select
-                      labelId={filterQuestion.qId}
-                      id={filterQuestion.qId + "ques"}
-                      multiple
-                      label={filterQuestion.question.labelText}
-                      value={filterQuestion?.value || []}
-                      onChange={(e: any, d) => {
-                        handleFilterSelect(filterQuestion.qId, e.target.value);
-                      }}
-                      input={<Input />}
-                      // @ts-ignore
-                      renderValue={(selectedOptions: IQuestionOption[]) =>
-                        selectedOptions.map(
-                          (selectedOption) => selectedOption.labelText + ", "
-                        )
-                      }
-                      // MenuProps={MenuProps}
-                    >
-                      {filterQuestion.question.options.map(
-                        (option, optionIndex) => (
-                          // @ts-ignore
-                          <MenuItem key={optionIndex} value={option}>
-                            <Checkbox
-                              checked={filterQuestion?.value?.some(
-                                (filterValue) =>
-                                  filterValue.labelCode === option.labelCode
-                              )}
-                            />
-                            <ListItemText primary={option.labelText} />
-                          </MenuItem>
-                        )
-                      )}
-                    </Select>
-                  </FormControl>
-                </Fragment>
-              </>
+              <MultiSelect
+                key={filterIndex}
+                // open={filterIndex === 0}
+                label={filterQuestion.question.labelText}
+                options={filterQuestion.question.options}
+                value={filterQuestion.value}
+                onChange={(value: IQuestionOption) => {
+                  handleFilterSelect(filterQuestion.qId, value);
+                }}
+              />
             ))}
           </div>
         </CustomScrollbar>

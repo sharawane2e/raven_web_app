@@ -7,7 +7,10 @@ import {
   Select,
   SelectProps,
 } from "@material-ui/core";
-import { memo } from "react";
+import { memo, useRef } from "react";
+import CustomScrollbar from "../../CustomScrollbar";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { IQuestionOption } from "../../../types/IQuestion";
 
 export interface IMultiSelectOptions {
   /**
@@ -19,56 +22,86 @@ export interface IMultiSelectOptions {
    */
   label: string;
 }
-
+// @ts-ignore
 interface MultiSelectProps extends SelectProps {
   /**
    * options to be rendered inside menu
    */
-  options: IMultiSelectOptions[];
+  options: IQuestionOption[];
   /**
    * value of the multi select
    */
-  value: any[];
+  value: IQuestionOption[];
+
+  onChange: (values: IQuestionOption) => void;
 }
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
-  const { options, value, label } = props;
+  const { options, value = [], label } = props;
 
   return (
-    <>
-      <label htmlFor="input-elem">hello</label>
-      <FormControl>
-        <Select
-          multiple
-          displayEmpty
-          native
-          value={value?.length ? value : []}
-          input={<Input id="input-elem" />}
-          renderValue={(selected) => {
-            if ((selected as string[]).length === 0) {
-              return <em>Placeholder</em>;
-            }
+    <FormControl className="multi-select">
+      <label htmlFor="input-elem">{label}</label>
+      <Select
+        multiple
+        open={props.open}
+        displayEmpty
+        value={value}
+        // onChange={props.onChange}
+        input={<Input />}
+        renderValue={(selected) => {
+          if ((selected as IQuestionOption[]).length === 0) {
+            return <em>{props.placeholder || "Please select"}</em>;
+          }
+          console.log("selected value", selected);
 
-            return (selected as string[]).join(", ");
-          }}
-          // MenuProps={MenuProps}
-          inputProps={{ "aria-label": "Without label" }}
-        >
-          <MenuItem disabled value="">
-            <em>Placeholder</em>
+          return (selected as IQuestionOption[])
+            .map((selectedValue) => {
+              return selectedValue?.labelText;
+            })
+            .join(", ");
+        }}
+        IconComponent={ExpandMoreIcon}
+        disableUnderline
+        inputProps={{ "aria-label": "Without label" }}
+        MenuProps={{
+          className: "multi-select__paper",
+          disablePortal: true,
+          elevation: 1,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+        }}
+      >
+        <CustomScrollbar autoHeight>
+          <MenuItem disabled value="" className="multi-select__placeholder">
+            <em>{props.placeholder || "Please select"}</em>
           </MenuItem>
-          {options.map((option, index: number) => (
-            // @ts-ignore
-            <MenuItem key={index} value={option}>
-              <Checkbox checked={value?.indexOf(option.value) > -1} />
-              <ListItemText primary={option.label} />
+          {options.map((option, optionIndex) => (
+            <MenuItem
+              key={optionIndex}
+              // @ts-ignore
+              value={option}
+              onClick={() => {
+                props.onChange !== undefined && props?.onChange(option);
+              }}
+            >
+              <Checkbox
+                checked={value?.some(
+                  (filterValue) => filterValue?.labelCode === option.labelCode
+                )}
+              />
+              <ListItemText primary={option.labelText} />
             </MenuItem>
           ))}
-        </Select>
-      </FormControl>
-      {/* <FormControl variant="outlined">
-      </FormControl> */}
-    </>
+        </CustomScrollbar>
+      </Select>
+    </FormControl>
   );
 };
 

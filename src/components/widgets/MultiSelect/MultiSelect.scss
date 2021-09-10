@@ -1,0 +1,51 @@
+.multi-select {
+  margin: 0;
+
+  .MuiInputBase-root {
+    margin-top: 0px;
+    border-radius: 3px;
+
+    .MuiInputBase-input {
+      background: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: map-get($map: $text-size, $key: xsmall);
+    }
+  }
+
+  label {
+    font-weight: 600;
+    margin: 15px 0 8px;
+    font-size: map-get($map: $text-size, $key: small);
+  }
+
+  .multi-select__paper {
+    .MuiButtonBase-root {
+      padding: 0;
+    }
+
+    .MuiTypography-root,
+    .multi-select__placeholder {
+      font-size: map-get($map: $text-size, $key: xsmall);
+    }
+    .MuiTypography-root {
+      margin-left: 8px;
+    }
+    .MuiSvgIcon-root {
+      font-size: map-get($map: $text-size, $key: regular);
+    }
+  }
+  .MuiPaper-root {
+    border-radius: 0;
+    border: 1px solid map-get($map: $text-color, $key: border);
+    left: 6px !important;
+  }
+  .custom-scrollbar__wrapper {
+    padding: 10px;
+  }
+
+  .MuiSelect-icon {
+    font-size: map-get($map: $text-size, $key: large);
+    top: 8px;
+  }
+}
