@@ -1,19 +1,10 @@
-import { QuestionType } from "../enums/QuestionType";
+import { ChartType } from "../enums/ChartType";
+import { IBaseQuestion } from "./IBaseQuestion";
 
-export interface IQuestion {
-  _id: string;
-  qId: string;
-  scale: any[];
-  subGroups: any[];
-  options: IQuestionOption[];
-  labelText: string;
-  questionText: string;
-  type: QuestionType;
+export interface IQuestion extends IBaseQuestion {
   order: number;
-}
-
-export interface IQuestionOption {
-  labelText: string;
-  labelCode: string;
-  order: number;
+  chartType: ChartType[];
+  split: boolean;
+  active: boolean;
+  netAllowed: boolean;
 }

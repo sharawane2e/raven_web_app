@@ -10,7 +10,7 @@ import {
 import { memo } from "react";
 import CustomScrollbar from "../../CustomScrollbar";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { IQuestionOption } from "../../../types/IQuestion";
+import { IQuestionOption } from "../../../types/IBaseQuestion";
 
 export interface IMultiSelectOptions {
   /**

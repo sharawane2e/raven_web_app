@@ -8,10 +8,7 @@ import {
   Dialog,
   FormControlLabel,
   Grid,
-  Modal,
-  Paper,
 } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
 import { useState } from "react";
 
 const StaticHomeScreen: React.FC = () => {
@@ -23,17 +20,11 @@ const StaticHomeScreen: React.FC = () => {
         <CustomScrollbar>
           <img src={dashboardImage} alt="" />
           <Dialog open={openPopup} className="home-modal">
-            {/* <CloseIcon
-              className="home-modal__close-icon"
-              onClick={() => setOpenPopup(false)}
-            /> */}
             <div className="home-modal__content">
               <CustomScrollbar>
                 <StaticDashboard onActionClick={() => setOpenPopup(false)} />
               </CustomScrollbar>
             </div>
-            {/* <Paper elevation={4}>
-            </Paper> */}
             <Grid container className="home-modal__footer">
               <FormControlLabel
                 className=""
@@ -41,7 +32,6 @@ const StaticHomeScreen: React.FC = () => {
                 label="Don't show thisd page again"
                 control={<Checkbox />}
               />
-
               <Button
                 className="button--primary"
                 onClick={() => setOpenPopup(false)}

@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setChartData } from "../../../../redux/actions/chartActions";
 import {
   fetchFilterList,
-  resetAppliedFilters,
+  resetFilters,
   setAppliedFilters,
   setFilterQuestionList,
   setFilters,
 } from "../../../../redux/actions/filterActions";
 import { RootState } from "../../../../redux/store";
 import { fetchChartData } from "../../../../services/ChartService";
-import { IQuestionOption } from "../../../../types/IQuestion";
+import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 
@@ -92,8 +92,8 @@ const ChartSidebarContent: React.FC = () => {
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
                 key={filterIndex}
-                label={filterQuestion.question.labelText}
-                options={filterQuestion.question.options}
+                label={filterQuestion.labelText}
+                options={filterQuestion.options}
                 value={filterQuestion.value}
                 onChange={(value: IQuestionOption) => {
                   handleFilterSelect(filterQuestion.qId, value);
@@ -110,7 +110,7 @@ const ChartSidebarContent: React.FC = () => {
         <Button
           className=""
           onClick={() => {
-            dispatch(resetAppliedFilters());
+            dispatch(resetFilters());
           }}
         >
           Clear

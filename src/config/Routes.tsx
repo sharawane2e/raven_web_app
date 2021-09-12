@@ -31,13 +31,13 @@ const Routes: IRoute[] = [
     ],
   },
   {
-    path: ["/charts"],
+    path: [WebUrl.HOME],
     component: ChartScreen,
     exact: true,
     isPrivate: true,
     routes: [
       {
-        path: "/charts",
+        path: WebUrl.HOME,
         component: ChartContent,
       },
     ],
@@ -104,12 +104,6 @@ const Routes: IRoute[] = [
         component: () => <SetPassword variant="reset" />,
       },
     ],
-  },
-  {
-    path: WebUrl.HOME,
-    component: StaticHomeScreen,
-    isPrivate: true,
-    exact: true,
   },
   {
     path: WebUrl.BASE,

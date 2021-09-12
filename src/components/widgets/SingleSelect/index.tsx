@@ -1,0 +1,79 @@
+import { FormControl, MenuItem, Select, SelectProps } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import CustomScrollbar from "../../CustomScrollbar";
+
+interface SingleSelectProps extends SelectProps {
+  options: any[];
+  placeholder?: string;
+  /**
+   * key to be used to extract value from options
+   */
+  valueKey?: string;
+  /**
+   * key to be used to extract label from options
+   */
+  labelKey?: string;
+  /**
+   * event handler for menu item selection
+   */
+  onItemSelect?: (value: any) => void;
+}
+
+const SingleSelect: React.FC<SingleSelectProps> = (props) => {
+  const { value, placeholder, options, labelKey, valueKey, onItemSelect } =
+    props;
+  return (
+    <FormControl variant="outlined" className="single-select">
+      <Select
+        value={value}
+        // onChange={onChange}
+        displayEmpty
+        inputProps={{ "aria-label": "Without label" }}
+        IconComponent={ExpandMoreIcon}
+        MenuProps={{
+          elevation: 1,
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: "left",
+          },
+        }}
+        renderValue={(selected) => {
+          if (!selected) {
+            return <span>{placeholder ? placeholder : "Please select"}</span>;
+          }
+          if (valueKey && labelKey) {
+            const label = options.find(
+              (option) => option[valueKey] === selected
+            )[labelKey];
+            return <span>{label ? label : ""}</span>;
+          }
+          return <span>{selected as any}</span>;
+        }}
+      >
+        <CustomScrollbar autoHeight>
+          <MenuItem value="" disabled>
+            {placeholder ? placeholder : "Please select"}
+          </MenuItem>
+          {options.map((option: any, index: number) => {
+            const optionVal = valueKey ? option[valueKey] : option;
+            return (
+              <MenuItem
+                key={index}
+                value={index === 0 ? "D1" : optionVal}
+                onClick={() => onItemSelect && onItemSelect(optionVal)}
+              >
+                {labelKey ? option[labelKey] : option}
+              </MenuItem>
+            );
+          })}
+        </CustomScrollbar>
+      </Select>
+    </FormControl>
+  );
+};
+
+export default SingleSelect;

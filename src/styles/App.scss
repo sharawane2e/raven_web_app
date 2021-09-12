@@ -9,6 +9,7 @@
 @import "../components/widgets/UserAvatar/UserAvatar.scss";
 @import "../components/widgets/ConfirmationDialog/ConfimationDialog.scss";
 @import "../components/widgets/MultiSelect/MultiSelect.scss";
+@import "../components/widgets/SingleSelect/SingleSelect.scss";
 
 // Import screen's scss
 @import "../screens/PublicFormScreen/PublicFormScreen.scss";
@@ -26,4 +27,5 @@
 @import "../components/ChangePassword/ChangePassword.scss";
 @import "../components/StaticDashboard/StaticDashboard.scss";
 @import "../components/UserTable/UserTable.scss";
+@import "../components/AppliedFilterList/AppliedFilterList.scss";
 @import "../components/Sidebar/sidebar-content/ChartSidebarContent/ChartSidebarContent.scss";

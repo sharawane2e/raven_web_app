@@ -1,9 +1,7 @@
-import { IQuestion, IQuestionOption } from "./IQuestion";
+import { IBaseQuestion, IQuestionOption } from "./IBaseQuestion";
 
-export interface IFilterQuestion {
-  _id: string;
-  qId: string;
+export interface IFilterQuestion extends IBaseQuestion {
   order: number;
-  question: IQuestion;
+  active: boolean;
   value: IQuestionOption[];
 }

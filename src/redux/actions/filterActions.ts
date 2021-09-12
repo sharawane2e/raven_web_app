@@ -13,7 +13,11 @@ export const setAppliedFilters = createAction<IFilter[]>("SET_APPLIED_FILTERS");
 
 export const setFilters = createAction<IFilter[]>("SET_FILTERS");
 
-export const resetAppliedFilters = createAction("RESET_APPLIED_FILTERS");
+export const resetFilters = createAction("RESET_FILTERS");
+
+export const removeAppliedFilter = createAction<IFilter>(
+  "REMOVE_APPLIED_FILTER"
+);
 
 export const fetchFilterList = () => async (dispatch: AppDispatch) => {
   try {

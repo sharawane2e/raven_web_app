@@ -27,6 +27,8 @@ enum ApiUrl {
 
   QUESTION = "/question",
 
+  BANNER_QUESTION = "/question/banner",
+
   CHART = "/chart",
 }
 

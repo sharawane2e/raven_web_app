@@ -1,49 +1,37 @@
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  FormControlLabel,
+  Grid,
+} from "@material-ui/core";
 import clsx from "clsx";
+import { useState } from "react";
 import AppRouting from "../../AppRouting";
 import Appbar from "../../components/Appbar";
+import CustomScrollbar from "../../components/CustomScrollbar";
 import Sidebar from "../../components/Sidebar";
 import ChartSidebarContent from "../../components/Sidebar/sidebar-content/ChartSidebarContent";
+import StaticDashboard from "../../components/StaticDashboard";
 import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
 import IRoute from "../../types/IRoute";
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 interface ChartScreenProps {
   routes: IRoute[];
 }
 
-// export interface IChartContext {
-//   questionData: any;
-//   chartData: any[];
-//   setQuestionData: (questionData: any) => void;
-//   setChartData: (chartData: any[]) => void;
-//   fetchChartData: (quesId?: string) => void;
-//   selectedQuestion: string;
-//   setSelectedQuestion: (selectedQuestion: string) => void;
-//   questions: any[];
-//   setQuestions: (questions: any[]) => void;
-// }
-
-// export const ChartContext = createContext({
-//   questionData: null,
-//   chartData: [],
-//   setQuestionData: (questionData: string) => {},
-//   setChartData: (chartData: string) => {},
-//   fetchChartData: (quesId?: string) => {},
-//   selectedQuestion: "",
-//   setSelectedQuestion: (selectedQuestion: string) => {},
-//   questions: [],
-//   setQuestions: (questions: any[]) => [],
-// });
-
 const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
+  const [openPopup, setOpenPopup] = useState<boolean>(true);
+  // const user = LocalStorageUtils.getUser();
 
   return (
     <div className="chart-screen">
       <SidebarContextProvider>
         <Appbar />
-
         <Sidebar title="Filters" content={ChartSidebarContent} />
         <SidebarContext.Consumer>
           {({ open }) => {
@@ -59,6 +47,28 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           }}
         </SidebarContext.Consumer>
       </SidebarContextProvider>
+
+      <Dialog open={openPopup} className="home-modal">
+        <div className="home-modal__content">
+          <CustomScrollbar>
+            <StaticDashboard onActionClick={() => setOpenPopup(false)} />
+          </CustomScrollbar>
+        </div>
+        <Grid container className="home-modal__footer">
+          <FormControlLabel
+            className=""
+            value="bottom"
+            label="Don't show this page again"
+            control={<Checkbox />}
+          />
+          <Button
+            className="button--primary"
+            onClick={() => setOpenPopup(false)}
+          >
+            Go to dashboard
+          </Button>
+        </Grid>
+      </Dialog>
     </div>
   );
 };
