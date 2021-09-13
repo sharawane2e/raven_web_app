@@ -37,7 +37,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           {({ open }) => {
             return (
               <main
-                className={clsx("content-area admin-panel__content", {
+                className={clsx("content-area", {
                   "sidebar-open": open,
                 })}
               >

@@ -10,12 +10,14 @@
 @import "../components/widgets/ConfirmationDialog/ConfimationDialog.scss";
 @import "../components/widgets/MultiSelect/MultiSelect.scss";
 @import "../components/widgets/SingleSelect/SingleSelect.scss";
+@import "../components/widgets/ButtonGroup/ButtonGroup.scss";
 
 // Import screen's scss
 @import "../screens/PublicFormScreen/PublicFormScreen.scss";
 @import "../screens/AdminPanelScreen/AdminPanelScreen.scss";
 @import "../screens/UserPanelScreen/UserPanelScreen.scss";
 @import "../screens/StaticHomeScreen/StaticHomeScreen.scss";
+@import "../screens/ChartScreen/ChartScreen.scss";
 
 // Import component's scss
 @import "../components/CustomTable/CustomTable.scss";
