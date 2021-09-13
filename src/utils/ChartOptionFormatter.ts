@@ -17,9 +17,9 @@ export const getChartOptions = (
       case QuestionType.RANK:
         return getSingleChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID:
-        return getGridChartOptions(questionData, chartData);
+        return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
-        return getGridChartOptions(questionData, chartData);
+        return getGridChartOptions(questionData, chartData, baseCount);
 
       default:
         return {};
@@ -86,6 +86,83 @@ const getSingleChartOptions = (
     ],
   };
 };
-const getGridChartOptions = (questionData: IQuestion, chartData: any): any => {
-  return {};
+const getGridChartOptions = (
+  questionData: IQuestion,
+  chartData: any,
+  baseCount: number
+): any => {
+  const categories = [];
+  const series = [];
+  for (
+    let scaleIndex = 0;
+    scaleIndex < questionData.scale.length;
+    scaleIndex++
+  ) {
+    const scale = questionData.scale[scaleIndex];
+    const data: any[] = [];
+
+    for (
+      let subGroupIndex = 0;
+      subGroupIndex < questionData.subGroups.length;
+      subGroupIndex++
+    ) {
+      const subGroup = questionData.subGroups[subGroupIndex];
+      categories.push(subGroup.labelText);
+
+      const optionData = chartData.find((c: any) => c._id === subGroup.qId);
+
+      let count = 0;
+      // debugger;
+      if (optionData) {
+        const label = optionData.options.find(
+          (option: any) => option.option === scale.labelCode
+        );
+
+        if (label) {
+          count = label.count;
+        }
+      }
+      const plotValue = (count / baseCount) * 100;
+
+      data.push({
+        name: subGroup.labelText,
+        y: +plotValue.toFixed(2),
+      });
+    }
+
+    series.push({
+      name: scale.labelText,
+      data,
+    });
+  }
+
+  return {
+    chart: {
+      type: "column",
+    },
+
+    title: {
+      text: "",
+    },
+
+    xAxis: {
+      categories,
+    },
+
+    yAxis: {
+      allowDecimals: false,
+      min: 0,
+      title: {
+        text: "Number of fruits",
+      },
+    },
+
+    // plotOptions: {
+    //   column: {
+    //     stacking: "normal",
+    //   },
+    // },
+
+    series,
+  };
 };

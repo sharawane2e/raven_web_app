@@ -4,6 +4,7 @@ import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { IQuestion } from "../../types/IQuestion";
 import {
+  resetChartData,
   setChartData,
   setChartOrientation,
   setChartType,
@@ -55,6 +56,10 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     ...action.payload,
   }));
+  builder.addCase(resetChartData, (state, action) => ({
+    ...state,
+    chartOptions: initialState.chartOptions,
+  }));
 
   builder.addCase(setChartOrientation, (state, action) => ({
     ...state,
@@ -68,10 +73,12 @@ const chartReducer = createReducer(initialState, (builder) => {
     chartOrientation: action.payload,
   }));
 
-  builder.addCase(setChartType, (state, action) => ({
-    ...state,
-    chartType: action.payload,
-  }));
+  builder.addCase(setChartType, (state, action) => {
+    return {
+      ...state,
+      chartType: action.payload,
+    };
+  });
 });
 
 export default chartReducer;

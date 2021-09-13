@@ -1,4 +1,5 @@
 import HighchartsReact from "highcharts-react-official";
+// import HighchartsReact from "react-highcharts";
 import Highcharts from "highcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -13,42 +14,14 @@ const Chart: React.FC<ChartProps> = (props) => {
   } = useSelector((state: RootState) => state);
 
   const newChartOptions = JSON.parse(JSON.stringify(chartOptions));
-
-  return <HighchartsReact highcharts={Highcharts} options={newChartOptions} />;
+  console.log(newChartOptions);
+  return (
+    <HighchartsReact
+      highcharts={Highcharts}
+      options={newChartOptions}
+      immutable
+    />
+  );
 };
 
 export default Chart;
-
-// const [chartOptions, setChartOptinos] = useState<Highcharts.Options>({
-//   title: {
-//     text: "",
-//   },
-//   chart: {
-//     type: "column",
-//   },
-//   legend: {
-//     enabled: false,
-//   },
-//   xAxis: {
-//     type: "category",
-//   },
-//   // plotOptions: {
-//   //   series: {
-//   //     // @ts-ignore
-//   //     dataLabels: {
-//   //       formatter: (value: number) => "fff" + value,
-//   //     },
-//   //   },
-//   // },
-//   yAxis: {
-//     min: 0,
-//     max: 100,
-//   },
-//   series: [
-//     // @ts-ignore
-//     {
-//       color: "#f47c3c",
-//       data: [],
-//     },
-//   ],
-// });

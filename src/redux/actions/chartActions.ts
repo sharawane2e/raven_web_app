@@ -10,3 +10,5 @@ export const setChartOrientation = createAction<ChartOrientation>(
 );
 
 export const setChartType = createAction<ChartType>("SET_CHART_TYPE");
+
+export const resetChartData = createAction("RESET_CHART_DATA");
