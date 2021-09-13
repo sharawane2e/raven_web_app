@@ -2,6 +2,7 @@ import ApiUrl from "../enums/ApiUrl";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
+import { getChartOptions } from "../utils/ChartOptionFormatter";
 
 export const fetchChartData = async (qId?: string) => {
   const {
@@ -10,7 +11,7 @@ export const fetchChartData = async (qId?: string) => {
     chart,
   } = store.getState();
 
-  let chartData: IChartState = { ...chart };
+  let chartData: IChartState = JSON.parse(JSON.stringify(chart));
 
   try {
     const chartFilters: any[] = [];
@@ -30,9 +31,11 @@ export const fetchChartData = async (qId?: string) => {
       });
     }
 
+    const quesId = qId ? qId : selectedQuestionId;
+
     const body = {
-      qId: qId ? qId : selectedQuestionId,
-      type: questionList.find((ques) => ques.qId === qId)?.type || "",
+      qId: quesId,
+      type: questionList.find((ques) => ques.qId === quesId)?.type || "",
       filters: chartFilters,
     };
 
@@ -40,6 +43,12 @@ export const fetchChartData = async (qId?: string) => {
     if (response.success) {
       chartData.chartData = response.data.chartData;
       chartData.questionData = response.data.questionData;
+
+      chartData.chartOptions = getChartOptions(
+        chartData.questionData,
+        chartData.chartData,
+        response.data.baseCount
+      );
     }
   } catch (error) {
     console.log(error);

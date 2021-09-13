@@ -14,7 +14,7 @@ export interface IChartState {
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
-  chartOptions: ChartOptionType;
+  chartOptions: any;
 }
 
 const initialState: IChartState = {
@@ -22,7 +22,31 @@ const initialState: IChartState = {
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
-  chartOptions: {},
+  chartOptions: {
+    title: {
+      text: "",
+    },
+    chart: {
+      type: "column",
+    },
+    legend: {
+      enabled: false,
+    },
+    xAxis: {
+      type: "category",
+    },
+    yAxis: {
+      min: 0,
+      max: 100,
+    },
+    series: [
+      // @ts-ignore
+      {
+        color: "#f47c3c",
+        data: [],
+      },
+    ],
+  },
 };
 
 const chartReducer = createReducer(initialState, (builder) => {

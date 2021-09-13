@@ -5,6 +5,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { IFilter } from "../../types/IFilter";
 import CustomScrollbar from "../CustomScrollbar";
 import { removeAppliedFilter } from "../../redux/actions/filterActions";
+import { fetchChartData } from "../../services/ChartService";
+import { setChartData } from "../../redux/actions/chartActions";
 
 const AppliedFilterList: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -12,6 +14,11 @@ const AppliedFilterList: React.FC = () => {
 
   const removeFilter = (filter: IFilter) => {
     dispatch(removeAppliedFilter(filter));
+    fetchChartData()
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+      })
+      .catch((error) => console.log(error));
   };
   return (
     <div className="applied-filters">

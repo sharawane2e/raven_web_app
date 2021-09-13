@@ -80,7 +80,9 @@ const ChartSidebarContent: React.FC = () => {
   const applyFilters = () => {
     dispatch(setAppliedFilters(filters));
     fetchChartData()
-      .then((chartData) => dispatch(setChartData(chartData)))
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+      })
       .catch((error) => console.log(error));
   };
 

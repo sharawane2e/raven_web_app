@@ -3,4 +3,5 @@ export enum QuestionType {
   GRID = "G",
   MULTI = "M",
   GRID_MULTI = "GM",
+  RANK = "R",
 }

@@ -12,7 +12,9 @@ const Chart: React.FC<ChartProps> = (props) => {
     chart: { chartOptions },
   } = useSelector((state: RootState) => state);
 
-  return <HighchartsReact highcharts={Highcharts} options={chartOptions} />;
+  const newChartOptions = JSON.parse(JSON.stringify(chartOptions));
+
+  return <HighchartsReact highcharts={Highcharts} options={newChartOptions} />;
 };
 
 export default Chart;
