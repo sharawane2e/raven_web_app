@@ -34,6 +34,10 @@ const ChartSidebarContent: React.FC = () => {
     values.forEach((v, i) => {
       if (v.labelCode === value.labelCode) {
         index = i;
+        const filterIndex = updatedFilters.findIndex(
+          (filter) => filter.qId === qId && filter.code === v.labelCode
+        );
+        updatedFilters.splice(filterIndex, 1);
       }
     });
     if (index >= 0) {
