@@ -30,6 +30,11 @@ const initialState: IChartState = {
     chart: {
       type: "column",
       inverted: false,
+      // width: "100%",
+      // height: "100%",
+      // style: {
+      //   height: "100%",
+      // },
     },
     legend: {
       enabled: false,
@@ -40,6 +45,13 @@ const initialState: IChartState = {
     yAxis: {
       min: 0,
       max: 100,
+    },
+    plotOptions: {
+      series: {
+        dataLabels: {
+          enabled: true,
+        },
+      },
     },
     series: [
       // @ts-ignore

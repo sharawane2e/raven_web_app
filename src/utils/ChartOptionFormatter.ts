@@ -1,5 +1,3 @@
-import { AnyMap } from "immer/dist/internal";
-import { ChartOptionType } from "../components/Chart";
 import { colorArr } from "../constants/Variables";
 import { QuestionType } from "../enums/QuestionType";
 import { IQuestion } from "../types/IQuestion";
@@ -55,9 +53,6 @@ const getSingleChartOptions = (
   }
 
   return {
-    chart: {
-      type: "column",
-    },
     title: {
       text: "",
     },
@@ -67,7 +62,7 @@ const getSingleChartOptions = (
     },
     yAxis: {
       min: 0,
-      max: 100,
+      // max: 100,
     },
     legend: {
       enabled: false,
@@ -83,6 +78,19 @@ const getSingleChartOptions = (
       {
         color: "#f47c3c",
         data,
+        dataLabels: {
+          enabled: true,
+          // rotation: -90,
+          color: "#FFFFFF",
+          align: "center",
+          format: "{point.y:.1f}%", // one decimal
+          // y: 10, // 10 pixels down from the top
+          // x: -10,
+          // y: 30,
+          style: {
+            fontSize: "10px",
+          },
+        },
       },
     ],
   };
@@ -135,14 +143,22 @@ const getGridChartOptions = (
       name: scale.labelText,
       color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
       data,
+      dataLabels: {
+        enabled: true,
+        // rotation: -90,
+        color: "#FFFFFF",
+        align: "center",
+        format: "{point.y:.1f}", // one decimal
+        // y: 10, // 10 pixels down from the top
+        style: {
+          fontSize: "10px",
+          fontFamily: "Roboto",
+        },
+      },
     });
   }
 
   return {
-    chart: {
-      type: "column",
-    },
-
     title: {
       text: "",
     },

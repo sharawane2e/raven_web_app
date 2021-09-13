@@ -44,11 +44,14 @@ export const fetchChartData = async (qId?: string) => {
       chartData.chartData = response.data.chartData;
       chartData.questionData = response.data.questionData;
 
-      chartData.chartOptions = getChartOptions(
-        chartData.questionData,
-        chartData.chartData,
-        response.data.baseCount
-      );
+      chartData.chartOptions = {
+        ...chart.chartOptions,
+        ...getChartOptions(
+          chartData.questionData,
+          chartData.chartData,
+          response.data.baseCount
+        ),
+      };
     }
   } catch (error) {
     console.log(error);

@@ -16,9 +16,11 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const changeChartType = (chartType: ChartType) => {
     const newChartData = JSON.parse(JSON.stringify(chart));
     newChartData.chartType = chartType;
+
     newChartData.chartOptions["plotOptions"] =
       chartType === ChartType.STACK
         ? {
+            // ...newChartData,
             column: {
               stacking: "normal",
             },
@@ -28,6 +30,12 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
               stacking: "normal",
             },
           };
+
+    // if (chartType === ChartType.COLUMN) {
+    //   delete newChartData.chartOptions["plotOptions"].column;
+    // } else if (chartType === ChartType.STACK) {
+    //   delete newChartData.chartOptions["plotOptions"].bar;
+    // }
 
     dispatch(setChartData(newChartData));
   };
