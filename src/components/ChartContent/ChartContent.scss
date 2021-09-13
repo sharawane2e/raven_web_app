@@ -1,0 +1,18 @@
+.chart-content {
+  .chart-content__control-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .export-chart-group {
+    justify-content: flex-end;
+  }
+
+  .button-group {
+    margin: 0 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -13,6 +13,9 @@ import { fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";
+import OrientationControl from "../OrientationControl";
+import ChartTypeControl from "../ChartTypeControl";
+import ExportChart from "../ExportChart";
 
 interface ChartContentProps {}
 
@@ -35,12 +38,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   return (
     <div className="chart-content">
-      <Grid container spacing={0}>
-        <Grid item xs={6}>
+      <Grid container spacing={0} justify="space-between">
+        <Grid item>
           <Breadcrum pageTitle="Reports" />
         </Grid>
-        <Grid item xs={6}>
-          <div>asdasd</div>
+        <Grid item className="chart-content__control-wrapper">
+          <OrientationControl />
+          <ChartTypeControl />
+          <ExportChart />
         </Grid>
       </Grid>
       <AppliedFilterList />

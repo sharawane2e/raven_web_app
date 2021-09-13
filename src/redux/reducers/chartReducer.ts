@@ -28,6 +28,7 @@ const initialState: IChartState = {
     },
     chart: {
       type: "column",
+      inverted: false,
     },
     legend: {
       enabled: false,
@@ -57,6 +58,13 @@ const chartReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(setChartOrientation, (state, action) => ({
     ...state,
+    chartOptions: {
+      ...state.chartOptions,
+      chart: {
+        ...state.chartOptions.chart,
+        inverted: action.payload === ChartOrientation.LANDSCAPE,
+      },
+    },
     chartOrientation: action.payload,
   }));
 

@@ -12,23 +12,34 @@ export interface ButtonGroupConfig {
 
 export interface ButtonGroupProps {
   groupTitle?: string;
+  className?: string;
   buttonConfig?: ButtonGroupConfig[];
 }
 
 const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
-  const { groupTitle, buttonConfig = [] } = props;
+  const { groupTitle, buttonConfig = [], className } = props;
   return (
-    <Grid container className="button-group">
-      {groupTitle && <Grid item>{groupTitle}</Grid>}
+    <Grid
+      container
+      className={clsx("button-group", {
+        [props?.className || ""]: props.className,
+      })}
+    >
+      {groupTitle && (
+        <Grid item className="button-group__group-title">
+          {groupTitle}
+        </Grid>
+      )}
       {buttonConfig.map((button, index) => (
         <Grid key={index}>
           <Button
-            variant="outlined"
+            // variant="outlined"
             disabled={button.disabled}
             className={clsx("button-group__button", {
               [button?.className || ""]: button.className,
               active: button.active,
             })}
+            onClick={button.onClick}
           >
             {button.renderChild ? button.renderChild() : button.label}
           </Button>
