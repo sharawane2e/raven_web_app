@@ -15,4 +15,24 @@
       margin-right: 0;
     }
   }
+
+  .chart-content__chart-wrapper {
+    margin-top: 15px;
+  }
+  .wave-button {
+    height: 30px;
+    font-size: map-get($map: $text-size, $key: xsmall);
+    width: 117px;
+    margin: 3px;
+    margin-bottom: 15px;
+  }
+}
+.orientation-control {
+  .active {
+    svg {
+      g {
+        stroke: map-get($map: $text-color, $key: accent);
+      }
+    }
+  }
 }

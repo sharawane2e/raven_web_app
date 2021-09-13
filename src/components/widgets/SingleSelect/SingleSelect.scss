@@ -7,3 +7,11 @@
     padding: 10px;
   }
 }
+.single-select__menu-list {
+  padding: 0;
+
+  .MuiListItem-root {
+    padding: 6px 10px;
+    font-size: map-get($map: $text-size, $key: xsmall);
+  }
+}

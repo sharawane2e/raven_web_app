@@ -16,7 +16,9 @@ import StaticDashboard from "../../components/StaticDashboard";
 import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
+import ApiUrl from "../../enums/ApiUrl";
 import IRoute from "../../types/IRoute";
+import ApiRequest from "../../utils/ApiRequest";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 interface ChartScreenProps {
@@ -26,7 +28,23 @@ interface ChartScreenProps {
 const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
   const [openPopup, setOpenPopup] = useState<boolean>(true);
-  // const user = LocalStorageUtils.getUser();
+  const [showContent, setShowContent] = useState<boolean>(true);
+  const user = LocalStorageUtils.getUser();
+
+  const handlePopupClose = () => {
+    if (!showContent) {
+      const url = ApiUrl.SHOW_CONTENT_PAGE + "/" + user._id;
+      ApiRequest.request(url, "PATCH", { showContentPageCheck: false })
+        .then((res) => {
+          if (res.success) {
+            user["showContentPage"] = false;
+            LocalStorageUtils.setUser(user);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
+    setOpenPopup(false);
+  };
 
   return (
     <div className="chart-screen">
@@ -48,23 +66,24 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         </SidebarContext.Consumer>
       </SidebarContextProvider>
 
-      <Dialog open={openPopup} className="home-modal">
+      <Dialog open={user.showContentPage && openPopup} className="home-modal">
         <div className="home-modal__content">
           <CustomScrollbar>
-            <StaticDashboard onActionClick={() => setOpenPopup(false)} />
+            <StaticDashboard onActionClick={handlePopupClose} />
           </CustomScrollbar>
         </div>
         <Grid container className="home-modal__footer">
           <FormControlLabel
             className=""
-            value="bottom"
             label="Don't show this page again"
-            control={<Checkbox />}
+            control={
+              <Checkbox
+                checked={!showContent}
+                onChange={() => setShowContent(!showContent)}
+              />
+            }
           />
-          <Button
-            className="button--primary"
-            onClick={() => setOpenPopup(false)}
-          >
+          <Button className="button--primary" onClick={handlePopupClose}>
             Go to dashboard
           </Button>
         </Grid>

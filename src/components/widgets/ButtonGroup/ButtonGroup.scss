@@ -3,16 +3,25 @@
   flex-wrap: nowrap;
   button {
     &.MuiButtonBase-root {
-      padding: 0;
       min-width: 0;
+      width: 25px;
+      height: 25px;
+
+      padding: 0px;
       margin: 0 5px;
     }
     &.active {
+      color: map-get($map: $text-color, $key: accent);
       svg {
         path {
           fill: map-get($map: $text-color, $key: accent);
         }
+
+        line {
+          stroke: map-get($map: $text-color, $key: accent);
+        }
       }
+      border-color: map-get($map: $text-color, $key: accent);
     }
   }
 

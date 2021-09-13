@@ -1,5 +1,6 @@
 import { AnyMap } from "immer/dist/internal";
 import { ChartOptionType } from "../components/Chart";
+import { colorArr } from "../constants/Variables";
 import { QuestionType } from "../enums/QuestionType";
 import { IQuestion } from "../types/IQuestion";
 
@@ -132,6 +133,7 @@ const getGridChartOptions = (
 
     series.push({
       name: scale.labelText,
+      color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
       data,
     });
   }
@@ -153,7 +155,7 @@ const getGridChartOptions = (
       allowDecimals: false,
       min: 0,
       title: {
-        text: "Number of fruits",
+        text: "",
       },
     },
 

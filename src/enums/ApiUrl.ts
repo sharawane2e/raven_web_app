@@ -11,6 +11,8 @@ enum ApiUrl {
 
   USER = "/user",
 
+  SHOW_CONTENT_PAGE = "/user/show-content-page",
+
   ACTIVATE_USER = "/user/activate",
 
   DEACTIVATE_USER = "/user/de-activate",

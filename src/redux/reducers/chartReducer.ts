@@ -56,10 +56,6 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     ...action.payload,
   }));
-  builder.addCase(resetChartData, (state, action) => ({
-    ...state,
-    chartOptions: initialState.chartOptions,
-  }));
 
   builder.addCase(setChartOrientation, (state, action) => ({
     ...state,

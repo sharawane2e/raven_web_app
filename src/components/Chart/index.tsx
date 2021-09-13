@@ -9,18 +9,12 @@ interface ChartProps {}
 export type ChartOptionType = Highcharts.Options;
 
 const Chart: React.FC<ChartProps> = (props) => {
-  const {
-    chart: { chartOptions },
-  } = useSelector((state: RootState) => state);
+  const chartOptions = useSelector(
+    (state: RootState) => state.chart.chartOptions
+  );
 
-  const newChartOptions = JSON.parse(JSON.stringify(chartOptions));
-  console.log(newChartOptions);
   return (
-    <HighchartsReact
-      highcharts={Highcharts}
-      options={newChartOptions}
-      immutable
-    />
+    <HighchartsReact highcharts={Highcharts} options={chartOptions} immutable />
   );
 };
 

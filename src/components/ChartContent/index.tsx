@@ -16,6 +16,8 @@ import Chart from "../Chart";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
+import { Button } from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 interface ChartContentProps {}
 
@@ -49,7 +51,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
       </Grid>
       <AppliedFilterList />
-
+      <Button className="button--primary wave-button" disabled>
+        <span>Select wave</span>
+        <ExpandMoreIcon />
+      </Button>
       <SingleSelect
         options={questionList}
         value={selectedQuestionId}
@@ -66,7 +71,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         valueKey="qId"
         labelKey="questionText"
       />
-      <div>
+      <div className="chart-content__chart-wrapper">
         <Chart />
       </div>
     </div>

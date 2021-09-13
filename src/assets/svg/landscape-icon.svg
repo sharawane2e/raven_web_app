@@ -1,10 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 30 24">
-  <g id="Group_3823" data-name="Group 3823" transform="translate(-1117.17 -310)">
-    <g id="Rectangle_2253" data-name="Rectangle 2253" transform="translate(1117.17 310)" fill="none" stroke="#bebebe" class="clStroke" stroke-width="1">
-      <rect width="30" height="24" rx="3" stroke="none"/>
-      <rect x="0.5" y="0.5" width="29" height="23" rx="2.5" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="9" viewBox="0 0 15 9">
+  <g id="Group_3973" data-name="Group 3973" transform="translate(330 -1115.17) rotate(90)">
+    <g id="Rectangle_2349" data-name="Rectangle 2349" transform="translate(1115.17 315)" fill="#fff" stroke="#bebebe" stroke-width="1">
+      <rect width="9" height="15" rx="1" stroke="none"/>
+      <rect x="0.5" y="0.5" width="8" height="14" rx="0.5" fill="none"/>
     </g>
-    <path id="Shape" d="M7.942,1.586a1.084,1.084,0,0,0-1.57,0L1.586,6.371a1.084,1.084,0,0,0,0,1.57l8.972,8.972a1.084,1.084,0,0,0,1.57,0l4.785-4.785a1.084,1.084,0,0,0,0-1.57L7.942,1.586Zm3.439,14.579L2.409,7.194,7.194,2.409l8.972,8.972-4.785,4.785Z" transform="translate(1145.565 322.314) rotate(135)" fill="#bebebe"  class="clFill"  fill-rule="evenodd"/>
-    <line id="Line_129" data-name="Line 129" x2="7" transform="translate(1136.297 318.5) rotate(90)" fill="none"  class="clStroke" stroke="#bebebe" stroke-linecap="round" stroke-width="1"/>
+    <line id="Line_148" data-name="Line 148" x2="8" transform="translate(1115.67 318.5)" fill="none" stroke="#bebebe" stroke-width="1"/>
   </g>
 </svg>

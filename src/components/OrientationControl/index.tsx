@@ -17,18 +17,26 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
   };
   const buttonConfig: ButtonGroupConfig[] = [
     {
+      tooltip: "Portrait",
       renderChild: () => <PortraitIcon />,
       onClick: () => changeOrientation(ChartOrientation.PORTRAIT),
       active: chartOrientation === ChartOrientation.PORTRAIT,
     },
     {
+      tooltip: "Landscape",
       renderChild: () => <LandscapeIcon />,
       onClick: () => changeOrientation(ChartOrientation.LANDSCAPE),
       active: chartOrientation === ChartOrientation.LANDSCAPE,
     },
   ];
 
-  return <ButtonGroup groupTitle="Orientation" buttonConfig={buttonConfig} />;
+  return (
+    <ButtonGroup
+      groupTitle="Orientation"
+      buttonConfig={buttonConfig}
+      className="orientation-control"
+    />
+  );
 };
 
 export default OrientationControl;

@@ -110,7 +110,7 @@ const ChartSidebarContent: React.FC = () => {
           Apply
         </Button>
         <Button
-          className=""
+          className="clear-button"
           onClick={() => {
             dispatch(resetFilters());
           }}

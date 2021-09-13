@@ -1,14 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 30 24">
-  <g id="Group_3786" data-name="Group 3786" transform="translate(-1117.17 -310)">
-    <g id="Rectangle_2253" data-name="Rectangle 2253" transform="translate(1117.17 310)" fill="none" stroke="#bebebe" class="clStroke" stroke-width="1">
-      <rect width="30" height="24" rx="3" stroke="none"/>
-      <rect x="0.5" y="0.5" width="29" height="23" rx="2.5" fill="none"/>
-    </g>
-    <g id="Group_3822" data-name="Group 3822" transform="translate(-0.486 -1.313)">
-      <path id="_2203540_bar_chart_stat_statistic_icon" data-name="2203540_bar_chart_stat_statistic_icon" d="M15,9H11v6H10V7H6v8H5V12H1v3H0v1H16V15H15Z" transform="translate(1124 314)" fill="#bebebe" class="clFill"/>
-      <path id="Path_13084" data-name="Path 13084" d="M1125,326.016h4.016v-2.687H1125" transform="translate(0 -0.828)" fill="#bebebe" class="clFill"/>
-      <path id="Path_13085" data-name="Path 13085" d="M1125,326.016h4.016v-2.687H1125" transform="translate(4.994 -6.016)" fill="#bebebe" class="clFill"/>
-      <path id="Path_13086" data-name="Path 13086" d="M1125,326.016h4.016v-2.687H1125" transform="translate(10 -3.828)" fill="#bebebe" class="clFill"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="12.688" viewBox="0 0 16 12.688">
+  <g id="bar-witj-dot" transform="translate(-1124 -317.313)">
+    <path id="_2203540_bar_chart_stat_statistic_icon" data-name="2203540_bar_chart_stat_statistic_icon" d="M15,9H11v6H10V7H6v8H5V12H1v3H0v1H16V15H15Z" transform="translate(1124 314)" fill="#bebebe"/>
+    <path id="Path_13084" data-name="Path 13084" d="M1125,326.016h4.016v-2.687H1125" transform="translate(0 -0.828)" fill="#bebebe"/>
+    <path id="Path_13085" data-name="Path 13085" d="M1125,326.016h4.016v-2.687H1125" transform="translate(4.994 -6.016)" fill="#bebebe"/>
+    <path id="Path_13086" data-name="Path 13086" d="M1125,326.016h4.016v-2.687H1125" transform="translate(10 -3.828)" fill="#bebebe"/>
   </g>
 </svg>

@@ -40,6 +40,9 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
             vertical: "top",
             horizontal: "left",
           },
+          MenuListProps: {
+            className: "single-select__menu-list",
+          },
         }}
         renderValue={(selected) => {
           if (!selected) {
