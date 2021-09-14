@@ -3,6 +3,9 @@ import IApiResponse from "../types/IApiResponse";
 import LocalStorageUtils from "./LocalStorageUtils";
 import Toaster from "./Toaster";
 import { errorMessages } from "../constants/messages";
+import store from "../redux/store";
+import { setUserProfile } from "../redux/actions/userActions";
+import { logOutUser } from "../services/AuthService";
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
@@ -34,12 +37,11 @@ const ApiRequest = {
         ...params,
       });
       response = apiResponse.data;
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {
-          LocalStorageUtils.removeUser();
-          window.location.href = `/login`;
+          logOutUser();
           this.setAuthToken();
         } else if (error.response.status === 400) {
           response = error.response.data;

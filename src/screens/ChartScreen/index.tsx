@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import AppRouting from "../../AppRouting";
 import Appbar from "../../components/Appbar";
 import CustomScrollbar from "../../components/CustomScrollbar";
@@ -17,9 +18,9 @@ import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
 import ApiUrl from "../../enums/ApiUrl";
+import { RootState } from "../../redux/store";
 import IRoute from "../../types/IRoute";
 import ApiRequest from "../../utils/ApiRequest";
-import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -29,16 +30,16 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
   const [openPopup, setOpenPopup] = useState<boolean>(true);
   const [showContent, setShowContent] = useState<boolean>(true);
-  const user = LocalStorageUtils.getUser();
+  const { profile } = useSelector((state: RootState) => state.user);
 
   const handlePopupClose = () => {
     if (!showContent) {
-      const url = ApiUrl.SHOW_CONTENT_PAGE + "/" + user._id;
+      const url = ApiUrl.SHOW_CONTENT_PAGE + "/" + profile?._id;
       ApiRequest.request(url, "PATCH", { showContentPageCheck: false })
         .then((res) => {
           if (res.success) {
-            user["showContentPage"] = false;
-            LocalStorageUtils.setUser(user);
+            // profile?.showContentPage = false;
+            // LocalStorageUtils.setUser(profile);
           }
         })
         .catch((error) => console.log(error));
@@ -66,7 +67,10 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         </SidebarContext.Consumer>
       </SidebarContextProvider>
 
-      <Dialog open={user.showContentPage && openPopup} className="home-modal">
+      <Dialog
+        open={!!profile?.showContentPage && openPopup}
+        className="home-modal"
+      >
         <div className="home-modal__content">
           <CustomScrollbar>
             <StaticDashboard onActionClick={handlePopupClose} />

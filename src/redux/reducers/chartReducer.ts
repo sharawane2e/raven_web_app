@@ -1,10 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ChartOptionType } from "../../components/Chart";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { IQuestion } from "../../types/IQuestion";
 import {
-  resetChartData,
   setChartData,
   setChartOrientation,
   setChartType,

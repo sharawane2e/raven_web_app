@@ -1,10 +1,22 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { setUser } from "../actions/userActions";
+import { IUserProfile } from "../../types/IUserProfile";
+import { setUserProfile } from "../actions/userActions";
 
-const initialState = "";
+export interface IUserState {
+  selectedUser: string;
+  profile: IUserProfile | null;
+}
+
+let initialState: IUserState = {
+  selectedUser: "",
+  profile: null,
+};
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder.addCase(setUser, (state, action) => action.payload);
+  builder.addCase(setUserProfile, (state, action) => ({
+    ...state,
+    profile: action.payload,
+  }));
 });
 
 export default userReducer;

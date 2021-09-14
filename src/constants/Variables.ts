@@ -1,4 +1,4 @@
-export const localStorageVar = "hfs_dashboard";
+export const accessTokenKey = "hfs_dashboard_access_token";
 
 export const colorArr = [
   "#F47C3C",

@@ -8,9 +8,12 @@ import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
 import ApiRequest from "../../../utils/ApiRequest";
 import ApiUrl from "../../../enums/ApiUrl";
 import Toaster from "../../../utils/Toaster";
-import LocalStorageUtils from "../../../utils/LocalStorageUtils";
 import { promptMessages } from "../../../constants/messages";
 import WebUrl from "../../../enums/WebUrl";
+import { AppDispatch } from "../../../redux/store";
+import { useDispatch } from "react-redux";
+import { setUserProfile } from "../../../redux/actions/userActions";
+import LocalStorageUtils from "../../../utils/LocalStorageUtils";
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -26,6 +29,8 @@ const Login: React.FC<LoginProps> = (props) => {
     mode: "onBlur",
   });
 
+  const dispatch: AppDispatch = useDispatch();
+
   const history = useHistory();
 
   const onSubmit = (data: any) => {
@@ -34,9 +39,10 @@ const Login: React.FC<LoginProps> = (props) => {
     ApiRequest.request(ApiUrl.LOGIN, "POST", data)
       .then((res) => {
         if (res.success) {
+          dispatch(setUserProfile(res.data));
           Toaster.success(res.message);
           ApiRequest.setAuthToken(res.data?.accessToken);
-          LocalStorageUtils.setUser(res.data);
+          LocalStorageUtils.setAccessToken(res.data.accessToken);
           history.push(WebUrl.HOME);
         } else {
           Toaster.error(res.message);

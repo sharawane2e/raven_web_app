@@ -1,31 +1,16 @@
-import { localStorageVar } from "../constants/Variables";
+import { accessTokenKey } from "../constants/Variables";
 
 class LocalStorageUtils {
-  static setUser(user: any) {
-    localStorage.setItem(localStorageVar, JSON.stringify(user));
+  static setAccessToken(token: string) {
+    localStorage.setItem(accessTokenKey, token);
   }
 
-  static getUser() {
-    const userString = localStorage.getItem(localStorageVar);
-    return userString ? JSON.parse(userString) : null;
-  }
-
-  static removeUser() {
-    localStorage.removeItem(localStorageVar);
+  static removeAccessToken() {
+    localStorage.removeItem(accessTokenKey);
   }
 
   static getToken() {
-    const user = this.getUser();
-    if (user) {
-      return user.accessToken;
-    } else {
-      return undefined;
-    }
-  }
-
-  static isUserLoggedIn() {
-    if (this.getToken()) return true;
-    return false;
+    return localStorage.getItem(accessTokenKey) || null;
   }
 }
 export default LocalStorageUtils;

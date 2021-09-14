@@ -1,20 +1,10 @@
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Tooltip,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Grid } from "@material-ui/core";
 import DoshboardChart from "../../assets/svg/statics-chart.svg";
-import LocalStorageUtils from "../../utils/LocalStorageUtils";
-import CustomScrollbar from "../CustomScrollbar";
+
 export interface StaticDashboardProps {
   onActionClick: () => void;
 }
 const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
-  const { onActionClick } = props;
-  const user = LocalStorageUtils.getUser();
   return (
     <div className="info-area">
       <h2 className="info-area__heading">HFS OneOffice Pulse</h2>

@@ -8,7 +8,6 @@ import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
 import Userform from "../Userform";
 import Breadcrum from "../widgets/Breadcrum";
-import LocalStorageUtils from "../../utils/LocalStorageUtils";
 
 export interface EditUserProps extends WithLoaderProps {}
 

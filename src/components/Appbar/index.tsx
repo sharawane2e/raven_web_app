@@ -12,19 +12,16 @@ import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
 import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
 import LocalStorageUtils from "../../utils/LocalStorageUtils";
-import { useDispatch } from "react-redux";
-import { setUser } from "../../redux/actions/userActions";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
 }
 
 const Appbar: React.FC<AppbarProps> = (props) => {
-  const dispatch = useDispatch();
+  const { profile: user } = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    dispatch(setUser("Himanshu"));
-  }, []);
   const { variant = "partialWidth" } = props;
   const {
     open: sidebarOpen,
@@ -37,7 +34,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   >(null);
 
   const history = useHistory();
-  const user = LocalStorageUtils.getUser();
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -76,7 +72,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <ProfileAvatar text={user.name} />
+          <ProfileAvatar text={user?.name || ""} />
           <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
@@ -101,7 +97,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         <MenuItem className="appbar__menu-item profile" disabled>
           {user?.name}
         </MenuItem>
-        {user.isAdmin || user.isKeyAdmin ? (
+        {user?.isAdmin || user?.isKeyAdmin ? (
           <MenuItem
             onClick={() => history.push("/admin")}
             className="appbar__menu-item"
