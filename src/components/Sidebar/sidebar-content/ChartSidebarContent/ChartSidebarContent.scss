@@ -6,18 +6,22 @@
 
   .chart-sidebar__filter-wrapper {
     height: calc(100% - 80px);
+    padding: 0px 10px 10px 10px;
   }
   .chart-sidebar__filter-questions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: 15px;
 
     .MuiFormControl-root {
       width: 95%;
     }
   }
-
+ .chart-sidebar__filter-questions{
+    em{
+      font-style: initial;
+    }
+ }
   .chart-sidebar__footer {
     padding: 15px;
 

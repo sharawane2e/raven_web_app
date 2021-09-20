@@ -59,9 +59,9 @@
   .MuiDrawer-paper {
     height: calc(100vh - 68px);
     margin-top: 68px;
-    -webkit-box-shadow: 2px 0px 5px 0px rgba(85,85,85,0.20);
-    -moz-box-shadow: 2px 0px 5px 0px rgba(85,85,85,0.20);
-    box-shadow: 2px 0px 5px 0px rgba(85,85,85,0.20);
+    -webkit-box-shadow:2px 5px 4px 0px rgba(85,85,85,0.20);
+    -moz-box-shadow:2px 5px 4px 0px rgba(85,85,85,0.20);
+    box-shadow: 2px 5px 4px 0px rgba(85,85,85,0.20);
   }
   .MuiDrawer-paperAnchorDockedLeft {
       border: none;

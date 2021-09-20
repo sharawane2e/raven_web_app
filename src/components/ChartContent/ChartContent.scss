@@ -1,4 +1,10 @@
 .chart-content {
+  .mr-top{
+    margin-top: 10px;
+  }
+  .mr-button{
+    margin-bottom: 10px;
+  }
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
@@ -10,6 +16,7 @@
 
   .button-group {
     margin: 0 10px;
+    min-width: 2rem;
 
     &:last-child {
       margin-right: 0;
