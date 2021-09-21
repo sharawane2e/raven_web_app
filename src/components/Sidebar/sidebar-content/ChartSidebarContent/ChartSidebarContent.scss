@@ -6,9 +6,9 @@
 
   .chart-sidebar__filter-wrapper {
     height: calc(100% - 80px);
-    padding: 0px 10px 10px 10px;
   }
   .chart-sidebar__filter-questions {
+    padding: 0px 10px 10px 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,16 +17,22 @@
       width: 95%;
     }
   }
- .chart-sidebar__filter-questions{
-    em{
+  .chart-sidebar__filter-questions {
+    em {
       font-style: initial;
     }
- }
+  }
   .chart-sidebar__footer {
     padding: 15px;
 
     .clear-button {
       margin-left: 15px;
+    }
+  }
+
+  .multi-select {
+    label {
+      overflow-x: hidden;
     }
   }
 }
