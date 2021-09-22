@@ -61,7 +61,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         onItemSelect={handleQuestionChange}
         placeholder="Please select a question"
         valueKey="qId"
-        labelKey="questionText"
+        labelKey="labelText"
       />
       <SingleSelect
         options={bannerQuestionList}
@@ -69,7 +69,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         onItemSelect={() => {}}
         placeholder="Select banner question"
         valueKey="qId"
-        labelKey="questionText"
+        labelKey="labelText"
       />
       <div className="chart-content__chart-wrapper">
         <Chart />

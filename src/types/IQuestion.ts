@@ -7,4 +7,5 @@ export interface IQuestion extends IBaseQuestion {
   split: boolean;
   active: boolean;
   netAllowed: boolean;
+  labelText: string;
 }

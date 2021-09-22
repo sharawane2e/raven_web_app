@@ -6,7 +6,7 @@ export interface IBaseQuestion {
   scale: IQuestionOption[];
   subGroups: any[];
   options: IQuestionOption[];
-  labelText: string;
+  // labelText: string;
   questionText: string;
   type: QuestionType;
 }

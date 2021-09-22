@@ -4,4 +4,5 @@ export interface IFilterQuestion extends IBaseQuestion {
   order: number;
   active: boolean;
   value: IQuestionOption[];
+  labelText: string;
 }
