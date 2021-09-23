@@ -4,10 +4,13 @@ import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
 import { getChartOptions } from "../utils/ChartOptionFormatter";
 
-export const fetchChartData = async (qId?: string) => {
+export const fetchChartData = async (
+  qId?: string,
+  bannerQuestionId?: string
+) => {
   const {
     filters: { appliedFilters },
-    questions: { questionList, selectedQuestionId },
+    questions: { questionList, selectedQuestionId, selectedBannerQuestionId },
     chart,
   } = store.getState();
 
@@ -32,11 +35,14 @@ export const fetchChartData = async (qId?: string) => {
     }
 
     const quesId = qId ? qId : selectedQuestionId;
-
+    const bannerQuesId = bannerQuestionId
+      ? bannerQuestionId
+      : selectedBannerQuestionId;
     const body = {
       qId: quesId,
       type: questionList.find((ques) => ques.qId === quesId)?.type || "",
       filters: chartFilters,
+      bannerQuestion: "",
     };
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);

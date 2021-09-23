@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import {
   fetchBannerQuestionList,
   fetchQuestionList,
+  setSelectedBannerQuestionId,
   setSelectedQuestionId,
 } from "../../redux/actions/questionAction";
 import { setChartData } from "../../redux/actions/chartActions";
@@ -24,18 +25,39 @@ interface ChartContentProps {}
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const { questions } = useSelector((state: RootState) => state);
   const dispatch: AppDispatch = useDispatch();
-  const { questionList, selectedQuestionId, bannerQuestionList } = questions;
+  const {
+    questionList,
+    selectedQuestionId,
+    bannerQuestionList,
+    selectedBannerQuestionId,
+  } = questions;
 
   useEffect(() => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
   }, []);
 
+  useEffect(() => {
+    if (questionList.length) {
+      dispatch(setSelectedQuestionId(questionList[0].qId));
+      fetchChartData(questionList[0].qId)
+        .then((chartData) => dispatch(setChartData(chartData)))
+        .catch((error) => console.log(error));
+    }
+  }, [questionList]);
+
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
       .then((chartData) => dispatch(setChartData(chartData)))
       .catch((error) => console.log(error));
+  };
+
+  const handelBannerQuestionChange = (value: string) => {
+    dispatch(setSelectedBannerQuestionId(value));
+    // fetchChartData(undefined, value)
+    //   .then((chartData) => dispatch(setChartData(chartData)))
+    //   .catch((error) => console.log(error));
   };
 
   return (
@@ -65,8 +87,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       />
       <SingleSelect
         options={bannerQuestionList}
-        value={""}
-        onItemSelect={() => {}}
+        value={selectedBannerQuestionId}
+        onItemSelect={handelBannerQuestionChange}
         placeholder="Select banner question"
         valueKey="qId"
         labelKey="labelText"

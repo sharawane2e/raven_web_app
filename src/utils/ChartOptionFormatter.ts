@@ -1,5 +1,6 @@
 import { colorArr } from "../constants/Variables";
 import { QuestionType } from "../enums/QuestionType";
+import store from "../redux/store";
 import { IQuestion } from "../types/IQuestion";
 
 export const getChartOptions = (
@@ -34,6 +35,100 @@ const getSingleChartOptions = (
   baseCount: number
 ): any => {
   const data: any[] = [];
+  const {
+    questions: { selectedBannerQuestionId, questionList },
+  } = store.getState();
+  // if (selectedBannerQuestionId) {
+  //   debugger;
+  //   const bannerQuestion = questionList.find(
+  //     (question) => question.qId === selectedBannerQuestionId
+  //   );
+
+  //   const categories: string[] = [];
+  //   const series: any[] = [];
+
+  //   // @ts-ignore
+  //   for (let index = 0; index < bannerQuestion?.options.length; index++) {
+  //     const bannerQuesOption = bannerQuestion?.options[index];
+
+  //     for (
+  //       let quesIndex = 0;
+  //       quesIndex < questionData.options.length;
+  //       quesIndex++
+  //     ) {
+  //       const quesOption = questionData.options[quesIndex];
+
+  //       let optionData = chartData[0][quesOption.labelCode];
+  //       let baseCount = 0;
+  //       let count = 0;
+  //       // debugger;
+  //       if (optionData) {
+  //         const label = optionData.find(
+  //           // @ts-ignore
+  //           (option: any) => option.labelCode === bannerQuesOption.labelCode
+  //         );
+
+  //         if (label) {
+  //           count = label.count;
+  //         }
+
+  //         optionData.forEach((d: any) => (baseCount += d.count));
+  //       }
+
+  //       const plotValue = (count / baseCount) * 100;
+
+  //       data.push({
+  //         name: quesOption.labelText,
+  //         y: +plotValue.toFixed(2),
+  //       });
+  //     }
+
+  //     series.push({
+  //       name: bannerQuesOption?.labelText,
+  //       color: colorArr[index < colorArr.length ? index : 0],
+  //       data,
+  //       dataLabels: {
+  //         enabled: true,
+  //         // rotation: -90,
+  //         color: "#343434",
+  //         align: "center",
+  //         format: "{point.y:.1f}", // one decimal
+  //         // y: 10, // 10 pixels down from the top
+  //         style: {
+  //           fontSize: "10px",
+  //           fontFamily: "Roboto",
+  //         },
+  //       },
+  //     });
+  //   }
+
+  //   return {
+  //     title: {
+  //       text: "",
+  //     },
+
+  //     xAxis: {
+  //       categories,
+  //     },
+
+  //     yAxis: {
+  //       allowDecimals: false,
+  //       min: 0,
+  //       title: {
+  //         text: "",
+  //       },
+  //     },
+
+  //     // plotOptions: {
+  //     //   column: {
+  //     //     stacking: "normal",
+  //     //   },
+  //     // },
+
+  //     series,
+  //   };
+  // } else {
+  // }
   for (
     let optionIndex = 0;
     optionIndex < questionData.options.length;
@@ -81,7 +176,7 @@ const getSingleChartOptions = (
         dataLabels: {
           enabled: true,
           // rotation: -90,
-          color: "#FFFFFF",
+          color: "#343434",
           align: "center",
           format: "{point.y:.1f}%", // one decimal
           // y: 10, // 10 pixels down from the top
@@ -95,6 +190,7 @@ const getSingleChartOptions = (
     ],
   };
 };
+
 const getGridChartOptions = (
   questionData: IQuestion,
   chartData: any,
@@ -146,9 +242,9 @@ const getGridChartOptions = (
       dataLabels: {
         enabled: true,
         // rotation: -90,
-        color: "#FFFFFF",
+        color: "#343434",
         align: "center",
-        format: "{point.y:.1f}", // one decimal
+        format: "{point.y:.1f}%", // one decimal
         // y: 10, // 10 pixels down from the top
         style: {
           fontSize: "10px",
@@ -166,7 +262,9 @@ const getGridChartOptions = (
     xAxis: {
       categories,
     },
-
+    legend: {
+      enabled: true,
+    },
     yAxis: {
       allowDecimals: false,
       min: 0,

@@ -9,6 +9,10 @@ export const setSelectedQuestionId = createAction<string>(
   "SET_SELECTED_QUESTION_ID"
 );
 
+export const setSelectedBannerQuestionId = createAction<string>(
+  "SET_SELECTED_BANNER_QUESTION_ID"
+);
+
 export const setQuestionList = createAction<IQuestion[]>("SET_QUESTION_LIST");
 
 export const setBannerQuestionList = createAction<IBannerQuestion[]>(
