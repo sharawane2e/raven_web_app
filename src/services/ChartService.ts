@@ -42,7 +42,7 @@ export const fetchChartData = async (
       qId: quesId,
       type: questionList.find((ques) => ques.qId === quesId)?.type || "",
       filters: chartFilters,
-      bannerQuestion: "",
+      bannerQuestion: bannerQuesId,
     };
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);

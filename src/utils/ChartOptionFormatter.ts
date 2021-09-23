@@ -34,161 +34,163 @@ const getSingleChartOptions = (
   chartData: any[],
   baseCount: number
 ): any => {
-  const data: any[] = [];
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
-  // if (selectedBannerQuestionId) {
-  //   debugger;
-  //   const bannerQuestion = questionList.find(
-  //     (question) => question.qId === selectedBannerQuestionId
-  //   );
+  if (selectedBannerQuestionId) {
+    
+    const bannerQuestion = questionList.find(
+      (question) => question.qId === selectedBannerQuestionId
+      );
+      
+      const categories: string[] = [];
+      const series: any[] = [];
+      
+      // @ts-ignore
+      for (let index = 0; index < bannerQuestion?.options.length; index++) {
+        const bannerQuesOption = bannerQuestion?.options[index];
+        const data: any[] = [];
 
-  //   const categories: string[] = [];
-  //   const series: any[] = [];
+      for (
+        let quesIndex = 0;
+        quesIndex < questionData.options.length;
+        quesIndex++
+      ) {
+        const quesOption = questionData.options[quesIndex];
 
-  //   // @ts-ignore
-  //   for (let index = 0; index < bannerQuestion?.options.length; index++) {
-  //     const bannerQuesOption = bannerQuestion?.options[index];
+        let optionData = chartData[0][quesOption.labelCode];
+        let baseCount = 0;
+        let count = 0;
+        // debugger;
+        if (optionData) {
+          const label = optionData.find(
+            // @ts-ignore
+            (option: any) => option.labelCode === bannerQuesOption.labelCode
+          );
 
-  //     for (
-  //       let quesIndex = 0;
-  //       quesIndex < questionData.options.length;
-  //       quesIndex++
-  //     ) {
-  //       const quesOption = questionData.options[quesIndex];
+          if (label) {
+            count = label.count;
+          }
 
-  //       let optionData = chartData[0][quesOption.labelCode];
-  //       let baseCount = 0;
-  //       let count = 0;
-  //       // debugger;
-  //       if (optionData) {
-  //         const label = optionData.find(
-  //           // @ts-ignore
-  //           (option: any) => option.labelCode === bannerQuesOption.labelCode
-  //         );
+          // optionData.forEach((d: any) => (baseCount += d.count));
+        }
 
-  //         if (label) {
-  //           count = label.count;
-  //         }
+        // const plotValue = (count / baseCount) * 100;
 
-  //         optionData.forEach((d: any) => (baseCount += d.count));
-  //       }
+        data.push({
+          name: quesOption.labelText,
+          // y: +plotValue.toFixed(2),
+          y: +count,
+        });
+      }
 
-  //       const plotValue = (count / baseCount) * 100;
-
-  //       data.push({
-  //         name: quesOption.labelText,
-  //         y: +plotValue.toFixed(2),
-  //       });
-  //     }
-
-  //     series.push({
-  //       name: bannerQuesOption?.labelText,
-  //       color: colorArr[index < colorArr.length ? index : 0],
-  //       data,
-  //       dataLabels: {
-  //         enabled: true,
-  //         // rotation: -90,
-  //         color: "#343434",
-  //         align: "center",
-  //         format: "{point.y:.1f}", // one decimal
-  //         // y: 10, // 10 pixels down from the top
-  //         style: {
-  //           fontSize: "10px",
-  //           fontFamily: "Roboto",
-  //         },
-  //       },
-  //     });
-  //   }
-
-  //   return {
-  //     title: {
-  //       text: "",
-  //     },
-
-  //     xAxis: {
-  //       categories,
-  //     },
-
-  //     yAxis: {
-  //       allowDecimals: false,
-  //       min: 0,
-  //       title: {
-  //         text: "",
-  //       },
-  //     },
-
-  //     // plotOptions: {
-  //     //   column: {
-  //     //     stacking: "normal",
-  //     //   },
-  //     // },
-
-  //     series,
-  //   };
-  // } else {
-  // }
-  for (
-    let optionIndex = 0;
-    optionIndex < questionData.options.length;
-    optionIndex++
-  ) {
-    const option = questionData.options[optionIndex];
-    const label = chartData.find(
-      (record: { labelCode: string; count: number }) =>
-        record.labelCode === option.labelCode
-    );
-    let count = 0;
-    if (label) {
-      count = label.count;
-    }
-    const plotValue = (count / baseCount) * 100;
-    data.push({ name: option.labelText, y: +plotValue.toFixed(2) });
-  }
-
-  return {
-    title: {
-      text: "",
-    },
-
-    xAxis: {
-      type: "category",
-    },
-    yAxis: {
-      min: 0,
-      // max: 100,
-    },
-    legend: {
-      enabled: false,
-    },
-
-    tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat:
-        '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
-    },
-
-    series: [
-      {
-        color: "#f47c3c",
+      series.push({
+        name: bannerQuesOption?.labelText,
+        color: colorArr[index < colorArr.length ? index : 0],
         data,
         dataLabels: {
           enabled: true,
           // rotation: -90,
           color: "#343434",
           align: "center",
-          format: "{point.y:.1f}%", // one decimal
+          format: "{point.y:.1f}", // one decimal
           // y: 10, // 10 pixels down from the top
-          // x: -10,
-          // y: 30,
           style: {
             fontSize: "10px",
+            fontFamily: "Roboto",
           },
         },
+      });
+    }
+
+    return {
+      title: {
+        text: "",
       },
-    ],
-  };
+
+      xAxis: {
+        categories,
+      },
+
+      yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+          text: "",
+        },
+      },
+
+      // plotOptions: {
+      //   column: {
+      //     stacking: "normal",
+      //   },
+      // },
+
+      series,
+    };
+  } else {
+    const data: any[] = [];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.options.length;
+      optionIndex++
+    ) {
+      const option = questionData.options[optionIndex];
+      const label = chartData.find(
+        (record: { labelCode: string; count: number }) =>
+          record.labelCode === option.labelCode
+      );
+      let count = 0;
+      if (label) {
+        count = label.count;
+      }
+      const plotValue = (count / baseCount) * 100;
+      data.push({ name: option.labelText, y: +plotValue.toFixed(2) });
+    }
+  
+    return {
+      title: {
+        text: "",
+      },
+  
+      xAxis: {
+        type: "category",
+      },
+      yAxis: {
+        min: 0,
+        // max: 100,
+      },
+      legend: {
+        enabled: false,
+      },
+  
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:
+          '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
+      },
+  
+      series: [
+        {
+          color: "#f47c3c",
+          data,
+          dataLabels: {
+            enabled: true,
+            // rotation: -90,
+            color: "#343434",
+            align: "center",
+            format: "{point.y:.1f}%", // one decimal
+            // y: 10, // 10 pixels down from the top
+            // x: -10,
+            // y: 30,
+            style: {
+              fontSize: "10px",
+            },
+          },
+        },
+      ],
+    };
+  }
 };
 
 const getGridChartOptions = (
