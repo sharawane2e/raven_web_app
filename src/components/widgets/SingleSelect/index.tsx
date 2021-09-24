@@ -17,6 +17,8 @@ interface SingleSelectProps extends SelectProps {
    * event handler for menu item selection
    */
   onItemSelect?: (value: any) => void;
+
+  disabledPredicate?: (value: any) => boolean;
 }
 
 const SingleSelect: React.FC<SingleSelectProps> = (props) => {
@@ -68,6 +70,9 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
                 key={index}
                 value={index === 0 ? "D1" : optionVal}
                 onClick={() => onItemSelect && onItemSelect(optionVal)}
+                disabled={
+                  props.disabledPredicate && props?.disabledPredicate(optionVal)
+                }
               >
                 {labelKey ? option[labelKey] : option}
               </MenuItem>

@@ -38,18 +38,27 @@ const getSingleChartOptions = (
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
   if (selectedBannerQuestionId) {
-    
     const bannerQuestion = questionList.find(
       (question) => question.qId === selectedBannerQuestionId
+    );
+
+    const categories: string[] = [];
+    const series: any[] = [];
+
+    questionData.options.forEach((option) => {
+      categories.push(option.labelText);
+    });
+
+    questionData.options.forEach((option) => {
+      chartData[0][option.labelCode] = chartData[0][option.labelCode]?.map(
+        (cv: any) => ({ ...cv, count: (cv.count / baseCount) * 100 })
       );
-      
-      const categories: string[] = [];
-      const series: any[] = [];
-      
-      // @ts-ignore
-      for (let index = 0; index < bannerQuestion?.options.length; index++) {
-        const bannerQuesOption = bannerQuestion?.options[index];
-        const data: any[] = [];
+    });
+
+    // @ts-ignore
+    for (let index = 0; index < bannerQuestion?.options.length; index++) {
+      const bannerQuesOption = bannerQuestion?.options[index];
+      const data: any[] = [];
 
       for (
         let quesIndex = 0;
@@ -59,7 +68,7 @@ const getSingleChartOptions = (
         const quesOption = questionData.options[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        let baseCount = 0;
+
         let count = 0;
         // debugger;
         if (optionData) {
@@ -71,29 +80,24 @@ const getSingleChartOptions = (
           if (label) {
             count = label.count;
           }
-
-          // optionData.forEach((d: any) => (baseCount += d.count));
         }
-
-        // const plotValue = (count / baseCount) * 100;
 
         data.push({
           name: quesOption.labelText,
-          // y: +plotValue.toFixed(2),
-          y: +count,
+          y: +count.toFixed(2),
         });
       }
 
       series.push({
         name: bannerQuesOption?.labelText,
-        color: colorArr[index < colorArr.length ? index : 0],
+        color: index < colorArr.length ? colorArr[index] : undefined,
         data,
         dataLabels: {
           enabled: true,
           // rotation: -90,
           color: "#343434",
           align: "center",
-          format: "{point.y:.1f}", // one decimal
+          format: "{point.y:.2f}%", // one decimal
           // y: 10, // 10 pixels down from the top
           style: {
             fontSize: "10px",
@@ -110,6 +114,10 @@ const getSingleChartOptions = (
 
       xAxis: {
         categories,
+      },
+
+      legend: {
+        enabled: true,
       },
 
       yAxis: {
@@ -147,12 +155,12 @@ const getSingleChartOptions = (
       const plotValue = (count / baseCount) * 100;
       data.push({ name: option.labelText, y: +plotValue.toFixed(2) });
     }
-  
+
     return {
       title: {
         text: "",
       },
-  
+
       xAxis: {
         type: "category",
       },
@@ -163,13 +171,13 @@ const getSingleChartOptions = (
       legend: {
         enabled: false,
       },
-  
+
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat:
           '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
       },
-  
+
       series: [
         {
           color: "#f47c3c",
@@ -179,7 +187,7 @@ const getSingleChartOptions = (
             // rotation: -90,
             color: "#343434",
             align: "center",
-            format: "{point.y:.1f}%", // one decimal
+            format: "{point.y:.2f}%", // one decimal
             // y: 10, // 10 pixels down from the top
             // x: -10,
             // y: 30,
@@ -246,7 +254,7 @@ const getGridChartOptions = (
         // rotation: -90,
         color: "#343434",
         align: "center",
-        format: "{point.y:.1f}%", // one decimal
+        format: "{point.y:.2f}%", // one decimal
         // y: 10, // 10 pixels down from the top
         style: {
           fontSize: "10px",

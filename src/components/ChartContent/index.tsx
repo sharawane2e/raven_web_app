@@ -84,14 +84,16 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         placeholder="Please select a question"
         valueKey="qId"
         labelKey="labelText"
+        disabledPredicate={(value) => value === selectedBannerQuestionId}
       />
       <SingleSelect
-        options={bannerQuestionList}
+        options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
         value={selectedBannerQuestionId}
         onItemSelect={handelBannerQuestionChange}
         placeholder="Select banner question"
         valueKey="qId"
         labelKey="labelText"
+        disabledPredicate={(value) => value === selectedQuestionId}
       />
       <div className="chart-content__chart-wrapper">
         <Chart />
