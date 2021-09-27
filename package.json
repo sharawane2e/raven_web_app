@@ -47,6 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "NODE_ENV=production react-scripts build",
+    "build:staging": "env-cmd -f .env.staging-internal react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
