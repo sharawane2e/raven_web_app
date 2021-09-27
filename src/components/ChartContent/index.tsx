@@ -54,10 +54,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
-    dispatch(setSelectedBannerQuestionId(value));
-    fetchChartData(undefined, value)
-      .then((chartData) => dispatch(setChartData(chartData)))
-      .catch((error) => console.log(error));
+    // dispatch(setSelectedBannerQuestionId(value));
+    // fetchChartData(undefined, value)
+    //   .then((chartData) => dispatch(setChartData(chartData)))
+    //   .catch((error) => console.log(error));
   };
 
   return (
