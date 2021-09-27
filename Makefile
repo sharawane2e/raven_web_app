@@ -3,3 +3,6 @@ build-dev:
 
 build-staging: 
 	docker build . -t web-app-staging-image -f Dockerfile.production
+
+build-staging-internal: 
+	docker build . -t web-app-staging-image -f Dockerfile.staging
