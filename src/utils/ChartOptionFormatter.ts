@@ -95,7 +95,7 @@ const getSingleChartOptions = (
         dataLabels: {
           enabled: true,
           // rotation: -90,
-          color: "#343434",
+          // color: "#343434",
           align: "center",
           format: "{point.y:.2f}%", // one decimal
           // y: 10, // 10 pixels down from the top
@@ -185,7 +185,7 @@ const getSingleChartOptions = (
           dataLabels: {
             enabled: true,
             // rotation: -90,
-            color: "#343434",
+            // color: "#343434",
             align: "center",
             format: "{point.y:.2f}%", // one decimal
             // y: 10, // 10 pixels down from the top
@@ -252,7 +252,7 @@ const getGridChartOptions = (
       dataLabels: {
         enabled: true,
         // rotation: -90,
-        color: "#343434",
+        // color: "#343434",
         align: "center",
         format: "{point.y:.2f}%", // one decimal
         // y: 10, // 10 pixels down from the top

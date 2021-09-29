@@ -3,8 +3,6 @@ import IApiResponse from "../types/IApiResponse";
 import LocalStorageUtils from "./LocalStorageUtils";
 import Toaster from "./Toaster";
 import { errorMessages } from "../constants/messages";
-import store from "../redux/store";
-import { setUserProfile } from "../redux/actions/userActions";
 import { logOutUser } from "../services/AuthService";
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";

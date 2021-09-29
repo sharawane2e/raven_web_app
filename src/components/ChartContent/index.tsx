@@ -54,10 +54,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
-    // dispatch(setSelectedBannerQuestionId(value));
-    // fetchChartData(undefined, value)
-    //   .then((chartData) => dispatch(setChartData(chartData)))
-    //   .catch((error) => console.log(error));
+    dispatch(setSelectedBannerQuestionId(value));
+    fetchChartData(undefined, value)
+      .then((chartData) => dispatch(setChartData(chartData)))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -73,10 +73,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
       </Grid>
       <AppliedFilterList />
-      <Button className="button--primary wave-button" disabled>
+      {/* <Button className="button--primary wave-button" disabled>
         <span>Select wave</span>
         <ExpandMoreIcon />
-      </Button>
+      </Button> */}
       <SingleSelect
         options={questionList}
         value={selectedQuestionId}

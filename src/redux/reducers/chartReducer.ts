@@ -28,6 +28,8 @@ const initialState: IChartState = {
     chart: {
       type: "column",
       inverted: false,
+      // plotShadow: false,
+      backgroundColor: "",
       // width: "100%",
       // height: "100%",
       // style: {
@@ -54,7 +56,7 @@ const initialState: IChartState = {
     series: [
       // @ts-ignore
       {
-        color: "#f47c3c",
+        // color: "#f47c3c",
         data: [],
       },
     ],

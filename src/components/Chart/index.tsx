@@ -1,5 +1,4 @@
 import HighchartsReact from "highcharts-react-official";
-// import HighchartsReact from "react-highcharts";
 import Highcharts from "highcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -14,7 +13,12 @@ const Chart: React.FC<ChartProps> = (props) => {
   );
 
   return (
-    <HighchartsReact highcharts={Highcharts} options={chartOptions} immutable />
+    <HighchartsReact
+      containerProps={{ style: { height: "100%" } }}
+      highcharts={Highcharts}
+      options={chartOptions}
+      immutable
+    />
   );
 };
 
