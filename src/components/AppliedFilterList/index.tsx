@@ -1,12 +1,13 @@
 import { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Chip } from "@material-ui/core";
+import { Chip, Tooltip } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { IFilter } from "../../types/IFilter";
 import CustomScrollbar from "../CustomScrollbar";
 import { removeAppliedFilter } from "../../redux/actions/filterActions";
 import { fetchChartData } from "../../services/ChartService";
 import { setChartData } from "../../redux/actions/chartActions";
+import { memo } from "react";
 
 const AppliedFilterList: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -33,14 +34,20 @@ const AppliedFilterList: React.FC = () => {
           <div className="applied-filters__filter-wrapper">
             {appliedFilters.length ? (
               appliedFilters.map((filter, index) => (
-                <Chip
-                  key={index}
-                  variant="outlined"
-                  onDelete={() => removeFilter(filter)}
-                  label={filter.label}
-                  deleteIcon={<CloseIcon />}
-                  className="applied-filters__filter-chip"
-                />
+                <Tooltip
+                  title={`${filter.questionLabel}: ${filter.label}`}
+                  placement="top"
+                  arrow
+                >
+                  <Chip
+                    key={index}
+                    variant="outlined"
+                    onDelete={() => removeFilter(filter)}
+                    label={filter.label}
+                    deleteIcon={<CloseIcon />}
+                    className="applied-filters__filter-chip"
+                  />
+                </Tooltip>
               ))
             ) : (
               <span className="no-selection-text">No filters applied</span>
@@ -52,4 +59,4 @@ const AppliedFilterList: React.FC = () => {
   );
 };
 
-export default AppliedFilterList;
+export default memo(AppliedFilterList);

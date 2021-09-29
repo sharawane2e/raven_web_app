@@ -2,6 +2,7 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { memo } from "react";
 
 interface ChartProps {}
 
@@ -22,4 +23,4 @@ const Chart: React.FC<ChartProps> = (props) => {
   );
 };
 
-export default Chart;
+export default memo(Chart);

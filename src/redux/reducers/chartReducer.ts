@@ -16,6 +16,17 @@ export interface IChartState {
   chartOptions: any;
 }
 
+export const dataLabels = {
+  enabled: true,
+  // color: "#343434",
+  align: "center",
+  format: "{point.y:.2f}%",
+
+  style: {
+    fontSize: "10px",
+  },
+};
+
 const initialState: IChartState = {
   questionData: null,
   chartData: [],
@@ -28,23 +39,24 @@ const initialState: IChartState = {
     chart: {
       type: "column",
       inverted: false,
-      // plotShadow: false,
-      backgroundColor: "",
-      // width: "100%",
-      // height: "100%",
-      // style: {
-      //   height: "100%",
-      // },
     },
     legend: {
       enabled: false,
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat:
+        '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
     },
     xAxis: {
       type: "category",
     },
     yAxis: {
+      allowDecimals: false,
       min: 0,
-      max: 100,
+      title: {
+        text: "",
+      },
     },
     plotOptions: {
       series: {
@@ -54,9 +66,7 @@ const initialState: IChartState = {
       },
     },
     series: [
-      // @ts-ignore
       {
-        // color: "#f47c3c",
         data: [],
       },
     ],

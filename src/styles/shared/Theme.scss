@@ -137,13 +137,14 @@
   }
 }
 
-// .highcharts-text-outline {
-//   stroke: none !important;
-//   fill: none !important;
-// }
-// .highcharts-data-label {
-//   text {
-//     fill: white !important;
-//     font-weight: normal !important;
-//   }
-// }
+.highcharts-text-outline {
+  stroke: none !important;
+  fill: none !important;
+}
+.highcharts-data-label {
+  text {
+    // fill: white !important;
+    font-family: "Nunito Sans", sans-serif !important;
+    font-weight: normal !important;
+  }
+}

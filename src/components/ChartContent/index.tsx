@@ -8,6 +8,7 @@ import {
   fetchQuestionList,
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
+  toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
 import { setChartData } from "../../redux/actions/chartActions";
 import { fetchChartData } from "../../services/ChartService";
@@ -17,13 +18,15 @@ import Chart from "../Chart";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
-import { Button } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { QuestionType } from "../../enums/QuestionType";
 
 interface ChartContentProps {}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
-  const { questions } = useSelector((state: RootState) => state);
+  const {
+    questions,
+    chart: { questionData },
+  } = useSelector((state: RootState) => state);
   const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
@@ -45,6 +48,18 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         .catch((error) => console.log(error));
     }
   }, [questionList]);
+
+  useEffect(() => {
+    if (
+      questionData?.type === QuestionType.GRID ||
+      questionData?.type === QuestionType.GRID_MULTI
+    ) {
+      dispatch(setSelectedBannerQuestionId(""));
+      dispatch(toggleBannerQuestionDisablity(true));
+    } else {
+      dispatch(toggleBannerQuestionDisablity(false));
+    }
+  }, [questionData?.type]);
 
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
@@ -93,6 +108,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         placeholder="Select banner question"
         valueKey="qId"
         labelKey="labelText"
+        disabled={questions.disableBannerQuestion}
         disabledPredicate={(value) => value === selectedQuestionId}
       />
       <div className="chart-content__chart-wrapper">

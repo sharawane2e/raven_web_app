@@ -6,6 +6,7 @@ import {
   setQuestionList,
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
+  toggleBannerQuestionDisablity,
 } from "../actions/questionAction";
 
 export interface IQuestionState {
@@ -13,6 +14,7 @@ export interface IQuestionState {
   bannerQuestionList: IBannerQuestion[];
   selectedQuestionId: string;
   selectedBannerQuestionId: string;
+  disableBannerQuestion: boolean;
 }
 
 const initialState: IQuestionState = {
@@ -20,6 +22,7 @@ const initialState: IQuestionState = {
   bannerQuestionList: [],
   selectedQuestionId: "",
   selectedBannerQuestionId: "",
+  disableBannerQuestion: false,
 };
 
 const questionReducer = createReducer(initialState, (builder) => {
@@ -31,6 +34,14 @@ const questionReducer = createReducer(initialState, (builder) => {
   builder.addCase(setSelectedBannerQuestionId, (state, action) => ({
     ...state,
     selectedBannerQuestionId: action.payload,
+  }));
+
+  builder.addCase(toggleBannerQuestionDisablity, (state, action) => ({
+    ...state,
+    disableBannerQuestion:
+      action.payload !== undefined
+        ? action.payload
+        : !state.disableBannerQuestion,
   }));
 
   builder.addCase(setQuestionList, (state, action) => ({
