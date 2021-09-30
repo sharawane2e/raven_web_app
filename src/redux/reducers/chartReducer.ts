@@ -39,6 +39,7 @@ const initialState: IChartState = {
     },
     legend: {
       enabled: false,
+      reversed: false,
     },
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
