@@ -1,8 +1,8 @@
 .chart-content {
-  .mr-top{
+  .mr-top {
     margin-top: 10px;
   }
-  .mr-button{
+  .mr-button {
     margin-bottom: 10px;
   }
   .chart-content__control-wrapper {
@@ -24,7 +24,12 @@
   }
 
   .chart-content__chart-wrapper {
-    margin-top: 15px;
+    margin-top: 25px;
+    height: calc(100vh - 320px);
+    background: #fff;
+    padding: 20px 15px;
+    border: 1px solid #E1E3E7;
+    border-radius: 2px;
   }
   .wave-button {
     height: 30px;

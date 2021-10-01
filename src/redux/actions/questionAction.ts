@@ -19,6 +19,10 @@ export const setBannerQuestionList = createAction<IBannerQuestion[]>(
   "SET_BANNER_QUESTION_LIST"
 );
 
+export const toggleBannerQuestionDisablity = createAction<boolean | undefined>(
+  "TOGGLE_BANNER_QUESTION_DISABLITY"
+);
+
 export const fetchQuestionList = () => async (dispatch: AppDispatch) => {
   try {
     const res = await ApiRequest.request(ApiUrl.QUESTION, "GET");

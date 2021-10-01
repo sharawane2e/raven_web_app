@@ -27,9 +27,8 @@ const ChartSidebarContent: React.FC = () => {
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
     const updatedFilters = [...filters];
-    let values = [
-      ...(filterQuestionList.find((q) => q.qId === qId)?.value || []),
-    ];
+    const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
+    let values = filterQuestion?.value || [];
     let index = -1;
     values.forEach((v, i) => {
       if (v.labelCode === value.labelCode) {
@@ -65,6 +64,7 @@ const ChartSidebarContent: React.FC = () => {
           qId: qId,
           code: filterValue?.labelCode || "",
           label: filterValue?.labelText || "",
+          questionLabel: filterQuestion?.labelText || "",
         });
       }
     }

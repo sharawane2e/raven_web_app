@@ -17,3 +17,7 @@ export const colorArr = [
   "#B9B9B9",
   "#7A94B0",
 ];
+
+export const primaryBarColor = "#f47c3c";
+
+export const decimalPrecision = 2;
