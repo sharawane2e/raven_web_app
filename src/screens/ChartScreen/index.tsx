@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import clsx from "clsx";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppRouting from "../../AppRouting";
 import Appbar from "../../components/Appbar";
 import CustomScrollbar from "../../components/CustomScrollbar";
@@ -18,8 +18,10 @@ import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
 import ApiUrl from "../../enums/ApiUrl";
+import { setUserProfile } from "../../redux/actions/userActions";
 import { RootState } from "../../redux/store";
 import IRoute from "../../types/IRoute";
+import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
 
 interface ChartScreenProps {
@@ -31,6 +33,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const [openPopup, setOpenPopup] = useState<boolean>(true);
   const [showContent, setShowContent] = useState<boolean>(true);
   const { profile } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   const handlePopupClose = () => {
     if (!showContent) {
@@ -38,8 +41,11 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
       ApiRequest.request(url, "PATCH", { showContentPageCheck: false })
         .then((res) => {
           if (res.success) {
-            // profile?.showContentPage = false;
-            // LocalStorageUtils.setUser(profile);
+            const updatedProfileData: IUserProfile = JSON.parse(
+              JSON.stringify(profile)
+            );
+            updatedProfileData.showContentPage = false;
+            dispatch(setUserProfile(updatedProfileData));
           }
         })
         .catch((error) => console.log(error));
