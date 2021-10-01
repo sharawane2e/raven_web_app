@@ -53,49 +53,23 @@ const ExportChart: React.FC<ExportChartProps> = () => {
         },
       ];
     } else if (questionData?.type === "G") {
-      // console.log("chart data ", chartData);
-      // console.log("question data ", questionData);
-      // let lbs: any = [];
-      // questionData.subGroups.map((subQuestion) => {
-      //   lbs.push(subQuestion.labelText);
-      // });
-
-      // chartData.map((subQuestionCount) => {
-      //   // const name = subQuestionCount.labelText;
-      //   let labels: any = [];
-      //   let values: any = [];
-
-      //   let name;
-      //   for (let i = 0; i < subQuestionCount.options.length; i++) {
-      //     name = subQuestionCount._id;
-
-      //     labels.push(subQuestionCount.options[i].option);
-      //     values.push(subQuestionCount.options[i].count);
-      //   }
-      //   ChartData.push({
-      //     name,
-      //     labels,
-      //     values,
-      //   });
-      // });
-
+      //labels are grouped into seprate array
       let lbs: any = [];
       for (let index = 0; index < questionData.subGroups.length; index++) {
         lbs.push(questionData.subGroups[index].labelText);
       }
-      // console.log("labels", lbs);
-      let names: any = [];
-      let nameCodes: any = [];
-      for (let index = 0; index < questionData.scale.length; index++) {
-        names.push(questionData.scale[index].labelText);
-        nameCodes.push(questionData.scale[index].labelCode);
-      }
-      // console.log("codes:", nameCodes.sort());
-      // console.log("scales", names);
 
+      //scale and its code are grouped into seprate array
+      let scales: any = [];
+      let scaleCodes: any = [];
+      for (let index = 0; index < questionData.scale.length; index++) {
+        scales.push(questionData.scale[index].labelText);
+        scaleCodes.push(questionData.scale[index].labelCode);
+      }
+
+      //all results of options and its counts are grouped into one array
       let questionOptionDataGroup: any = [];
       for (let index = 0; index < chartData.length; index++) {
-        // console.log(index, chartData[index].options);
         for (
           let index2 = 0;
           index2 < chartData[index].options.length;
@@ -105,8 +79,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
         }
       }
 
-      // console.log("semi data ", questionOptionDataGroup);
-      let finalData: any;
+      //now we group all the same options results into one group
+      let groupedOptionsData: any;
       let groupBy = (array: any, key: any) => {
         return array.reduce((result: any, obj: any) => {
           (result[obj[key]] = result[obj[key]] || []).push(obj);
@@ -114,46 +88,33 @@ const ExportChart: React.FC<ExportChartProps> = () => {
           return result;
         }, {});
       };
+      groupedOptionsData = groupBy(questionOptionDataGroup, "option");
 
-      finalData = groupBy(questionOptionDataGroup, "option");
-
-      let final: any = [];
-      let keys = Object.keys(finalData).length;
-      console.log("key length:", keys);
-      console.log("finalData:", finalData);
-      names.map((n: any) => {
-        let vals: any = [];
-
-        let x: any[];
+      //now we need to make a chartData dynamic object
+      let keys = Object.keys(groupedOptionsData).length;
+      console.log("final data options:", groupedOptionsData);
+      scales.map((n: any) => {
         let cnts: any;
         cnts = [];
+
         for (let index = 1; index <= keys; index++) {
-          cnts = [];
-          console.log(finalData[index]);
-          let keys2 = Object.keys(finalData[index]);
-          console.log("keys2: ", keys2.length);
+          let keys2 = Object.keys(groupedOptionsData[index]);
           for (let j = 0; j < keys2.length; j++) {
-            console.log(finalData[index][j].count);
-            cnts.push(finalData[index][j].count);
+            cnts.push(groupedOptionsData[index][j].count);
           }
-          console.log("cunts", cnts);
         }
-        final.push({
+        ChartData.push({
           name: n,
           labels: lbs,
           values: cnts,
         });
-        cnts = [];
       });
 
-      ChartData = final;
       console.log("chart data", ChartData);
-      console.log("amogh this is final :", final);
-
       // labels = [
       //   "Jan",
       //   "Feb",
-      //   "Mar",
+      //   "Marc",
       //   "Apr",
       //   "May",
       //   "Jun",
@@ -175,10 +136,23 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       //   },
       //   {
       //     name: "New York",
-      //     labels,
+      //     labels: [
+      //       "Jan",
+      //       "march",
+      //       "Marc",
+      //       "Apr",
+      //       "May",
+      //       "Jun",
+      //       "Jul",
+      //       "Aug",
+      //       "Sep",
+      //       "Oct",
+      //       "Nov",
+      //       "Dec",
+      //     ],
       //     values: [
-      //       83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5,
-      //       106.6, 92.3,
+      //       83.6, 100, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6,
+      //       92.3,
       //     ],
       //   },
       //   {
@@ -198,12 +172,9 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       //     ],
       //   },
       // ];
-      // console.log("under development ");
     } else if (questionData?.type === "M") {
       console.log("multi question");
     }
-    // console.log("outside final data");
-    // console.log(ChartData);
 
     let fileName,
       mainQuestionText,
