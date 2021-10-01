@@ -4,18 +4,20 @@ import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import pptxgen from "pptxgenjs";
+import { decimalPrecision } from "../../constants/Variables";
+import { QuestionType } from "../../enums/QuestionType";
 interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const {
-    chart: { chartData, questionData },
+    chart: { chartData, questionData, baseCount },
   } = useSelector((state: RootState) => state);
 
   let lb: any = [];
   let val: any = [];
   let labels: any = [];
   const generateChart = async () => {
-    let ChartData: any = [];
+    let seriesData: any[] = [];
     // console.log(chartData);
     // console.log(questionData);
     if (questionData?.type === "S" || questionData?.type === "R") {
@@ -45,133 +47,40 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       sortedCountObj.map((i) => {
         val.push(i.count);
       });
-      ChartData = [
+      seriesData = [
         {
           name: questionData?.labelText,
           labels: lb,
           values: val,
         },
       ];
-    } else if (questionData?.type === "G") {
-      //labels are grouped into seprate array
-      let lbs: any = [];
-      for (let index = 0; index < questionData.subGroups.length; index++) {
-        lbs.push(questionData.subGroups[index].labelText);
-      }
+    } else if (
+      questionData?.type === QuestionType.GRID ||
+      questionData?.type === QuestionType.GRID_MULTI
+    ) {
+      labels = questionData.subGroups.map((subGroup) => subGroup.labelText);
 
-      //scale and its code are grouped into seprate array
-      let scales: any = [];
-      let scaleCodes: any = [];
-      for (let index = 0; index < questionData.scale.length; index++) {
-        scales.push(questionData.scale[index].labelText);
-        scaleCodes.push(questionData.scale[index].labelCode);
-      }
-
-      //all results of options and its counts are grouped into one array
-      let questionOptionDataGroup: any = [];
-      for (let index = 0; index < chartData.length; index++) {
-        for (
-          let index2 = 0;
-          index2 < chartData[index].options.length;
-          index2++
-        ) {
-          questionOptionDataGroup.push(chartData[index].options[index2]);
-        }
-      }
-
-      //now we group all the same options results into one group
-      let groupedOptionsData: any;
-      let groupBy = (array: any, key: any) => {
-        return array.reduce((result: any, obj: any) => {
-          (result[obj[key]] = result[obj[key]] || []).push(obj);
-
-          return result;
-        }, {});
-      };
-      groupedOptionsData = groupBy(questionOptionDataGroup, "option");
-
-      //now we need to make a chartData dynamic object
-      let keys = Object.keys(groupedOptionsData).length;
-      console.log("final data options:", groupedOptionsData);
-      scales.map((n: any) => {
-        let cnts: any;
-        cnts = [];
-
-        for (let index = 1; index <= keys; index++) {
-          let keys2 = Object.keys(groupedOptionsData[index]);
-          for (let j = 0; j < keys2.length; j++) {
-            cnts.push(groupedOptionsData[index][j].count);
-          }
-        }
-        ChartData.push({
-          name: n,
-          labels: lbs,
-          values: cnts,
+      questionData.scale.forEach((scaleOption) => {
+        seriesData.push({
+          name: scaleOption.labelText,
+          labels,
+          values: questionData.subGroups.map((subGroup: any) => {
+            const subGroupData = chartData.find(
+              (data) => data._id === subGroup.qId
+            );
+            if (subGroupData) {
+              const data = subGroupData?.options?.find(
+                (scaleData: any) => scaleData.option === scaleOption.labelCode
+              )?.count;
+              return data !== undefined
+                ? +((data / baseCount) * 100).toFixed(decimalPrecision)
+                : 0;
+            } else {
+              return 0;
+            }
+          }),
         });
       });
-
-      console.log("chart data", ChartData);
-      // labels = [
-      //   "Jan",
-      //   "Feb",
-      //   "Marc",
-      //   "Apr",
-      //   "May",
-      //   "Jun",
-      //   "Jul",
-      //   "Aug",
-      //   "Sep",
-      //   "Oct",
-      //   "Nov",
-      //   "Dec",
-      // ];
-      // ChartData = [
-      //   {
-      //     name: "Tokyo",
-      //     labels,
-      //     values: [
-      //       49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1,
-      //       95.6, 54.4,
-      //     ],
-      //   },
-      //   {
-      //     name: "New York",
-      //     labels: [
-      //       "Jan",
-      //       "march",
-      //       "Marc",
-      //       "Apr",
-      //       "May",
-      //       "Jun",
-      //       "Jul",
-      //       "Aug",
-      //       "Sep",
-      //       "Oct",
-      //       "Nov",
-      //       "Dec",
-      //     ],
-      //     values: [
-      //       83.6, 100, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6,
-      //       92.3,
-      //     ],
-      //   },
-      //   {
-      //     name: "London",
-      //     labels,
-      //     values: [
-      //       48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3,
-      //       51.2,
-      //     ],
-      //   },
-      //   {
-      //     name: "Berlin",
-      //     labels,
-      //     values: [
-      //       42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8,
-      //       51.1,
-      //     ],
-      //   },
-      // ];
     } else if (questionData?.type === "M") {
       console.log("multi question");
     }
@@ -203,7 +112,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     let tableSlide = pptxGenJsObj.addSlide();
 
     let colors;
-    if (ChartData.length > 1) {
+    if (seriesData.length > 1) {
       colors = [
         "#CC6933",
         "#E37439",
@@ -240,6 +149,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       // catAxisOrientation: "minMax",
       showLegend: true,
       showTitle: false,
+      dataLabelFormatCode: "0%;;;,##.## %",
     };
 
     let verticalBarChartConfiguration = {
@@ -446,20 +356,20 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     vericalChartSlide.addChart(
       pptxGenJsObj.ChartType.bar,
-      ChartData,
+      seriesData,
       verticalBarChartConfiguration
     );
 
     horizontalChartSlide.addChart(
       pptxGenJsObj.ChartType.bar,
-      ChartData,
+      seriesData,
       horizontalBarChartConfiguration
     );
 
     let row = [];
-    row.push(["", ...ChartData[0].labels]);
-    for (let i = 0; i < ChartData.length; i++) {
-      row.push([ChartData[i].name, ...ChartData[i].values]);
+    row.push(["", ...seriesData[0].labels]);
+    for (let i = 0; i < seriesData.length; i++) {
+      row.push([seriesData[i].name, ...seriesData[i].values]);
     }
 
     tableSlide.addShape(pptxGenJsObj.ShapeType.rect, {
@@ -479,7 +389,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       border: { type: "solid" },
     });
 
-    // await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
+    await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
