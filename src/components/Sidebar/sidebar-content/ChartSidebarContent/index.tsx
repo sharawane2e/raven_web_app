@@ -27,9 +27,13 @@ const ChartSidebarContent: React.FC = () => {
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
     const updatedFilters = [...filters];
+
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
-    let values = filterQuestion?.value || [];
+    let values: IQuestionOption[] = filterQuestion?.value
+      ? JSON.parse(JSON.stringify(filterQuestion?.value))
+      : [];
     let index = -1;
+
     values.forEach((v, i) => {
       if (v.labelCode === value.labelCode) {
         index = i;
@@ -42,7 +46,7 @@ const ChartSidebarContent: React.FC = () => {
     if (index >= 0) {
       values.splice(index, 1);
     } else {
-      values.push(value);
+      values.push({ ...value });
     }
 
     for (let index = 0; index < values.length; index++) {
