@@ -13,8 +13,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  filters: filterReducer,
   questions: questionReducer,
+  filters: filterReducer,
   chart: chartReducer,
   user: persistReducer(persistConfig, userReducer),
 });

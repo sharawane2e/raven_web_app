@@ -1,6 +1,3 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { IBannerQuestion } from "../../types/IBannerQuestion";
-import { IQuestion } from "../../types/IQuestion";
 import {
   setBannerQuestionList,
   setQuestionList,
@@ -8,6 +5,9 @@ import {
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
 } from "../actions/questionAction";
+import { createReducer } from "@reduxjs/toolkit";
+import { IBannerQuestion } from "../../types/IBannerQuestion";
+import { IQuestion } from "../../types/IQuestion";
 
 export interface IQuestionState {
   questionList: IQuestion[];

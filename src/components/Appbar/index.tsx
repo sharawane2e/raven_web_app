@@ -70,12 +70,12 @@ const Appbar: React.FC<AppbarProps> = (props) => {
 
         <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
-      <div className="appbar__right-panel">
+      {/* <div className="appbar__right-panel">
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
           <ProfileAvatar text={user?.name || ""} />
           <ExpandMoreIcon className="down-arrow-icon" />
         </div>
-      </div>
+      </div> */}
       <Menu
         anchorEl={anchorEl}
         id="menu"

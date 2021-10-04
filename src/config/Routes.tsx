@@ -17,19 +17,19 @@ import UserPanelScreen from "../screens/UserPanelScreen";
 import IRoute from "../types/IRoute";
 
 const Routes: IRoute[] = [
-  {
-    path: [WebUrl.CHANGE_PASSWORD],
-    component: UserPanelScreen,
-    isPrivate: true,
-    exact: true,
-    routes: [
-      {
-        path: WebUrl.CHANGE_PASSWORD,
-        component: ChangePassword,
-        exact: true,
-      },
-    ],
-  },
+  // {
+  //   path: [WebUrl.CHANGE_PASSWORD],
+  //   component: UserPanelScreen,
+  //   isPrivate: true,
+  //   exact: true,
+  //   routes: [
+  //     {
+  //       path: WebUrl.CHANGE_PASSWORD,
+  //       component: ChangePassword,
+  //       exact: true,
+  //     },
+  //   ],
+  // },
   {
     path: [WebUrl.HOME],
     component: ChartScreen,
@@ -41,6 +41,15 @@ const Routes: IRoute[] = [
         component: ChartContent,
       },
     ],
+  },
+  {
+    path: WebUrl.BASE,
+    component: () => <Redirect to={WebUrl.HOME} />,
+    exact: true,
+  },
+  {
+    path: "*",
+    component: PageNotFoundScreen,
   },
 
   {
@@ -60,59 +69,50 @@ const Routes: IRoute[] = [
         component: AddUser,
         exact: true,
       },
-      {
-        path: WebUrl.USER_DETAILS,
-        component: UserDetails,
-        exact: true,
-      },
-      {
-        path: WebUrl.EDIT_USER,
-        component: EditUser,
-        exact: true,
-      },
-      {
-        path: WebUrl.ADMIN,
-        component: () => <Redirect to={WebUrl.USER_DETAILS} />,
-        exact: true,
-      },
+      // {
+      //   path: WebUrl.USER_DETAILS,
+      //   component: UserDetails,
+      //   exact: true,
+      // },
+      // {
+      //   path: WebUrl.EDIT_USER,
+      //   component: EditUser,
+      //   exact: true,
+      // },
+      // {
+      //   path: WebUrl.ADMIN,
+      //   component: () => <Redirect to={WebUrl.USER_DETAILS} />,
+      //   exact: true,
+      // },
     ],
   },
-  {
-    path: [
-      WebUrl.LOGIN,
-      WebUrl.FORGOT_PASSWORD,
-      WebUrl.SET_PASSWORD,
-      WebUrl.RESET_PASSWORD,
-    ],
-    component: PublicFormScreen,
-    exact: true,
-    routes: [
-      {
-        path: WebUrl.LOGIN,
-        component: Login,
-      },
-      {
-        path: WebUrl.FORGOT_PASSWORD,
-        component: ForgotPassword,
-      },
-      {
-        path: WebUrl.SET_PASSWORD,
-        component: () => <SetPassword variant="set" />,
-      },
-      {
-        path: WebUrl.RESET_PASSWORD,
-        component: () => <SetPassword variant="reset" />,
-      },
-    ],
-  },
-  {
-    path: WebUrl.BASE,
-    component: () => <Redirect to={WebUrl.HOME} />,
-    exact: true,
-  },
-  {
-    path: "*",
-    component: PageNotFoundScreen,
-  },
+  // {
+  //   path: [
+  //     WebUrl.LOGIN,
+  //     WebUrl.FORGOT_PASSWORD,
+  //     WebUrl.SET_PASSWORD,
+  //     WebUrl.RESET_PASSWORD,
+  //   ],
+  //   component: PublicFormScreen,
+  //   exact: true,
+  //   routes: [
+  //     {
+  //       path: WebUrl.LOGIN,
+  //       component: Login,
+  //     },
+  //     {
+  //       path: WebUrl.FORGOT_PASSWORD,
+  //       component: ForgotPassword,
+  //     },
+  //     {
+  //       path: WebUrl.SET_PASSWORD,
+  //       component: () => <SetPassword variant="set" />,
+  //     },
+  //     {
+  //       path: WebUrl.RESET_PASSWORD,
+  //       component: () => <SetPassword variant="reset" />,
+  //     },
+  //   ],
+  // },
 ];
 export default Routes;

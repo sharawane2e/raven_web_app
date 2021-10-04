@@ -7,6 +7,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import store, { persistor } from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
+import LocalStorageUtils from "./utils/LocalStorageUtils";
+
+LocalStorageUtils.setAccessToken(
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRkOTJhMmFiNmIxZTEyODBhYzVkYWEiLCJhY3RpdmUiOnRydWUsImlzQWRtaW4iOnRydWUsImlzS2V5QWRtaW4iOnRydWUsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaWF0IjoxNjMzMzM5NTg3LCJleHAiOjMxNjMzMzM5NTg3fQ.WYtysmMXuBdqUSFotZvWsVL0loI8ToqTx9d_cdkQRgo"
+);
 
 ReactDOM.render(
   <React.StrictMode>
