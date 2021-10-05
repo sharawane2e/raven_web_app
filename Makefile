@@ -6,3 +6,6 @@ build-staging:
 
 build-staging-internal: 
 	docker build . -t web-app-staging-internal-image -f Dockerfile.staging
+
+build-presentation: 
+	docker build . -t web-app-presentation-image -f Dockerfile.presentation
