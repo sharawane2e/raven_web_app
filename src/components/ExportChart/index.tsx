@@ -3,390 +3,198 @@ import { ReactComponent as PdfIcon } from "../../assets/svg/pdf-icon.svg";
 import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+
 import pptxgen from "pptxgenjs";
-import { decimalPrecision } from "../../constants/Variables";
+import {
+  singleChartDataGen,
+  gridChartDataGen,
+  tableChartDataGen,
+} from "../../utils/PptDataGenerator";
 import { QuestionType } from "../../enums/QuestionType";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { colorArr, primaryBarColor } from "../../constants/Variables";
+import * as path from "path";
+
 interface ExportChartProps {}
+
+const setDefaultSlideProperties = (
+  slide: any,
+  pptxGenJsObj: any,
+  config: ISlideConfig
+) => {
+  const { mainQuestionText, chartFontFace, baseText, questionText } = config;
+
+  slide.addShape(pptxGenJsObj.ShapeType.rect, {
+    x: 0.5,
+    y: 0,
+    w: 0.1,
+    h: 0.5,
+    fill: { color: primaryBarColor },
+    line: { type: "none" },
+  });
+  slide.addText(mainQuestionText, {
+    x: 1,
+    y: 0.25,
+    w: 8,
+    fontFace: chartFontFace,
+    fontSize: 10,
+    color: "000000",
+    align: "left",
+  });
+  slide.addText(baseText, {
+    x: 0.5,
+    y: 4.9,
+    w: 9.5,
+    fontFace: chartFontFace,
+    fontSize: 8,
+    color: "000000",
+    align: "left",
+    bold: true,
+  });
+  slide.addText(questionText, {
+    x: 0.5,
+    y: 5.1,
+    w: 9.5,
+    fontFace: chartFontFace,
+    fontSize: 8,
+    color: "000000",
+    align: "left",
+  });
+
+  slide.addText("© 2020, HFS Research Ltd", {
+    x: 4.2,
+    y: 5.4,
+    w: 1.5,
+    fontFace: chartFontFace,
+    fontSize: 8,
+    color: "666666",
+    align: "center",
+  });
+
+  // "/src/assets/svg/brand-logo.jpg"
+  // console.log(__dirname);
+  // slide.addImage({
+  //   path: path.join(__dirname, "../../assets/svg/brand-logo.svg"),
+
+  //   x: 0,
+  //   y: 5.2,
+  //   w: 1,
+  //   h: 0.4,
+  // });
+};
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const {
     chart: { chartData, questionData, baseCount },
   } = useSelector((state: RootState) => state);
 
-  let lb: any = [];
-  let val: any = [];
-  let labels: any = [];
   const generateChart = async () => {
+    let pptxGenJsObj = new pptxgen();
+    let fileName: string = "HFS- " + questionData?.labelText;
+    let mainQuestionText: string = questionData?.labelText || "";
+    let baseText: string = `Base: Total = ${baseCount}`;
+    let questionText: string = questionData?.questionText || "";
+    let chartFontFace: string = "Calibri";
+    let vericalColumnSlide = pptxGenJsObj.addSlide();
+    // let vericalStackedSlide = pptxGenJsObj.addSlide();
+    let horizontalColumnSlide = pptxGenJsObj.addSlide();
+    // let horizontalStackedSlide = pptxGenJsObj.addSlide();
+    let tableSlide = pptxGenJsObj.addSlide();
+
+    let slideConfig: ISlideConfig = {
+      mainQuestionText,
+      baseText,
+      questionText,
+      chartFontFace,
+    };
     let seriesData: any[] = [];
-    // console.log(chartData);
-    // console.log(questionData);
-    if (questionData?.type === "S" || questionData?.type === "R") {
-      let options = questionData?.options || [];
-      let sortedOptions = options.map((i) => {
-        return parseInt(i.labelCode, 10);
-      });
 
-      sortedOptions.map((item) => {
-        let cLb = options.find(
-          (element) => element.labelCode == item.toString()
-        );
-
-        lb.push(cLb?.labelText);
-      });
-
-      let ChartDataCodeToInt = chartData.map((i) => {
-        let code = parseInt(i.labelCode);
-        let count = i.count;
-
-        return { code, count };
-      });
-      const sortedCountObj = ChartDataCodeToInt.sort((first, second) =>
-        first.code > second.code ? 1 : -1
-      );
-
-      sortedCountObj.map((i) => {
-        val.push(i.count);
-      });
-      seriesData = [
-        {
-          name: questionData?.labelText,
-          labels: lb,
-          values: val,
-        },
-      ];
+    if (
+      questionData?.type === QuestionType.SINGLE ||
+      questionData?.type === QuestionType.RANK ||
+      questionData?.type === QuestionType.MULTI
+    ) {
+      seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
       questionData?.type === QuestionType.GRID ||
       questionData?.type === QuestionType.GRID_MULTI
     ) {
-      labels = questionData.subGroups.map((subGroup) => subGroup.labelText);
-
-      questionData.scale.forEach((scaleOption) => {
-        seriesData.push({
-          name: scaleOption.labelText,
-          labels,
-          values: questionData.subGroups.map((subGroup: any) => {
-            const subGroupData = chartData.find(
-              (data) => data._id === subGroup.qId
-            );
-            if (subGroupData) {
-              const data = subGroupData?.options?.find(
-                (scaleData: any) => scaleData.option === scaleOption.labelCode
-              )?.count;
-              return data !== undefined
-                ? +((data / baseCount) * 100).toFixed(decimalPrecision)
-                : 0;
-            } else {
-              return 0;
-            }
-          }),
-        });
-      });
-    } else if (questionData?.type === "M") {
-      console.log("multi question");
+      seriesData = gridChartDataGen(questionData, chartData, baseCount);
+    } else {
+      console.log("under development");
     }
-
-    let fileName,
-      mainQuestionText,
-      baseText,
-      questionText,
-      tableHeading: string;
-
-    let VChartType, VChartGroupingType, HChartType, HChartGroupingType: any;
-    let pptxGenJsObj = new pptxgen();
-
-    fileName = "HFS- " + questionData?.labelText;
-    mainQuestionText = questionData?.labelText || "";
-    baseText =
-      "Base: Total = 100 Filters: Gender (M) / Age (20 -30,30 – 40) / Region (USA)";
-    questionText = questionData?.questionText || "";
-
-    VChartType = "col";
-    VChartGroupingType = "clustered	";
-    tableHeading = "Chart Data";
-    HChartType = "bar";
-    HChartGroupingType = "percentStacked";
-
-    //slides
-    let vericalChartSlide = pptxGenJsObj.addSlide();
-    let horizontalChartSlide = pptxGenJsObj.addSlide();
-    let tableSlide = pptxGenJsObj.addSlide();
 
     let colors;
     if (seriesData.length > 1) {
-      colors = [
-        "#CC6933",
-        "#E37439",
-        "#F47C3C",
-        "#323C4E",
-        "#566fa3",
-        "#ECECEC",
-        "#93B0E6",
-        "#849ECF",
-        "#67ABE6",
-        "#989A9B",
-        "#A3ABAE",
-        "#47769E",
-        "#CCCCCC",
-        "#B9B9B9",
-        "#7A94B0",
-      ];
+      colors = [...colorArr];
     } else {
-      colors = ["#F47C3C"];
+      colors = [primaryBarColor];
     }
+
     const commonChartProperties = {
-      x: 0,
-      y: 0.9,
-      w: 10,
-      h: 3.6,
+      x: 0.3,
+      y: 0.5,
+      w: 9.4,
+      h: 4.2,
       chartColors: colors,
-      dataLabelFontFace: "Arial",
-      dataLabelFontSize: 8,
+      dataLabelFontFace: chartFontFace,
+      dataLabelFontSize: 4,
       dataLabelFontBold: true,
       showValue: true,
-      catAxisLabelColor: "000000",
-      catAxisLabelFontFace: "Courier",
-      catAxisLabelFontSize: 12,
-      // catAxisOrientation: "minMax",
+      catAxisLabelColor: "666666",
+      catAxisLabelFontFace: chartFontFace,
+      catAxisLabelFontSize: 6,
+      valAxisLabelFontSize: 6,
+      valAxisLabelColor: "666666",
+      valAxisLabelFontFace: chartFontFace,
+      legendFontSize: 6,
       showLegend: true,
       showTitle: false,
-      dataLabelFormatCode: "0%;;;,##.## %",
-    };
-
-    let verticalBarChartConfiguration = {
+      dataLabelFormatCode: "0%;;;,##.##%",
       dataLabelColor: "000000",
-      ...commonChartProperties,
-      barDir: VChartType.toLowerCase(),
-      barGrouping: VChartGroupingType,
     };
 
-    let horizontalBarChartConfiguration = {
+    setDefaultSlideProperties(vericalColumnSlide, pptxGenJsObj, slideConfig);
+    setDefaultSlideProperties(horizontalColumnSlide, pptxGenJsObj, slideConfig);
+    // setDefaultSlideProperties(vericalStackedSlide, pptxGenJsObj, slideConfig);
+    // setDefaultSlideProperties(
+    //   horizontalStackedSlide,
+    //   pptxGenJsObj,
+    //   slideConfig
+    // );
+    setDefaultSlideProperties(tableSlide, pptxGenJsObj, slideConfig);
+
+    vericalColumnSlide.addChart(
+      pptxGenJsObj.ChartType.bar,
+      seriesData,
+
+      {
+        ...commonChartProperties,
+        dataLabelColor: "000000",
+        barDir: "col",
+        barGrouping: "clustered",
+        legendPos: "b",
+        dataBorder: { pt: 1, color: "0000ffff" },
+      }
+    );
+
+    horizontalColumnSlide.addChart(pptxGenJsObj.ChartType.bar, seriesData, {
+      ...commonChartProperties,
+      legendPos: "b",
       dataLabelColor: "FFFFFF",
-      ...commonChartProperties,
-      barDir: HChartType,
-      barGrouping: HChartGroupingType,
-    };
-    vericalChartSlide.addShape(pptxGenJsObj.ShapeType.rect, {
-      x: 0.5,
-      y: 0,
-      w: 0.1,
-      h: 0.8,
-      fill: { color: "F47C3C" },
-      line: { type: "none" },
-    });
-    vericalChartSlide.addText(mainQuestionText, {
-      x: 1,
-      y: 0.4,
-      w: 8,
-      fontFace: "Calibri",
-      fontSize: 16,
-      color: "000000",
-      align: "left",
-    });
-    vericalChartSlide.addText(baseText, {
-      x: 0,
-      y: 4.6,
-      w: 10,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "left",
-      bold: true,
-    });
-    vericalChartSlide.addText(questionText, {
-      x: 0,
-      y: 4.8,
-      w: 10,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "left",
+      barDir: "bar",
+      barGrouping: "percentStacked",
     });
 
-    vericalChartSlide.addText("© 2020, HFS Research Ltd", {
-      x: 4.2,
-      y: 5.2,
-      w: 1.5,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "center",
-    });
+    const row = tableChartDataGen(seriesData);
 
-    // add image path and set x and y cords according to it
-    // vericalChartSlide.addImage({
-    //   path: 'https://cdn1.expresscomputer.in/wp-content/uploads/2018/10/17211510/HFS.jpg',
-    //   x: 0,
-    //   y: 5.2,
-    //   w: 1,
-    // });
-    vericalChartSlide.addText("HFS Research", {
-      x: 0,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "F47C3C",
-      align: "left",
-    });
-
-    vericalChartSlide.addText("Page 1", {
-      x: 9,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "right",
-    });
-
-    //htext
-    horizontalChartSlide.addShape(pptxGenJsObj.ShapeType.rect, {
-      x: 0.5,
-      y: 0,
-      w: 0.1,
-      h: 0.8,
-      fill: { color: "F47C3C" },
-      line: { type: "none" },
-    });
-    horizontalChartSlide.addText(mainQuestionText, {
-      x: 1,
-      y: 0.4,
-      w: 8,
-      fontFace: "Calibri",
-      fontSize: 16,
-      color: "000000",
-      align: "left",
-    });
-    horizontalChartSlide.addText(baseText, {
-      x: 0,
-      y: 4.6,
-      w: 10,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "left",
-      bold: true,
-    });
-    horizontalChartSlide.addText(questionText, {
-      x: 0,
-      y: 4.8,
-      w: 10,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "left",
-    });
-
-    horizontalChartSlide.addText("© 2020, HFS Research Ltd", {
-      x: 4.2,
-      y: 5.2,
-      w: 1.5,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "center",
-    });
-
-    // add image path and set x and y cords according to it
-    // horizontalChartSlide.addImage({
-    //   path: 'https://cdn1.expresscomputer.in/wp-content/uploads/2018/10/17211510/HFS.jpg',
-    //   x: 0,
-    //   y: 5.2,
-    //   w: 1,
-    // });
-    horizontalChartSlide.addText("HFS Research", {
-      x: 0,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "F47C3C",
-      align: "left",
-    });
-    horizontalChartSlide.addText("Page 2", {
-      x: 9,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "right",
-    });
-
-    //table slide
-
-    tableSlide.addText(tableHeading, {
-      x: 0.5,
-      y: 0.4,
-      w: 8,
-      fontFace: "Calibri",
-      fontSize: 16,
-      color: "000000",
-      align: "center",
-    });
-
-    tableSlide.addText("© 2020, HFS Research Ltd", {
-      x: 4.2,
-      y: 5.2,
-      w: 1.5,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "center",
-    });
-
-    tableSlide.addText("HFS Research", {
-      x: 0,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "F47C3C",
-      align: "left",
-    });
-    tableSlide.addText("Page 3", {
-      x: 9,
-      y: 5.2,
-      w: 1,
-      fontFace: "Calibri",
-      fontSize: 8,
-      color: "000000",
-      align: "right",
-    });
-
-    vericalChartSlide.addChart(
-      pptxGenJsObj.ChartType.bar,
-      seriesData,
-      verticalBarChartConfiguration
-    );
-
-    horizontalChartSlide.addChart(
-      pptxGenJsObj.ChartType.bar,
-      seriesData,
-      horizontalBarChartConfiguration
-    );
-
-    let row = [];
-    row.push(["", ...seriesData[0].labels]);
-    for (let i = 0; i < seriesData.length; i++) {
-      row.push([seriesData[i].name, ...seriesData[i].values]);
-    }
-
-    tableSlide.addShape(pptxGenJsObj.ShapeType.rect, {
-      x: 0.5,
-      y: 0,
-      w: 0.1,
-      h: 0.8,
-      fill: { color: "F47C3C" },
-      line: { type: "none" },
-    });
-    // @ts-ignore
     tableSlide.addTable(row, {
-      x: 0.5,
-      y: 1,
+      x: 0.3,
+      y: 0.6,
       h: 3,
-      w: 9,
+      w: 9.4,
       border: { type: "solid" },
+      fontSize: 6,
     });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
