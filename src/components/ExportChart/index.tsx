@@ -204,7 +204,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       h: 3,
       w: 9.4,
       //@ts-ignore
-      fill:"e6e6e6",
+      //fill:"e6e6e6",
       border: {pt:.4, type: "solid", color:'E6E6E6'},
       //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
       //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
@@ -217,6 +217,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
+
     {
       renderChild: () => <PptIcon />,
       onClick: generateChart,
