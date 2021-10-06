@@ -81,7 +81,9 @@ export function gridChartDataGen(
 
 export function tableChartDataGen(seriesData: any) {
   let row = [];
+
   row.push(["", ...seriesData[0].labels]);
+  console.log(row)
   for (let i = 0; i < seriesData.length; i++) {
     row.push([seriesData[i].name, ...seriesData[i].values]);
   }
