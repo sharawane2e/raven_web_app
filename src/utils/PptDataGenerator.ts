@@ -82,7 +82,7 @@ export function gridChartDataGen(
 export function tableChartDataGen(seriesData: any) {
   let rows = [];
   let scale: any = [];
-  seriesData.map((index: any) => {
+  seriesData.forEach((index: any) => {
     scale.push(index.name);
   });
   rows.push(["", ...scale]);
