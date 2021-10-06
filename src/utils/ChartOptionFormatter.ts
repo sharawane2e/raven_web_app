@@ -20,7 +20,7 @@ export const getChartOptions = (
       case QuestionType.MULTI:
         return getSingleChartOptions(questionData, chartData, baseCount);
       case QuestionType.RANK:
-        return getSingleChartOptions(questionData, chartData, baseCount);
+        return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
