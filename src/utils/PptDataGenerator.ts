@@ -80,27 +80,23 @@ export function gridChartDataGen(
 }
 
 export function tableChartDataGen(seriesData: any) {
-  let row = [];
-  // row.push(["", ...seriesData[0].labels]);
-  // for (let i = 0; i < seriesData.length; i++) {
-  //   row.push([seriesData[i].name, ...seriesData[i].values]);
-  // }
-  // console.log("row", row);
-  debugger;
+  let rows = [];
   let scale: any = [];
   seriesData.map((index: any) => {
     scale.push(index.name);
   });
-  row.push(["", ...scale]);
-  let a: any = [];
-  let b: any = [];
-  for (let k = 0; k < seriesData[0].values.length; k++) {
-    seriesData.map((d: any) => {
-      b.push(d.values[k]);
+  rows.push(["", ...scale]);
+  let subRow: any = [];
+  for (let k = 0; k < seriesData[0].labels.length; k++) {
+    seriesData.forEach((d: any) => {
+      if (d.values[k]) {
+        subRow.push(d.values[k]);
+      } else {
+        subRow.push(0);
+      }
     });
-    a.push([seriesData[0].labels[k], ...b]);
-    b = [];
+    rows.push([seriesData[0].labels[k], ...subRow]);
+    subRow = [];
   }
-  row.push(...a);
-  return row;
+  return rows;
 }
