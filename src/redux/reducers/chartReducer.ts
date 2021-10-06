@@ -14,6 +14,7 @@ export interface IChartState {
   chartOrientation: ChartOrientation;
   chartType: ChartType;
   chartOptions: any;
+  baseCount: number;
 }
 
 export const dataLabels = {
@@ -70,6 +71,7 @@ const initialState: IChartState = {
       },
     ],
   },
+  baseCount: 0,
 };
 
 const chartReducer = createReducer(initialState, (builder) => {

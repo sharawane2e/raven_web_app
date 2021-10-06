@@ -49,6 +49,7 @@ export const fetchChartData = async (
     if (response.success) {
       chartData.chartData = response.data.chartData;
       chartData.questionData = response.data.questionData;
+      chartData.baseCount = response.data.baseCount;
 
       chartData.chartOptions = {
         ...chart.chartOptions,
