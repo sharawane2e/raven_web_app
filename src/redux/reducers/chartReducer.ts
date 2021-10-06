@@ -19,10 +19,7 @@ export interface IChartState {
 
 export const dataLabels = {
   enabled: true,
-  // color: "#343434",
-  align: "center",
   format: "{point.y:.2f}%",
-
   style: {
     fontSize: "10px",
   },
@@ -43,6 +40,7 @@ const initialState: IChartState = {
     },
     legend: {
       enabled: false,
+      reversed: false,
     },
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
@@ -63,6 +61,7 @@ const initialState: IChartState = {
       series: {
         dataLabels: {
           enabled: true,
+          x: 0,
         },
       },
     },
