@@ -222,12 +222,18 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       y: 0.6,
       h: 3,
       w: 9.4,
-      border: { type: "solid" },
+      //@ts-ignore
+      fill:"e6e6e6",
+      border: {pt:.4, type: "solid", color:'E6E6E6'},
       //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
       //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
       fontSize: 6,
       //@ts-ignore
+<<<<<<< HEAD
       pt: 0.5,
+=======
+      
+>>>>>>> 47e8713304d1bcca397c440c3f02e30d5f551bfe
     });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
