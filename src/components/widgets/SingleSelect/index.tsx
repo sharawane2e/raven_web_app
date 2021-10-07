@@ -30,6 +30,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
         value={value}
         // onChange={onChange}
         displayEmpty
+        className={props.className}
         disabled={props.disabled}
         inputProps={{ "aria-label": "Without label" }}
         IconComponent={ExpandMoreIcon}

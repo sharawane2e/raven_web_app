@@ -58,7 +58,11 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
     },
   ];
 
-  return <ButtonGroup groupTitle="Chart type" buttonConfig={buttonConfig} />;
+  return <ButtonGroup 
+  groupTitle="Chart type" 
+  buttonConfig={buttonConfig} 
+  className=" Step-6"
+  />;
 };
 
 export default ChartTypeControl;

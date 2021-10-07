@@ -98,7 +98,7 @@ const ChartSidebarContent: React.FC = () => {
     <div className="chart-sidebar">
       <div className="chart-sidebar__filter-wrapper">
         <CustomScrollbar>
-          <div className="chart-sidebar__filter-questions">
+          <div className="chart-sidebar__filter-questions Step-3">
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
                 key={filterIndex}
@@ -114,7 +114,7 @@ const ChartSidebarContent: React.FC = () => {
         </CustomScrollbar>
       </div>
       <div className="chart-sidebar__footer">
-        <Button className="button--primary" onClick={applyFilters}>
+        <Button className="button--primary Step-4" onClick={applyFilters}>
           Apply
         </Button>
         <Button
