@@ -52,7 +52,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   useEffect(() => {
     if (
       questionData?.type === QuestionType.GRID ||
-      questionData?.type === QuestionType.GRID_MULTI
+      questionData?.type === QuestionType.GRID_MULTI ||
+      questionData?.type === QuestionType.RANK
     ) {
       dispatch(setSelectedBannerQuestionId(""));
       dispatch(toggleBannerQuestionDisablity(true));
