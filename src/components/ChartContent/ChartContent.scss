@@ -38,6 +38,12 @@
     margin: 3px;
     margin-bottom: 15px;
   }
+
+  .chart-content__base-count {
+    font-size: map-get($map: $text-size, $key: small);
+    color: map-get($map: $text-color, $key: primary);
+    margin-top: 10px;
+  }
 }
 .orientation-control {
   .active {
