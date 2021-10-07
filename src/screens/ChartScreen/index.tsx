@@ -34,7 +34,7 @@ interface ChartScreenProps {
 const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
   const [openPopup, setOpenPopup] = useState<boolean>(true);
-  const [showChartTour, setShowChartTour] = useState<boolean>(true);
+  const [showChartTour, setShowChartTour] = useState<boolean>(false);
   const [showContent, setShowContent] = useState<boolean>(true);
   const { profile } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         .catch((error) => console.log(error));
     }
     setOpenPopup(false);
+    setShowChartTour(true);
   };
 
   return (
