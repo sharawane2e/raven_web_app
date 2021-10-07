@@ -101,6 +101,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         onItemSelect={handleQuestionChange}
         placeholder="Please select a question"
         valueKey="qId"
+        labelKey="labelText"
         className="Step-1"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
       />
