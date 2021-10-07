@@ -117,14 +117,14 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     if (
       (questionData?.type === QuestionType.SINGLE ||
-        questionData?.type === QuestionType.RANK ||
         questionData?.type === QuestionType.MULTI) &&
       !selectedBannerQuestionId
     ) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
       (questionData?.type === QuestionType.GRID ||
-        questionData?.type === QuestionType.GRID_MULTI) &&
+        questionData?.type === QuestionType.GRID_MULTI ||
+        questionData?.type === QuestionType.RANK) &&
       !selectedBannerQuestionId
     ) {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
@@ -238,7 +238,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       renderChild: () => <PptIcon />,
       onClick: generateChart,
-      disabled: true,
+      // disabled: true,
     },
     {
       renderChild: () => <PdfIcon />,
