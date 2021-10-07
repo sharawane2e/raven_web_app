@@ -15,6 +15,7 @@ import { fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";
+import TableView from "../tableView";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
@@ -115,7 +116,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         disabledPredicate={(value) => value === selectedQuestionId}
       />
       <div className="chart-content__chart-wrapper">
-        {chartType === ChartType.TABLE ? <div>Table data</div> : <Chart />}
+        {chartType === ChartType.TABLE ? 
+        <TableView /> 
+        : 
+        <Chart />}
         <div className="chart-content__base-count">Base: Total={baseCount}</div>
       </div>
     </div>

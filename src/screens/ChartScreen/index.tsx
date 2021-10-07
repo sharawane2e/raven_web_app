@@ -105,11 +105,11 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           </Button>
         </Grid>
       </Dialog>
-      {/* <Tour
+      {<Tour
         steps={chartTourSteps}
         isOpen={showChartTour}
         onRequestClose={() => setShowChartTour(false)}
-      /> */}
+      /> }
     </div>
   );
 };

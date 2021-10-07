@@ -3,11 +3,11 @@ import { ITourStep } from "../types/ITourStep";
 export const chartTourSteps: ITourStep[] = [
   {
     selector: ".Step-1",
-    content: "Select study question",
+    content: "Select the question you would like to visualize as chart",
   },
   {
     selector: ".Step-2",
-    content: "Select banner question to cross tabulate",
+    content: "Select the question you would like to visualize as chart",
   },
   {
     selector: ".Step-3",
