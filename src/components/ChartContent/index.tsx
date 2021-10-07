@@ -19,13 +19,14 @@ import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
+import { ChartType } from "../../enums/ChartType";
 
 interface ChartContentProps {}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const {
     questions,
-    chart: { questionData },
+    chart: { questionData, baseCount, chartType },
   } = useSelector((state: RootState) => state);
   const dispatch: AppDispatch = useDispatch();
   const {
@@ -52,7 +53,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   useEffect(() => {
     if (
       questionData?.type === QuestionType.GRID ||
-      questionData?.type === QuestionType.GRID_MULTI
+      questionData?.type === QuestionType.GRID_MULTI ||
+      questionData?.type === QuestionType.RANK
     ) {
       dispatch(setSelectedBannerQuestionId(""));
       dispatch(toggleBannerQuestionDisablity(true));
@@ -113,7 +115,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         disabledPredicate={(value) => value === selectedQuestionId}
       />
       <div className="chart-content__chart-wrapper">
-        <Chart />
+        {chartType === ChartType.TABLE ? <div>Table data</div> : <Chart />}
+        <div className="chart-content__base-count">Base: Total={baseCount}</div>
       </div>
     </div>
   );
