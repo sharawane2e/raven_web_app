@@ -3,6 +3,7 @@ import {
   decimalPrecision,
   primaryBarColor,
 } from "../constants/Variables";
+import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
 import { dataLabels } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
@@ -210,4 +211,15 @@ const getGridChartOptions = (
     },
     series,
   };
+};
+
+export const changeChartOptions = (chartOptions: any, type: ChartType) => {
+  const newChartOptions = { ...chartOptions };
+  debugger;
+
+  if (type === ChartType.COLUMN) {
+  } else if (type === ChartType.STACK) {
+  }
+
+  return newChartOptions;
 };

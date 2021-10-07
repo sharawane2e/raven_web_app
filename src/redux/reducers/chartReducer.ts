@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from "../../enums/QuestionType";
 import { IQuestion } from "../../types/IQuestion";
+import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
   setChartData,
   setChartOrientation,
@@ -95,9 +97,16 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
+    const type = state.questionData?.type;
+    let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
+
+    if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
+      chartOptions = changeChartOptions(chartOptions, action.payload);
+    }
     return {
       ...state,
       chartType: action.payload,
+      chartOptions,
     };
   });
 });
