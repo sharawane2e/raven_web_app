@@ -5,6 +5,8 @@ import {
   FormControlLabel,
   Grid,
 } from "@material-ui/core";
+import { TourProvider } from "@reactour/tour";
+import Tour from "reactour";
 import clsx from "clsx";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +16,7 @@ import CustomScrollbar from "../../components/CustomScrollbar";
 import Sidebar from "../../components/Sidebar";
 import ChartSidebarContent from "../../components/Sidebar/sidebar-content/ChartSidebarContent";
 import StaticDashboard from "../../components/StaticDashboard";
+import { chartTourSteps } from "../../config/TourConfig";
 import SidebarContextProvider, {
   SidebarContext,
 } from "../../contexts/SidebarContext";
@@ -31,6 +34,7 @@ interface ChartScreenProps {
 const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
   const [openPopup, setOpenPopup] = useState<boolean>(true);
+  const [showChartTour, setShowChartTour] = useState<boolean>(true);
   const [showContent, setShowContent] = useState<boolean>(true);
   const { profile } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -55,6 +59,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
+      {/* <TourProvider steps={chartTourSteps}> */}
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
@@ -72,7 +77,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           }}
         </SidebarContext.Consumer>
       </SidebarContextProvider>
-
+      {/* </TourProvider> */}
       <Dialog
         open={!!profile?.showContentPage && openPopup}
         className="home-modal"
@@ -98,6 +103,11 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           </Button>
         </Grid>
       </Dialog>
+      <Tour
+        steps={chartTourSteps}
+        isOpen={showChartTour}
+        onRequestClose={() => setShowChartTour(false)}
+      />
     </div>
   );
 };
