@@ -52,6 +52,7 @@ const initialState: IChartState = {
     },
     yAxis: {
       allowDecimals: false,
+      gridLineWidth: 0,
       min: 0,
       title: {
         text: "",
