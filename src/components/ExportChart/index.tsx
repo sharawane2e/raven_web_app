@@ -15,7 +15,8 @@ import { QuestionType } from "../../enums/QuestionType";
 import { ISlideConfig } from "../../types/ISlideConfig";
 import { colorArr, primaryBarColor } from "../../constants/Variables";
 import * as path from "path";
-
+import { jsPDF } from "jspdf";
+import { HtmlHTMLAttributes } from "react";
 interface ExportChartProps {}
 
 const setDefaultSlideProperties = (
@@ -235,6 +236,18 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     // await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
 
+  const generatePdf = async () => {
+    // var doc = new jsPDF();
+    // let element = document.getElementById(
+    //   "chart-content__chart-wrapper"
+    // ) as HTMLCollectionOf<>;
+    // await doc.html(element, {
+    //   callback: function (doc) {
+    //     doc.save();
+    //   },
+    // });
+  };
+
   const buttonConfig: ButtonGroupConfig[] = [
     {
       renderChild: () => <PptIcon />,
@@ -243,7 +256,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     },
     {
       renderChild: () => <PdfIcon />,
-      disabled: true,
+      onClick: generatePdf,
+      // disabled: true,
     },
   ];
 

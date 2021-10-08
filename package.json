@@ -24,6 +24,7 @@
     "clsx": "^1.1.1",
     "highcharts": "^9.2.2",
     "highcharts-react-official": "^3.0.0",
+    "jspdf": "^2.4.0",
     "node-sass": "^4.14.1",
     "pptxgenjs": "^3.8.0",
     "query-string": "^7.0.1",
