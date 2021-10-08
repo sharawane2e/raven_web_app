@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Breadcrum from "../widgets/Breadcrum";
 import Grid from "@material-ui/core/Grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,10 +22,14 @@ import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
 import { StaticText } from "../../constants/StaticText";
+import { Tooltip } from "@material-ui/core";
+import Toaster from "../../utils/Toaster";
 
 interface ChartContentProps {}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
+  const [showBannerException, setShowBannerException] = useState(true);
+
   const {
     questions,
     chart: { questionData, baseCount, chartType },
@@ -42,15 +46,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
   }, []);
-
-  useEffect(() => {
-    if (questionList.length) {
-      dispatch(setSelectedQuestionId(questionList[0].qId));
-      fetchChartData(questionList[0].qId)
-        .then((chartData) => dispatch(setChartData(chartData)))
-        .catch((error) => console.log(error));
-    }
-  }, [questionList]);
 
   useEffect(() => {
     if (
@@ -79,6 +74,30 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       .catch((error) => console.log(error));
   };
 
+  const showBannerClickException = () => {
+    if (showBannerException) {
+      setShowBannerException(false);
+      setTimeout(() => {
+        setShowBannerException(true);
+      }, 3000);
+      Toaster.error(StaticText.BANNER_SELECTION_EXCEPTION);
+    }
+  };
+
+  const bannerQuestion: JSX.Element = (
+    <SingleSelect
+      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      value={selectedBannerQuestionId}
+      onItemSelect={handelBannerQuestionChange}
+      placeholder={StaticText.BANNER_LABEL}
+      valueKey="qId"
+      labelKey="labelText"
+      className="Step-2"
+      disabled={questions.disableBannerQuestion}
+      disabledPredicate={(value) => value === selectedQuestionId}
+    />
+  );
+
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
@@ -96,6 +115,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <span>Select wave</span>
         <ExpandMoreIcon />
       </Button> */}
+
       <SingleSelect
         options={questionList}
         value={selectedQuestionId}
@@ -106,17 +126,17 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         className="Step-1"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
       />
-      <SingleSelect
-        options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
-        value={selectedBannerQuestionId}
-        onItemSelect={handelBannerQuestionChange}
-        placeholder={StaticText.BANNER_LABEL}
-        valueKey="qId"
-        labelKey="labelText"
-        className="Step-2"
-        disabled={questions.disableBannerQuestion}
-        disabledPredicate={(value) => value === selectedQuestionId}
-      />
+      {questions.disableBannerQuestion ? (
+        <Tooltip
+          title={StaticText.BANNER_SELECTION_EXCEPTION}
+          placement="bottom"
+          arrow
+        >
+          <div onClick={showBannerClickException}>{bannerQuestion}</div>
+        </Tooltip>
+      ) : (
+        bannerQuestion
+      )}
       <div className="chart-content__chart-wrapper">
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
         <div className="chart-content__base-count">n = {baseCount}</div>

@@ -53,13 +53,7 @@ const initialState: IChartState = {
       type: "category",
     },
     yAxis: {
-      allowDecimals: false,
-      gridLineWidth: 0,
-      tickInterval: 25,
-      min: 0,
-      title: {
-        text: "",
-      },
+      visible: false,
     },
     plotOptions: {
       series: {
