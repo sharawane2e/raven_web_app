@@ -33,4 +33,4 @@ export const colorArr = [
 
 export const primaryBarColor = "#f47c3c";
 
-export const decimalPrecision = 2;
+export const decimalPrecision = 1;

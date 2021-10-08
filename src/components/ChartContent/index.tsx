@@ -21,6 +21,7 @@ import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
+import { StaticText } from "../../constants/StaticText";
 
 interface ChartContentProps {}
 
@@ -99,7 +100,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         options={questionList}
         value={selectedQuestionId}
         onItemSelect={handleQuestionChange}
-        placeholder="Please select a question"
+        placeholder={StaticText.QUESTION_LABEL}
         valueKey="qId"
         labelKey="labelText"
         className="Step-1"
@@ -109,7 +110,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
         value={selectedBannerQuestionId}
         onItemSelect={handelBannerQuestionChange}
-        placeholder="Select banner question"
+        placeholder={StaticText.BANNER_LABEL}
         valueKey="qId"
         labelKey="labelText"
         className="Step-2"
@@ -117,11 +118,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         disabledPredicate={(value) => value === selectedQuestionId}
       />
       <div className="chart-content__chart-wrapper">
-        {chartType === ChartType.TABLE ? 
-        <TableView /> 
-        : 
-        <Chart />}
-        <div className="chart-content__base-count">Base: Total={baseCount}</div>
+        {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
+        <div className="chart-content__base-count">n = {baseCount}</div>
       </div>
     </div>
   );

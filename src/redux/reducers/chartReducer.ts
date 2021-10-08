@@ -21,7 +21,7 @@ export interface IChartState {
 
 export const dataLabels = {
   enabled: true,
-  format: "{point.y:.2f}%",
+  format: "{point.y:.1f}",
   style: {
     fontSize: "10px",
   },
