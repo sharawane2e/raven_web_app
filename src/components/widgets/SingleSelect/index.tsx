@@ -70,7 +70,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
             return (
               <MenuItem
                 key={index}
-                value={index === 0 ? "D1" : optionVal}
+                value={optionVal}
                 onClick={() => onItemSelect && onItemSelect(optionVal)}
                 disabled={
                   props.disabledPredicate && props?.disabledPredicate(optionVal)

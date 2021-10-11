@@ -49,6 +49,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   useEffect(() => {
     if (
+      selectedQuestionId === "" ||
       questionData?.type === QuestionType.GRID ||
       questionData?.type === QuestionType.GRID_MULTI ||
       questionData?.type === QuestionType.RANK
@@ -86,7 +87,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
-      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      options={[{ qId: "", questionText: "None" }, ...bannerQuestionList]}
       value={selectedBannerQuestionId}
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
