@@ -123,7 +123,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           </span>
           <span>Change password</span>
         </MenuItem>
-        <MenuItem onClick={logOutUser} className="appbar__menu-item">
+        <MenuItem onClick={() => logOutUser()} className="appbar__menu-item">
           <span>
             <LogOutIcon />
           </span>

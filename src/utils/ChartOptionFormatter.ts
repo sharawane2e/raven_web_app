@@ -3,10 +3,12 @@ import {
   decimalPrecision,
   primaryBarColor,
 } from "../constants/Variables";
+import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
 import { dataLabels } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import { IQuestion } from "../types/IQuestion";
+import { round } from "./Utility";
 
 export const getChartOptions = (
   questionData: IQuestion | null,
@@ -90,7 +92,8 @@ const getSingleChartOptions = (
         if (count > 0)
           data.push({
             name: quesOption.labelText,
-            y: +count.toFixed(decimalPrecision),
+            // y: +count.toFixed(decimalPrecision),
+            y: round(count, decimalPrecision),
           });
       }
 
@@ -125,12 +128,12 @@ const getSingleChartOptions = (
       if (label) {
         count = label.count;
       }
-      const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
-
+      // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
+      const plotValue = (count / baseCount) * 100;
       if (plotValue > 0)
         data.push({
           name: option.labelText,
-          y: +plotValue.toFixed(decimalPrecision),
+          y: round(plotValue, decimalPrecision),
         });
     }
 
@@ -187,11 +190,11 @@ const getGridChartOptions = (
           count = label.count;
         }
       }
-      const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
+      const plotValue = (count / baseCount) * 100;
       if (plotValue > 0) {
         data.push({
           name: subGroup.labelText,
-          y: plotValue,
+          y: round(plotValue, decimalPrecision),
         });
       }
     }
@@ -210,4 +213,15 @@ const getGridChartOptions = (
     },
     series,
   };
+};
+
+export const changeChartOptions = (chartOptions: any, type: ChartType) => {
+  const newChartOptions = { ...chartOptions };
+  debugger;
+
+  if (type === ChartType.COLUMN) {
+  } else if (type === ChartType.STACK) {
+  }
+
+  return newChartOptions;
 };

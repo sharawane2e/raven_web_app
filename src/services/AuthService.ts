@@ -4,14 +4,14 @@ import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
 import LocalStorageUtils from "../utils/LocalStorageUtils";
 
-export const logOutUser = () => {
+export const logOutUser = (hitServer: boolean = true) => {
   const uiBaseUrl = process.env.REACT_APP_UI_BASE_URL;
   LocalStorageUtils.removeAccessToken();
 
   store.dispatch(setUserProfile(null));
   window.location.href = `${uiBaseUrl}login`;
-
-  ApiRequest.request(ApiUrl.LOGOUT, "POST").catch((error) =>
-    console.log(error)
-  );
+  if (hitServer)
+    ApiRequest.request(ApiUrl.LOGOUT, "POST").catch((error) =>
+      console.log(error)
+    );
 };

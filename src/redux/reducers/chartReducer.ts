@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from "../../enums/QuestionType";
 import { IQuestion } from "../../types/IQuestion";
+import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
   setChartData,
   setChartOrientation,
@@ -19,7 +21,7 @@ export interface IChartState {
 
 export const dataLabels = {
   enabled: true,
-  format: "{point.y:.2f}%",
+  format: "{point.y:.1f}",
   style: {
     fontSize: "10px",
   },
@@ -51,13 +53,7 @@ const initialState: IChartState = {
       type: "category",
     },
     yAxis: {
-      allowDecimals: false,
-      gridLineWidth: 0,
-      tickInterval: 25,
-      min: 0,
-      title: {
-        text: "",
-      },
+      visible: false,
     },
     plotOptions: {
       series: {
@@ -95,9 +91,16 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
+    const type = state.questionData?.type;
+    let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
+
+    if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
+      chartOptions = changeChartOptions(chartOptions, action.payload);
+    }
     return {
       ...state,
       chartType: action.payload,
+      chartOptions,
     };
   });
 });

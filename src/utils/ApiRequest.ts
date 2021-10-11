@@ -39,7 +39,7 @@ const ApiRequest = {
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {
-          logOutUser();
+          logOutUser(false);
           this.setAuthToken();
         } else if (error.response.status === 400) {
           response = error.response.data;
