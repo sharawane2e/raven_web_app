@@ -40,11 +40,11 @@ const TableView: React.FC<TableProps> = (props) => {
     <div>
       <table className="table-view">
         {tableData.map((row) => (
-          <tr>
+          <div className="Table-row">
             {row.map((col) => (
-              <td>{col}</td>
+              <div className="Table-row-item">{col}</div>
             ))}
-          </tr>
+          </div>
         ))}
       </table>
     </div>
