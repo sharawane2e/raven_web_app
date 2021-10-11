@@ -91,7 +91,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
       valueKey="qId"
-      labelKey="labelText"
+      labelKey="questionText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
       disabledPredicate={(value) => value === selectedQuestionId}
@@ -122,7 +122,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         onItemSelect={handleQuestionChange}
         placeholder={StaticText.QUESTION_LABEL}
         valueKey="qId"
-        labelKey="labelText"
+        labelKey="questionText"
         className="Step-1"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
       />

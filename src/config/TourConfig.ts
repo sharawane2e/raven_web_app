@@ -7,11 +7,12 @@ export const chartTourSteps: ITourStep[] = [
   },
   {
     selector: ".Step-2",
-    content: "Select the question you would like to visualize as chart",
+    content:
+      "Select the question you want to cross tabulate with the above question",
   },
   {
     selector: ".Step-3",
-    content: "Select filter to fine tune the demographic view of the data.",
+    content: "Select filter to fine tune the demographic view of the data",
   },
   {
     selector: ".Step-4",
@@ -19,7 +20,7 @@ export const chartTourSteps: ITourStep[] = [
   },
   {
     selector: ".Step-5",
-    content: "Pick the required chart orientation.",
+    content: "Pick the required chart orientation",
   },
   {
     selector: ".Step-6",

@@ -217,7 +217,6 @@ const getGridChartOptions = (
 
 export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   const newChartOptions = { ...chartOptions };
-  debugger;
 
   if (type === ChartType.COLUMN) {
   } else if (type === ChartType.STACK) {

@@ -29,6 +29,7 @@ export const fetchFilterList = () => async (dispatch: AppDispatch) => {
         else if (a.order < b.order) return -1;
         else return 0;
       });
+
       dispatch(setFilterQuestionList(filterQuestionList));
     }
   } catch (error) {

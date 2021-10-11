@@ -26,7 +26,7 @@ import { RootState } from "../../redux/store";
 import IRoute from "../../types/IRoute";
 import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
-import { skipPartiallyEmittedExpressions } from "typescript";
+import { fetchFilterList } from "../../redux/actions/filterActions";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -47,6 +47,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
     if (!profile?.showContentPage && showTourGuide) {
       setShowChartTour(true);
     }
+    dispatch(fetchFilterList());
   }, []);
 
   const handlePopupClose = () => {
@@ -75,6 +76,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
+
         <SidebarContext.Consumer>
           {({ open }) => {
             return (
