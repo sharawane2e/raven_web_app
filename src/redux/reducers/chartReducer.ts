@@ -21,7 +21,7 @@ export interface IChartState {
 
 export const dataLabels = {
   enabled: true,
-  format: "{point.y:.1f}",
+  format: "{point.y:.1f}%",
   style: {
     fontSize: "10px",
   },
@@ -59,6 +59,7 @@ const initialState: IChartState = {
       series: {
         dataLabels: {
           enabled: true,
+          allowOverlap: true,
           x: 0,
         },
       },
