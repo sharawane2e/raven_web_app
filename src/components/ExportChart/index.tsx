@@ -17,6 +17,7 @@ import { colorArr, primaryBarColor } from "../../constants/Variables";
 import * as path from "path";
 import { jsPDF } from "jspdf";
 import { HtmlHTMLAttributes } from "react";
+import "svg2pdf.js";
 interface ExportChartProps {}
 
 const setDefaultSlideProperties = (
@@ -237,15 +238,41 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   };
 
   const generatePdf = async () => {
-    // var doc = new jsPDF();
-    // let element = document.getElementById(
-    //   "chart-content__chart-wrapper"
-    // ) as HTMLCollectionOf<>;
-    // await doc.html(element, {
+    var doc = new jsPDF();
+    let element = document.getElementsByClassName(
+      "chart-content__chart-wrapper"
+    ) as HTMLCollectionOf<Element>;
+
+    console.log(element[0]);
+    let margins = {
+      top: 10,
+      bottom: 10,
+      left: 40,
+      width: 80,
+    };
+
+    // let source = element[0] as HTMLElement;
+    // console.log(source);
+    // await doc.html(source, {
     //   callback: function (doc) {
-    //     doc.save();
+    //     return doc;
     //   },
+    //   x: 10,
+    //   y: 10,
     // });
+
+    let Source = document.getElementsByClassName("highcharts-root");
+    let svgSource = Source[0];
+    console.log(svgSource);
+
+    await doc.svg(svgSource, {
+      x: 0,
+      y: 10,
+      width: 200,
+      height: 200,
+      loadExternalStyleSheets: true,
+    });
+    doc.save();
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
