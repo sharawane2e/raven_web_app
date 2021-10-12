@@ -27,6 +27,16 @@ export const dataLabels = {
   },
 };
 
+export const defaultPlotOptions = {
+  series: {
+    dataLabels: {
+      enabled: true,
+      allowOverlap: true,
+      x: 0,
+    },
+  },
+};
+
 const initialState: IChartState = {
   questionData: null,
   chartData: [],
@@ -55,15 +65,7 @@ const initialState: IChartState = {
     yAxis: {
       visible: false,
     },
-    plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true,
-          allowOverlap: true,
-          x: 0,
-        },
-      },
-    },
+    plotOptions: defaultPlotOptions,
     series: [
       {
         data: [],

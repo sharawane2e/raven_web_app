@@ -3,6 +3,7 @@ import Highcharts from "highcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { memo } from "react";
+import { colorArr } from "../../constants/Variables";
 
 interface ChartProps {}
 
@@ -12,7 +13,9 @@ const Chart: React.FC<ChartProps> = (props) => {
   const chartOptions = useSelector(
     (state: RootState) => state.chart.chartOptions
   );
-
+  Highcharts.setOptions({
+    colors: colorArr,
+  });
   return (
     <HighchartsReact
       containerProps={{ style: { height: "100%" } }}
