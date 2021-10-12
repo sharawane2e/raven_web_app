@@ -18,6 +18,8 @@ import * as path from "path";
 import { jsPDF } from "jspdf";
 import { HtmlHTMLAttributes } from "react";
 import "svg2pdf.js";
+import { cloneDeep } from "lodash";
+
 interface ExportChartProps {}
 
 const setDefaultSlideProperties = (
@@ -261,11 +263,17 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     //   y: 10,
     // });
 
-    let Source = document.getElementsByClassName("highcharts-root");
-    let svgSource = Source[0];
-    console.log(svgSource);
-
-    await doc.svg(svgSource, {
+    let source = document.getElementsByClassName("highcharts-root");
+    let svgSource = source[0];
+    let clonedSource = svgSource.cloneNode(true) as HTMLElement;
+    console.log("Cloned source", clonedSource);
+    clonedSource
+      .querySelectorAll(".highcharts-text-outline")
+      .forEach((node: any) => node.parentNode.removeChild(node));
+    // svgSource
+    //   .querySelectorAll(".highcharts-text-outline")
+    //   .forEach((node: any) => node.parentNode.removeChild(node));
+    await doc.svg(clonedSource, {
       x: 0,
       y: 10,
       width: 200,
