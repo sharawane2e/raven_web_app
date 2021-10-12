@@ -241,12 +241,12 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
   const generatePdf = async () => {
     let clientWidth = document.body.clientWidth;
-    let doc;
-    if (clientWidth >= 2560) {
-      doc = new jsPDF("p", "mm", [200, 180]);
-    } else {
-      doc = new jsPDF();
-    }
+    let doc = new jsPDF();
+    // if (clientWidth >= 2560) {
+    //   doc = new jsPDF("p", "mm", [200, 180]);
+    // } else {
+    //   doc = new jsPDF();
+    // }
 
     let source = document.getElementsByClassName("highcharts-root");
     let svgSource = source[0];
@@ -272,20 +272,20 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     let logo = document.getElementsByClassName("appbar__brand-logo")[0];
     console.log("logo", logo);
     await doc.svg(logo, { x: 10, y: 260, width: 40, height: 40 });
-    // await doc.svg(clonedSource, {
-    //   x: 5,
-    //   y: 50,
-    //   width: 200,
-    //   height: 200,
-    //   loadExternalStyleSheets: true,
-    // });
     await doc.svg(clonedSource, {
       x: 5,
-      y: 20,
-      width: 170,
-      height: 100,
+      y: 50,
+      width: 200,
+      height: 200,
       loadExternalStyleSheets: true,
     });
+    // await doc.svg(clonedSource, {
+    //   x: 5,
+    //   y: 20,
+    //   width: 170,
+    //   height: 100,
+    //   loadExternalStyleSheets: true,
+    // });
     doc.save("HFS - " + questionData?.labelText + ".pdf");
   };
 
