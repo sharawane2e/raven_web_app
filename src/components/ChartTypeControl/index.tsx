@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from "../../redux/store";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as ColumnChartIcon } from "../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-icon.svg";
-import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg"
+import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
 import { setChartData } from "../../redux/actions/chartActions";
 
 interface ChartTypeControlProps {}
@@ -55,14 +55,17 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <TableIcon />,
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,
+      // disabled: true,
     },
   ];
 
-  return <ButtonGroup 
-  groupTitle="Chart type" 
-  buttonConfig={buttonConfig} 
-  className=" Step-6"
-  />;
+  return (
+    <ButtonGroup
+      groupTitle="Chart type"
+      buttonConfig={buttonConfig}
+      className=" Step-6"
+    />
+  );
 };
 
 export default ChartTypeControl;

@@ -34,7 +34,7 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     <ButtonGroup
       groupTitle="Orientation"
       buttonConfig={buttonConfig}
-      className="Step-5"
+      className="Step-5 orientation-control"
     />
   );
 };

@@ -8,7 +8,7 @@ import {
 import { TourProvider } from "@reactour/tour";
 import Tour from "reactour";
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AppRouting from "../../AppRouting";
 import Appbar from "../../components/Appbar";
@@ -26,7 +26,7 @@ import { RootState } from "../../redux/store";
 import IRoute from "../../types/IRoute";
 import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
-import { skipPartiallyEmittedExpressions } from "typescript";
+import { fetchFilterList } from "../../redux/actions/filterActions";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -37,8 +37,18 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const [openPopup, setOpenPopup] = useState<boolean>(true);
   const [showChartTour, setShowChartTour] = useState<boolean>(false);
   const [showContent, setShowContent] = useState<boolean>(true);
-  const { profile } = useSelector((state: RootState) => state.user);
+  const {
+    user: { profile },
+    tour: { showTourGuide },
+  } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!profile?.showContentPage && showTourGuide) {
+      setShowChartTour(true);
+    }
+    dispatch(fetchFilterList());
+  }, []);
 
   const handlePopupClose = () => {
     if (!showContent) {
@@ -56,15 +66,17 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         .catch((error) => console.log(error));
     }
     setOpenPopup(false);
-    setShowChartTour(true);
+    if (showTourGuide) {
+      setShowChartTour(true);
+    }
   };
 
   return (
     <div className="chart-screen">
-      {/* <TourProvider steps={chartTourSteps}> */}
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
+
         <SidebarContext.Consumer>
           {({ open }) => {
             return (
@@ -79,7 +91,6 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           }}
         </SidebarContext.Consumer>
       </SidebarContextProvider>
-      {/* </TourProvider> */}
       <Dialog
         open={!!profile?.showContentPage && openPopup}
         className="home-modal"
@@ -105,11 +116,13 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           </Button>
         </Grid>
       </Dialog>
-      {<Tour
-        steps={chartTourSteps}
-        isOpen={showChartTour}
-        onRequestClose={() => setShowChartTour(false)}
-      /> }
+      {
+        <Tour
+          steps={chartTourSteps}
+          isOpen={showChartTour}
+          onRequestClose={() => setShowChartTour(false)}
+        />
+      }
     </div>
   );
 };
