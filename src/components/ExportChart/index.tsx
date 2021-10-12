@@ -240,47 +240,53 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   };
 
   const generatePdf = async () => {
-    var doc = new jsPDF();
-    let element = document.getElementsByClassName(
-      "chart-content__chart-wrapper"
-    ) as HTMLCollectionOf<Element>;
-
-    console.log(element[0]);
-    let margins = {
-      top: 10,
-      bottom: 10,
-      left: 40,
-      width: 80,
-    };
-
-    // let source = element[0] as HTMLElement;
-    // console.log(source);
-    // await doc.html(source, {
-    //   callback: function (doc) {
-    //     return doc;
-    //   },
-    //   x: 10,
-    //   y: 10,
-    // });
+    let clientWidth = document.body.clientWidth;
+    let doc;
+    if (clientWidth >= 2560) {
+      doc = new jsPDF("p", "mm", [200, 180]);
+    } else {
+      doc = new jsPDF();
+    }
 
     let source = document.getElementsByClassName("highcharts-root");
     let svgSource = source[0];
     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
-    console.log("Cloned source", clonedSource);
+
     clonedSource
       .querySelectorAll(".highcharts-text-outline")
       .forEach((node: any) => node.parentNode.removeChild(node));
-    // svgSource
-    //   .querySelectorAll(".highcharts-text-outline")
-    //   .forEach((node: any) => node.parentNode.removeChild(node));
+
+    doc.setFontSize(10);
+    const lText = doc.splitTextToSize(questionData?.labelText || "", 160);
+    doc.text(lText, 10, 5);
+    doc.setFontSize(8);
+    const qText = doc.splitTextToSize(questionData?.questionText || "", 180);
+    doc.text(qText, 8, 20);
+    doc.text("n = " + baseCount || "", 10, 260);
+    doc.setFontSize(6);
+    doc.text("© 2020, HFS Research Ltd" || "", 95, 290);
+    doc.setDrawColor(0);
+    doc.setFillColor(244, 124, 60);
+    doc.rect(5, 0, 3, 12, "F");
+    doc.addSvgAsImage("../BrandLogo", 50, 50, 50, 50);
+    let logo = document.getElementsByClassName("appbar__brand-logo")[0];
+    console.log("logo", logo);
+    await doc.svg(logo, { x: 10, y: 260, width: 40, height: 40 });
+    // await doc.svg(clonedSource, {
+    //   x: 5,
+    //   y: 50,
+    //   width: 200,
+    //   height: 200,
+    //   loadExternalStyleSheets: true,
+    // });
     await doc.svg(clonedSource, {
-      x: 0,
-      y: 10,
-      width: 200,
-      height: 200,
+      x: 5,
+      y: 20,
+      width: 170,
+      height: 100,
       loadExternalStyleSheets: true,
     });
-    doc.save();
+    doc.save("HFS - " + questionData?.labelText + ".pdf");
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
