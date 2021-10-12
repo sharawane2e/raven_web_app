@@ -7,7 +7,7 @@ import {
   singleChartDataGen,
   tableChartDataGen,
 } from "../../utils/PptDataGenerator";
-import "./tableView.scss";
+import { Grid } from "@material-ui/core";
 interface TableProps {}
 
 const TableView: React.FC<TableProps> = (props) => {
@@ -37,16 +37,22 @@ const TableView: React.FC<TableProps> = (props) => {
   console.log(tableData);
 
   return (
-    <div>
-      <table className="table-view">
-        {tableData.map((row) => (
-          <div className="Table-row">
-            {row.map((col) => (
-              <div className="Table-row-item">{col}</div>
-            ))}
-          </div>
-        ))}
-      </table>
+    <div className="table-chart">
+      {tableData.map((row) => (
+        <Grid
+          container
+          justifyContent="space-evenly"
+          style={{ border: "1px solid grey" }}
+          className="table-chart__row"
+          sm={12}
+        >
+          {row.map((col) => (
+            <Grid item className="table-chart__item" wrap="wrap" sm={1}>
+              {col}
+            </Grid>
+          ))}
+        </Grid>
+      ))}
     </div>
   );
 };

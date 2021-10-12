@@ -15,13 +15,14 @@ import { fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";
-import TableView from "../tableView";
+
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
 import { StaticText } from "../../constants/StaticText";
+import TableView from "../TableView";
 
 interface ChartContentProps {}
 
