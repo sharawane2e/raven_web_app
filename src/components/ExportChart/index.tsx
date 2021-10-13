@@ -242,21 +242,18 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   const generatePdf = async () => {
     let clientWidth = document.body.clientWidth;
     let doc = new jsPDF();
-    let x, y, w, h, baseX, baseY, logoX, logoY, copyRightX, copyRightY;
-    // if (clientWidth >= 2560) {
-    //   console.log("first if");
-    //   doc = new jsPDF("l", "mm", [200, 180]);
-    //   x = 5;
-    //   y = 20;
-    //   w = 170;
-    //   h = 100;
-    //   baseX = 10;
-    //   baseY = 150;
-    //   logoX = 0;
-    //   logoY = 180;
-    //   copyRightX = 90;
-    //   copyRightY = 200;
-    // } else if (clientWidth < 2560 && clientWidth >= 1300) {
+    let x,
+      y,
+      w,
+      h,
+      baseX,
+      baseY,
+      logoX,
+      logoY,
+      copyRightX,
+      copyRightY,
+      qWordBreak,
+      lWordBreak;
 
     if (clientWidth >= 1300) {
       console.log("sec else if");
@@ -271,6 +268,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       logoY = 180;
       copyRightX = 135;
       copyRightY = 210;
+      lWordBreak = 160;
+      qWordBreak = 180;
     } else {
       console.log("else");
       doc = new jsPDF("p", "mm", [180, 260]);
@@ -284,6 +283,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       logoY = 220;
       copyRightX = 80;
       copyRightY = 255;
+      lWordBreak = 160;
+      qWordBreak = 160;
     }
 
     let source = document.getElementsByClassName("highcharts-root");
@@ -295,10 +296,16 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       .forEach((node: any) => node.parentNode.removeChild(node));
 
     doc.setFontSize(10);
-    const lText = doc.splitTextToSize(questionData?.labelText || "", 160);
+    const lText = doc.splitTextToSize(
+      questionData?.labelText || "",
+      lWordBreak
+    );
     doc.text(lText, 10, 5);
     doc.setFontSize(8);
-    const qText = doc.splitTextToSize(questionData?.questionText || "", 180);
+    const qText = doc.splitTextToSize(
+      questionData?.questionText || "",
+      qWordBreak
+    );
     doc.text(qText, 8, 20);
     doc.text("n = " + baseCount || "", baseX, baseY);
     doc.setFontSize(6);
