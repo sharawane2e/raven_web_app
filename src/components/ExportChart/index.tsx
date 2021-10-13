@@ -242,11 +242,49 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   const generatePdf = async () => {
     let clientWidth = document.body.clientWidth;
     let doc = new jsPDF();
+    let x, y, w, h, baseX, baseY, logoX, logoY, copyRightX, copyRightY;
     // if (clientWidth >= 2560) {
-    //   doc = new jsPDF("p", "mm", [200, 180]);
-    // } else {
-    //   doc = new jsPDF();
-    // }
+    //   console.log("first if");
+    //   doc = new jsPDF("l", "mm", [200, 180]);
+    //   x = 5;
+    //   y = 20;
+    //   w = 170;
+    //   h = 100;
+    //   baseX = 10;
+    //   baseY = 150;
+    //   logoX = 0;
+    //   logoY = 180;
+    //   copyRightX = 90;
+    //   copyRightY = 200;
+    // } else if (clientWidth < 2560 && clientWidth >= 1300) {
+
+    if (clientWidth >= 1300) {
+      console.log("sec else if");
+      doc = new jsPDF("l", "mm", [300, 220]);
+      x = 5;
+      y = 30;
+      w = 290;
+      h = 140;
+      baseX = 10;
+      baseY = 180;
+      logoX = 10;
+      logoY = 180;
+      copyRightX = 135;
+      copyRightY = 210;
+    } else {
+      console.log("else");
+      doc = new jsPDF("p", "mm", [180, 260]);
+      x = 5;
+      y = 30;
+      w = 170;
+      h = 180;
+      baseX = 10;
+      baseY = 220;
+      logoX = 10;
+      logoY = 220;
+      copyRightX = 80;
+      copyRightY = 255;
+    }
 
     let source = document.getElementsByClassName("highcharts-root");
     let svgSource = source[0];
@@ -262,30 +300,24 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     doc.setFontSize(8);
     const qText = doc.splitTextToSize(questionData?.questionText || "", 180);
     doc.text(qText, 8, 20);
-    doc.text("n = " + baseCount || "", 10, 260);
+    doc.text("n = " + baseCount || "", baseX, baseY);
     doc.setFontSize(6);
-    doc.text("© 2020, HFS Research Ltd" || "", 95, 290);
+    doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
     doc.setDrawColor(0);
     doc.setFillColor(244, 124, 60);
     doc.rect(5, 0, 3, 12, "F");
-    doc.addSvgAsImage("../BrandLogo", 50, 50, 50, 50);
+    doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
     let logo = document.getElementsByClassName("appbar__brand-logo")[0];
     console.log("logo", logo);
-    await doc.svg(logo, { x: 10, y: 260, width: 40, height: 40 });
+    await doc.svg(logo, { x: logoX, y: logoY, width: 40, height: 40 });
     await doc.svg(clonedSource, {
-      x: 5,
-      y: 50,
-      width: 200,
-      height: 200,
+      x: x,
+      y: y,
+      width: w,
+      height: h,
       loadExternalStyleSheets: true,
     });
-    // await doc.svg(clonedSource, {
-    //   x: 5,
-    //   y: 20,
-    //   width: 170,
-    //   height: 100,
-    //   loadExternalStyleSheets: true,
-    // });
+
     doc.save("HFS - " + questionData?.labelText + ".pdf");
   };
 
