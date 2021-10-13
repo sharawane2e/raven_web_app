@@ -87,19 +87,24 @@ export const changeChartType = (newChartType: ChartType) => {
   let plotOptions = newChartData.chartOptions["plotOptions"];
   delete plotOptions.column;
   delete plotOptions.bar;
+  delete plotOptions.pie;
   if (newChartType === ChartType.STACK) {
-    plotOptions["column"] = { stacking: "normal" };
+    plotOptions["column"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = "{point.y:.1f}%";
   } else if (newChartType === ChartType.COLUMN) {
-    plotOptions["bar"] = { stacking: "normal" };
+    plotOptions["bar"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = "{point.y:.1f}%";
   } else if (newChartType === ChartType.PIE) {
     plotOptions["pie"] = {
       allowPointSelect: false,
       cursor: "pointer",
-      dataLabels: {
-        enabled: true,
-        distance: -50,
-      },
     };
+    plotOptions["series"].dataLabels.format =
+      "<b>{point.name}</b>: {point.percentage:.1f}%";
   }
 
   if (newChartType === ChartType.PIE) {
