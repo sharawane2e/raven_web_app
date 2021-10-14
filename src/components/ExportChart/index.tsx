@@ -117,22 +117,14 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     if (
       (questionData?.type === QuestionType.SINGLE ||
-<<<<<<< HEAD
-        questionData?.type === QuestionType.RANK ||
-=======
->>>>>>> ppt
         questionData?.type === QuestionType.MULTI) &&
       !selectedBannerQuestionId
     ) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
       (questionData?.type === QuestionType.GRID ||
-<<<<<<< HEAD
-        questionData?.type === QuestionType.GRID_MULTI) &&
-=======
         questionData?.type === QuestionType.GRID_MULTI ||
         questionData?.type === QuestionType.RANK) &&
->>>>>>> ppt
       !selectedBannerQuestionId
     ) {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
