@@ -29,18 +29,18 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       active: chartType === ChartType.STACK,
     },
     {
-      tooltip: "Table",
-      renderChild: () => <TableIcon />,
-      onClick: () => changeChartType(ChartType.TABLE),
-      active: chartType === ChartType.TABLE,
-      // disabled: true,
-    },
-    {
       tooltip: "Pie Chart",
       renderChild: () => <PieChartIcon />,
       onClick: () => changeChartType(ChartType.PIE),
       active: chartType === ChartType.PIE,
       disabled: !(chart.questionData?.type === QuestionType.SINGLE),
+    },
+    {
+      tooltip: "Table",
+      renderChild: () => <TableIcon />,
+      onClick: () => changeChartType(ChartType.TABLE),
+      active: chartType === ChartType.TABLE,
+      disabled: true,
     },
   ];
 

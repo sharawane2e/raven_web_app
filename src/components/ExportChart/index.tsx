@@ -217,19 +217,19 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     const row = tableChartDataGen(seriesData);
 
-    tableSlide.addTable(row, {
-      x: 0.3,
-      y: 0.6,
-      h: 3,
-      w: 9.4,
-      //@ts-ignore
-      //fill:"e6e6e6",
-      border: { pt: 0.4, type: "solid", color: "E6E6E6" },
-      //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
-      //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
-      fontSize: 6,
-      //@ts-ignore
-    });
+    // tableSlide.addTable(row, {
+    //   x: 0.3,
+    //   y: 0.6,
+    //   h: 3,
+    //   w: 9.4,
+    //   //@ts-ignore
+    //   //fill:"e6e6e6",
+    //   border: { pt: 0.4, type: "solid", color: "E6E6E6" },
+    //   //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
+    //   //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
+    //   fontSize: 6,
+    //   //@ts-ignore
+    // });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
