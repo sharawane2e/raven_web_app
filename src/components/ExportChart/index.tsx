@@ -117,14 +117,22 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     if (
       (questionData?.type === QuestionType.SINGLE ||
+<<<<<<< HEAD
         questionData?.type === QuestionType.RANK ||
+=======
+>>>>>>> ppt
         questionData?.type === QuestionType.MULTI) &&
       !selectedBannerQuestionId
     ) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
       (questionData?.type === QuestionType.GRID ||
+<<<<<<< HEAD
         questionData?.type === QuestionType.GRID_MULTI) &&
+=======
+        questionData?.type === QuestionType.GRID_MULTI ||
+        questionData?.type === QuestionType.RANK) &&
+>>>>>>> ppt
       !selectedBannerQuestionId
     ) {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
@@ -223,13 +231,20 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       h: 3,
       w: 9.4,
       //@ts-ignore
+<<<<<<< HEAD
       // fill: "e6e6e6",
+=======
+      //fill:"e6e6e6",
+>>>>>>> ppt
       border: { pt: 0.4, type: "solid", color: "E6E6E6" },
       //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
       //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
       fontSize: 6,
       //@ts-ignore
+<<<<<<< HEAD
       pt: 0.5,
+=======
+>>>>>>> ppt
     });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
@@ -239,7 +254,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       renderChild: () => <PptIcon />,
       onClick: generateChart,
-      disabled: true,
+      // disabled: true,
     },
     {
       renderChild: () => <PdfIcon />,
@@ -259,3 +274,4 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 export default ExportChart;
 
 // some change
+// ppt code change
