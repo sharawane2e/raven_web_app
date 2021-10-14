@@ -42,7 +42,6 @@ const TableView: React.FC<TableProps> = (props) => {
         <Grid
           container
           justifyContent="space-evenly"
-          style={{ border: "1px solid grey" }}
           className="table-chart__row"
           sm={12}
         >
