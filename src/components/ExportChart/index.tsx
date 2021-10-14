@@ -238,7 +238,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       renderChild: () => <PptIcon />,
       onClick: generateChart,
-      // disabled: true,
+      disabled: true,
     },
     {
       renderChild: () => <PdfIcon />,
