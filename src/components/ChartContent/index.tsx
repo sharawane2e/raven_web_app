@@ -11,7 +11,7 @@ import {
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
 import { setChartData } from "../../redux/actions/chartActions";
-import { fetchChartData } from "../../services/ChartService";
+import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";
@@ -65,7 +65,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
-      .then((chartData) => dispatch(setChartData(chartData)))
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+        if (chartData.questionData?.type !== QuestionType.SINGLE) {
+          changeChartType(ChartType.COLUMN);
+        }
+      })
       .catch((error) => console.log(error));
   };
 
