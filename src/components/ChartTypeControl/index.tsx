@@ -45,7 +45,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <TableIcon />,
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,
-      disabled: true,
+      // disabled: true,
     },
   ];
 
