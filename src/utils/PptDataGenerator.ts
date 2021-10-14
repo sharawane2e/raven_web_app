@@ -75,9 +75,7 @@ export function gridChartDataGen(
       }),
     });
   });
-  console.log("question data", questionData);
-  console.log("chart data", chartData);
-  console.log(seriesData);
+
   return seriesData;
 }
 
@@ -85,9 +83,7 @@ export function bannerChartDataGen(
   bannerQuestionList: any,
   questionData: any,
   chartData: any,
-  chartOptions: any,
-  baseCount: any,
-  selectedQuestionId: any,
+
   selectedBannerQuestionId: any
 ) {
   let labels: any = [];
@@ -111,10 +107,7 @@ export function bannerChartDataGen(
             );
             if (subOptionData) {
               const data = subOptionData.count;
-              return data;
-              // return data !== undefined
-              //   ? +((data / baseCount) * 100).toFixed(decimalPrecision)
-              //   : 0;
+              return data.toFixed(2);
             } else {
               return 0;
             }
