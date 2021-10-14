@@ -37,21 +37,18 @@ const TableView: React.FC<TableProps> = (props) => {
   console.log(tableData);
 
   return (
-    <div className="table-chart">
-      {tableData.map((row) => (
-        <Grid
-          container
-          justifyContent="space-evenly"
-          className="table-chart__row"
-          sm={12}
-        >
-          {row.map((col) => (
-            <Grid item className="table-chart__item" wrap="wrap" sm={1}>
-              {col}
-            </Grid>
-          ))}
-        </Grid>
-      ))}
+    <div className="pl-table">
+      <div className="pl-thead ">
+        {tableData.map((row) => (
+          <div className="row">
+            {row.map((col) => (
+              <div className="col">
+                {col}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

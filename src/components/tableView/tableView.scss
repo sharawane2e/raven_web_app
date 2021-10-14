@@ -104,3 +104,60 @@
     overflow: auto;
     margin-right: -15px;
   }
+
+
+
+
+  ////// other option
+
+.pl-table {
+  .row{ 
+    margin: 5px 0; 
+    padding: 0 20px; 
+    align-items: center; 
+  }
+  .col{ 
+    padding: 0 10px; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
+  .pl-thead {
+    color: #979797;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 11px;
+    margin: 15px 0;
+    &.tall {
+      background-color: #263338;
+      margin: 0;
+      padding: 5px 0;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: initial;
+      .col {
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        text-align: center;
+        align-self: stretch;
+        &:last-child {
+          border: none;
+        }
+        .large {
+          font-size: 21px;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .pl-tbody {
+    .row {
+      background-color: #ffffff;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      color: #979797;
+      font-size: 11px;
+    }
+    &.scroll {
+      max-height: 100px;
+      overflow-x: scroll;
+    }
+  }
+}
