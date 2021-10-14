@@ -9,6 +9,7 @@ import {
   singleChartDataGen,
   gridChartDataGen,
   tableChartDataGen,
+  bannerChartDataGen,
 } from "../../utils/PptDataGenerator";
 import { QuestionType } from "../../enums/QuestionType";
 import { ISlideConfig } from "../../types/ISlideConfig";
@@ -82,7 +83,15 @@ const setDefaultSlideProperties = (
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const {
-    chart: { chartData, questionData, baseCount },
+    chart: { chartOptions, chartData, questionData, baseCount },
+  } = useSelector((state: RootState) => state);
+
+  const {
+    questions: {
+      selectedQuestionId,
+      selectedBannerQuestionId,
+      bannerQuestionList,
+    },
   } = useSelector((state: RootState) => state);
 
   const generateChart = async () => {
@@ -107,16 +116,28 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     let seriesData: any[] = [];
 
     if (
-      questionData?.type === QuestionType.SINGLE ||
-      questionData?.type === QuestionType.RANK ||
-      questionData?.type === QuestionType.MULTI
+      (questionData?.type === QuestionType.SINGLE ||
+        questionData?.type === QuestionType.RANK ||
+        questionData?.type === QuestionType.MULTI) &&
+      !selectedBannerQuestionId
     ) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
-      questionData?.type === QuestionType.GRID ||
-      questionData?.type === QuestionType.GRID_MULTI
+      (questionData?.type === QuestionType.GRID ||
+        questionData?.type === QuestionType.GRID_MULTI) &&
+      !selectedBannerQuestionId
     ) {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
+    } else if (selectedBannerQuestionId) {
+      seriesData = bannerChartDataGen(
+        bannerQuestionList,
+        questionData,
+        chartData,
+        chartOptions,
+        baseCount,
+        selectedQuestionId,
+        selectedBannerQuestionId
+      );
     } else {
       console.log("under development");
     }
@@ -208,6 +229,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
       fontSize: 6,
       //@ts-ignore
+      pt: 0.5,
     });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
