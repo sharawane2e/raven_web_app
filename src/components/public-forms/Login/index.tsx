@@ -14,6 +14,7 @@ import { AppDispatch } from "../../../redux/store";
 import { useDispatch } from "react-redux";
 import { setUserProfile } from "../../../redux/actions/userActions";
 import LocalStorageUtils from "../../../utils/LocalStorageUtils";
+import { showTourGuide } from "../../../redux/actions/tourAction";
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -40,6 +41,7 @@ const Login: React.FC<LoginProps> = (props) => {
       .then((res) => {
         if (res.success) {
           dispatch(setUserProfile(res.data));
+          dispatch(showTourGuide());
           Toaster.success(res.message);
           ApiRequest.setAuthToken(res.data?.accessToken);
           LocalStorageUtils.setAccessToken(res.data.accessToken);

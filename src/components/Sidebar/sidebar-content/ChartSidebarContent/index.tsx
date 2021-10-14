@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setChartData } from "../../../../redux/actions/chartActions";
 import {
@@ -20,10 +20,6 @@ const ChartSidebarContent: React.FC = () => {
   const { filterQuestionList, filters } = useSelector(
     (state: RootState) => state.filters
   );
-
-  useEffect(() => {
-    dispatch(fetchFilterList());
-  }, []);
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
     const updatedFilters = [...filters];
@@ -81,6 +77,7 @@ const ChartSidebarContent: React.FC = () => {
         return filterQuestion;
       }
     );
+
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
     dispatch(setFilters(updatedFilters));
   };
@@ -98,7 +95,7 @@ const ChartSidebarContent: React.FC = () => {
     <div className="chart-sidebar">
       <div className="chart-sidebar__filter-wrapper">
         <CustomScrollbar>
-          <div className="chart-sidebar__filter-questions">
+          <div className="chart-sidebar__filter-questions Step-3">
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
                 key={filterIndex}
@@ -114,7 +111,7 @@ const ChartSidebarContent: React.FC = () => {
         </CustomScrollbar>
       </div>
       <div className="chart-sidebar__footer">
-        <Button className="button--primary" onClick={applyFilters}>
+        <Button className="button--primary Step-4" onClick={applyFilters}>
           Apply
         </Button>
         <Button
@@ -130,4 +127,4 @@ const ChartSidebarContent: React.FC = () => {
   );
 };
 
-export default ChartSidebarContent;
+export default memo(ChartSidebarContent);

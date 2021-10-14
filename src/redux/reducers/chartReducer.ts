@@ -1,7 +1,9 @@
 import { createReducer } from "@reduxjs/toolkit";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from "../../enums/QuestionType";
 import { IQuestion } from "../../types/IQuestion";
+import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
   setChartData,
   setChartOrientation,
@@ -14,13 +16,25 @@ export interface IChartState {
   chartOrientation: ChartOrientation;
   chartType: ChartType;
   chartOptions: any;
+  baseCount: number;
 }
 
 export const dataLabels = {
   enabled: true,
-  format: "{point.y:.2f}%",
+  // format: "{point.y:.1f}%",
   style: {
     fontSize: "10px",
+  },
+};
+
+export const defaultPlotOptions = {
+  series: {
+    dataLabels: {
+      enabled: true,
+      format: "{point.y:.1f}%",
+      allowOverlap: true,
+      x: 0,
+    },
   },
 };
 
@@ -50,26 +64,16 @@ const initialState: IChartState = {
       type: "category",
     },
     yAxis: {
-      allowDecimals: false,
-      min: 0,
-      title: {
-        text: "",
-      },
+      visible: false,
     },
-    plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true,
-          x: 0,
-        },
-      },
-    },
+    plotOptions: defaultPlotOptions,
     series: [
       {
         data: [],
       },
     ],
   },
+  baseCount: 0,
 };
 
 const chartReducer = createReducer(initialState, (builder) => {
@@ -91,9 +95,16 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
+    const type = state.questionData?.type;
+    let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
+
+    if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
+      chartOptions = changeChartOptions(chartOptions, action.payload);
+    }
     return {
       ...state,
       chartType: action.payload,
+      chartOptions,
     };
   });
 });

@@ -22,7 +22,7 @@ const initialState: IQuestionState = {
   bannerQuestionList: [],
   selectedQuestionId: "",
   selectedBannerQuestionId: "",
-  disableBannerQuestion: false,
+  disableBannerQuestion: true,
 };
 
 const questionReducer = createReducer(initialState, (builder) => {

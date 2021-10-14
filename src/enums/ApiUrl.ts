@@ -1,6 +1,8 @@
 enum ApiUrl {
   LOGIN = "/auth/login",
 
+  LOGOUT = "/auth/logout",
+
   FORGOT_PASSWORD = "/auth/forgot-password",
 
   SET_PASSWORD = "/auth/set-password",

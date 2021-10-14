@@ -4,38 +4,17 @@ import { AppDispatch, RootState } from "../../redux/store";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as ColumnChartIcon } from "../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-icon.svg";
-import { setChartData } from "../../redux/actions/chartActions";
+import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
+import { ReactComponent as PieChartIcon } from "../../assets/svg/pie-chart.svg";
+import { QuestionType } from "../../enums/QuestionType";
+import { changeChartType } from "../../services/ChartService";
 
 interface ChartTypeControlProps {}
 
 const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
-  const dispatch: AppDispatch = useDispatch();
   const { chartType } = chart;
 
-  const changeChartType = (chartType: ChartType) => {
-    const newChartData = JSON.parse(JSON.stringify(chart));
-    newChartData.chartType = chartType;
-    let seriesData: any[] = newChartData.chartOptions.series;
-
-    seriesData?.reverse();
-    newChartData.chartOptions["plotOptions"] =
-      chartType === ChartType.STACK
-        ? {
-            column: {
-              stacking: "normal",
-            },
-          }
-        : {
-            bar: {
-              stacking: "normal",
-            },
-          };
-    newChartData.chartOptions["series"] = seriesData;
-    newChartData.chartOptions["legend"].reversed =
-      !newChartData.chartOptions["legend"].reversed;
-    dispatch(setChartData(newChartData));
-  };
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: "Column chart",
@@ -49,9 +28,29 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
     },
+    {
+      tooltip: "Pie Chart",
+      renderChild: () => <PieChartIcon />,
+      onClick: () => changeChartType(ChartType.PIE),
+      active: chartType === ChartType.PIE,
+      disabled: !(chart.questionData?.type === QuestionType.SINGLE),
+    },
+    {
+      tooltip: "Table",
+      renderChild: () => <TableIcon />,
+      onClick: () => changeChartType(ChartType.TABLE),
+      active: chartType === ChartType.TABLE,
+      disabled: true,
+    },
   ];
 
-  return <ButtonGroup groupTitle="Chart type" buttonConfig={buttonConfig} />;
+  return (
+    <ButtonGroup
+      groupTitle="Chart type"
+      buttonConfig={buttonConfig}
+      className=" Step-6"
+    />
+  );
 };
 
 export default ChartTypeControl;
