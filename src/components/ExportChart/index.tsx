@@ -241,6 +241,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
   };
 
   const generatePdf = async () => {
+    let seriesData = [];
     let clientWidth = document.body.clientWidth;
     let doc = new jsPDF();
     let x,
@@ -326,14 +327,36 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       loadExternalStyleSheets: true,
     });
     doc.addPage();
+    if (
+      (questionData?.type === QuestionType.SINGLE ||
+        questionData?.type === QuestionType.MULTI) &&
+      !selectedBannerQuestionId
+    ) {
+      seriesData = singleChartDataGen(questionData, chartData, baseCount);
+    } else if (
+      (questionData?.type === QuestionType.GRID ||
+        questionData?.type === QuestionType.GRID_MULTI ||
+        questionData?.type === QuestionType.RANK) &&
+      !selectedBannerQuestionId
+    ) {
+      seriesData = gridChartDataGen(questionData, chartData, baseCount);
+    } else if (selectedBannerQuestionId) {
+      seriesData = bannerChartDataGen(
+        bannerQuestionList,
+        questionData,
+        chartData,
+
+        selectedBannerQuestionId
+      );
+    } else {
+      console.log("under development");
+    }
+    const row = tableChartDataGen(seriesData);
     autoTable(doc, { html: "#my-table" });
+    console.log(seriesData);
     autoTable(doc, {
-      head: [["Name", "Email", "Country"]],
-      body: [
-        ["David", "david@example.com", "Sweden"],
-        ["Castille", "castille@example.com", "Spain"],
-        // ...
-      ],
+      // head: [row[0]],
+      body: [...row],
     });
 
     doc.save("HFS - " + questionData?.labelText + ".pdf");
