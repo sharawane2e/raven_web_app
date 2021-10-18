@@ -242,10 +242,6 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
   const setDefaultPdfPageProperties = async (
     doc: any,
-    x: any,
-    y: any,
-    w: any,
-    h: any,
     baseX: any,
     baseY: any,
     logoX: any,
@@ -337,10 +333,6 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     await setDefaultPdfPageProperties(
       doc,
-      x,
-      y,
-      w,
-      h,
       baseX,
       baseY,
       logoX,
@@ -360,10 +352,6 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     doc.addPage([300, 297], "p");
     await setDefaultPdfPageProperties(
       doc,
-      x,
-      y,
-      w,
-      h,
       baseX,
       260,
       logoX,
@@ -432,6 +420,3 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 };
 
 export default ExportChart;
-
-// some change
-// ppt code change
