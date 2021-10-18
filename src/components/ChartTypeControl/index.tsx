@@ -12,7 +12,10 @@ import { changeChartType } from "../../services/ChartService";
 interface ChartTypeControlProps {}
 
 const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
-  const { chart } = useSelector((state: RootState) => state);
+  const {
+    chart,
+    questions: { selectedBannerQuestionId },
+  } = useSelector((state: RootState) => state);
   const { chartType } = chart;
 
   const buttonConfig: ButtonGroupConfig[] = [
@@ -29,18 +32,20 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       active: chartType === ChartType.STACK,
     },
     {
+      tooltip: "Pie Chart",
+      renderChild: () => <PieChartIcon />,
+      onClick: () => changeChartType(ChartType.PIE),
+      active: chartType === ChartType.PIE,
+      disabled:
+        !(chart.questionData?.type === QuestionType.SINGLE) ||
+        !!selectedBannerQuestionId,
+    },
+    {
       tooltip: "Table",
       renderChild: () => <TableIcon />,
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,
       // disabled: true,
-    },
-    {
-      tooltip: "Pie Chart",
-      renderChild: () => <PieChartIcon />,
-      onClick: () => changeChartType(ChartType.PIE),
-      active: chartType === ChartType.PIE,
-      disabled: !(chart.questionData?.type === QuestionType.SINGLE),
     },
   ];
 

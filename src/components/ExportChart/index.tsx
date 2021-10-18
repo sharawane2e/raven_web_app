@@ -9,6 +9,7 @@ import {
   singleChartDataGen,
   gridChartDataGen,
   tableChartDataGen,
+  bannerChartDataGen,
 } from "../../utils/PptDataGenerator";
 import { QuestionType } from "../../enums/QuestionType";
 import { ISlideConfig } from "../../types/ISlideConfig";
@@ -82,7 +83,15 @@ const setDefaultSlideProperties = (
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const {
-    chart: { chartData, questionData, baseCount },
+    chart: { chartOptions, chartData, questionData, baseCount },
+  } = useSelector((state: RootState) => state);
+
+  const {
+    questions: {
+      selectedQuestionId,
+      selectedBannerQuestionId,
+      bannerQuestionList,
+    },
   } = useSelector((state: RootState) => state);
 
   const generateChart = async () => {
@@ -107,16 +116,26 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     let seriesData: any[] = [];
 
     if (
-      questionData?.type === QuestionType.SINGLE ||
-      questionData?.type === QuestionType.RANK ||
-      questionData?.type === QuestionType.MULTI
+      (questionData?.type === QuestionType.SINGLE ||
+        questionData?.type === QuestionType.MULTI) &&
+      !selectedBannerQuestionId
     ) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
     } else if (
-      questionData?.type === QuestionType.GRID ||
-      questionData?.type === QuestionType.GRID_MULTI
+      (questionData?.type === QuestionType.GRID ||
+        questionData?.type === QuestionType.GRID_MULTI ||
+        questionData?.type === QuestionType.RANK) &&
+      !selectedBannerQuestionId
     ) {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
+    } else if (selectedBannerQuestionId) {
+      seriesData = bannerChartDataGen(
+        bannerQuestionList,
+        questionData,
+        chartData,
+
+        selectedBannerQuestionId
+      );
     } else {
       console.log("under development");
     }
@@ -149,7 +168,9 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       legendFontSize: 6,
       showLegend: true,
       showTitle: false,
-      dataLabelFormatCode: "0%;;;,##.##%",
+      dataLabelFormatCode: " ##.##;;;",
+      // "0%;0%;;"
+      // ##.##;
     };
 
     setDefaultSlideProperties(vericalColumnSlide, pptxGenJsObj, slideConfig);
@@ -196,19 +217,19 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
     const row = tableChartDataGen(seriesData);
 
-    tableSlide.addTable(row, {
-      x: 0.3,
-      y: 0.6,
-      h: 3,
-      w: 9.4,
-      //@ts-ignore
-      fill: "e6e6e6",
-      border: { pt: 0.4, type: "solid", color: "E6E6E6" },
-      //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
-      //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
-      fontSize: 6,
-      //@ts-ignore
-    });
+    // tableSlide.addTable(row, {
+    //   x: 0.3,
+    //   y: 0.6,
+    //   h: 3,
+    //   w: 9.4,
+    //   //@ts-ignore
+    //   //fill:"e6e6e6",
+    //   border: { pt: 0.4, type: "solid", color: "E6E6E6" },
+    //   //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
+    //   //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
+    //   fontSize: 6,
+    //   //@ts-ignore
+    // });
 
     await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
@@ -217,7 +238,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       renderChild: () => <PptIcon />,
       onClick: generateChart,
-      disabled: true,
+      // disabled: true,
     },
     {
       renderChild: () => <PdfIcon />,
@@ -235,3 +256,6 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 };
 
 export default ExportChart;
+
+// some change
+// ppt code change

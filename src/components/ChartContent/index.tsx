@@ -70,7 +70,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const handelBannerQuestionChange = (value: string) => {
     dispatch(setSelectedBannerQuestionId(value));
     fetchChartData(undefined, value)
-      .then((chartData) => dispatch(setChartData(chartData)))
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+        if (!!value) {
+          changeChartType(ChartType.COLUMN);
+        }
+      })
       .catch((error) => console.log(error));
   };
 

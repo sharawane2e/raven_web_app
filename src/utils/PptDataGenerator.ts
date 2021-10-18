@@ -79,6 +79,46 @@ export function gridChartDataGen(
   return seriesData;
 }
 
+export function bannerChartDataGen(
+  bannerQuestionList: any,
+  questionData: any,
+  chartData: any,
+
+  selectedBannerQuestionId: any
+) {
+  let labels: any = [];
+  let seriesData: any[] = [];
+  labels = questionData.options.map((label: any) => label.labelText);
+  let scale =
+    bannerQuestionList.find(
+      (ques: any) => ques.qId === selectedBannerQuestionId
+    )?.options || [];
+  let chartDataComplete = chartData[0];
+  scale.forEach((scaleOption: any) => {
+    seriesData.push({
+      name: scaleOption.labelText,
+      labels,
+      values: questionData.options.map((option: any) => {
+        if (option.labelCode in chartDataComplete) {
+          const obj = chartDataComplete[option.labelCode];
+          if (obj != []) {
+            const subOptionData = obj.find(
+              (subObj: any) => subObj.labelCode === scaleOption.labelCode
+            );
+            if (subOptionData) {
+              const data = subOptionData.count;
+              return data.toFixed(2);
+            } else {
+              return 0;
+            }
+          }
+        }
+      }),
+    });
+  });
+  return seriesData;
+}
+
 export function tableChartDataGen(seriesData: any) {
   let rows = [];
   let scale: any = [];
