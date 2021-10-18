@@ -240,6 +240,44 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     // await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
 
+  const setDefaultPdfPageProperties = async (
+    doc: any,
+    x: any,
+    y: any,
+    w: any,
+    h: any,
+    baseX: any,
+    baseY: any,
+    logoX: any,
+    logoY: any,
+    copyRightX: any,
+    copyRightY: any,
+    qWordBreak: any,
+    lWordBreak: any
+  ) => {
+    doc.setFontSize(10);
+    const lText = doc.splitTextToSize(
+      questionData?.labelText || "",
+      lWordBreak
+    );
+    doc.text(lText, 10, 5);
+    doc.setFontSize(8);
+    const qText = doc.splitTextToSize(
+      questionData?.questionText || "",
+      qWordBreak
+    );
+    doc.text(qText, 8, 20);
+    doc.text("n = " + baseCount || "", baseX, baseY);
+    doc.setFontSize(6);
+    doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
+    doc.setDrawColor(0);
+    doc.setFillColor(244, 124, 60);
+    doc.rect(5, 0, 3, 12, "F");
+    doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
+    let logo = document.getElementsByClassName("appbar__brand-logo")[0];
+    await doc.svg(logo, { x: logoX, y: logoY, width: 40, height: 40 });
+  };
+
   const generatePdf = async () => {
     let seriesData = [];
     let clientWidth = document.body.clientWidth;
@@ -297,28 +335,21 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       .querySelectorAll(".highcharts-text-outline")
       .forEach((node: any) => node.parentNode.removeChild(node));
 
-    doc.setFontSize(10);
-    const lText = doc.splitTextToSize(
-      questionData?.labelText || "",
+    await setDefaultPdfPageProperties(
+      doc,
+      x,
+      y,
+      w,
+      h,
+      baseX,
+      baseY,
+      logoX,
+      logoY,
+      copyRightX,
+      copyRightY,
+      qWordBreak,
       lWordBreak
     );
-    doc.text(lText, 10, 5);
-    doc.setFontSize(8);
-    const qText = doc.splitTextToSize(
-      questionData?.questionText || "",
-      qWordBreak
-    );
-    doc.text(qText, 8, 20);
-    doc.text("n = " + baseCount || "", baseX, baseY);
-    doc.setFontSize(6);
-    doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
-    doc.setDrawColor(0);
-    doc.setFillColor(244, 124, 60);
-    doc.rect(5, 0, 3, 12, "F");
-    doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
-    let logo = document.getElementsByClassName("appbar__brand-logo")[0];
-    console.log("logo", logo);
-    await doc.svg(logo, { x: logoX, y: logoY, width: 40, height: 40 });
     await doc.svg(clonedSource, {
       x: x,
       y: y,
@@ -326,7 +357,22 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       height: h,
       loadExternalStyleSheets: true,
     });
-    doc.addPage();
+    doc.addPage([300, 297], "p");
+    await setDefaultPdfPageProperties(
+      doc,
+      x,
+      y,
+      w,
+      h,
+      baseX,
+      260,
+      logoX,
+      260,
+      copyRightX,
+      290,
+      qWordBreak,
+      lWordBreak
+    );
     if (
       (questionData?.type === QuestionType.SINGLE ||
         questionData?.type === QuestionType.MULTI) &&
@@ -357,6 +403,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     autoTable(doc, {
       // head: [row[0]],
       body: [...row],
+      startY: 40,
     });
 
     doc.save("HFS - " + questionData?.labelText + ".pdf");
