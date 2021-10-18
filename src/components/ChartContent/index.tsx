@@ -11,7 +11,7 @@ import {
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
 import { setChartData } from "../../redux/actions/chartActions";
-import { fetchChartData } from "../../services/ChartService";
+import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";

@@ -3,6 +3,7 @@ import { RootState } from "../../redux/store";
 import { memo } from "react";
 import { QuestionType } from "../../enums/QuestionType";
 import {
+  bannerChartDataGen,
   gridChartDataGen,
   singleChartDataGen,
   tableChartDataGen,
@@ -13,22 +14,35 @@ interface TableProps {}
 const TableView: React.FC<TableProps> = (props) => {
   const {
     chart: { chartData, questionData, baseCount },
+    questions: { selectedBannerQuestionId, bannerQuestionList },
   } = useSelector((state: RootState) => state);
   console.log(chartData, questionData, baseCount);
 
   let seriesData: any[] = [];
 
   if (
-    questionData?.type === QuestionType.SINGLE ||
-    questionData?.type === QuestionType.RANK ||
-    questionData?.type === QuestionType.MULTI
+    (questionData?.type === QuestionType.SINGLE ||
+      questionData?.type === QuestionType.MULTI) &&
+    !selectedBannerQuestionId
   ) {
     seriesData = singleChartDataGen(questionData, chartData, baseCount);
   } else if (
-    questionData?.type === QuestionType.GRID ||
-    questionData?.type === QuestionType.GRID_MULTI
+    (questionData?.type === QuestionType.GRID ||
+      questionData?.type === QuestionType.GRID_MULTI ||
+      questionData?.type === QuestionType.RANK) &&
+    !selectedBannerQuestionId
   ) {
     seriesData = gridChartDataGen(questionData, chartData, baseCount);
+  } else if (selectedBannerQuestionId) {
+    seriesData = bannerChartDataGen(
+      bannerQuestionList,
+
+      questionData,
+
+      chartData,
+
+      selectedBannerQuestionId
+    );
   } else {
     console.log("under development");
   }
