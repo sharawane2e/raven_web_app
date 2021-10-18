@@ -101,9 +101,10 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     let baseText: string = `Base: Total = ${baseCount}`;
     let questionText: string = questionData?.questionText || "";
     let chartFontFace: string = "Calibri";
-    let vericalColumnSlide = pptxGenJsObj.addSlide();
+    let chartSlide = pptxGenJsObj.addSlide();
+    let barDir, barGrp;
     // let vericalStackedSlide = pptxGenJsObj.addSlide();
-    let horizontalColumnSlide = pptxGenJsObj.addSlide();
+    // let horizontalColumnSlide = pptxGenJsObj.addSlide();
     // let horizontalStackedSlide = pptxGenJsObj.addSlide();
     let tableSlide = pptxGenJsObj.addSlide();
 
@@ -173,8 +174,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       // ##.##;
     };
 
-    setDefaultSlideProperties(vericalColumnSlide, pptxGenJsObj, slideConfig);
-    setDefaultSlideProperties(horizontalColumnSlide, pptxGenJsObj, slideConfig);
+    setDefaultSlideProperties(chartSlide, pptxGenJsObj, slideConfig);
+    // setDefaultSlideProperties(horizontalColumnSlide, pptxGenJsObj, slideConfig);
     // setDefaultSlideProperties(vericalStackedSlide, pptxGenJsObj, slideConfig);
     // setDefaultSlideProperties(
     //   horizontalStackedSlide,
@@ -183,7 +184,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     // );
     setDefaultSlideProperties(tableSlide, pptxGenJsObj, slideConfig);
 
-    vericalColumnSlide.addChart(
+    chartSlide.addChart(
       pptxGenJsObj.ChartType.bar,
       seriesData,
 
@@ -199,39 +200,39 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       }
     );
 
-    horizontalColumnSlide.addChart(pptxGenJsObj.ChartType.bar, seriesData, {
-      ...commonChartProperties,
-      dataLabelColor: "000000",
-      barDir: "bar",
-      barGrouping: "clustered",
-      legendPos: "b",
-      //@ts-ignore
-      dataLabelPosition: "l",
-      //@ts-ignore
-      catAxisOrientation: "maxMin",
+    // horizontalColumnSlide.addChart(pptxGenJsObj.ChartType.bar, seriesData, {
+    //   ...commonChartProperties,
+    //   dataLabelColor: "000000",
+    //   barDir: "bar",
+    //   barGrouping: "clustered",
+    //   legendPos: "b",
+    //   //@ts-ignore
+    //   dataLabelPosition: "l",
+    //   //@ts-ignore
+    //   catAxisOrientation: "maxMin",
 
-      dataBorder: { pt: 0.5, color: "0000ffff" },
-      //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
-      valGridLine: { color: "E6E6E6", style: "solid", size: 0.5 },
-    });
+    //   dataBorder: { pt: 0.5, color: "0000ffff" },
+    //   //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
+    //   valGridLine: { color: "E6E6E6", style: "solid", size: 0.5 },
+    // });
 
     const row = tableChartDataGen(seriesData);
 
-    // tableSlide.addTable(row, {
-    //   x: 0.3,
-    //   y: 0.6,
-    //   h: 3,
-    //   w: 9.4,
-    //   //@ts-ignore
-    //   //fill:"e6e6e6",
-    //   border: { pt: 0.4, type: "solid", color: "E6E6E6" },
-    //   //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
-    //   //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
-    //   fontSize: 6,
-    //   //@ts-ignore
-    // });
+    tableSlide.addTable(row, {
+      x: 0.3,
+      y: 0.6,
+      h: 3,
+      w: 9.4,
+      //@ts-ignore
+      //fill:"e6e6e6",
+      border: { pt: 0.4, type: "solid", color: "E6E6E6" },
+      //catGridLine: { color: 'FFFFFF', style: 'solid', size: .1 },
+      //valGridLine: { color: 'E6E6E6', style: 'solid', size: .5 },
+      fontSize: 6,
+      //@ts-ignore
+    });
 
-    await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
+    // await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
