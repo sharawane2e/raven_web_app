@@ -18,6 +18,7 @@ import * as path from "path";
 import { jsPDF } from "jspdf";
 import { HtmlHTMLAttributes } from "react";
 import "svg2pdf.js";
+import autoTable from "jspdf-autotable";
 import { cloneDeep } from "lodash";
 
 interface ExportChartProps {}
@@ -323,6 +324,16 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       width: w,
       height: h,
       loadExternalStyleSheets: true,
+    });
+    doc.addPage();
+    autoTable(doc, { html: "#my-table" });
+    autoTable(doc, {
+      head: [["Name", "Email", "Country"]],
+      body: [
+        ["David", "david@example.com", "Sweden"],
+        ["Castille", "castille@example.com", "Spain"],
+        // ...
+      ],
     });
 
     doc.save("HFS - " + questionData?.labelText + ".pdf");
