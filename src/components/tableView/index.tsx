@@ -37,12 +37,12 @@ const TableView: React.FC<TableProps> = (props) => {
   console.log(tableData);
 
   return (
-    <div className="pl-table">
-      <div className="pl-thead ">
+    <div className="tableView">
+      <div className="TableView">
         {tableData.map((row) => (
-          <div className="row">
+          <div className="Table-row">
             {row.map((col) => (
-              <div className="col">
+              <div className="Table-row-item">
                 {col}
               </div>
             ))}

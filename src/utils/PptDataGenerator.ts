@@ -85,7 +85,7 @@ export function tableChartDataGen(seriesData: any) {
   seriesData.forEach((index: any) => {
     scale.push(index.name);
   });
-  rows.push(["", ...scale]);
+  rows.push([".", ...scale]);
   let subRow: any = [];
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {

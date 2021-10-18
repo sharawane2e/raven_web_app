@@ -1,5 +1,4 @@
 .TableView {
-    overflow: hidden;
     display: -webkit-box;
     display: -moz-box;
     display: box;
@@ -22,7 +21,7 @@
     font-size: 1rem;
     margin: 0.5rem;
     line-height: 1.5;
-    
+    border-top: 1px solid #E5E5E5;
   }
   .table-chart{
     border-top: 1px solid #E5E5E5;
@@ -43,6 +42,8 @@
   }
   .Table-row {
     width: 100%;
+    border: 1px solid #E5E5E5;
+    border-top: none;
   }
   @media (min-width: 500px) {
     .Table-row {
@@ -84,7 +85,7 @@
     word-break: break-word;
   }
   .Table-row .Table-row-item:nth-of-type(1){
-    flex-grow: 0.08;
+    flex-grow: 3;
   }
   .Table-row-item:before {
     content: attr(data-header);
@@ -161,3 +162,6 @@
     }
   }
 }
+
+
+//// otherr one
