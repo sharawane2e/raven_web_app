@@ -237,7 +237,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       //@ts-ignore
     });
 
-    // await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
+    await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
   };
 
   const setDefaultPdfPageProperties = async (
