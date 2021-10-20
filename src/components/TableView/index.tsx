@@ -8,7 +8,7 @@ import {
   singleChartDataGen,
   tableChartDataGen,
 } from "../../utils/PptDataGenerator";
-import { Grid } from "@material-ui/core";
+
 interface TableProps {}
 
 const TableView: React.FC<TableProps> = (props) => {
@@ -47,7 +47,7 @@ const TableView: React.FC<TableProps> = (props) => {
     console.log("under development");
   }
 
-  let tableData = tableChartDataGen(seriesData);
+  let tableData = tableChartDataGen(seriesData, baseCount);
   console.log(tableData);
 
   return (
