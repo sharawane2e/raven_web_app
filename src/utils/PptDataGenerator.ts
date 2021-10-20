@@ -146,7 +146,12 @@ export function tableChartDataGen(seriesData: any, baseCount: number) {
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {
       if (d.values[k]) {
-        subRow.push(formatTableData(d.values[k], baseCount));
+        subRow.push(
+          d.values[k] +
+            "%" +
+            "   |   " +
+            round((d.values[k] / 100) * baseCount, 2)
+        );
       } else {
         subRow.push(formatTableData(0, baseCount));
       }
@@ -314,8 +319,8 @@ function generatePptSlide(
       fontSize: 6,
       autoPage: true,
       autoPageHeaderRows: 1,
-      autoPageLineWeight: 5,
-      autoPageCharWeight: 5,
+      autoPageLineWeight: 10,
+      autoPageCharWeight: 10,
       autoPageRepeatHeader: true,
       autoPageSlideStartY: 0.6,
     });
