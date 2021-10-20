@@ -7,4 +7,6 @@ export class StaticText {
 
   static BANNER_SELECTION_EXCEPTION =
     "Cross tabulation is not applicable with current question selection";
+
+  static COPYRIGHT_TEXT = "© 2020, HFS Research Ltd";
 }

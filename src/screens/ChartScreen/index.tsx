@@ -5,7 +5,6 @@ import {
   FormControlLabel,
   Grid,
 } from "@material-ui/core";
-import { TourProvider } from "@reactour/tour";
 import Tour from "reactour";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
@@ -27,6 +26,7 @@ import IRoute from "../../types/IRoute";
 import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
 import { fetchFilterList } from "../../redux/actions/filterActions";
+import { hideTourGuide } from "../../redux/actions/tourAction";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -44,9 +44,9 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!profile?.showContentPage && showTourGuide) {
-      setShowChartTour(true);
-    }
+    // if (!profile?.showContentPage && showTourGuide) {
+    //   setShowChartTour(true);
+    // }
     dispatch(fetchFilterList());
   }, []);
 
@@ -66,9 +66,9 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         .catch((error) => console.log(error));
     }
     setOpenPopup(false);
-    if (showTourGuide) {
-      setShowChartTour(true);
-    }
+    // if (showTourGuide) {
+    //   setShowChartTour(true);
+    // }
   };
 
   return (
@@ -119,8 +119,8 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
       {
         <Tour
           steps={chartTourSteps}
-          isOpen={showChartTour}
-          onRequestClose={() => setShowChartTour(false)}
+          isOpen={showTourGuide}
+          onRequestClose={() => dispatch(hideTourGuide())}
         />
       }
     </div>
