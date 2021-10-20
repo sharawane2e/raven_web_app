@@ -15,7 +15,7 @@ import { QuestionType } from "../enums/QuestionType";
 import { chartConfig } from "../config/PptConfig";
 import { StaticText } from "../constants/StaticText";
 import { PptChartOrientation, PptChartType } from "../enums/PptChart";
-import { round } from "./Utility";
+import { formatTableData, round } from "./Utility";
 
 export function singleChartDataGen(
   questionData: any,
@@ -100,7 +100,6 @@ export function bannerChartDataGen(
   bannerQuestionList: any,
   questionData: any,
   chartData: any,
-
   selectedBannerQuestionId: any
 ) {
   let labels: any = [];
@@ -136,20 +135,20 @@ export function bannerChartDataGen(
   return seriesData;
 }
 
-export function tableChartDataGen(seriesData: any) {
+export function tableChartDataGen(seriesData: any, baseCount: number) {
   let rows = [];
   let scale: any = [];
   seriesData.forEach((index: any) => {
     scale.push(index.name);
   });
-  rows.push([".", ...scale]);
+  rows.push(["", ...scale]);
   let subRow: any = [];
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {
       if (d.values[k]) {
-        subRow.push(d.values[k]);
+        subRow.push(formatTableData(d.values[k], baseCount));
       } else {
-        subRow.push(0);
+        subRow.push(formatTableData(0, baseCount));
       }
     });
     rows.push([seriesData[0].labels[k], ...subRow]);
@@ -305,18 +304,18 @@ function generatePptSlide(
   }
 
   if (chartType === ChartType.TABLE) {
-    const row = tableChartDataGen(seriesData);
+    const row = tableChartDataGen(seriesData, baseCount);
     slide.addTable(row, {
       x: 0.3,
       y: 0.6,
-      h: 3,
+      h: 3.5,
       w: 9.4,
       border: { pt: 0.4, type: "solid", color: "E6E6E6" },
       fontSize: 6,
       autoPage: true,
       autoPageHeaderRows: 1,
-      autoPageLineWeight: 10,
-      autoPageCharWeight: 10,
+      autoPageLineWeight: 5,
+      autoPageCharWeight: 5,
       autoPageRepeatHeader: true,
       autoPageSlideStartY: 0.6,
     });

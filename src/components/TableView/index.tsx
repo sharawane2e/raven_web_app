@@ -47,7 +47,7 @@ const TableView: React.FC<TableProps> = (props) => {
     console.log("under development");
   }
 
-  let tableData = tableChartDataGen(seriesData);
+  let tableData = tableChartDataGen(seriesData, baseCount);
   console.log(tableData);
 
   return (
