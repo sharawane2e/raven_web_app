@@ -104,7 +104,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
-      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      options={[{ qId: "", questionText: "None" }, ...bannerQuestionList]}
       value={selectedBannerQuestionId}
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
