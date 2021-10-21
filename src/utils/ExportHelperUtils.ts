@@ -164,10 +164,10 @@ export function tableChartDataGen() {
     seriesData.forEach((d: any) => {
       if (d.values[k]) {
         subRow.push(
-          d.values[k] +
-            "%" +
+          round((d.values[k] / 100) * baseCount, 2) +
             "   |   " +
-            round((d.values[k] / 100) * baseCount, 2)
+            d.values[k] +
+            "%"
         );
       } else {
         subRow.push(formatTableData(0, baseCount));

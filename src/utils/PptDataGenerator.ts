@@ -136,7 +136,10 @@ function generatePptSlide(
   graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType }
 ) {
   const {
-    chart: { chartType },
+    chart: { questionData, chartData, chartType, baseCount },
+  } = store.getState();
+  const {
+    questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -166,6 +169,28 @@ function generatePptSlide(
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
       pptChartType = pptxGenJsObj.ChartType.bar;
+    }
+
+    if (selectedBannerQuestionId) {
+      seriesData = bannerChartDataGen(
+        bannerQuestionList,
+        questionData,
+        chartData,
+        selectedBannerQuestionId
+      );
+    } else {
+      if (
+        questionData?.type === QuestionType.SINGLE ||
+        questionData?.type === QuestionType.MULTI
+      ) {
+        seriesData = singleChartDataGen(questionData, chartData, baseCount);
+      } else if (
+        questionData?.type === QuestionType.GRID ||
+        questionData?.type === QuestionType.GRID_MULTI ||
+        questionData?.type === QuestionType.RANK
+      ) {
+        seriesData = gridChartDataGen(questionData, chartData, baseCount);
+      }
     }
 
     slide.addChart(pptChartType, seriesData, {
