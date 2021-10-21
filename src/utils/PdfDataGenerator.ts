@@ -28,7 +28,7 @@ const setDefaultPdfPageProperties = async (
     questionData?.questionText || "",
     qWordBreak
   );
-  doc.text(qText, 8, 20);
+  doc.text(qText, 10, 20);
   doc.text("n = " + baseCount || "", baseX, baseY);
   doc.setFontSize(6);
   doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
@@ -67,7 +67,7 @@ export const generatePdf = async () => {
     y = 30;
     w = 290;
     h = 140;
-    baseX = 10;
+    baseX = 12;
     baseY = 180;
     logoX = 10;
     logoY = 180;
@@ -102,7 +102,7 @@ export const generatePdf = async () => {
       y = 30;
       w = 290;
       h = 140;
-      baseX = 10;
+      baseX = 12;
       baseY = 180;
       logoX = 10;
       logoY = 180;
@@ -116,7 +116,7 @@ export const generatePdf = async () => {
       y = 30;
       w = 170;
       h = 180;
-      baseX = 10;
+      baseX = 12;
       baseY = 220;
       logoX = 10;
       logoY = 220;
