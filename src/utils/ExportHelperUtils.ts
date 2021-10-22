@@ -125,13 +125,10 @@ export function tableChartDataGen() {
   let seriesData = [];
   const {
     chart: { chartData, questionData, baseCount, chartType },
-  } = store.getState();
-
-  const {
     questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
-  if (selectedBannerQuestionId) {
+  if (selectedBannerQuestionId && questionData?.type === QuestionType.SINGLE) {
     seriesData = bannerChartDataGen(
       bannerQuestionList,
       questionData,

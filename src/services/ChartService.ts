@@ -72,7 +72,6 @@ export const changeChartType = (newChartType: ChartType) => {
   const { chart } = store.getState();
   const { chartType } = chart;
   const { dispatch } = store;
-
   const newChartData = JSON.parse(JSON.stringify(chart));
   newChartData.chartType = newChartType;
 
