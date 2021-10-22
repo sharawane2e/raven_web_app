@@ -145,6 +145,29 @@ function generatePptSlide(
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let seriesData: any[] = [];
+  let chartColors: any[] = [];
+
+  if (selectedBannerQuestionId) {
+    seriesData = bannerChartDataGen(
+      bannerQuestionList,
+      questionData,
+      chartData,
+      selectedBannerQuestionId
+    );
+  } else {
+    if (
+      questionData?.type === QuestionType.SINGLE ||
+      questionData?.type === QuestionType.MULTI
+    ) {
+      seriesData = singleChartDataGen(questionData, chartData, baseCount);
+    } else if (
+      questionData?.type === QuestionType.GRID ||
+      questionData?.type === QuestionType.GRID_MULTI ||
+      questionData?.type === QuestionType.RANK
+    ) {
+      seriesData = gridChartDataGen(questionData, chartData, baseCount);
+    }
+  }
 
   if (chartType === ChartType.TABLE) {
     const row = tableChartDataGen();
@@ -164,39 +187,19 @@ function generatePptSlide(
     });
   } else {
     let pptChartType;
-
+    debugger;
     if (chartType === ChartType.PIE) {
+      chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
+      chartColors = seriesData.length > 1 ? [...colorArr] : [primaryBarColor];
       pptChartType = pptxGenJsObj.ChartType.bar;
-    }
-
-    if (selectedBannerQuestionId) {
-      seriesData = bannerChartDataGen(
-        bannerQuestionList,
-        questionData,
-        chartData,
-        selectedBannerQuestionId
-      );
-    } else {
-      if (
-        questionData?.type === QuestionType.SINGLE ||
-        questionData?.type === QuestionType.MULTI
-      ) {
-        seriesData = singleChartDataGen(questionData, chartData, baseCount);
-      } else if (
-        questionData?.type === QuestionType.GRID ||
-        questionData?.type === QuestionType.GRID_MULTI ||
-        questionData?.type === QuestionType.RANK
-      ) {
-        seriesData = gridChartDataGen(questionData, chartData, baseCount);
-      }
     }
 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
-      chartColors: seriesData.length > 1 ? [...colorArr] : [primaryBarColor],
+      chartColors: chartColors,
     });
   }
   return slide;
