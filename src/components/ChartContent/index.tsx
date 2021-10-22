@@ -15,14 +15,13 @@ import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
 import Chart from "../Chart";
-
+import TableView from "../TableView";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
 import { StaticText } from "../../constants/StaticText";
-import TableView from "../TableView";
 import { Tooltip } from "@material-ui/core";
 import Toaster from "../../utils/Toaster";
 
@@ -50,10 +49,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   useEffect(() => {
     if (
-      selectedQuestionId === "" ||
       questionData?.type === QuestionType.GRID ||
       questionData?.type === QuestionType.GRID_MULTI ||
-      questionData?.type === QuestionType.RANK
+      questionData?.type === QuestionType.RANK ||
+      questionData?.type === undefined
     ) {
       dispatch(setSelectedBannerQuestionId(""));
       dispatch(toggleBannerQuestionDisablity(true));
@@ -61,6 +60,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       dispatch(toggleBannerQuestionDisablity(false));
     }
   }, [questionData?.type]);
+
+  // const handleQuestionChange = (value: string) => {
+  //   dispatch(setSelectedQuestionId(value));
+  //   fetchChartData(value)
+  //     .then((chartData) => dispatch(setChartData(chartData)))
+  //     .catch((error) => console.log(error));
+  // };
 
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
