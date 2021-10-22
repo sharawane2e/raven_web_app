@@ -73,7 +73,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        if (chartData.questionData?.type !== QuestionType.SINGLE) {
+        if (
+          chartData.questionData?.type !== QuestionType.SINGLE &&
+          chartType === ChartType.PIE
+        ) {
           changeChartType(ChartType.COLUMN);
         }
       })
@@ -85,7 +88,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        if (!!value) {
+        if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         }
       })
