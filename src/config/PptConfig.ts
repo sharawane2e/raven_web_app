@@ -25,6 +25,9 @@ export const chartConfig: pptxgen.IChartOpts = {
   dataLabelFormatCode: " ##.##;;;",
   legendPos: "b",
   dataBorder: { pt: 0.5, color: "0000ffff" },
-  valGridLine: { color: "E6E6E6", style: "solid", size: 0.5 },
+  valAxisHidden: true,
+  catGridLine: { style: "none" },
+
+  valGridLine: { style: "none" },
   dataLabelColor: "000000",
 };
