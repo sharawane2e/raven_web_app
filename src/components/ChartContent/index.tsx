@@ -51,7 +51,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     if (
       questionData?.type === QuestionType.GRID ||
       questionData?.type === QuestionType.GRID_MULTI ||
-      questionData?.type === QuestionType.RANK
+      questionData?.type === QuestionType.RANK ||
+      questionData?.type === undefined
     ) {
       dispatch(setSelectedBannerQuestionId(""));
       dispatch(toggleBannerQuestionDisablity(true));
@@ -60,10 +61,25 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }
   }, [questionData?.type]);
 
+  // const handleQuestionChange = (value: string) => {
+  //   dispatch(setSelectedQuestionId(value));
+  //   fetchChartData(value)
+  //     .then((chartData) => dispatch(setChartData(chartData)))
+  //     .catch((error) => console.log(error));
+  // };
+
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
-      .then((chartData) => dispatch(setChartData(chartData)))
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+        if (
+          chartData.questionData?.type !== QuestionType.SINGLE &&
+          chartType === ChartType.PIE
+        ) {
+          changeChartType(ChartType.COLUMN);
+        }
+      })
       .catch((error) => console.log(error));
   };
 
@@ -72,7 +88,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        if (!!value) {
+        if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         }
       })
@@ -91,12 +107,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
-      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      options={[{ qId: "", questionText: "None" }, ...bannerQuestionList]}
       value={selectedBannerQuestionId}
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
       valueKey="qId"
-      labelKey="labelText"
+      labelKey="questionText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
       disabledPredicate={(value) => value === selectedQuestionId}
@@ -127,7 +143,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         onItemSelect={handleQuestionChange}
         placeholder={StaticText.QUESTION_LABEL}
         valueKey="qId"
-        labelKey="labelText"
+        labelKey="questionText"
         className="Step-1"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
       />

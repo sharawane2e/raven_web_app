@@ -36,6 +36,27 @@ box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
   .appbar__right-panel {
     padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
+    .appbar__tourGuide{
+      display: flex;
+      align-items: center;
+      cursor: pointer;      
+      margin-right: 10px;
+      background: map-get($map: $bg-color, $key:grayLight );
+      text-align: center;
+      margin-top: 2px;
+      color: map-get($map: $text-color, $key: primary);
+      border-radius: 4px;      
+      padding: .3rem .5rem .3rem .1rem;
+      .tourText{
+        font-size: .9rem;
+      }
+      &:hover{
+        color: #FFF;
+        background: #f47c3c;;
+      }
+  }
+      
+    
   }
   .appbar__menu {
     color: map-get($map: $text-color, $key: fade);
