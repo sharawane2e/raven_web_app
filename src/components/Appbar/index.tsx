@@ -32,7 +32,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     toggleMobileSidebar,
   } = useContext(SidebarContext);
   const [anchorEl, setAnchorEl] = useState<Element | ((element: Element) => Element) | null | undefined >(null);
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const closeMenu = () => {

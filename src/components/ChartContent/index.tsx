@@ -160,7 +160,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       )}
       <div className="chart-content__chart-wrapper">
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
-        <div className="chart-content__base-count">n = {baseCount}</div>
+        {baseCount==0 ? "" : <div className="chart-content__base-count">n {baseCount}</div>}
+        
       </div>
     </div>
   );
