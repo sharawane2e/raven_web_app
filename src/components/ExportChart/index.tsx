@@ -21,7 +21,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       renderChild: () => <PdfIcon />,
       onClick: generatePdf,
-      // disabled: true,
+      // disabled: t,
       disabled: chart.questionData === null,
     },
   ];

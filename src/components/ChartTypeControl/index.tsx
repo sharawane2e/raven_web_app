@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ChartType } from "../../enums/ChartType";
-import { AppDispatch, RootState } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as ColumnChartIcon } from "../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-icon.svg";

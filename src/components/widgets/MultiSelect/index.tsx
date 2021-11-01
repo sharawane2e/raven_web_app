@@ -81,7 +81,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           <MenuItem disabled value="" className="multi-select__placeholder">
             <em>{props.placeholder || "Please select"}</em>
           </MenuItem>
-          {options.map((option, optionIndex) => (
+          {options?.map((option, optionIndex) => (
             <MenuItem
               key={optionIndex}
               // @ts-ignore

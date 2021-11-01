@@ -13,9 +13,11 @@ const Chart: React.FC<ChartProps> = (props) => {
   const chartOptions = useSelector(
     (state: RootState) => state.chart.chartOptions
   );
+
   Highcharts.setOptions({
     colors: colorArr,
   });
+
   return (
     <HighchartsReact
       containerProps={{ style: { height: "100%" } }}

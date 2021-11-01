@@ -1,4 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
+import { ChartDataLabels } from "../../enums/ChartDataLabels";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { QuestionType } from "../../enums/QuestionType";
@@ -8,6 +9,7 @@ import {
   setChartData,
   setChartOrientation,
   setChartType,
+  setDataLabelFormat,
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -15,8 +17,10 @@ export interface IChartState {
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
+
   chartOptions: any;
   baseCount: number;
+  bannerQuestionData: IQuestion | null;
 }
 
 export const dataLabels = {
@@ -31,7 +35,7 @@ export const defaultPlotOptions = {
   series: {
     dataLabels: {
       enabled: true,
-      format: "{point.y:.1f}%",
+      format: ChartDataLabels.PERCENTAGE,
       allowOverlap: true,
       x: 0,
     },
@@ -40,9 +44,11 @@ export const defaultPlotOptions = {
 
 const initialState: IChartState = {
   questionData: null,
+  bannerQuestionData: null,
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
+
   chartOptions: {
     title: {
       text: "",
@@ -107,6 +113,14 @@ const chartReducer = createReducer(initialState, (builder) => {
       chartOptions,
     };
   });
+
+  builder.addCase(setDataLabelFormat, (state, action) => ({
+    ...state,
+    chartOptions: {
+      ...state.chartOptions,
+      ...action.payload,
+    },
+  }));
 });
 
 export default chartReducer;

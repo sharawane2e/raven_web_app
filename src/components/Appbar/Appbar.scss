@@ -7,9 +7,9 @@
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
--moz-box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
-box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+  box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
 
   .appbar__left-panel {
     // padding-left: 0.9375rem; //15px
@@ -21,7 +21,7 @@ box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
       font-weight: bold;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       flex-direction: row-reverse;
       padding-left: 0.9375rem;
       .appbar__heading {
@@ -36,27 +36,28 @@ box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
   .appbar__right-panel {
     padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
-    .appbar__tourGuide{
+    .appbar__tourGuide {
       display: flex;
       align-items: center;
-      cursor: pointer;      
+      cursor: pointer;
       margin-right: 10px;
-      background: map-get($map: $bg-color, $key:grayLight );
+      background: map-get($map: $bg-color, $key: grayLight);
       text-align: center;
       margin-top: 2px;
       color: map-get($map: $text-color, $key: primary);
-      border-radius: 4px;      
-      padding: .3rem .5rem .3rem .1rem;
-      .tourText{
-        font-size: .9rem;
+      border-radius: 4px;
+      padding: 0.3rem 0.5rem 0.3rem 0.1rem;
+      .tourText {
+        font-size: 0.9rem;
       }
-      &:hover{
-        color: #FFF;
-        background: #f47c3c;;
+      &:hover {
+        color: #fff;
+        background: #f47c3c;
       }
-  }
-      
-    
+      @media (max-width: 767px) {
+        width: 80px;
+      }
+    }
   }
   .appbar__menu {
     color: map-get($map: $text-color, $key: fade);
@@ -68,11 +69,13 @@ box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
     height: 3rem;
     //border-right: 1px solid map-get($map: $text-color, $key: border);
     padding: 0.625rem 0; //10px 0px;
-    -webkit-box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
-    -moz-box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
-    box-shadow: 1px 0px 3px 0px rgba(85,85,85,0.25);
-    @media (max-width: 768px) {
+    -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    @media (max-width: 767px) {
       border: none;
+      box-shadow: none;
+      width: unset;
     }
   }
 
@@ -108,6 +111,10 @@ box-shadow: 0px 2px 5px 0px rgba(85,85,85,0.20);
     cursor: pointer;
     margin-left: 0.9375rem;
     padding: 0.625rem 0; //10px 0px;
+    @media (max-width: 767px) {
+      padding: 0px;
+      margin-left: 0px;
+    }
     &::before,
     &::after,
     div {

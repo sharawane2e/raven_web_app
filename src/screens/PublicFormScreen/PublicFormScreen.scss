@@ -1,27 +1,26 @@
 .public-form-screen {
-  position: relative;  
+  position: relative;
   @media only screen and (max-width: 960px) {
-    .public-form-screen__form-area{
-          flex-grow: 1;
-          max-width: 100%;
-          min-width: 100%;
-          flex-basis: 100%;
-        }
-        .public-banner__banner-area{
-          display: none;
-        }
-      }
+    .public-form-screen__form-area {
+      flex-grow: 1;
+      max-width: 100%;
+      min-width: 100%;
+      flex-basis: 100%;
+    }
+    .public-banner__banner-area {
+      display: none;
+    }
+  }
   .public-form-screen__brand-logo {
     position: absolute;
     top: 0.9375rem; //15px
     left: 0.9375rem; //15px
-    @media only screen and (max-width:960px){
+    @media only screen and (max-width: 960px) {
       top: 10px;
       left: 0px;
       margin: auto;
       width: 100%;
     }
-    
   }
 
   .public-form {
@@ -36,9 +35,9 @@
       flex-direction: column;
       align-items: flex-start;
       width: 50%;
-      @media only screen and (max-width:960px){
+      @media only screen and (max-width: 960px) {
         width: 80%;
-        background: #f3f2f2;
+        // background: #f3f2f2;
         padding: 20px;
         border-radius: 5px;
       }
@@ -57,16 +56,17 @@
     text-decoration: none;
   }
 }
-.footerText{
-    position: absolute;
-    left: 15px;
-    bottom: 15px;
-    font-size: map-get($map: $text-size, $key:xsmall );
-    @media only screen and (max-width:960px) {
-      width: 90%;
-      left: 0px;
-      right: 0px;
-      margin: auto;
-      text-align: center;
-    }
+.footerText {
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+  font-size: map-get($map: $text-size, $key: xsmall);
+  width: 50%;
+  @media only screen and (max-width: 960px) {
+    width: 90%;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    text-align: center;
+  }
 }

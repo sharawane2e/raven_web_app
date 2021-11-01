@@ -5,6 +5,9 @@ import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
 import { getChartOptions } from "../utils/ChartOptionFormatter";
+import { ChartDataLabels } from "../enums/ChartDataLabels";
+import { IQuestion } from "../types/IQuestion";
+import { QuestionType } from "../enums/QuestionType";
 
 export const fetchChartData = async (
   qId?: string,
@@ -48,17 +51,23 @@ export const fetchChartData = async (
     };
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
+
     if (response.success) {
-      chartData.chartData = response.data.chartData;
+      chartData.chartData = computeBaseCount(
+        response.data.chartData,
+        response.data.questionData
+      );
       chartData.questionData = response.data.questionData;
       chartData.baseCount = response.data.baseCount;
+      chartData.bannerQuestionData = response.data.bannerQuestionData;
 
       chartData.chartOptions = {
         ...chart.chartOptions,
         ...getChartOptions(
           chartData.questionData,
           chartData.chartData,
-          response.data.baseCount
+          response.data.baseCount,
+          response.data.bannerQuestionData
         ),
       };
     }
@@ -66,6 +75,19 @@ export const fetchChartData = async (
     console.log(error);
   }
   return chartData;
+};
+
+export const computeBaseCount = (chartData: any[], question: IQuestion) => {
+  const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
+  if (question.type === QuestionType.GRID) {
+    chartDataWithUpdatedBase.forEach((data: any) => {
+      data.baseCount = data?.options?.reduce(
+        (sum: number, currentObj: any) => sum + currentObj.count,
+        0
+      );
+    });
+  }
+  return chartDataWithUpdatedBase;
 };
 
 export const changeChartType = (newChartType: ChartType) => {
@@ -120,4 +142,22 @@ export const changeChartType = (newChartType: ChartType) => {
   newChartData.chartOptions["series"] = seriesData;
 
   dispatch(setChartData(newChartData));
+};
+
+export const changeDataLabelFormat = (chartDataLabel: ChartDataLabels) => {
+  const { chartOptions } = store.getState().chart;
+  let newChartOptions = JSON.parse(JSON.stringify(chartOptions));
+  newChartOptions.plotOptions.series.dataLabels.format = chartDataLabel;
+  newChartOptions = {
+    ...newChartOptions,
+    ...getChartOptions(
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      newChartOptions
+    ),
+  };
+
+  return newChartOptions;
 };

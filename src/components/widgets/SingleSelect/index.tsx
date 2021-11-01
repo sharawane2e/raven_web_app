@@ -1,5 +1,6 @@
 import { FormControl, MenuItem, Select, SelectProps } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import clsx from "clsx";
 import CustomScrollbar from "../../CustomScrollbar";
 
 interface SingleSelectProps extends SelectProps {
@@ -47,6 +48,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           MenuListProps: {
             className: "single-select__menu-list",
           },
+          ...props.MenuProps,
         }}
         renderValue={(selected) => {
           if (!selected) {
@@ -65,12 +67,15 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           <MenuItem value="" disabled>
             {placeholder ? placeholder : "Please select"}
           </MenuItem>
-          {options.map((option: any, index: number) => {
+          {options?.map((option: any, index: number) => {
             const optionVal = valueKey ? option[valueKey] : option;
             return (
               <MenuItem
                 key={index}
                 value={optionVal}
+                className={clsx({
+                  "selected-value": optionVal === value,
+                })}
                 onClick={() => onItemSelect && onItemSelect(optionVal)}
                 disabled={
                   props.disabledPredicate && props?.disabledPredicate(optionVal)

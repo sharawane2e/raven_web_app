@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { memo, useEffect, useState } from "react";
 import { tableChartDataGen } from "../../utils/ExportHelperUtils";
+import { Scrollbars } from "react-custom-scrollbars";
 
 interface TableProps {}
 
@@ -16,17 +17,19 @@ const TableView: React.FC<TableProps> = (props) => {
   }, [chartData]);
 
   return (
-    <div className="tableView">
-      <div className="TableView">
-        {tableData.map((row: any) => (
-          <div className="Table-row">
-            {row.map((col: any) => (
-              <div className="Table-row-item">{col}</div>
-            ))}
-          </div>
-        ))}
+    <Scrollbars>
+      <div className="tableView">
+        <div className="TableView">
+          {tableData.map((row: any) => (
+            <div className="Table-row">
+              {row.map((col: any) => (
+                <div className="Table-row-item">{col}</div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Scrollbars>
   );
 };
 

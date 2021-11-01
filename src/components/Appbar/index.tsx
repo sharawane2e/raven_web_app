@@ -1,4 +1,4 @@
-import { useState, useContext, MouseEvent, useEffect } from "react";
+import { useState, useContext, MouseEvent } from "react";
 import { Menu, MenuItem } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
@@ -12,7 +12,6 @@ import { ReactComponent as LogOutIcon } from "../../assets/svg/logout-icon.svg";
 import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
 import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
-import LocalStorageUtils from "../../utils/LocalStorageUtils";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { showTourGuide } from "../../redux/actions/tourAction";
@@ -76,7 +75,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
 
         <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
-
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
           <TourPlayIcon />

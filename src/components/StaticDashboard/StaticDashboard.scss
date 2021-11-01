@@ -1,27 +1,33 @@
 .info-area {
   padding: 0 15px;
+  @media (max-width: 767px) {
+    padding: 0px;
+  }
 
   & ul {
+    @media (max-width: 767px) {
+      padding: 5px;
+    }
     li {
       padding: 5px 5px 5px 15px;
       list-style-type: none;
       margin-bottom: 10px;
       position: relative;
       padding-left: 30px;
-      &::after{
+      &::after {
         content: "";
         position: absolute;
         left: 5px;
         top: 10px;
-        background: map-get($map: $text-color, $key: accent );
+        background: map-get($map: $text-color, $key: accent);
         height: 10px;
         width: 10px;
         border-radius: 5px;
       }
     }
   }
-  & .info-area__heading{
-    background: map-get($map: $text-color, $key: accent );
+  & .info-area__heading {
+    background: map-get($map: $text-color, $key: accent);
     margin-left: -1rem;
     padding: 10px 30px 10px 30px;
     display: inline-flex;
@@ -29,11 +35,17 @@
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
     color: #fff;
+    @media (max-width: 767px) {
+      font-size: 1.2rem;
+    }
   }
-  & .info-area__head{
+  & .info-area__head {
     padding-left: 25px;
+    @media (max-width: 767px) {
+      font-size: 1.2rem;
+    }
   }
-  & .info-area__subhead{
+  & .info-area__subhead {
     padding-left: 25px;
   }
 }
@@ -41,6 +53,12 @@
   text-align: center;
   & img {
     margin-top: 30px;
+    @media (max-width: 767px) {
+      width: 90%;
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      width: 100%;
+    }
   }
 }
 .home-modal__footer {

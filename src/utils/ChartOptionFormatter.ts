@@ -3,6 +3,7 @@ import {
   decimalPrecision,
   primaryBarColor,
 } from "../constants/Variables";
+import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
 import { dataLabels } from "../redux/reducers/chartReducer";
@@ -11,16 +12,31 @@ import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
 
 export const getChartOptions = (
-  questionData: IQuestion | null,
-  chartData: any,
-  baseCount: number
+  questionData: IQuestion | null = store.getState().chart.questionData,
+  chartData: any = store.getState().chart.chartData,
+  baseCount: number = store.getState().chart.baseCount,
+  bannerQuestionData: IQuestion | null = store.getState().chart
+    .bannerQuestionData,
+  chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
-        return getSingleChartOptions(questionData, chartData, baseCount);
+        return getSingleChartOptions(
+          questionData,
+          chartData,
+          baseCount,
+          bannerQuestionData,
+          chartOptionsData
+        );
       case QuestionType.MULTI:
-        return getSingleChartOptions(questionData, chartData, baseCount);
+        return getSingleChartOptions(
+          questionData,
+          chartData,
+          baseCount,
+          bannerQuestionData,
+          chartOptionsData
+        );
       case QuestionType.RANK:
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID:
@@ -39,16 +55,23 @@ export const getChartOptions = (
 const getSingleChartOptions = (
   questionData: IQuestion,
   chartData: any[],
-  baseCount: number
+  baseCount: number,
+  bannerQuestionData: IQuestion | null,
+  chartOptionsData: any
 ): any => {
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
-  if (selectedBannerQuestionId) {
-    const bannerQuestion = questionList.find(
-      (question) => question.qId === selectedBannerQuestionId
-    );
 
+  const {
+    plotOptions: {
+      series: {
+        dataLabels: { format },
+      },
+    },
+  } = chartOptionsData;
+
+  if (selectedBannerQuestionId) {
     const categories: string[] = [];
     const series: any[] = [];
 
@@ -56,15 +79,21 @@ const getSingleChartOptions = (
       categories.push(option.labelText);
     });
 
-    questionData.options.forEach((option) => {
-      chartData[0][option.labelCode] = chartData[0][option.labelCode]?.map(
-        (cv: any) => ({ ...cv, count: (cv.count / baseCount) * 100 })
-      );
-    });
+    // questionData.options.forEach((option) => {
+    //   chartData[0][option.labelCode] = chartData[0][option.labelCode]?.map(
+    //     (cv: any) => {
+    //       if (format === ChartDataLabels.PERCENTAGE) {
+    //         return { ...cv, count: (cv.count / baseCount) * 100 };
+    //       } else {
+    //         return { ...cv, count: cv.count };
+    //       }
+    //     }
+    //   );
+    // });
 
     // @ts-ignore
-    for (let index = 0; index < bannerQuestion?.options.length; index++) {
-      const bannerQuesOption = bannerQuestion?.options[index];
+    for (let index = 0; index < bannerQuestionData?.options.length; index++) {
+      const bannerQuesOption = bannerQuestionData?.options[index];
       const data: any[] = [];
 
       for (
@@ -84,8 +113,17 @@ const getSingleChartOptions = (
             (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
+          const localBase = optionData?.reduce(
+            (sum: number, option: any) => sum + option.count,
+            0
+          );
+
           if (label) {
-            count = label.count;
+            if (format === ChartDataLabels.PERCENTAGE) {
+              count = (label.count / localBase) * 100;
+            } else {
+              count = label.count;
+            }
           }
         }
 
@@ -129,7 +167,14 @@ const getSingleChartOptions = (
         count = label.count;
       }
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
-      const plotValue = (count / baseCount) * 100;
+      let plotValue;
+
+      if (format === ChartDataLabels.PERCENTAGE) {
+        plotValue = (count / baseCount) * 100;
+      } else {
+        plotValue = count;
+      }
+
       if (plotValue > 0)
         data.push({
           name: option.labelText,
@@ -159,6 +204,8 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
+  // debugger;
+  // console.log("Hello");
   const categories = [];
   const series = [];
   for (
@@ -168,7 +215,6 @@ const getGridChartOptions = (
   ) {
     const scale = questionData.scale[scaleIndex];
     const data: any[] = [];
-
     for (
       let subGroupIndex = 0;
       subGroupIndex < questionData.subGroups.length;
@@ -190,7 +236,8 @@ const getGridChartOptions = (
           count = label.count;
         }
       }
-      const plotValue = (count / baseCount) * 100;
+      const base = optionData?.baseCount || baseCount;
+      const plotValue = (count / base) * 100;
       if (plotValue > 0) {
         data.push({
           name: subGroup.labelText,

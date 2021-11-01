@@ -4,28 +4,52 @@
   }
   .mr-button {
     margin-bottom: 10px;
+    // @media (max-width: 767px) {
+    //   display: block;
+    // }
   }
+  .MuiGrid-container {
+    width: unset;
+  }
+
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
+    // display: none;
+    @media (max-width: 767px) {
+      display: none;
+    }
+    // @media (max-width: 767px) {
+    //   display: block;
+    //   padding: 5px;
+    // }
+    // @include media("<tablet") {
+    //   .chart-content__control-wrapper {
+    //     display: none;
+    //   }
+    // }
+  }
+
+  .chart-content__control-wrapper-mobile {
+    // display: inline-block;
+    // margin-bottom: 15px;
+    border: 1.5px solid map-get($map: $text-color, $key: accent);
+    color: map-get($map: $text-color, $key: accent);
+    @media (min-width: 767px) {
+      display: none;
+    }
   }
 
   .export-chart-group {
     justify-content: flex-end;
-  }
-
-  .button-group {
-    margin: 0 10px;
-    min-width: 2rem;
-
-    &:last-child {
-      margin-right: 0;
+    @media (max-width: 767px) {
+      justify-content: unset;
     }
   }
 
   .chart-content__chart-wrapper {
     margin-top: 25px;
-    height: calc(100vh - 320px);
+    height: calc(100vh - 340px);
     // background: #fff;
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
@@ -51,6 +75,55 @@
       g {
         stroke: map-get($map: $text-color, $key: accent);
       }
+    }
+  }
+}
+
+.button-group {
+  margin: 0 10px;
+  min-width: 2rem;
+  @media (max-width: 767px) {
+    padding: 5px;
+  }
+  .button-group__button-wrapper {
+    display: flex;
+    flex: 1;
+    @media (max-width: 767px) {
+      display: flex;
+      flex: 3;
+    }
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.chart-content__control-menu {
+  border-radius: 0;
+  border: 1px solid map-get($map: $text-color, $key: border);
+
+  ul {
+    padding: 0;
+  }
+
+  .appbar__menu-item {
+    display: flex;
+    align-items: center;
+    font-size: map-get($map: $text-size, $key: small);
+    border-bottom: 1px solid map-get($map: $text-color, $key: border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+    svg {
+      margin-right: 10px;
+    }
+
+    &.profile {
+      background-color: map-get($map: $bg-color, $key: "secondary-dark");
+      font-size: map-get($map: $text-color, $key: primary);
+      font-weight: 700;
+      opacity: 1;
     }
   }
 }

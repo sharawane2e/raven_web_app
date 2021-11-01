@@ -1,6 +1,7 @@
 import { decimalPrecision } from "../constants/Variables";
+import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { QuestionType } from "../enums/QuestionType";
-import store from "../redux/store";
+import store, { RootState } from "../redux/store";
 import { formatTableData, round } from "./Utility";
 
 export function singleChartDataGen(
@@ -8,40 +9,34 @@ export function singleChartDataGen(
   chartData: any,
   baseCount: any
 ) {
-  let lb: any = [];
-  let val: any = [];
+  const state: RootState = store.getState();
+  const dataFormat =
+    state?.chart?.chartOptions?.plotOptions?.series?.dataLabels?.format ||
+    ChartDataLabels.PERCENTAGE;
+  let labels: any = [];
+  let values: any = [];
   let seriesData: any[] = [];
   let options = questionData?.options || [];
-  let sortedOptions = options.map((i: any) => {
-    return parseInt(i.labelCode, 10);
-  });
 
-  sortedOptions.map((item: any) => {
-    let cLb = options.find(
-      (element: any) => element.labelCode == item.toString()
+  options.forEach((option: any) => {
+    const dataObj = chartData.find(
+      (data: any) => data.labelCode === option.labelCode
     );
-
-    lb.push(cLb?.labelText);
+    if (dataObj && dataObj.count > 0) {
+      labels.push(option.labelText);
+      let count = dataObj.count;
+      if (dataFormat === ChartDataLabels.PERCENTAGE) {
+        count = round((count / baseCount) * 100, 2);
+      }
+      values.push(count);
+    }
   });
 
-  let ChartDataCodeToInt = chartData.map((i: any) => {
-    let code = parseInt(i.labelCode);
-    let count = i.count;
-
-    return { code, count };
-  });
-  const sortedCountObj = ChartDataCodeToInt.sort((first: any, second: any) =>
-    first.code > second.code ? 1 : -1
-  );
-
-  sortedCountObj.map((i: any) => {
-    val.push(round((i.count / baseCount) * 100, decimalPrecision));
-  });
   seriesData = [
     {
       name: questionData?.labelText,
-      labels: lb,
-      values: val,
+      labels: labels,
+      values: values,
     },
   ];
 
@@ -56,7 +51,6 @@ export function gridChartDataGen(
   let labels: any = [];
   let seriesData: any[] = [];
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
-
   questionData.scale.forEach((scaleOption: any) => {
     seriesData.push({
       name: scaleOption.labelText,
@@ -78,6 +72,12 @@ export function gridChartDataGen(
       }),
     });
   });
+  // seriesData[0].labels = seriesData[0].labels.splice(0, 1);
+  // seriesData[0].values = seriesData[0].values.splice(0, 1);
+  // seriesData[0].labels = [...seriesData[0].labels];
+  // seriesData[0].values = [...seriesData[0].values];
+  // seriesData[0].labels.splice(0, 1);
+  // seriesData[0].values.splice(0, 1);
 
   return seriesData;
 }
@@ -96,6 +96,7 @@ export function bannerChartDataGen(
       (ques: any) => ques.qId === selectedBannerQuestionId
     )?.options || [];
   let chartDataComplete = chartData[0];
+
   scale.forEach((scaleOption: any) => {
     seriesData.push({
       name: scaleOption.labelText,
@@ -109,6 +110,7 @@ export function bannerChartDataGen(
             );
             if (subOptionData) {
               const data = subOptionData.count;
+
               return data.toFixed(2);
             } else {
               return 0;
@@ -118,6 +120,7 @@ export function bannerChartDataGen(
       }),
     });
   });
+
   return seriesData;
 }
 
@@ -128,7 +131,11 @@ export function tableChartDataGen() {
     questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
-  if (selectedBannerQuestionId && questionData?.type === QuestionType.SINGLE) {
+  if (
+    selectedBannerQuestionId &&
+    (questionData?.type === QuestionType.SINGLE ||
+      questionData?.type === QuestionType.MULTI)
+  ) {
     seriesData = bannerChartDataGen(
       bannerQuestionList,
       questionData,
@@ -171,7 +178,9 @@ export function tableChartDataGen() {
       }
     });
     rows.push([seriesData[0].labels[k], ...subRow]);
+
     subRow = [];
   }
+
   return rows;
 }

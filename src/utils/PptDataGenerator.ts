@@ -119,6 +119,36 @@ export const generateChart = async () => {
       chartType === ChartType.COLUMN ? PptChartType.COLUMN : PptChartType.STACK,
   };
 
+  let chartSettings: pptxgen.IChartOpts = {
+    showValue: true,
+
+    //show line on x-axis or y-axis
+    catAxisLineShow: false,
+    valAxisLineShow: false,
+
+    //show or hide legend
+    showLegend: true,
+
+    //show or hide title
+    showTitle: false,
+
+    //change data label format
+
+    //percentage number format
+    dataLabelFormatCode: "##.##;;;",
+
+    //simple number data format
+    // dataLabelFormatCode: "###",
+
+    //show or hide x-axis or y-axis
+    catAxisHidden: false,
+    valAxisHidden: false,
+
+    //grid lines config
+    catGridLine: { style: "solid" },
+    valGridLine: { style: "solid" },
+  };
+
   let slideConfig: ISlideConfig = {
     mainQuestionText,
     baseText,
@@ -126,14 +156,15 @@ export const generateChart = async () => {
     chartFontFace,
   };
 
-  generatePptSlide(pptxGenJsObj, slideConfig, graphTypeProps);
+  generatePptSlide(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
   await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
 };
 
 function generatePptSlide(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
-  graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType }
+  graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType },
+  chartSettings: pptxgen.IChartOpts
 ) {
   const {
     chart: { questionData, chartData, chartType, baseCount },
@@ -187,7 +218,7 @@ function generatePptSlide(
     });
   } else {
     let pptChartType;
-    debugger;
+
     if (chartType === ChartType.PIE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
@@ -200,6 +231,7 @@ function generatePptSlide(
       ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
+      // ...chartSettings,
     });
   }
   return slide;

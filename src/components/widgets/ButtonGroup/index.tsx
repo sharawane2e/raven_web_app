@@ -31,23 +31,25 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
           {groupTitle}
         </Grid>
       )}
-      {buttonConfig.map((button, index) => (
-        <Grid key={index}>
-          <Tooltip title={button.tooltip || ""} arrow placement="top">
-            <Button
-              variant="outlined"
-              disabled={button.disabled}
-              className={clsx("button-group__button", {
-                [button?.className || ""]: button.className,
-                active: button.active,
-              })}
-              onClick={button.onClick}
-            >
-              {button.renderChild ? button.renderChild() : button.label}
-            </Button>
-          </Tooltip>
-        </Grid>
-      ))}
+      <Grid item className="button-group__button-wrapper">
+        {buttonConfig.map((button, index) => (
+          <div key={index}>
+            <Tooltip title={button.tooltip || ""} arrow placement="top">
+              <Button
+                variant="outlined"
+                disabled={button.disabled}
+                className={clsx("button-group__button", {
+                  [button?.className || ""]: button.className,
+                  active: button.active,
+                })}
+                onClick={button.onClick}
+              >
+                {button.renderChild ? button.renderChild() : button.label}
+              </Button>
+            </Tooltip>
+          </div>
+        ))}
+      </Grid>
     </Grid>
   );
 };

@@ -28,6 +28,7 @@
   .button-group__group-title {
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: primary);
-    min-width: fit-content;
+    // min-width: fit-content;
+    flex: 1;
   }
 }

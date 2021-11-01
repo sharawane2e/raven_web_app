@@ -1,3 +1,9 @@
+.testing {
+  @media (max-width: 767px) {
+    min-width: 0 !important;
+    width: 100%;
+  }
+}
 .single-select {
   margin: 0;
 
@@ -13,5 +19,8 @@
   .MuiListItem-root {
     padding: 6px 10px;
     font-size: map-get($map: $text-size, $key: xsmall);
+  }
+  .selected-value {
+    background-color: #e3e3e3;
   }
 }
