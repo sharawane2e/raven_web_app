@@ -55,6 +55,7 @@
   "scripts": {
     "start": "set HTTPS=true&&set SSL_CRT_FILE=./cert/cert.pem&&set SSL_KEY_FILE=./cert/key.pem&&react-scripts start",
     "build": "NODE_ENV=production react-scripts build",
+    "build-windows": "set NODE_ENV=production&&react-scripts build",
     "build:staging": "env-cmd -f .env.staging-internal react-scripts build",
     "build:presentation": "env-cmd -f .env.presentation react-scripts build",
     "test": "react-scripts test",

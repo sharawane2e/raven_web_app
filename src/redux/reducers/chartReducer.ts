@@ -71,6 +71,7 @@ const initialState: IChartState = {
     },
     yAxis: {
       visible: false,
+      reversedStacks: false,
     },
     plotOptions: defaultPlotOptions,
     series: [

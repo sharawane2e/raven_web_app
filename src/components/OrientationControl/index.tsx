@@ -9,7 +9,9 @@ import { setChartOrientation } from "../../redux/actions/chartActions";
 interface OrientationControlProps {}
 
 const OrientationControl: React.FC<OrientationControlProps> = () => {
-  const { chartOrientation } = useSelector((state: RootState) => state.chart);
+  const { chartOrientation, questionData } = useSelector(
+    (state: RootState) => state.chart
+  );
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {
@@ -21,12 +23,14 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
       renderChild: () => <PortraitIcon />,
       onClick: () => changeOrientation(ChartOrientation.PORTRAIT),
       active: chartOrientation === ChartOrientation.PORTRAIT,
+      disabled: questionData === null,
     },
     {
       tooltip: "Landscape",
       renderChild: () => <LandscapeIcon />,
       onClick: () => changeOrientation(ChartOrientation.LANDSCAPE),
       active: chartOrientation === ChartOrientation.LANDSCAPE,
+      disabled: questionData === null,
     },
   ];
 

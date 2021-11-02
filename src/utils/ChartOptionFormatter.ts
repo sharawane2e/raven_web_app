@@ -119,11 +119,13 @@ const getSingleChartOptions = (
           );
 
           if (label) {
-            if (format === ChartDataLabels.PERCENTAGE) {
-              count = (label.count / localBase) * 100;
-            } else {
-              count = label.count;
-            }
+            count = (label.count / localBase) * 100;
+
+            // if (format === ChartDataLabels.PERCENTAGE) {
+            //   count = (label.count / localBase) * 100;
+            // } else {
+            //   count = label.count;
+            // }
           }
         }
 
@@ -168,12 +170,12 @@ const getSingleChartOptions = (
       }
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
-
-      if (format === ChartDataLabels.PERCENTAGE) {
-        plotValue = (count / baseCount) * 100;
-      } else {
-        plotValue = count;
-      }
+      plotValue = (count / baseCount) * 100;
+      // if (format === ChartDataLabels.PERCENTAGE) {
+      //   plotValue = (count / baseCount) * 100;
+      // } else {
+      //   plotValue = count;
+      // }
 
       if (plotValue > 0)
         data.push({

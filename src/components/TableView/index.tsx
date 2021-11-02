@@ -11,8 +11,6 @@ const TableView: React.FC<TableProps> = (props) => {
   const { chartData } = useSelector((state: RootState) => state.chart);
 
   useEffect(() => {
-    console.log(chartData);
-
     setTableData(tableChartDataGen());
   }, [chartData]);
 

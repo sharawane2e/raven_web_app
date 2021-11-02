@@ -24,10 +24,10 @@ export function singleChartDataGen(
     );
     if (dataObj && dataObj.count > 0) {
       labels.push(option.labelText);
-      let count = dataObj.count;
-      if (dataFormat === ChartDataLabels.PERCENTAGE) {
-        count = round((count / baseCount) * 100, 2);
-      }
+      // let count = dataObj.count;
+      let count = round((dataObj.count / baseCount) * 100, 2);
+      // if (dataFormat === ChartDataLabels.PERCENTAGE) {
+      // }
       values.push(count);
     }
   });
@@ -156,7 +156,7 @@ export function tableChartDataGen() {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
     }
   }
-
+  debugger;
   let rows = [];
   let scale: any = [];
   seriesData.forEach((index: any) => {
@@ -168,9 +168,9 @@ export function tableChartDataGen() {
     seriesData.forEach((d: any) => {
       if (d.values[k]) {
         subRow.push(
-          round((d.values[k] / 100) * baseCount, 0) +
+          round(d.values[k], 0) +
             "|" +
-            round(d.values[k], 1) +
+            round((d.values[k] / baseCount) * 100, 1) +
             "%"
         );
       } else {

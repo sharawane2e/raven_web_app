@@ -8,6 +8,7 @@ import { getChartOptions } from "../utils/ChartOptionFormatter";
 import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
+import { omit } from "lodash";
 
 export const fetchChartData = async (
   qId?: string,
@@ -92,23 +93,14 @@ export const computeBaseCount = (chartData: any[], question: IQuestion) => {
 
 export const changeChartType = (newChartType: ChartType) => {
   const { chart } = store.getState();
-  const { chartType } = chart;
   const { dispatch } = store;
-  const newChartData = JSON.parse(JSON.stringify(chart));
-  newChartData.chartType = newChartType;
+  const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  let seriesData: any[] = newChartData.chartOptions.series;
+  chartDataClone.chartType = newChartType;
 
-  if (newChartType === ChartType.STACK || chartType === ChartType.STACK) {
-    seriesData?.reverse();
-    newChartData.chartOptions["legend"].reversed =
-      !newChartData.chartOptions["legend"].reversed;
-  }
+  let plotOptions = chartDataClone.chartOptions["plotOptions"];
+  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
 
-  let plotOptions = newChartData.chartOptions["plotOptions"];
-  delete plotOptions.column;
-  delete plotOptions.bar;
-  delete plotOptions.pie;
   if (newChartType === ChartType.STACK) {
     plotOptions["column"] = {
       stacking: "normal",
@@ -129,19 +121,19 @@ export const changeChartType = (newChartType: ChartType) => {
   }
 
   if (newChartType === ChartType.PIE) {
-    newChartData.chartOptions["chart"] = {
-      ...newChartData.chartOptions["chart"],
+    chartDataClone.chartOptions["chart"] = {
+      ...chartDataClone.chartOptions["chart"],
       type: "pie",
     };
   } else {
-    newChartData.chartOptions["chart"] = {
-      ...newChartData.chartOptions["chart"],
+    chartDataClone.chartOptions["chart"] = {
+      ...chartDataClone.chartOptions["chart"],
       type: "column",
     };
   }
-  newChartData.chartOptions["series"] = seriesData;
+  chartDataClone.chartOptions["plotOptions"] = plotOptions;
 
-  dispatch(setChartData(newChartData));
+  dispatch(setChartData(chartDataClone));
 };
 
 export const changeDataLabelFormat = (chartDataLabel: ChartDataLabels) => {

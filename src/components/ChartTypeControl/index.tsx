@@ -24,12 +24,14 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <ColumnChartIcon />,
       onClick: () => changeChartType(ChartType.COLUMN),
       active: chartType === ChartType.COLUMN,
+      disabled: chart.questionData === null,
     },
     {
       tooltip: "Stack chart",
       renderChild: () => <StackChartIcon />,
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
+      disabled: chart.questionData === null,
     },
     {
       tooltip: "Pie Chart",
