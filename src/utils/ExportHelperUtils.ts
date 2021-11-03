@@ -1,5 +1,4 @@
 import { decimalPrecision } from "../constants/Variables";
-import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { QuestionType } from "../enums/QuestionType";
 import store, { RootState } from "../redux/store";
 import { formatTableData, round } from "./Utility";
@@ -9,10 +8,6 @@ export function singleChartDataGen(
   chartData: any,
   baseCount: any
 ) {
-  const state: RootState = store.getState();
-  const dataFormat =
-    state?.chart?.chartOptions?.plotOptions?.series?.dataLabels?.format ||
-    ChartDataLabels.PERCENTAGE;
   let labels: any = [];
   let values: any = [];
   let seriesData: any[] = [];
@@ -24,10 +19,7 @@ export function singleChartDataGen(
     );
     if (dataObj && dataObj.count > 0) {
       labels.push(option.labelText);
-      // let count = dataObj.count;
       let count = round((dataObj.count / baseCount) * 100, 2);
-      // if (dataFormat === ChartDataLabels.PERCENTAGE) {
-      // }
       values.push(count);
     }
   });
@@ -59,12 +51,13 @@ export function gridChartDataGen(
         const subGroupData = chartData.find(
           (data: any) => data._id === subGroup.qId
         );
+
         if (subGroupData) {
           const data = subGroupData?.options?.find(
             (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
           return data !== undefined
-            ? +((data / baseCount) * 100).toFixed(decimalPrecision)
+            ? round(+((data / subGroupData.baseCount) * 100), decimalPrecision)
             : 0;
         } else {
           return 0;
@@ -103,15 +96,19 @@ export function bannerChartDataGen(
       labels,
       values: questionData.options.map((option: any) => {
         if (option.labelCode in chartDataComplete) {
-          const obj = chartDataComplete[option.labelCode];
-          if (obj != []) {
+          const obj = chartDataComplete[option.labelCode] || [];
+          if (obj && obj.length > 0) {
+            const localBase = obj?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0
+            );
             const subOptionData = obj.find(
               (subObj: any) => subObj.labelCode === scaleOption.labelCode
             );
             if (subOptionData) {
-              const data = subOptionData.count;
+              const data = (subOptionData.count / localBase) * 100;
 
-              return data.toFixed(2);
+              return round(data, decimalPrecision);
             } else {
               return 0;
             }
@@ -156,7 +153,7 @@ export function tableChartDataGen() {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
     }
   }
-  debugger;
+
   let rows = [];
   let scale: any = [];
   seriesData.forEach((index: any) => {
@@ -167,12 +164,7 @@ export function tableChartDataGen() {
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {
       if (d.values[k]) {
-        subRow.push(
-          round(d.values[k], 0) +
-            "|" +
-            round((d.values[k] / baseCount) * 100, 1) +
-            "%"
-        );
+        subRow.push(round(d.values[k], 1) + "%");
       } else {
         subRow.push(formatTableData(0, baseCount));
       }

@@ -35,7 +35,6 @@ interface ChartScreenProps {
 const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const { routes } = props;
   const [openPopup, setOpenPopup] = useState<boolean>(true);
-  const [showChartTour, setShowChartTour] = useState<boolean>(false);
   const [showContent, setShowContent] = useState<boolean>(true);
   const {
     user: { profile },
@@ -44,9 +43,6 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // if (!profile?.showContentPage && showTourGuide) {
-    //   setShowChartTour(true);
-    // }
     dispatch(fetchFilterList());
   }, []);
 
@@ -91,17 +87,14 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           }}
         </SidebarContext.Consumer>
       </SidebarContextProvider>
-      <Dialog
-        open={!!profile?.showContentPage && openPopup}
-        className="home-modal"
-      >
+      <Dialog open={openPopup} className="home-modal">
         <div className="home-modal__content">
           <CustomScrollbar>
             <StaticDashboard onActionClick={handlePopupClose} />
           </CustomScrollbar>
         </div>
         <Grid container className="home-modal__footer">
-          <FormControlLabel
+          {/* <FormControlLabel
             className=""
             label="Don't show this page again"
             control={
@@ -110,7 +103,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
                 onChange={() => setShowContent(!showContent)}
               />
             }
-          />
+          /> */}
           <Button className="button--primary" onClick={handlePopupClose}>
             Go to dashboard
           </Button>

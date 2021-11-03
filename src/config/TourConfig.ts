@@ -8,15 +8,17 @@ export const chartTourSteps: ITourStep[] = [
   {
     selector: ".Step-2",
     content:
-      "Select the question you want to cross tabulate with the above question",
+      "Select the question if you want to cross tabulate with the above question. (Optional)",
   },
   {
     selector: ".Step-3",
-    content: "Select filter to fine tune the demographic view of the data",
+    content:
+      "Select the filters if you want to fine tune the demographic view of the data. (Optional )",
   },
   {
     selector: ".Step-4",
-    content: "Click to apply selected filters",
+    content:
+      "Select the filters if you want to fine tune the demographic view of the data. (Optional )",
   },
   {
     selector: ".Step-5",

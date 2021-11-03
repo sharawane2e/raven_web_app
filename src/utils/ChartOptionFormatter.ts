@@ -79,18 +79,6 @@ const getSingleChartOptions = (
       categories.push(option.labelText);
     });
 
-    // questionData.options.forEach((option) => {
-    //   chartData[0][option.labelCode] = chartData[0][option.labelCode]?.map(
-    //     (cv: any) => {
-    //       if (format === ChartDataLabels.PERCENTAGE) {
-    //         return { ...cv, count: (cv.count / baseCount) * 100 };
-    //       } else {
-    //         return { ...cv, count: cv.count };
-    //       }
-    //     }
-    //   );
-    // });
-
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption = bannerQuestionData?.options[index];
@@ -120,12 +108,6 @@ const getSingleChartOptions = (
 
           if (label) {
             count = (label.count / localBase) * 100;
-
-            // if (format === ChartDataLabels.PERCENTAGE) {
-            //   count = (label.count / localBase) * 100;
-            // } else {
-            //   count = label.count;
-            // }
           }
         }
 
