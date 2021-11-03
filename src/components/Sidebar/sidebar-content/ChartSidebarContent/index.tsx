@@ -17,9 +17,10 @@ import MultiSelect from "../../../widgets/MultiSelect";
 
 const ChartSidebarContent: React.FC = () => {
   const dispatch = useDispatch();
-  const { filterQuestionList, filters } = useSelector(
-    (state: RootState) => state.filters
-  );
+  const {
+    filters: { filterQuestionList, filters },
+    chart: { questionData },
+  } = useSelector((state: RootState) => state);
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
     const updatedFilters = [...filters];
@@ -111,7 +112,11 @@ const ChartSidebarContent: React.FC = () => {
         </CustomScrollbar>
       </div>
       <div className="chart-sidebar__footer">
-        <Button className="button--primary Step-4" onClick={applyFilters}>
+        <Button
+          className="button--primary Step-4"
+          onClick={applyFilters}
+          disabled={questionData === null}
+        >
           Apply
         </Button>
         <Button
