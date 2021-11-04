@@ -80,7 +80,10 @@ export const fetchChartData = async (
 
 export const computeBaseCount = (chartData: any[], question: IQuestion) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
-  if (question.type === QuestionType.GRID) {
+  if (
+    question.type === QuestionType.GRID ||
+    question.type === QuestionType.RANK
+  ) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
         (sum: number, currentObj: any) => sum + currentObj.count,
