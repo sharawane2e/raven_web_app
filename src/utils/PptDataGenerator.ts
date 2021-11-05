@@ -126,7 +126,7 @@ export const generateChart = async () => {
     let fileName: string = "HFS- " + questionData?.labelText;
 
     let mainQuestionText: string = questionData?.labelText || "";
-    let baseText: string = `Sample size: ${baseCount} executives across Global 2000 enterprises`;
+    let baseText: string = `Sample set: ${baseCount} executives across Global 2000 enterprises`;
     let questionText: string = questionData?.questionText || "";
     let sourceText: string = StaticText.SAMPLE_DATA_SOURCE_TEXT;
     let copyRightText: string = StaticText.COPYRIGHT_TEXT;
