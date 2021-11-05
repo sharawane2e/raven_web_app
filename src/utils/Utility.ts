@@ -7,5 +7,5 @@ export function round(value: number, precision: number) {
 
 export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
-  return value + " | " + percentageValue + "%";
+  return percentageValue + "%";
 }

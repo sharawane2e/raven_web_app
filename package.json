@@ -53,6 +53,7 @@
     "yup": "^0.32.9"
   },
   "scripts": {
+    "start:linux": "HTTPS=true react-scripts start",
     "start": "set HTTPS=true&&set SSL_CRT_FILE=./cert/cert.pem&&set SSL_KEY_FILE=./cert/key.pem&&react-scripts start",
     "build": "NODE_ENV=production react-scripts build",
     "build-windows": "set NODE_ENV=production&&react-scripts build",
