@@ -2,8 +2,9 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { memo } from "react";
+import { memo, useContext, useEffect } from "react";
 import { colorArr } from "../../constants/Variables";
+import { SidebarContext } from "../../contexts/SidebarContext";
 
 interface ChartProps {}
 
@@ -14,9 +15,27 @@ const Chart: React.FC<ChartProps> = (props) => {
     (state: RootState) => state.chart.chartOptions
   );
 
-  Highcharts.setOptions({
-    colors: colorArr,
-  });
+  const { open } = useContext(SidebarContext);
+
+  useEffect(() => {
+    Highcharts.setOptions({
+      colors: colorArr,
+    });
+  }, []);
+
+  useEffect(() => {
+    setTimeout(reflow, 300);
+  }, [open]);
+
+  function reflow() {
+    //console.log("called reflow", HighchartsReact, Highcharts);
+    // console.log(Highcharts.charts)
+    for (const chart of Highcharts.charts) {
+      if (chart) {
+        chart.reflow();
+      }
+    }
+  }
 
   return (
     <HighchartsReact

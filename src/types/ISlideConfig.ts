@@ -1,6 +1,9 @@
 export interface ISlideConfig {
-  mainQuestionText: string;
-  chartFontFace: string;
-  baseText: string;
-  questionText: string;
+    mainQuestionText: string;
+    filters: string;
+    chartFontFace: string;
+    baseText: string;
+    sourceText: string;
+
+    copyRightText: string;
 }
