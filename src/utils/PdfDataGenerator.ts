@@ -32,7 +32,7 @@ const setDefaultPdfPageProperties = async (
         qWordBreak
     );
     doc.text(filterText, 10, 20);
-    doc.text("Sample size: " + baseCount + " executives across Global 2000 enterprises" || "", baseX, baseY);
+    doc.text("Sample set: " + baseCount + " executives across Global 2000 enterprises" || "", baseX, baseY);
     doc.text("Source: HFS Pulse, H1 2021" || "", sourceX, sourceY);
     doc.setFontSize(6);
     doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
