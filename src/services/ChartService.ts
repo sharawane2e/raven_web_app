@@ -82,7 +82,8 @@ export const computeBaseCount = (chartData: any[], question: IQuestion) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
   if (
     question.type === QuestionType.GRID ||
-    question.type === QuestionType.RANK
+    question.type === QuestionType.RANK ||
+    question.type === QuestionType.GRID_MULTI
   ) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
