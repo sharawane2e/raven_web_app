@@ -17,8 +17,7 @@ export const chartTourSteps: ITourStep[] = [
   },
   {
     selector: ".Step-4",
-    content:
-      "Select the filters if you want to fine tune the demographic view of the data. (Optional )",
+    content: "Click to apply the selected filters",
   },
   {
     selector: ".Step-5",
