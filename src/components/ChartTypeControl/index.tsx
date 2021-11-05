@@ -53,7 +53,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
     <ButtonGroup
       groupTitle="Chart type"
       buttonConfig={buttonConfig}
-      className=" Step-6"
+      className=" Step-6 chartTyle__option"
     />
   );
 };

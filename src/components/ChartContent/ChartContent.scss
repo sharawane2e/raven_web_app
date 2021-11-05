@@ -1,4 +1,5 @@
 .chart-content {
+  margin-top: 10px;
   .mr-top {
     margin-top: 10px;
   }
@@ -44,6 +45,118 @@
     color: map-get($map: $text-color, $key: primary);
     margin-top: 10px;
   }
+  .title__Block{
+    display: flex;
+    .appbar__heading {
+      color: map-get($map: $text-color, $key: primary);
+      font-weight: bold;
+      display: grid;
+      margin-right: 0.5rem;
+      padding-top: 2px;
+    }
+    .appbar__tourGuide{
+      display: flex;
+      align-items: center;
+      cursor: pointer;  
+      background: map-get($map: $bg-color, $key:grayLight );
+      text-align: center;
+      color: map-get($map: $text-color, $key: primary);
+      border-radius: 4px;      
+      padding: .2rem .4rem .2rem .1rem;
+      margin-top: 2px;
+      height: 20px;
+      .MuiSvgIcon-root{
+        font-size: 15px;
+      }
+      .tourText{
+        font-size: .7rem;
+      }
+      &:hover{
+        color: #FFF;
+        background: #f47c3c;;
+      }
+    }
+  }
+
+  .button-group{
+    display: block;
+    .MuiGrid-root{
+      display: inline-block;
+      .button.MuiButtonBase-root{
+        margin: 0px 5px 0px;
+      }
+    }
+    .button-group__group-title{
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+  }
+  .chartTyle__option{
+    min-width: 150px;
+  }
+
+
+
+  .menu-icon {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-right: 0.5375rem;
+    float: left;
+    padding: .24rem;
+    border: 1px solid map-get($map: $text-color, $key: fade);
+    border-radius: 50%;
+    //padding: 0.625rem 0; //10px 0px;
+    &::before,
+    &::after,
+    div {
+      background: map-get($map: $text-color, $key: fade);
+      content: "";
+      display: block;
+      height: 1px;
+      border-radius: 3px;
+      margin: 3px 2px;
+      transition: 0.5s;
+    }
+  }
+
+  &.sidebar-open {
+    // width: calc(100% - #{$sidebar-width});
+    // margin-left: $sidebar-width;
+
+    @media (min-width: 769px) {
+      .menu-icon {
+        div {
+          transform: scale(0);
+        }
+
+        &::before {
+          transform: translateY(6px) rotate(135deg);
+        }
+        &::after {
+          transform: translateY(-6px) rotate(-135deg);
+        }
+      }
+    }
+  }
+
+  &.full-width {
+    width: 100% !important;
+    margin-left: 0;
+    .menu-icon {
+      display: none;
+    }
+    .appbar__brand-logo {
+      display: block;
+    }
+
+    // .appbar__left-panel {
+    //   margin-left: $sidebar-width;
+    // }
+  }
+
+
 }
 .orientation-control {
   .active {
