@@ -36,12 +36,12 @@ const Chart: React.FC<ChartProps> = (props) => {
       }
     }
   }
-
   return (
     <HighchartsReact
       containerProps={{ style: { height: "100%" } }}
       highcharts={Highcharts}
       options={chartOptions}
+      //onClick={reflow}
       immutable
     />
   );

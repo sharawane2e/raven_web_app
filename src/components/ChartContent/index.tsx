@@ -1,7 +1,9 @@
-import { useEffect, useState, MouseEvent } from "react";
+import { useState, useContext, MouseEvent, useEffect } from "react";
 import Breadcrum from "../widgets/Breadcrum";
 import Grid from "@material-ui/core/Grid";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import { AppDispatch, RootState } from "../../redux/store";
 import {
   fetchBannerQuestionList,
@@ -28,19 +30,48 @@ import { Menu, MenuItem, Chip } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChartOptionsControl from "../ChartOptionsControl";
 // import Tooltip from "@material-ui/Tooltip";
+import { showTourGuide } from "../../redux/actions/tourAction";
+import TourPlayIcon from "@material-ui/icons/PlayArrow";
 
-interface ChartContentProps {}
+interface ChartContentProps {
+  variant?: "fullWidth" | "partialWidth";
+}
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const [showBannerException, setShowBannerException] = useState(true);
+  //const dispatch: AppDispatch = useDispatch();
+  const { profile: user } = useSelector((state: RootState) => state.user);
+
+  const { variant = "partialWidth" } = props;
+  const {
+    open: sidebarOpen,
+    toggleSidebarOpen,
+    openMobileDrawer,
+    toggleMobileSidebar,
+  } = useContext(SidebarContext);
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const opneMenu = (e: MouseEvent<Element>) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const tourStart = (e: MouseEvent<Element>) => {
+    // alert("sss")
+    dispatch(showTourGuide());
+  };
+
   const {
     questions,
     chart: { questionData, baseCount, chartType },
   } = useSelector((state: RootState) => state);
-  const dispatch: AppDispatch = useDispatch();
+  //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
     selectedQuestionId,
@@ -66,14 +97,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       dispatch(toggleBannerQuestionDisablity(false));
     }
   }, [questionData?.type]);
-
-  const closeMenu = () => {
-    setAnchorEl(null);
-  };
-
-  const opneMenu = (e: MouseEvent<Element>) => {
-    setAnchorEl(e.currentTarget);
-  };
 
   const handleQuestionChange = (value: string) => {
     dispatch(setSelectedQuestionId(value));
@@ -132,8 +155,21 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
-        <Grid item>
-          <Breadcrum pageTitle="Reports" />
+        <Grid item className="title__Block">
+          <div
+            className="menu-icon"
+            onClick={() => {
+              toggleSidebarOpen();
+              toggleMobileSidebar();
+            }}
+          >
+            <div></div>
+          </div>
+          <div className="appbar__heading">HFS OneOffice Pulse </div>
+          <div className="appbar__tourGuide" onClick={tourStart}>
+            <TourPlayIcon />
+            <div className="tourText">Start tour</div>
+          </div>
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}

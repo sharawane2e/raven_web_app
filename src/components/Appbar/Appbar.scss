@@ -1,6 +1,6 @@
 .appbar {
   /*box-shadow: 0px 0px 5px #55555526;*/
-  display: inline-flex;
+  display: none;
   justify-content: space-between;
 
   // position: relative;
@@ -53,9 +53,6 @@
       &:hover {
         color: #fff;
         background: #f47c3c;
-      }
-      @media (max-width: 767px) {
-        width: 80px;
       }
     }
   }

@@ -63,17 +63,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push("/home")}
           />
         </div>
-        <div
-          className="menu-icon"
-          onClick={() => {
-            toggleSidebarOpen();
-            toggleMobileSidebar();
-          }}
-        >
-          <div></div>
-        </div>
-
-        <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
