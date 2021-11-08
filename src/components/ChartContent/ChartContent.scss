@@ -166,15 +166,15 @@
   }
 }
 .orientation-control {
-  // .button-group__button :not(.Mui-disabled) {
   .active {
-    svg {
-      g {
-        stroke: map-get($map: $text-color, $key: accent);
+    &:not(.Mui-disabled) {
+      svg {
+        g {
+          stroke: map-get($map: $text-color, $key: accent);
+        }
       }
     }
   }
-  // }
 }
 
 .chart-option-tooltip {
