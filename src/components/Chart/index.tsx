@@ -1,50 +1,60 @@
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import { useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { memo, useContext, useEffect } from "react";
+import { memo, useEffect, Component } from "react";
 import { colorArr } from "../../constants/Variables";
-import { SidebarContext } from "../../contexts/SidebarContext";
+import { isEqual } from "lodash";
 
-interface ChartProps {}
+interface ChartProps extends RootState {}
 
-export type ChartOptionType = Highcharts.Options;
+interface ChartState {}
 
-const Chart: React.FC<ChartProps> = (props) => {
-  const chartOptions = useSelector(
-    (state: RootState) => state.chart.chartOptions
-  );
-
-  const { open } = useContext(SidebarContext);
-
-  useEffect(() => {
+class Chart extends Component<ChartProps, ChartState> {
+  componentDidMount() {
     Highcharts.setOptions({
       colors: colorArr,
     });
-  }, []);
+  }
 
-  useEffect(() => {
-    setTimeout(reflow, 300);
-  }, [open]);
+  componentDidUpdate(prevProps: ChartProps) {
+    if (this.props?.sidebar?.open !== prevProps?.sidebar?.open) {
+      setTimeout(this.reflow, 300);
+    }
+  }
 
-  function reflow() {
-    //console.log("called reflow", HighchartsReact, Highcharts);
-    // console.log(Highcharts.charts)
+  shouldComponentUpdate(prevProps: ChartProps) {
+    if (
+      isEqual(prevProps.chart.chartOptions, this.props.chart.chartOptions) &&
+      this.props?.sidebar?.open === prevProps?.sidebar?.open
+    )
+      return false;
+    return true;
+  }
+
+  reflow = () => {
     for (const chart of Highcharts.charts) {
       if (chart) {
         chart.reflow();
       }
     }
-  }
-  return (
-    <HighchartsReact
-      containerProps={{ style: { height: "100%" } }}
-      highcharts={Highcharts}
-      options={chartOptions}
-      //onClick={reflow}
-      immutable
-    />
-  );
-};
+  };
 
-export default memo(Chart);
+  render() {
+    // @ts-ignore
+    const { chartOptions } = this.props.chart;
+    return (
+      <HighchartsReact
+        containerProps={{ style: { height: "100%" } }}
+        highcharts={Highcharts}
+        options={chartOptions}
+        //onClick={reflow}
+        immutable
+      />
+    );
+  }
+}
+
+const mapStateToProps = (state: RootState) => state;
+
+export default connect(mapStateToProps)(Chart);

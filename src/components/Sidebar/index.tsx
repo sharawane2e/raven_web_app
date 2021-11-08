@@ -3,8 +3,13 @@ import Drawer from "@material-ui/core/Drawer";
 import clsx from "clsx";
 import { SwipeableDrawer } from "@material-ui/core";
 import BrandLogo from "../BrandLogo";
-import { SidebarContext } from "../../contexts/SidebarContext";
 import { useHistory } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  toggleSidebar,
+  toggleSidebarMobile,
+} from "../../redux/actions/sidebarAction";
+import { RootState } from "../../redux/store";
 
 export interface SidebarProps {
   /**
@@ -18,8 +23,18 @@ export interface SidebarProps {
 }
 const Sidebar: React.FC<SidebarProps> = (props) => {
   const { title, content: SidebarContent } = props;
-  const { open, openMobileDrawer, toggleMobileSidebar } =
-    useContext(SidebarContext);
+  // const { open, openMobileDrawer, toggleMobileSidebar } =
+  //   useContext(SidebarContext);
+
+  const { open, openMobileDrawer } = useSelector(
+    (state: RootState) => state.sidebar
+  );
+  const dispatch = useDispatch();
+
+  const toggleMobileSidebar = (open_?: boolean | undefined) => {
+    dispatch(toggleSidebarMobile(open_));
+  };
+
   const history = useHistory();
   const sidebarContent = (
     <>

@@ -32,6 +32,10 @@ import ChartOptionsControl from "../ChartOptionsControl";
 // import Tooltip from "@material-ui/Tooltip";
 import { showTourGuide } from "../../redux/actions/tourAction";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
+import {
+  toggleSidebar,
+  toggleSidebarMobile,
+} from "../../redux/actions/sidebarAction";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -39,21 +43,17 @@ interface ChartContentProps {
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const [showBannerException, setShowBannerException] = useState(true);
-  //const dispatch: AppDispatch = useDispatch();
-  const { profile: user } = useSelector((state: RootState) => state.user);
 
-  const { variant = "partialWidth" } = props;
-  const {
-    open: sidebarOpen,
-    toggleSidebarOpen,
-    openMobileDrawer,
-    toggleMobileSidebar,
-  } = useContext(SidebarContext);
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const toggleSidebarOpen = () => {
+    dispatch(toggleSidebar());
+  };
+  const toggleMobileSidebar = () => {
+    dispatch(toggleSidebarMobile());
+  };
 
   const closeMenu = () => {
     setAnchorEl(null);

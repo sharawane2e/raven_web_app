@@ -3,7 +3,6 @@ import { Menu, MenuItem } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
 import clsx from "clsx";
-import { SidebarContext } from "../../contexts/SidebarContext";
 import BrandLogo from "../BrandLogo";
 import ProfileAvatar from "../widgets/ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
@@ -24,12 +23,11 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
 
   const { variant = "partialWidth" } = props;
-  const {
-    open: sidebarOpen,
-    toggleSidebarOpen,
-    openMobileDrawer,
-    toggleMobileSidebar,
-  } = useContext(SidebarContext);
+
+  const { open: sidebarOpen, openMobileDrawer } = useSelector(
+    (state: RootState) => state.sidebar
+  );
+
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);

@@ -16,9 +16,7 @@ import Sidebar from "../../components/Sidebar";
 import ChartSidebarContent from "../../components/Sidebar/sidebar-content/ChartSidebarContent";
 import StaticDashboard from "../../components/StaticDashboard";
 import { chartTourSteps } from "../../config/TourConfig";
-import SidebarContextProvider, {
-  SidebarContext,
-} from "../../contexts/SidebarContext";
+import SidebarContextProvider from "../../contexts/SidebarContext";
 import ApiUrl from "../../enums/ApiUrl";
 import { setUserProfile } from "../../redux/actions/userActions";
 import { RootState } from "../../redux/store";
@@ -39,6 +37,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
   const {
     user: { profile },
     tour: { showTourGuide },
+    sidebar: { open },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
@@ -72,20 +71,13 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
-
-        <SidebarContext.Consumer>
-          {({ open }) => {
-            return (
-              <main
-                className={clsx("content-area", {
-                  "sidebar-open": open,
-                })}
-              >
-                <AppRouting routes={routes} />
-              </main>
-            );
-          }}
-        </SidebarContext.Consumer>
+        <main
+          className={clsx("content-area", {
+            "sidebar-open": open,
+          })}
+        >
+          <AppRouting routes={routes} />
+        </main>
       </SidebarContextProvider>
       <Dialog open={openPopup} className="home-modal">
         <div className="home-modal__content">
