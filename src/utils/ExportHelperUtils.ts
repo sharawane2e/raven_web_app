@@ -18,6 +18,7 @@ export function singleChartDataGen(
     const dataObj = chartData.find(
       (data: any) => data.labelCode === option.labelCode
     );
+
     if (dataObj && dataObj.count > 0) {
       labels.push(option.labelText);
       let count = round((dataObj.count / baseCount) * 100, 2);
@@ -57,6 +58,7 @@ export function gridChartDataGen(
           const data = subGroupData?.options?.find(
             (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
+
           return data !== undefined
             ? round(+((data / subGroupData.baseCount) * 100), decimalPrecision)
             : 0;
@@ -66,12 +68,6 @@ export function gridChartDataGen(
       }),
     });
   });
-  // seriesData[0].labels = seriesData[0].labels.splice(0, 1);
-  // seriesData[0].values = seriesData[0].values.splice(0, 1);
-  // seriesData[0].labels = [...seriesData[0].labels];
-  // seriesData[0].values = [...seriesData[0].values];
-  // seriesData[0].labels.splice(0, 1);
-  // seriesData[0].values.splice(0, 1);
 
   return seriesData;
 }
@@ -154,6 +150,7 @@ export function tableChartDataGen() {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
     }
   }
+  console.log("series data:", seriesData);
 
   let rows = [];
   let scale: any = [];
@@ -164,10 +161,11 @@ export function tableChartDataGen() {
   let subRow: any = [];
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {
+      console.log(d.values[k]);
       if (d.values[k]) {
         subRow.push(round(d.values[k], 1) + "%");
       } else {
-        subRow.push(formatTableData(0, baseCount));
+        subRow.push(0 + "%");
       }
     });
     rows.push([seriesData[0].labels[k], ...subRow]);

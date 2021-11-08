@@ -52,7 +52,6 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
           if ((selected as IQuestionOption[]).length === 0) {
             return <em>{props.placeholder || "Please select"}</em>;
           }
-          console.log("selected value", selected);
 
           return (selected as IQuestionOption[])
             .map((selectedValue) => {
