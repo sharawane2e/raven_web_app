@@ -19,10 +19,12 @@ export function singleChartDataGen(
       (data: any) => data.labelCode === option.labelCode
     );
 
+    labels.push(option.labelText);
     if (dataObj && dataObj.count > 0) {
-      labels.push(option.labelText);
       let count = round((dataObj.count / baseCount) * 100, 2);
       values.push(count);
+    } else {
+      values.push(0);
     }
   });
 
@@ -163,6 +165,7 @@ export function tableChartDataGen() {
       if (d.values[k]) {
         subRow.push(round(d.values[k], 1) + "%");
       } else {
+        // subRow.push(formatTableData(0, baseCount));
         subRow.push(0 + "%");
       }
     });
