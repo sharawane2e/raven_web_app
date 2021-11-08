@@ -177,18 +177,19 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <ChartTypeControl />
           <ExportChart />
         </Grid>
+        <Tooltip title="Chart Options" className="chart-option-tooltip">
+          <MoreVertIcon
+            className="chart-content__control-wrapper-mobile"
+            onClick={opneMenu}
+          />
+        </Tooltip>
         {/* <Chip
           label="Chart Options"
           variant="outlined"
           className="applied-filters__info-chip chart-content__control-wrapper-mobile"
           onClick={opneMenu}
         /> */}
-        <Tooltip title="Chart Options">
-          <MoreVertIcon
-            className="chart-content__control-wrapper-mobile"
-            onClick={opneMenu}
-          />
-        </Tooltip>
+
         {/* <span
           className="chart-content__control-wrapper-mobile"
           onClick={opneMenu}

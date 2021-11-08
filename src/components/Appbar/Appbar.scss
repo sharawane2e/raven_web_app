@@ -21,7 +21,7 @@
       font-weight: bold;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       flex-direction: row-reverse;
       padding-left: 0.9375rem;
       .appbar__heading {
@@ -69,10 +69,8 @@
     -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       border: none;
-      box-shadow: none;
-      width: unset;
     }
   }
 
@@ -108,10 +106,6 @@
     cursor: pointer;
     margin-left: 0.9375rem;
     padding: 0.625rem 0; //10px 0px;
-    @media (max-width: 767px) {
-      padding: 0px;
-      margin-left: 0px;
-    }
     &::before,
     &::after,
     div {

@@ -5,52 +5,32 @@
   }
   .mr-button {
     margin-bottom: 10px;
-    // @media (max-width: 767px) {
-    //   display: block;
-    // }
   }
-  .MuiGrid-container {
-    width: unset;
-  }
-
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
-    // display: none;
-    @media (max-width: 767px) {
-      display: none;
-    }
-    // @media (max-width: 767px) {
-    //   display: block;
-    //   padding: 5px;
-    // }
-    // @include media("<tablet") {
-    //   .chart-content__control-wrapper {
-    //     display: none;
-    //   }
-    // }
-  }
 
-  .chart-content__control-wrapper-mobile {
-    // display: inline-block;
-    // margin-bottom: 15px;
-    border: 1.5px solid map-get($map: $text-color, $key: accent);
-    color: map-get($map: $text-color, $key: accent);
-    @media (min-width: 767px) {
+    @media (max-width: 786px) {
       display: none;
     }
   }
 
   .export-chart-group {
     justify-content: flex-end;
-    @media (max-width: 767px) {
-      justify-content: unset;
+  }
+
+  .button-group {
+    margin: 0 10px;
+    min-width: 2rem;
+
+    &:last-child {
+      margin-right: 0;
     }
   }
 
   .chart-content__chart-wrapper {
     margin-top: 25px;
-    height: calc(100vh - 340px);
+    height: calc(100vh - 320px);
     // background: #fff;
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
@@ -69,7 +49,7 @@
     color: map-get($map: $text-color, $key: primary);
     margin-top: 10px;
   }
-  .title__Block{
+  .title__Block {
     display: flex;
     .appbar__heading {
       color: map-get($map: $text-color, $key: primary);
@@ -78,49 +58,54 @@
       margin-right: 0.5rem;
       padding-top: 2px;
     }
-    .appbar__tourGuide{
+    .appbar__tourGuide {
       display: flex;
       align-items: center;
-      cursor: pointer;  
-      background: map-get($map: $bg-color, $key:grayLight );
+      cursor: pointer;
+      background: map-get($map: $bg-color, $key: grayLight);
       text-align: center;
       color: map-get($map: $text-color, $key: primary);
-      border-radius: 4px;      
-      padding: .2rem .4rem .2rem .1rem;
+      border-radius: 4px;
+      padding: 0.2rem 0.4rem 0.2rem 0.1rem;
       margin-top: 2px;
       height: 20px;
-      .MuiSvgIcon-root{
+      .MuiSvgIcon-root {
         font-size: 15px;
       }
-      .tourText{
-        font-size: .7rem;
+      .tourText {
+        font-size: 0.7rem;
       }
-      &:hover{
-        color: #FFF;
-        background: #f47c3c;;
+      &:hover {
+        color: #fff;
+        background: #f47c3c;
       }
     }
   }
 
-  .button-group{
-    display: block;
-    .MuiGrid-root{
-      display: inline-block;
-      .button.MuiButtonBase-root{
+  .button-group {
+    // display: block;
+    .MuiGrid-root {
+      // display: inline-block;
+      .button.MuiButtonBase-root {
         margin: 0px 5px 0px;
       }
     }
-    .button-group__group-title{
+    .button-group__group-title {
       display: block;
       margin-bottom: 4px;
+      min-width: fit-content;
     }
-    
+    &.orientation-control,
+    &.export-chart-group {
+      flex: 1;
+    }
+    &.chartTyle__option {
+      flex: 2;
+    }
   }
-  .chartTyle__option{
+  .chartTyle__option {
     min-width: 150px;
   }
-
-
 
   .menu-icon {
     width: 14px;
@@ -128,7 +113,7 @@
     cursor: pointer;
     margin-right: 0.5375rem;
     float: left;
-    padding: .24rem;
+    padding: 0.24rem;
     border: 1px solid map-get($map: $text-color, $key: fade);
     border-radius: 50%;
     //padding: 0.625rem 0; //10px 0px;
@@ -179,66 +164,21 @@
     //   margin-left: $sidebar-width;
     // }
   }
-
-
 }
 .orientation-control {
   .active {
-    &:not(.Mui-disabled) {
-      svg {
-        g {
-          stroke: map-get($map: $text-color, $key: accent);
-        }
+    svg {
+      g {
+        stroke: map-get($map: $text-color, $key: accent);
       }
     }
   }
 }
 
-.button-group {
-  margin: 0 10px;
-  min-width: 2rem;
-  @media (max-width: 767px) {
-    padding: 5px;
-  }
-  .button-group__button-wrapper {
-    display: flex;
-    flex: 1;
-    @media (max-width: 767px) {
-      display: flex;
-      flex: 3;
-    }
-  }
+.chart-option-tooltip {
+  display: none;
 
-  &:last-child {
-    margin-right: 0;
-  }
-}
-.chart-content__control-menu {
-  border-radius: 0;
-  border: 1px solid map-get($map: $text-color, $key: border);
-
-  ul {
-    padding: 0;
-  }
-
-  .appbar__menu-item {
-    display: flex;
-    align-items: center;
-    font-size: map-get($map: $text-size, $key: small);
-    border-bottom: 1px solid map-get($map: $text-color, $key: border);
-
-    &:last-child {
-      border-bottom: none;
-    }
-    svg {
-      margin-right: 10px;
-    }
-
-    &.profile {
-      background-color: map-get($map: $bg-color, $key: "secondary-dark");
-      font-size: map-get($map: $text-color, $key: primary);
-      font-weight: 700;
-      opacity: 1;
-    }
+  @media (max-width: 786px) {
+    display: block;
   }
 }

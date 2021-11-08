@@ -1,4 +1,5 @@
 .button-group {
+  display: flex;
   align-items: flex-end;
   flex-wrap: nowrap;
   button {
@@ -33,4 +34,8 @@
     // min-width: fit-content;
     flex: 1;
   }
+}
+
+.button-group__button-wrapper {
+  display: flex;
 }
