@@ -150,7 +150,6 @@ export function tableChartDataGen() {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
     }
   }
-  console.log("series data:", seriesData);
 
   let rows = [];
   let scale: any = [];
@@ -161,7 +160,6 @@ export function tableChartDataGen() {
   let subRow: any = [];
   for (let k = 0; k < seriesData[0].labels.length; k++) {
     seriesData.forEach((d: any) => {
-      console.log(d.values[k]);
       if (d.values[k]) {
         subRow.push(round(d.values[k], 1) + "%");
       } else {
