@@ -21,7 +21,7 @@ export function singleChartDataGen(
 
     labels.push(option.labelText);
     if (dataObj && dataObj.count > 0) {
-      let count = round((dataObj.count / baseCount) * 100, 2);
+      let count = round((dataObj.count / baseCount) * 100, decimalPrecision);
       values.push(count);
     } else {
       values.push(0);
