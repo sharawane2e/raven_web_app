@@ -22,7 +22,7 @@ export const chartConfig: pptxgen.IChartOpts = {
   legendFontSize: 8,
   showLegend: true,
   showTitle: false,
-  dataLabelFormatCode: "##.##;;;",
+  dataLabelFormatCode: " ##.##;;;",
   legendPos: "b",
   dataBorder: { pt: 0.5, color: "0000ffff" },
   valAxisHidden: true,
