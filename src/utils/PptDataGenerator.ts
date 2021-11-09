@@ -244,18 +244,19 @@ function generatePptSlide(
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
-      debugger;
       chartColors =
         seriesData.length > 1
           ? slice(colorArr, 0, seriesData.length)
           : [primaryBarColor];
       pptChartType = pptxGenJsObj.ChartType.bar;
-
+      console.log(chartColors);
       if (chartOrientation === ChartOrientation.LANDSCAPE) {
-        seriesData.forEach((row: any) => {
-          row.labels?.reverse();
-          row.values?.reverse();
+        seriesData.forEach((row: any, index) => {
+          //   row.labels = row.labels?.reverse();
+          row.values = row.values?.reverse();
+          seriesData[index] = row;
         });
+        seriesData[0]?.labels.reverse();
         seriesData.reverse();
         chartColors.reverse();
       }
