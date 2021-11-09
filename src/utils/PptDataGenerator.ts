@@ -249,15 +249,18 @@ function generatePptSlide(
           ? slice(colorArr, 0, seriesData.length)
           : [primaryBarColor];
       pptChartType = pptxGenJsObj.ChartType.bar;
-      console.log(chartColors);
+
       if (chartOrientation === ChartOrientation.LANDSCAPE) {
         seriesData.forEach((row: any, index) => {
           row.values = row.values?.reverse();
           seriesData[index] = row;
         });
         seriesData[0]?.labels.reverse();
-        seriesData.reverse();
-        chartColors.reverse();
+
+        if (chartType !== ChartType.STACK) {
+          seriesData.reverse();
+          chartColors.reverse();
+        }
       }
       seriesData.forEach((row: any, index) => {
         row.values = row.values.map((value: number) => value / 100);
