@@ -252,7 +252,6 @@ function generatePptSlide(
       console.log(chartColors);
       if (chartOrientation === ChartOrientation.LANDSCAPE) {
         seriesData.forEach((row: any, index) => {
-          //   row.labels = row.labels?.reverse();
           row.values = row.values?.reverse();
           seriesData[index] = row;
         });
@@ -260,6 +259,10 @@ function generatePptSlide(
         seriesData.reverse();
         chartColors.reverse();
       }
+      seriesData.forEach((row: any, index) => {
+        row.values = row.values.map((value: number) => value / 100);
+        seriesData[index] = row;
+      });
     }
 
     slide.addChart(pptChartType, seriesData, {
