@@ -9,7 +9,7 @@
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
-    min-width: 550px;
+    // min-width: 550px;
     @media (max-width: 786px) {
       display: none;
     }
@@ -95,13 +95,6 @@
       margin-bottom: 4px;
       min-width: fit-content;
     }
-    &.orientation-control,
-    &.export-chart-group {
-      flex: 1;
-    }
-    &.chartTyle__option {
-      flex: 2;
-    }
   }
   .chartTyle__option {
     min-width: 150px;
@@ -163,6 +156,20 @@
     // .appbar__left-panel {
     //   margin-left: $sidebar-width;
     // }
+  }
+  .button-group__button-wrapper {
+    div {
+      &:first-child {
+        .button-group__button {
+          margin-left: 0;
+        }
+      }
+      &:last-child {
+        .button-group__button {
+          margin-left: 0;
+        }
+      }
+    }
   }
 }
 .orientation-control {

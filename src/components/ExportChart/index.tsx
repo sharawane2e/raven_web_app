@@ -13,12 +13,14 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
+      tooltip: "Powerpoint",
       renderChild: () => <PptIcon />,
       onClick: generateChart,
       // disabled: true,
       disabled: chart.questionData === null,
     },
     {
+      tooltip: "PDF",
       renderChild: () => <PdfIcon />,
       onClick: generatePdf,
       // disabled: t,

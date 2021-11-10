@@ -22,14 +22,19 @@ export const chartConfig: pptxgen.IChartOpts = {
   legendFontSize: 8,
   showLegend: true,
   showTitle: false,
-  dataLabelFormatCode: " ##.##;;;",
+  showPercent: false,
+
+  // dataLabelFormatCode: "%;;;",
   legendPos: "b",
   dataBorder: { pt: 0.5, color: "0000ffff" },
   valAxisHidden: true,
   catGridLine: { style: "none" },
+  // valAxisLabelFormatCode: "%",
 
   valGridLine: { style: "none" },
   dataLabelColor: "000000",
+  dataLabelFormatCode: "##.##%;;;",
+  valLabelFormatCode: "##.##%;;;",
 };
 
 export const tableConfig: pptxgen.TableProps = {

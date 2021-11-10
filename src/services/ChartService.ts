@@ -54,12 +54,16 @@ export const fetchChartData = async (
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
 
     if (response.success) {
-      chartData.chartData = computeBaseCount(
+      chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
-        response.data.questionData
+        response.data.questionData,
+        response.data.baseCount
       );
       chartData.questionData = response.data.questionData;
-      chartData.baseCount = response.data.baseCount;
+      chartData.baseCount = computeBaseCount(
+        response.data.baseCount,
+        response.data.questionData
+      );
       chartData.bannerQuestionData = response.data.bannerQuestionData;
 
       chartData.chartOptions = {
@@ -67,7 +71,7 @@ export const fetchChartData = async (
         ...getChartOptions(
           chartData.questionData,
           chartData.chartData,
-          response.data.baseCount,
+          chartData.baseCount,
           response.data.bannerQuestionData
         ),
       };
@@ -78,12 +82,15 @@ export const fetchChartData = async (
   return chartData;
 };
 
-export const computeBaseCount = (chartData: any[], question: IQuestion) => {
+export const formatChartDataWithBaseCount = (
+  chartData: any[],
+  question: IQuestion,
+  baseCountData: any[]
+) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
   if (
     question.type === QuestionType.GRID ||
-    question.type === QuestionType.RANK ||
-    question.type === QuestionType.GRID_MULTI
+    question.type === QuestionType.RANK
   ) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
@@ -91,8 +98,26 @@ export const computeBaseCount = (chartData: any[], question: IQuestion) => {
         0
       );
     });
+  } else if (question.type === QuestionType.GRID_MULTI) {
+    const fieldCountData = baseCountData[0]?.fieldCount || [];
+    chartDataWithUpdatedBase.forEach((data: any) => {
+      data.baseCount =
+        fieldCountData.find((countData: any) => countData.quesId === data._id)
+          ?.count || undefined;
+    });
   }
   return chartDataWithUpdatedBase;
+};
+
+export const computeBaseCount = (baseCount: any, question: IQuestion) => {
+  if (Array.isArray(baseCount)) {
+    if (question.type === QuestionType.GRID_MULTI) {
+      return baseCount[0]?.baseCount[0]?.baseCount || 0;
+    } else {
+      return baseCount[0]?.baseCount || 0;
+    }
+  }
+  return 0;
 };
 
 export const changeChartType = (newChartType: ChartType) => {

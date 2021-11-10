@@ -46,6 +46,7 @@ export function gridChartDataGen(
 ) {
   let labels: any = [];
   let seriesData: any[] = [];
+
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   questionData.scale.forEach((scaleOption: any) => {
     seriesData.push({
