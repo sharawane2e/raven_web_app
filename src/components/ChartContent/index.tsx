@@ -165,7 +165,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           >
             <div></div>
           </div>
-          <div className="appbar__heading">HFS OneOffice Pulse </div>
+          <div className="appbar__heading">HFS Pulse Dashboard </div>
           <div className="appbar__tourGuide" onClick={tourStart}>
             <TourPlayIcon />
             <div className="tourText">Start tour</div>

@@ -43,9 +43,8 @@
         <circle cx="67" cy="67" r="65" fill="none"/>
       </g>
       <circle id="Ellipse_26" data-name="Ellipse 26" cx="59" cy="59" r="59" transform="translate(281 483)" fill="#f47c3c"/>
-      <text id="HFS_OneOffice_Pulse" data-name="HFS 
-OneOffice 
-Pulse" transform="translate(340 523)" fill="#fff" font-size="16" font-family="NunitoSans-SemiBold, Nunito Sans" font-weight="600"><tspan x="-17.552" y="0">HFS </tspan><tspan x="-38.752" y="24">OneOffice </tspan><tspan x="-19.736" y="48">Pulse</tspan></text>
+      <text id="HFS_Pulse_Dashboard" data-name="HFS Pulse
+Dashboard" transform="translate(340 535)" fill="#fff" font-size="16" font-family="NunitoSans-SemiBold, Nunito Sans" font-weight="600"><tspan x="-37.288" y="0">HFS Pulse</tspan><tspan x="-39.808" y="24">Dashboard</tspan></text>
     </g>
     <g id="Group_3959" data-name="Group 3959">
       <path id="Path_13100" data-name="Path 13100" d="M7888.831,476l15.438-41.822,23.09-19.885" transform="translate(-7550)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
