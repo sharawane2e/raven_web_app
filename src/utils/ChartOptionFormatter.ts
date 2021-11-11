@@ -111,12 +111,12 @@ const getSingleChartOptions = (
           }
         }
 
-        if (count > 0)
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y: round(count, decimalPrecision),
-          });
+        // if (count > 0)
+        data.push({
+          name: quesOption.labelText,
+          // y: +count.toFixed(decimalPrecision),
+          y: count > 0 ? round(count, decimalPrecision) : null,
+        });
       }
 
       if (data.length)
@@ -188,10 +188,16 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
-  // debugger;
-  // console.log("Hello");
   const categories = [];
   const series = [];
+
+  const subGroups = questionData.subGroups.filter((subGroup: any) => {
+    const subGroupData = chartData.find(
+      (data: any) => data._id === subGroup.qId
+    );
+    if (subGroupData && subGroupData.options.length) return true;
+    return false;
+  });
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -201,10 +207,10 @@ const getGridChartOptions = (
     const data: any[] = [];
     for (
       let subGroupIndex = 0;
-      subGroupIndex < questionData.subGroups.length;
+      subGroupIndex < subGroups.length;
       subGroupIndex++
     ) {
-      const subGroup = questionData.subGroups[subGroupIndex];
+      const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
 
       const optionData = chartData.find((c: any) => c._id === subGroup.qId);
@@ -222,12 +228,12 @@ const getGridChartOptions = (
       }
       const base = optionData?.baseCount || baseCount;
       const plotValue = (count / base) * 100;
-      if (plotValue > 0) {
-        data.push({
-          name: subGroup.labelText,
-          y: round(plotValue, decimalPrecision),
-        });
-      }
+      // if (plotValue > 0) {
+      data.push({
+        name: subGroup.labelText,
+        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+      });
+      // }
     }
     if (data.length)
       series.push({
