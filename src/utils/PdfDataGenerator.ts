@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
-
+import { StaticText } from "../constants/StaticText";
 const setDefaultPdfPageProperties = async (
   doc: any,
   baseX: any,
@@ -38,15 +38,16 @@ const setDefaultPdfPageProperties = async (
     baseX,
     baseY
   );
-  doc.text("Source: HFS Pulse, H1 2021" || "", sourceX, sourceY);
-  doc.setFontSize(6);
-  doc.text("© 2020, HFS Research Ltd" || "", copyRightX, copyRightY);
+  doc.text(StaticText.SAMPLE_DATA_SOURCE_TEXT || "", sourceX, sourceY);
+  // doc.setFontSize(6);
+  doc.setTextColor(127, 127, 127);
+  doc.text(StaticText.COPYRIGHT_TEXT || "", copyRightX, copyRightY);
   doc.setDrawColor(0);
   doc.setFillColor(244, 124, 60);
   doc.rect(5, 0, 3, 12, "F");
-  doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
+  // doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
   let logo = document.getElementsByClassName("appbar__brand-logo")[0];
-  await doc.svg(logo, { x: logoX, y: logoY, width: 40, height: 40 });
+  await doc.svg(logo, { x: logoX, y: logoY, width: 15, height: 15 });
 };
 
 export const generatePdf = async () => {
@@ -87,9 +88,9 @@ export const generatePdf = async () => {
     sourceX = 12;
     sourceY = 265;
     logoX = 10;
-    logoY = 260;
-    copyRightX = 200;
-    copyRightY = 290;
+    logoY = 275;
+    copyRightX = 30;
+    copyRightY = 284;
     lWordBreak = pdfWidth - 20;
     qWordBreak = 180;
     await setDefaultPdfPageProperties(
@@ -128,9 +129,9 @@ export const generatePdf = async () => {
       sourceX = 12;
       sourceY = 185;
       logoX = 10;
-      logoY = 180;
-      copyRightX = 135;
-      copyRightY = 210;
+      logoY = 195;
+      copyRightX = 30;
+      copyRightY = 204;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
     } else {
@@ -147,9 +148,9 @@ export const generatePdf = async () => {
       sourceX = 12;
       sourceY = 225;
       logoX = 10;
-      logoY = 220;
-      copyRightX = 80;
-      copyRightY = 255;
+      logoY = 235;
+      copyRightX = 30;
+      copyRightY = 244;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 160;
     }

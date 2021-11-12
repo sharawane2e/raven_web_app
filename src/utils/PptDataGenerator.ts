@@ -110,17 +110,17 @@ const setDefaultSlideProperties = (pptxGenJsObj: any, config: ISlideConfig) => {
         text: {
           text: copyRightText,
           options: {
-            x: 4.2,
-            y: 5.4,
+            x: 0.75,
+            y: 5.35,
             w: 1.5,
             fontFace: chartFontFace,
-            fontSize: 6,
+            fontSize: 7,
             color: "7f7f7f",
             align: "center",
           },
         },
       },
-      { image: { x: 0.38, y: 5.15, w: 1, h: 0.38, data: logoBase64String } },
+      { image: { x: 0.38, y: 5.15, w: 0.4, h: 0.4, data: logoBase64String } },
     ],
   });
 };
