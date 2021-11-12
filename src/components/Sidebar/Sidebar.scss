@@ -22,7 +22,8 @@
   }
 }
 .sidebar__brand {
-  display: flex;
+  // display: flex;
+  display: none;
   align-items: center;
   max-height: 70px;
   padding-left: 15px;
@@ -60,11 +61,11 @@
     height: 100vh;
     //height: calc(100vh - 68px);
     //margin-top: 68px;
-    -webkit-box-shadow:2px 5px 4px 0px rgba(85,85,85,0.20);
-    -moz-box-shadow:2px 5px 4px 0px rgba(85,85,85,0.20);
-    box-shadow: 2px 5px 4px 0px rgba(85,85,85,0.20);
+    -webkit-box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
+    -moz-box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
+    box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
   }
   .MuiDrawer-paperAnchorDockedLeft {
-      border: none;
+    border: none;
   }
 }

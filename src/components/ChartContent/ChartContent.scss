@@ -79,6 +79,10 @@
         color: #fff;
         background: #f47c3c;
       }
+
+      @media (max-width: 786px) {
+        display: none;
+      }
     }
   }
 
