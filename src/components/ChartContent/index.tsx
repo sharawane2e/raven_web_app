@@ -48,6 +48,20 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     Element | ((element: Element) => Element) | null | undefined
   >(null);
   const dispatch = useDispatch();
+
+  const {
+    questions,
+    chart: { questionData, baseCount, chartType },
+    sidebar: { open },
+  } = useSelector((state: RootState) => state);
+  //const dispatch: AppDispatch = useDispatch();
+  const {
+    questionList,
+    selectedQuestionId,
+    bannerQuestionList,
+    selectedBannerQuestionId,
+  } = questions;
+
   const toggleSidebarOpen = () => {
     dispatch(toggleSidebar());
   };
@@ -64,20 +78,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
   const tourStart = (e: MouseEvent<Element>) => {
     // alert("sss")
-    dispatch(showTourGuide());
+    if (!open) {
+      dispatch(toggleSidebar(true));
+    }
+    setTimeout(() => {
+      dispatch(showTourGuide());
+    }, 300);
   };
-
-  const {
-    questions,
-    chart: { questionData, baseCount, chartType },
-  } = useSelector((state: RootState) => state);
-  //const dispatch: AppDispatch = useDispatch();
-  const {
-    questionList,
-    selectedQuestionId,
-    bannerQuestionList,
-    selectedBannerQuestionId,
-  } = questions;
 
   useEffect(() => {
     dispatch(fetchQuestionList());
