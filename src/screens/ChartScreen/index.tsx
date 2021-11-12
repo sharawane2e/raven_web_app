@@ -25,6 +25,7 @@ import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
 import { fetchFilterList } from "../../redux/actions/filterActions";
 import { hideTourGuide } from "../../redux/actions/tourAction";
+import { toggleSidebar } from "../../redux/actions/sidebarAction";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -106,6 +107,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           steps={chartTourSteps}
           isOpen={showTourGuide}
           onRequestClose={() => dispatch(hideTourGuide())}
+          startAt={0}
         />
       }
     </div>
@@ -113,51 +115,3 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 };
 
 export default ChartScreen;
-
-// const ag = [
-//   {
-//     $match: {
-//       $and: [
-//         {
-//           responses: {
-//             $elemMatch: { quesId: "D1", value: { $in: ["1", "2", "3", "4"] } },
-//           },
-//         },
-//         {
-//           responses: {
-//             $elemMatch: { quesId: "D2", value: { $in: ["2", "3", "4", "5"] } },
-//           },
-//         },
-//       ],
-//     },
-//   },
-// ];
-
-const data = [
-  {
-    $facet: {
-      fieldCount: [
-        {
-          $unwind: "$responses",
-        },
-        {
-          $match: { "responses.grpId": "Q18a", "responses.value": { $ne: [] } },
-        },
-
-        {
-          $group: {
-            _id: { quesId: "$responses.quesId" },
-            count: { $sum: 1 },
-          },
-        },
-        {
-          $project: {
-            quesId: "$_id.quesId",
-            count: 1,
-            _id: 0,
-          },
-        },
-      ],
-    },
-  },
-];
