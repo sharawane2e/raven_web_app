@@ -56,6 +56,9 @@ const initialState: IChartState = {
     chart: {
       type: "column",
       inverted: false,
+      style: {
+        fontFamily: `"Avenir", Arial`,
+      },
     },
     legend: {
       enabled: false,

@@ -9,12 +9,12 @@
       background: none;
       border-radius: 10px;
       padding: 10px;
-      font-size: map-get($map: $text-size, $key: xsmall);
+      font-size: map-get($map: $text-size, $key: small);
     }
   }
 
   label {
-    font-weight: 600;
+    font-weight: 500;
     margin: 15px 0 8px;
     font-size: map-get($map: $text-size, $key: small);
   }
@@ -26,7 +26,7 @@
 
     .MuiTypography-root,
     .multi-select__placeholder {
-      font-size: map-get($map: $text-size, $key: xsmall);
+      font-size: map-get($map: $text-size, $key: small);
     }
     .MuiTypography-root {
       margin-left: 8px;

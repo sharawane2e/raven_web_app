@@ -53,10 +53,11 @@
     display: flex;
     .appbar__heading {
       color: map-get($map: $text-color, $key: primary);
-      font-weight: bold;
+      font-weight: 500;
       display: grid;
       margin-right: 0.5rem;
       padding-top: 2px;
+      font-size: 17px;
     }
     .appbar__tourGuide {
       display: flex;
