@@ -123,8 +123,56 @@ export function bannerChartDataGen(
 
 export function tableChartDataGen() {
   let seriesData = [];
+
+  seriesData = chartDataGen();
+
+  let rows = [];
+
+  if (seriesData) {
+    let scale: any = [];
+    seriesData.forEach((index: any) => {
+      scale.push(index.name);
+    });
+    rows.push(["", ...scale]);
+    let subRow: any = [];
+    for (let k = 0; k < seriesData[0].labels.length; k++) {
+      seriesData.forEach((d: any) => {
+        if (d.values[k]) {
+          subRow.push(round(d.values[k], 1) + "%");
+        } else {
+          subRow.push(0 + "%");
+        }
+      });
+      rows.push([seriesData[0].labels[k], ...subRow]);
+
+      subRow = [];
+    }
+  }
+
+  return rows;
+}
+
+export function appliedFiltersText() {
   const {
-    chart: { chartData, questionData, baseCount, chartType },
+    filters: { appliedFilters },
+  } = store.getState();
+
+  let filters: string = "Filters: ";
+
+  if (appliedFilters.length > 0) {
+    appliedFilters.forEach((f) => {
+      filters += f.label + " | ";
+    });
+  } else {
+    filters += StaticText.NO_FILTER_APPLIED;
+  }
+  return filters;
+}
+
+export function chartDataGen() {
+  let seriesData = [];
+  const {
+    chart: { chartData, questionData, baseCount },
     questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
@@ -153,44 +201,5 @@ export function tableChartDataGen() {
       seriesData = gridChartDataGen(questionData, chartData, baseCount);
     }
   }
-
-  let rows = [];
-  let scale: any = [];
-  seriesData.forEach((index: any) => {
-    scale.push(index.name);
-  });
-  rows.push(["", ...scale]);
-  let subRow: any = [];
-  for (let k = 0; k < seriesData[0].labels.length; k++) {
-    seriesData.forEach((d: any) => {
-      if (d.values[k]) {
-        subRow.push(round(d.values[k], 1) + "%");
-      } else {
-        // subRow.push(formatTableData(0, baseCount));
-        subRow.push(0 + "%");
-      }
-    });
-    rows.push([seriesData[0].labels[k], ...subRow]);
-
-    subRow = [];
-  }
-
-  return rows;
-}
-
-export function appliedFiltersText() {
-  const {
-    filters: { appliedFilters },
-  } = store.getState();
-
-  let filters: string = "Filters: ";
-
-  if (appliedFilters.length > 0) {
-    appliedFilters.forEach((f) => {
-      filters += f.label + " | ";
-    });
-  } else {
-    filters += StaticText.NO_FILTER_APPLIED;
-  }
-  return filters;
+  return seriesData;
 }

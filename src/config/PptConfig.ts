@@ -1,4 +1,12 @@
-import { chartFontFace } from "../constants/Variables";
+import {
+  chartFontFace,
+  catAxisFontSize,
+  valAxisFontSize,
+  lengendFontSize,
+  dataLabelFontSize,
+  dataLabelColor,
+  chartAxisColor,
+} from "../constants/Variables";
 import pptxgen from "pptxgenjs";
 
 export const chartConfig: pptxgen.IChartOpts = {
@@ -8,18 +16,18 @@ export const chartConfig: pptxgen.IChartOpts = {
   h: 3.8,
   //   chartColors: colors,
   dataLabelFontFace: chartFontFace,
-  dataLabelFontSize: 5,
+  dataLabelFontSize: dataLabelFontSize,
   // dataLabelFontBold: true,
   showValue: true,
-  catAxisLabelColor: "191919",
+  catAxisLabelColor: chartAxisColor,
   catAxisLabelFontFace: chartFontFace,
-  catAxisLabelFontSize: 8,
+  catAxisLabelFontSize: catAxisFontSize,
   catAxisLineShow: false,
-  valAxisLabelFontSize: 8,
-  valAxisLabelColor: "191919",
+  valAxisLabelFontSize: valAxisFontSize,
+  valAxisLabelColor: chartAxisColor,
   valAxisLineShow: false,
   valAxisLabelFontFace: chartFontFace,
-  legendFontSize: 8,
+  legendFontSize: lengendFontSize,
   showLegend: true,
   showTitle: false,
   showPercent: false,
@@ -32,7 +40,7 @@ export const chartConfig: pptxgen.IChartOpts = {
   // valAxisLabelFormatCode: "%",
 
   valGridLine: { style: "none" },
-  dataLabelColor: "000000",
+  dataLabelColor: dataLabelColor,
   dataLabelFormatCode: "##.##%;;;",
   valLabelFormatCode: "##.##%;;;",
 };

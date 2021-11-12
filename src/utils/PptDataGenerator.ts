@@ -20,6 +20,7 @@ import {
   bannerChartDataGen,
   tableChartDataGen,
   appliedFiltersText,
+  chartDataGen,
 } from "./ExportHelperUtils";
 import { slice } from "lodash";
 
@@ -199,10 +200,7 @@ function generatePptSlide(
   chartSettings: pptxgen.IChartOpts
 ) {
   const {
-    chart: { questionData, chartData, chartType, baseCount, chartOrientation },
-  } = store.getState();
-  const {
-    questions: { selectedBannerQuestionId, bannerQuestionList },
+    chart: { chartType, chartOrientation },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -210,27 +208,7 @@ function generatePptSlide(
   let seriesData: any[] = [];
   let chartColors: any[] = [];
 
-  if (selectedBannerQuestionId) {
-    seriesData = bannerChartDataGen(
-      bannerQuestionList,
-      questionData,
-      chartData,
-      selectedBannerQuestionId
-    );
-  } else {
-    if (
-      questionData?.type === QuestionType.SINGLE ||
-      questionData?.type === QuestionType.MULTI
-    ) {
-      seriesData = singleChartDataGen(questionData, chartData, baseCount);
-    } else if (
-      questionData?.type === QuestionType.GRID ||
-      questionData?.type === QuestionType.GRID_MULTI ||
-      questionData?.type === QuestionType.RANK
-    ) {
-      seriesData = gridChartDataGen(questionData, chartData, baseCount);
-    }
-  }
+  seriesData = chartDataGen();
 
   if (chartType === ChartType.TABLE) {
     const row = tableChartDataGen();
