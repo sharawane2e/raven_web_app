@@ -52,7 +52,8 @@ export const primaryBarColor = "#f47c3c";
 
 export const decimalPrecision = 1;
 
-export const chartFontFace = "Calibri";
+// export const chartFontFace = "Calibri";
+export const chartFontFace = "Avenir";
 
 export const pptTemplateKey = "SLIDE_TEMPLATE";
 

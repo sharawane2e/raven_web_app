@@ -27,6 +27,7 @@ export const chartConfig: pptxgen.IChartOpts = {
   valAxisLabelColor: chartAxisColor,
   valAxisLineShow: false,
   valAxisLabelFontFace: chartFontFace,
+  legendFontFace: chartFontFace,
   legendFontSize: lengendFontSize,
   showLegend: true,
   showTitle: false,

@@ -7,7 +7,7 @@ import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
 import { StaticText } from "../constants/StaticText";
 const setDefaultPdfPageProperties = async (
-  doc: any,
+  doc: jsPDF,
   baseX: any,
   baseY: any,
   sourceX: any,
@@ -22,6 +22,10 @@ const setDefaultPdfPageProperties = async (
   const {
     chart: { questionData, baseCount },
   } = store.getState();
+
+  // doc.addFont("Avenir", "Arial", "normal");
+
+  // doc.setFont("Avenir");
   doc.setFontSize(10);
   const lText = doc.splitTextToSize(questionData?.labelText || "", lWordBreak);
   doc.text(lText, 10, 5);
