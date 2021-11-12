@@ -240,12 +240,12 @@ function generatePptSlide(
           chartColors.reverse();
         }
       }
-      seriesData.forEach((row: any, index) => {
-        row.values = row.values.map((value: number) => value / 100);
-        seriesData[index] = row;
-      });
     }
 
+    seriesData.forEach((row: any, index) => {
+      row.values = row.values.map((value: number) => value / 100);
+      seriesData[index] = row;
+    });
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
