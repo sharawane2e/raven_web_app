@@ -8,6 +8,7 @@ import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
 import { dataLabels } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
+import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
 
@@ -79,17 +80,19 @@ const getSingleChartOptions = (
       categories.push(option.labelText);
     });
 
+    const subGroups = questionData.options.filter((option: IQuestionOption) => {
+      const subGroup = chartData[0][option.labelCode];
+      if (subGroup && subGroup?.length) return true;
+      return false;
+    });
+
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption = bannerQuestionData?.options[index];
       const data: any[] = [];
 
-      for (
-        let quesIndex = 0;
-        quesIndex < questionData.options.length;
-        quesIndex++
-      ) {
-        const quesOption = questionData.options[quesIndex];
+      for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
+        const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
 
