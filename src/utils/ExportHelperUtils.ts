@@ -56,14 +56,14 @@ export function gridChartDataGen(
         const subGroupData = chartData.find(
           (data: any) => data._id === subGroup.qId
         );
-
+        const base = subGroupData?.baseCount || baseCount;
         if (subGroupData) {
           const data = subGroupData?.options?.find(
             (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
 
           return data !== undefined
-            ? round(+((data / subGroupData.baseCount) * 100), decimalPrecision)
+            ? round(+((data / base) * 100), decimalPrecision)
             : 0;
         } else {
           return 0;
