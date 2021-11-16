@@ -1,21 +1,21 @@
 export const accessTokenKey = "hfs_dashboard_access_token";
 
 export const colorArr = [
-  "#f47c3c",
-  "#323c4e",
-  "#414e66",
-  "#93b0e6",
-  "#849ecf",
-  "#67abe6",
-  "#47769e",
-  "#5684ac",
-  "#739cc0",
-  "#9ab8d3",
-  "#989a9b",
-  "#a3abae",
-  "#b9b9b9",
-  "#cccccc",
-  "#ececec",
+  "#723c82",
+  "#f17238",
+  "#f59562",
+  "#7d92a2",
+  "#cbcdd3",
+  "#e7e6e9",
+  "#45264c",
+  "#22869b",
+  "#9bc6d4",
+  "#3d3a3a",
+  "#848e96",
+  "#e1e3e8",
+  "#fdb71d",
+  "#ffcb79",
+  "#ffef9a",
   // --------
   // "#f47c3c",
   // "#323c4e",
@@ -48,7 +48,7 @@ export const colorArr = [
   //"#7A94B0",
 ];
 
-export const primaryBarColor = "#f47c3c";
+export const primaryBarColor = "#f17238";
 
 export const decimalPrecision = 1;
 

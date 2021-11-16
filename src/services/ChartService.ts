@@ -88,10 +88,7 @@ export const formatChartDataWithBaseCount = (
   baseCountData: any[]
 ) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
-  if (
-    question.type === QuestionType.GRID ||
-    question.type === QuestionType.RANK
-  ) {
+  if (question.type === QuestionType.GRID) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
         (sum: number, currentObj: any) => sum + currentObj.count,
@@ -113,6 +110,8 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
     if (question.type === QuestionType.GRID_MULTI) {
       return baseCount[0]?.baseCount[0]?.baseCount || 0;
+    } else if (question.type === QuestionType.RANK) {
+      return baseCount[0]?.count;
     } else {
       return baseCount[0]?.baseCount || 0;
     }
