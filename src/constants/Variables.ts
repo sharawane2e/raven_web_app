@@ -1,35 +1,35 @@
 export const accessTokenKey = "hfs_dashboard_access_token";
 
 export const colorArr = [
-  "#723c82",
-  "#f17238",
-  "#f59562",
-  "#7d92a2",
-  "#cbcdd3",
-  "#e7e6e9",
-  "#45264c",
-  "#22869b",
-  "#9bc6d4",
-  "#3d3a3a",
-  "#848e96",
-  "#e1e3e8",
-  "#fdb71d",
-  "#ffcb79",
-  "#ffef9a",
+  // "#723c82",
+  // "#f17238",
+  // "#f59562",
+  // "#7d92a2",
+  // "#cbcdd3",
+  // "#e7e6e9",
+  // "#45264c",
+  // "#22869b",
+  // "#9bc6d4",
+  // "#3d3a3a",
+  // "#848e96",
+  // "#e1e3e8",
+  // "#fdb71d",
+  // "#ffcb79",
+  // "#ffef9a",
   // --------
-  // "#f47c3c",
-  // "#323c4e",
-  // "#414e66",
-  // "#93b0e6",
-  // "#849ecf",
-  // "#67abe6",
-  // "#47769e",
-  // "#7a94b0",
-  // "#989a9b",
-  // "#a3abae",
-  // "#b9b9b9",
-  // "#cccccc",
-  // "#ececec",
+  "#f47c3c",
+  "#323c4e",
+  "#414e66",
+  "#93b0e6",
+  "#849ecf",
+  "#67abe6",
+  "#47769e",
+  "#7a94b0",
+  "#989a9b",
+  "#a3abae",
+  "#b9b9b9",
+  "#cccccc",
+  "#ececec",
   // ------
   //"#CC6933",
   //"#E37439",
@@ -49,11 +49,12 @@ export const colorArr = [
 ];
 
 export const primaryBarColor = "#f17238";
+// export const primaryBarColor = "#070707";
 
 export const decimalPrecision = 1;
 
-// export const chartFontFace = "Calibri";
-export const chartFontFace = "Avenir";
+export const chartFontFace = "Calibri";
+// export const chartFontFace = "Avenir";
 
 export const pptTemplateKey = "SLIDE_TEMPLATE";
 

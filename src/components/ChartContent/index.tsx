@@ -172,7 +172,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           >
             <div></div>
           </div>
-          <div className="appbar__heading">HFS Pulse Dashboard </div>
+          <div className="appbar__heading">RAVEN Dashboard </div>
           <div className="appbar__tourGuide" onClick={tourStart}>
             <TourPlayIcon />
             <div className="tourText">Start tour</div>
@@ -270,7 +270,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <div className="chart-content__base-count">
           Sample set: {baseCount} executives across Global 2000 enterprises
           <br />
-          Source: HFS Pulse, H1 2021
+          {/* Source: HFS Pulse, H1 2021 */}
+          Source: E2E Research, 2021
         </div>
       </div>
     </div>

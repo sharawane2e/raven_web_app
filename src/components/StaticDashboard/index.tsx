@@ -7,13 +7,13 @@ export interface StaticDashboardProps {
 const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
   return (
     <div className="info-area">
-      <h2 className="info-area__heading">HFS Pulse Dashboard</h2>
+      <h2 className="info-area__heading">RAVEN Dashboard</h2>
       <h2 className="info-area__head">Don’t react, anticipate demand</h2>
       <ul>
         <li>
-          “HFS Pulse Dashboard” is designed to focus on anticipated demand
-          changes for technology and business services.  We envision it to be
-          the ultimate semi-annual guide to technology and business services
+          “RAVEN Dashboard” is designed to focus on anticipated demand changes
+          for technology and business services.  We envision it to be the
+          ultimate semi-annual guide to technology and business services
         </li>
         <li>
           Organizations that will thrive in the pandemic economy must be in step
