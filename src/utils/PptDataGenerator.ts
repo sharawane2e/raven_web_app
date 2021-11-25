@@ -4,7 +4,9 @@ import {
   logoBase64String,
   pptTemplateKey,
   primaryBarColor,
+  pptBackgroundColor,
 } from "../constants/Variables";
+import { sourceText, copyRightText } from "../constants/Variables";
 import pptxgen from "pptxgenjs";
 import store from "../redux/store";
 import { ISlideConfig } from "../types/ISlideConfig";
@@ -35,7 +37,7 @@ const setDefaultSlideProperties = (pptxGenJsObj: any, config: ISlideConfig) => {
   } = config;
   pptxGenJsObj.defineSlideMaster({
     title: pptTemplateKey,
-    background: { color: "FFFFFF" },
+    background: { color: pptBackgroundColor },
     objects: [
       {
         rect: {
@@ -136,8 +138,7 @@ export const generateChart = async () => {
   let mainQuestionText: string = questionData?.labelText || "";
   let baseText: string = `Sample set: ${baseCount} executives across Global 2000 enterprises`;
   let questionText: string = questionData?.questionText || "";
-  let sourceText: string = StaticText.SAMPLE_DATA_SOURCE_TEXT;
-  let copyRightText: string = StaticText.COPYRIGHT_TEXT;
+
   let filters: string = appliedFiltersText();
 
   let graphTypeProps = {
@@ -185,7 +186,6 @@ export const generateChart = async () => {
     chartFontFace,
     baseText,
     sourceText,
-
     copyRightText,
   };
 

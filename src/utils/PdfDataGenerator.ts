@@ -5,7 +5,7 @@ import jsPDF from "jspdf";
 import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
-import { StaticText } from "../constants/StaticText";
+import { sourceText, copyRightText } from "../constants/Variables";
 const setDefaultPdfPageProperties = async (
   doc: jsPDF,
   baseX: any,
@@ -42,10 +42,10 @@ const setDefaultPdfPageProperties = async (
     baseX,
     baseY
   );
-  doc.text(StaticText.SAMPLE_DATA_SOURCE_TEXT || "", sourceX, sourceY);
+  doc.text(sourceText || "", sourceX, sourceY);
   // doc.setFontSize(6);
   doc.setTextColor(127, 127, 127);
-  doc.text(StaticText.COPYRIGHT_TEXT || "", copyRightX, copyRightY);
+  doc.text(copyRightText || "", copyRightX, copyRightY);
   doc.setDrawColor(0);
   doc.setFillColor(244, 124, 60);
   doc.rect(5, 0, 3, 12, "F");

@@ -8,9 +8,5 @@ export class StaticText {
   static BANNER_SELECTION_EXCEPTION =
     "Cross tabulation is not applicable with current question selection";
 
-  static COPYRIGHT_TEXT = "© 2021 | RAVEN Research Ltd.";
-
-  static SAMPLE_DATA_SOURCE_TEXT = "Source: RAVEN, 2021";
-
   static NO_FILTER_APPLIED = "No filters applied";
 }
