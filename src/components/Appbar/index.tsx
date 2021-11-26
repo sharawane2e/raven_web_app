@@ -4,6 +4,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
 import clsx from "clsx";
 import BrandLogo from "../BrandLogo";
+import { SidebarContext } from "../../contexts/SidebarContext";
 import ProfileAvatar from "../widgets/ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
 import { useHistory } from "react-router";
@@ -14,6 +15,10 @@ import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.s
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { showTourGuide } from "../../redux/actions/tourAction";
+import {
+  toggleSidebar,
+  toggleSidebarMobile,
+} from "../../redux/actions/sidebarAction";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -23,10 +28,23 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
 
   const { variant = "partialWidth" } = props;
+  // const {
+  //   open: sidebarOpen,
+  //   toggleSidebarOpen,
+  //   openMobileDrawer,
+  //   toggleMobileSidebar,
+  // } = useContext(SidebarContext);
 
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
     (state: RootState) => state.sidebar
   );
+
+  const toggleSidebarOpen = () => {
+    dispatch(toggleSidebar());
+  };
+  const toggleMobileSidebar = () => {
+    dispatch(toggleSidebarMobile());
+  };
 
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
@@ -61,17 +79,28 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push("/home")}
           />
         </div>
+        <div
+          className="menu-icon"
+          onClick={() => {
+            toggleSidebarOpen();
+            toggleMobileSidebar();
+          }}
+        >
+          <div></div>
+        </div>
+        <div className="appbar__heading">HFS OneOffice Pulse</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
           <ProfileAvatar text={user?.name || ""} />
           <ExpandMoreIcon className="down-arrow-icon" />
-        </div> */}
+        </div>
+        </div>
       </div>
       <Menu
         anchorEl={anchorEl}
