@@ -3,14 +3,14 @@
   // display: none;
   display: inline-flex;
   justify-content: space-between;
-
+  background: map-get($map: $bg-color, $key: secondary-dark);
   // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
-  -webkit-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  -moz-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+  //-webkit-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+  //-moz-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+  //box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
 
   .appbar__left-panel {
     // padding-left: 0.9375rem; //15px
@@ -42,7 +42,7 @@
       align-items: center;
       cursor: pointer;
       margin-right: 10px;
-      background: map-get($map: $bg-color, $key: grayLight);
+      background: map-get($map: $bg-color, $key: secondary);
       text-align: center;
       margin-top: 2px;
       color: map-get($map: $text-color, $key: primary);
@@ -53,7 +53,7 @@
       }
       &:hover {
         color: #fff;
-        background: #f47c3c;
+        background: map-get($map: $bg-color, $key: accent);
       }
     }
   }
@@ -70,6 +70,7 @@
     -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    background: map-get($map: $bg-color, $key: primary);
     @media (max-width: 768px) {
       border: none;
     }
@@ -95,6 +96,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    color: map-get($map: $text-color, $key: primary);
 
     .down-arrow-icon {
       color: map-get($map: $text-color, $key: accent);
@@ -196,7 +198,7 @@
     }
 
     &.profile {
-      background-color: map-get($map: $bg-color, $key: "secondary-dark");
+      //background-color: map-get($map: $bg-color, $key: "secondary-dark");
       font-size: map-get($map: $text-color, $key: primary);
       font-weight: 700;
       opacity: 1;

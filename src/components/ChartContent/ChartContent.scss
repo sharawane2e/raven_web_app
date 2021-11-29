@@ -1,15 +1,13 @@
 .chart-content {
-  margin-top: 10px;
-  .mr-top {
-    margin-top: 10px;
-  }
-  .mr-button {
-    margin-bottom: 10px;
+  .MuiGrid-container{
+    background: map-get($map: $bg-color, $key: secondary);
+    padding: 0px 10px;
   }
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
-    // min-width: 550px;
+    padding: .4rem 0px;
+    //min-width: 550px;
     @media (max-width: 786px) {
       display: none;
     }
@@ -21,7 +19,7 @@
 
   .button-group {
     margin: 0 10px;
-    min-width: 2rem;
+    min-width: 5rem;
 
     &:last-child {
       margin-right: 0;
@@ -29,8 +27,9 @@
   }
 
   .chart-content__chart-wrapper {
-    margin-top: 25px;
-    height: calc(100vh - 320px);
+    margin: 15px 5px 10px 12px;
+    width: 98.2%;
+    height: calc(100vh - 340px);
     // background: #fff;
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
@@ -88,21 +87,22 @@
   }
 
   .button-group {
-    // display: block;
+    //display: block;
+    flex-direction: unset;
     .MuiGrid-root {
-      // display: inline-block;
+      //display: inline-block;
       .button.MuiButtonBase-root {
         margin: 0px 5px 0px;
       }
     }
     .button-group__group-title {
-      display: block;
+      //display: block;
       margin-bottom: 4px;
       min-width: fit-content;
     }
   }
   .chartTyle__option {
-    min-width: 150px;
+    min-width: 200px;
   }
 
   .menu-icon {

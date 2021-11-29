@@ -1,15 +1,16 @@
 .applied-filters {
   display: flex;
   align-items: center;
+  padding: 10px 10px 5px 10px;
   .applied-filters__scroll-wrapper {
-    height: 2.8125rem; //45px
+    height: 2.1125rem; //45px
     flex: 1;
   }
   .applied-filters__filter-wrapper {
     display: flex;
   }
   .applied-filters__info-chip {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border: 1.5px solid map-get($map: $text-color, $key: accent);
     color: map-get($map: $text-color, $key: accent);
   }

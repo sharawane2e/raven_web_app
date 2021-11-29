@@ -16,6 +16,14 @@
     .MuiFormControl-root {
       width: 95%;
     }
+    .MuiInput-input{
+      background: map-get($map: $bg-color, $key:secondary-shade );
+      border-radius: 2px;
+      border: none;
+    }
+    .MuiInputBase-root{
+      border: none;
+    }
   }
   .chart-sidebar__filter-questions {
     em {
@@ -24,6 +32,14 @@
   }
   .chart-sidebar__footer {
     padding: 15px;
+    .MuiButton-label{
+      color: map-get($map: $text-color, $key: primary);
+      color: #fff;
+    }
+    .button--primary{
+      color: map-get($map: $text-color, $key: light);
+    }
+    
 
     .clear-button {
       margin-left: 15px;

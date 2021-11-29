@@ -32,23 +32,24 @@ $font-weight: (
 );
 
 $text-color: (
-  "accent": #f47c3c,
-  "light": #ffffff,
-  "partial-light": #dddddd,
-  "primary": #343434,
-  "primary-fade": #2a2c2b,
-  "fade": #a2a2a2,
+  "accent": #F1AD0F,
+  "light": #fff,
+  "partial-light": #DFDFDF,
+  "primary": #DFDFDF,
+  "primary-dark":#000,
+  "primary-fade": #DFDFDF,
+  "fade": #DFDFDF,
   "danger": red,
   "border": #dee2e6,
   "link": #491d40,
 );
 
 $bg-color: (
-  "accent": #f47c3c,
-  "primary": #ffffff,
-  "secondary": #dee2e6,
-  "secondary-shade": #fbfbfb,
-  "secondary-dark": #dedede80,
+  "accent": #F1AD0F,
+  "primary": #070707,
+  "secondary": #393939,
+  "secondary-shade": #DFDFDF,
+  "secondary-dark": #1E1E1E,
   "secondary-light": #bebebe2e,
   "grayLight": #f7f7f7,
   "dark": #848484,

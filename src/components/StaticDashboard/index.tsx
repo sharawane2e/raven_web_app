@@ -22,10 +22,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
         </li>
       </ul>
       <Grid container>
-        <Grid item md={6} sm={6} className="info-area__imgwider">
-          <img src={DoshboardChart} />
-        </Grid>
-        <Grid item md={6} sm={6}>
+        <Grid item md={12} sm={12}>
           <h3 className="info-area__subhead">Demographics:</h3>
           <ul>
             <li>

@@ -1,6 +1,8 @@
 .chart-screen {
   .content-area {
-    padding: 10px 30px;
+    //padding: 10px 30px;
+    margin-top: -6px;
+    background: map-get($map: $bg-color, $key:secondary-dark );
     @media (max-width: 767px) {
       padding: 10px 5px;
     }

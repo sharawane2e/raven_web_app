@@ -163,20 +163,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
         <Grid item className="title__Block">
-          <div
-            className="menu-icon"
-            onClick={() => {
-              toggleSidebarOpen();
-              toggleMobileSidebar();
-            }}
-          >
-            <div></div>
-          </div>
-          <div className="appbar__heading">RAVEN Dashboard </div>
-          <div className="appbar__tourGuide" onClick={tourStart}>
-            <TourPlayIcon />
-            <div className="tourText">Start tour</div>
-          </div>
+          <Breadcrum pageTitle="Reports" />
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
@@ -248,7 +235,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         placeholder={StaticText.QUESTION_LABEL}
         valueKey="qId"
         labelKey="labelText"
-        className="Step-1"
+        className="single_select_area Step-1"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
         MenuProps={{
           classes: { paper: "testing" },
