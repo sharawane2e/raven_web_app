@@ -122,7 +122,7 @@ const setDefaultSlideProperties = (pptxGenJsObj: any, config: ISlideConfig) => {
           },
         },
       },
-      { image: { x: 0.38, y: 5.15, w: 1, h: 0.4, data: logoBase64String } },
+      { image: { x: 0.38, y: 5.15, w: 1.2, h: 0.4, data: logoBase64String } },
     ],
   });
 };

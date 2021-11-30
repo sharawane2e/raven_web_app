@@ -6,6 +6,8 @@ import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
 import { sourceText, copyRightText } from "../constants/Variables";
+import { logoBase64String } from "../constants/Variables";
+
 const setDefaultPdfPageProperties = async (
   doc: jsPDF,
   baseX: any,
@@ -49,9 +51,8 @@ const setDefaultPdfPageProperties = async (
   doc.setDrawColor(0);
   doc.setFillColor(244, 124, 60);
   doc.rect(5, 0, 3, 12, "F");
-  // doc.addSvgAsImage("../BrandLogo", logoX, logoY, 50, 50);
-  let logo = document.getElementsByClassName("appbar__brand-logo")[0];
-  await doc.svg(logo, { x: logoX, y: logoY, width: 15, height: 15 });
+
+  doc.addImage(logoBase64String, "JPEG", logoX, logoY, 25, 12);
 };
 
 export const generatePdf = async () => {
@@ -93,8 +94,8 @@ export const generatePdf = async () => {
     sourceY = 265;
     logoX = 10;
     logoY = 275;
-    copyRightX = 30;
-    copyRightY = 284;
+    copyRightX = 40;
+    copyRightY = 283;
     lWordBreak = pdfWidth - 20;
     qWordBreak = 180;
     await setDefaultPdfPageProperties(
@@ -134,8 +135,8 @@ export const generatePdf = async () => {
       sourceY = 185;
       logoX = 10;
       logoY = 195;
-      copyRightX = 30;
-      copyRightY = 204;
+      copyRightX = 40;
+      copyRightY = 203;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
     } else {
@@ -153,8 +154,8 @@ export const generatePdf = async () => {
       sourceY = 225;
       logoX = 10;
       logoY = 235;
-      copyRightX = 30;
-      copyRightY = 244;
+      copyRightX = 40;
+      copyRightY = 242;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 160;
     }
