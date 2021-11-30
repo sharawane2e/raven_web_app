@@ -2,6 +2,10 @@
   .MuiGrid-container{
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
+    width: inherit;
+  }
+  .MuiInputBase-input.Mui-disabled {
+    opacity: .6;
   }
   .chart-content__control-wrapper {
     display: flex;
@@ -30,6 +34,8 @@
     margin: 15px 5px 10px 12px;
     width: 98.2%;
     height: calc(100vh - 340px);
+    border-radius: 3px;
+    overflow: hidden;
     // background: #fff;
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
@@ -73,7 +79,7 @@
         font-size: 15px;
       }
       .tourText {
-        font-size: 0.7rem;
+        font-size: map-get($map: $text-size, $key: xsmall);
       }
       &:hover {
         color: #fff;
@@ -97,8 +103,10 @@
     }
     .button-group__group-title {
       //display: block;
-      margin-bottom: 4px;
+      //margin-bottom: 4px;
       min-width: fit-content;
+      padding-right: 7px;
+      padding-top: 2px;
     }
   }
   .chartTyle__option {

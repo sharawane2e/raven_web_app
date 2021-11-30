@@ -52,7 +52,7 @@
         font-size: 0.9rem;
       }
       &:hover {
-        color: #fff;
+        color: map-get($map: $text-color, $key:light);
         background: map-get($map: $bg-color, $key: accent);
       }
     }

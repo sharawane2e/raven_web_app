@@ -3,6 +3,7 @@ import AddUser from "../components/AddUser";
 import ChartContent from "../components/ChartContent";
 import ForgotPassword from "../components/public-forms/ForgotPassword";
 import SetPassword from "../components/public-forms/SetPassword";
+import ChangePassword from "../components/ChangePassword";
 import Login from "../components/public-forms/Login";
 import WebUrl from "../enums/WebUrl";
 import AdminPanelScreen from "../screens/AdminPanelScreen";
@@ -12,6 +13,7 @@ import PublicFormScreen from "../screens/PublicFormScreen";
 import IRoute from "../types/IRoute";
 import UserDetails from "../components/UserDetails";
 import EditUser from "../components/EditUser";
+import UserPanelScreen from "../screens/UserPanelScreen";
 
 const Routes: IRoute[] = [
   {
@@ -27,7 +29,19 @@ const Routes: IRoute[] = [
     ],
   },
  
-  
+  {
+    path: [WebUrl.CHANGE_PASSWORD],
+    component: UserPanelScreen,
+    isPrivate: true,
+    exact: true,
+    routes: [
+      {
+        path: WebUrl.CHANGE_PASSWORD,
+        component: ChangePassword,
+        exact: true,
+      },
+    ],
+  },
 
   {
     path: [

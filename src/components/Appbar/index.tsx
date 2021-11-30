@@ -120,6 +120,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         disableAutoFocusItem
         PaperProps={{ elevation: 0, className: "appbar__menu" }}
       >
+        {/*
         <MenuItem className="appbar__menu-item profile" disabled>
           {user?.name}
         </MenuItem>
@@ -148,7 +149,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             <PasswordIcon />
           </span>
           <span>Change password</span>
-        </MenuItem>
+        </MenuItem>*/}
         <MenuItem onClick={() => logOutUser()} className="appbar__menu-item">
           <span>
             <LogOutIcon />
