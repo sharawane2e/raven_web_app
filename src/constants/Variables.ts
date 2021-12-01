@@ -72,4 +72,6 @@ export const dataLabelColor = "000000";
 export const pptBackgroundColor = "FFFFFF";
 
 export const sourceText = "Source: RAVEN, 2021";
-export const copyRightText = "© 2021 | RAVEN Research Ltd.";
+export const copyRightText = "Copyright © 2021 E2E Research Services Pvt. Ltd.";
+
+export const exportPrefix = "RAVEN - ";

@@ -6,7 +6,11 @@ import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
 import { sourceText, copyRightText } from "../constants/Variables";
-import { logoBase64String, primaryBarColor } from "../constants/Variables";
+import {
+  logoBase64String,
+  primaryBarColor,
+  exportPrefix,
+} from "../constants/Variables";
 import { hexToRgb } from "@material-ui/core";
 
 const setDefaultPdfPageProperties = async (
@@ -190,5 +194,5 @@ export const generatePdf = async () => {
     });
   }
 
-  doc.save("RAVEN - " + questionData?.labelText + ".pdf");
+  doc.save(exportPrefix + questionData?.labelText + ".pdf");
 };

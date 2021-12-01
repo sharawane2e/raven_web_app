@@ -6,7 +6,11 @@ import {
   primaryBarColor,
   pptBackgroundColor,
 } from "../constants/Variables";
-import { sourceText, copyRightText } from "../constants/Variables";
+import {
+  sourceText,
+  copyRightText,
+  exportPrefix,
+} from "../constants/Variables";
 import pptxgen from "pptxgenjs";
 import store from "../redux/store";
 import { ISlideConfig } from "../types/ISlideConfig";
@@ -112,8 +116,8 @@ const setDefaultSlideProperties = (pptxGenJsObj: any, config: ISlideConfig) => {
         text: {
           text: copyRightText,
           options: {
-            x: 1.4,
-            y: 5.35,
+            x: 1.6,
+            y: 5.38,
             w: 2.5,
             fontFace: chartFontFace,
             fontSize: 7,
@@ -133,7 +137,7 @@ export const generateChart = async () => {
   } = store.getState();
 
   let pptxGenJsObj = new pptxgen();
-  let fileName: string = "HFS- " + questionData?.labelText;
+  let fileName: string = exportPrefix + questionData?.labelText;
 
   let mainQuestionText: string = questionData?.labelText || "";
   let baseText: string = `Sample set: ${baseCount} executives across Global 2000 enterprises`;
