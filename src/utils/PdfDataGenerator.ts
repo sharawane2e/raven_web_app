@@ -6,7 +6,8 @@ import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
 import { tableChartDataGen, appliedFiltersText } from "./ExportHelperUtils";
 import { sourceText, copyRightText } from "../constants/Variables";
-import { logoBase64String } from "../constants/Variables";
+import { logoBase64String, primaryBarColor } from "../constants/Variables";
+import { hexToRgb } from "@material-ui/core";
 
 const setDefaultPdfPageProperties = async (
   doc: jsPDF,
@@ -49,7 +50,7 @@ const setDefaultPdfPageProperties = async (
   doc.setTextColor(127, 127, 127);
   doc.text(copyRightText || "", copyRightX, copyRightY);
   doc.setDrawColor(0);
-  doc.setFillColor(244, 124, 60);
+  doc.setFillColor(hexToRgb(primaryBarColor));
   doc.rect(5, 0, 3, 12, "F");
 
   doc.addImage(logoBase64String, "JPEG", logoX, logoY, 25, 12);
