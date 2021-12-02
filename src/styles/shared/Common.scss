@@ -8,6 +8,11 @@ body {
   background: #070707;
 }
 
+tspan{
+  font-family: "Avenir", Arial;
+  font-size: map-get($map: $text-size, $key: small);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

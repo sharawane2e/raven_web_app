@@ -1,6 +1,8 @@
 import { Grid } from "@material-ui/core";
 import DoshboardChart from "../../assets/svg/statics-chart.svg";
 import Carousel from 'react-material-ui-carousel';
+import {ReactComponent as SlideFirst} from "../../assets/svg/slide1.svg";
+import {ReactComponent as Slidesecond} from "../../assets/svg/slide2.svg";
 
 export interface StaticDashboardProps {
   onActionClick: () => void;
@@ -9,16 +11,10 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
   return (
     <Carousel>
       <div>
-         <h2>Hii</h2>
-         <p>How do you do</p>
+         <SlideFirst />
       </div>
       <div>
-         <h2>Hii</h2>
-         <p>How do you do 1</p>
-      </div>
-      <div>
-         <h2>Hii</h2>
-         <p>How do you do 2</p>
+         <Slidesecond />
       </div>
     </Carousel>
   );
