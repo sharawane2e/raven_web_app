@@ -1,5 +1,8 @@
 .public-form-screen {
   position: relative;
+  background: url("../../assets/images/login_bg.png");
+  background-size: 100% 100%;
+
   @media only screen and (max-width: 960px) {
     .public-form-screen__form-area {
       flex-grow: 1;
@@ -13,8 +16,8 @@
   }
   .public-form-screen__brand-logo {
     position: absolute;
-    top: 0.9375rem; //15px
-    left: 0.9375rem; //15px
+    top: 2rem;
+    left: 2rem;
     width: 150px;
     @media only screen and (max-width: 960px) {
       top: 10px;
@@ -34,10 +37,21 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      width: 50%;
+      width: 90%;
+      padding: 80px 40px;
+      background: map-get($map: $bg-color, $key: secondary);
+      border: 1px solid map-get($map: $bg-color, $key: #000);
+      margin-right: 90px;
+      .MuiInputBase-root{
+        background: map-get($map: $bg-color, $key: secondary-shade);;
+      }
+      .input-field__endontment-icon{
+        color: map-get($map: $text-color, $key: primary-dark);
+      }
       @media only screen and (max-width: 960px) {
         width: 80%;
         // background: #f3f2f2;
+        margin-right: 0px;
         padding: 20px;
         border-radius: 5px;
       }
@@ -47,21 +61,27 @@
       font-size: map-get($map: $heading-size, $key: small);
       font-weight: bold;
       margin-bottom: 2.5rem; //40px;
+      color: map-get($map: $text-color, $key: primary);
+      
+      
     }
   }
 
   .public-form__link {
-    color: map-get($map: $text-color, $key: link);
+    color: map-get($map: $text-color, $key: primary);
     margin-top: 30px;
     text-decoration: none;
   }
 }
 .footerText {
   position: absolute;
-  left: 15px;
   bottom: 15px;
   font-size: map-get($map: $text-size, $key: xsmall);
+  right: 15px;
+  font-size: 0.75rem;
   width: 50%;
+  text-align: right;
+  color: map-get($map: $text-color, $key: primary);
   @media only screen and (max-width: 960px) {
     width: 90%;
     left: 0px;

@@ -34,12 +34,14 @@
     margin: 15px 5px 10px 12px;
     width: 98.2%;
     height: calc(100vh - 340px);
-    border-radius: 3px;
-    overflow: hidden;
     // background: #fff;
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
     // border-radius: 2px;
+    .highcharts-container{
+      overflow: hidden;
+      border-radius: 3px;
+    }
   }
   .wave-button {
     height: 30px;
