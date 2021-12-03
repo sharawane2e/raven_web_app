@@ -1,6 +1,11 @@
+.objectives * {
+  //   padding: 0;
+  //   margin: 0;
+  box-sizing: border-box;
+}
 .objectives {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   b {
     font-size: 20px;
     color: #0193d5;
@@ -9,7 +14,7 @@
     padding-left: 30px;
   }
   .left-Area {
-    width: 70%;
+    flex: 70%;
     .leftContain {
       display: flex;
       margin-left: 5px;
@@ -46,7 +51,7 @@
   .rightContain {
     height: 100vh;
     background-color: #dfdfdf;
-    width: 30%;
+    flex: 30%;
     svg {
       width: 93%;
       height: 530px;
@@ -55,6 +60,9 @@
   }
 }
 .makeStyles-root-1 {
-  overflow: scroll !important;
-  height: 60vh;
+  overflow: visible !important;
+  //   height: 100vh;
+}
+.makeStyles-itemWrapper-3 {
+  height: inherit !important;
 }

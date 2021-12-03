@@ -17,30 +17,30 @@ const StaticHomeScreen: React.FC = () => {
     <div className="home-screen">
       <Appbar variant="fullWidth" />
       <main className="home-screen__content">
-        <CustomScrollbar>
-          <img src={dashboardImage} alt="" />
-          <Dialog open={openPopup} className="home-modal">
-            <div className="home-modal__content">
-              <CustomScrollbar>
-                <StaticDashboard onActionClick={() => setOpenPopup(false)} />
-              </CustomScrollbar>
-            </div>
-            <Grid container className="home-modal__footer">
-              <FormControlLabel
-                className=""
-                value="bottom"
-                label="Don't show thisd page again"
-                control={<Checkbox />}
-              />
-              <Button
-                className="button--primary"
-                onClick={() => setOpenPopup(false)}
-              >
-                Go to dashboard
-              </Button>
-            </Grid>
-          </Dialog>
-        </CustomScrollbar>
+        {/* <CustomScrollbar> */}
+        <img src={dashboardImage} alt="" />
+        <Dialog open={openPopup} className="home-modal">
+          <div className="home-modal__content">
+            {/* <CustomScrollbar> */}
+            <StaticDashboard onActionClick={() => setOpenPopup(false)} />
+            {/* </CustomScrollbar> */}
+          </div>
+          <Grid container className="home-modal__footer">
+            <FormControlLabel
+              className=""
+              value="bottom"
+              label="Don't show thisd page again"
+              control={<Checkbox />}
+            />
+            <Button
+              className="button--primary"
+              onClick={() => setOpenPopup(false)}
+            >
+              Go to dashboard
+            </Button>
+          </Grid>
+        </Dialog>
+        {/* </CustomScrollbar> */}
       </main>
     </div>
   );

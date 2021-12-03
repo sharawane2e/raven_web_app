@@ -35,6 +35,7 @@
     "lodash": "^4.17.21",
     "node-sass": "^4.14.1",
     "pptxgenjs": "^3.8.0",
+    "pure-react-carousel": "^1.27.8",
     "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-custom-scrollbars": "^4.2.1",
@@ -62,7 +63,7 @@
   },
   "scripts": {
     "start:linux": "HTTPS=true react-scripts start",
-    "start": "set HTTPS=true&&react-scripts start",
+    "start": "react-scripts start",
     "build": "NODE_ENV=production react-scripts build",
     "build-windows": "set NODE_ENV=production&&react-scripts build",
     "build:staging": "env-cmd -f .env.staging-internal react-scripts build",
