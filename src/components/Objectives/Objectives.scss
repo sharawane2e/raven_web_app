@@ -1,0 +1,60 @@
+.objectives {
+  display: flex;
+  align-items: center;
+  b {
+    font-size: 20px;
+    color: #0193d5;
+  }
+  h2 {
+    padding-left: 30px;
+  }
+  .left-Area {
+    width: 70%;
+    .leftContain {
+      display: flex;
+      margin-left: 5px;
+      margin-right: 10px;
+      p {
+        padding-left: 10px;
+        margin-top: 2px;
+      }
+      ul {
+        li {
+          list-style: none;
+          & ::before {
+            content: " ";
+            width: 0;
+            height: 0;
+            border-top: 10px solid #0000ff9c;
+            border-left: 10px solid transparent;
+            position: absolute;
+            left: 92px;
+            margin-top: 7px;
+          }
+        }
+      }
+      .left-line {
+        border-left: 1px solid lightgray;
+        padding-right: 5px;
+      }
+
+      svg {
+        width: 50px;
+      }
+    }
+  }
+  .rightContain {
+    height: 100vh;
+    background-color: #dfdfdf;
+    width: 30%;
+    svg {
+      width: 93%;
+      height: 530px;
+      padding: 10px;
+    }
+  }
+}
+.makeStyles-root-1 {
+  overflow: scroll !important;
+  height: 60vh;
+}
