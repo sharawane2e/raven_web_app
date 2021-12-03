@@ -1,1 +1,13 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 34.67"><defs><style>.cls-1,.cls-3{fill:#0193d5;}.cls-2{fill:none;stroke:#bfbfbf;stroke-miterlimit:8;stroke-width:0.5px;}.cls-3{fill-rule:evenodd;}</style></defs><path class="cls-1" d="M12.78,38.28H34.39V8.81H12.78ZM10.19,6.21H37V40.88H10.19Z" transform="translate(-10.19 -6.21)"/><rect class="cls-1" x="5.67" y="5.6" width="3.46" height="3.47"/><rect class="cls-1" x="5.67" y="11.6" width="3.46" height="3.47"/><rect class="cls-1" x="5.67" y="17.6" width="3.46" height="3.47"/><rect class="cls-1" x="12.97" y="6.55" width="8.64" height="1.73"/><rect class="cls-1" x="5.55" y="24.38" width="3.46" height="3.47"/><rect class="cls-1" x="12.72" y="12.47" width="8.64" height="1.73"/><rect class="cls-1" x="12.72" y="18.47" width="8.64" height="1.73"/><rect class="cls-1" x="12.72" y="25.47" width="8.64" height="1.73"/><line class="cls-2" x1="26.8" y1="17.34" x2="48.39" y2="17.34"/><path class="cls-3" d="M57.38,23.54a5.4,5.4,0,1,1,5.4,5.4,5.4,5.4,0,0,1-5.4-5.4" transform="translate(-10.19 -6.21)"/></svg>
+<svg id="research_objective_1_" data-name="research_objective (1)" xmlns="http://www.w3.org/2000/svg" width="58" height="34.676" viewBox="0 0 58 34.676">
+  <path id="Path_9224" data-name="Path 9224" d="M12.78,38.286H34.39V8.81H12.78ZM10.19,6.21H37V40.886H10.19Z" transform="translate(-10.19 -6.21)" fill="#0193d5"/>
+  <rect id="Rectangle_30025" data-name="Rectangle 30025" width="3.46" height="3.47" transform="translate(5.67 5.601)" fill="#0193d5"/>
+  <rect id="Rectangle_30026" data-name="Rectangle 30026" width="3.46" height="3.47" transform="translate(5.67 11.602)" fill="#0193d5"/>
+  <rect id="Rectangle_30027" data-name="Rectangle 30027" width="3.46" height="3.47" transform="translate(5.67 17.603)" fill="#0193d5"/>
+  <rect id="Rectangle_30028" data-name="Rectangle 30028" width="8.64" height="1.73" transform="translate(12.973 6.551)" fill="#0193d5"/>
+  <rect id="Rectangle_30029" data-name="Rectangle 30029" width="3.46" height="3.47" transform="translate(5.55 24.385)" fill="#0193d5"/>
+  <rect id="Rectangle_30030" data-name="Rectangle 30030" width="8.64" height="1.73" transform="translate(12.723 12.472)" fill="#0193d5"/>
+  <rect id="Rectangle_30031" data-name="Rectangle 30031" width="8.64" height="1.73" transform="translate(12.723 18.473)" fill="#0193d5"/>
+  <rect id="Rectangle_30032" data-name="Rectangle 30032" width="8.64" height="1.73" transform="translate(12.723 25.475)" fill="#0193d5"/>
+  <line id="Line_283" data-name="Line 283" x2="21.59" transform="translate(26.807 17.343)" fill="none" stroke="#bfbfbf" stroke-miterlimit="8" stroke-width="0.5"/>
+  <path id="Path_9225" data-name="Path 9225" d="M57.38,23.54a5.4,5.4,0,1,1,5.4,5.4,5.4,5.4,0,0,1-5.4-5.4" transform="translate(-10.18 -6.207)" fill="#0193d5" fill-rule="evenodd"/>
+</svg>
