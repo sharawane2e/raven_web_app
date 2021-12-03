@@ -88,7 +88,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Raven - Dashboard</div>
+        <div className="appbar__heading">Sports Betting Research</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
@@ -96,10 +96,10 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <div className="tourText">Start tour</div>
         </div>
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <ProfileAvatar text={user?.name || ""} />
-          <ExpandMoreIcon className="down-arrow-icon" />
-        </div>
+          <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+            <ProfileAvatar text={user?.name || ""} />
+            <ExpandMoreIcon className="down-arrow-icon" />
+          </div>
         </div>
       </div>
       <Menu

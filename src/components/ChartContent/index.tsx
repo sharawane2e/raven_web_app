@@ -255,10 +255,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       <div className="chart-content__chart-wrapper">
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
         <div className="chart-content__base-count">
-          Sample set: {baseCount} executives across Global 2000 enterprises
-          <br />
+          Sample set: {baseCount}
+          {/* executives across Global 2000 enterprises */}
+          {/* <br /> */}
           {/* Source: HFS Pulse, H1 2021 */}
-          Source: E2E Research, 2021
+          {/* Source: E2E Research, 2021 */}
         </div>
       </div>
     </div>

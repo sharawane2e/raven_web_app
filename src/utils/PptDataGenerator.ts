@@ -140,7 +140,7 @@ export const generateChart = async () => {
   let fileName: string = exportPrefix + questionData?.labelText;
 
   let mainQuestionText: string = questionData?.labelText || "";
-  let baseText: string = `Sample set: ${baseCount} executives across Global 2000 enterprises`;
+  let baseText: string = `Sample set: ${baseCount}`;
   let questionText: string = questionData?.questionText || "";
 
   let filters: string = appliedFiltersText();

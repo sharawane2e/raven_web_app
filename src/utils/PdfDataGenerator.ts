@@ -43,12 +43,7 @@ const setDefaultPdfPageProperties = async (
     qWordBreak
   );
   doc.text(filterText, 10, 20);
-  doc.text(
-    "Sample set: " + baseCount + " executives across Global 2000 enterprises" ||
-      "",
-    baseX,
-    baseY
-  );
+  doc.text("Sample set: " + baseCount || "", baseX, baseY);
   doc.text(sourceText || "", sourceX, sourceY);
   // doc.setFontSize(6);
   doc.setTextColor(127, 127, 127);
