@@ -8,6 +8,8 @@ import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../assets/svg/pie-chart.svg";
 import { QuestionType } from "../../enums/QuestionType";
 import { changeChartType } from "../../services/ChartService";
+import Toaster from "../../utils/Toaster";
+import { StaticText } from "../../constants/StaticText";
 
 interface ChartTypeControlProps {}
 
@@ -25,6 +27,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.COLUMN),
       active: chartType === ChartType.COLUMN,
       disabled: chart.questionData === null,
+      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
     },
     {
       tooltip: "Stack chart",
@@ -32,6 +35,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
       disabled: chart.questionData === null,
+      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
     },
     {
       tooltip: "Pie Chart",
@@ -41,6 +45,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       disabled:
         !(chart.questionData?.type === QuestionType.SINGLE) ||
         !!selectedBannerQuestionId,
+        disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
     },
     {
       tooltip: "Table",
@@ -48,6 +53,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,
       disabled: chart.questionData === null,
+      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
     },
   ];
 

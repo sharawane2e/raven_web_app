@@ -9,4 +9,6 @@ export class StaticText {
     "Cross tabulation is not applicable with current question selection";
 
   static NO_FILTER_APPLIED = "No filters applied";
+
+  static DISABLED_CHART = "No question selected to create the chart";
 }

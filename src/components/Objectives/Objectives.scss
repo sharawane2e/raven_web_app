@@ -1,27 +1,51 @@
-.objectives * {
-  //   padding: 0;
-  //   margin: 0;
-  box-sizing: border-box;
-}
 .objectives {
   display: flex;
-  align-items: flex-start;
-  b {
-    font-size: 20px;
-    color: #0193d5;
+
+  &--container {
+    // &--left {
+    //   flex: 70%;
+    // }
+    // &--right {
+    //   flex: 30%;
+    //   background-color: #dfdfdf;
+    // }
+    svg {
+      height: 100%;
+      width: 100%;
+    }
   }
-  h2 {
-    padding-left: 30px;
+  .container {
+    &--left {
+      flex: 70%;
+      padding-left: 10px;
+    }
+    &--right {
+      flex: 30%;
+      background-color: #dfdfdf;
+    }
   }
-  .left-Area {
-    flex: 70%;
-    .leftContain {
-      display: flex;
-      margin-left: 5px;
-      margin-right: 10px;
+  &--content {
+    display: flex;
+    align-items: flex-start;
+    svg {
+      margin-right: -6px;
+      z-index: 1;
+      flex-basis: 70px;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+
+    &--border {
+      border-left: 1px solid lightgray;
+    }
+
+    &--text {
+      padding-right: 5px;
+      width: calc(100% - 170px);
       p {
         padding-left: 10px;
         margin-top: 2px;
+        position: relative;
       }
       ul {
         li {
@@ -33,36 +57,83 @@
             border-top: 10px solid #0000ff9c;
             border-left: 10px solid transparent;
             position: absolute;
-            left: 92px;
+            left: -10px;
             margin-top: 7px;
           }
         }
       }
-      .left-line {
-        border-left: 1px solid lightgray;
-        padding-right: 5px;
-      }
 
-      svg {
-        width: 50px;
+      &--blue {
+        color: #0193d5;
       }
     }
   }
-  .rightContain {
-    height: 100vh;
-    background-color: #dfdfdf;
-    flex: 30%;
-    svg {
-      width: 93%;
-      height: 530px;
-      padding: 10px;
-    }
+
+  & * {
+    box-sizing: border-box;
   }
 }
-.makeStyles-root-1 {
-  overflow: visible !important;
-  //   height: 100vh;
+
+b {
+  font-size: 20px;
 }
-.makeStyles-itemWrapper-3 {
-  height: inherit !important;
+h2 {
+  padding-left: 30px;
 }
+
+// .objectives {
+//   display: flex;
+
+//   .left-Area {
+//     flex: 70%;
+//     .leftContain {
+//       display: flex;
+//       margin-left: 5px;
+//       margin-right: 10px;
+//       p {
+//         padding-left: 10px;
+//         margin-top: 2px;
+//       }
+//       ul {
+//         li {
+//           list-style: none;
+//           & ::before {
+//             content: " ";
+//             width: 0;
+//             height: 0;
+//             border-top: 10px solid #0000ff9c;
+//             border-left: 10px solid transparent;
+//             position: absolute;
+//             left: 92px;
+//             margin-top: 7px;
+//           }
+//         }
+//       }
+//       .left-line {
+//         border-left: 1px solid lightgray;
+//         padding-right: 5px;
+//       }
+
+//       svg {
+//         width: 50px;
+//       }
+//     }
+//   }
+//   .right {
+//     height: 100vh;
+//     background-color: #dfdfdf;
+//     flex: 30%;
+//     svg {
+//       width: 93%;
+//       height: 530px;
+//       padding: 10px;
+//     }
+//   }
+// }
+// .makeStyles-root-1 {
+//   overflow: visible !important;
+//   //   height: 100vh;
+// }
+// .makeStyles-itemWrapper-3 {
+//   height: inherit !important;
+// }
