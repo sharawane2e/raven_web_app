@@ -1,6 +1,7 @@
 .custom-table {
   .custom-table__link-container {
     display: flex;
+    color: map-get($map: $text-color, $key: light);
     li {
       list-style: none;
 
