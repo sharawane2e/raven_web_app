@@ -11,4 +11,6 @@ export class StaticText {
   static NO_FILTER_APPLIED = "No filters applied";
 
   static DISABLED_CHART = "No question selected to create the chart";
+
+  static DISABLED_TABLE = "No question selected to create the table";
 }

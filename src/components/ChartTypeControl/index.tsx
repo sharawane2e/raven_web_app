@@ -27,7 +27,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.COLUMN),
       active: chartType === ChartType.COLUMN,
       disabled: chart.questionData === null,
-      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
+      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
       tooltip: "Stack chart",
@@ -35,7 +35,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
       disabled: chart.questionData === null,
-      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
+      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
       tooltip: "Pie Chart",
@@ -45,7 +45,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       disabled:
         !(chart.questionData?.type === QuestionType.SINGLE) ||
         !!selectedBannerQuestionId,
-        disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
+      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
       tooltip: "Table",
@@ -53,7 +53,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,
       disabled: chart.questionData === null,
-      disableClick:()=>Toaster.error(StaticText.DISABLED_CHART)
+      disableClick: () => Toaster.error(StaticText.DISABLED_TABLE),
     },
   ];
 
