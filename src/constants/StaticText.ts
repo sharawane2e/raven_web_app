@@ -12,5 +12,5 @@ export class StaticText {
 
   static DISABLED_CHART = "No question selected to create the chart";
 
-  static DISABLED_TABLE = "No question selected to create the table";
+  static DISABLED_TABLE = "No question selected to create the chart";
 }
