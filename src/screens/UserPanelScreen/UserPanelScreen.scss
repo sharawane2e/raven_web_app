@@ -1,11 +1,27 @@
+.contant-shape{  
+  background: map-get($map: $bg-color, $key: secondary);
+  padding: 9px;
+
+}
 .user-panel {
   .user-panel__page-title {
     margin: 15px 0;
     color: map-get($map: $text-color, $key: primary);
     font-size: map-get($map: $text-size, $key: large);
     font-weight: 600;
+    padding-left: 12px;
   }
   ._loading_overlay_wrapper {
     height: 100%;
   }
+}
+
+.MuiInputBase-input{
+  color: map-get($map: $text-color, $key: primary-dark);
+}
+.MuiInputBase-root{
+  background: map-get($map: $bg-color, $key: secondary-shade);
+}
+.MuiSvgIcon-root{
+  color: map-get($map: $text-color, $key: primary-dark);
 }

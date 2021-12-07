@@ -4,6 +4,7 @@
     color: map-get($map: $text-color, $key: primary);
     font-size: map-get($map: $text-size, $key: large);
     font-weight: 600;
+    padding-left: 12px;
   }
 
   ._loading_overlay_wrapper {

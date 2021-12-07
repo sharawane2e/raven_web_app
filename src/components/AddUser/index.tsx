@@ -29,7 +29,9 @@ const AddUser: React.FC<AddUserProps> = (props) => {
 
   return (
     <div className="add-user">
-      <Breadcrum pageTitle="Admin" />
+      <div className="contant-shape">
+        <Breadcrum pageTitle="Admin" />
+      </div>
       <div className="admin-panel__page-title">Add user</div>
       <Userform onSubmit={onSubmit} />
     </div>

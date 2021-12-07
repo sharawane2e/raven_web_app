@@ -61,7 +61,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
 
   return (
     <div className="change-password">
-      <Breadcrum pageTitle="User" />
+      <div className="contant-shape">
+        <Breadcrum pageTitle="User" />
+      </div>
       <div className="user-panel__page-title">Change password</div>
 
       <form onSubmit={handleSubmit(onSubmit)}>

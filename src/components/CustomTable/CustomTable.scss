@@ -34,6 +34,7 @@
 
     .MuiSelect-select {
       padding-left: 00.3125rem;
+
     }
     .menu-item {
       font-size: map-get($map: $text-size, $key: small);
@@ -41,6 +42,7 @@
     }
 
     .label {
+      color: map-get($map: $text-color, $key: partial-light);
       @media (max-width: 768px) {
         margin-right: 20px !important;
       }
@@ -72,7 +74,13 @@
   .custom-table__page-limiter {
     display: flex;
     align-items: center;
-
+    .MuiSelect-icon{
+      color: map-get($map: $bg-color, $key: secondary);
+    }
+    .MuiInputBase-root{
+      color: map-get($map: $text-color, $key: partial-light);
+      
+    }
     .limiter-label {
       font-size: map-get($map: $text-size, $key: small);
       color: map-get($map: $text-color, $key: primary);
@@ -81,6 +89,10 @@
   .custom-table__search-wrapper {
     display: flex;
     align-items: center;
+    .label{
+      color: map-get($map: $text-color, $key: partial-light);
+    }
+    
     .MuiFormControl-root {
       margin: 0;
       width: 14.375rem;
@@ -88,7 +100,7 @@
     input {
       padding: 10px;
       font-size: map-get($map: $text-size, $key: small);
-      color: map-get($map: $text-color, $key: primary);
+      color: map-get($map: $text-color, $key: primary-dark);
     }
 
     span:nth-child(2) {
@@ -118,7 +130,7 @@
 }
 
 .rc-table {
-  border: 1px solid map-get($map: $text-color, $key: border);
+  //border: 1px solid map-get($map: $text-color, $key: border);
   .rc__header {
     display: flex;
     padding: 0 10px;
@@ -137,7 +149,7 @@
         flex: auto;
       }
     }
-    border-bottom: 1px solid map-get($map: $text-color, $key: border);
+    border-bottom: 1px solid map-get($map: $bg-color, $key: dark);
 
     @media (max-width: 768px) {
       display: none;
@@ -160,14 +172,14 @@
       display: flex;
       padding: 0 10px;
       transition: background 0.3s linear;
-      border-bottom: 1px solid map-get($map: $text-color, $key: border);
+      border-bottom: 1px solid map-get($map: $bg-color, $key: secondary-light);
       align-items: center;
       min-height: 3.75rem; //60px;
       &:nth-child(odd) {
-        background: map-get($map: $bg-color, $key: "fade");
+        background: map-get($map: $bg-color, $key: "secondary");
       }
       &:nth-child(even) {
-        background: map-get($map: $bg-color, $key: "primary");
+        background: map-get($map: $bg-color, $key: "secondary-dark");
       }
 
       > div {
@@ -189,6 +201,7 @@
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: map-get($map: $text-color, $key: primary-fade);
       .cell-label {
         display: none;
       }

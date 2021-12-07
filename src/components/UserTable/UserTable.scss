@@ -2,6 +2,9 @@
   .user-table__body {
     height: calc(100vh - 345px);
   }
+  .custom-table{
+    padding: 12px;
+  }
 
   .name {
     flex: 1.25 !important;

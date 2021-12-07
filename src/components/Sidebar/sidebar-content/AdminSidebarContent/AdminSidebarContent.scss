@@ -12,13 +12,16 @@
 
     span:nth-child(2) {
       flex: 6;
-      color: map-get($map: $text-color, $key: primary);
+      color: map-get($map:  $bg-color, $key: fade);
     }
 
     svg {
-      font-size: map-get($map: $text-size, $key: regular);
+      color: map-get($map:  $text-color, $key: light);
       height: 14px;
       // margin-right: 15px;
+    }
+    svg path {
+      fill: map-get($map: $text-color, $key: light);
     }
 
     &.active-link {
@@ -31,7 +34,7 @@
     }
 
     &:hover {
-      background-color: map-get($map: $bg-color, $key: secondary-shade);
+      background-color: map-get($map: $bg-color, $key: secondary-dark);
     }
   }
 }
