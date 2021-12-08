@@ -12,5 +12,5 @@ export class StaticText {
 
   static DISABLED_CHART = "No question selected to create the chart";
 
-  static DISABLED_TABLE = "No question selected to create the chart";
+  static PIE_NOT_AVAILABLE = "Pie chart is not available for this selection";
 }
