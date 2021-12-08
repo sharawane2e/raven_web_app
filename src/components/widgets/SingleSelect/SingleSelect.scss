@@ -7,18 +7,25 @@
 .single-select {
   margin: 5px 12px;
   width: 98.3%;
+  @media (max-width: 767px) {
+    margin: 5px 0px;
+    width: 100%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    margin: 5px 7px;
+  }
 
   .MuiSelect-root {
     background-color: map-get($map: $bg-color, $key: fade);
     font-size: map-get($map: $text-size, $key: "small");
-    color: map-get($map: $text-color, $key:primary-dark);
+    color: map-get($map: $text-color, $key: primary-dark);
     padding: 10px;
     border: 0px;
   }
-  
-  .MuiInputBase-root{
+
+  .MuiInputBase-root {
     border: 0px;
-    color: map-get($map: $text-color, $key:primary);
+    color: map-get($map: $text-color, $key: primary);
   }
 }
 .single-select__menu-list {
@@ -30,5 +37,8 @@
   }
   .selected-value {
     background-color: #e3e3e3;
+    @media (max-width: 768px) {
+      background-color: unset;
+    }
   }
 }

@@ -45,3 +45,21 @@ html {
 .jVgtBk {
   padding: 40px !important;
 }
+
+.MuiMenu-paper {
+  @media (max-width: 768px) {
+    background: #393939;
+    color: #dfdfdf;
+  }
+  li {
+    span {
+      svg {
+        path {
+          @media (max-width: 768px) {
+            fill: #dfdfdf;
+          }
+        }
+      }
+    }
+  }
+}

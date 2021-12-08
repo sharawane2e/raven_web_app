@@ -35,7 +35,6 @@
 
     .MuiSelect-select {
       padding-left: 00.3125rem;
-
     }
     .menu-item {
       font-size: map-get($map: $text-size, $key: small);
@@ -53,6 +52,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @media (max-width: 768px) {
+      color: #dfdfdf;
+    }
   }
   .custom-table__mobile-sort {
     display: none;
@@ -62,6 +64,7 @@
 
     .custom-table__sort {
       min-width: 5rem; //80px
+      border-radius: 4px;
 
       .MuiSelect-selectMenu {
         display: flex;
@@ -75,12 +78,13 @@
   .custom-table__page-limiter {
     display: flex;
     align-items: center;
-    .MuiSelect-icon{
+    .MuiSelect-icon {
       color: map-get($map: $bg-color, $key: secondary);
     }
-    .MuiInputBase-root{
+    .MuiInputBase-root {
       color: map-get($map: $text-color, $key: partial-light);
-      
+
+      border-radius: 4px;
     }
     .limiter-label {
       font-size: map-get($map: $text-size, $key: small);
@@ -90,13 +94,16 @@
   .custom-table__search-wrapper {
     display: flex;
     align-items: center;
-    .label{
+    .label {
       color: map-get($map: $text-color, $key: partial-light);
     }
-    
+
     .MuiFormControl-root {
       margin: 0;
       width: 14.375rem;
+      @media (max-width: 768px) {
+        width: 100%;
+      }
     }
     input {
       padding: 10px;
@@ -253,6 +260,12 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  @media (max-width: 768px) {
+    margin-left: 5px;
+  }
+  svg {
+    color: #dfdfdf;
+  }
 
   .asc-icon,
   .desc-icon {

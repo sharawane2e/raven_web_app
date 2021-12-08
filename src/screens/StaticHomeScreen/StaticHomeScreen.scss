@@ -32,14 +32,17 @@
     z-index: 9999999;
     cursor: pointer;
   }
+  @media (max-width: 767px) {
+    display: none;
+  }
 }
 
 .home-modal__content {
   height: 72vh;
 }
-.dn{
+.dn {
   display: none;
 }
-.makeStyles-item-2{
+.makeStyles-item-2 {
   height: 60vh;
 }

@@ -16,30 +16,36 @@
     .MuiFormControl-root {
       width: 95%;
     }
-    .MuiInput-input{
-      background: map-get($map: $bg-color, $key:secondary-shade );
+    .MuiInput-input {
+      background: map-get($map: $bg-color, $key: secondary-shade);
       border-radius: 2px;
       border: none;
     }
-    .MuiInputBase-root{
+    .MuiInputBase-root {
       border: none;
     }
   }
   .chart-sidebar__filter-questions {
+    @media (max-width: 767px) {
+      background: #070707;
+      color: #dfdfdf;
+    }
     em {
       font-style: initial;
     }
   }
   .chart-sidebar__footer {
     padding: 15px;
-    .MuiButton-label{
+    @media (max-width: 767px) {
+      background: #070707;
+    }
+    .MuiButton-label {
       color: map-get($map: $text-color, $key: primary);
       color: #fff;
     }
-    .button--primary{
+    .button--primary {
       color: map-get($map: $text-color, $key: light);
     }
-    
 
     .clear-button {
       margin-left: 15px;

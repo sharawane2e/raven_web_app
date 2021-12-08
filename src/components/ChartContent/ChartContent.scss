@@ -1,16 +1,19 @@
 .chart-content {
-  .MuiGrid-container{
+  .MuiGrid-container {
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
     width: inherit;
+    @media (max-width: 1023px) {
+      padding: 5px 10px;
+    }
   }
   .MuiInputBase-input.Mui-disabled {
-    opacity: .6;
+    opacity: 0.6;
   }
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
-    padding: .4rem 0px;
+    padding: 0.4rem 0px;
     //min-width: 550px;
     @media (max-width: 786px) {
       display: none;
@@ -38,7 +41,14 @@
     // padding: 20px 15px;
     // border: 1px solid #E1E3E7;
     // border-radius: 2px;
-    .highcharts-container{
+    @media (max-width: 767px) {
+      margin: 15px 5px 15px 0px;
+      width: 100%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      margin: 15px 5px 10px 8px;
+    }
+    .highcharts-container {
       overflow: hidden;
       border-radius: 3px;
     }

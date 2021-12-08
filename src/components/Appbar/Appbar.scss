@@ -31,6 +31,9 @@
       .appbar__brand-logo {
         transform: none;
         position: static;
+        width: 95px;
+        margin-left: 5px;
+        margin-top: 3px;
       }
     }
   }
@@ -52,8 +55,11 @@
         font-size: 0.9rem;
       }
       &:hover {
-        color: map-get($map: $text-color, $key:light);
+        color: map-get($map: $text-color, $key: light);
         background: map-get($map: $bg-color, $key: accent);
+      }
+      @media (max-width: 768px) {
+        margin-left: 10px;
       }
     }
   }
@@ -73,6 +79,9 @@
     background: map-get($map: $bg-color, $key: primary);
     @media (max-width: 768px) {
       border: none;
+      width: 100%;
+      box-shadow: none;
+      background: none;
     }
   }
 
@@ -119,6 +128,10 @@
       border-radius: 3px;
       margin: 4px 0;
       transition: 0.5s;
+    }
+    @media (max-width: 768px) {
+      margin-right: 0.9375rem;
+      margin-left: 0;
     }
   }
 
@@ -189,6 +202,12 @@
     align-items: center;
     font-size: map-get($map: $text-size, $key: small);
     border-bottom: 1px solid map-get($map: $text-color, $key: border);
+
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4) {
+      display: none;
+    }
 
     &:last-child {
       border-bottom: none;
