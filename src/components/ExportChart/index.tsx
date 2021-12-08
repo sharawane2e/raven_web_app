@@ -4,8 +4,9 @@ import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as PdfIcon } from "../../assets/svg/pdf-icon.svg";
 import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
 import "svg2pdf.js";
-import { generateChart } from "../../utils/PptDataGenerator";
-import { generatePdf } from "../../utils/PdfDataGenerator";
+import { generatePpt } from "../../utils/ppt/PptGen";
+import { generatePdf } from "../../utils/pdf/PdfGen";
+import {} from "../../utils/ppt/PptGen";
 interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
@@ -15,7 +16,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       tooltip: "Powerpoint",
       renderChild: () => <PptIcon />,
-      onClick: generateChart,
+      onClick: generatePpt,
       // disabled: true,
       disabled: chart.questionData === null,
     },

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { memo, useEffect, useState } from "react";
-import { tableChartDataGen } from "../../utils/ExportHelperUtils";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
 import { Scrollbars } from "react-custom-scrollbars";
 
 interface TableProps {}
