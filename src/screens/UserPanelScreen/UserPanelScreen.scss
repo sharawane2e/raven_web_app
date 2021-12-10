@@ -1,7 +1,6 @@
-.contant-shape{  
+.contant-shape {
   background: map-get($map: $bg-color, $key: secondary);
   padding: 9px;
-
 }
 .user-panel {
   .user-panel__page-title {
@@ -16,12 +15,12 @@
   }
 }
 
-.MuiInputBase-input{
+.MuiInputBase-input {
   color: map-get($map: $text-color, $key: primary-dark);
 }
-.MuiInputBase-root{
+.MuiInputBase-root {
   background: map-get($map: $bg-color, $key: secondary-shade);
 }
-.MuiSvgIcon-root{
+.MuiSvgIcon-root {
   color: map-get($map: $text-color, $key: primary-dark);
 }

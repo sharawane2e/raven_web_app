@@ -42,10 +42,10 @@
       background: map-get($map: $bg-color, $key: secondary);
       border: 1px solid map-get($map: $bg-color, $key: #000);
       margin-right: 90px;
-      .MuiInputBase-root{
-        background: map-get($map: $bg-color, $key: secondary-shade);;
+      .MuiInputBase-root {
+        background: map-get($map: $bg-color, $key: secondary-shade);
       }
-      .input-field__endontment-icon{
+      .input-field__endontment-icon {
         color: map-get($map: $text-color, $key: primary-dark);
       }
       @media only screen and (max-width: 960px) {
@@ -62,8 +62,6 @@
       font-weight: bold;
       margin-bottom: 2.5rem; //40px;
       color: map-get($map: $text-color, $key: primary);
-      
-      
     }
   }
 

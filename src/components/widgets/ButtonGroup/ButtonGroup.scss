@@ -3,7 +3,7 @@
   align-items: flex-start;
   flex-direction: column;
   flex-wrap: nowrap;
-  &.MuiGrid-root.button-group:nth-last(){
+  &.MuiGrid-root.button-group:nth-last() {
     margin-right: 0px;
     padding-right: 0px;
   }
