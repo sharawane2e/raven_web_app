@@ -181,3 +181,53 @@ export const changeDataLabelFormat = (chartDataLabel: ChartDataLabels) => {
 
   return newChartOptions;
 };
+
+export const transposeChart = () => {
+  const { chart } = store.getState();
+  const { dispatch } = store;
+  const chartDataClone = JSON.parse(JSON.stringify(chart));
+
+  const newSubGroup: any = [];
+  const newScale: any = [];
+  const newChartData: any = [];
+  chartDataClone.questionData.subGroups.forEach((scale: any, index: number) => {
+    newScale.push({
+      labelText: scale.labelText,
+      labelCode: scale.qId,
+      order: index,
+    });
+  });
+
+  chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
+    newSubGroup.push({
+      qId: scale.labelCode,
+      labelText: scale.labelText,
+      questionText: scale.labelText,
+      type: QuestionType.SINGLE,
+    });
+  });
+
+  newSubGroup.forEach((col: any, index: number) => {
+    const options: any = [];
+    chartDataClone.chartData.forEach((data: any, index: number) => {
+      const count: number = data.options.find(
+        (subOption: any) => subOption.option === col.qId
+      )?.count;
+      options.push({ option: data._id, count: count == undefined ? 0 : count });
+    });
+    newChartData.push({ _id: col.qId, options: options });
+  });
+
+  chartDataClone.chartData = newChartData;
+  chartDataClone.questionData.scale = newScale;
+  chartDataClone.questionData.subGroups = newSubGroup;
+  chartDataClone.chartOptions = {
+    ...chart.chartOptions,
+    ...getChartOptions(
+      chartDataClone.questionData,
+      chartDataClone.chartData,
+      chartDataClone.baseCount
+    ),
+  };
+  dispatch(setChartData(chartDataClone));
+};
