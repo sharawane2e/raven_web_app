@@ -1,11 +1,14 @@
 .chart-content {
-  .MuiGrid-container {
+  .mr-button.MuiGrid-container {
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
     width: inherit;
     @media (max-width: 1023px) {
       padding: 5px 10px;
     }
+  }
+  .questioSelection{
+    padding-right: 15px;
   }
   .MuiInputBase-input.Mui-disabled {
     opacity: 0.6;
