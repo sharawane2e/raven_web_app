@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import AppRouting from "../../AppRouting";
 import BrandLogo from "../../components/BrandLogo";
@@ -5,12 +6,20 @@ import CopyrightFooter from "../../components/CopyrightFooter";
 
 import PublicBanner from "../../components/PublicBanner";
 import IRoute from "../../types/IRoute";
+import LocalStorageUtils from "../../utils/LocalStorageUtils";
+import { History, LocationState } from "history";
 
 export interface PublicFormScreenProps {
   routes: IRoute[];
+  history:History<LocationState>
 }
 
 const PublicFormScreen: React.FC<PublicFormScreenProps> = (props) => {
+  useEffect(() => {
+    if(LocalStorageUtils.getToken()){
+      props.history.push("/")
+    }
+  })
   return (
     <div className="public-form-screen">
       <Grid container>

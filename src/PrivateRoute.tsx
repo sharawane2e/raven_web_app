@@ -17,6 +17,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
 
   // @ts-ignore
   // return <Component {...props} />;
+
   return profile &&  profile.accessToken ? (
     props.route.isAdmin && !isUserAdmin ? (
       <Redirect to={WebUrl.NOT_FOUND} />
