@@ -28,8 +28,6 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       active: chartType === ChartType.TABLE,
       disabled:
         chart.questionData === null ||
-        chart.questionData.type === "M" ||
-        chart.questionData.type === "S" ||
         chart.questionData.type === "MG" ||
         chart.questionData.type === "G",
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),

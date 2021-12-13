@@ -52,7 +52,7 @@ export const fetchChartData = async (
     };
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
-
+    // debugger;
     if (response.success) {
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
@@ -187,47 +187,92 @@ export const transposeChart = () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  const newSubGroup: any = [];
-  const newScale: any = [];
-  const newChartData: any = [];
-  chartDataClone.questionData.subGroups.forEach((scale: any, index: number) => {
-    newScale.push({
-      labelText: scale.labelText,
-      labelCode: scale.qId,
-      order: index,
-    });
-  });
+  if (chartDataClone.questionData.type == "R") {
+    const newSubGroup: any = [];
+    const newScale: any = [];
+    const newChartData: any = [];
+    chartDataClone.questionData.subGroups.forEach(
+      (scale: any, index: number) => {
+        newScale.push({
+          labelText: scale.labelText,
+          labelCode: scale.qId,
+          order: index,
+        });
+      }
+    );
 
-  chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
-    newSubGroup.push({
-      qId: scale.labelCode,
-      labelText: scale.labelText,
-      questionText: scale.labelText,
-      type: QuestionType.SINGLE,
+    chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
+      newSubGroup.push({
+        qId: scale.labelCode,
+        labelText: scale.labelText,
+        questionText: scale.labelText,
+        type: QuestionType.SINGLE,
+      });
     });
-  });
 
-  newSubGroup.forEach((col: any, index: number) => {
-    const options: any = [];
-    chartDataClone.chartData.forEach((data: any, index: number) => {
-      const count: number = data.options.find(
-        (subOption: any) => subOption.option === col.qId
-      )?.count;
-      options.push({ option: data._id, count: count == undefined ? 0 : count });
+    newSubGroup.forEach((col: any, index: number) => {
+      const options: any = [];
+      chartDataClone.chartData.forEach((data: any, index: number) => {
+        const count: number = data.options.find(
+          (subOption: any) => subOption.option === col.qId
+        )?.count;
+        options.push({
+          option: data._id,
+          count: count == undefined ? 0 : count,
+        });
+      });
+      newChartData.push({ _id: col.qId, options: options });
     });
-    newChartData.push({ _id: col.qId, options: options });
-  });
 
-  chartDataClone.chartData = newChartData;
-  chartDataClone.questionData.scale = newScale;
-  chartDataClone.questionData.subGroups = newSubGroup;
-  chartDataClone.chartOptions = {
-    ...chart.chartOptions,
-    ...getChartOptions(
-      chartDataClone.questionData,
-      chartDataClone.chartData,
-      chartDataClone.baseCount
-    ),
-  };
-  dispatch(setChartData(chartDataClone));
+    chartDataClone.chartData = newChartData;
+    chartDataClone.questionData.scale = newScale;
+    chartDataClone.questionData.subGroups = newSubGroup;
+    chartDataClone.chartOptions = {
+      ...chart.chartOptions,
+      ...getChartOptions(
+        chartDataClone.questionData,
+        chartDataClone.chartData,
+        chartDataClone.baseCount
+      ),
+    };
+    dispatch(setChartData(chartDataClone));
+  }else{
+    const {chartData} = chartDataClone;
+    const allLabels:Array<string> = [];
+    const newChartData:any = {};
+    const questionData = chartDataClone.questionData;
+    const bannerData = chartDataClone.bannerQuestionData;
+
+    for(const labelArrays in chartData[0]){
+      var labelArray = chartData[0][labelArrays];
+      labelArray.forEach((el:any)=>{
+       if(allLabels.indexOf(el.labelCode)==-1){
+        allLabels.push(el.labelCode);
+        newChartData[el.labelCode] = [];
+       }
+       newChartData[el.labelCode].push({"count":el.count,"labelCode":labelArrays})
+
+      })
+    }
+
+    
+
+    console.log(allLabels);
+    console.log(newChartData);
+    // debugger;
+    chartDataClone.chartData[0] = newChartData;
+    chartDataClone.questionData = bannerData;
+    chartDataClone.bannerQuestionData = questionData;
+    chartDataClone.chartOptions = {
+      ...chart.chartOptions,
+      ...getChartOptions(
+        chartDataClone.questionData,
+        chartDataClone.chartData,
+        chartDataClone.baseCount,
+        chartDataClone.bannerQuestionData
+      ),
+    };
+    dispatch(setChartData(chartDataClone));
+    
+  }
 };
