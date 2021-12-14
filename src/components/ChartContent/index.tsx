@@ -36,7 +36,7 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from "../../redux/actions/sidebarAction";
-import ChartOperationControl from "../ChartOperationControl";
+
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -263,7 +263,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       <div className="additionFeatures">
         <Grid container spacing={0}>
           <Grid xs={8}>
-            <ChartOperationControl />
+            <ChartOptionsControl />
           </Grid>
         </Grid>
       </div>
