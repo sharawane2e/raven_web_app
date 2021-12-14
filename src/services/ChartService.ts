@@ -170,7 +170,11 @@ export const transposeChart = () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  if (chartDataClone.questionData.type == QuestionType.RANK) {
+  if (
+    chartDataClone.questionData.type == QuestionType.RANK ||
+    chartDataClone.questionData.type == QuestionType.GRID ||
+    chartDataClone.questionData.type == QuestionType.GRID_MULTI
+  ) {
     const newSubGroup: any = [];
     const newScale: any = [];
     const newChartData: any = [];
@@ -195,6 +199,7 @@ export const transposeChart = () => {
 
     newSubGroup.forEach((col: any, index: number) => {
       const options: any = [];
+      let baseCount: number = 0;
       chartDataClone.chartData.forEach((data: any, index: number) => {
         const count: number = data.options.find(
           (subOption: any) => subOption.option === col.qId
@@ -203,8 +208,21 @@ export const transposeChart = () => {
           option: data._id,
           count: count == undefined ? 0 : count,
         });
+
+        baseCount += count == undefined ? 0 : count;
       });
-      newChartData.push({ _id: col.qId, options: options });
+      if (
+        chartDataClone.questionData.type == QuestionType.GRID ||
+        chartDataClone.questionData.type == QuestionType.GRID_MULTI
+      ) {
+        newChartData.push({
+          _id: col.qId,
+          options: options,
+          baseCount: baseCount,
+        });
+      } else {
+        newChartData.push({ _id: col.qId, options: options });
+      }
     });
     chartDataClone.chartData = newChartData;
     chartDataClone.questionData.scale = newScale;
@@ -237,10 +255,6 @@ export const transposeChart = () => {
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
-  } else if (
-    chartDataClone.questionData.type == QuestionType.GRID ||
-    chartDataClone.questionData.type == QuestionType.GRID_MULTI
-  ) {
   }
   chartDataClone.chartOptions = {
     ...chart.chartOptions,
