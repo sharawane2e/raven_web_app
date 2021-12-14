@@ -36,7 +36,7 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from "../../redux/actions/sidebarAction";
-import TransposeControl from "../TransposeControl";
+import ChartOperationControl from "../ChartOperationControl";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -144,20 +144,20 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const bannerQuestion: JSX.Element = (
-      <SingleSelect
-        options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
-        value={selectedBannerQuestionId}
-        onItemSelect={handelBannerQuestionChange}
-        placeholder={StaticText.BANNER_LABEL}
-        valueKey="qId"
-        labelKey="labelText"
-        className="Step-2"
-        disabled={questions.disableBannerQuestion}
-        disabledPredicate={(value) => value === selectedQuestionId}
-        MenuProps={{
-          classes: { paper: "testing" },
-        }}
-      />
+    <SingleSelect
+      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      value={selectedBannerQuestionId}
+      onItemSelect={handelBannerQuestionChange}
+      placeholder={StaticText.BANNER_LABEL}
+      valueKey="qId"
+      labelKey="labelText"
+      className="Step-2"
+      disabled={questions.disableBannerQuestion}
+      disabledPredicate={(value) => value === selectedQuestionId}
+      MenuProps={{
+        classes: { paper: "testing" },
+      }}
+    />
   );
 
   return (
@@ -255,18 +255,16 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
                 <div onClick={showBannerClickException}>{bannerQuestion}</div>
               </Tooltip>
             ) : (
-              
-                bannerQuestion
+              bannerQuestion
             )}
           </Grid>
         </Grid>
       </div>
       <div className="additionFeatures">
-      <Grid container spacing={0}>
+        <Grid container spacing={0}>
           <Grid xs={8}>
-            <TransposeControl />
+            <ChartOperationControl />
           </Grid>
-      
         </Grid>
       </div>
       <div className="chart-content__chart-wrapper">
