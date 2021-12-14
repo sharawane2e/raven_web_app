@@ -2,18 +2,15 @@ import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
 
 export function bannerChartDataGen(
-  bannerQuestionList: any,
   questionData: any,
   chartData: any,
-  selectedBannerQuestionId: any
+  baseCount: any,
+  bannerQuestionData: any
 ) {
   let labels: any = [];
   let seriesData: any[] = [];
   labels = questionData.options.map((label: any) => label.labelText);
-  let scale =
-    bannerQuestionList.find(
-      (ques: any) => ques.qId === selectedBannerQuestionId
-    )?.options || [];
+  let scale = bannerQuestionData.options;
   let chartDataComplete = chartData[0];
 
   scale.forEach((scaleOption: any) => {

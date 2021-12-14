@@ -7,7 +7,7 @@ import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-i
 import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../assets/svg/pie-chart.svg";
 import { QuestionType } from "../../enums/QuestionType";
-import { changeChartType, transposeChart } from "../../services/ChartService";
+import { changeChartType } from "../../services/ChartService";
 import Toaster from "../../utils/Toaster";
 import { StaticText } from "../../constants/StaticText";
 
@@ -21,17 +21,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const { chartType } = chart;
 
   const buttonConfig: ButtonGroupConfig[] = [
-    {
-      tooltip: "Transpose",
-      renderChild: () => <TableIcon />,
-      onClick: () => transposeChart(),
-      active: chartType === ChartType.TABLE,
-      disabled:
-        chart.questionData === null ||
-        chart.questionData.type === "MG" ||
-        chart.questionData.type === "G",
-      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
-    },
+  
     {
       tooltip: "Column chart",
       renderChild: () => <ColumnChartIcon />,
