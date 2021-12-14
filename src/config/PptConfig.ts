@@ -49,8 +49,8 @@ export const chartConfig: pptxgen.IChartOpts = {
 export const tableConfig: pptxgen.TableProps = {
   x: 0.3,
   y: 0.9,
-  h: 3.8,
-  w: 9.4,
+  //h: 3.8,
+  //w: 9.4,
   border: { pt: 0.4, type: "solid", color: "E6E6E6" },
   fontSize: 6,
   autoPage: true,

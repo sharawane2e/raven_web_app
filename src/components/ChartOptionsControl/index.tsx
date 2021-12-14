@@ -27,9 +27,13 @@ const ChartOptionsControl: React.FC<ChartDataLabelControlProps> = () => {
       onClick: () => transposeChart(),
       active: true,
       disabled:
+        (chart.questionData?.type === QuestionType.SINGLE &&
+          !chart.bannerQuestionData) ||
+        (chart.questionData?.type === QuestionType.MULTI &&
+          !chart.bannerQuestionData) ||
         chart.questionData === null ||
         chart.questionData.type === QuestionType.GRID_MULTI ||
-        chart.questionData.type === QuestionType.MULTI,
+        chart.questionData.type === QuestionType.GRID,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),
     },
     {
