@@ -187,7 +187,7 @@ export const transposeChart = () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  if (chartDataClone.questionData.type == "R") {
+  if (chartDataClone.questionData.type == QuestionType.RANK) {
     const newSubGroup: any = [];
     const newScale: any = [];
     const newChartData: any = [];
@@ -223,56 +223,50 @@ export const transposeChart = () => {
       });
       newChartData.push({ _id: col.qId, options: options });
     });
-
     chartDataClone.chartData = newChartData;
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
-    chartDataClone.chartOptions = {
-      ...chart.chartOptions,
-      ...getChartOptions(
-        chartDataClone.questionData,
-        chartDataClone.chartData,
-        chartDataClone.baseCount
-      ),
-    };
-    dispatch(setChartData(chartDataClone));
-  }else{
-    const {chartData} = chartDataClone;
-    const allLabels:Array<string> = [];
-    const newChartData:any = {};
+  } else if (
+    chartDataClone.bannerQuestionData &&
+    (chartDataClone.questionData.type == QuestionType.SINGLE ||
+      chartDataClone.questionData.type == QuestionType.MULTI)
+  ) {
+    const { chartData } = chartDataClone;
+    const allLabels: Array<string> = [];
+    const newChartData: any = {};
     const questionData = chartDataClone.questionData;
     const bannerData = chartDataClone.bannerQuestionData;
 
-    for(const labelArrays in chartData[0]){
-      var labelArray = chartData[0][labelArrays];
-      labelArray.forEach((el:any)=>{
-       if(allLabels.indexOf(el.labelCode)==-1){
-        allLabels.push(el.labelCode);
-        newChartData[el.labelCode] = [];
-       }
-       newChartData[el.labelCode].push({"count":el.count,"labelCode":labelArrays})
-
-      })
+    for (const labelArrays in chartData[0]) {
+      const labelArray = chartData[0][labelArrays];
+      labelArray.forEach((el: any) => {
+        if (allLabels.indexOf(el.labelCode) == -1) {
+          allLabels.push(el.labelCode);
+          newChartData[el.labelCode] = [];
+        }
+        newChartData[el.labelCode].push({
+          count: el.count,
+          labelCode: labelArrays,
+        });
+      });
     }
 
-    
-
-    console.log(allLabels);
-    console.log(newChartData);
-    // debugger;
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
-    chartDataClone.chartOptions = {
-      ...chart.chartOptions,
-      ...getChartOptions(
-        chartDataClone.questionData,
-        chartDataClone.chartData,
-        chartDataClone.baseCount,
-        chartDataClone.bannerQuestionData
-      ),
-    };
-    dispatch(setChartData(chartDataClone));
-    
+  } else if (
+    chartDataClone.questionData.type == QuestionType.GRID ||
+    chartDataClone.questionData.type == QuestionType.GRID_MULTI
+  ) {
   }
+  chartDataClone.chartOptions = {
+    ...chart.chartOptions,
+    ...getChartOptions(
+      chartDataClone.questionData,
+      chartDataClone.chartData,
+      chartDataClone.baseCount,
+      chartDataClone.bannerQuestionData
+    ),
+  };
+  dispatch(setChartData(chartDataClone));
 };

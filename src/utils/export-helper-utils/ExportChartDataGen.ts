@@ -7,8 +7,8 @@ import { singleChartDataGen } from "./SingleQuesUtils";
 export function chartDataGen() {
   let seriesData = [];
   const {
-    chart: { chartData, questionData, baseCount },
-    questions: { selectedBannerQuestionId, bannerQuestionList },
+    chart: { chartData, questionData, bannerQuestionData, baseCount },
+    questions: { selectedBannerQuestionId },
   } = store.getState();
 
   if (
@@ -17,10 +17,10 @@ export function chartDataGen() {
       questionData?.type === QuestionType.MULTI)
   ) {
     seriesData = bannerChartDataGen(
-      bannerQuestionList,
       questionData,
       chartData,
-      selectedBannerQuestionId
+      baseCount,
+      bannerQuestionData
     );
   } else {
     if (questionData?.type === QuestionType.SINGLE) {
