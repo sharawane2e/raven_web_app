@@ -25,7 +25,7 @@ export const fetchChartData = async (
   try {
     const chartFilters: any[] = [];
     if (appliedFilters.length) {
-      appliedFilters.forEach((filter) => {
+      appliedFilters.forEach((filter:any) => {
         const chartFilter = chartFilters.find(
           (chartFilter) => chartFilter.qId === filter.qId
         );
@@ -46,7 +46,7 @@ export const fetchChartData = async (
       : selectedBannerQuestionId;
     const body = {
       qId: quesId,
-      type: questionList.find((ques) => ques.qId === quesId)?.type || "",
+      type: questionList.find((ques:any) => ques.qId === quesId)?.type || "",
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
     };

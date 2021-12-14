@@ -31,6 +31,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ChartOptionsControl from "../ChartOptionsControl";
 // import Tooltip from "@material-ui/Tooltip";
 import { showTourGuide } from "../../redux/actions/tourAction";
+import store from "../../redux/store";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
 import {
   toggleSidebar,
@@ -52,9 +53,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: { questionData, baseCount, chartType },
+    chart: { questionData, baseCount, chartType, bannerQuestionData},
     sidebar: { open },
   } = useSelector((state: RootState) => state);
+  const { chart } = store.getState(); 
   //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
@@ -260,14 +262,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </Grid>
         </Grid>
       </div>
-      <div className="additionFeatures">
-        <Grid container spacing={0}>
-          <Grid xs={8}>
-            <ChartOptionsControl />
-          </Grid>
-        </Grid>
-      </div>
+      
       <div className="chart-content__chart-wrapper">
+        
+        {questionData?.type !== QuestionType.SINGLE || 
+        (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>}
+
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
         <div className="chart-content__base-count">
           Sample set: {baseCount}
