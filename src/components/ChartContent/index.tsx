@@ -229,7 +229,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </Button> */}
       <div className="questioSelection">
         <Grid container spacing={0}>
-          <Grid xs={8}>
+          <Grid xs={8} className="md-space-4">
             <SingleSelect
               options={questionList}
               value={selectedQuestionId}
