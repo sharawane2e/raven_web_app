@@ -3,13 +3,14 @@ import { ChartDataLabels } from "../../enums/ChartDataLabels";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { QuestionType } from "../../enums/QuestionType";
+import { IChartOperations } from "../../types/IChartOperations";
 import { IQuestion } from "../../types/IQuestion";
 import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
   setChartData,
   setChartOrientation,
   setChartType,
-  setDataLabelFormat,
+  setChartOperations
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -17,7 +18,7 @@ export interface IChartState {
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
-
+  chartOperations:IChartOperations,
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
@@ -35,7 +36,7 @@ export const defaultPlotOptions = {
   series: {
     dataLabels: {
       enabled: true,
-      format: ChartDataLabels.PERCENTAGE,
+      format: "{point.y:.1f}%",
       allowOverlap: true,
       x: 0,
     },
@@ -48,6 +49,10 @@ const initialState: IChartState = {
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
+  chartOperations:{
+    transposed:false,
+    labelFormat:ChartDataLabels.PERCENTAGE
+  },
 
   chartOptions: {
     title: {
@@ -55,7 +60,7 @@ const initialState: IChartState = {
     },
     chart: {
       type: "column",
-      inverted: false,
+      
       style: {
         fontFamily: `"Avenir", Arial`,
       },
@@ -118,12 +123,9 @@ const chartReducer = createReducer(initialState, (builder) => {
     };
   });
 
-  builder.addCase(setDataLabelFormat, (state, action) => ({
+  builder.addCase(setChartOperations, (state, action) => ({
     ...state,
-    chartOptions: {
-      ...state.chartOptions,
-      ...action.payload,
-    },
+   ...action.payload
   }));
 });
 

@@ -4,8 +4,8 @@ import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon
 import { ChartDataLabels } from "../../enums/ChartDataLabels";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-import { setDataLabelFormat } from "../../redux/actions/chartActions";
-import { changeDataLabelFormat } from "../../services/ChartService";
+// import { setChartOperations } from "../../redux/actions/chartActions";
+import { changeChartOperations } from "../../services/ChartService";
 import { changeChartType, transposeChart } from "../../services/ChartService";
 import { QuestionType } from "../../enums/QuestionType";
 import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
@@ -16,7 +16,7 @@ interface ChartDataLabelControlProps {}
 
 const ChartOptionsControl: React.FC<ChartDataLabelControlProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
-  const { chartType } = chart;
+  const { chartOperations } = chart;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -36,25 +36,17 @@ const ChartOptionsControl: React.FC<ChartDataLabelControlProps> = () => {
       tooltip: "Percentage",
       renderChild: () => <PortraitIcon />,
       onClick: () => {
-        const newChartOptions = changeDataLabelFormat(
-          ChartDataLabels.PERCENTAGE
-        );
-        dispatch(setDataLabelFormat(newChartOptions));
+        changeChartOperations({...chartOperations,labelFormat:ChartDataLabels.PERCENTAGE})
       },
-      active:
-        chart.chartOptions.plotOptions.series.dataLabels.format ===
-        ChartDataLabels.PERCENTAGE,
+      active:chart.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE
     },
     {
       tooltip: "Number",
       renderChild: () => <LandscapeIcon />,
       onClick: () => {
-        const newChartOptions = changeDataLabelFormat(ChartDataLabels.NUMBER);
-        dispatch(setDataLabelFormat(newChartOptions));
+        changeChartOperations({...chartOperations,labelFormat:ChartDataLabels.NUMBER})
       },
-      active:
-        chart.chartOptions.plotOptions.series.dataLabels.format ===
-        ChartDataLabels.NUMBER,
+      active:chart.chartOperations.labelFormat===ChartDataLabels.NUMBER
     },
   ];
 

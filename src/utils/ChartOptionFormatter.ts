@@ -64,6 +64,8 @@ const getSingleChartOptions = (
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
+  const {chart:{chartOperations}} = store.getState();
+
   const {
     plotOptions: {
       series: {
@@ -155,17 +157,18 @@ const getSingleChartOptions = (
       }
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
-      plotValue = (count / baseCount) * 100;
-      // if (format === ChartDataLabels.PERCENTAGE) {
-      //   plotValue = (count / baseCount) * 100;
-      // } else {
-      //   plotValue = count;
-      // }
+      // plotValue = (count / baseCount) * 100;
+      if (chartOperations.labelFormat === "percentage") {
+        plotValue = (count / baseCount) * 100;
+      } else {
+        plotValue = count;
+      }
 
       if (plotValue > 0)
         data.push({
           name: option.labelText,
-          y: round(plotValue, decimalPrecision),
+          // y: round(plotValue, decimalPrecision),
+          y: plotValue,
         });
     }
 

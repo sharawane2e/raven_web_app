@@ -14,4 +14,6 @@ export const setChartType = createAction<ChartType>("SET_CHART_TYPE");
 
 export const resetChartData = createAction("RESET_CHART_DATA");
 
-export const setDataLabelFormat = createAction<any>("SET_CHART_DATA_LABEL");
+// export const setDataLabelFormat = createAction<any>("SET_CHART_DATA_LABEL");
+
+export const setChartOperations = createAction<any>("SET_CHART_OPERATIONS");

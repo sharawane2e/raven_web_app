@@ -1,6 +1,6 @@
 import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
-import { setChartData } from "../redux/actions/chartActions";
+import { setChartData,setChartOperations } from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
@@ -9,6 +9,7 @@ import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import { omit } from "lodash";
+import { IChartOperations } from "../types/IChartOperations";
 
 export const fetchChartData = async (
   qId?: string,
@@ -126,28 +127,6 @@ export const changeChartType = (newChartType: ChartType) => {
 
   chartDataClone.chartType = newChartType;
 
-  let plotOptions = chartDataClone.chartOptions["plotOptions"];
-  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
-
-  if (newChartType === ChartType.STACK) {
-    plotOptions["column"] = {
-      stacking: "normal",
-    };
-    plotOptions["series"].dataLabels.format = "{point.y:.1f}%";
-  } else if (newChartType === ChartType.COLUMN) {
-    plotOptions["bar"] = {
-      stacking: "normal",
-    };
-    plotOptions["series"].dataLabels.format = "{point.y:.1f}%";
-  } else if (newChartType === ChartType.PIE) {
-    plotOptions["pie"] = {
-      allowPointSelect: false,
-      cursor: "pointer",
-    };
-    plotOptions["series"].dataLabels.format =
-      "<b>{point.name}</b>: {point.percentage:.1f}%";
-  }
-
   if (newChartType === ChartType.PIE) {
     chartDataClone.chartOptions["chart"] = {
       ...chartDataClone.chartOptions["chart"],
@@ -159,27 +138,31 @@ export const changeChartType = (newChartType: ChartType) => {
       type: "column",
     };
   }
-  chartDataClone.chartOptions["plotOptions"] = plotOptions;
+  chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
   dispatch(setChartData(chartDataClone));
 };
 
-export const changeDataLabelFormat = (chartDataLabel: ChartDataLabels) => {
-  const { chartOptions } = store.getState().chart;
-  let newChartOptions = JSON.parse(JSON.stringify(chartOptions));
-  newChartOptions.plotOptions.series.dataLabels.format = chartDataLabel;
-  newChartOptions = {
-    ...newChartOptions,
-    ...getChartOptions(
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      newChartOptions
-    ),
-  };
+export const changeChartOperations = (chartOperationsObj: IChartOperations) => {
+  const {dispatch} = store;
+  const {chart} = store.getState();
+  const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  return newChartOptions;
+  chartDataClone.chartOperations = chartOperationsObj;
+  dispatch(setChartOperations(chartDataClone));
+  getPlotOptions();
+  chartDataClone.chartOptions = {
+    ...chart.chartOptions,
+    // plotOptions:getPlotOptions(),
+    ...getChartOptions(
+      chartDataClone.questionData,
+      chartDataClone.chartData,
+      chartDataClone.baseCount,
+      chartDataClone.bannerQuestionData
+    ),
+    plotOptions:getPlotOptions()
+  };
+  dispatch(setChartData(chartDataClone));
 };
 
 export const transposeChart = () => {
@@ -270,3 +253,29 @@ export const transposeChart = () => {
   };
   dispatch(setChartData(chartDataClone));
 };
+
+export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
+  const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
+  let plotOptions = chartDataClone.chartOptions["plotOptions"];
+  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
+
+  if (chartType === ChartType.STACK) {
+    plotOptions["column"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+  } else if (chartType === ChartType.COLUMN) {
+    plotOptions["bar"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+  } else if (chartType === ChartType.PIE) {
+    plotOptions["pie"] = {
+      allowPointSelect: false,
+      cursor: "pointer",
+    };
+    plotOptions["series"].dataLabels.format =`${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'<b>{point.name}</b>: {point.percentage:.1f}%':'<b>{point.name}</b>: {point.percentage:.0f}'}`;
+  }
+  console.log(plotOptions)
+  return plotOptions;
+}
