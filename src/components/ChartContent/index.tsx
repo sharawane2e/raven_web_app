@@ -36,6 +36,7 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from "../../redux/actions/sidebarAction";
+import TransposeControl from "../TransposeControl";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -258,6 +259,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
                 bannerQuestion
             )}
           </Grid>
+        </Grid>
+      </div>
+      <div className="additionFeatures">
+      <Grid container spacing={0}>
+          <Grid xs={8}>
+            <TransposeControl />
+          </Grid>
+      
         </Grid>
       </div>
       <div className="chart-content__chart-wrapper">
