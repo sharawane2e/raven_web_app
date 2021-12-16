@@ -264,9 +264,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </div>
       
       <div className="chart-content__chart-wrapper">
+      <ChartOptionsControl />
         
-        {questionData?.type !== QuestionType.SINGLE || 
-        (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>}
+        {/* {questionData?.type !== QuestionType.SINGLE || 
+        (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
 
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
         <div className="chart-content__base-count">

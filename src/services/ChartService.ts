@@ -4,11 +4,10 @@ import { setChartData,setChartOperations } from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
-import { getChartOptions } from "../utils/ChartOptionFormatter";
+import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { ChartDataLabels } from "../enums/ChartDataLabels";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-import { omit } from "lodash";
 import { IChartOperations } from "../types/IChartOperations";
 
 export const fetchChartData = async (
@@ -150,10 +149,8 @@ export const changeChartOperations = (chartOperationsObj: IChartOperations) => {
 
   chartDataClone.chartOperations = chartOperationsObj;
   dispatch(setChartOperations(chartDataClone));
-  getPlotOptions();
   chartDataClone.chartOptions = {
     ...chart.chartOptions,
-    // plotOptions:getPlotOptions(),
     ...getChartOptions(
       chartDataClone.questionData,
       chartDataClone.chartData,
@@ -172,8 +169,7 @@ export const transposeChart = () => {
 
   if (
     chartDataClone.questionData.type == QuestionType.RANK ||
-    chartDataClone.questionData.type == QuestionType.GRID ||
-    chartDataClone.questionData.type == QuestionType.GRID_MULTI
+    chartDataClone.questionData.type == QuestionType.GRID
   ) {
     const newSubGroup: any = [];
     const newScale: any = [];
@@ -255,6 +251,66 @@ export const transposeChart = () => {
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
+  }else if(chartDataClone.questionData.type == QuestionType.GRID_MULTI){
+    const newSubGroup: any = [];
+    const newScale: any = [];
+    const newChartData: any = [];
+    chartDataClone.questionData.subGroups.forEach(
+      (scale: any, index: number) => {
+        newScale.push({
+          labelText: scale.labelText,
+          labelCode: scale.qId,
+          order: index,
+        });
+      }
+    );
+
+    chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
+      newSubGroup.push({
+        qId: scale.labelCode,
+        labelText: scale.labelText,
+        questionText: scale.labelText,
+        type: QuestionType.SINGLE,
+      });
+    });
+
+    newSubGroup.forEach((col: any, index: number) => {
+      const options: any = [];
+      let baseCount: number = 0;
+      let withoutTransposeBaseCount:any=0;
+      chartDataClone.chartData.forEach((data: any, index: number) => {
+        const count: number = data.options.find(
+          (subOption: any) => subOption.option === col.qId
+        )?.count;
+        // debugger;
+        withoutTransposeBaseCount = data.options.find(
+          (subOption: any)=> {
+            if(subOption.option === col.qId && subOption.baseCount){
+              return subOption.baseCount;
+            }
+          }
+        );
+
+        withoutTransposeBaseCount = withoutTransposeBaseCount?.baseCount
+        options.push({
+          option: data._id,
+          count: count == undefined ? 0 : count,
+          baseCount:data.baseCount
+        });
+
+        baseCount += count == undefined ? 0 : count;
+      });
+
+        newChartData.push({
+          _id: col.qId,
+          options: options,
+          baseCount:withoutTransposeBaseCount
+        });
+     
+    });
+    chartDataClone.chartData = newChartData;
+    chartDataClone.questionData.scale = newScale;
+    chartDataClone.questionData.subGroups = newSubGroup;
   }
   chartDataClone.chartOptions = {
     ...chart.chartOptions,
@@ -268,28 +324,4 @@ export const transposeChart = () => {
   dispatch(setChartData(chartDataClone));
 };
 
-export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
-  const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
-  let plotOptions = chartDataClone.chartOptions["plotOptions"];
-  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
 
-  if (chartType === ChartType.STACK) {
-    plotOptions["column"] = {
-      stacking: "normal",
-    };
-    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
-  } else if (chartType === ChartType.COLUMN) {
-    plotOptions["bar"] = {
-      stacking: "normal",
-    };
-    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
-  } else if (chartType === ChartType.PIE) {
-    plotOptions["pie"] = {
-      allowPointSelect: false,
-      cursor: "pointer",
-    };
-    plotOptions["series"].dataLabels.format =`${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'<b>{point.name}</b>: {point.percentage:.1f}%':'<b>{point.name}</b>: {point.percentage:.0f}'}`;
-  }
-  console.log(plotOptions)
-  return plotOptions;
-}

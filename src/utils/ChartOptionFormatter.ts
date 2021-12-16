@@ -11,6 +11,7 @@ import store from "../redux/store";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
+import { omit } from "lodash";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -172,10 +173,14 @@ const getSingleChartOptions = (
         });
     }
 
+ 
+
     return {
       legend: {
         enabled: false,
       },
+
+      tooltip:{...getToolTip()},
 
       series: [
         {
@@ -218,13 +223,13 @@ const getGridChartOptions = (
     ) {
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
-
       const optionData = chartData.find((c: any) => c._id === subGroup.qId);
 
       let count = 0;
+      let label;
       // debugger;
       if (optionData) {
-        const label = optionData.options.find(
+        label = optionData.options.find(
           (option: any) => option.option === scale.labelCode
         );
 
@@ -232,7 +237,7 @@ const getGridChartOptions = (
           count = label.count;
         }
       }
-      const base = optionData?.baseCount || baseCount;
+      const base = label.baseCount?label.baseCount:optionData?.baseCount || baseCount;
       const plotValue = (count / base) * 100;
       // if (plotValue > 0) {
       data.push({
@@ -254,6 +259,7 @@ const getGridChartOptions = (
     legend: {
       enabled: true,
     },
+    tooltip:{...getToolTip()},
     series,
   };
 };
@@ -267,3 +273,43 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
 
   return newChartOptions;
 };
+
+const getToolTip = () =>{
+  const {chart:{chartOperations}} = store.getState();
+  const tooltip:{headerFormat:String,pointFormat:String}={headerFormat:"",pointFormat:""};
+      
+  if (chartOperations.labelFormat === "percentage") {
+    tooltip["headerFormat"]= '<span style="font-size:11px">{series.name}</span><br>';
+    tooltip["pointFormat"]="<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
+  } else {
+    tooltip["headerFormat"]= '<span style="font-size:11px">{series.name}</span><br>';
+    tooltip["pointFormat"]='<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>';
+  }
+
+  return tooltip;
+}
+
+export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
+  const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
+  let plotOptions = chartDataClone.chartOptions["plotOptions"];
+  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
+
+  if (chartType === ChartType.STACK) {
+    plotOptions["column"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+  } else if (chartType === ChartType.COLUMN) {
+    plotOptions["bar"] = {
+      stacking: "normal",
+    };
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+  } else if (chartType === ChartType.PIE) {
+    plotOptions["pie"] = {
+      allowPointSelect: false,
+      cursor: "pointer",
+    };
+    plotOptions["series"].dataLabels.format =`${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'<b>{point.name}</b>: {point.percentage:.1f}%':'<b>{point.name}</b>: {point.percentage:.0f}'}`;
+  }
+  return plotOptions;
+}
