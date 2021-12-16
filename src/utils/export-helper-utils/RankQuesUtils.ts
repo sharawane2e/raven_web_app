@@ -5,5 +5,5 @@ export function rankChartDataGen(
   chartData: any,
   baseCount: any
 ) {
-  gridChartDataGen(questionData, chartData, baseCount);
+  return gridChartDataGen(questionData, chartData, baseCount);
 }

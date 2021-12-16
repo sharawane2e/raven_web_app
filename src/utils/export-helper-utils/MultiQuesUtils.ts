@@ -4,5 +4,5 @@ export function multiChartDataGen(
   chartData: any,
   baseCount: any
 ) {
-  singleChartDataGen(questionData, chartData, baseCount);
+  return singleChartDataGen(questionData, chartData, baseCount);
 }
