@@ -1,51 +1,37 @@
 import { gridChartDataGen } from "./GridQuesUtils";
 import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
+import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
+import { IMultiGridSubGrpData, ISubGrpOptions } from "../../types/IChart";
 export function multiGridChartDataGen(
-  questionData: any,
+  questionData: IBaseQuestion,
   chartData: any,
-  baseCount: any
+  baseCount: number
 ) {
-  let labels: any = [];
-  let seriesData: any[] = [];
-
+  let labels: Array<string> = [];
+  let seriesData: Array<Object> = [];
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
-  questionData.scale.forEach((scaleOption: any) => {
+  questionData.scale.forEach((scaleOption: IQuestionOption) => {
     seriesData.push({
       name: scaleOption.labelText,
       labels,
       values: questionData.subGroups.map((subGroup: any) => {
         const subGroupData = chartData.find(
-          (data: any) => data._id === subGroup.qId
+          (data: IMultiGridSubGrpData) => data._id === subGroup.qId
         );
-
-        if (subGroupData) {
-          const data = subGroupData?.options?.find(
-            (scaleData: any) => scaleData.option === scaleOption.labelCode
-          )?.count;
-          const base = subGroupData?.baseCount;
-          const transposeBase = subGroupData?.options?.find(
-            (scaleData: any) => {
-              if (scaleData.option === scaleOption.labelCode) {
-                return scaleData.baseCount;
-              }
-            }
-          );
-          if (base) {
-            return data !== undefined
-              ? round(+((data / base) * 100), decimalPrecision)
-              : 0;
-          } else if (transposeBase) {
-            return data !== undefined
-              ? round(
-                  +((data / transposeBase.baseCount) * 100),
-                  decimalPrecision
-                )
-              : 0;
-          }
-        } else {
+        console.log("sgd", subGroupData);
+        if (!subGroupData) {
           return 0;
         }
+        const dataObj = subGroupData?.options?.find(
+          (optionObj: ISubGrpOptions) =>
+            optionObj.option === scaleOption.labelCode
+        );
+        const data: number = dataObj.count;
+        const base: number = subGroupData?.baseCount || dataObj.baseCount;
+        return data !== undefined
+          ? round(+((data / base) * 100), decimalPrecision)
+          : 0;
       }),
     });
   });
