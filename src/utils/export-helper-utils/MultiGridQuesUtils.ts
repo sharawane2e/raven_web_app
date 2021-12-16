@@ -19,7 +19,6 @@ export function multiGridChartDataGen(
         const subGroupData = chartData.find(
           (data: IMultiGridSubGrpData) => data._id === subGroup.qId
         );
-        console.log("sgd", subGroupData);
         if (!subGroupData) {
           return 0;
         }
@@ -27,10 +26,9 @@ export function multiGridChartDataGen(
           (optionObj: ISubGrpOptions) =>
             optionObj.option === scaleOption.labelCode
         );
-        const data: number = dataObj.count;
         const base: number = subGroupData?.baseCount || dataObj.baseCount;
-        return data !== undefined
-          ? round(+((data / base) * 100), decimalPrecision)
+        return dataObj.count !== undefined
+          ? round(+((dataObj.count / base) * 100), decimalPrecision)
           : 0;
       }),
     });

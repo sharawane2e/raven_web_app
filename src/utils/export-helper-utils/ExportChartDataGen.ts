@@ -22,7 +22,6 @@ export function chartDataGen() {
     seriesData = bannerChartDataGen(
       questionData,
       chartData,
-      baseCount,
       bannerQuestionData
     );
   } else {
