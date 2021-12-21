@@ -12,6 +12,7 @@ import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
 import { omit } from "lodash";
+import { ChartOrientation } from "../enums/ChartOrientation";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -299,17 +300,32 @@ export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
       stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+    plotOptions["series"].dataLabels.y = undefined;
+    plotOptions["series"].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+    if(chartDataClone.chartOrientation===ChartOrientation.PORTRAIT){
+      plotOptions["series"].dataLabels.y = -20;
+      plotOptions["series"].dataLabels.rotation = 270;
+      
+    }else{
+      plotOptions["series"].dataLabels.y = undefined;
+      plotOptions["series"].dataLabels.rotation = 0;
+
+    }
   } else if (chartType === ChartType.PIE) {
     plotOptions["pie"] = {
       allowPointSelect: false,
       cursor: "pointer",
     };
     plotOptions["series"].dataLabels.format =`${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'<b>{point.name}</b>: {point.percentage:.1f}%':'<b>{point.name}</b>: {point.percentage:.0f}'}`;
+    // plotOptions["series"].dataLabels.y = undefined;
+    // plotOptions["series"].dataLabels.rotation = undefined;
+    delete plotOptions["series"].dataLabels.y;
+    delete plotOptions["series"].dataLabels.rotation;
   }
   return plotOptions;
 }

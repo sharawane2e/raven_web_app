@@ -5,6 +5,9 @@ import { ChartOrientation } from "../../enums/ChartOrientation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setChartOrientation } from "../../redux/actions/chartActions";
+import store from "../../redux/store";
+import { getChartOptions, getPlotOptions } from "../../utils/ChartOptionFormatter";
+import { setChartData } from "../../redux/actions/chartActions";
 
 interface OrientationControlProps {}
 
@@ -15,7 +18,12 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {
+
     dispatch(setChartOrientation(orientation));
+    const { chart } = store.getState();
+    const chartDataClone = JSON.parse(JSON.stringify(chart));
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions();
+    dispatch(setChartData(chartDataClone));
   };
   const buttonConfig: ButtonGroupConfig[] = [
     {

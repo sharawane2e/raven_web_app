@@ -29,6 +29,8 @@ export const dataLabels = {
   // format: "{point.y:.1f}%",
   style: {
     fontSize: "10px",
+    textOutline:false,
+    fontWeight:null
   },
 };
 
@@ -39,6 +41,8 @@ export const defaultPlotOptions = {
       format: "{point.y:.1f}%",
       allowOverlap: true,
       x: 0,
+      y:-20,
+      rotation:270,
     },
   },
 };
