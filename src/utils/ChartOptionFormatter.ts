@@ -45,7 +45,7 @@ export const getChartOptions = (
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
-        return getGridChartOptions(questionData, chartData, baseCount);
+        return getGridMultiChartOptions(questionData, chartData, baseCount);
 
       default:
         return {};
@@ -66,7 +66,9 @@ const getSingleChartOptions = (
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
-  const {chart:{chartOperations}} = store.getState();
+  const {
+    chart: { chartOperations },
+  } = store.getState();
 
   const {
     plotOptions: {
@@ -174,14 +176,12 @@ const getSingleChartOptions = (
         });
     }
 
- 
-
     return {
       legend: {
         enabled: false,
       },
 
-      tooltip:{...getToolTip()},
+      tooltip: { ...getToolTip() },
 
       series: [
         {
@@ -238,7 +238,8 @@ const getGridChartOptions = (
           count = label.count;
         }
       }
-      const base = label.baseCount?label.baseCount:optionData?.baseCount || baseCount;
+      const base = optionData?.baseCount || baseCount;
+
       const plotValue = (count / base) * 100;
       // if (plotValue > 0) {
       data.push({
@@ -260,7 +261,74 @@ const getGridChartOptions = (
     legend: {
       enabled: true,
     },
-    tooltip:{...getToolTip()},
+    tooltip: { ...getToolTip() },
+    series,
+  };
+};
+
+const getGridMultiChartOptions = (
+  questionData: IQuestion,
+  chartData: any,
+  baseCount: number
+): any => {
+  const categories = [];
+  const series = [];
+
+  const subGroups = questionData.subGroups.filter((subGroup: any) => {
+    const subGroupData = chartData.find(
+      (data: any) => data._id === subGroup.qId
+    );
+    if (subGroupData && subGroupData.options.length) return true;
+    return false;
+  });
+  for (
+    let scaleIndex = 0;
+    scaleIndex < questionData.scale.length;
+    scaleIndex++
+  ) {
+    const scale = questionData.scale[scaleIndex];
+    const data: any[] = [];
+    for (
+      let subGroupIndex = 0;
+      subGroupIndex < subGroups.length;
+      subGroupIndex++
+    ) {
+      const subGroup = subGroups[subGroupIndex];
+      categories.push(subGroup.labelText);
+      const optionData = chartData.find((c: any) => c._id === subGroup.qId);
+
+      let count = 0;
+      let label;
+      if (optionData) {
+        label = optionData.options.find(
+          (option: any) => option.option === scale.labelCode
+        );
+
+        if (label) {
+          count = label.count;
+        }
+      }
+      const base = label.baseCount ? label.baseCount : optionData?.baseCount;
+      const plotValue = (count / base) * 100;
+
+      data.push({
+        name: subGroup.labelText,
+        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+      });
+    }
+    if (data.length)
+      series.push({
+        name: scale.labelText,
+        color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
+        data,
+        dataLabels,
+      });
+  }
+  return {
+    legend: {
+      enabled: true,
+    },
+    tooltip: { ...getToolTip() },
     series,
   };
 };
@@ -275,22 +343,33 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   return newChartOptions;
 };
 
-const getToolTip = () =>{
-  const {chart:{chartOperations}} = store.getState();
-  const tooltip:{headerFormat:String,pointFormat:String}={headerFormat:"",pointFormat:""};
-      
+const getToolTip = () => {
+  const {
+    chart: { chartOperations },
+  } = store.getState();
+  const tooltip: { headerFormat: String; pointFormat: String } = {
+    headerFormat: "",
+    pointFormat: "",
+  };
+
   if (chartOperations.labelFormat === "percentage") {
-    tooltip["headerFormat"]= '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"]="<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
+    tooltip["headerFormat"] =
+      '<span style="font-size:11px">{series.name}</span><br>';
+    tooltip["pointFormat"] =
+      "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
   } else {
-    tooltip["headerFormat"]= '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"]='<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>';
+    tooltip["headerFormat"] =
+      '<span style="font-size:11px">{series.name}</span><br>';
+    tooltip["pointFormat"] =
+      "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
   }
 
   return tooltip;
-}
+};
 
-export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
+export const getPlotOptions = (
+  chartType = store.getState().chart.chartType
+) => {
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
   let plotOptions = chartDataClone.chartOptions["plotOptions"];
   plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
@@ -299,33 +378,43 @@ export const getPlotOptions = (chartType = store.getState().chart.chartType) =>{
     plotOptions["column"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
+    plotOptions["series"].dataLabels.format = `${
+      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+        ? "{point.y:.1f}%"
+        : "{point.y:.0f}"
+    }`;
     plotOptions["series"].dataLabels.y = undefined;
     plotOptions["series"].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'{point.y:.1f}%':'{point.y:.0f}'}`;
-    if(chartDataClone.chartOrientation===ChartOrientation.PORTRAIT){
+    plotOptions["series"].dataLabels.format = `${
+      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+        ? "{point.y:.1f}%"
+        : "{point.y:.0f}"
+    }`;
+    if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
       plotOptions["series"].dataLabels.y = -20;
       plotOptions["series"].dataLabels.rotation = 270;
-      
-    }else{
+    } else {
       plotOptions["series"].dataLabels.y = undefined;
       plotOptions["series"].dataLabels.rotation = 0;
-
     }
   } else if (chartType === ChartType.PIE) {
     plotOptions["pie"] = {
       allowPointSelect: false,
       cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format =`${chartDataClone.chartOperations.labelFormat===ChartDataLabels.PERCENTAGE?'<b>{point.name}</b>: {point.percentage:.1f}%':'<b>{point.name}</b>: {point.percentage:.0f}'}`;
+    plotOptions["series"].dataLabels.format = `${
+      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+        ? "<b>{point.name}</b>: {point.percentage:.1f}%"
+        : "<b>{point.name}</b>: {point.percentage:.0f}"
+    }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   }
   return plotOptions;
-}
+};
