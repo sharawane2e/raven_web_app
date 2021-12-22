@@ -210,6 +210,11 @@ const getGridChartOptions = (
     if (subGroupData && subGroupData.options.length) return true;
     return false;
   });
+
+  const {
+    chart: { chartOperations },
+  } = store.getState();
+  
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -239,8 +244,14 @@ const getGridChartOptions = (
         }
       }
       const base = optionData?.baseCount || baseCount;
+      let plotValue;
+      // plotValue = (count / baseCount) * 100;
+      if (chartOperations.labelFormat === "percentage") {
+        plotValue = (count / base) * 100;
+      } else {
+        plotValue = count;
+      }
 
-      const plotValue = (count / base) * 100;
       // if (plotValue > 0) {
       data.push({
         name: subGroup.labelText,
