@@ -37,6 +37,7 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from "../../redux/actions/sidebarAction";
+import ChartTransposeControl from "../ChartTransposeControl";
 
 
 interface ChartContentProps {
@@ -264,7 +265,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </div>
       
       <div className="chart-content__chart-wrapper">
-      <ChartOptionsControl />
+      <ChartTransposeControl />
+      {/* <ChartOptionsControl /> */}
         
         {/* {questionData?.type !== QuestionType.SINGLE || 
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}

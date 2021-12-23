@@ -22,6 +22,7 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
+ 
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -62,6 +63,7 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
+  
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -114,10 +116,17 @@ const getSingleChartOptions = (
             (sum: number, option: any) => sum + option.count,
             0
           );
+          
 
-          if (label) {
+          if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
+          } else if(chartOperations.labelFormat === ChartDataLabels.NUMBER && label) {
+            count = label.count;
           }
+
+          // if (label) {
+          //   count = (label.count / localBase) * 100;
+          // }
         }
 
         // if (count > 0)
@@ -141,9 +150,11 @@ const getSingleChartOptions = (
       legend: {
         enabled: true,
       },
+      tooltip: { ...getToolTip() },
       series,
     };
   } else {
+    
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -162,7 +173,7 @@ const getSingleChartOptions = (
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
       // plotValue = (count / baseCount) * 100;
-      if (chartOperations.labelFormat === "percentage") {
+      if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
         plotValue = (count / baseCount) * 100;
       } else {
         plotValue = count;
@@ -246,7 +257,7 @@ const getGridChartOptions = (
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       // plotValue = (count / baseCount) * 100;
-      if (chartOperations.labelFormat === "percentage") {
+      if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
         plotValue = (count / base) * 100;
       } else {
         plotValue = count;
@@ -292,6 +303,11 @@ const getGridMultiChartOptions = (
     if (subGroupData && subGroupData.options.length) return true;
     return false;
   });
+
+  const {
+    chart: { chartOperations },
+  } = store.getState();
+
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -320,7 +336,14 @@ const getGridMultiChartOptions = (
         }
       }
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
-      const plotValue = (count / base) * 100;
+
+      let plotValue;
+      if(chartOperations.labelFormat === ChartDataLabels.PERCENTAGE){
+        plotValue = (count / base) * 100;
+      }else{
+        plotValue = count
+      }
+    
 
       data.push({
         name: subGroup.labelText,
@@ -363,7 +386,7 @@ const getToolTip = () => {
     pointFormat: "",
   };
 
-  if (chartOperations.labelFormat === "percentage") {
+  if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
     tooltip["headerFormat"] =
       '<span style="font-size:11px">{series.name}</span><br>';
     tooltip["pointFormat"] =

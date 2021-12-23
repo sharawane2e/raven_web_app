@@ -142,12 +142,12 @@ export const changeChartType = (newChartType: ChartType) => {
   dispatch(setChartData(chartDataClone));
 };
 
-export const changeChartOperations = (chartOperationsObj: IChartOperations) => {
+export const changeChartOperations = (newChartOperations: IChartOperations) => {
   const {dispatch} = store;
   const {chart} = store.getState();
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  chartDataClone.chartOperations = chartOperationsObj;
+  chartDataClone.chartOperations = newChartOperations;
   dispatch(setChartOperations(chartDataClone));
   chartDataClone.chartOptions = {
     ...chart.chartOptions,
