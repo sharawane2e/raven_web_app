@@ -20,7 +20,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
       totalSlides={2}
       isPlaying={true}
       playDirection={"forward"}
-      interval={10000}
+      interval={5000}
     >
 
    

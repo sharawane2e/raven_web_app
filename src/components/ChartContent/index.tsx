@@ -38,6 +38,7 @@ import {
   toggleSidebarMobile,
 } from "../../redux/actions/sidebarAction";
 import ChartTransposeControl from "../ChartTransposeControl";
+import clsx from "clsx";
 
 
 interface ChartContentProps {
@@ -163,6 +164,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     />
   );
 
+
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
@@ -264,7 +266,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
       </div>
       
-      <div className="chart-content__chart-wrapper">
+      <div className={clsx("chart-content__chart-wrapper",{"chart-content__chart-wrapper-table":chartType === ChartType.TABLE})}>
       <ChartTransposeControl />
       {/* <ChartOptionsControl /> */}
         

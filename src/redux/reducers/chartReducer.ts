@@ -40,9 +40,10 @@ export const defaultPlotOptions = {
       enabled: true,
       format: "{point.y:.1f}%",
       allowOverlap: true,
+      rotation:-90,
       x: 0,
       y:-20,
-      rotation:270,
+      crop:false,
     },
   },
 };

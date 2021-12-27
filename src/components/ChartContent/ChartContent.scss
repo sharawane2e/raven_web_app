@@ -7,7 +7,7 @@
       padding: 5px 10px;
     }
   }
-  .questioSelection{
+  .questioSelection {
     padding: 0px 12px;
   }
   .MuiInputBase-input.Mui-disabled {
@@ -54,12 +54,16 @@
       margin: 15px 5px 10px 8px;
     }
     //.highcharts-container {
-      //overflow: hidden;
-      //border-radius: 3px;
+    //overflow: hidden;
+    //border-radius: 3px;
     //}
-    .highcharts-background{
+    .highcharts-background {
       fill: transparent;
     }
+  }
+
+  .chart-content__chart-wrapper-table {
+    background: map-get($map: $bg-color, $key: "primary");
   }
   .wave-button {
     height: 30px;
@@ -225,7 +229,7 @@
   }
 }
 
-.md-space-4{
+.md-space-4 {
   padding-right: 12px;
   box-sizing: border-box;
 }
