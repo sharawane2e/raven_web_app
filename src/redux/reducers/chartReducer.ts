@@ -48,17 +48,18 @@ export const defaultPlotOptions = {
   },
 };
 
+export const defaultChartOperations = {
+  transposed:false,
+  labelFormat:ChartDataLabels.PERCENTAGE
+}
+
 const initialState: IChartState = {
   questionData: null,
   bannerQuestionData: null,
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
-  chartOperations:{
-    transposed:false,
-    labelFormat:ChartDataLabels.PERCENTAGE
-  },
-
+  chartOperations:defaultChartOperations,
   chartOptions: {
     title: {
       text: "",
@@ -130,7 +131,8 @@ const chartReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(setChartOperations, (state, action) => ({
     ...state,
-   ...action.payload
+    chartOperations:{...state.chartOperations,...action.payload}
+   
   }));
 });
 

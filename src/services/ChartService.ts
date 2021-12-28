@@ -148,7 +148,7 @@ export const changeChartOperations = (newChartOperations: IChartOperations) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartOperations = newChartOperations;
-  dispatch(setChartOperations(chartDataClone));
+  dispatch(setChartOperations(newChartOperations));
   chartDataClone.chartOptions = {
     ...chart.chartOptions,
     ...getChartOptions(
@@ -166,6 +166,7 @@ export const transposeChart = () => {
   const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
+  const transposed = !chartDataClone.chartOperations.transposed;
 
   if (
     chartDataClone.questionData.type == QuestionType.RANK ||
@@ -322,6 +323,7 @@ export const transposeChart = () => {
     ),
   };
   dispatch(setChartData(chartDataClone));
+  dispatch(setChartOperations({...chartDataClone.chartOperations,transposed}));
 };
 
 

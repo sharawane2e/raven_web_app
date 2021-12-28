@@ -4,13 +4,13 @@ import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon
 import { ChartDataLabels } from "../../enums/ChartDataLabels";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-// import { setChartOperations } from "../../redux/actions/chartActions";
 import { changeChartOperations } from "../../services/ChartService";
 import { changeChartType, transposeChart } from "../../services/ChartService";
 import { QuestionType } from "../../enums/QuestionType";
 import { ReactComponent as TransposeIcon } from "../../assets/svg/Transpose.svg";
 import Toaster from "../../utils/Toaster";
 import { StaticText } from "../../constants/StaticText";
+import store from "../../redux/store";
 
 interface ChartTransposeControlProps {}
 
@@ -26,7 +26,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
         tooltip: "Transpose",
         renderChild: () => <TransposeIcon />,
         onClick: () => transposeChart(),
-        active: true,
+        active: chartOperations.transposed,
         disabled:
           (chart.questionData?.type === QuestionType.SINGLE &&
             !chart.bannerQuestionData) ||
@@ -39,9 +39,9 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
 
   return (
     <ButtonGroup
-      groupTitle="Transpose"
+      groupTitle=""
       buttonConfig={buttonConfig}
-      className=""
+      className="transpose"
     />
   );
 };

@@ -12,7 +12,7 @@ import {
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
-import { setChartData } from "../../redux/actions/chartActions";
+import { setChartData, setChartOperations } from "../../redux/actions/chartActions";
 import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
@@ -39,6 +39,7 @@ import {
 } from "../../redux/actions/sidebarAction";
 import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
+import { defaultChartOperations } from "../../redux/reducers/chartReducer";
 
 
 interface ChartContentProps {
@@ -115,6 +116,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
+        dispatch(setChartOperations(defaultChartOperations))
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
           chartType === ChartType.PIE
@@ -130,6 +132,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
+        dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         }

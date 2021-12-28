@@ -4,7 +4,6 @@ import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon
 import { ChartDataLabels } from "../../enums/ChartDataLabels";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-// import { setChartOperations } from "../../redux/actions/chartActions";
 import { changeChartOperations } from "../../services/ChartService";
 import { changeChartType, transposeChart } from "../../services/ChartService";
 import { QuestionType } from "../../enums/QuestionType";

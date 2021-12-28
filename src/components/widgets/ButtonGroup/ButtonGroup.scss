@@ -44,3 +44,25 @@
 .button-group__button-wrapper {
   display: flex;
 }
+
+//will need to remove this and get a new svg
+.transpose {
+  & .button-group__button.active {
+    g {
+      fill: #f1ad0f;
+      stroke: #f1ad0f;
+    }
+    rect {
+      fill: #f1ad0f;
+    }
+    path {
+      fill: #f1ad0f;
+    }
+
+    #Path_13193 {
+      fill: rgba(255, 255, 255, 0);
+      stroke: #f1ad0f;
+    }
+  }
+}
+//will need to remove this and get a new svg
