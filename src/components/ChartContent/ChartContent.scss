@@ -76,7 +76,8 @@
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: primary);
-    margin-top: 30px;
+    // margin-top: 30px;
+    margin-top: 5px;
   }
   .title__Block {
     display: flex;
