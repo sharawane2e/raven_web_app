@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/nvgt/gamblingproject/static/css/main.8705e5fa.chunk.css",
-    "main.js": "/nvgt/gamblingproject/static/js/main.8e2949e5.chunk.js",
-    "main.js.map": "/nvgt/gamblingproject/static/js/main.8e2949e5.chunk.js.map",
+    "main.js": "/nvgt/gamblingproject/static/js/main.da581e5a.chunk.js",
+    "main.js.map": "/nvgt/gamblingproject/static/js/main.da581e5a.chunk.js.map",
     "runtime-main.js": "/nvgt/gamblingproject/static/js/runtime-main.66fdf3dd.js",
     "runtime-main.js.map": "/nvgt/gamblingproject/static/js/runtime-main.66fdf3dd.js.map",
     "static/css/2.029a9c87.chunk.css": "/nvgt/gamblingproject/static/css/2.029a9c87.chunk.css",
-    "static/js/2.96c2290b.chunk.js": "/nvgt/gamblingproject/static/js/2.96c2290b.chunk.js",
-    "static/js/2.96c2290b.chunk.js.map": "/nvgt/gamblingproject/static/js/2.96c2290b.chunk.js.map",
+    "static/js/2.6c937c51.chunk.js": "/nvgt/gamblingproject/static/js/2.6c937c51.chunk.js",
+    "static/js/2.6c937c51.chunk.js.map": "/nvgt/gamblingproject/static/js/2.6c937c51.chunk.js.map",
     "static/js/3.335b7e5c.chunk.js": "/nvgt/gamblingproject/static/js/3.335b7e5c.chunk.js",
     "static/js/3.335b7e5c.chunk.js.map": "/nvgt/gamblingproject/static/js/3.335b7e5c.chunk.js.map",
     "static/js/4.a4375150.chunk.js": "/nvgt/gamblingproject/static/js/4.a4375150.chunk.js",
@@ -19,7 +19,7 @@
     "index.html": "/nvgt/gamblingproject/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/nvgt/gamblingproject/static/css/2.029a9c87.chunk.css.map",
     "static/css/main.8705e5fa.chunk.css.map": "/nvgt/gamblingproject/static/css/main.8705e5fa.chunk.css.map",
-    "static/js/2.96c2290b.chunk.js.LICENSE.txt": "/nvgt/gamblingproject/static/js/2.96c2290b.chunk.js.LICENSE.txt",
+    "static/js/2.6c937c51.chunk.js.LICENSE.txt": "/nvgt/gamblingproject/static/js/2.6c937c51.chunk.js.LICENSE.txt",
     "static/js/3.335b7e5c.chunk.js.LICENSE.txt": "/nvgt/gamblingproject/static/js/3.335b7e5c.chunk.js.LICENSE.txt",
     "static/js/4.a4375150.chunk.js.LICENSE.txt": "/nvgt/gamblingproject/static/js/4.a4375150.chunk.js.LICENSE.txt",
     "static/js/5.a5fa0ac5.chunk.js.LICENSE.txt": "/nvgt/gamblingproject/static/js/5.a5fa0ac5.chunk.js.LICENSE.txt",
@@ -49,8 +49,8 @@
   "entrypoints": [
     "static/js/runtime-main.66fdf3dd.js",
     "static/css/2.029a9c87.chunk.css",
-    "static/js/2.96c2290b.chunk.js",
+    "static/js/2.6c937c51.chunk.js",
     "static/css/main.8705e5fa.chunk.css",
-    "static/js/main.8e2949e5.chunk.js"
+    "static/js/main.da581e5a.chunk.js"
   ]
 }
