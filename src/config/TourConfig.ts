@@ -3,17 +3,17 @@ import { ITourStep } from "../types/ITourStep";
 export const chartTourSteps: ITourStep[] = [
   {
     selector: ".Step-1",
-    content: "Select the question you would like to visualize as chart",
+    content: "Select the question to visualize",
   },
   {
     selector: ".Step-2",
     content:
-      "Select the question if you want to cross tabulate with the above question. (Optional)",
+      "Select the question to crosstab with it (Optional)",
   },
   {
     selector: ".Step-3",
     content:
-      "Select the filters if you want to fine tune the demographic view of the data. (Optional )",
+      "Select any filters to focus on part of the data (Optional)",
   },
   {
     selector: ".Step-4",
@@ -21,10 +21,10 @@ export const chartTourSteps: ITourStep[] = [
   },
   {
     selector: ".Step-5",
-    content: "Pick the required chart orientation",
+    content: "Select the desired chart orientation",
   },
   {
     selector: ".Step-6",
-    content: "Select chart type to get different chart visualization",
+    content: "Select chart type to change the visualization",
   },
 ];

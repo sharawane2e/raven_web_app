@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/e2e/financialresearch/static/css/main.513c44de.chunk.css",
-    "main.js": "/e2e/financialresearch/static/js/main.62d8f231.chunk.js",
-    "main.js.map": "/e2e/financialresearch/static/js/main.62d8f231.chunk.js.map",
+    "main.js": "/e2e/financialresearch/static/js/main.c739e88a.chunk.js",
+    "main.js.map": "/e2e/financialresearch/static/js/main.c739e88a.chunk.js.map",
     "runtime-main.js": "/e2e/financialresearch/static/js/runtime-main.6ad7aae4.js",
     "runtime-main.js.map": "/e2e/financialresearch/static/js/runtime-main.6ad7aae4.js.map",
     "static/css/2.029a9c87.chunk.css": "/e2e/financialresearch/static/css/2.029a9c87.chunk.css",
@@ -58,6 +58,6 @@
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.69f587bb.chunk.js",
     "static/css/main.513c44de.chunk.css",
-    "static/js/main.62d8f231.chunk.js"
+    "static/js/main.c739e88a.chunk.js"
   ]
 }
