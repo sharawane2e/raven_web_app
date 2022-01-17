@@ -1,12 +1,18 @@
 import { decimalPrecision } from "../../constants/Variables";
 import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
 import { round } from "../Utility";
+import store from "../../redux/store";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+
 
 export function bannerChartDataGen(
   questionData: IBaseQuestion,
   chartData: any,
   bannerQuestionData: any
 ) {
+  const {
+    chart:{chartLabelType} 
+  }= store.getState();
   const labels: Array<string> = questionData.options.map(
     (label: IQuestionOption) => label.labelText
   );
@@ -30,9 +36,18 @@ export function bannerChartDataGen(
             if (!subOptionData) {
               return 0;
             }
-            return subOptionData.count !== undefined
+            if(chartLabelType===ChartLabelType.PERCENTAGE){
+              return subOptionData.count !== undefined
               ? round(+((subOptionData.count / base) * 100), decimalPrecision)
               : 0;
+            }
+            else{
+              return subOptionData.count !== undefined
+              ? subOptionData.count
+              : 0;
+            }
+
+           
           }
         }
       }),

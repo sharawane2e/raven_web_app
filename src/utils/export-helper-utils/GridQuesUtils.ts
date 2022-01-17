@@ -1,5 +1,8 @@
 import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
+import store from "../../redux/store";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+
 
 export function gridChartDataGen(
   questionData: any,
@@ -8,6 +11,11 @@ export function gridChartDataGen(
 ) {
   let labels: any = [];
   let seriesData: any[] = [];
+
+  
+  const {
+    chart:{chartLabelType} 
+  }= store.getState();
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   questionData.scale.forEach((scaleOption: any) => {
@@ -24,9 +32,18 @@ export function gridChartDataGen(
             (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
 
-          return data !== undefined
+          if(chartLabelType===ChartLabelType.PERCENTAGE){
+            return data !== undefined
             ? round(+((data / base) * 100), decimalPrecision)
             : 0;
+          }
+          else{
+            return data !== undefined
+            ? data
+            : 0;
+          }
+
+         
         } else {
           return 0;
         }

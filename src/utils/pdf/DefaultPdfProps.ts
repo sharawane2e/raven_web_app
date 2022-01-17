@@ -3,7 +3,7 @@ import store from "../../redux/store";
 import jsPDF from "jspdf";
 import "svg2pdf.js";
 
-import { appliedFiltersText } from "../export-helper-utils/AppliedFiltersUtils";
+import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
 import { sourceText, copyRightText } from "../../constants/Variables";
 import { logoBase64String, primaryBarColor } from "../../constants/Variables";
 import { hexToRgb } from "@material-ui/core";

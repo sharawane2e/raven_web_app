@@ -17,6 +17,7 @@ import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
 import { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
@@ -25,7 +26,7 @@ export function pptDataGen(
   chartSettings: pptxgen.IChartOpts
 ) {
   const {
-    chart: { chartType, chartOrientation },
+    chart: { chartType, chartOrientation,chartLabelType },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -67,15 +68,19 @@ export function pptDataGen(
       }
     }
 
-    seriesData.forEach((row: any, index) => {
-      row.values = row.values.map((value: number) => value / 100);
-      seriesData[index] = row;
-    });
+    if(chartLabelType===ChartLabelType.PERCENTAGE){
+      seriesData.forEach((row: any, index) => {
+        row.values = row.values.map((value: number) => value / 100);
+        seriesData[index] = row;
+      });
+    }
+
+ 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
-      // ...chartSettings,
+      ...chartSettings,
     });
   }
   return slide;

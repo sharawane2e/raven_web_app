@@ -5,18 +5,23 @@ import {
   copyRightText,
   exportPrefix,
 } from "../../constants/Variables";
-import { appliedFiltersText } from "../export-helper-utils/AppliedFiltersUtils";
+import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
 import { ChartType } from "../../enums/ChartType";
 import { ISlideConfig } from "../../types/ISlideConfig";
 import { chartFontFace } from "../../constants/Variables";
 import { pptDataGen } from "./PptDataGen";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export const generatePpt = async () => {
   const {
     chart: { questionData, chartOrientation, chartType, baseCount },
   } = store.getState();
+
+  const {
+    chart:{chartLabelType} 
+  }= store.getState();
 
   let pptxGenJsObj = new pptxgen();
   let fileName: string = exportPrefix + questionData?.labelText;
@@ -37,34 +42,36 @@ export const generatePpt = async () => {
   };
 
   let chartSettings: pptxgen.IChartOpts = {
-    showValue: true,
+    // showValue: true,
 
     //show line on x-axis or y-axis
-    catAxisLineShow: false,
-    valAxisLineShow: false,
+    // catAxisLineShow: false,
+    // valAxisLineShow: false,
 
     //show or hide legend
-    showLegend: true,
+    // showLegend: true,
 
     //show or hide title
-    showTitle: false,
+    // showTitle: false,
 
     //change data label format
 
     //percentage number format
-    dataLabelFormatCode: "##.##;;;",
+    dataLabelFormatCode: chartLabelType===ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
+    valLabelFormatCode:  chartLabelType===ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
 
     //simple number data format
     // dataLabelFormatCode: "###",
 
     //show or hide x-axis or y-axis
-    catAxisHidden: false,
-    valAxisHidden: false,
+    // catAxisHidden: false,
+    // valAxisHidden: false,
 
     //grid lines config
-    catGridLine: { style: "solid" },
-    valGridLine: { style: "solid" },
+    // catGridLine: { style: "solid" },
+    // valGridLine: { style: "solid" },
   };
+  console.log(chartSettings)
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
