@@ -3,7 +3,7 @@ import {
   decimalPrecision,
   primaryBarColor,
 } from "../constants/Variables";
-import { ChartDataLabels } from "../enums/ChartDataLabels";
+import { ChartLabelType } from "../enums/ChartLabelType";
 import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
 import { dataLabels } from "../redux/reducers/chartReducer";
@@ -69,7 +69,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart: { chartOperations },
+    chart: { chartLabelType },
   } = store.getState();
 
   const {
@@ -118,9 +118,9 @@ const getSingleChartOptions = (
           );
           
 
-          if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE && label) {
+          if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
-          } else if(chartOperations.labelFormat === ChartDataLabels.NUMBER && label) {
+          } else if(chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
 
@@ -173,7 +173,7 @@ const getSingleChartOptions = (
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
       // plotValue = (count / baseCount) * 100;
-      if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / baseCount) * 100;
       } else {
         plotValue = count;
@@ -223,7 +223,7 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartOperations },
+    chart: { chartLabelType },
   } = store.getState();
   
   for (
@@ -257,7 +257,7 @@ const getGridChartOptions = (
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       // plotValue = (count / baseCount) * 100;
-      if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
       } else {
         plotValue = count;
@@ -305,7 +305,7 @@ const getGridMultiChartOptions = (
   });
 
   const {
-    chart: { chartOperations },
+    chart: { chartLabelType },
   } = store.getState();
 
   for (
@@ -338,7 +338,7 @@ const getGridMultiChartOptions = (
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
 
       let plotValue;
-      if(chartOperations.labelFormat === ChartDataLabels.PERCENTAGE){
+      if(chartLabelType === ChartLabelType.PERCENTAGE){
         plotValue = (count / base) * 100;
       }else{
         plotValue = count
@@ -379,14 +379,14 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
 
 const getToolTip = () => {
   const {
-    chart: { chartOperations },
+    chart: { chartLabelType },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
     headerFormat: "",
     pointFormat: "",
   };
 
-  if (chartOperations.labelFormat === ChartDataLabels.PERCENTAGE) {
+  if (chartLabelType === ChartLabelType.PERCENTAGE) {
     tooltip["headerFormat"] =
       '<span style="font-size:11px">{series.name}</span><br>';
     tooltip["pointFormat"] =
@@ -413,7 +413,7 @@ export const getPlotOptions = (
       stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "{point.y:.1f}%"
         : "{point.y:.0f}"
     }`;
@@ -424,7 +424,7 @@ export const getPlotOptions = (
       stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "{point.y:.1f}%"
         : "{point.y:.0f}"
     }`;
@@ -441,7 +441,7 @@ export const getPlotOptions = (
       cursor: "pointer",
     };
     plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartOperations.labelFormat === ChartDataLabels.PERCENTAGE
+      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "<b>{point.name}</b>: {point.percentage:.1f}%"
         : "<b>{point.name}</b>: {point.percentage:.0f}"
     }`;

@@ -1,11 +1,11 @@
 import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
-import { setChartData,setChartOperations } from "../redux/actions/chartActions";
+import { setChartData } from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
 import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
-import { ChartDataLabels } from "../enums/ChartDataLabels";
+import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import { IChartOperations } from "../types/IChartOperations";
@@ -142,25 +142,7 @@ export const changeChartType = (newChartType: ChartType) => {
   dispatch(setChartData(chartDataClone));
 };
 
-export const changeChartOperations = (newChartOperations: IChartOperations) => {
-  const {dispatch} = store;
-  const {chart} = store.getState();
-  const chartDataClone = JSON.parse(JSON.stringify(chart));
 
-  chartDataClone.chartOperations = newChartOperations;
-  dispatch(setChartOperations(newChartOperations));
-  chartDataClone.chartOptions = {
-    ...chart.chartOptions,
-    ...getChartOptions(
-      chartDataClone.questionData,
-      chartDataClone.chartData,
-      chartDataClone.baseCount,
-      chartDataClone.bannerQuestionData
-    ),
-    plotOptions:getPlotOptions()
-  };
-  dispatch(setChartData(chartDataClone));
-};
 
 export const transposeChart = () => {
   const { chart } = store.getState();
@@ -323,7 +305,7 @@ export const transposeChart = () => {
     ),
   };
   dispatch(setChartData(chartDataClone));
-  dispatch(setChartOperations({...chartDataClone.chartOperations,transposed}));
+  // dispatch(changeChartLabelType({...chartDataClone.chartOperations,transposed})); // this is for trasnpose
 };
 
 

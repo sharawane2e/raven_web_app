@@ -1,10 +1,9 @@
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as PortraitIcon } from "../../assets/svg/portrait-icon.svg";
 import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon.svg";
-import { ChartDataLabels } from "../../enums/ChartDataLabels";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
-import { changeChartOperations } from "../../services/ChartService";
 import { changeChartType, transposeChart } from "../../services/ChartService";
 import { QuestionType } from "../../enums/QuestionType";
 import { ReactComponent as TransposeIcon } from "../../assets/svg/Transpose.svg";

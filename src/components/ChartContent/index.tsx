@@ -12,7 +12,7 @@ import {
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
-import { setChartData, setChartOperations } from "../../redux/actions/chartActions";
+import { setChartData } from "../../redux/actions/chartActions";
 import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
@@ -40,6 +40,7 @@ import {
 import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
 import { defaultChartOperations } from "../../redux/reducers/chartReducer";
+import LabelTypeControl from "../LabelTypeControl";
 
 
 interface ChartContentProps {
@@ -116,7 +117,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        dispatch(setChartOperations(defaultChartOperations))
+        // dispatch(setChartOperations(defaultChartOperations))
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
           chartType === ChartType.PIE
@@ -132,7 +133,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        dispatch(setChartOperations(defaultChartOperations))
+        // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         }
@@ -176,6 +177,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
+          <LabelTypeControl />
           <OrientationControl />
           <ChartTypeControl />
           <ExportChart />

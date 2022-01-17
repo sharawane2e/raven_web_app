@@ -1,5 +1,7 @@
 import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
+import store from "../../redux/store";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function singleChartDataGen(
   questionData: any,
@@ -11,6 +13,10 @@ export function singleChartDataGen(
   let seriesData: any[] = [];
   let options = questionData?.options || [];
 
+  const {
+    chart:{chartLabelType} 
+  }= store.getState();
+
   options.forEach((option: any) => {
     const dataObj = chartData.find(
       (data: any) => data.labelCode === option.labelCode
@@ -18,7 +24,13 @@ export function singleChartDataGen(
 
     labels.push(option.labelText);
     if (dataObj && dataObj.count > 0) {
-      let count = round((dataObj.count / baseCount) * 100, decimalPrecision);
+      let count;
+      if(chartLabelType===ChartLabelType.PERCENTAGE){
+
+        count = round((dataObj.count / baseCount) * 100, decimalPrecision);
+      }else{
+        count = dataObj.count;
+      }
       values.push(count);
     } else {
       values.push(0);

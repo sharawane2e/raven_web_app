@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ChartDataLabels } from "../../enums/ChartDataLabels";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { IChartState } from "../reducers/chartReducer";
@@ -16,4 +16,6 @@ export const resetChartData = createAction("RESET_CHART_DATA");
 
 // export const setDataLabelFormat = createAction<any>("SET_CHART_DATA_LABEL");
 
-export const setChartOperations = createAction<any>("SET_CHART_OPERATIONS");
+export const setChartLabel = createAction<any>("SET_CHART_Label");
+
+export const setChartTranspose = createAction<any>("SET_CHART_Transpose");

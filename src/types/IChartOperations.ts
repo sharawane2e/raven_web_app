@@ -1,7 +1,7 @@
-import { ChartDataLabels } from "../enums/ChartDataLabels";
+import { ChartLabelType } from "../enums/ChartLabelType";
 
 
 export interface IChartOperations {
   transposed:boolean,
-  labelFormat:ChartDataLabels
+  labelFormat:ChartLabelType
 }

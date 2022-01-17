@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { ChartDataLabels } from "../../enums/ChartDataLabels";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { QuestionType } from "../../enums/QuestionType";
@@ -10,7 +10,8 @@ import {
   setChartData,
   setChartOrientation,
   setChartType,
-  setChartOperations
+  setChartLabel,
+  setChartTranspose
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -18,6 +19,8 @@ export interface IChartState {
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
+  chartLabelType:ChartLabelType,
+  chartTranspose:boolean,
   chartOperations:IChartOperations,
   chartOptions: any;
   baseCount: number;
@@ -50,7 +53,7 @@ export const defaultPlotOptions = {
 
 export const defaultChartOperations = {
   transposed:false,
-  labelFormat:ChartDataLabels.PERCENTAGE
+  labelFormat:ChartLabelType.PERCENTAGE
 }
 
 const initialState: IChartState = {
@@ -59,6 +62,8 @@ const initialState: IChartState = {
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
+  chartLabelType:ChartLabelType.PERCENTAGE,
+  chartTranspose:false,
   chartOperations:defaultChartOperations,
   chartOptions: {
     title: {
@@ -129,9 +134,14 @@ const chartReducer = createReducer(initialState, (builder) => {
     };
   });
 
-  builder.addCase(setChartOperations, (state, action) => ({
+  builder.addCase(setChartLabel, (state, action) => ({
     ...state,
-    chartOperations:{...state.chartOperations,...action.payload}
+    chartLabelType:action.payload
+  }));
+
+  builder.addCase(setChartTranspose, (state, action) => ({
+    ...state,
+    chartTranspose:action.payload
    
   }));
 });
