@@ -11,6 +11,7 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import BackgroundMethodology from "../BackgroundMethodology";
+import BusinessObjective from "../BusinessObjective";
 
 export interface StaticDashboardProps {
   onActionClick: () => void;
@@ -20,7 +21,8 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
 
     <div>
        {/* <img className="wid100" src={backgroundWithMethodology} /> */}
-       <BackgroundMethodology />
+       {/* <BackgroundMethodology /> */}
+       <BusinessObjective />
     </div>
     // <CarouselProvider
     //   naturalSlideWidth={100}
