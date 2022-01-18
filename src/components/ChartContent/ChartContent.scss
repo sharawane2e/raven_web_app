@@ -18,7 +18,7 @@
     align-items: center;
     padding: 0.4rem 0px;
     //min-width: 550px;
-    @media (max-width: 786px) {
+    @media (max-width: 960px) {
       display: none;
     }
   }
@@ -225,7 +225,7 @@
 .chart-option-tooltip {
   display: none;
 
-  @media (max-width: 786px) {
+  @media (max-width: 960px) {
     display: block;
   }
 }

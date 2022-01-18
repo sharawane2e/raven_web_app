@@ -3,7 +3,7 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { QuestionType } from "../../enums/QuestionType";
-import { IChartOperations } from "../../types/IChartOperations";
+
 import { IQuestion } from "../../types/IQuestion";
 import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
@@ -21,7 +21,6 @@ export interface IChartState {
   chartType: ChartType;
   chartLabelType:ChartLabelType,
   chartTranspose:boolean,
-  chartOperations:IChartOperations,
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
@@ -51,10 +50,7 @@ export const defaultPlotOptions = {
   },
 };
 
-export const defaultChartOperations = {
-  transposed:false,
-  labelFormat:ChartLabelType.PERCENTAGE
-}
+
 
 const initialState: IChartState = {
   questionData: null,
@@ -64,7 +60,6 @@ const initialState: IChartState = {
   chartType: ChartType.COLUMN,
   chartLabelType:ChartLabelType.PERCENTAGE,
   chartTranspose:false,
-  chartOperations:defaultChartOperations,
   chartOptions: {
     title: {
       text: "",

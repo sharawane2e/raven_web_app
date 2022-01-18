@@ -1,6 +1,6 @@
 import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
-import { setChartData } from "../redux/actions/chartActions";
+import { setChartData, setChartTranspose } from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
@@ -8,7 +8,6 @@ import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-import { IChartOperations } from "../types/IChartOperations";
 
 export const fetchChartData = async (
   qId?: string,
@@ -148,7 +147,7 @@ export const transposeChart = () => {
   const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
-  const transposed = !chartDataClone.chartOperations.transposed;
+  const transposed = !chartDataClone.chartTranspose;
 
   if (
     chartDataClone.questionData.type == QuestionType.RANK ||
@@ -305,7 +304,7 @@ export const transposeChart = () => {
     ),
   };
   dispatch(setChartData(chartDataClone));
-  // dispatch(changeChartLabelType({...chartDataClone.chartOperations,transposed})); // this is for trasnpose
+  dispatch(setChartTranspose(true));
 };
 
 

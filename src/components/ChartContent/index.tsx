@@ -12,7 +12,7 @@ import {
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
-import { setChartData } from "../../redux/actions/chartActions";
+import { setChartData, setChartTranspose } from "../../redux/actions/chartActions";
 import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
@@ -39,7 +39,6 @@ import {
 } from "../../redux/actions/sidebarAction";
 import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
-import { defaultChartOperations } from "../../redux/reducers/chartReducer";
 import LabelTypeControl from "../LabelTypeControl";
 
 
@@ -113,6 +112,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   }, [questionData?.type]);
 
   const handleQuestionChange = (value: string) => {
+    dispatch(setChartTranspose(false));
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
       .then((chartData) => {
@@ -129,6 +129,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
+    dispatch(setChartTranspose(false));
     dispatch(setSelectedBannerQuestionId(value));
     fetchChartData(undefined, value)
       .then((chartData) => {
@@ -222,6 +223,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             className: "chart-content__control-menu",
           }}
         >
+          <MenuItem className="chart-content__menu-item">
+          <LabelTypeControl />
+          </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <OrientationControl />
           </MenuItem>

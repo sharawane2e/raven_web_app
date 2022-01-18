@@ -14,10 +14,7 @@ import store from "../../redux/store";
 interface ChartTransposeControlProps {}
 
 const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
-  const { chart } = useSelector((state: RootState) => state);
-  const { chartOperations } = chart;
-
-  const dispatch: AppDispatch = useDispatch();
+  const { chart } = store.getState();
 
   const buttonConfig: ButtonGroupConfig[] = [
    
@@ -25,7 +22,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
         tooltip: "Transpose",
         renderChild: () => <TransposeIcon />,
         onClick: () => transposeChart(),
-        active: chartOperations.transposed,
+        active: chart.chartTranspose,
         disabled:
           (chart.questionData?.type === QuestionType.SINGLE &&
             !chart.bannerQuestionData) ||
