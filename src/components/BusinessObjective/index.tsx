@@ -20,33 +20,27 @@ const BusinessObjective = (props: Props) => {
   return (
     <div className="backgroundMethodology">
       <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography
-              variant="h3"
-              component="h3"
-              className="backgroundMethodology__heading"
-            >
-              {/* Background + Methodology */}
-            </Typography>
-          </Grid>
-          <div className="finalcial-logo">
-            <img src={FinancialLogo} />
-          </div>
-          <Grid item xs={12}>
+        <Grid container spacing={2}>          
+          <Grid item xs={12} className="container">
+         
             <div className="backgroundMethodology__businessObjective">
-              <div className="backgroundMethodology__businessObjective__card">
+              <div className="card">
+                
+                <div className="finalcial-logo">
+                  <img src={FinancialLogo} />
+                </div>
+                <div className="business-objective">
                 <Typography
                   variant="h3"
-                  component="h3"
-                  className="backgroundMethodology__businessObjective__card__heading"
+                  component="div"
+                  className="business-objective--heading"
                 >
                   Business Objective
                 </Typography>
                 <Typography
                   variant="h3"
-                  component="h3"
-                  className="backgroundMethodology__businessObjective__card__para"
+                  component="div"
+                  className="business-objective--content"
                 >
                   In order to better meet the needs of existing and potential clients and to successfully grow our business, it is important to understand the perspectives of executive level financial officers at both public and private institutions and corporations. Specifically, we need to:
                   <ul>
@@ -57,40 +51,84 @@ const BusinessObjective = (props: Props) => {
                   </ul>
 
                 </Typography>
+                </div>
+               
               </div>
             </div>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="container">
+         
             <div className="backgroundMethodology__businessObjective">
-              <div className="backgroundMethodology__businessObjective__card">
+              <div className="card">
+                
+                {/* <div className="finalcial-logo">
+                  <img src={FinancialLogo} />
+                </div> */}
+                <div className="business-objective">
                 <Typography
                   variant="h3"
-                  component="h3"
-                  className="backgroundMethodology__businessObjective__card__heading"
+                  component="div"
+                  className="business-objective--heading"
                 >
                   Research Objective
                 </Typography>
                 <Typography
                   variant="h3"
-                  component="h3"
-                  className="backgroundMethodology__businessObjective__card__para"
+                  component="div"
+                  className="business-objective--content"
                 >
                   Key objectives for this research include:
                   <ul>
                     <li>Understand how innovation and enterprise-wide performance management are viewed and planned for </li>
                     <li>Understand the type and extent of changes to performance management systems that are expected to contribute to business growth in terms of people, processes, and technologie</li>
                   </ul>
-                  
+
                 </Typography>
+                </div>
+               
               </div>
             </div>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} className="container">
+         
+            <div className="backgroundMethodology__businessObjective">
+              <div className="card">
+                
+                {/* <div className="finalcial-logo">
+                  <img src={FinancialLogo} />
+                </div> */}
+                <div className="business-objective">
+                {/* <Typography
+                  variant="h3"
+                  component="div"
+                  className="business-objective--heading"
+                >
+                  Research Objective
+                </Typography> */}
+                <Typography
+                  variant="h3"
+                  component="div"
+                  className="business-objective--content"
+                >
+                  Online survey: LOI = 13 minutes<br />
+                  Sample size: N=500<br />
+                  Demographic target: Global, minimum n=25 per country<br />
+                  Industry target: CFO, VP of Finance<br />
+                  Field dates:  July 6 to 27, 2021<br />
+
+                </Typography>
+                </div>
+               
+              </div>
+            </div>
+          </Grid>
+         
+          {/* <Grid item xs={12}>
             <div className="backgroundMethodology__businessObjective">
               <div className="">
                 <Typography
                   variant="h3"
-                  component="h3"
+                  component="div"
                   className="backgroundMethodology__businessObjective__card__para"
                 >
                   Online survey: LOI = 13 minutes<br />
@@ -102,7 +140,7 @@ const BusinessObjective = (props: Props) => {
                 </Typography>
               </div>
             </div>
-          </Grid>
+          </Grid> */}
          
         </Grid>
       </Box>
