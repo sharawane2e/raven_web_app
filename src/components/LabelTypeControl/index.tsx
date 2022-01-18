@@ -8,6 +8,8 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 import store from "../../redux/store";
 import { setChartData, setChartLabel } from '../../redux/actions/chartActions';
 import { getChartOptions, getPlotOptions } from '../../utils/ChartOptionFormatter';
+import Toaster from '../../utils/Toaster';
+import { StaticText } from '../../constants/StaticText';
 
 interface LabelTypeControlProps {
     
@@ -36,7 +38,9 @@ const LabelTypeControl:React.FC<LabelTypeControlProps> = () => {
           onClick: () => {
             changeChartLabelType(ChartLabelType.PERCENTAGE)
           },
-          active:chart.chartLabelType===ChartLabelType.PERCENTAGE
+          active:chart.chartLabelType===ChartLabelType.PERCENTAGE,
+          disabled: chart.questionData === null,
+          disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
         },
         {
           tooltip: "Number",
@@ -44,7 +48,9 @@ const LabelTypeControl:React.FC<LabelTypeControlProps> = () => {
           onClick: () => {
             changeChartLabelType(ChartLabelType.NUMBER)
           },
-          active:chart.chartLabelType===ChartLabelType.NUMBER
+          active:chart.chartLabelType===ChartLabelType.NUMBER,
+          disabled: chart.questionData === null,
+          disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
         },
       ];
 

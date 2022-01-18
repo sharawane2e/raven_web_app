@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/e2e/nxtgen/static/css/main.22a490d8.chunk.css",
-    "main.js": "/e2e/nxtgen/static/js/main.466ce196.chunk.js",
-    "main.js.map": "/e2e/nxtgen/static/js/main.466ce196.chunk.js.map",
+    "main.js": "/e2e/nxtgen/static/js/main.ec99775d.chunk.js",
+    "main.js.map": "/e2e/nxtgen/static/js/main.ec99775d.chunk.js.map",
     "runtime-main.js": "/e2e/nxtgen/static/js/runtime-main.f1e40123.js",
     "runtime-main.js.map": "/e2e/nxtgen/static/js/runtime-main.f1e40123.js.map",
     "static/css/2.029a9c87.chunk.css": "/e2e/nxtgen/static/css/2.029a9c87.chunk.css",
@@ -25,7 +25,7 @@
     "static/js/5.a5fa0ac5.chunk.js.LICENSE.txt": "/e2e/nxtgen/static/js/5.a5fa0ac5.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/e2e/nxtgen/static/media/login_bg.07b9c2c7.png",
     "static/media/Financial_Logo.2c81ff2b.svg": "/e2e/nxtgen/static/media/Financial_Logo.2c81ff2b.svg",
-    "static/media/Number.f412f830.svg": "/e2e/nxtgen/static/media/Number.f412f830.svg",
+    "static/media/Number.6159c4cc.svg": "/e2e/nxtgen/static/media/Number.6159c4cc.svg",
     "static/media/Percentage.579e5ca1.svg": "/e2e/nxtgen/static/media/Percentage.579e5ca1.svg",
     "static/media/Transpose.eff99b3b.svg": "/e2e/nxtgen/static/media/Transpose.eff99b3b.svg",
     "static/media/admin-icon.46582a2b.svg": "/e2e/nxtgen/static/media/admin-icon.46582a2b.svg",
@@ -53,6 +53,6 @@
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.8374f25e.chunk.js",
     "static/css/main.22a490d8.chunk.css",
-    "static/js/main.466ce196.chunk.js"
+    "static/js/main.ec99775d.chunk.js"
   ]
 }
