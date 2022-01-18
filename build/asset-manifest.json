@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/e2e/nxtgen/static/css/main.229d1710.chunk.css",
+    "main.css": "/e2e/nxtgen/static/css/main.ad94af20.chunk.css",
     "main.js": "/e2e/nxtgen/static/js/main.509bcb42.chunk.js",
     "main.js.map": "/e2e/nxtgen/static/js/main.509bcb42.chunk.js.map",
     "runtime-main.js": "/e2e/nxtgen/static/js/runtime-main.f1e40123.js",
@@ -18,7 +18,7 @@
     "static/js/6.f2620fa6.chunk.js.map": "/e2e/nxtgen/static/js/6.f2620fa6.chunk.js.map",
     "index.html": "/e2e/nxtgen/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/e2e/nxtgen/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.229d1710.chunk.css.map": "/e2e/nxtgen/static/css/main.229d1710.chunk.css.map",
+    "static/css/main.ad94af20.chunk.css.map": "/e2e/nxtgen/static/css/main.ad94af20.chunk.css.map",
     "static/js/2.8374f25e.chunk.js.LICENSE.txt": "/e2e/nxtgen/static/js/2.8374f25e.chunk.js.LICENSE.txt",
     "static/js/3.335b7e5c.chunk.js.LICENSE.txt": "/e2e/nxtgen/static/js/3.335b7e5c.chunk.js.LICENSE.txt",
     "static/js/4.a4375150.chunk.js.LICENSE.txt": "/e2e/nxtgen/static/js/4.a4375150.chunk.js.LICENSE.txt",
@@ -52,7 +52,7 @@
     "static/js/runtime-main.f1e40123.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.8374f25e.chunk.js",
-    "static/css/main.229d1710.chunk.css",
+    "static/css/main.ad94af20.chunk.css",
     "static/js/main.509bcb42.chunk.js"
   ]
 }
