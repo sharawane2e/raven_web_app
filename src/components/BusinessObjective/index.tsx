@@ -9,6 +9,7 @@ import SurveyedImg from "../../assets/images/surveyed.png";
 import AddressImg from "../../assets/images/addressImg.png";
 import UpArrowImg from "../../assets/images/up.png";
 import DownArrowImg from "../../assets/images/down.png";
+import FinancialLogo from "../../assets/svg/Financial_Logo.svg";
 
 import CustomScrollbar from "../CustomScrollbar";
 import { Typography } from "@material-ui/core";
@@ -29,6 +30,9 @@ const BusinessObjective = (props: Props) => {
               {/* Background + Methodology */}
             </Typography>
           </Grid>
+          <div className="finalcial-logo">
+            <img src={FinancialLogo} />
+          </div>
           <Grid item xs={12}>
             <div className="backgroundMethodology__businessObjective">
               <div className="backgroundMethodology__businessObjective__card">
