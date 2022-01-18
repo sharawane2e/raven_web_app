@@ -304,7 +304,7 @@ export const transposeChart = () => {
     ),
   };
   dispatch(setChartData(chartDataClone));
-  dispatch(setChartTranspose(true));
+  dispatch(setChartTranspose(transposed));
 };
 
 
