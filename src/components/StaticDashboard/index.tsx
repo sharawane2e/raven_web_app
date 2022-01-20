@@ -22,7 +22,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
     <div>
        {/* <img className="wid100" src={backgroundWithMethodology} /> */}
        {/* <BackgroundMethodology /> */}
-       <BusinessObjective />
+       <Objectives />
     </div>
     // <CarouselProvider
     //   naturalSlideWidth={100}
