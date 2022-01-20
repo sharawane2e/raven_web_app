@@ -124,19 +124,32 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
-  // debugger;
-
-  if (newChartType === ChartType.PIE) {
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "pie",
-    };
-  } else {
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "column",
-    };
+  if(newChartType === ChartType.STACK&& chart.chartType===ChartType.COLUMN){
+   let newSeries:any = [];
+   console.log(chartDataClone.chartOptions.series[0].data)
+   chartDataClone.chartOptions.series[0].data.map((element:any) => {
+     const data = [element];
+     const dataLabels = chartDataClone.chartOptions.series[0].dataLabels;
+     const name  = chartDataClone.chartOptions.series[0].name;
+     const color  = chartDataClone.chartOptions.series[0].color;
+     const object = {name,color,dataLabels,data};
+    newSeries.push(object)
+   });
+   chartDataClone.chartOptions.series = JSON.parse(JSON.stringify(newSeries));
+  //  console.log(newSeries)
   }
+
+  // if (newChartType === ChartType.PIE) {
+  //   chartDataClone.chartOptions["chart"] = {
+  //     ...chartDataClone.chartOptions["chart"],
+  //     type: "pie",
+  //   };
+  // } else {
+  //   chartDataClone.chartOptions["chart"] = {
+  //     ...chartDataClone.chartOptions["chart"],
+  //     type: "column",
+  //   };
+  // }
   chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
   dispatch(setChartData(chartDataClone));
