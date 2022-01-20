@@ -19,6 +19,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
   const { chartType } = chart;
+  const { questionData } = chart;
 
   const buttonConfig: ButtonGroupConfig[] = [
   
@@ -35,7 +36,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <StackChartIcon />,
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
-      disabled: chart.questionData === null,
+      disabled: chart.questionData === null || questionData?.type==QuestionType.SINGLE,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
