@@ -124,6 +124,7 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
+  // debugger;
 
   if (newChartType === ChartType.PIE) {
     chartDataClone.chartOptions["chart"] = {

@@ -57,7 +57,8 @@ const LabelTypeControl:React.FC<LabelTypeControlProps> = () => {
 
     return (
         <ButtonGroup
-        groupTitle='Label type'
+        // groupTitle='Label type'
+        groupTitle=''
         buttonConfig={buttonConfig}
         className="Step-5 label-type-control"
         />

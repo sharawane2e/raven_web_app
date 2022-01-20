@@ -12,7 +12,10 @@ import {
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
-import { setChartData, setChartTranspose } from "../../redux/actions/chartActions";
+import {
+  setChartData,
+  setChartTranspose,
+} from "../../redux/actions/chartActions";
 import { changeChartType, fetchChartData } from "../../services/ChartService";
 import AppliedFilterList from "../AppliedFilterList";
 import SingleSelect from "../widgets/SingleSelect";
@@ -41,7 +44,6 @@ import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
 import LabelTypeControl from "../LabelTypeControl";
 
-
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
 }
@@ -56,10 +58,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: { questionData, baseCount, chartType, bannerQuestionData},
+    chart: { questionData, baseCount, chartType, bannerQuestionData },
     sidebar: { open },
   } = useSelector((state: RootState) => state);
-  const { chart } = store.getState(); 
+  const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
@@ -169,7 +171,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     />
   );
 
-
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
@@ -178,10 +179,18 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
-          <LabelTypeControl />
-          <OrientationControl />
-          <ChartTypeControl />
-          <ExportChart />
+          <div className="chart-content__control-item">
+            <ChartTypeControl />
+          </div>
+          <div  className="chart-content__control-item">
+            <OrientationControl />
+          </div>
+          <div  className="chart-content__control-item">
+            <LabelTypeControl />
+          </div>
+          <div  className="chart-content__control-item">
+            <ExportChart />
+          </div>
         </Grid>
         <Tooltip title="Chart Options" className="chart-option-tooltip">
           <MoreVertIcon
@@ -224,13 +233,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           }}
         >
           <MenuItem className="chart-content__menu-item">
-          <LabelTypeControl />
+            <ChartTypeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <OrientationControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
-            <ChartTypeControl />
+            <LabelTypeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <ExportChart />
@@ -274,17 +283,21 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </Grid>
         </Grid>
       </div>
-      
-      <div className={clsx("chart-content__chart-wrapper",{"chart-content__chart-wrapper-table":chartType === ChartType.TABLE})}>
-      <ChartTransposeControl />
-      {/* <ChartOptionsControl /> */}
-        
+
+      <div
+        className={clsx("chart-content__chart-wrapper", {
+          "chart-content__chart-wrapper-table": chartType === ChartType.TABLE,
+        })}
+      >
+        <ChartTransposeControl />
+        {/* <ChartOptionsControl /> */}
+
         {/* {questionData?.type !== QuestionType.SINGLE || 
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
 
         {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
         <div className="chart-content__base-count">
-          Sample set: {baseCount}
+          Sample Size: {baseCount}
           {/* executives across Global 2000 enterprises */}
           {/* <br /> */}
           {/* Source: HFS Pulse, H1 2021 */}

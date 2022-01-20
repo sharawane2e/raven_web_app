@@ -443,7 +443,7 @@ export const getPlotOptions = (
     plotOptions["series"].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "<b>{point.name}</b>: {point.percentage:.1f}%"
-        : "<b>{point.name}</b>: {point.percentage:.0f}"
+        : "<b>{point.name}</b>: {point.y:.0f}"
     }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;

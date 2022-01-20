@@ -31,7 +31,8 @@ const ExportChart: React.FC<ExportChartProps> = () => {
 
   return (
     <ButtonGroup
-      groupTitle="Export"
+      // groupTitle="Export"
+      groupTitle=""
       buttonConfig={buttonConfig}
       className="export-chart-group"
     />
