@@ -142,6 +142,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
+        }else if(chartData.questionData?.type === QuestionType.SINGLE && chartData.bannerQuestionData==null){
+          changeChartType(ChartType.COLUMN);
         }
       })
       .catch((error) => console.log(error));
