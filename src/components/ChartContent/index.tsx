@@ -191,6 +191,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <OrientationControl />
           </div>
           <div  className="chart-content__control-item">
+            <ChartTransposeControl />
+          </div>
+          <div  className="chart-content__control-item">
             <LabelTypeControl />
           </div>
           <div  className="chart-content__control-item">
@@ -244,6 +247,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <OrientationControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
+            <ChartTransposeControl />
+          </MenuItem>
+          <MenuItem className="chart-content__menu-item">
             <LabelTypeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
@@ -294,7 +300,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           "chart-content__chart-wrapper-table": chartType === ChartType.TABLE,
         })}
       >
-        <ChartTransposeControl />
+        {/* <ChartTransposeControl /> */}
         {/* <ChartOptionsControl /> */}
 
         {/* {questionData?.type !== QuestionType.SINGLE || 
@@ -307,6 +313,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           {/* <br /> */}
           {/* Source: HFS Pulse, H1 2021 */}
           {/* Source: E2E Research, 2021 */}
+        </div>
+        <div className="chart-content__info">
+        Note: Sample size reflects selections from filter and cross-tab menus, not in-legend selections.
         </div>
       </div>
     </div>
