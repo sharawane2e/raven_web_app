@@ -38,6 +38,10 @@ export const dataLabels = {
 
 export const defaultPlotOptions = {
   series: {
+    pointPadding:0.04,
+    groupPadding: 0.05,
+    borderWidth: 0,
+    shadow: false,
     dataLabels: {
       enabled: true,
       format: "{point.y:.1f}%",

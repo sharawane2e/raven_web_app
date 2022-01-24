@@ -410,7 +410,7 @@ export const getPlotOptions = (
 
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
-      stacking: "normal",
+      stacking: "normal",      
     };
     plotOptions["series"].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
