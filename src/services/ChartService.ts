@@ -58,12 +58,17 @@ export const fetchChartData = async (
         response.data.questionData,
         response.data.baseCount
       );
-      chartData.questionData = response.data.questionData;
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
         response.data.questionData
       );
-      chartData.bannerQuestionData = response.data.bannerQuestionData;
+      const formatedQData =removeEmptyDataLengends(
+        response.data.chartData,
+        response.data.questionData,
+        response.data.bannerQuestionData);
+
+      chartData.questionData = formatedQData[0]
+      chartData.bannerQuestionData = formatedQData[1];
 
       chartData.chartOptions = {
         ...chart.chartOptions,
@@ -104,6 +109,42 @@ export const formatChartDataWithBaseCount = (
   }
   return chartDataWithUpdatedBase;
 };
+
+export const removeEmptyDataLengends= ( 
+  chartData: any[],
+  question: IQuestion,
+  bannerQuestionData: any)=>{
+    const chartDataClone = JSON.parse(JSON.stringify(chartData));
+    const uniqueLengends:any = []
+    const filteredOptions:any=[];
+    if ((question.type === QuestionType.SINGLE || question.type === QuestionType.MULTI) && bannerQuestionData !== null) {
+      Object.values(chartDataClone[0]).forEach((obj:any)=>{
+        obj.forEach((subArr:any)=>{
+          if(!uniqueLengends.includes(subArr.labelCode)) uniqueLengends.push(subArr.labelCode)
+        })
+      })
+       bannerQuestionData.options.forEach((obj:any)=>{
+        if(uniqueLengends.includes(obj.labelCode))  filteredOptions.push(obj);
+      })
+      bannerQuestionData.options=filteredOptions;
+    }
+    else if(question.type === QuestionType.GRID || question.type === QuestionType.GRID_MULTI ||  question.type === QuestionType.RANK){
+      Object.values(chartDataClone).forEach((obj:any)=>{
+        obj.options.forEach((subArr:any)=>{
+         
+          if(!uniqueLengends.includes(subArr.option)) uniqueLengends.push(subArr.option)
+        })
+      })
+       question.scale.forEach((obj:any)=>{
+        if(uniqueLengends.includes(obj.labelCode))  filteredOptions.push(obj);
+      })
+      question.scale=filteredOptions;
+    }
+   
+    return [question,bannerQuestionData];
+     
+    
+}
 
 export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
