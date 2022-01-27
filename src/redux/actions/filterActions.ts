@@ -22,7 +22,9 @@ export const removeAppliedFilter = createAction<IFilter>(
 export const fetchFilterList = () => async (dispatch: AppDispatch) => {
   try {
     const res = await ApiRequest.request(ApiUrl.FILTER, "GET");
+  
     if (res.success) {
+      
       const filterQuestionList: IFilterQuestion[] = res.data;
       filterQuestionList.sort((a, b) => {
         if (a.order > b.order) return 1;

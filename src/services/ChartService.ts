@@ -141,11 +141,9 @@ export const removeEmptyDataLengends= (
       question.scale=filteredOptions;
     }
    
-    return [question,bannerQuestionData];
-     
     
+    return [question,bannerQuestionData];
 }
-
 export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
     if (question.type === QuestionType.GRID_MULTI) {

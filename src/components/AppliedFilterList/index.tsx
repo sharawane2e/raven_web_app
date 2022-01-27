@@ -1,12 +1,12 @@
-import { RootState } from "../../redux/store";
+import store, { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Chip, Tooltip } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { IFilter } from "../../types/IFilter";
 import CustomScrollbar from "../CustomScrollbar";
 import { removeAppliedFilter } from "../../redux/actions/filterActions";
-import { fetchChartData } from "../../services/ChartService";
-import { setChartData } from "../../redux/actions/chartActions";
+import { fetchChartData, transposeChart } from "../../services/ChartService";
+import { setChartData, setChartTranspose } from "../../redux/actions/chartActions";
 import { memo } from "react";
 
 const AppliedFilterList: React.FC = () => {
@@ -14,12 +14,25 @@ const AppliedFilterList: React.FC = () => {
   const dispatch = useDispatch();
 
   const removeFilter = (filter: IFilter) => {
+    const { chart } = store.getState();
     dispatch(removeAppliedFilter(filter));
+    if(chart.chartTranspose){
+      fetchChartData()
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+         transposeChart();
+         dispatch(setChartTranspose(chart.chartTranspose));
+      })
+      .catch((error) => console.log(error));
+         
+    }
+    else{
     fetchChartData()
       .then((chartData) => {
         dispatch(setChartData(chartData));
       })
       .catch((error) => console.log(error));
+    }
   };
   return (
     <div className="applied-filters">
