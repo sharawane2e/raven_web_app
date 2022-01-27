@@ -17,3 +17,20 @@
   height: 12px;
   color: #5e5e5e;
 }
+
+.cross--btn {
+  width: 20px;
+  height: 20px;
+  align-self: end;
+  margin: 10px;
+}
+
+.chart-screen__chart-wrapper-table {
+  .MuiDialog-paper {
+    background: map-get($map: $bg-color, $key: "primary");
+  }
+
+  .cross--btn {
+    background: map-get($map: $bg-color, $key: "white");
+  }
+}

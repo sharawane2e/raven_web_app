@@ -11,7 +11,8 @@ import {
   setChartOrientation,
   setChartType,
   setChartLabel,
-  setChartTranspose
+  setChartTranspose,
+  setChartFullScreen
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -21,6 +22,7 @@ export interface IChartState {
   chartType: ChartType;
   chartLabelType:ChartLabelType,
   chartTranspose:boolean,
+  chartfullScreen:boolean,
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
@@ -64,6 +66,7 @@ const initialState: IChartState = {
   chartType: ChartType.COLUMN,
   chartLabelType:ChartLabelType.PERCENTAGE,
   chartTranspose:false,
+  chartfullScreen:false,
   chartOptions: {
     title: {
       text: "",
@@ -141,6 +144,12 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(setChartTranspose, (state, action) => ({
     ...state,
     chartTranspose:action.payload
+   
+  }));
+
+  builder.addCase(setChartFullScreen, (state, action) => ({
+    ...state,
+    chartfullScreen:action.payload
    
   }));
 });

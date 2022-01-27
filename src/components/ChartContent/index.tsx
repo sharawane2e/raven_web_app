@@ -43,6 +43,7 @@ import {
 import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
 import LabelTypeControl from "../LabelTypeControl";
+import ChartFullScreen from "../ChartFullScreen";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -192,6 +193,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </div>
           <div  className="chart-content__control-item">
             <ChartTransposeControl />
+          </div>
+          <div  className="chart-content__control-item">
+            <ChartFullScreen />
           </div>
           <div  className="chart-content__control-item">
             <LabelTypeControl />

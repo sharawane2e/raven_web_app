@@ -4,6 +4,7 @@ import {
   Dialog,
   FormControlLabel,
   Grid,
+  IconButton,
 } from "@material-ui/core";
 import Tour from "reactour";
 import clsx from "clsx";
@@ -19,13 +20,18 @@ import { chartTourSteps } from "../../config/TourConfig";
 import SidebarContextProvider from "../../contexts/SidebarContext";
 import ApiUrl from "../../enums/ApiUrl";
 import { setUserProfile } from "../../redux/actions/userActions";
-import { RootState } from "../../redux/store";
+import store, { RootState } from "../../redux/store";
 import IRoute from "../../types/IRoute";
 import { IUserProfile } from "../../types/IUserProfile";
 import ApiRequest from "../../utils/ApiRequest";
 import { fetchFilterList } from "../../redux/actions/filterActions";
 import { hideTourGuide } from "../../redux/actions/tourAction";
 import { toggleSidebar } from "../../redux/actions/sidebarAction";
+import Chart from "../../components/Chart";
+import TableView from "../../components/TableView";
+import { ChartType } from "../../enums/ChartType";
+import CloseIcon from "@mui/icons-material/Close";
+import { setChartFullScreen } from "../../redux/actions/chartActions";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -41,6 +47,9 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
     sidebar: { open },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
+
+  const { chart } = store.getState();
+  // const {dispatch} = store;
 
   useEffect(() => {
     dispatch(fetchFilterList());
@@ -101,6 +110,23 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
             Go to dashboard
           </Button>
         </Grid>
+      </Dialog>
+      <Dialog
+        fullScreen
+        open={chart.chartfullScreen}
+        className={clsx("fullscreen--dialog", {
+          "chart-screen__chart-wrapper-table":
+            chart.chartType === ChartType.TABLE,
+        })}
+      >
+          <IconButton className="cross--btn" onClick={() => {
+                dispatch(setChartFullScreen(false));
+              }}>
+            <CloseIcon
+              
+            />
+          </IconButton>
+          {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
       </Dialog>
       {
         <Tour

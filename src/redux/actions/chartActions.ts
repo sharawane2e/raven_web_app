@@ -19,3 +19,5 @@ export const resetChartData = createAction("RESET_CHART_DATA");
 export const setChartLabel = createAction<any>("SET_CHART_Label");
 
 export const setChartTranspose = createAction<any>("SET_CHART_Transpose");
+
+export const setChartFullScreen = createAction<boolean>("SET_CHART_FULLSCREEN");
