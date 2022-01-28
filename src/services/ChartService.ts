@@ -8,6 +8,7 @@ import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
+import { colorArr } from "../constants/Variables";
 
 export const fetchChartData = async (
   qId?: string,
@@ -124,32 +125,26 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
-  if(newChartType === ChartType.STACK&& chart.chartType===ChartType.COLUMN){
-   let newSeries:any = [];
-   console.log(chartDataClone.chartOptions.series[0].data)
-   chartDataClone.chartOptions.series[0].data.map((element:any) => {
-     const data = [element];
-     const dataLabels = chartDataClone.chartOptions.series[0].dataLabels;
-     const name  = chartDataClone.chartOptions.series[0].name;
-     const color  = chartDataClone.chartOptions.series[0].color;
-     const object = {name,color,dataLabels,data};
-    newSeries.push(object)
-   });
-   chartDataClone.chartOptions.series = JSON.parse(JSON.stringify(newSeries));
-  //  console.log(newSeries)
+
+  if(chart?.questionData?.type===QuestionType.SINGLE){
+    dispatch(setChartData(chartDataClone));
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      ...getChartOptions()
+    }
   }
 
-  // if (newChartType === ChartType.PIE) {
-  //   chartDataClone.chartOptions["chart"] = {
-  //     ...chartDataClone.chartOptions["chart"],
-  //     type: "pie",
-  //   };
-  // } else {
-  //   chartDataClone.chartOptions["chart"] = {
-  //     ...chartDataClone.chartOptions["chart"],
-  //     type: "column",
-  //   };
-  // }
+ if (newChartType === ChartType.PIE) {
+    chartDataClone.chartOptions["chart"] = {
+      ...chartDataClone.chartOptions["chart"],
+      type: "pie",
+    };
+  } else {
+    chartDataClone.chartOptions["chart"] = {
+      ...chartDataClone.chartOptions["chart"],
+      type: "column",
+    };
+  }
   chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
   dispatch(setChartData(chartDataClone));
