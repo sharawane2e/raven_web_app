@@ -8,6 +8,7 @@ import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
+import { colorArr } from "../constants/Variables";
 
 export const fetchChartData = async (
   qId?: string,
@@ -163,9 +164,16 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
-  // debugger;
 
-  if (newChartType === ChartType.PIE) {
+  if(chart?.questionData?.type===QuestionType.SINGLE){
+    dispatch(setChartData(chartDataClone));
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      ...getChartOptions()
+    }
+  }
+
+ if (newChartType === ChartType.PIE) {
     chartDataClone.chartOptions["chart"] = {
       ...chartDataClone.chartOptions["chart"],
       type: "pie",

@@ -73,6 +73,10 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
+    chart:{chartType}
+  } = store.getState();
+
+  const {
     plotOptions: {
       series: {
         dataLabels: { format },
@@ -187,6 +191,30 @@ const getSingleChartOptions = (
         });
     }
 
+    const series:any[] = [];
+
+    if(chartType===ChartType.STACK){
+      data.map((element:any,index:number) => {
+        const name  = element.name;
+        const color  = colorArr[index];
+        const data = [{
+          name:questionData.labelText,
+          y:element.y
+        }];
+        series.push({name,color,data,dataLabels});
+      });
+    }else{
+      
+      series.push( {
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      })
+      
+    }
+
+
     return {
       legend: {
         enabled: false,
@@ -194,14 +222,8 @@ const getSingleChartOptions = (
 
       tooltip: { ...getToolTip() },
 
-      series: [
-        {
-          color: primaryBarColor,
-          name: questionData.labelText,
-          data,
-          dataLabels,
-        },
-      ],
+      series
+
     };
   }
 };
