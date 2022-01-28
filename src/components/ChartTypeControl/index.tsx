@@ -36,7 +36,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <StackChartIcon />,
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
-      disabled: chart.questionData === null || (questionData?.type==QuestionType.SINGLE&&bannerQuestionData==null),
+      disabled: chart.questionData === null,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
