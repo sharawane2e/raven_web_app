@@ -16,7 +16,7 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export const generatePpt = async () => {
   const {
-    chart: { questionData, chartOrientation, chartType, baseCount },
+    chart: { questionData,bannerQuestionData, chartOrientation, chartType, baseCount },
   } = store.getState();
 
   const {
@@ -27,6 +27,8 @@ export const generatePpt = async () => {
   let fileName: string = exportPrefix + questionData?.labelText;
 
   let mainQuestionText: string = questionData?.labelText || "";
+  let bannerQuestionText:string = bannerQuestionData?.labelText || "";
+  console.log(bannerQuestionText)
   let baseText: string = `Sample set: ${baseCount}`;
   // let questionText: string = questionData?.questionText || "";
 
@@ -75,6 +77,7 @@ export const generatePpt = async () => {
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
+    bannerQuestionText,
     filters,
     chartFontFace,
     baseText,
