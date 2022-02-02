@@ -22,7 +22,7 @@ export const setDefaultPdfPageProperties = async (
   lWordBreak: any
 ) => {
   const {
-    chart: { questionData, baseCount },
+    chart: { questionData, baseCount, bannerQuestionData },
   } = store.getState();
 
   // doc.addFont("Avenir", "Arial", "normal");
@@ -30,6 +30,7 @@ export const setDefaultPdfPageProperties = async (
   // doc.setFont("Avenir");
   doc.setFontSize(10);
   const lText = doc.splitTextToSize(questionData?.labelText || "", lWordBreak);
+
   doc.text(lText, 10, 5);
   doc.setFontSize(8);
   doc.setTextColor(64, 64, 64);
@@ -39,7 +40,14 @@ export const setDefaultPdfPageProperties = async (
   );
   doc.text(filterText, 10, 20);
   doc.text("Sample set: " + baseCount || "", baseX, baseY);
-  doc.text(sourceText || "", sourceX, sourceY);
+  if (bannerQuestionData) {
+    doc.text(
+      "Cross tabulated:  " + bannerQuestionData?.labelText || "",
+      baseX,
+      baseY + 5
+    );
+  }
+  // doc.text(sourceText || "", sourceX, sourceY);
   // doc.setFontSize(6);
   doc.setTextColor(127, 127, 127);
   doc.text(copyRightText || "", copyRightX, copyRightY);

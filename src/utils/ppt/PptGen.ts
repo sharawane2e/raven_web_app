@@ -16,17 +16,25 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export const generatePpt = async () => {
   const {
-    chart: { questionData, chartOrientation, chartType, baseCount },
+    chart: {
+      questionData,
+      bannerQuestionData,
+      chartOrientation,
+      chartType,
+      baseCount,
+    },
   } = store.getState();
 
   const {
-    chart:{chartLabelType} 
-  }= store.getState();
+    chart: { chartLabelType },
+  } = store.getState();
 
   let pptxGenJsObj = new pptxgen();
   let fileName: string = exportPrefix + questionData?.labelText;
 
   let mainQuestionText: string = questionData?.labelText || "";
+  let bannerQuestionText: string = bannerQuestionData?.labelText || "";
+
   let baseText: string = `Sample set: ${baseCount}`;
   // let questionText: string = questionData?.questionText || "";
 
@@ -57,8 +65,10 @@ export const generatePpt = async () => {
     //change data label format
 
     //percentage number format
-    dataLabelFormatCode: chartLabelType===ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
-    valLabelFormatCode:  chartLabelType===ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
+    dataLabelFormatCode:
+      chartLabelType === ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
+    valLabelFormatCode:
+      chartLabelType === ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
 
     //simple number data format
     // dataLabelFormatCode: "###",
@@ -71,10 +81,11 @@ export const generatePpt = async () => {
     // catGridLine: { style: "solid" },
     // valGridLine: { style: "solid" },
   };
-  console.log(chartSettings)
+  console.log(chartSettings);
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
+    bannerQuestionText,
     filters,
     chartFontFace,
     baseText,
