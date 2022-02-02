@@ -1,0 +1,9 @@
+.horizontal-scroll-thumb {
+  background-color: map-get($map: $bg-color, $key: "accent") !important;
+  border-radius: 3px;
+}
+
+.vertical-scroll-thumb {
+  background-color: map-get($map: $bg-color, $key: "accent") !important;
+  border-radius: 3px;
+}

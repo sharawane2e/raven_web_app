@@ -137,7 +137,7 @@ const ChartSidebarContent: React.FC = () => {
             dispatch(resetFilters());
           }}
         >
-          Clear
+          Reset
         </Button>
       </div>
     </div>

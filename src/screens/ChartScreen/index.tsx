@@ -32,6 +32,7 @@ import TableView from "../../components/TableView";
 import { ChartType } from "../../enums/ChartType";
 import CloseIcon from "@mui/icons-material/Close";
 import { setChartFullScreen } from "../../redux/actions/chartActions";
+// import {useHotkeys} from 'react-hotkeys-hook';
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -50,6 +51,8 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   const { chart } = store.getState();
   // const {dispatch} = store;
+
+  // useHotkeys('f',()=>{dispatch(setChartFullScreen(false));})
 
   useEffect(() => {
     dispatch(fetchFilterList());
