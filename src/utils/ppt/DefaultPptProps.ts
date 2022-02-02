@@ -107,11 +107,10 @@ export const setDefaultSlideProperties = (
     { image: { x: 0.38, y: 5.15, w: 1.2, h: 0.4, data: logoBase64String } },
   ];
 
-  if(bannerQuestionText){
-    console.log("BT:",bannerQuestionText)
-    objsArr.push( {
+  if (bannerQuestionText) {
+    objsArr.push({
       text: {
-        text: "Cross tabulated:  "+bannerQuestionText,
+        text: "Cross tabulated:  " + bannerQuestionText,
         options: {
           x: 0.3,
           y: 4.95,
@@ -123,13 +122,12 @@ export const setDefaultSlideProperties = (
           // bold: true,
         },
       },
-    },)
+    });
   }
-
 
   pptxGenJsObj.defineSlideMaster({
     title: pptTemplateKey,
     background: { color: pptBackgroundColor },
-    objects: objsArr
+    objects: objsArr,
   });
 };
