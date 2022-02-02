@@ -3,7 +3,6 @@ import { round } from "../Utility";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 
-
 export function gridChartDataGen(
   questionData: any,
   chartData: any,
@@ -12,10 +11,9 @@ export function gridChartDataGen(
   let labels: any = [];
   let seriesData: any[] = [];
 
-  
   const {
-    chart:{chartLabelType} 
-  }= store.getState();
+    chart: { chartLabelType },
+  } = store.getState();
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   questionData.scale.forEach((scaleOption: any) => {
@@ -32,24 +30,18 @@ export function gridChartDataGen(
             (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
 
-          if(chartLabelType===ChartLabelType.PERCENTAGE){
+          if (chartLabelType === ChartLabelType.PERCENTAGE) {
             return data !== undefined
-            ? round(+((data / base) * 100), decimalPrecision)
-            : 0;
+              ? round(+((data / base) * 100), decimalPrecision)
+              : 0;
+          } else {
+            return data !== undefined ? data : 0;
           }
-          else{
-            return data !== undefined
-            ? data
-            : 0;
-          }
-
-         
         } else {
           return 0;
         }
       }),
     });
   });
-
   return seriesData;
 }

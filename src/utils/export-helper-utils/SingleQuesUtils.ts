@@ -2,6 +2,7 @@ import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
 
 export function singleChartDataGen(
   questionData: any,
@@ -14,8 +15,8 @@ export function singleChartDataGen(
   let options = questionData?.options || [];
 
   const {
-    chart:{chartLabelType} 
-  }= store.getState();
+    chart: { chartLabelType, chartType },
+  } = store.getState();
 
   options.forEach((option: any) => {
     const dataObj = chartData.find(
@@ -25,10 +26,9 @@ export function singleChartDataGen(
     labels.push(option.labelText);
     if (dataObj && dataObj.count > 0) {
       let count;
-      if(chartLabelType===ChartLabelType.PERCENTAGE){
-
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         count = round((dataObj.count / baseCount) * 100, decimalPrecision);
-      }else{
+      } else {
         count = dataObj.count;
       }
       values.push(count);
@@ -45,5 +45,18 @@ export function singleChartDataGen(
     },
   ];
 
-  return seriesData;
+  if (chartType === ChartType.STACK) {
+    const stackSeriesData: any = [];
+    const label: string = questionData.questionText;
+    seriesData[0].labels.forEach((ele: any, index: number) => {
+      stackSeriesData.push({
+        name: seriesData[0].labels[index],
+        labels: [label],
+        values: [seriesData[0].values[index]],
+      });
+    });
+    return stackSeriesData;
+  } else {
+    return seriesData;
+  }
 }

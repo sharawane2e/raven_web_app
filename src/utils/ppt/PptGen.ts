@@ -81,7 +81,6 @@ export const generatePpt = async () => {
     // catGridLine: { style: "solid" },
     // valGridLine: { style: "solid" },
   };
-  console.log(chartSettings);
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
