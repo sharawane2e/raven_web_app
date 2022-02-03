@@ -33,7 +33,6 @@
       flex-basis: 70px;
       flex-grow: 0;
       flex-shrink: 0;
-      margin-top: -6px;
     }
 
     &--border {
@@ -42,7 +41,7 @@
 
     &--text {
       padding-right: 5px;
-      width: calc(100% - 151px);
+      width: calc(100% - 170px);
       p {
         padding-left: 10px;
         margin-top: 2px;
@@ -138,95 +137,3 @@ h2 {
 // .makeStyles-itemWrapper-3 {
 //   height: inherit !important;
 // }
-.carousal-section {
-  width: 100%;
-  .MuiGrid-container {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 20px;
-  }
-  .MuiGrid-item {
-    width: 20%;
-    margin-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 8px;
-    padding-right: 8px;
-
-    //   &:first-child {
-    //     padding-left: 15px;
-    //   }
-    &:last-child {
-      border-right: none;
-    }
-  }
-  .MuiPaper-elevation {
-    max-width: 100%;
-    width: 100%;
-    min-width: 20%;
-    border-top-right-radius: 25%;
-    border-top-left-radius: 25%;
-    box-shadow: -5px 3px 5px 0px #959595d9;
-    background-color: #dbdada69;
-  }
-  .card-image {
-    text-align: center;
-    padding: 20px 20px 10px 20px; 
-    & svg {
-      height: 80px;
-    }
-  }
-  .card-title {
-    font-size: 14px;
-    font-weight: bold;
-    width: 100%;
-    text-align: center;
-    padding: 2px;
-  }
-  .note-header {
-    padding: 15px;
-  }
-  .note-subheader {
-    padding-right: 30px;
-    padding-left: 30px;
-    padding-top: 20px;
-  }
-  .note-container {
-    margin-top: 40px;
-    margin-left: 25px;
-    margin-right: 25px;
-    border: 1px solid #e2e2e2;
-    .MuiGrid-container {
-      border-bottom: 1px solid #e2e2e2;
-      .MuiGrid-item {
-        border-right: 1px solid #e2e2e2;
-        &:last-child {
-          border-right: none;
-        }
-      }
-    }
-    .note-division {
-      width: 225px;
-      margin: 0 auto;
-      text-align: left;
-
-      .current-division {
-        background: #2c93eb;
-        color: white;
-        padding: 5px;
-        margin-bottom: 20px;
-      }
-      .future-division {
-        background: violet;
-        color: white;
-        padding: 5px;
-        margin-bottom: 20px;
-      }
-    }
-  }
-}
-.css-1vioaa7-MuiPaper-root{
-  height: 210px;
-}
