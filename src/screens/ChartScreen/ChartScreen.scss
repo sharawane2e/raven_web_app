@@ -23,6 +23,10 @@
   height: 20px;
   align-self: end;
   margin: 10px;
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: 1;
 }
 
 .chart-screen__chart-wrapper-table {

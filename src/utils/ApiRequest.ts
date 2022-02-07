@@ -4,6 +4,8 @@ import LocalStorageUtils from "./LocalStorageUtils";
 import Toaster from "./Toaster";
 import { errorMessages } from "../constants/messages";
 import { logOutUser } from "../services/AuthService";
+import store from "../redux/store";
+import { setChartLoading } from "../redux/actions/chartActions";
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
@@ -15,8 +17,10 @@ const token = LocalStorageUtils.getToken();
 if (token) {
   axiosInstance.defaults.headers.common["Authorization"] = "bearer " + token;
 }
+const {dispatch} = store;
 
 const ApiRequest = {
+  
   request: async function (
     url: string,
     method: MethodType,
@@ -29,12 +33,14 @@ const ApiRequest = {
       data: null,
     };
     try {
+      dispatch(setChartLoading(true));
       const apiResponse = await axiosInstance(url, {
         data,
         method,
         ...params,
       });
       response = apiResponse.data;
+      dispatch(setChartLoading(false));
     } catch (error: any) {
       console.log(error);
       if (error.response) {

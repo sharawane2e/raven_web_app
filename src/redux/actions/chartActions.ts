@@ -21,3 +21,5 @@ export const setChartLabel = createAction<any>("SET_CHART_Label");
 export const setChartTranspose = createAction<any>("SET_CHART_Transpose");
 
 export const setChartFullScreen = createAction<boolean>("SET_CHART_FULLSCREEN");
+
+export const setChartLoading = createAction<boolean>("SET_CHART_SCREEN");

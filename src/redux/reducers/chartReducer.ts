@@ -12,10 +12,12 @@ import {
   setChartType,
   setChartLabel,
   setChartTranspose,
-  setChartFullScreen
+  setChartFullScreen,
+  setChartLoading
 } from "../actions/chartActions";
 
 export interface IChartState {
+  chartLoading:boolean;
   questionData: IQuestion | null;
   chartData: any[];
   chartOrientation: ChartOrientation;
@@ -59,6 +61,7 @@ export const defaultPlotOptions = {
 
 
 const initialState: IChartState = {
+  chartLoading:false,
   questionData: null,
   bannerQuestionData: null,
   chartData: [],
@@ -150,6 +153,12 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(setChartFullScreen, (state, action) => ({
     ...state,
     chartfullScreen:action.payload
+   
+  }));
+
+  builder.addCase(setChartLoading, (state, action) => ({
+    ...state,
+    chartLoading:action.payload
    
   }));
 });

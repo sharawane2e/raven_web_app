@@ -44,6 +44,7 @@ import ChartTransposeControl from "../ChartTransposeControl";
 import clsx from "clsx";
 import LabelTypeControl from "../LabelTypeControl";
 import ChartFullScreen from "../ChartFullScreen";
+import Loader from "../widgets/Loader/Index";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -59,7 +60,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: { questionData, baseCount, chartType, bannerQuestionData },
+    chart: {
+      chartLoading,
+      questionData,
+      baseCount,
+      chartType,
+      bannerQuestionData,
+    },
     sidebar: { open },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
@@ -140,7 +147,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
-        }else if(chartData.questionData?.type === QuestionType.SINGLE && chartData.bannerQuestionData==null){
+        } else if (
+          chartData.questionData?.type === QuestionType.SINGLE &&
+          chartData.bannerQuestionData == null
+        ) {
           changeChartType(ChartType.COLUMN);
         }
       })
@@ -185,19 +195,19 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
-          <div  className="chart-content__control-item">
+          <div className="chart-content__control-item">
             <OrientationControl />
           </div>
-          <div  className="chart-content__control-item">
+          <div className="chart-content__control-item">
             <ChartTransposeControl />
           </div>
-          <div  className="chart-content__control-item">
+          <div className="chart-content__control-item">
             <ChartFullScreen />
           </div>
-          <div  className="chart-content__control-item">
+          <div className="chart-content__control-item">
             <LabelTypeControl />
           </div>
-          <div  className="chart-content__control-item">
+          <div className="chart-content__control-item">
             <ExportChart />
           </div>
         </Grid>
@@ -307,7 +317,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         {/* {questionData?.type !== QuestionType.SINGLE || 
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
 
-        {chartType === ChartType.TABLE ? <TableView /> : <Chart />}
+        {chartLoading ? (
+          <Loader />
+        ) : chartType === ChartType.TABLE ? (
+          <TableView />
+        ) : (
+          <Chart />
+        )}
         <div className="chart-content__base-count">
           Sample Size: {baseCount}
           {/* executives across Global 2000 enterprises */}
@@ -316,7 +332,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           {/* Source: E2E Research, 2021 */}
         </div>
         <div className="chart-content__info">
-        Note: Sample size reflects selections from filter and cross-tab menus, not in-legend selections.
+          Note: Sample size reflects selections from filter and cross-tab menus,
+          not in-legend selections.
         </div>
       </div>
     </div>
