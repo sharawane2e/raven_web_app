@@ -2,6 +2,9 @@ import store, { RootState } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { Chip, Tooltip } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
+import ClearAllIcon from "@material-ui/icons/ClearAll";
+import ClearIcon from '@material-ui/icons/Clear';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { IFilter } from "../../types/IFilter";
 import CustomScrollbar from "../CustomScrollbar";
 import { removeAppliedFilter } from "../../redux/actions/filterActions";
@@ -34,14 +37,27 @@ const AppliedFilterList: React.FC = () => {
       .catch((error) => console.log(error));
     }
   };
+
+  const handleRemoveFilters = () =>{
+    
+  }
   return (
     <div className="applied-filters">
-      <Chip
-        label="Your selections"
-        variant="outlined"
-        className="applied-filters__info-chip"
-      />
-
+      <div className="applied-filters--wrapper">
+        <Chip
+          label="Your selections"
+          variant="outlined"
+          className="applied-filters__info-chip"
+          />
+          {/* <Tooltip
+            title={`Clear all Filters`}
+            placement="top"
+            arrow 
+          >
+            <HighlightOffIcon className="applied-filters--icon" onClick={handleRemoveFilters} />
+          </Tooltip> */}
+      </div>
+      
       <div className="applied-filters__scroll-wrapper">
         <CustomScrollbar>
           <div className="applied-filters__filter-wrapper">

@@ -2,6 +2,20 @@
   display: flex;
   align-items: center;
   padding: 10px 10px 5px 10px;
+
+  &--wrapper {
+    position: relative;
+  }
+
+  &--icon {
+    position: absolute;
+    top: -11px;
+    right: -6px;
+    width: 15px;
+    height: 15px;
+    // color: #f1ad0f;
+    color: map-get($map: $text-color, $key: accent);
+  }
   .applied-filters__scroll-wrapper {
     height: 45px; //45px
     flex: 1;
