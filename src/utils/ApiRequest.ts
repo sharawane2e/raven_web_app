@@ -42,6 +42,7 @@ const ApiRequest = {
       response = apiResponse.data;
       dispatch(setChartLoading(false));
     } catch (error: any) {
+      dispatch(setChartLoading(false));
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {

@@ -309,6 +309,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       <div
         className={clsx("chart-content__chart-wrapper", {
           "chart-content__chart-wrapper-table": chartType === ChartType.TABLE,
+          "chart-wrapper--loading": chartLoading == true,
         })}
       >
         {/* <ChartTransposeControl /> */}

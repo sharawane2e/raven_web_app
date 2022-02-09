@@ -61,7 +61,7 @@
       fill: transparent;
     }
   }
-  
+
   .chart-content__chart-wrapper-table {
     background: map-get($map: $bg-color, $key: "primary");
   }
@@ -78,7 +78,6 @@
     color: map-get($map: $text-color, $key: primary);
     margin-top: 23px;
     // margin-top: 5px;
-
   }
 
   .chart-content__info {
@@ -224,6 +223,11 @@
     padding-right: 10px;
     margin-right: 10px;
   }
+
+  & .chart-wrapper--loading {
+    background: map-get($map: $bg-color, $key: secondary-dark);
+    position: relative;
+  }
 }
 .orientation-control {
   .active {
@@ -249,6 +253,6 @@
   padding-right: 12px;
   box-sizing: border-box;
 }
-.chart-content__control-menu{
+.chart-content__control-menu {
   background: map-get($map: $bg-color, $key: "secondary");
 }

@@ -1,9 +1,12 @@
-body {
-  background-color: #333;
+// body {
+//   background-color: #333;
+// }
+
+.loader--wrapper {
+  height: 100%;
 }
 .loading {
-  position: fixed;
-  float: left;
+  position: absolute;
   top: 50%;
   left: 50%;
   height: 120px;
@@ -18,23 +21,46 @@ body {
 }
 @keyframes loading {
   0% {
-    background-color: #cd0a00;
+    background-color: #323c4e;
   }
 
   30% {
-    background-color: #fa8a00;
+    background-color: #f1ad0f;
   }
   50% {
     height: 100px;
     margin-top: 0px;
   }
+
   80% {
-    background-color: #91d700;
+    background-color: #f1ad0f;
   }
+
   100% {
-    background-color: #cd0a00;
+    background-color: #323c4e;
   }
 }
+// @keyframes loading {
+//   0% {
+//     background-color: #cd0a00;
+//   }
+
+//   30% {
+//     background-color: #fa8a00;
+//   }
+
+//   50% {
+//     height: 100px;
+//     margin-top: 0px;
+//   }
+//   80% {
+//     background-color: #91d700;
+//   }
+
+//   100% {
+//     background-color: #cd0a00;
+//   }
+// }
 /*@-moz-keyframes loading {
   50% { height: 100px; margin-top: 0px; }
 }
