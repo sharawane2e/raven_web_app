@@ -1,4 +1,4 @@
-export const accessTokenKey = "hfs_dashboard_access_token";
+export const accessTokenKey = "financialresearch_dashboard_access_token";
 
 export const colorArr = [
   // "#723c82",
