@@ -1,4 +1,4 @@
-export const accessTokenKey = "nxtgen_dashboard_access_token";
+export const accessTokenKey = "ror2021_dashboard_access_token";
 
 export const colorArr = [
   // "#723c82",
