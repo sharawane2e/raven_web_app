@@ -88,7 +88,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Next Generation Finance Survey</div>
+        <div className="appbar__heading">ROR 2021</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
@@ -120,7 +120,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         disableAutoFocusItem
         PaperProps={{ elevation: 0, className: "appbar__menu" }}
       >
-       
         <MenuItem className="appbar__menu-item profile" disabled>
           {user?.name}
         </MenuItem>
