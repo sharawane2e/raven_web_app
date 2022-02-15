@@ -24,6 +24,14 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const buttonConfig: ButtonGroupConfig[] = [
   
     {
+      tooltip: "Line chart",
+      renderChild: () => <ColumnChartIcon />,
+      onClick: () => changeChartType(ChartType.LINE),
+      active: chartType === ChartType.LINE,
+      disabled: chart.questionData === null,
+      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
+    },
+    {
       tooltip: "Column chart",
       renderChild: () => <ColumnChartIcon />,
       onClick: () => changeChartType(ChartType.COLUMN),

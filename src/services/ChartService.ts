@@ -173,7 +173,13 @@ export const changeChartType = (newChartType: ChartType) => {
     }
   }
 
- if (newChartType === ChartType.PIE) {
+  if(newChartType === ChartType.LINE){
+    chartDataClone.chartOptions["chart"] = {
+      ...chartDataClone.chartOptions["chart"],
+      type: "line",
+    };
+  }
+ else if (newChartType === ChartType.PIE) {
     chartDataClone.chartOptions["chart"] = {
       ...chartDataClone.chartOptions["chart"],
       type: "pie",
