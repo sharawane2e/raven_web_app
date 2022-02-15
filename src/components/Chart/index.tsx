@@ -44,13 +44,17 @@ class Chart extends Component<ChartProps, ChartState> {
     // @ts-ignore
     const { chartOptions } = this.props.chart;
     return (
-      <HighchartsReact
-        containerProps={{ style: { height: "100%" } }}
-        highcharts={Highcharts}
-        options={chartOptions}
-        //onClick={reflow}
-        immutable
-      />
+      <>
+        <HighchartsReact
+          containerProps={{
+            style: { height: "100%", overflow: "unset" },
+          }}
+          highcharts={Highcharts}
+          options={chartOptions}
+          //onClick={reflow}s
+          immutable
+        />
+      </>
     );
   }
 }
