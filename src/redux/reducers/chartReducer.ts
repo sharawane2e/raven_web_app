@@ -19,6 +19,7 @@ import {
 export interface IChartState {
   chartLoading:boolean;
   questionData: IQuestion | null;
+  // openQSelection:boolean;
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
@@ -63,6 +64,7 @@ export const defaultPlotOptions = {
 const initialState: IChartState = {
   chartLoading:false,
   questionData: null,
+  // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
