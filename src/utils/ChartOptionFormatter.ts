@@ -278,6 +278,8 @@ const getGridChartOptions = (
       }
       const base = optionData?.baseCount || baseCount;
       let plotValue;
+      let percentageValue = (count / base) * 100;
+      let numberValue = count;
       // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
@@ -289,6 +291,8 @@ const getGridChartOptions = (
       data.push({
         name: subGroup.labelText,
         y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        percentageValue,
+        numberValue
       });
       // }
     }
@@ -408,17 +412,22 @@ const getToolTip = () => {
     pointFormat: "",
   };
 
-  if (chartLabelType === ChartLabelType.PERCENTAGE) {
-    tooltip["headerFormat"] =
+  tooltip["headerFormat"] =
       '<span style="font-size:11px">{series.name}</span><br>';
     tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
-  } else {
-    tooltip["headerFormat"] =
-      '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
-  }
+      "<span>{point.name}</span>: <b>Count {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+
+  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
+  // } else {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
+  // }
 
   return tooltip;
 };
