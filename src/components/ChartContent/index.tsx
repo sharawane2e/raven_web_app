@@ -1,9 +1,9 @@
 import { useState, useContext, MouseEvent, useEffect } from "react";
 import Breadcrum from "../widgets/Breadcrum";
 import Grid from "@material-ui/core/Grid";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { SidebarContext } from "../../contexts/SidebarContext";
+// import { SidebarContext } from "../../contexts/SidebarContext";
 import { AppDispatch, RootState } from "../../redux/store";
 import {
   fetchBannerQuestionList,
@@ -31,11 +31,11 @@ import { Tooltip } from "@material-ui/core";
 import Toaster from "../../utils/Toaster";
 import { Menu, MenuItem, Chip } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ChartOptionsControl from "../ChartOptionsControl";
+// import ChartOptionsControl from "../ChartOptionsControl";
 // import Tooltip from "@material-ui/Tooltip";
 import { showTourGuide } from "../../redux/actions/tourAction";
-import store from "../../redux/store";
-import TourPlayIcon from "@material-ui/icons/PlayArrow";
+// import store from "../../redux/store";
+// import TourPlayIcon from "@material-ui/icons/PlayArrow";
 import {
   toggleSidebar,
   toggleSidebarMobile,
@@ -69,7 +69,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     },
     sidebar: { open },
   } = useSelector((state: RootState) => state);
-  const { chart } = store.getState();
+  //const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
@@ -78,12 +78,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     selectedBannerQuestionId,
   } = questions;
 
-  const toggleSidebarOpen = () => {
-    dispatch(toggleSidebar());
-  };
-  const toggleMobileSidebar = () => {
-    dispatch(toggleSidebarMobile());
-  };
+  // const toggleSidebarOpen = () => {
+  //   dispatch(toggleSidebar());
+  // };
+  // const toggleMobileSidebar = () => {
+  //   dispatch(toggleSidebarMobile());
+  // };
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -166,6 +166,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       Toaster.error(StaticText.BANNER_SELECTION_EXCEPTION);
     }
   };
+
+  // setTimeout(() => {
+  //   apirequestDelay:true,
+  // }, 5000);
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
@@ -318,12 +322,15 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         {/* {questionData?.type !== QuestionType.SINGLE || 
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
 
+        {/* {console.log("chatLoader()", chatLoader())} */}
         {chartLoading ? (
           <Loader />
         ) : chartType === ChartType.TABLE ? (
           <TableView />
         ) : (
-          <Chart />
+          <>
+            <Chart />
+          </>
         )}
         <div className="chart-content__base-count">
           Sample Size: {baseCount}

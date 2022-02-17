@@ -1,7 +1,10 @@
 import { Button } from "@material-ui/core";
 import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setChartData, setChartTranspose } from "../../../../redux/actions/chartActions";
+import {
+  setChartData,
+  setChartTranspose,
+} from "../../../../redux/actions/chartActions";
 import {
   fetchFilterList,
   resetFilters,
@@ -10,7 +13,10 @@ import {
   setFilters,
 } from "../../../../redux/actions/filterActions";
 import store, { RootState } from "../../../../redux/store";
-import { fetchChartData, transposeChart } from "../../../../services/ChartService";
+import {
+  fetchChartData,
+  transposeChart,
+} from "../../../../services/ChartService";
 import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
@@ -86,22 +92,21 @@ const ChartSidebarContent: React.FC = () => {
   const applyFilters = () => {
     const { chart } = store.getState();
     dispatch(setAppliedFilters(filters));
-    if(chart.chartTranspose){
+    if (chart.chartTranspose) {
       fetchChartData()
-      .then((chartData) => {
-        dispatch(setChartData(chartData));
-         transposeChart();
-         dispatch(setChartTranspose(chart.chartTranspose));
-      })
-      .catch((error) => console.log(error));
-        
-         
-         }
-    else{
-        fetchChartData().then((chartData) => {
-            dispatch(setChartData(chartData));
-          }).catch((error) => console.log(error));
-         }
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+          transposeChart();
+          dispatch(setChartTranspose(chart.chartTranspose));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -137,7 +142,7 @@ const ChartSidebarContent: React.FC = () => {
             dispatch(resetFilters());
           }}
         >
-          Reset
+          Clear
         </Button>
       </div>
     </div>

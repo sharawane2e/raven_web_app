@@ -6,6 +6,7 @@ import { errorMessages } from "../constants/messages";
 import { logOutUser } from "../services/AuthService";
 import store from "../redux/store";
 import { setChartLoading } from "../redux/actions/chartActions";
+import { timeout } from "./Utility";
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
@@ -17,10 +18,9 @@ const token = LocalStorageUtils.getToken();
 if (token) {
   axiosInstance.defaults.headers.common["Authorization"] = "bearer " + token;
 }
-const {dispatch} = store;
+const { dispatch } = store;
 
 const ApiRequest = {
-  
   request: async function (
     url: string,
     method: MethodType,
@@ -34,11 +34,14 @@ const ApiRequest = {
     };
     try {
       dispatch(setChartLoading(true));
-      const apiResponse = await axiosInstance(url, {
-        data,
-        method,
-        ...params,
-      });
+      const [apiResponse, timeoutResponse] = await Promise.all([
+        axiosInstance(url, {
+          data,
+          method,
+          ...params,
+        }),
+        timeout(1000),
+      ]);
       response = apiResponse.data;
       dispatch(setChartLoading(false));
     } catch (error: any) {
