@@ -480,6 +480,9 @@ export const getPlotOptions = (
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
+  }else{
+    delete plotOptions["series"].dataLabels.y;
+    delete plotOptions["series"].dataLabels.rotation;
   }
   return plotOptions;
 };
