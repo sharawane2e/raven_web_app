@@ -45,7 +45,7 @@ export const getChartOptions = (
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.NPS:
-        return getGridChartOptions(questionData, chartData, baseCount);
+        return getNpsChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(questionData, chartData, baseCount);
 
@@ -273,6 +273,7 @@ const getGridChartOptions = (
         }
       }
       const base = optionData?.baseCount || baseCount;
+
       let plotValue;
       // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -281,11 +282,6 @@ const getGridChartOptions = (
         plotValue = count;
       }
 
-      // if (plotValue > 0) {
-      // data.push({
-      //   name: subGroup.labelText,
-      //   y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-      // });
       if (questionData.type === QuestionType.NPS) {
         data.push({
           name: subGroup.labelText,
@@ -386,6 +382,98 @@ const getGridMultiChartOptions = (
         dataLabels,
       });
   }
+  return {
+    legend: {
+      enabled: true,
+    },
+    tooltip: { ...getToolTip() },
+    series,
+  };
+};
+
+const getNpsChartOptions = (
+  questionData: IQuestion,
+  chartData: any,
+  baseCount: number
+): any => {
+  const categories = [];
+  const series = [];
+
+  const subGroups = questionData.subGroups.filter((subGroup: any) => {
+    const subGroupData = chartData.find(
+      (data: any) => data._id === subGroup.qId
+    );
+    if (subGroupData && subGroupData.options.length) return true;
+    return false;
+  });
+
+  const {
+    chart: { chartLabelType },
+  } = store.getState();
+
+  for (
+    let scaleIndex = 0;
+    scaleIndex < questionData.scale.length;
+    scaleIndex++
+  ) {
+    const scale = questionData.scale[scaleIndex];
+    const data: any[] = [];
+    for (
+      let subGroupIndex = 0;
+      subGroupIndex < subGroups.length;
+      subGroupIndex++
+    ) {
+      const subGroup = subGroups[subGroupIndex];
+      categories.push(subGroup.labelText);
+      const optionData = chartData.find((c: any) => c._id === subGroup.qId);
+
+      let count = 0;
+      let label;
+      // debugger;
+      if (optionData) {
+        label = optionData.options.find(
+          (option: any) => option.option === scale.labelCode
+        );
+
+        if (label) {
+          count = label.count;
+        }
+      }
+      // const base = optionData?.baseCount || baseCount;
+      // console.log("OPD", optionData);
+      // console.log("label", label);
+      const base = label?.baseCount || optionData?.baseCount;
+      // console.log(base);
+      let plotValue;
+      // plotValue = (count / baseCount) * 100;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
+        plotValue = (count / base) * 100;
+      } else {
+        plotValue = count;
+      }
+
+      if (questionData.type === QuestionType.NPS) {
+        data.push({
+          name: subGroup.labelText,
+          y: round(plotValue, decimalPrecision),
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        });
+      }
+      // }
+    }
+    if (data.length)
+      series.push({
+        name: scale.labelText,
+        color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
+        data,
+        dataLabels,
+      });
+  }
+
   return {
     legend: {
       enabled: true,
