@@ -267,7 +267,6 @@ export const transposeChart = () => {
         baseCount += count == undefined ? 0 : count;
       });
       if (
-        chartDataClone.questionData.type == QuestionType.NPS ||
         chartDataClone.questionData.type == QuestionType.GRID ||
         chartDataClone.questionData.type == QuestionType.GRID_MULTI
       ) {
