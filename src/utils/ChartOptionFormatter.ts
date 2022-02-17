@@ -204,12 +204,15 @@ const getSingleChartOptions = (
 
     if (chartType === ChartType.STACK) {
       data.map((element: any, index: number) => {
+        console.log("element", element);
         const name = element.name;
         const color = colorArr[index];
         const data = [
           {
             name: questionData.labelText,
             y: element.y,
+            numberValue: element.numberValue,
+            percentageValue: element.percentageValue,
           },
         ];
         series.push({ name, color, data, dataLabels });
@@ -227,9 +230,7 @@ const getSingleChartOptions = (
       legend: {
         enabled: false,
       },
-
       tooltip: { ...getToolTip() },
-
       series,
     };
   }
@@ -425,7 +426,7 @@ const getToolTip = () => {
   tooltip["headerFormat"] =
     '<span style="font-size:11px">{series.name}</span><br>';
   tooltip["pointFormat"] =
-    "<span>{point.name}</span>: <b>Count {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
 
   // if (chartLabelType === ChartLabelType.PERCENTAGE) {
   //   tooltip["headerFormat"] =
