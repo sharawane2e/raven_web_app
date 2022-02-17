@@ -44,26 +44,23 @@ const filterReducer = createReducer(initialState, (builder) => {
     return { ...state, appliedFilters };
   });
 
-  builder.addCase(removeAllFilters, (state, action) => {
-    const appliedFilters: IFilter[] = JSON.parse(
-      JSON.stringify(state.appliedFilters)
-    );
-    const spliceIndex = appliedFilters.findIndex(
-      (appliedFilter) =>
-        appliedFilter.qId === action.payload.qId &&
-        appliedFilter.code === action.payload.code
-    );
-    appliedFilters.splice(spliceIndex, 1);
-    return { ...state, appliedFilters };
-  });
+  // builder.addCase(removeAllFilters, (state, action) => {
+  //   const appliedFilters: IFilter[] = JSON.parse(
+  //     JSON.stringify(state.appliedFilters)
+  //   );
+  //   const spliceIndex = appliedFilters.findIndex(
+  //     (appliedFilter) =>
+  //       appliedFilter.qId === action.payload.qId &&
+  //       appliedFilter.code === action.payload.code
+  //   );
+  //   appliedFilters.splice(spliceIndex, 1);
+  //   return { ...state, appliedFilters };
+  // });
 
   builder.addCase(resetFilters, (state) => {
     let filterQuestionList = JSON.parse(
       JSON.stringify(state.filterQuestionList)
     ) as IFilterQuestion[];
-    const appliedFilters: IFilter[] = JSON.parse(
-      JSON.stringify(state.appliedFilters)
-    );
 
     filterQuestionList = filterQuestionList.map((filterQuestion) => {
       filterQuestion.value = [];

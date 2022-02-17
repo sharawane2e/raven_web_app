@@ -24,6 +24,7 @@ import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 
 import { IFilter } from "../../../../types/IFilter";
+import { filter } from "lodash";
 
 const ChartSidebarContent: React.FC = () => {
   const dispatch = useDispatch();
@@ -115,8 +116,25 @@ const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
   console.log("appliedFilters", appliedFilters);
 
-  const removeFilter = () => {
+  const removeFilter = (filter: IFilter | IFilter[]) => {
     dispatch(resetFilters());
+    const { chart } = store.getState();
+    // dispatch(removeAppliedFilter(filter));
+    if (chart.chartTranspose) {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+          transposeChart();
+          dispatch(setChartTranspose(chart.chartTranspose));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -150,11 +168,11 @@ const ChartSidebarContent: React.FC = () => {
         <Button
           className="clear-button"
           onClick={() => {
-            removeFilter;
+            removeFilter(appliedFilters);
             //dispatch(resetFilters());
           }}
         >
-          Reset
+          Clear
         </Button>
       </div>
     </div>
