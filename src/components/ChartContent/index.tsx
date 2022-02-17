@@ -167,10 +167,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }
   };
 
-  // setTimeout(() => {
-  //   apirequestDelay:true,
-  // }, 5000);
-
   const bannerQuestion: JSX.Element = (
     <SingleSelect
       options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}

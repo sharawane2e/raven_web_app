@@ -16,3 +16,12 @@
     background: none;
   }
 }
+.is-admin {
+  color: map-get($map: $text-color, $key: light);
+  .MuiCheckbox-root {
+    color: map-get($map: $text-color, $key: light);
+  }
+  .MuiSvgIcon-root {
+    color: map-get($map: $text-color, $key: light);
+  }
+}
