@@ -267,6 +267,7 @@ export const transposeChart = () => {
         baseCount += count == undefined ? 0 : count;
       });
       if (
+        chartDataClone.questionData.type == QuestionType.NPS ||
         chartDataClone.questionData.type == QuestionType.GRID ||
         chartDataClone.questionData.type == QuestionType.GRID_MULTI
       ) {
@@ -282,6 +283,7 @@ export const transposeChart = () => {
     chartDataClone.chartData = newChartData;
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
+    console.log("NPS-c  ", chartDataClone);
   } else if (
     chartDataClone.bannerQuestionData &&
     (chartDataClone.questionData.type == QuestionType.SINGLE ||
@@ -310,7 +312,10 @@ export const transposeChart = () => {
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
-  } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
+  } else if (
+    chartDataClone.questionData.type == QuestionType.GRID_MULTI ||
+    chartDataClone.questionData.type == QuestionType.NPS
+  ) {
     const newSubGroup: any = [];
     const newScale: any = [];
     const newChartData: any = [];
