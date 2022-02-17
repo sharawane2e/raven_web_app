@@ -9,3 +9,7 @@ export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
   return percentageValue + "%";
 }
+
+export function timeout(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
