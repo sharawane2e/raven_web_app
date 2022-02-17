@@ -11,6 +11,8 @@ import {
   setAppliedFilters,
   setFilterQuestionList,
   setFilters,
+  removeAppliedFilter,
+  removeAllFilters,
 } from "../../../../redux/actions/filterActions";
 import store, { RootState } from "../../../../redux/store";
 import {
@@ -20,6 +22,8 @@ import {
 import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
+
+import { IFilter } from "../../../../types/IFilter";
 
 const ChartSidebarContent: React.FC = () => {
   const dispatch = useDispatch();
@@ -108,6 +112,12 @@ const ChartSidebarContent: React.FC = () => {
         .catch((error) => console.log(error));
     }
   };
+  const { appliedFilters } = useSelector((state: RootState) => state.filters);
+  console.log("appliedFilters", appliedFilters);
+
+  const removeFilter = () => {
+    dispatch(resetFilters());
+  };
 
   return (
     <div className="chart-sidebar">
@@ -136,10 +146,12 @@ const ChartSidebarContent: React.FC = () => {
         >
           Apply
         </Button>
+
         <Button
           className="clear-button"
           onClick={() => {
-            dispatch(resetFilters());
+            removeFilter;
+            //dispatch(resetFilters());
           }}
         >
           Reset
