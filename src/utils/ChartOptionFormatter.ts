@@ -22,7 +22,6 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
- 
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -63,7 +62,6 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -73,7 +71,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart:{chartType}
+    chart: { chartType },
   } = store.getState();
 
   const {
@@ -120,25 +118,33 @@ const getSingleChartOptions = (
             (sum: number, option: any) => sum + option.count,
             0
           );
-          
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
-          } else if(chartLabelType === ChartLabelType.NUMBER && label) {
+          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
+          if (label) {
+            let percentageValue = (label.count / localBase) * 100;
+            let numberValue = label.count;
 
-          // if (label) {
-          //   count = (label.count / localBase) * 100;
-          // }
+            data.push({
+              name: quesOption.labelText,
+              // y: +count.toFixed(decimalPrecision),
+              y: count > 0 ? round(count, decimalPrecision) : null,
+              percentageValue,
+              numberValue,
+            });
+          } else {
+            data.push({
+              name: quesOption.labelText,
+              // y: +count.toFixed(decimalPrecision),
+              y: count > 0 ? round(count, decimalPrecision) : null,
+            });
+          }
         }
 
         // if (count > 0)
-        data.push({
-          name: quesOption.labelText,
-          // y: +count.toFixed(decimalPrecision),
-          y: count > 0 ? round(count, decimalPrecision) : null,
-        });
       }
 
       if (data.length)
@@ -158,7 +164,6 @@ const getSingleChartOptions = (
       series,
     };
   } else {
-    
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -177,6 +182,8 @@ const getSingleChartOptions = (
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
       // plotValue = (count / baseCount) * 100;
+      let percentageValue = (count / baseCount) * 100;
+      let numberValue = count;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / baseCount) * 100;
       } else {
@@ -188,42 +195,43 @@ const getSingleChartOptions = (
           name: option.labelText,
           // y: round(plotValue, decimalPrecision),
           y: plotValue,
+          percentageValue,
+          numberValue,
         });
     }
 
-    const series:any[] = [];
+    const series: any[] = [];
 
-    if(chartType===ChartType.STACK){
-      data.map((element:any,index:number) => {
-        const name  = element.name;
-        const color  = colorArr[index];
-        const data = [{
-          name:questionData.labelText,
-          y:element.y
-        }];
-        series.push({name,color,data,dataLabels});
+    if (chartType === ChartType.STACK) {
+      data.map((element: any, index: number) => {
+        console.log("element", element);
+        const name = element.name;
+        const color = colorArr[index];
+        const data = [
+          {
+            name: questionData.labelText,
+            y: element.y,
+            numberValue: element.numberValue,
+            percentageValue: element.percentageValue,
+          },
+        ];
+        series.push({ name, color, data, dataLabels });
       });
-    }else{
-      
-      series.push( {
+    } else {
+      series.push({
         color: primaryBarColor,
         name: questionData.labelText,
         data,
         dataLabels,
-      })
-      
+      });
     }
-
 
     return {
       legend: {
         enabled: false,
       },
-
       tooltip: { ...getToolTip() },
-
-      series
-
+      series,
     };
   }
 };
@@ -247,7 +255,7 @@ const getGridChartOptions = (
   const {
     chart: { chartLabelType },
   } = store.getState();
-  
+
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -278,6 +286,8 @@ const getGridChartOptions = (
       }
       const base = optionData?.baseCount || baseCount;
       let plotValue;
+      let percentageValue = (count / base) * 100;
+      let numberValue = count;
       // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
@@ -289,6 +299,8 @@ const getGridChartOptions = (
       data.push({
         name: subGroup.labelText,
         y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        percentageValue,
+        numberValue,
       });
       // }
     }
@@ -360,16 +372,19 @@ const getGridMultiChartOptions = (
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
 
       let plotValue;
-      if(chartLabelType === ChartLabelType.PERCENTAGE){
+      let percentageValue = (count / base) * 100;
+      let numberValue = count;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
-      }else{
-        plotValue = count
+      } else {
+        plotValue = count;
       }
-    
 
       data.push({
         name: subGroup.labelText,
         y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        percentageValue,
+        numberValue,
       });
     }
     if (data.length)
@@ -408,17 +423,22 @@ const getToolTip = () => {
     pointFormat: "",
   };
 
-  if (chartLabelType === ChartLabelType.PERCENTAGE) {
-    tooltip["headerFormat"] =
-      '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
-  } else {
-    tooltip["headerFormat"] =
-      '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
-  }
+  tooltip["headerFormat"] =
+    '<span style="font-size:11px">{series.name}</span><br>';
+  tooltip["pointFormat"] =
+    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+
+  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
+  // } else {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
+  // }
 
   return tooltip;
 };
@@ -432,7 +452,7 @@ export const getPlotOptions = (
 
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
-      stacking: "normal",      
+      stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE

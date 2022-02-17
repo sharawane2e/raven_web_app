@@ -68,7 +68,7 @@ const filterReducer = createReducer(initialState, (builder) => {
     return {
       ...state,
       filterQuestionList,
-      appliedFilters: [],
+      // appliedFilters: [],
       filters: [],
     };
   });
