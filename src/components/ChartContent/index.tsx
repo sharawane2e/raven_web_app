@@ -112,6 +112,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       questionData?.type === QuestionType.GRID ||
       questionData?.type === QuestionType.GRID_MULTI ||
       questionData?.type === QuestionType.RANK ||
+      questionData?.type === QuestionType.NPS ||
       questionData?.type === undefined
     ) {
       dispatch(setSelectedBannerQuestionId(""));
@@ -131,6 +132,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
           chartType === ChartType.PIE
+        ) {
+          changeChartType(ChartType.COLUMN);
+        }
+
+        if (
+          chartData.questionData?.type === QuestionType.NPS &&
+          chartType !== ChartType.COLUMN
         ) {
           changeChartType(ChartType.COLUMN);
         }

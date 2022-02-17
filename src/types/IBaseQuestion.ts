@@ -9,6 +9,7 @@ export interface IBaseQuestion {
   // labelText: string;
   questionText: string;
   type: QuestionType;
+  minBase: number;
 }
 
 export interface IQuestionOption {

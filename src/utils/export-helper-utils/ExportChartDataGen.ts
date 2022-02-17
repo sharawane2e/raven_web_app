@@ -6,6 +6,7 @@ import { multiGridChartDataGen } from "./MultiGridQuesUtils";
 import { multiChartDataGen } from "./MultiQuesUtils";
 import { rankChartDataGen } from "./RankQuesUtils";
 import { singleChartDataGen } from "./SingleQuesUtils";
+import { npsChartDataGen } from "./NpsQuesUtils";
 
 export function chartDataGen() {
   let seriesData = [];
@@ -35,6 +36,8 @@ export function chartDataGen() {
       seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.RANK) {
       seriesData = rankChartDataGen(questionData, chartData, baseCount);
+    } else if (questionData?.type === QuestionType.NPS) {
+      seriesData = npsChartDataGen(questionData, chartData, baseCount);
     }
   }
   return seriesData;

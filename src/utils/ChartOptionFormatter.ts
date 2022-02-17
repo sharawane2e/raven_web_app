@@ -22,7 +22,6 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
- 
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -45,6 +44,8 @@ export const getChartOptions = (
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
+      case QuestionType.NPS:
+        return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(questionData, chartData, baseCount);
 
@@ -63,7 +64,6 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -73,7 +73,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart:{chartType}
+    chart: { chartType },
   } = store.getState();
 
   const {
@@ -120,11 +120,10 @@ const getSingleChartOptions = (
             (sum: number, option: any) => sum + option.count,
             0
           );
-          
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
-          } else if(chartLabelType === ChartLabelType.NUMBER && label) {
+          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
 
@@ -158,7 +157,6 @@ const getSingleChartOptions = (
       series,
     };
   } else {
-    
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -191,29 +189,28 @@ const getSingleChartOptions = (
         });
     }
 
-    const series:any[] = [];
+    const series: any[] = [];
 
-    if(chartType===ChartType.STACK){
-      data.map((element:any,index:number) => {
-        const name  = element.name;
-        const color  = colorArr[index];
-        const data = [{
-          name:questionData.labelText,
-          y:element.y
-        }];
-        series.push({name,color,data,dataLabels});
+    if (chartType === ChartType.STACK) {
+      data.map((element: any, index: number) => {
+        const name = element.name;
+        const color = colorArr[index];
+        const data = [
+          {
+            name: questionData.labelText,
+            y: element.y,
+          },
+        ];
+        series.push({ name, color, data, dataLabels });
       });
-    }else{
-      
-      series.push( {
+    } else {
+      series.push({
         color: primaryBarColor,
         name: questionData.labelText,
         data,
         dataLabels,
-      })
-      
+      });
     }
-
 
     return {
       legend: {
@@ -222,8 +219,7 @@ const getSingleChartOptions = (
 
       tooltip: { ...getToolTip() },
 
-      series
-
+      series,
     };
   }
 };
@@ -247,7 +243,7 @@ const getGridChartOptions = (
   const {
     chart: { chartLabelType },
   } = store.getState();
-  
+
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -286,10 +282,21 @@ const getGridChartOptions = (
       }
 
       // if (plotValue > 0) {
-      data.push({
-        name: subGroup.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-      });
+      // data.push({
+      //   name: subGroup.labelText,
+      //   y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+      // });
+      if (questionData.type === QuestionType.NPS) {
+        data.push({
+          name: subGroup.labelText,
+          y: round(plotValue, decimalPrecision),
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        });
+      }
       // }
     }
     if (data.length)
@@ -360,12 +367,11 @@ const getGridMultiChartOptions = (
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
 
       let plotValue;
-      if(chartLabelType === ChartLabelType.PERCENTAGE){
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
-      }else{
-        plotValue = count
+      } else {
+        plotValue = count;
       }
-    
 
       data.push({
         name: subGroup.labelText,
@@ -432,7 +438,7 @@ export const getPlotOptions = (
 
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
-      stacking: "normal",      
+      stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
