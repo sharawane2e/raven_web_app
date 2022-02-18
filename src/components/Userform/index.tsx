@@ -86,6 +86,7 @@ const UserForm: React.FC<UserFormProps> = (props) => {
           render={({ field }) => (
             <FormControlLabel
               label="Is admin"
+              className="is-admin"
               control={<Checkbox {...field} disableRipple />}
               checked={field.value}
               disabled={user && user.isKeyAdmin}
