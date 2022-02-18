@@ -1,18 +1,15 @@
 import { Button } from "@material-ui/core";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setChartData,
   setChartTranspose,
 } from "../../../../redux/actions/chartActions";
 import {
-  fetchFilterList,
   resetFilters,
   setAppliedFilters,
   setFilterQuestionList,
   setFilters,
-  removeAppliedFilter,
-  removeAllFilters,
 } from "../../../../redux/actions/filterActions";
 import store, { RootState } from "../../../../redux/store";
 import {
@@ -22,11 +19,10 @@ import {
 import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
-
 import { IFilter } from "../../../../types/IFilter";
-import { filter } from "lodash";
 
 const ChartSidebarContent: React.FC = () => {
+  const { appliedFilters } = useSelector((state: RootState) => state.filters);
   const dispatch = useDispatch();
   const {
     filters: { filterQuestionList, filters },
@@ -113,13 +109,10 @@ const ChartSidebarContent: React.FC = () => {
         .catch((error) => console.log(error));
     }
   };
-  const { appliedFilters } = useSelector((state: RootState) => state.filters);
-  console.log("appliedFilters", appliedFilters);
 
   const removeFilter = (filter: IFilter | IFilter[]) => {
     dispatch(resetFilters());
     const { chart } = store.getState();
-    // dispatch(removeAppliedFilter(filter));
     if (chart.chartTranspose) {
       fetchChartData()
         .then((chartData) => {
