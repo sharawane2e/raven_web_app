@@ -59,6 +59,11 @@ export const fetchChartData = async (
         response.data.questionData,
         response.data.baseCount
       );
+      chartData.questionData = formatQuestionDataWithBaseCount(
+        chartData.chartData,
+        response.data.questionData,
+        response.data.baseCount
+      );
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
         response.data.questionData
@@ -69,8 +74,7 @@ export const fetchChartData = async (
         response.data.bannerQuestionData
       );
 
-      chartData.questionData = formatedQData[0];
-      chartData.bannerQuestionData = formatedQData[1];
+      chartData.bannerQuestionData = response.data.bannerQuestionData;
 
       chartData.chartOptions = {
         ...chart.chartOptions,
@@ -88,34 +92,54 @@ export const fetchChartData = async (
   return chartData;
 };
 
+export const formatQuestionDataWithBaseCount = (
+  chartData: any[],
+  question: IQuestion,
+  baseCountData: any[]
+) => {
+  let questionData = JSON.parse(JSON.stringify(question));
+  let newSubGroup: any = [];
+  if (question.type == QuestionType.NPS) {
+    for (let i = 0; i < questionData.subGroups.length; i++) {
+      const subGroup = questionData.subGroups[i];
+      const optionData = chartData.find((c: any) => c._id === subGroup.qId);
+      if (optionData) {
+        newSubGroup.push(subGroup);
+      }
+    }
+    questionData.subGroups = newSubGroup;
+  }
+  return questionData;
+};
+
 export const formatChartDataWithBaseCount = (
   chartData: any[],
   question: IQuestion,
   baseCountData: any[]
 ) => {
-  const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
+  let chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
   if (question.type == QuestionType.NPS) {
+    const chartDataWithMinBase: any = [];
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
         (sum: number, currentObj: any) => sum + currentObj.count,
         0
       );
-      const promoters = data.options.find((obj: any) => {
-        return obj.option == 3;
-      });
-      const detractors = data.options.find((obj: any) => {
-        return obj.option == 1;
-      });
-
-      const promoterCount = promoters?.count ? promoters.count : 0;
-      const detractorsCount = detractors?.count ? detractors.count : 0;
-
-      let npsCount = promoterCount - detractorsCount;
-
-      // console.log("data.id",data._id);
-      // console.log("npsCount",npsCount);
-      data.options.push({ option: "4", count: npsCount });
+      if (data.baseCount >= question.minBase) {
+        const promoters = data.options.find((obj: any) => {
+          return obj.option == 3;
+        });
+        const detractors = data.options.find((obj: any) => {
+          return obj.option == 1;
+        });
+        const promoterCount = promoters?.count ? promoters.count : 0;
+        const detractorsCount = detractors?.count ? detractors.count : 0;
+        let npsCount = promoterCount - detractorsCount;
+        data.options.push({ option: "4", count: npsCount });
+        chartDataWithMinBase.push(data);
+      }
     });
+    chartDataWithUpdatedBase = chartDataWithMinBase;
   } else if (question.type == QuestionType.GRID) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
@@ -282,7 +306,6 @@ export const transposeChart = () => {
     chartDataClone.chartData = newChartData;
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
-    console.log("NPS-c  ", chartDataClone);
   } else if (
     chartDataClone.bannerQuestionData &&
     (chartDataClone.questionData.type == QuestionType.SINGLE ||
