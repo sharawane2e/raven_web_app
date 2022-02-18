@@ -105,6 +105,7 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
+        console.log(optionData)
 
         let count = 0;
         // debugger;
@@ -124,40 +125,51 @@ const getSingleChartOptions = (
           } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
-          if (label) {
+         
+          // if (label) {
             let percentageValue = (label.count / localBase) * 100;
             let numberValue = label.count;
+            console.log(percentageValue)
+            console.log(numberValue)
 
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          // } else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+              
+          //   });
+          // }
+          
+
+          if(chartType==ChartType.LINE){
+            data.push({
+              name: quesOption.labelText,
+              // y: +count.toFixed(decimalPrecision),
+              y: count !== null ? round(count, decimalPrecision) : 0,
+              percentageValue,
+              numberValue
+            });
+          }else{
             data.push({
               name: quesOption.labelText,
               // y: +count.toFixed(decimalPrecision),
               y: count > 0 ? round(count, decimalPrecision) : null,
               percentageValue,
-              numberValue,
-            });
-          } else {
-            data.push({
-              name: quesOption.labelText,
-              // y: +count.toFixed(decimalPrecision),
-              y: count > 0 ? round(count, decimalPrecision) : null,
+              numberValue
             });
           }
         }
 
     
-        if(chartType==ChartType.LINE){
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y: count !== null ? round(count, decimalPrecision) : 0,
-          });
-        }else{
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y: count > 0 ? round(count, decimalPrecision) : null,
-          });
-        }
+       
        
       }
 
