@@ -1,6 +1,6 @@
 import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
-import { setChartData, setChartTranspose } from "../redux/actions/chartActions";
+import { setChartData, setChartTranspose, setChartType } from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
@@ -166,6 +166,7 @@ export const changeChartType = (newChartType: ChartType) => {
   chartDataClone.chartType = newChartType;
 
   if(chart?.questionData?.type===QuestionType.SINGLE && newChartType === ChartType.COLUMN){
+    dispatch(setChartType(ChartType.COLUMN));
     dispatch(setChartData(chartDataClone));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
@@ -179,21 +180,58 @@ export const changeChartType = (newChartType: ChartType) => {
   }
 
   else if(newChartType === ChartType.LINE){
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "line",
-    };
+
+    dispatch(setChartType(ChartType.LINE));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart:{
+        ...chartDataClone.chartOptions["chart"],
+        type: "line",
+      },
+      ...getChartOptions()
+    }
+
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "line",
+    // };
   }
  else if (newChartType === ChartType.PIE) {
-    chartDataClone.chartOptions["chart"] = {
+  dispatch(setChartType(ChartType.PIE));
+
+  chartDataClone.chartOptions = {
+    ...chartDataClone.chartOptions,
+    chart:{
       ...chartDataClone.chartOptions["chart"],
       type: "pie",
-    };
+    },
+    ...getChartOptions()
+  }
+
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "pie",
+    // };
   } else {
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "column",
-    };
+    dispatch(setChartType(ChartType.PIE));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart:{
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
+      },
+      ...getChartOptions()
+    }
+
+
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "column",
+    // };
+
+
   }
   chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 

@@ -44,7 +44,11 @@ export function pptDataGen(
   } else {
     let pptChartType;
 
-    if (chartType === ChartType.PIE) {
+    if (chartType === ChartType.LINE) {
+      chartColors = [...colorArr];
+      pptChartType = pptxGenJsObj.ChartType.line;
+    }
+    else if (chartType === ChartType.PIE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {

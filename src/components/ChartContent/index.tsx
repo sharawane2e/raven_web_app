@@ -144,12 +144,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         } else if (
           chartData.questionData?.type === QuestionType.SINGLE &&
-          chartData.bannerQuestionData == null
+          chartData.bannerQuestionData == null && chartType !== ChartType.LINE
         ) {
           changeChartType(ChartType.COLUMN);
         }
