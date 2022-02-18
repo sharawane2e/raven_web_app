@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { IFilter } from "../../types/IFilter";
 import { IFilterQuestion } from "../../types/IFilterQuestion";
 import {
+  removeAllFilters,
   removeAppliedFilter,
   resetFilters,
   setAppliedFilters,
@@ -60,6 +61,7 @@ const filterReducer = createReducer(initialState, (builder) => {
     let filterQuestionList = JSON.parse(
       JSON.stringify(state.filterQuestionList)
     ) as IFilterQuestion[];
+
     filterQuestionList = filterQuestionList.map((filterQuestion) => {
       filterQuestion.value = [];
       return filterQuestion;
@@ -68,6 +70,8 @@ const filterReducer = createReducer(initialState, (builder) => {
     return {
       ...state,
       filterQuestionList,
+      appliedFilters: [],
+      // appliedFilters: [],
       filters: [],
     };
   });

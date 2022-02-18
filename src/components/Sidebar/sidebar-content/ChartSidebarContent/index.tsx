@@ -1,21 +1,28 @@
 import { Button } from "@material-ui/core";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setChartData, setChartTranspose } from "../../../../redux/actions/chartActions";
 import {
-  fetchFilterList,
+  setChartData,
+  setChartTranspose,
+} from "../../../../redux/actions/chartActions";
+import {
   resetFilters,
   setAppliedFilters,
   setFilterQuestionList,
   setFilters,
 } from "../../../../redux/actions/filterActions";
 import store, { RootState } from "../../../../redux/store";
-import { fetchChartData, transposeChart } from "../../../../services/ChartService";
+import {
+  fetchChartData,
+  transposeChart,
+} from "../../../../services/ChartService";
 import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
+import { IFilter } from "../../../../types/IFilter";
 
 const ChartSidebarContent: React.FC = () => {
+  const { appliedFilters } = useSelector((state: RootState) => state.filters);
   const dispatch = useDispatch();
   const {
     filters: { filterQuestionList, filters },
@@ -86,22 +93,41 @@ const ChartSidebarContent: React.FC = () => {
   const applyFilters = () => {
     const { chart } = store.getState();
     dispatch(setAppliedFilters(filters));
-    if(chart.chartTranspose){
+    if (chart.chartTranspose) {
       fetchChartData()
-      .then((chartData) => {
-        dispatch(setChartData(chartData));
-         transposeChart();
-         dispatch(setChartTranspose(chart.chartTranspose));
-      })
-      .catch((error) => console.log(error));
-        
-         
-         }
-    else{
-        fetchChartData().then((chartData) => {
-            dispatch(setChartData(chartData));
-          }).catch((error) => console.log(error));
-         }
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+          transposeChart();
+          dispatch(setChartTranspose(chart.chartTranspose));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+
+  const removeFilter = (filter: IFilter | IFilter[]) => {
+    dispatch(resetFilters());
+    const { chart } = store.getState();
+    if (chart.chartTranspose) {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+          transposeChart();
+          dispatch(setChartTranspose(chart.chartTranspose));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -131,13 +157,15 @@ const ChartSidebarContent: React.FC = () => {
         >
           Apply
         </Button>
+
         <Button
           className="clear-button"
           onClick={() => {
-            dispatch(resetFilters());
+            removeFilter(appliedFilters);
+            //dispatch(resetFilters());
           }}
         >
-          Reset
+          Clear
         </Button>
       </div>
     </div>
