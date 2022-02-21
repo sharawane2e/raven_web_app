@@ -27,11 +27,11 @@ enum ApiUrl {
 
   RESEND_ACTIVATION_MAIL = "/user/resend-activation-email",
 
-  FILTER = "/filters",
+  FILTER = "/filters/2",
 
-  QUESTION = "/question",
+  QUESTION = "/question/2",
 
-  BANNER_QUESTION = "/question/banner",
+  BANNER_QUESTION = "/question/banner/2",
 
   CHART = "/chart",
 }

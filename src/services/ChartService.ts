@@ -45,6 +45,7 @@ export const fetchChartData = async (
       ? bannerQuestionId
       : selectedBannerQuestionId;
     const body = {
+      wave: 2,
       qId: quesId,
       type: questionList.find((ques: any) => ques.qId === quesId)?.type || "",
       filters: chartFilters,
