@@ -46,6 +46,7 @@ import LabelTypeControl from "../LabelTypeControl";
 import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
+import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -53,8 +54,8 @@ interface ChartContentProps {
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
   const [showBannerException, setShowBannerException] = useState(true);
-
-  const [openQSelection,setOpenQSelection] = useState(false);
+  const [openQSelection, setOpenQSelection] = useState(false);
+  const [OpenQuestionCross, setOpenQuestionCross] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
@@ -171,18 +172,19 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }
   };
 
-  const handleQSelectionOpen = () =>{
-    setOpenQSelection(true)
-  }
+  const handleQSelectionOpen = () => {
+    setOpenQSelection(true);
+  };
 
-  const handleQSelectionClose = () =>{
-    setOpenQSelection(false)
-  }
+  const handleQSelectionClose = () => {
+    setOpenQSelection(false);
+  };
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
       options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
       value={selectedBannerQuestionId}
+      open={questions.disableBannerQuestion ? false : OpenQuestionCross}
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
       valueKey="qId"
@@ -193,6 +195,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       MenuProps={{
         classes: { paper: "testing" },
       }}
+      handleClose={() => setOpenQuestionCross(false)}
+      handleOpen={() => setOpenQuestionCross(true)}
     />
   );
 
@@ -301,6 +305,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
                 classes: { paper: "testing" },
               }}
               open={openQSelection}
+              handleClose={handleQSelectionClose}
+              handleOpen={handleQSelectionOpen}
             />
           </Grid>
           <Grid xs={4}>
@@ -330,21 +336,27 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
         {/* {questionData?.type !== QuestionType.SINGLE || 
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
-
-        <div
-          className="noQuestion--selected"
-          onClick={handleQSelectionOpen}
-        >
-          <No_Question_Selected />
-        </div>
-
-        {/* {chartLoading ? (
+        {chart?.questionData === null ? (
+          <div className="noQuestion--selected" onClick={handleQSelectionOpen}>
+            <No_Question_Selected />
+          </div>
+        ) : (
+          ""
+        )}
+        {chart?.chartData == [] ? (
+          <div className="noQuestion--selected">
+            <No_Data_Found />
+          </div>
+        ) : (
+          ""
+        )}
+        {chartLoading ? (
           <Loader />
         ) : chartType === ChartType.TABLE ? (
           <TableView />
         ) : (
           <Chart />
-        )} */}
+        )}
         <div className="chart-content__base-count">
           Sample Size: {baseCount}
           {/* executives across Global 2000 enterprises */}
