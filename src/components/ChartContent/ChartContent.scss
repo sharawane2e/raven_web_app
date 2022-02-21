@@ -228,6 +228,12 @@
     background: map-get($map: $bg-color, $key: secondary-dark);
     position: relative;
   }
+  & .noQuestion--selected {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 .orientation-control {
   .active {

@@ -67,7 +67,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart: { chartLabelType,chartOptions },
+    chart: { chartLabelType, chartOptions },
   } = store.getState();
 
   const {
@@ -105,7 +105,7 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        console.log(optionData)
+        console.log(optionData);
 
         let count = 0;
         // debugger;
@@ -125,12 +125,8 @@ const getSingleChartOptions = (
           } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
-         
+
           // if (label) {
-            let percentageValue = (label.count / localBase) * 100;
-            let numberValue = label.count;
-            console.log(percentageValue)
-            console.log(numberValue)
 
           //   data.push({
           //     name: quesOption.labelText,
@@ -144,33 +140,40 @@ const getSingleChartOptions = (
           //     name: quesOption.labelText,
           //     // y: +count.toFixed(decimalPrecision),
           //     y: count > 0 ? round(count, decimalPrecision) : null,
-              
+
           //   });
           // }
-          
-
-          if(chartType==ChartType.LINE){
+          if (label) {
+            let percentageValue = (label.count / localBase) * 100;
+            let numberValue = label.count;
             data.push({
               name: quesOption.labelText,
               // y: +count.toFixed(decimalPrecision),
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
-              numberValue
-            });
-          }else{
-            data.push({
-              name: quesOption.labelText,
-              // y: +count.toFixed(decimalPrecision),
-              y: count > 0 ? round(count, decimalPrecision) : null,
-              percentageValue,
-              numberValue
+              numberValue,
             });
           }
-        }
 
-    
-       
-       
+          // if(chartType==ChartType.LINE){
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count !== null ? round(count, decimalPrecision) : 0,
+          //     percentageValue,
+          //     numberValue
+          //   });
+          // }
+          // else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          //}
+        }
       }
 
       if (data.length)
@@ -280,7 +283,7 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartLabelType,chartType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
 
   for (
@@ -323,22 +326,22 @@ const getGridChartOptions = (
       }
 
       // if (plotValue > 0) {
-        if(chartType==ChartType.LINE){
-          data.push({
-            name: subGroup.labelText,
-            y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
-            percentageValue,
-            numberValue
-          });
-        }else{
-          data.push({
-            name: subGroup.labelText,
-            y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-            percentageValue,
-            numberValue
-          });
-        }
-      
+      if (chartType == ChartType.LINE) {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+          percentageValue,
+          numberValue,
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          percentageValue,
+          numberValue,
+        });
+      }
+
       // }
     }
     if (data.length)
@@ -376,7 +379,7 @@ const getGridMultiChartOptions = (
   });
 
   const {
-    chart: { chartLabelType,chartType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
 
   for (
@@ -416,19 +419,18 @@ const getGridMultiChartOptions = (
       } else {
         plotValue = count;
       }
-    
-      if(chartType===ChartType.LINE){
+
+      if (chartType === ChartType.LINE) {
         data.push({
           name: subGroup.labelText,
-          y: plotValue !==null ? round(plotValue, decimalPrecision) : 0,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
         });
-      }else{
+      } else {
         data.push({
           name: subGroup.labelText,
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
         });
       }
-      
     }
     if (data.length)
       series.push({
@@ -534,7 +536,7 @@ export const getPlotOptions = (
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
-  }else{
+  } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   }
