@@ -235,6 +235,9 @@
     align-items: center;
   }
 }
+.noQuestion--selected + .noQuestion--selected {
+  display: none;
+}
 .orientation-control {
   .active {
     &:not(.Mui-disabled) {

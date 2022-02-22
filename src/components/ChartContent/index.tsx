@@ -343,12 +343,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           ""
         )}
-        {chart?.chartData == [] ? (
+        {/* {console.log("chartLoading", chartLoading)} */}
+
+        {chart?.chartData.length ? (
+          ""
+        ) : (
           <div className="noQuestion--selected">
             <No_Data_Found />
           </div>
-        ) : (
-          ""
         )}
         {chartLoading ? (
           <Loader />
