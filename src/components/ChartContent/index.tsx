@@ -74,7 +74,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     },
     sidebar: { open },
   } = useSelector((state: RootState) => state);
-  // const { chart } = store.getState();
+  const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
