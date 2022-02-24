@@ -20,11 +20,27 @@ interface SingleSelectProps extends SelectProps {
   onItemSelect?: (value: any) => void;
 
   disabledPredicate?: (value: any) => boolean;
+
+  handleClose?: (value: any) => void;
+
+  handleOpen?: (value: any) => void;
+  handleQSelectionOpenData?: boolean;
 }
 
 const SingleSelect: React.FC<SingleSelectProps> = (props) => {
-  const { value, placeholder, options, labelKey, valueKey, onItemSelect } =
-    props;
+  const {
+    value,
+    placeholder,
+    options,
+    labelKey,
+    open = true,
+    valueKey,
+    //defaultOpen,
+    handleQSelectionOpenData,
+    onItemSelect,
+    handleClose,
+    handleOpen,
+  } = props;
   return (
     <FormControl variant="outlined" className="single-select">
       <Select
@@ -35,6 +51,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
         disabled={props.disabled}
         inputProps={{ "aria-label": "Without label" }}
         IconComponent={ExpandMoreIcon}
+        open={open}
         MenuProps={{
           elevation: 1,
           anchorOrigin: {
@@ -62,6 +79,9 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           }
           return <span>{selected as any}</span>;
         }}
+        onClose={handleClose}
+        onOpen={handleOpen}
+        //defaultOpen={true}
       >
         <CustomScrollbar autoHeight>
           <MenuItem value="" disabled>
