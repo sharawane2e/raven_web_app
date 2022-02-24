@@ -67,7 +67,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, chartOptions },
   } = store.getState();
 
   const {
@@ -144,7 +144,19 @@ const getSingleChartOptions = (
           }
         }
 
-        // if (count > 0)
+        if (chartType == ChartType.LINE) {
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count !== null ? round(count, decimalPrecision) : 0,
+          });
+        } else {
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count > 0 ? round(count, decimalPrecision) : null,
+          });
+        }
       }
 
       if (data.length)
@@ -189,6 +201,7 @@ const getSingleChartOptions = (
       } else {
         plotValue = count;
       }
+      // debugger;
 
       if (plotValue > 0)
         data.push({
@@ -252,7 +265,7 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
 
   for (
@@ -295,12 +308,22 @@ const getGridChartOptions = (
       }
 
       // if (plotValue > 0) {
-      data.push({
-        name: subGroup.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-        percentageValue,
-        numberValue,
-      });
+      if (chartType == ChartType.LINE) {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+          percentageValue,
+          numberValue,
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          percentageValue,
+          numberValue,
+        });
+      }
+
       // }
     }
     if (data.length)
@@ -338,7 +361,7 @@ const getGridMultiChartOptions = (
   });
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
 
   for (
@@ -379,12 +402,17 @@ const getGridMultiChartOptions = (
         plotValue = count;
       }
 
-      data.push({
-        name: subGroup.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-        percentageValue,
-        numberValue,
-      });
+      if (chartType === ChartType.LINE) {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        });
+      }
     }
     if (data.length)
       series.push({
@@ -488,6 +516,9 @@ export const getPlotOptions = (
     }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;
+    delete plotOptions["series"].dataLabels.y;
+    delete plotOptions["series"].dataLabels.rotation;
+  } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   }

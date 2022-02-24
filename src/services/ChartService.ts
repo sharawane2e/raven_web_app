@@ -1,6 +1,11 @@
 import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
-import { setChartData, setChartTranspose } from "../redux/actions/chartActions";
+import {
+  setChartData,
+  setChartOrientation,
+  setChartTranspose,
+  setChartType,
+} from "../redux/actions/chartActions";
 import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest from "../utils/ApiRequest";
@@ -174,28 +179,77 @@ export const changeChartType = (newChartType: ChartType) => {
 
   chartDataClone.chartType = newChartType;
 
-  if (chart?.questionData?.type === QuestionType.SINGLE) {
-    dispatch(setChartData(chartDataClone));
+  if (
+    chart?.questionData?.type === QuestionType.SINGLE &&
+    newChartType === ChartType.COLUMN
+  ) {
+    dispatch(setChartType(ChartType.COLUMN));
+    //dispatch(setChartData(chartDataClone));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
+      },
       ...getChartOptions(),
     };
-  }
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    dispatch(setChartData(chartDataClone));
+  } else if (newChartType === ChartType.LINE) {
+    const lineSetportrait: any = "portrait";
+    dispatch(setChartType(ChartType.LINE));
 
-  if (newChartType === ChartType.PIE) {
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "pie",
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions["chart"],
+        type: "line",
+      },
+      ...getChartOptions(),
     };
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    dispatch(setChartData(chartDataClone));
+    dispatch(setChartOrientation(lineSetportrait));
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "line",
+    // };
+  } else if (newChartType === ChartType.PIE) {
+    dispatch(setChartType(ChartType.PIE));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions["chart"],
+        type: "pie",
+      },
+      ...getChartOptions(),
+    };
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+
+    dispatch(setChartData(chartDataClone));
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "pie",
+    // };
   } else {
-    chartDataClone.chartOptions["chart"] = {
-      ...chartDataClone.chartOptions["chart"],
-      type: "column",
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
+      },
+      ...getChartOptions(),
     };
-  }
-  chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    dispatch(setChartType(ChartType.PIE));
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
-  dispatch(setChartData(chartDataClone));
+    dispatch(setChartData(chartDataClone));
+    // chartDataClone.chartOptions["chart"] = {
+    //   ...chartDataClone.chartOptions["chart"],
+    //   type: "column",
+    // };
+  }
 };
 
 export const transposeChart = () => {
