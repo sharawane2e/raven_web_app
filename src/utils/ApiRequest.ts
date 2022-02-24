@@ -17,10 +17,9 @@ const token = LocalStorageUtils.getToken();
 if (token) {
   axiosInstance.defaults.headers.common["Authorization"] = "bearer " + token;
 }
-const {dispatch} = store;
+const { dispatch } = store;
 
 const ApiRequest = {
-  
   request: async function (
     url: string,
     method: MethodType,
