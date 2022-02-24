@@ -23,8 +23,6 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {
-    console.log("orientation", orientation);
-    // const orientationLineChartChnage= chart.chartType == 5 ? "portrait" : orientation ;
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
