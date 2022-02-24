@@ -126,16 +126,16 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
-    const type = state.questionData?.type;
-    let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
+    // const type = state.questionData?.type;
+    // let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
 
-    if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
-      chartOptions = changeChartOptions(chartOptions, action.payload);
-    }
+    // if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
+    //   chartOptions = changeChartOptions(chartOptions, action.payload);
+    // }
     return {
       ...state,
       chartType: action.payload,
-      chartOptions,
+      // chartOptions,
     };
   });
 

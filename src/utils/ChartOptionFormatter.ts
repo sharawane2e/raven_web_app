@@ -69,7 +69,7 @@ const getSingleChartOptions = (
   } = store.getState();
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType,chartOptions },
   } = store.getState();
 
   const {
@@ -133,12 +133,21 @@ const getSingleChartOptions = (
           // }
         }
 
-        // if (count > 0)
-        data.push({
-          name: quesOption.labelText,
-          // y: +count.toFixed(decimalPrecision),
-          y: count > 0 ? round(count, decimalPrecision) : null,
-        });
+    
+        if(chartType==ChartType.LINE){
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count !== null ? round(count, decimalPrecision) : 0,
+          });
+        }else{
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count > 0 ? round(count, decimalPrecision) : null,
+          });
+        }
+       
       }
 
       if (data.length)
@@ -182,6 +191,7 @@ const getSingleChartOptions = (
       } else {
         plotValue = count;
       }
+      // debugger;
 
       if (plotValue > 0)
         data.push({
@@ -245,7 +255,7 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType,chartType },
   } = store.getState();
   
   for (
@@ -278,6 +288,8 @@ const getGridChartOptions = (
       }
       const base = optionData?.baseCount || baseCount;
       let plotValue;
+      let percentageValue = (count / base) * 100;
+      let numberValue = count;
       // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
@@ -286,10 +298,22 @@ const getGridChartOptions = (
       }
 
       // if (plotValue > 0) {
-      data.push({
-        name: subGroup.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-      });
+        if(chartType==ChartType.LINE){
+          data.push({
+            name: subGroup.labelText,
+            y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+            percentageValue,
+            numberValue
+          });
+        }else{
+          data.push({
+            name: subGroup.labelText,
+            y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+            percentageValue,
+            numberValue
+          });
+        }
+      
       // }
     }
     if (data.length)
@@ -327,7 +351,7 @@ const getGridMultiChartOptions = (
   });
 
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType,chartType },
   } = store.getState();
 
   for (
@@ -366,11 +390,18 @@ const getGridMultiChartOptions = (
         plotValue = count
       }
     
-
-      data.push({
-        name: subGroup.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-      });
+      if(chartType===ChartType.LINE){
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue !==null ? round(plotValue, decimalPrecision) : 0,
+        });
+      }else{
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+        });
+      }
+      
     }
     if (data.length)
       series.push({
@@ -408,17 +439,22 @@ const getToolTip = () => {
     pointFormat: "",
   };
 
-  if (chartLabelType === ChartLabelType.PERCENTAGE) {
-    tooltip["headerFormat"] =
+  tooltip["headerFormat"] =
       '<span style="font-size:11px">{series.name}</span><br>';
     tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
-  } else {
-    tooltip["headerFormat"] =
-      '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
-  }
+      "<span>{point.name}</span>: <b>Count {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+
+  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
+  // } else {
+  //   tooltip["headerFormat"] =
+  //     '<span style="font-size:11px">{series.name}</span><br>';
+  //   tooltip["pointFormat"] =
+  //     "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
+  // }
 
   return tooltip;
 };
@@ -469,6 +505,9 @@ export const getPlotOptions = (
     }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;
+    delete plotOptions["series"].dataLabels.y;
+    delete plotOptions["series"].dataLabels.rotation;
+  }else{
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   }

@@ -6,6 +6,7 @@ import { ReactComponent as ColumnChartIcon } from "../../assets/svg/column-chart
 import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-icon.svg";
 import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../assets/svg/pie-chart.svg";
+import { ReactComponent as LineChartIcon } from "../../assets/svg/line_chart.svg";
 import { QuestionType } from "../../enums/QuestionType";
 import { changeChartType } from "../../services/ChartService";
 import Toaster from "../../utils/Toaster";
@@ -23,6 +24,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
 
   const buttonConfig: ButtonGroupConfig[] = [
   
+    
     {
       tooltip: "Column chart",
       renderChild: () => <ColumnChartIcon />,
@@ -36,6 +38,14 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <StackChartIcon />,
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
+      disabled: chart.questionData === null,
+      disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
+    },
+    {
+      tooltip: "Line chart",
+      renderChild: () => <LineChartIcon />,
+      onClick: () => changeChartType(ChartType.LINE),
+      active: chartType === ChartType.LINE,
       disabled: chart.questionData === null,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
