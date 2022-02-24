@@ -1,6 +1,6 @@
 export interface IFilter {
   label: string;
   code: string;
-  qId: string;
+  qId: any;
   questionLabel: string;
 }

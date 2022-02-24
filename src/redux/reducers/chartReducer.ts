@@ -13,19 +13,19 @@ import {
   setChartLabel,
   setChartTranspose,
   setChartFullScreen,
-  setChartLoading
+  setChartLoading,
 } from "../actions/chartActions";
 
 export interface IChartState {
-  chartLoading:boolean;
+  chartLoading: boolean;
   questionData: IQuestion | null;
   // openQSelection:boolean;
   chartData: any[];
   chartOrientation: ChartOrientation;
   chartType: ChartType;
-  chartLabelType:ChartLabelType,
-  chartTranspose:boolean,
-  chartfullScreen:boolean,
+  chartLabelType: ChartLabelType;
+  chartTranspose: boolean;
+  chartfullScreen: boolean;
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
@@ -36,14 +36,14 @@ export const dataLabels = {
   // format: "{point.y:.1f}%",
   style: {
     fontSize: "10px",
-    textOutline:false,
-    fontWeight:null
+    textOutline: false,
+    fontWeight: null,
   },
 };
 
 export const defaultPlotOptions = {
   series: {
-    pointPadding:0.04,
+    pointPadding: 0.04,
     groupPadding: 0.05,
     borderWidth: 0,
     shadow: false,
@@ -51,34 +51,32 @@ export const defaultPlotOptions = {
       enabled: true,
       format: "{point.y:.1f}%",
       allowOverlap: true,
-      rotation:-90,
+      rotation: -90,
       x: 0,
-      y:-20,
-      crop:false,
+      y: -20,
+      crop: false,
     },
   },
 };
 
-
-
 const initialState: IChartState = {
-  chartLoading:false,
+  chartLoading: false,
   questionData: null,
   // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
-  chartLabelType:ChartLabelType.PERCENTAGE,
-  chartTranspose:false,
-  chartfullScreen:false,
+  chartLabelType: ChartLabelType.PERCENTAGE,
+  chartTranspose: false,
+  chartfullScreen: false,
   chartOptions: {
     title: {
       text: "",
     },
     chart: {
       type: "column",
-      
+
       style: {
         fontFamily: `"Avenir", Arial`,
       },
@@ -143,25 +141,22 @@ const chartReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(setChartLabel, (state, action) => ({
     ...state,
-    chartLabelType:action.payload
+    chartLabelType: action.payload,
   }));
 
   builder.addCase(setChartTranspose, (state, action) => ({
     ...state,
-    chartTranspose:action.payload
-   
+    chartTranspose: action.payload,
   }));
 
   builder.addCase(setChartFullScreen, (state, action) => ({
     ...state,
-    chartfullScreen:action.payload
-   
+    chartfullScreen: action.payload,
   }));
 
   builder.addCase(setChartLoading, (state, action) => ({
     ...state,
-    chartLoading:action.payload
-   
+    chartLoading: action.payload,
   }));
 });
 

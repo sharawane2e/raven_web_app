@@ -10,6 +10,6 @@ export function formatTableData(value: number, divisor: number) {
   return percentageValue + "%";
 }
 
-// export function notNullToZero(){
-//   return 
-// }
+export function timeout(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
