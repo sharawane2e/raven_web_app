@@ -69,7 +69,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     },
     sidebar: { open },
   } = useSelector((state: RootState) => state);
-  const { chart } = store.getState();
+  // const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
   const {
     questionList,
@@ -78,12 +78,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     selectedBannerQuestionId,
   } = questions;
 
-  const toggleSidebarOpen = () => {
-    dispatch(toggleSidebar());
-  };
-  const toggleMobileSidebar = () => {
-    dispatch(toggleSidebarMobile());
-  };
+  // const toggleSidebarOpen = () => {
+  //   dispatch(toggleSidebar());
+  // };
+  // const toggleMobileSidebar = () => {
+  //   dispatch(toggleSidebarMobile());
+  // };
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -92,15 +92,15 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
-  const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
-    if (!open) {
-      dispatch(toggleSidebar(true));
-    }
-    setTimeout(() => {
-      dispatch(showTourGuide());
-    }, 300);
-  };
+  // const tourStart = (e: MouseEvent<Element>) => {
+  //   // alert("sss")
+  //   if (!open) {
+  //     dispatch(toggleSidebar(true));
+  //   }
+  //   setTimeout(() => {
+  //     dispatch(showTourGuide());
+  //   }, 300);
+  // };
 
   useEffect(() => {
     dispatch(fetchQuestionList());
@@ -148,7 +148,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           changeChartType(ChartType.COLUMN);
         } else if (
           chartData.questionData?.type === QuestionType.SINGLE &&
-          chartData.bannerQuestionData == null && chartType !== ChartType.LINE
+          chartData.bannerQuestionData == null &&
+          chartType !== ChartType.LINE
         ) {
           changeChartType(ChartType.COLUMN);
         }
