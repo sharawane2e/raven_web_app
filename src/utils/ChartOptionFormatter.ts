@@ -22,7 +22,6 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
- 
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -63,17 +62,16 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
   const {
-    chart: { chartLabelType,chartOptions },
+    chart: { chartLabelType, chartOptions },
   } = store.getState();
 
   const {
-    chart:{chartType}
+    chart: { chartType },
   } = store.getState();
 
   const {
@@ -107,6 +105,7 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
+        console.log(optionData);
 
         let count = 0;
         // debugger;
@@ -120,34 +119,61 @@ const getSingleChartOptions = (
             (sum: number, option: any) => sum + option.count,
             0
           );
-          
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
-          } else if(chartLabelType === ChartLabelType.NUMBER && label) {
+          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
 
           // if (label) {
-          //   count = (label.count / localBase) * 100;
-          // }
-        }
 
-    
-        if(chartType==ChartType.LINE){
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y: count !== null ? round(count, decimalPrecision) : 0,
-          });
-        }else{
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y: count > 0 ? round(count, decimalPrecision) : null,
-          });
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          // } else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+
+          //   });
+          // }
+          if (label) {
+            let percentageValue = (label.count / localBase) * 100;
+            let numberValue = label.count;
+            data.push({
+              name: quesOption.labelText,
+              // y: +count.toFixed(decimalPrecision),
+              y: count !== null ? round(count, decimalPrecision) : 0,
+              percentageValue,
+              numberValue,
+            });
+          }
+
+          // if(chartType==ChartType.LINE){
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count !== null ? round(count, decimalPrecision) : 0,
+          //     percentageValue,
+          //     numberValue
+          //   });
+          // }
+          // else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          //}
         }
-       
       }
 
       if (data.length)
@@ -167,7 +193,6 @@ const getSingleChartOptions = (
       series,
     };
   } else {
-    
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -186,6 +211,8 @@ const getSingleChartOptions = (
       // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
       // plotValue = (count / baseCount) * 100;
+      let percentageValue = (count / baseCount) * 100;
+      let numberValue = count;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / baseCount) * 100;
       } else {
@@ -198,42 +225,43 @@ const getSingleChartOptions = (
           name: option.labelText,
           // y: round(plotValue, decimalPrecision),
           y: plotValue,
+          percentageValue,
+          numberValue,
         });
     }
 
-    const series:any[] = [];
+    const series: any[] = [];
 
-    if(chartType===ChartType.STACK){
-      data.map((element:any,index:number) => {
-        const name  = element.name;
-        const color  = colorArr[index];
-        const data = [{
-          name:questionData.labelText,
-          y:element.y
-        }];
-        series.push({name,color,data,dataLabels});
+    if (chartType === ChartType.STACK) {
+      data.map((element: any, index: number) => {
+        console.log("element", element);
+        const name = element.name;
+        const color = colorArr[index];
+        const data = [
+          {
+            name: questionData.labelText,
+            y: element.y,
+            numberValue: element.numberValue,
+            percentageValue: element.percentageValue,
+          },
+        ];
+        series.push({ name, color, data, dataLabels });
       });
-    }else{
-      
-      series.push( {
+    } else {
+      series.push({
         color: primaryBarColor,
         name: questionData.labelText,
         data,
         dataLabels,
-      })
-      
+      });
     }
-
 
     return {
       legend: {
         enabled: false,
       },
-
       tooltip: { ...getToolTip() },
-
-      series
-
+      series,
     };
   }
 };
@@ -255,9 +283,9 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartLabelType,chartType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
-  
+
   for (
     let scaleIndex = 0;
     scaleIndex < questionData.scale.length;
@@ -298,22 +326,23 @@ const getGridChartOptions = (
       }
 
       // if (plotValue > 0) {
-        if(chartType==ChartType.LINE){
-          data.push({
-            name: subGroup.labelText,
-            y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
-            percentageValue,
-            numberValue
-          });
-        }else{
-          data.push({
-            name: subGroup.labelText,
-            y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-            percentageValue,
-            numberValue
-          });
-        }
-      
+      if (chartType == ChartType.LINE) {
+        console.log(plotValue);
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+          percentageValue,
+          numberValue,
+        });
+      } else {
+        data.push({
+          name: subGroup.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          percentageValue,
+          numberValue,
+        });
+      }
+
       // }
     }
     if (data.length)
@@ -351,7 +380,7 @@ const getGridMultiChartOptions = (
   });
 
   const {
-    chart: { chartLabelType,chartType },
+    chart: { chartLabelType, chartType },
   } = store.getState();
 
   for (
@@ -384,24 +413,25 @@ const getGridMultiChartOptions = (
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
 
       let plotValue;
-      if(chartLabelType === ChartLabelType.PERCENTAGE){
+      let percentageValue = (count / base) * 100;
+      let numberValue = count;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
-      }else{
-        plotValue = count
+      } else {
+        plotValue = count;
       }
-    
-      if(chartType===ChartType.LINE){
+
+      if (chartType === ChartType.LINE) {
         data.push({
           name: subGroup.labelText,
-          y: plotValue !==null ? round(plotValue, decimalPrecision) : 0,
+          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
         });
-      }else{
+      } else {
         data.push({
           name: subGroup.labelText,
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
         });
       }
-      
     }
     if (data.length)
       series.push({
@@ -440,9 +470,9 @@ const getToolTip = () => {
   };
 
   tooltip["headerFormat"] =
-      '<span style="font-size:11px">{series.name}</span><br>';
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: <b>Count {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+    '<span style="font-size:11px">{series.name}</span><br>';
+  tooltip["pointFormat"] =
+    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
 
   // if (chartLabelType === ChartLabelType.PERCENTAGE) {
   //   tooltip["headerFormat"] =
@@ -464,11 +494,11 @@ export const getPlotOptions = (
 ) => {
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
   let plotOptions = chartDataClone.chartOptions["plotOptions"];
-  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
+  plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
 
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
-      stacking: "normal",      
+      stacking: "normal",
     };
     plotOptions["series"].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
@@ -507,7 +537,18 @@ export const getPlotOptions = (
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
-  }else{
+  } else if (chartType === ChartType.LINE) {
+    console.log("line chart", plotOptions);
+    plotOptions["line"] = {
+      // allowPointSelect: false,
+      // cursor: "pointer",
+    };
+    plotOptions["series"].dataLabels.format = `${
+      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+        ? "{point.y:.1f}%"
+        : "{point.y:.0f}"
+    }`;
+  } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   }
