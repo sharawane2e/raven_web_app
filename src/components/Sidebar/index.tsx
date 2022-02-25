@@ -49,6 +49,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   return (
     <div className="sidebar">
       <Drawer
+        anchor="left"
         variant="permanent"
         className={clsx("drawer drawer--desktop", {
           "drawer--close": !open,

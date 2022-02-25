@@ -1,10 +1,15 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { toggleSidebarMobile, toggleSidebar } from "../actions/sidebarAction";
-import { hideTourGuide, showTourGuide } from "../actions/tourAction";
+import {
+  toggleSidebarMobile,
+  toggleSidebar,
+  toggleSidebarUserCache,
+} from "../actions/sidebarAction";
+// import { hideTourGuide, showTourGuide } from "../actions/tourAction";
 
 const initialState = {
   open: true,
   openMobileDrawer: false,
+  userCache: false,
 };
 
 const sidebarReducer = createReducer(initialState, (builder) => {
@@ -14,6 +19,21 @@ const sidebarReducer = createReducer(initialState, (builder) => {
       ...state,
       open: action.payload === undefined ? !state.open : !!action.payload,
       //   open: !state.open,
+    };
+  });
+  // builder.addCase(toggleSidebarUserCache, (state, action) => {
+  //   // debugger;
+  //   return {
+  //     ...state,
+  //     userCache: action.payload === undefined ? !state.open : !!action.payload,
+  //     //   open: !state.open,
+  //   };
+  // });
+  builder.addCase(toggleSidebarUserCache, (state, action) => {
+    return {
+      ...state,
+      userCache:
+        action.payload === undefined ? !state.userCache : !!action.payload,
     };
   });
   builder.addCase(toggleSidebarMobile, (state, action) => {

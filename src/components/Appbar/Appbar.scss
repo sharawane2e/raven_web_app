@@ -61,6 +61,9 @@
       @media (max-width: 768px) {
         margin-left: 10px;
       }
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
   .appbar__menu {
@@ -223,4 +226,14 @@
       opacity: 1;
     }
   }
+}
+.cache-icon {
+  fill: #000000;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1rem;
+  // transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex-shrink: 0;
+  user-select: none;
 }

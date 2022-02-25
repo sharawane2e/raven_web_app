@@ -1,0 +1,29 @@
+.user-cache {
+  .MuiDrawer-paper {
+    width: 15rem;
+  }
+  .MuiSvgIcon-root {
+    color: #c3c3c3;
+  }
+  &__select-all {
+    display: flex;
+    padding-left: 8px;
+    padding-right: 8px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__footer {
+  }
+  &__footer-inr {
+    display: flex;
+    justify-content: end;
+    padding: 15px 8px;
+  }
+  &__delete-btn {
+    margin-right: 15px;
+  }
+  .button--secondary {
+    border: 1px solid #fff;
+    color: #fff;
+  }
+}

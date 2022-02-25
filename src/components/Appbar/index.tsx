@@ -12,13 +12,16 @@ import { ReactComponent as LogOutIcon } from "../../assets/svg/logout-icon.svg";
 import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
 import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
 import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
+import { ReactComponent as Cache } from "../../assets/svg/my_cache.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { showTourGuide } from "../../redux/actions/tourAction";
 import {
   toggleSidebar,
   toggleSidebarMobile,
+  toggleSidebarUserCache,
 } from "../../redux/actions/sidebarAction";
+import { Badge } from "@mui/material";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -44,6 +47,9 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleMobileSidebar = () => {
     dispatch(toggleSidebarMobile());
+  };
+  const toggleUserSidebar = () => {
+    dispatch(toggleSidebarUserCache());
   };
 
   const [anchorEl, setAnchorEl] = useState<
@@ -95,11 +101,26 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-            <ProfileAvatar text={user?.name || ""} />
-            <ExpandMoreIcon className="down-arrow-icon" />
+        <Badge badgeContent={4} color="primary">
+          <div className="appbar__tourGuide">
+            <Cache className="cache-icon" />
+            <div
+              className="tourText"
+              onClick={() => {
+                toggleUserSidebar();
+                // toggleMobileSidebar();
+              }}
+            >
+              My Cache
+            </div>
           </div>
+        </Badge>
+        {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+         
+        </div> */}
+        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+          <ProfileAvatar text={user?.name || ""} />
+          <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
       <Menu

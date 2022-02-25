@@ -164,6 +164,7 @@ const ChartSidebarContent: React.FC = () => {
             removeFilter(appliedFilters);
             //dispatch(resetFilters());
           }}
+          disabled={questionData === null}
         >
           Clear
         </Button>

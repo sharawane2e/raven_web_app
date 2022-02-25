@@ -3,16 +3,26 @@ import { RootState } from "../../redux/store";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as PdfIcon } from "../../assets/svg/pdf-icon.svg";
 import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
+import { ReactComponent as Wishlist } from "../../assets/svg/wishlist.svg";
 import "svg2pdf.js";
 import { generatePpt } from "../../utils/ppt/PptGen";
 import { generatePdf } from "../../utils/pdf/PdfGen";
-import {} from "../../utils/ppt/PptGen";
+// import {} from "../../utils/ppt/PptGen";
+// import { userCache } from "../Sidebar/sidebar-content/UserCache";
 interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
 
   const buttonConfig: ButtonGroupConfig[] = [
+    {
+      tooltip: "User Cache",
+      renderChild: () => <Wishlist />,
+      //onClick: userCache,
+      //active: true,
+      // disabled: t,
+      disabled: chart.questionData === null,
+    },
     {
       tooltip: "Powerpoint",
       renderChild: () => <PptIcon />,
