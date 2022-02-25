@@ -338,7 +338,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
         {chart?.questionData === null ? (
           <div className="noQuestion--selected">
-            <No_Question_Selected onClick={handleQSelectionOpen} />
+            <No_Question_Selected
+              className="cursor-pointer"
+              onClick={handleQSelectionOpen}
+            />
           </div>
         ) : (
           ""
