@@ -148,10 +148,10 @@ const UserCache: React.FC = () => {
                 //dispatch(resetFilters());
               }}
             >
-              <Typography variant="body1" component="div">
-                Export
-                <KeyboardArrowDownIcon />
-              </Typography>
+              {/* <Typography variant="body1" component="div"> */}
+              Export
+              <KeyboardArrowDownIcon />
+              {/* </Typography> */}
             </Button>
           </div>
         </div>

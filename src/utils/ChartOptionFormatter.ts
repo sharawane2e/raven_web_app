@@ -327,6 +327,7 @@ const getGridChartOptions = (
 
       // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
+        console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
@@ -493,7 +494,7 @@ export const getPlotOptions = (
 ) => {
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
   let plotOptions = chartDataClone.chartOptions["plotOptions"];
-  plotOptions = omit(plotOptions, ["column", "bar", "pie"]);
+  plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
 
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
@@ -536,6 +537,17 @@ export const getPlotOptions = (
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
+  } else if (chartType === ChartType.LINE) {
+    console.log("line chart", plotOptions);
+    plotOptions["line"] = {
+      // allowPointSelect: false,
+      // cursor: "pointer",
+    };
+    plotOptions["series"].dataLabels.format = `${
+      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+        ? "{point.y:.1f}%"
+        : "{point.y:.0f}"
+    }`;
   } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
