@@ -35,7 +35,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
-
+import Radio from "@mui/material/Radio";
 import {
   toggleSidebar,
   toggleSidebarMobile,
@@ -93,40 +93,25 @@ const UserCache: React.FC = () => {
             //onClick={toggleDrawer(anchor, false)}
             //onKeyDown={toggleDrawer(anchor, false)}
           >
-            <List>
-              {[
-                "Inbox",
-                "Starred",
-                "Send email",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-                "Drafts",
-              ].map((text, index) => (
-                <ListItem button key={text}>
-                  {/* <ListItemIcon></ListItemIcon> */}
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List>
+            <Typography
+              variant="body1"
+              component="div"
+              className="user-cache__cache-data"
+            >
+              <Typography variant="body1" component="div">
+                demo menu
+              </Typography>
+              <Typography variant="body1" component="div">
+                demo data
+              </Typography>
+              <Typography variant="body1" component="div">
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+              </Typography>
+            </Typography>
           </Box>
         </CustomScrollbar>
 

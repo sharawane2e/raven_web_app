@@ -102,17 +102,15 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <div className="tourText">Start tour</div>
         </div>
         <Badge badgeContent={4} color="primary">
-          <div className="appbar__tourGuide">
+          <div
+            className="appbar__tourGuide"
+            onClick={() => {
+              toggleUserSidebar();
+              // toggleMobileSidebar();
+            }}
+          >
             <Cache className="cache-icon" />
-            <div
-              className="tourText"
-              onClick={() => {
-                toggleUserSidebar();
-                // toggleMobileSidebar();
-              }}
-            >
-              My Cache
-            </div>
+            <div className="tourText">My Cache</div>
           </div>
         </Badge>
         {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>

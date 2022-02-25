@@ -12,7 +12,10 @@
     justify-content: space-between;
     align-items: center;
   }
-  &__footer {
+  &__cache-data {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 15px 8px;
   }
   &__footer-inr {
     display: flex;
