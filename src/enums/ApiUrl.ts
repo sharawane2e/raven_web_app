@@ -34,6 +34,8 @@ enum ApiUrl {
   BANNER_QUESTION = "/question/banner",
 
   CHART = "/chart",
+
+  SAVECHART = "/save-cahrt",
 }
 
 export default ApiUrl;
