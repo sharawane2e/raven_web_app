@@ -101,9 +101,9 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <Badge badgeContent={4} color="primary">
+        <Badge badgeContent={4} color="primary" className="badge-icon">
           <div
-            className="appbar__tourGuide"
+            className="appbar__tourGuide appbar__cache-btn"
             onClick={() => {
               toggleUserSidebar();
               // toggleMobileSidebar();

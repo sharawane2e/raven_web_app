@@ -37,6 +37,19 @@
       }
     }
   }
+  .appbar__cache-btn {
+    padding: 7px !important;
+    margin-right: 0 !important;
+  }
+  .cache-icon {
+    margin-right: 3px;
+  }
+  .badge-icon {
+    .css-106c1u2-MuiBadge-badge {
+      background-color: #dfdfd7 !important;
+      color: #1e1e1e;
+    }
+  }
   .appbar__right-panel {
     padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
@@ -114,6 +127,7 @@
       color: map-get($map: $text-color, $key: accent);
       // cursor: pointer;
     }
+    margin-left: 20px;
   }
 
   .menu-icon {

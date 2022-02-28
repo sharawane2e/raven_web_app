@@ -1,4 +1,5 @@
 .chart-content {
+  position: relative;
   .mr-button.MuiGrid-container {
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;

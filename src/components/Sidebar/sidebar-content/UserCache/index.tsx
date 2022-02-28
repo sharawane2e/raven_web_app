@@ -1,49 +1,19 @@
-import {
-  Box,
-  Button,
-  Drawer,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
+import { Box, Button, Drawer, Typography } from "@material-ui/core";
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setChartData,
-  setChartTranspose,
-} from "../../../../redux/actions/chartActions";
-import {
-  resetFilters,
-  setAppliedFilters,
-  setFilterQuestionList,
-  setFilters,
-} from "../../../../redux/actions/filterActions";
-import store, { RootState } from "../../../../redux/store";
-import {
-  fetchChartData,
-  transposeChart,
-} from "../../../../services/ChartService";
-import { IQuestionOption } from "../../../../types/IBaseQuestion";
-import CustomScrollbar from "../../../CustomScrollbar";
-import MultiSelect from "../../../widgets/MultiSelect";
-import { IFilter } from "../../../../types/IFilter";
-import Divider from "@mui/material/Divider";
 
-import List from "@mui/material/List/List";
-import FormGroup from "@mui/material/FormGroup";
+import store, { RootState } from "../../../../redux/store";
+import CustomScrollbar from "../../../CustomScrollbar";
+import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
 import Radio from "@mui/material/Radio";
-import {
-  toggleSidebar,
-  toggleSidebarMobile,
-  toggleSidebarUserCache,
-} from "../../../../redux/actions/sidebarAction";
+import { toggleSidebarUserCache } from "../../../../redux/actions/sidebarAction";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { ReactComponent as ColumnChartIcon } from "../../../../assets/svg/column-chart-icon.svg";
 
-type Anchor = "top" | "left" | "bottom" | "right";
+// type Anchor = "top" | "left" | "bottom" | "right";
 
 const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
@@ -86,34 +56,48 @@ const UserCache: React.FC = () => {
 
           <Divider sx={{ borderColor: "#fff" }} />
         </Box>
-        <CustomScrollbar>
-          <Box
-            // sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
-            role="presentation"
-            //onClick={toggleDrawer(anchor, false)}
-            //onKeyDown={toggleDrawer(anchor, false)}
-          >
+        <div className="user-cache__sidebar">
+          <CustomScrollbar>
             <Typography
               variant="body1"
               component="div"
               className="user-cache__cache-data"
             >
-              <Typography variant="body1" component="div">
-                demo menu
+              <Typography
+                variant="body1"
+                component="div"
+                className="user-cache__chart-icon"
+              >
+                <ColumnChartIcon />
               </Typography>
-              <Typography variant="body1" component="div">
-                demo data
+              <Typography
+                variant="body1"
+                component="div"
+                className="user-cache__chart-question"
+              >
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className="user-cache__chart-headding"
+                >
+                  Question Data
+                </Typography>
+                <Typography variant="body1" component="div">
+                  <Typography variant="body1" component="div">
+                    demo data
+                  </Typography>
+                </Typography>
               </Typography>
-              <Typography variant="body1" component="div">
-                <FormControlLabel
-                  value="male"
-                  control={<Radio />}
-                  label="Male"
-                />
-              </Typography>
+              <FormControlLabel
+                value="male"
+                control={<Radio sx={{ p: 0 }} />}
+                label=""
+                sx={{ mr: 0 }}
+              />
             </Typography>
-          </Box>
-        </CustomScrollbar>
+            <Divider sx={{ borderColor: "#fff" }} />
+          </CustomScrollbar>
+        </div>
 
         <div className="user-cache__footer">
           <Divider sx={{ borderColor: "#fff" }} />
@@ -127,7 +111,7 @@ const UserCache: React.FC = () => {
             </Button>
 
             <Button
-              className="button--primary"
+              className="button--primary btn-line"
               onClick={() => {
                 // removeFilter(appliedFilters);
                 //dispatch(resetFilters());
@@ -135,7 +119,7 @@ const UserCache: React.FC = () => {
             >
               {/* <Typography variant="body1" component="div"> */}
               Export
-              <KeyboardArrowDownIcon />
+              <KeyboardArrowDownIcon sx={{ fill: "#fff" }} />
               {/* </Typography> */}
             </Button>
           </div>

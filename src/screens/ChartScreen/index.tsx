@@ -82,6 +82,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
+      <UserCache />
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
@@ -91,9 +92,9 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           })}
         >
           <AppRouting routes={routes} />
-          <UserCache />
         </main>
       </SidebarContextProvider>
+
       <Dialog open={openPopup} className="home-modal">
         <div className="home-modal__content">
           <CustomScrollbar>

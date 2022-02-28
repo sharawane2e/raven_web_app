@@ -47,6 +47,7 @@ import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
 import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
+import UserCache from "../../components/Sidebar/sidebar-content/UserCache";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -289,6 +290,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <span>Select wave</span>
         <ExpandMoreIcon />
       </Button> */}
+
       <div className="questioSelection">
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
