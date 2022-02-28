@@ -265,3 +265,6 @@
 .chart-content__control-menu {
   background: map-get($map: $bg-color, $key: "secondary");
 }
+.cursor-pointer {
+  cursor: pointer;
+}
