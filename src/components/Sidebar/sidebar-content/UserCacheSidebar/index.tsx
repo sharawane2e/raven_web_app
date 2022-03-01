@@ -1,7 +1,7 @@
 import { Box, Button, Drawer, Typography } from "@material-ui/core";
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import store, { RootState } from "../../../../redux/store";
 import CustomScrollbar from "../../../CustomScrollbar";
 import Divider from "@mui/material/Divider";
@@ -15,18 +15,19 @@ import { setUserCache } from "../../../../redux/actions/chartActions";
 import Toaster from "../../../../utils/Toaster";
 import ApiUrl from "../../../../enums/ApiUrl";
 import ApiRequest from "../../../../utils/ApiRequest";
-
 import { ReactComponent as ColumnChartIcon } from "../../../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../../../assets/svg/stack-chart-icon.svg";
 import { ReactComponent as TableIcon } from "../../../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../../../assets/svg/pie-chart.svg";
 import { ReactComponent as LineChartIcon } from "../../../../assets/svg/line_chart.svg";
 import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 // import { Grid } from "@mui/material";
 
 const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
   const { chart } = useSelector((state: RootState) => state);
+  const [selctAll, setSelectAll] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -61,6 +62,12 @@ const UserCache: React.FC = () => {
     }
   };
 
+  const selectAll = (event: any) => {
+    const curentEvent = event.target.checked;
+    setSelectAll(curentEvent);
+  };
+  console.log("event", selctAll);
+
   return (
     <div className="sidebar user-cache">
       <Drawer
@@ -83,7 +90,7 @@ const UserCache: React.FC = () => {
             className="user-cache__select-all"
           >
             <FormControlLabel
-              control={<Checkbox sx={{ color: "#fff" }} />}
+              control={<Checkbox sx={{ color: "#fff" }} onClick={selectAll} />}
               label="Select All"
             />
             <CloseIcon
@@ -133,12 +140,28 @@ const UserCache: React.FC = () => {
                     >
                       {savedata?.qText}
                     </Typography>
-                    <Typography variant="body1" component="div">
-                      <Typography variant="body1" component="div">
+                    <Typography
+                      variant="body1"
+                      component="div"
+                      className="user-cache__collectdata"
+                    >
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        className="user-cache__date"
+                      >
                         {curentDate.split(",")[0]}
                       </Typography>
-                      <Typography variant="body1" component="div">
-                        {curentDate.split(",")[0]}
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        className="user-cache__colection-icon"
+                      >
+                        {chart?.userCache[index]?.filter ? (
+                          <FilterAltIcon />
+                        ) : (
+                          ""
+                        )}
                       </Typography>
                     </Typography>
                   </Typography>
@@ -156,6 +179,8 @@ const UserCache: React.FC = () => {
                     <Checkbox
                       className="user-cache-checkbox"
                       sx={{ p: 0, ml: "-4px" }}
+                      defaultChecked={selctAll}
+                      // isChecked={selctAll}
                     />
                     {/* <Checkbox sx={{ p: 0, ml: "-4px" }} defaultChecked /> */}
                   </Typography>

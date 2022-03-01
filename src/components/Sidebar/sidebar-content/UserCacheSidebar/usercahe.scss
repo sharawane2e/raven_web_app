@@ -66,7 +66,7 @@
   &__chart-headding {
     // display: flex;
     flex-wrap: wrap;
-    font-size: map-get($map: $text-size, $key: small);
+    font-size: map-get($map: $text-size, $key: large);
     word-wrap: break-word;
     white-space: nowrap;
     overflow: hidden;
@@ -92,17 +92,26 @@
   &__delete-btn {
     margin-right: 15px;
   }
+  &__collectdata {
+    display: flex;
+  }
+  &__date {
+    margin-right: 10px;
+    font-size: map-get($map: $text-size, $key: small);
+  }
+  &__colection-icon {
+    font-size: map-get($map: $text-size, $key: small);
+  }
   .button--secondary {
     border: 1px solid #fff;
     color: #fff;
   }
   .multi-select-btn {
+    display: flex;
     flex-basis: 10.666667%;
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-    -ms-flex-positive: 0;
     flex-grow: 0;
     max-width: 10.666667%;
+    justify-content: end;
   }
 }
 .btn-line {
