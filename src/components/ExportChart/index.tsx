@@ -13,12 +13,22 @@ interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
-  const { questions } = useSelector((state: RootState) => state);
-  const questionText = questions.questionList;
+  const chartQuestionData = chart?.questionData;
+
+  const userCachebody = {
+    qId: chartQuestionData?.qId,
+    qText: chartQuestionData?.questionText,
+    type: chartQuestionData?.type,
+    filter: [""],
+    bannerQuestion: chart?.bannerQuestionData,
+    chartType: chart?.chartType,
+    chartOrientation: chart?.chartOrientation,
+    chartTranspose: chart?.chartTranspose,
+  };
 
   const userCache = () => {
-    let data;
-    ApiRequest.request(ApiUrl.SAVECHART, "POST", data)
+    //let data;
+    ApiRequest.request(ApiUrl.SAVECHART, "POST", userCachebody)
       .then((res) => {
         if (res.success) {
           console.log("data send ");
