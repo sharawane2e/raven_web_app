@@ -23,6 +23,7 @@ import Chart from "../Chart";
 import TableView from "../TableView";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
+import UserCache from "../UserCache";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
@@ -31,7 +32,7 @@ import { Tooltip } from "@material-ui/core";
 import Toaster from "../../utils/Toaster";
 import { Menu, MenuItem, Chip } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import ChartOptionsControl from "../ChartOptionsControl";
+//import ChartOptionsControl from "../ChartOptionsControl";
 // import Tooltip from "@material-ui/Tooltip";
 import { showTourGuide } from "../../redux/actions/tourAction";
 import store from "../../redux/store";
@@ -47,7 +48,7 @@ import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
 import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
-import UserCache from "../../components/Sidebar/sidebar-content/UserCache";
+//import UserCache from "../Sidebar/sidebar-content/UserCacheSidebar";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -209,6 +210,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
+          <div className="chart-content__control-item">
+            <UserCache />
+          </div>
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>

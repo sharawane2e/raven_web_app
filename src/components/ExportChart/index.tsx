@@ -14,45 +14,8 @@ interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
-  const { filters } = useSelector((state: RootState) => state);
-  const chartQuestionData = chart?.questionData;
-
-  const userCachebody = {
-    qText: chartQuestionData?.questionText,
-    qId: chartQuestionData?.qId,
-    type: chartQuestionData?.type,
-    filter: filters?.appliedFilters,
-    bannerQuestion:
-      chart?.bannerQuestionData == null
-        ? "test data"
-        : chart?.bannerQuestionData,
-    chartType: String(chart?.chartType),
-    chartOrientation: chart?.chartOrientation,
-    chartTranspose: chart?.chartTranspose,
-  };
-
-  const userCache = () => {
-    ApiRequest.request(ApiUrl.SAVECHART, "POST", userCachebody)
-      .then((res) => {
-        if (res.success) {
-          Toaster.success(res.message);
-        } else {
-          Toaster.error(res.message);
-        }
-      })
-      .catch((error) => console.log(error))
-      .finally(() => console.log("finaly run"));
-  };
 
   const buttonConfig: ButtonGroupConfig[] = [
-    {
-      tooltip: "User Cache",
-      renderChild: () => <Wishlist />,
-      onClick: userCache,
-      //active: true,
-      // disabled: t,
-      disabled: chart.questionData === null,
-    },
     {
       tooltip: "Powerpoint",
       renderChild: () => <PptIcon />,

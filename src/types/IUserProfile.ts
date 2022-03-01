@@ -13,4 +13,5 @@ export interface IUserProfile {
   createdAt: string;
   updatedAt: string;
   accessToken: string;
+  savedChart: [];
 }

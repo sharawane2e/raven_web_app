@@ -33,7 +33,7 @@ import { ChartType } from "../../enums/ChartType";
 import CloseIcon from "@mui/icons-material/Close";
 import { setChartFullScreen } from "../../redux/actions/chartActions";
 // import {useHotkeys} from 'react-hotkeys-hook';
-import UserCache from "../../components/Sidebar/sidebar-content/UserCache";
+import UserCacheSidebar from "../../components/Sidebar/sidebar-content/UserCacheSidebar";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -82,7 +82,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
-      <UserCache />
+      <UserCacheSidebar />
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />

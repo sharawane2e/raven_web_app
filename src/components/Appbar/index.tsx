@@ -29,6 +29,7 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
+  const { userCache } = useSelector((state: RootState) => state.chart);
 
   const { variant = "partialWidth" } = props;
   // const {
@@ -101,7 +102,11 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <Badge badgeContent={4} color="primary" className="badge-icon">
+        <Badge
+          badgeContent={userCache.length}
+          color="primary"
+          className="badge-icon"
+        >
           <div
             className="appbar__tourGuide appbar__cache-btn"
             onClick={() => {

@@ -1,18 +1,20 @@
 .user-cache {
   position: relative;
   &__sidebar {
-    height: calc(100vh - 40px);
-    overflow: hidden;
+    // height: calc(100vh - 40px);
+    // overflow: hidden;
+    position: relative;
+    width: 100%;
   }
   .MuiDrawer-paper {
-    width: 18rem;
+    width: 24rem;
     background: #393939;
     &::before {
       content: "";
       position: fixed;
       top: 33px;
       left: 90%;
-      z-index: 999999999;
+      z-index: 10;
       transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       display: block;
       border-width: 20px 20px;
@@ -38,9 +40,12 @@
     padding: 8px;
     // flex-wrap: nowrap;
     // padding: 15px 8px;
-    width: 93%;
+    width: 96%;
     align-items: center;
-    justify-content: center;
+    // justify-content: center;
+  }
+  &__chart-icon-sec {
+    max-width: 10.666667%;
   }
   &__chart-icon {
     border: 1px solid #fff;
@@ -50,13 +55,23 @@
     width: 30px;
     height: 30px;
     justify-content: center;
-    margin-right: 10px;
-    flex-basis: 10.666667%;
-    -webkit-box-flex: 0;
-    -webkit-flex-grow: 0;
-    -ms-flex-positive: 0;
-    flex-grow: 0;
-    max-width: 10.666667%;
+    //margin-right: 10px;
+    // flex-basis: 10.666667%;
+    // -webkit-box-flex: 0;
+    // -webkit-flex-grow: 0;
+    // -ms-flex-positive: 0;
+    // flex-grow: 0;
+    // max-width: 10.666667%;
+  }
+  &__chart-headding {
+    // display: flex;
+    flex-wrap: wrap;
+    font-size: map-get($map: $text-size, $key: small);
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 15px;
   }
   &__chart-question {
     // display: flex;
@@ -66,6 +81,8 @@
     -ms-flex-positive: 0;
     flex-grow: 0;
     max-width: 80.666667%;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   &__footer-inr {
     display: flex;
@@ -78,6 +95,14 @@
   .button--secondary {
     border: 1px solid #fff;
     color: #fff;
+  }
+  .multi-select-btn {
+    flex-basis: 10.666667%;
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    max-width: 10.666667%;
   }
 }
 .btn-line {
