@@ -9,31 +9,35 @@ import { generatePpt } from "../../utils/ppt/PptGen";
 import { generatePdf } from "../../utils/pdf/PdfGen";
 import ApiUrl from "../../enums/ApiUrl";
 import ApiRequest from "../../utils/ApiRequest";
+import Toaster from "../../utils/Toaster";
 interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {
   const { chart } = useSelector((state: RootState) => state);
+  const { filters } = useSelector((state: RootState) => state);
   const chartQuestionData = chart?.questionData;
 
   const userCachebody = {
-    qId: chartQuestionData?.qId,
     qText: chartQuestionData?.questionText,
+    qId: chartQuestionData?.qId,
     type: chartQuestionData?.type,
-    filter: [""],
-    bannerQuestion: chart?.bannerQuestionData,
-    chartType: chart?.chartType,
+    filter: filters?.appliedFilters,
+    bannerQuestion:
+      chart?.bannerQuestionData == null
+        ? "test data"
+        : chart?.bannerQuestionData,
+    chartType: String(chart?.chartType),
     chartOrientation: chart?.chartOrientation,
     chartTranspose: chart?.chartTranspose,
   };
 
   const userCache = () => {
-    //let data;
     ApiRequest.request(ApiUrl.SAVECHART, "POST", userCachebody)
       .then((res) => {
         if (res.success) {
-          console.log("data send ");
+          Toaster.success(res.message);
         } else {
-          // Toaster.error(res.message);
+          Toaster.error(res.message);
         }
       })
       .catch((error) => console.log(error))

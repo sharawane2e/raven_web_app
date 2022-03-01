@@ -35,7 +35,7 @@ enum ApiUrl {
 
   CHART = "/chart",
 
-  SAVECHART = "/save-cahrt",
+  SAVECHART = "user/save-chart",
 }
 
 export default ApiUrl;
