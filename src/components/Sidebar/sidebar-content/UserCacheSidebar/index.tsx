@@ -28,6 +28,8 @@ const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
   const { chart } = useSelector((state: RootState) => state);
   const [selctAll, setSelectAll] = useState(false);
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checked, setChecked] = useState({});
 
   const dispatch = useDispatch();
 
@@ -41,8 +43,7 @@ const UserCache: React.FC = () => {
           Toaster.error(res.message);
         }
       })
-      .catch((error) => console.log(error))
-      .finally(() => console.log("Sucess"));
+      .catch((error) => console.log(error));
   }, []);
 
   const closeSidebar = () => {
@@ -62,11 +63,46 @@ const UserCache: React.FC = () => {
     }
   };
 
-  const selectAll = (event: any) => {
+  // const selectAll = (event: any) => {
+  //   const curentEvent = event.target.checked;
+  //   setSelectAll(curentEvent);
+  // };
+  const singleSelect = (event: any) => {
     const curentEvent = event.target.checked;
     setSelectAll(curentEvent);
   };
-  console.log("event", selctAll);
+
+  const toggleCheck = (inputName: string | number) => {
+    setChecked((prevState: any) => {
+      const newState: any = { ...prevState };
+      newState[inputName] = !prevState[inputName];
+      return newState;
+    });
+  };
+
+  // const selectAll = (value: boolean | ((prevState: boolean) => boolean)) => {
+  //   setCheckedAll(value);
+  //   setChecked((prevState) => {
+  //     const newState: any = { ...prevState };
+  //     for (const inputName in newState) {
+  //       newState[inputName] = value;
+  //     }
+  //     return newState;
+  //   });
+  // };
+  // useEffect(() => {
+  //   let allChecked: any = true;
+  //   for (const inputName in checked) {
+  //     if (checked[inputName] === false) {
+  //       allChecked = false;
+  //     }
+  //   }
+  //   if (allChecked) {
+  //     setCheckedAll(true);
+  //   } else {
+  //     setCheckedAll(false);
+  //   }
+  // }, [checked]);
 
   return (
     <div className="sidebar user-cache">
@@ -90,7 +126,13 @@ const UserCache: React.FC = () => {
             className="user-cache__select-all"
           >
             <FormControlLabel
-              control={<Checkbox sx={{ color: "#fff" }} onClick={selectAll} />}
+              control={
+                <Checkbox
+                  sx={{ color: "#fff" }}
+                  //onChange={(event) => selectAll(event.target.checked)}
+                  checked={checkedAll}
+                />
+              }
               label="Select All"
             />
             <CloseIcon
@@ -179,8 +221,11 @@ const UserCache: React.FC = () => {
                     <Checkbox
                       className="user-cache-checkbox"
                       sx={{ p: 0, ml: "-4px" }}
-                      defaultChecked={selctAll}
-                      // isChecked={selctAll}
+                      name={index}
+                      // onClick={handleSelectAll}
+                      // checked={isCheckAll}
+                      onChange={() => toggleCheck(index)}
+                      //checked={checked[index]}
                     />
                     {/* <Checkbox sx={{ p: 0, ml: "-4px" }} defaultChecked /> */}
                   </Typography>
