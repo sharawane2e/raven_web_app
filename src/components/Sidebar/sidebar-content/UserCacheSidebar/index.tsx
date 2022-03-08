@@ -61,8 +61,7 @@ const UserCache: React.FC = () => {
           Toaster.error(res.message);
         }
       })
-      .catch((error) => console.log(error))
-      .finally(() => console.log("Sucess"));
+      .catch((error) => console.log(error));
   }, []);
 
   const closeSidebar = () => {
