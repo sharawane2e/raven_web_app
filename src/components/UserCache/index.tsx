@@ -25,8 +25,9 @@ const UserCache: React.FC<UserCacheProps> = () => {
     type: chartQuestionData?.type,
     filter: filters?.appliedFilters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? "demo" : chart?.bannerQuestionData,
-    chartType: String(chart?.chartType),
+      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData,
+    chartType: chart?.chartType,
+    chartLabelType: chart?.chartLabelType,
     chartOrientation: chart?.chartOrientation,
     chartTranspose: chart?.chartTranspose,
     date: new Date(),

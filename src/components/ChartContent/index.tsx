@@ -58,6 +58,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const [showBannerException, setShowBannerException] = useState(true);
   const [openQSelection, setOpenQSelection] = useState(false);
   const [OpenQuestionCross, setOpenQuestionCross] = useState(false);
+  const [QuestionId, setQuestionid] = useState("");
 
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined

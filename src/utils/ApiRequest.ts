@@ -40,7 +40,7 @@ const ApiRequest = {
           method,
           ...params,
         }),
-        timeout(1000),
+        timeout(0),
       ]);
       response = apiResponse.data;
       dispatch(setChartLoading(false));

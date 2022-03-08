@@ -41,6 +41,15 @@
     padding: 7px !important;
     margin-right: 0 !important;
   }
+  .user-active {
+    background: #f1ad0f !important;
+    svg {
+      fill: #fff !important;
+    }
+    .tourText {
+      color: #fff;
+    }
+  }
   .cache-icon {
     margin-right: 3px;
   }

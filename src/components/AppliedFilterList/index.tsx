@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Chip, Tooltip } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import ClearAllIcon from "@material-ui/icons/ClearAll";
-import ClearIcon from '@material-ui/icons/Clear';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import ClearIcon from "@material-ui/icons/Clear";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { IFilter } from "../../types/IFilter";
 import CustomScrollbar from "../CustomScrollbar";
 import { removeAppliedFilter } from "../../redux/actions/filterActions";
 import { fetchChartData, transposeChart } from "../../services/ChartService";
-import { setChartData, setChartTranspose } from "../../redux/actions/chartActions";
+import {
+  setChartData,
+  setChartTranspose,
+} from "../../redux/actions/chartActions";
 import { memo } from "react";
 
 const AppliedFilterList: React.FC = () => {
@@ -19,28 +22,26 @@ const AppliedFilterList: React.FC = () => {
   const removeFilter = (filter: IFilter) => {
     const { chart } = store.getState();
     dispatch(removeAppliedFilter(filter));
-    if(chart.chartTranspose){
+    if (chart.chartTranspose) {
       fetchChartData()
-      .then((chartData) => {
-        dispatch(setChartData(chartData));
-         transposeChart();
-         dispatch(setChartTranspose(chart.chartTranspose));
-      })
-      .catch((error) => console.log(error));
-         
-    }
-    else{
-    fetchChartData()
-      .then((chartData) => {
-        dispatch(setChartData(chartData));
-      })
-      .catch((error) => console.log(error));
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+          transposeChart();
+          dispatch(setChartTranspose(chart.chartTranspose));
+        })
+        .catch((error) => console.log(error));
+    } else {
+      fetchChartData()
+        .then((chartData) => {
+          dispatch(setChartData(chartData));
+        })
+        .catch((error) => console.log(error));
     }
   };
 
-  const handleRemoveFilters = () =>{
-    
-  }
+  // const handleRemoveFilters = () =>{
+
+  // }
   return (
     <div className="applied-filters">
       <div className="applied-filters--wrapper">
@@ -48,8 +49,8 @@ const AppliedFilterList: React.FC = () => {
           label="Your selections"
           variant="outlined"
           className="applied-filters__info-chip"
-          />
-          {/* <Tooltip
+        />
+        {/* <Tooltip
             title={`Clear all Filters`}
             placement="top"
             arrow 
@@ -57,7 +58,7 @@ const AppliedFilterList: React.FC = () => {
             <HighlightOffIcon className="applied-filters--icon" onClick={handleRemoveFilters} />
           </Tooltip> */}
       </div>
-      
+
       <div className="applied-filters__scroll-wrapper">
         <CustomScrollbar>
           <div className="applied-filters__filter-wrapper">

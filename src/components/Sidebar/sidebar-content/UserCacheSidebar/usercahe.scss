@@ -36,6 +36,7 @@
     align-items: center;
   }
   &__cache-data {
+    cursor: pointer;
     display: flex;
     padding: 8px;
     // flex-wrap: nowrap;
@@ -66,7 +67,7 @@
   &__chart-headding {
     // display: flex;
     flex-wrap: wrap;
-    font-size: map-get($map: $text-size, $key: large);
+    font-size: map-get($map: $text-size, $key: regular);
     word-wrap: break-word;
     white-space: nowrap;
     overflow: hidden;

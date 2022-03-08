@@ -11,7 +11,11 @@ import CloseIcon from "@mui/icons-material/Close";
 // import Radio from "@mui/material/Radio";
 import { toggleSidebarUserCache } from "../../../../redux/actions/sidebarAction";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { setUserCache } from "../../../../redux/actions/chartActions";
+import {
+  setChartData,
+  setChartTranspose,
+  setUserCache,
+} from "../../../../redux/actions/chartActions";
 import Toaster from "../../../../utils/Toaster";
 import ApiUrl from "../../../../enums/ApiUrl";
 import ApiRequest from "../../../../utils/ApiRequest";
@@ -20,14 +24,30 @@ import { ReactComponent as StackChartIcon } from "../../../../assets/svg/stack-c
 import { ReactComponent as TableIcon } from "../../../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../../../assets/svg/pie-chart.svg";
 import { ReactComponent as LineChartIcon } from "../../../../assets/svg/line_chart.svg";
-import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+// import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-// import { Grid } from "@mui/material";
+import {
+  fetchChartData,
+  transposeChart,
+} from "../../../../services/ChartService";
+import { setSelectedQuestionId } from "../../../../redux/actions/questionAction";
+// import { QuestionType } from "../../../../enums/QuestionType";
+import {
+  removeAppliedFilter,
+  setAppliedFilters,
+  setFilterQuestionList,
+  setFilters,
+} from "../../../../redux/actions/filterActions";
+import { ChartType } from "../../../../enums/ChartType";
+import { changeChartType } from "../../../../services/ChartService";
+import { ReactComponent as NumberIcon } from "../../assets/svg/Number.svg";
+import { ReactComponent as PercentageIcon } from "../../assets/svg/Percentage.svg";
 
 const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
   const { chart } = useSelector((state: RootState) => state);
-  const [selctAll, setSelectAll] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [check, setschecked] = useState();
 
   const dispatch = useDispatch();
 
@@ -61,12 +81,94 @@ const UserCache: React.FC = () => {
       return <LineChartIcon />;
     }
   };
+  useEffect(() => {
+    setUsers(chart?.userCache);
+  }, [chart?.userCache]);
 
-  const selectAll = (event: any) => {
-    const curentEvent = event.target.checked;
-    setSelectAll(curentEvent);
+  const handleChange = (event: any) => {
+    const { value, name, checked } = event.target;
+    if (name === "allSelect") {
+      const tempUser: any = users.map((user: any) => {
+        return { ...user, isChecked: checked };
+      });
+      setUsers(tempUser);
+      users.map((userChecked: any, index: any) => {
+        setschecked(userChecked?.isChecked);
+      });
+    } else {
+      const tempUser: any = users.map((user: any, index: number) =>
+        index === parseInt(name) ? { ...user, isChecked: checked } : user
+      );
+      setUsers(tempUser);
+    }
   };
-  console.log("event", selctAll);
+
+  const cacheShow = (cacheId: any) => {
+    dispatch(setSelectedQuestionId(cacheId));
+    chart?.userCache.forEach((userCacheinfo: any, index: string | number) => {
+      console.log("userCacheinfo", userCacheinfo?.chartOrientation);
+      if (userCacheinfo?.qId === cacheId) {
+        if (chart?.userCache[index]?.chartType == 1) {
+          changeChartType(ChartType.COLUMN);
+        } else if (chart?.userCache[index]?.chartType == 2) {
+          changeChartType(ChartType.STACK);
+        } else if (chart?.userCache[index]?.chartType == 3) {
+          changeChartType(ChartType.TABLE);
+        } else if (chart?.userCache[index]?.chartType == 4) {
+          changeChartType(ChartType.PIE);
+        } else if (chart?.userCache[index]?.chartType == 5) {
+          changeChartType(ChartType.LINE);
+        }
+        dispatch(setFilters(userCacheinfo.filter));
+        dispatch(setAppliedFilters(userCacheinfo.filter));
+        dispatch(removeAppliedFilter(userCacheinfo.filter));
+
+        if (userCacheinfo.chartTranspose) {
+          fetchChartData()
+            .then((chartData) => {
+              dispatch(setChartData(chartData));
+              transposeChart();
+              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+            })
+            .catch((error) => console.log(error));
+        } else {
+          dispatch(setChartTranspose(false));
+        }
+
+        fetchChartData(cacheId)
+          .then((chartData) => {
+            dispatch(setChartData(chartData));
+            dispatch(setChartOperations(userCacheinfo?.chartOrientation));
+            // if (
+            //   chartData.questionData?.type !== QuestionType.SINGLE &&
+            //   chartType === ChartType.PIE
+            // ) {
+            //   changeChartType(ChartType.COLUMN);
+            // }
+          })
+          .catch((error) => console.log(error));
+
+        // else {
+        //   console.log("chart?.userCache?.filter", userCacheinfo.filter);
+        //   fetchChartData()
+        //     .then((chartData) => {
+        //       dispatch(setChartData(chartData));
+        //     })
+        //     .catch((error) => console.log(error));
+        // }
+      }
+    });
+  };
+
+  const applyOptions = (index: any) => {
+    console.log("chart?.userCache[index]?", chart?.userCache[index]);
+    if (chart?.userCache[index]?.filter.length > 0) {
+      return <FilterAltIcon />;
+    }
+    // else if(){
+
+    // }
+  };
 
   return (
     <div className="sidebar user-cache">
@@ -90,7 +192,19 @@ const UserCache: React.FC = () => {
             className="user-cache__select-all"
           >
             <FormControlLabel
-              control={<Checkbox sx={{ color: "#fff" }} onClick={selectAll} />}
+              control={
+                <Checkbox
+                  name="allSelect"
+                  onChange={handleChange}
+                  sx={{ color: "#fff" }}
+                  // checked={savedata?.isChecked}
+                  checked={users.some(
+                    (userDat: any, index: any) => userDat?.isChecked !== true
+                  )}
+                  // onClick={selectAll}
+                  // checked={!users.some((user) => user?.isChecked !== true)}
+                />
+              }
               label="Select All"
             />
             <CloseIcon
@@ -103,106 +217,93 @@ const UserCache: React.FC = () => {
           <Divider sx={{ borderColor: "#6b6868" }} />
         </Box>
         <CustomScrollbar>
-          {chart?.userCache.map((savedata: any, index: any) => {
-            let cacheDate = new Date(savedata?.date);
-            const curentDate = cacheDate.toLocaleString("en-us");
+          {users === undefined
+            ? ""
+            : users.map((savedata: any, index: any) => {
+                let cacheDate = new Date(savedata?.date);
+                const curentDate = cacheDate.toLocaleString("en-us");
 
-            return (
-              <div className="user-cache__sidebar" key={index}>
-                <Typography
-                  variant="body1"
-                  component="div"
-                  className="user-cache__cache-data"
-                >
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    className="user-cache__chart-icon-sec"
-                  >
-                    <Typography
-                      variant="body1"
-                      component="div"
-                      className="user-cache__chart-icon"
-                    >
-                      {/* <ColumnChartIcon /> */}
-                      {chartIcons(index)}
-                    </Typography>
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    className="user-cache__chart-question"
-                  >
-                    <Typography
-                      variant="h6"
-                      component="h6"
-                      className="user-cache__chart-headding"
-                    >
-                      {savedata?.qText}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      component="div"
-                      className="user-cache__collectdata"
-                    >
+                return (
+                  <div className="user-cache__sidebar" key={index}>
+                    <div className="user-cache__cache-data">
                       <Typography
                         variant="body1"
                         component="div"
-                        className="user-cache__date"
+                        className="user-cache__chart-icon-sec"
                       >
-                        {curentDate.split(",")[0]}
+                        <Typography
+                          variant="body1"
+                          component="div"
+                          className="user-cache__chart-icon"
+                        >
+                          {/* <ColumnChartIcon /> */}
+                          {chartIcons(index)}
+                        </Typography>
                       </Typography>
                       <Typography
                         variant="body1"
                         component="div"
-                        className="user-cache__colection-icon"
+                        className="user-cache__chart-question"
+                        onClick={() => cacheShow(savedata?.qId)}
                       >
-                        {chart?.userCache[index]?.filter ? (
-                          <FilterAltIcon />
-                        ) : (
-                          ""
-                        )}
+                        <Typography
+                          variant="h6"
+                          component="h6"
+                          className="user-cache__chart-headding"
+                        >
+                          {savedata?.qText}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          component="div"
+                          className="user-cache__collectdata"
+                        >
+                          <Typography
+                            variant="body1"
+                            component="div"
+                            className="user-cache__date"
+                          >
+                            {curentDate.split(",")[0]}
+                          </Typography>
+                          <Typography
+                            variant="body1"
+                            component="div"
+                            className="user-cache__colection-icon"
+                          >
+                            {applyOptions(index)}
+                          </Typography>
+                        </Typography>
                       </Typography>
-                    </Typography>
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    component="div"
-                    className="multi-select-btn"
-                  >
-                    {/* <FormControlLabel
-                     value="male"
-                     control={<Radio sx={{ p: 0 }} />}
-                     label=""
-                     sx={{ mr: 0 }}
-                   /> */}
-                    <Checkbox
-                      className="user-cache-checkbox"
-                      sx={{ p: 0, ml: "-4px" }}
-                      defaultChecked={selctAll}
-                      // isChecked={selctAll}
-                    />
-                    {/* <Checkbox sx={{ p: 0, ml: "-4px" }} defaultChecked /> */}
-                  </Typography>
-                </Typography>
-                <Divider sx={{ borderColor: "#272424" }} />
-                <Divider sx={{ borderColor: "#6b6868" }} />
-              </div>
-            );
-          })}
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        className="multi-select-btn"
+                      >
+                        <Checkbox
+                          name={index}
+                          value={savedata?.qId}
+                          className="user-cache-checkbox"
+                          sx={{ p: 0, ml: "-4px" }}
+                          checked={
+                            savedata?.isChecked == undefined
+                              ? ""
+                              : savedata?.isChecked
+                          }
+                          onChange={handleChange}
+                        />
+                      </Typography>
+                    </div>
+                    <Divider sx={{ borderColor: "#272424" }} />
+                    <Divider sx={{ borderColor: "#6b6868" }} />
+                  </div>
+                );
+              })}
         </CustomScrollbar>
         <div className="user-cache__footer">
-          <Divider sx={{ borderColor: "#272424" }} />
-          <Divider sx={{ borderColor: "#6b6868" }} />
           <div className="user-cache__footer-inr">
-            <Button
-              className="button--secondary user-cache__delete-btn"
-              //  onClick={applyFilters}
-              //disabled={questionData === null}
-            >
+            <Button className="button--secondary user-cache__delete-btn">
               Delete
             </Button>
-
             <Button
               className="button--primary btn-line"
               onClick={() => {
@@ -223,3 +324,6 @@ const UserCache: React.FC = () => {
 };
 
 export default memo(UserCache);
+function setChartOperations(defaultChartOperations: any): any {
+  throw new Error("Function not implemented.");
+}

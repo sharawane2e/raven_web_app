@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setChartOrientation } from "../../redux/actions/chartActions";
 import store from "../../redux/store";
-import { getChartOptions, getPlotOptions } from "../../utils/ChartOptionFormatter";
+import {
+  getChartOptions,
+  getPlotOptions,
+} from "../../utils/ChartOptionFormatter";
 import { setChartData } from "../../redux/actions/chartActions";
 
 interface OrientationControlProps {}
@@ -15,10 +18,10 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
   const { chartOrientation, questionData } = useSelector(
     (state: RootState) => state.chart
   );
+  const { chart } = store.getState();
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {
-
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -38,7 +41,7 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
       renderChild: () => <LandscapeIcon />,
       onClick: () => changeOrientation(ChartOrientation.LANDSCAPE),
       active: chartOrientation === ChartOrientation.LANDSCAPE,
-      disabled: questionData === null,
+      disabled: questionData === null || (chart?.chartType == 5 ? true : false),
     },
   ];
 

@@ -30,6 +30,7 @@ export interface AppbarProps {
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
   const { userCache } = useSelector((state: RootState) => state.chart);
+  const { sidebar } = useSelector((state: RootState) => state);
 
   const { variant = "partialWidth" } = props;
   // const {
@@ -102,13 +103,16 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
+        {console.log("userCache.length", userCache == undefined)}
         <Badge
-          badgeContent={userCache.length}
+          badgeContent={userCache == undefined ? 0 : userCache.length}
           color="primary"
           className="badge-icon"
         >
           <div
-            className="appbar__tourGuide appbar__cache-btn"
+            className={`appbar__tourGuide appbar__cache-btn ${
+              sidebar?.userCache ? "user-active" : ""
+            }`}
             onClick={() => {
               toggleUserSidebar();
               // toggleMobileSidebar();
