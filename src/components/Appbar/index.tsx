@@ -22,6 +22,10 @@ import {
   toggleSidebarUserCache,
 } from "../../redux/actions/sidebarAction";
 import { Badge } from "@mui/material";
+import Toaster from "../../utils/Toaster";
+import ApiUrl from "../../enums/ApiUrl";
+import ApiRequest from "../../utils/ApiRequest";
+import { setUserCache } from "../../redux/actions/chartActions";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -52,6 +56,16 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
+    ApiRequest.request(ApiUrl.SAVECHART, "GET")
+      .then((res) => {
+        if (res.success) {
+          //Toaster.success(res.message);
+          dispatch(setUserCache(res?.data));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const [anchorEl, setAnchorEl] = useState<
@@ -68,7 +82,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     setAnchorEl(e.currentTarget);
   };
   const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
     dispatch(showTourGuide());
   };
 
@@ -103,7 +116,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        {console.log("userCache.length", userCache == undefined)}
         <Badge
           badgeContent={userCache == undefined ? 0 : userCache.length}
           color="primary"

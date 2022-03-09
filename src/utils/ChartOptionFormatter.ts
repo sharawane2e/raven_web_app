@@ -105,7 +105,6 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        console.log(optionData);
 
         let count = 0;
         // debugger;
@@ -234,7 +233,6 @@ const getSingleChartOptions = (
 
     if (chartType === ChartType.STACK) {
       data.map((element: any, index: number) => {
-        console.log("element", element);
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -327,7 +325,6 @@ const getGridChartOptions = (
 
       // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
-        console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
@@ -538,7 +535,6 @@ export const getPlotOptions = (
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    console.log("line chart", plotOptions);
     plotOptions["line"] = {
       // allowPointSelect: false,
       // cursor: "pointer",

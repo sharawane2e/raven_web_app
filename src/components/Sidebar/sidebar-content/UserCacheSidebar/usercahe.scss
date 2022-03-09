@@ -8,12 +8,13 @@
   }
   .MuiDrawer-paper {
     width: 24rem;
-    background: #393939;
+    background: map-get($map: $bg-color, $key: "secondary");
+    box-shadow: -9px 33px 47px 0px $black;
     &::before {
       content: "";
       position: fixed;
       top: 33px;
-      left: 90%;
+      left: 89%;
       z-index: 10;
       transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       display: block;
@@ -39,17 +40,45 @@
     cursor: pointer;
     display: flex;
     padding: 8px;
-    // flex-wrap: nowrap;
-    // padding: 15px 8px;
+    flex-wrap: nowrap;
     width: 96%;
     align-items: center;
-    // justify-content: center;
+    &--cache-section {
+      display: flex;
+      flex-basis: 90.666667%;
+      flex-grow: 0;
+      max-width: 90.666667%;
+      align-items: center;
+      &:hover .user-cache__chart-icon {
+        border-color: $white;
+      }
+      &:hover .chart-hover-filed path {
+        fill: map-get($map: $bg-color, $key: "accent");
+      }
+      &:hover .user-cache__chart-headding {
+        color: $white;
+      }
+    }
+  }
+  .active-section {
+    .user-cache__chart-icon {
+      border-color: $white;
+    }
+    .chart-hover-filed path {
+      fill: map-get($map: $bg-color, $key: "accent");
+    }
+    .user-cache__chart-headding {
+      color: $white;
+    }
   }
   &__chart-icon-sec {
     max-width: 10.666667%;
+    svg {
+      fill: $hedding-color;
+    }
   }
   &__chart-icon {
-    border: 1px solid #fff;
+    border: 1px solid $hedding-color;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -76,14 +105,15 @@
   }
   &__chart-question {
     // display: flex;
-    flex-basis: 80.666667%;
+    flex-basis: 87.666667%;
     -webkit-box-flex: 0;
     -webkit-flex-grow: 0;
     -ms-flex-positive: 0;
     flex-grow: 0;
-    max-width: 80.666667%;
+    max-width: 87.666667%;
     padding-left: 10px;
     padding-right: 10px;
+    color: $hedding-color;
   }
   &__footer-inr {
     display: flex;
@@ -101,7 +131,13 @@
     font-size: map-get($map: $text-size, $key: small);
   }
   &__colection-icon {
+    display: flex;
+    align-items: center;
     font-size: map-get($map: $text-size, $key: small);
+  }
+  .filter-icons {
+    width: 16px !important;
+    height: 16px !important;
   }
   .button--secondary {
     border: 1px solid #fff;
@@ -114,6 +150,12 @@
     max-width: 10.666667%;
     justify-content: end;
   }
+}
+.border-first-line {
+  border-color: $border-first !important;
+}
+.border-second-line {
+  border-color: $border-second !important;
 }
 .btn-line {
   span {

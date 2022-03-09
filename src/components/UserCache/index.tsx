@@ -64,7 +64,7 @@ const UserCache: React.FC<UserCacheProps> = () => {
       tooltip: "User Cache",
       renderChild: () => <WishList />,
       onClick: userCacheSubmit,
-      //active: true,
+      active: true,
       // disabled: t,
       disabled: chart.questionData === null,
     },
