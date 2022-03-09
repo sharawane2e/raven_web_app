@@ -46,17 +46,17 @@ const UserCache: React.FC<UserCacheProps> = () => {
       .catch((error) => console.log(error))
       .finally(() => console.log("finaly run"));
 
-    ApiRequest.request(ApiUrl.SAVECHART, "GET")
-      .then((res) => {
-        if (res.success) {
-          //Toaster.success(res.message);
-          dispatch(setUserCache(res?.data));
-        } else {
-          Toaster.error(res.message);
-        }
-      })
-      .catch((error) => console.log(error))
-      .finally(() => console.log("finaly run"));
+    // ApiRequest.request(ApiUrl.SAVECHART, "GET")
+    //   .then((res) => {
+    //     if (res.success) {
+    //       //Toaster.success(res.message);
+    //       dispatch(setUserCache(res?.data));
+    //     } else {
+    //       Toaster.error(res.message);
+    //     }
+    //   })
+    //   .catch((error) => console.log(error))
+    //   .finally(() => console.log("finaly run"));
   };
 
   const buttonConfig: ButtonGroupConfig[] = [

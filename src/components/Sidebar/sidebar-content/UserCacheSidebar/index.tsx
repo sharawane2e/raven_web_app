@@ -51,7 +51,7 @@ const UserCache: React.FC = () => {
   const [check, setschecked] = useState();
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
-  const [userCacheId, serUserCacheId] = useState([]);
+  const [userCacheId, setUserCacheId] = useState<any[] | []>([]);
 
   const dispatch = useDispatch();
 
@@ -89,13 +89,21 @@ const UserCache: React.FC = () => {
     setUsers(chart?.userCache);
   }, [chart?.userCache]);
 
-  let userDataArr: any[] = [];
-
+  let NewArr: any[] = [];
+  const updateCheckList = (dataCheck: any) => {
+    let checkList: any[] = [];
+    // checkList.push(dataCheck);
+    // let newArray = [...checkList, dataCheck];
+    // console.log("checkList", newArray);
+  };
   const handleChange = (userId: any, event: any) => {
     const { value, name, checked } = event.target;
-
     if (name === "allSelect") {
-      const tempUser: any = users.map((user: any) => {
+      const userMultiId = userId.map((element: any, index: any) => {
+        return element?._id;
+      });
+      setUserCacheId(userMultiId);
+      const tempUser: any = users.map((user: any, index: any) => {
         return { ...user, isChecked: checked };
       });
       setUsers(tempUser);
@@ -104,24 +112,21 @@ const UserCache: React.FC = () => {
         index === parseInt(name) ? { ...user, isChecked: checked } : user
       );
       setUsers(tempUser);
-      serUserCacheId(userId);
+      updateCheckList(userId);
+      // NewArr.push(userId);
+      setUserCacheId([]);
     }
+    console.log("userId", NewArr);
     if (event.target.checked) {
       setButtonShow(false);
     } else {
       setButtonShow(true);
+      setUserCacheId([]);
     }
   };
+  // console.log("user", userCacheId);
 
   const cacheShow = (cacheId: any, event: any) => {
-    const getid = event.target.getAttribute("id");
-
-    if (getid === cacheId) {
-      setActiveSection(true);
-    } else {
-      setActiveSection(false);
-    }
-
     dispatch(setSelectedQuestionId(cacheId));
     chart?.userCache.forEach((userCacheinfo: any, index: string | number) => {
       if (userCacheinfo?.qId === cacheId) {
@@ -158,7 +163,7 @@ const UserCache: React.FC = () => {
   };
 
   const userDeletebody = {
-    _ids: [userCacheId],
+    _ids: userCacheId,
   };
 
   const userCacheDelete = () => {
@@ -188,21 +193,26 @@ const UserCache: React.FC = () => {
             component="div"
             className="user-cache__select-all"
           >
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="allSelect"
-                  onChange={(event) => handleChange("", event)}
-                  sx={{ color: "#fff" }}
-                  checked={
-                    !users.some(
-                      (userDat: any, index: any) => userDat?.isChecked !== true
-                    )
-                  }
-                />
-              }
-              label="Select All"
-            />
+            {users === undefined ? (
+              ""
+            ) : (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="allSelect"
+                    onChange={(event) => handleChange(users, event)}
+                    sx={{ color: "#fff" }}
+                    checked={
+                      !users.some(
+                        (checkedAll: any) => checkedAll?.isChecked !== true
+                      )
+                    }
+                  />
+                }
+                label="Select All"
+              />
+            )}
+
             <CloseIcon
               onClick={closeSidebar}
               sx={{ color: "#fff", cursor: "pointer" }}
