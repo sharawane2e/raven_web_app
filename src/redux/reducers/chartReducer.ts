@@ -15,6 +15,7 @@ import {
   setChartFullScreen,
   setChartLoading,
   setUserCache,
+  // getUserCache,
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -30,6 +31,7 @@ export interface IChartState {
   baseCount: number;
   bannerQuestionData: IQuestion | null;
   userCache: any;
+  // getUserCache: any;
 }
 
 export const dataLabels = {
@@ -71,6 +73,7 @@ const initialState: IChartState = {
   chartTranspose: false,
   chartfullScreen: false,
   userCache: [],
+  // getUserCache: [],
   chartOptions: {
     title: {
       text: "",
@@ -164,6 +167,11 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     userCache: action.payload,
   }));
+
+  // builder.addCase(getUserCache, (state, action) => ({
+  //   ...state,
+  //   getUserCache: action.payload,
+  // }));
 });
 
 export default chartReducer;

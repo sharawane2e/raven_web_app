@@ -14,14 +14,14 @@
       content: "";
       position: fixed;
       top: 33px;
-      left: 89%;
+      // left: 89%;
       z-index: 10;
       transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       display: block;
       border-width: 20px 20px;
       border-style: solid;
       border-color: #393939 transparent transparent;
-      margin-left: -19px;
+      margin-left: 217px;
       transform: rotate(180deg);
     }
   }
@@ -61,13 +61,13 @@
     }
   }
   .active-section {
-    .user-cache__chart-icon {
+    + .user-cache__chart-icon {
       border-color: $white;
     }
-    .chart-hover-filed path {
+    + .chart-hover-filed path {
       fill: map-get($map: $bg-color, $key: "accent");
     }
-    .user-cache__chart-headding {
+    + .user-cache__chart-headding {
       color: $white;
     }
   }
@@ -134,6 +134,9 @@
     display: flex;
     align-items: center;
     font-size: map-get($map: $text-size, $key: small);
+    > svg {
+      margin-right: 5px;
+    }
   }
   .filter-icons {
     width: 16px !important;
@@ -149,6 +152,9 @@
     flex-grow: 0;
     max-width: 10.666667%;
     justify-content: end;
+  }
+  .checked-color {
+    color: map-get($map: $bg-color, $key: "accent");
   }
 }
 .border-first-line {

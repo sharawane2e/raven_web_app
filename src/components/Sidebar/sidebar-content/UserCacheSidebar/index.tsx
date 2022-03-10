@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { toggleSidebarUserCache } from "../../../../redux/actions/sidebarAction";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
+  fetchuserCache,
   setChartData,
   setChartTranspose,
   setUserCache,
@@ -30,7 +31,10 @@ import {
   fetchChartData,
   transposeChart,
 } from "../../../../services/ChartService";
-import { setSelectedQuestionId } from "../../../../redux/actions/questionAction";
+import {
+  setSelectedBannerQuestionId,
+  setSelectedQuestionId,
+} from "../../../../redux/actions/questionAction";
 import { setChartOrientation } from "../../../../redux/actions/chartActions";
 import {
   removeAppliedFilter,
@@ -43,6 +47,10 @@ import { changeChartType } from "../../../../services/ChartService";
 import { ReactComponent as NumberIcon } from "../../../../assets/svg/Number.svg";
 import { ReactComponent as PercentageIcon } from "../../../../assets/svg/Percentage.svg";
 import { ReactComponent as TransposeIcon } from "../../../../assets/svg/Transpose.svg";
+import { ReactComponent as TransferdataIcon } from "../../../../assets/svg/transfer_data.svg";
+import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
+import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
+import { Tooltip } from "@material-ui/core";
 
 const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
@@ -51,7 +59,7 @@ const UserCache: React.FC = () => {
   const [check, setschecked] = useState();
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
-  const [userCacheId, setUserCacheId] = useState<any[] | []>([]);
+  const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
   const dispatch = useDispatch();
 
@@ -66,6 +74,7 @@ const UserCache: React.FC = () => {
     //     }
     //   })
     //   .catch((error) => console.log(error));
+    dispatch(fetchuserCache());
   }, []);
 
   const closeSidebar = () => {
@@ -89,13 +98,6 @@ const UserCache: React.FC = () => {
     setUsers(chart?.userCache);
   }, [chart?.userCache]);
 
-  let NewArr: any[] = [];
-  const updateCheckList = (dataCheck: any) => {
-    let checkList: any[] = [];
-    // checkList.push(dataCheck);
-    // let newArray = [...checkList, dataCheck];
-    // console.log("checkList", newArray);
-  };
   const handleChange = (userId: any, event: any) => {
     const { value, name, checked } = event.target;
     if (name === "allSelect") {
@@ -112,19 +114,22 @@ const UserCache: React.FC = () => {
         index === parseInt(name) ? { ...user, isChecked: checked } : user
       );
       setUsers(tempUser);
-      updateCheckList(userId);
-      // NewArr.push(userId);
-      setUserCacheId([]);
+      if (checked) {
+        setButtonShow(false);
+        setUserCacheId([...userCacheId, userId]);
+      } else {
+        setButtonShow(true);
+        setUserCacheId(
+          userCacheId.filter((el: any) => el !== event.target.value)
+        );
+      }
     }
-    console.log("userId", NewArr);
-    if (event.target.checked) {
+    if (checked) {
       setButtonShow(false);
     } else {
       setButtonShow(true);
-      setUserCacheId([]);
     }
   };
-  // console.log("user", userCacheId);
 
   const cacheShow = (cacheId: any, event: any) => {
     dispatch(setSelectedQuestionId(cacheId));
@@ -134,6 +139,8 @@ const UserCache: React.FC = () => {
         dispatch(setFilters(userCacheinfo.filter));
         dispatch(setAppliedFilters(userCacheinfo.filter));
         dispatch(removeAppliedFilter(userCacheinfo.filter));
+        dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
+
         if (userCacheinfo.chartTranspose) {
           fetchChartData()
             .then((chartData) => {
@@ -150,12 +157,6 @@ const UserCache: React.FC = () => {
           .then((chartData) => {
             dispatch(setChartData(chartData));
             dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
-            // if (
-            //   chartData.questionData?.type !== QuestionType.SINGLE &&
-            //   chartType === ChartType.PIE
-            // ) {
-            //   changeChartType(ChartType.COLUMN);
-            // }
           })
           .catch((error) => console.log(error));
       }
@@ -172,6 +173,7 @@ const UserCache: React.FC = () => {
         if (res.success) {
           Toaster.success(res.message);
           //dispatch(setUserCache(res?.data));
+          dispatch(fetchuserCache());
         } else {
           Toaster.error(res.message);
         }
@@ -199,6 +201,10 @@ const UserCache: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    icon={<CircleUnchecked />}
+                    checkedIcon={
+                      <CircleCheckedFilled className="checked-color" />
+                    }
                     name="allSelect"
                     onChange={(event) => handleChange(users, event)}
                     sx={{ color: "#fff" }}
@@ -289,21 +295,31 @@ const UserCache: React.FC = () => {
                               className="user-cache__colection-icon"
                             >
                               {chart?.userCache[index]?.filter.length > 0 ? (
-                                <FilterAltIcon
-                                  id={savedata?.qId}
-                                  className="filter-icons"
-                                />
+                                <Tooltip title={"Demo"} arrow placement="top">
+                                  <FilterAltIcon
+                                    id={savedata?.qId}
+                                    className="filter-icons"
+                                  />
+                                </Tooltip>
                               ) : (
                                 ""
                               )}
                               {chart?.userCache[index]?.chartLabelType ===
                               "percentage" ? (
-                                <NumberIcon id={savedata?.qId} />
+                                <Tooltip title={"Demo"} arrow placement="top">
+                                  <NumberIcon id={savedata?.qId} />
+                                </Tooltip>
                               ) : (
                                 <PercentageIcon />
                               )}
                               {chart?.userCache[index]?.chartTranspose ? (
                                 <TransposeIcon id={savedata?.qId} />
+                              ) : (
+                                ""
+                              )}
+                              {chart?.userCache[index]?.qid !== "" &&
+                              chart?.userCache[index]?.bannerQuestion !== "" ? (
+                                <TransferdataIcon />
                               ) : (
                                 ""
                               )}
@@ -317,8 +333,12 @@ const UserCache: React.FC = () => {
                         className="multi-select-btn"
                       >
                         <Checkbox
+                          icon={<CircleUnchecked />}
+                          checkedIcon={
+                            <CircleCheckedFilled className="checked-color" />
+                          }
                           name={index}
-                          value={savedata?.qId}
+                          value={savedata?._id}
                           className="user-cache-checkbox"
                           sx={{ p: 0, ml: "-4px" }}
                           checked={

@@ -3,13 +3,13 @@ import { RootState } from "../../redux/store";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 import { ReactComponent as PdfIcon } from "../../assets/svg/pdf-icon.svg";
 import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
-import { ReactComponent as Wishlist } from "../../assets/svg/wishlist.svg";
+// import { ReactComponent as Wishlist } from "../../assets/svg/wishlist.svg";
 import "svg2pdf.js";
 import { generatePpt } from "../../utils/ppt/PptGen";
 import { generatePdf } from "../../utils/pdf/PdfGen";
-import ApiUrl from "../../enums/ApiUrl";
-import ApiRequest from "../../utils/ApiRequest";
-import Toaster from "../../utils/Toaster";
+// import ApiUrl from "../../enums/ApiUrl";
+// import ApiRequest from "../../utils/ApiRequest";
+// import Toaster from "../../utils/Toaster";
 interface ExportChartProps {}
 
 const ExportChart: React.FC<ExportChartProps> = () => {

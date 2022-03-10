@@ -4,14 +4,13 @@ import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
 // import { ReactComponent as PdfIcon } from "../../assets/svg/pdf-icon.svg";
 //import { ReactComponent as PptIcon } from "../../assets/svg/ppt-icon.svg";
 import { ReactComponent as WishList } from "../../assets/svg/wishlist.svg";
-
 import "svg2pdf.js";
-import { generatePpt } from "../../utils/ppt/PptGen";
-import { generatePdf } from "../../utils/pdf/PdfGen";
+// import { generatePpt } from "../../utils/ppt/PptGen";
+// import { generatePdf } from "../../utils/pdf/PdfGen";
 import ApiUrl from "../../enums/ApiUrl";
 import ApiRequest from "../../utils/ApiRequest";
 import Toaster from "../../utils/Toaster";
-import { setUserCache } from "../../redux/actions/chartActions";
+import { fetchuserCache, setUserCache } from "../../redux/actions/chartActions";
 interface UserCacheProps {}
 
 const UserCache: React.FC<UserCacheProps> = () => {
@@ -25,7 +24,7 @@ const UserCache: React.FC<UserCacheProps> = () => {
     type: chartQuestionData?.type,
     filter: filters?.appliedFilters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData,
+      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData?.qId,
     chartType: chart?.chartType,
     chartLabelType: chart?.chartLabelType,
     chartOrientation: chart?.chartOrientation,
@@ -38,6 +37,7 @@ const UserCache: React.FC<UserCacheProps> = () => {
     ApiRequest.request(ApiUrl.SAVECHART, "POST", userCachebody)
       .then((res) => {
         if (res.success) {
+          dispatch(fetchuserCache());
           Toaster.success(res.message);
         } else {
           Toaster.error(res.message);
@@ -45,18 +45,6 @@ const UserCache: React.FC<UserCacheProps> = () => {
       })
       .catch((error) => console.log(error))
       .finally(() => console.log("finaly run"));
-
-    // ApiRequest.request(ApiUrl.SAVECHART, "GET")
-    //   .then((res) => {
-    //     if (res.success) {
-    //       //Toaster.success(res.message);
-    //       dispatch(setUserCache(res?.data));
-    //     } else {
-    //       Toaster.error(res.message);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error))
-    //   .finally(() => console.log("finaly run"));
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
@@ -64,7 +52,7 @@ const UserCache: React.FC<UserCacheProps> = () => {
       tooltip: "User Cache",
       renderChild: () => <WishList />,
       onClick: userCacheSubmit,
-      active: true,
+      active: chart?.userCache.length > 0 ? true : false,
       // disabled: t,
       disabled: chart.questionData === null,
     },

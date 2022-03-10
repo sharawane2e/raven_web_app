@@ -4,7 +4,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
 import clsx from "clsx";
 import BrandLogo from "../BrandLogo";
-import { SidebarContext } from "../../contexts/SidebarContext";
+// import { SidebarContext } from "../../contexts/SidebarContext";
 import ProfileAvatar from "../widgets/ProfileAvatar";
 import { logOutUser } from "../../services/AuthService";
 import { useHistory } from "react-router";
@@ -22,10 +22,10 @@ import {
   toggleSidebarUserCache,
 } from "../../redux/actions/sidebarAction";
 import { Badge } from "@mui/material";
-import Toaster from "../../utils/Toaster";
-import ApiUrl from "../../enums/ApiUrl";
-import ApiRequest from "../../utils/ApiRequest";
-import { setUserCache } from "../../redux/actions/chartActions";
+// import Toaster from "../../utils/Toaster";
+// import ApiUrl from "../../enums/ApiUrl";
+// import ApiRequest from "../../utils/ApiRequest";
+import { fetchuserCache } from "../../redux/actions/chartActions";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -56,16 +56,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
-    ApiRequest.request(ApiUrl.SAVECHART, "GET")
-      .then((res) => {
-        if (res.success) {
-          //Toaster.success(res.message);
-          dispatch(setUserCache(res?.data));
-        } else {
-          Toaster.error(res.message);
-        }
-      })
-      .catch((error) => console.log(error));
+    // dispatch(fetchuserCache());
   };
 
   const [anchorEl, setAnchorEl] = useState<
