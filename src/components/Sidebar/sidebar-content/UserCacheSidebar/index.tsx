@@ -51,6 +51,7 @@ import { ReactComponent as TransferdataIcon } from "../../../../assets/svg/trans
 import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
+import Animation from "../../../Skeleton"
 
 const UserCache: React.FC = () => {
   const { sidebar } = useSelector((state: RootState) => state);
@@ -225,7 +226,7 @@ const UserCache: React.FC = () => {
           {/* <Divider className="border-first-line" /> */}
           {/* <Divider className="border-second-line" /> */}
         </Box>
-
+        <Animation/>
         <CustomScrollbar>
           {getUserCache.length === 0 ? (
             <div className="user-cache__no-data">no data exists</div>
