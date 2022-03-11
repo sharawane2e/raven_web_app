@@ -1,5 +1,6 @@
 .user-cache {
   position: relative;
+  user-select: none;
   &__sidebar {
     // height: calc(100vh - 40px);
     // overflow: hidden;
@@ -8,20 +9,21 @@
   }
   .MuiDrawer-paper {
     width: 24rem;
-    background: map-get($map: $bg-color, $key: "secondary");
+    background: $white;
+    color: map-get($map: $bg-color, $key: secondary);
     box-shadow: -9px 33px 47px 0px $black;
     &::before {
       content: "";
       position: fixed;
-      top: 33px;
+      top: 38px;
       // left: 89%;
       z-index: 10;
       transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       display: block;
-      border-width: 20px 20px;
+      border-width: 15px 10px;
       border-style: solid;
-      border-color: #393939 transparent transparent;
-      margin-left: 217px;
+      border-color: #fff transparent transparent;
+      margin-left: 230px;
       transform: rotate(180deg);
     }
   }
@@ -35,6 +37,10 @@
     padding-right: 8px;
     justify-content: space-between;
     align-items: center;
+  }
+  &__bottom-line {
+    width: 100%;
+    border-bottom: 2px solid $border-color;
   }
   &__cache-data {
     cursor: pointer;
@@ -50,13 +56,13 @@
       max-width: 90.666667%;
       align-items: center;
       &:hover .user-cache__chart-icon {
-        border-color: $white;
+        border-color: map-get($map: $bg-color, $key: secondary);
       }
       &:hover .chart-hover-filed path {
         fill: map-get($map: $bg-color, $key: "accent");
       }
       &:hover .user-cache__chart-headding {
-        color: $white;
+        color: map-get($map: $bg-color, $key: secondary);
       }
     }
   }
@@ -143,8 +149,8 @@
     height: 16px !important;
   }
   .button--secondary {
-    border: 1px solid #fff;
-    color: #fff;
+    border: 1px solid $hedding-color;
+    color: $hedding-color;
   }
   .multi-select-btn {
     display: flex;
@@ -154,14 +160,19 @@
     justify-content: end;
   }
   .checked-color {
-    color: map-get($map: $bg-color, $key: "accent");
+    color: map-get($map: $bg-color, $key: "accent") !important;
   }
 }
 .border-first-line {
-  border-color: $border-first !important;
+  border-color: map-get($map: $bg-color, $key: "dark") !important;
 }
 .border-second-line {
-  border-color: $border-second !important;
+  border-color: map-get($map: $bg-color, $key: secondary-shade) !important;
+}
+.default-checkbox-color {
+  svg {
+    color: map-get($map: $bg-color, $key: secondary) !important;
+  }
 }
 .btn-line {
   span {

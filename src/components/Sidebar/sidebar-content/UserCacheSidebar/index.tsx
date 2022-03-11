@@ -56,7 +56,6 @@ const UserCache: React.FC = () => {
   const { userCache } = useSelector((state: RootState) => state?.sidebar);
   const { chart } = useSelector((state: RootState) => state);
   const [users, setUsers] = useState([]);
-  const [check, setschecked] = useState();
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
@@ -201,6 +200,7 @@ const UserCache: React.FC = () => {
               <FormControlLabel
                 control={
                   <Checkbox
+                    className="default-checkbox-color"
                     icon={<CircleUnchecked />}
                     checkedIcon={
                       <CircleCheckedFilled className="checked-color" />
@@ -224,9 +224,9 @@ const UserCache: React.FC = () => {
               sx={{ color: "#fff", cursor: "pointer" }}
             />
           </Typography>
-
-          <Divider className="border-first-line" />
-          <Divider className="border-second-line" />
+          <div className="user-cache__bottom-line"></div>
+          {/* <Divider className="border-first-line" /> */}
+          {/* <Divider className="border-second-line" /> */}
         </Box>
         <CustomScrollbar>
           {users === undefined
@@ -295,7 +295,11 @@ const UserCache: React.FC = () => {
                               className="user-cache__colection-icon"
                             >
                               {chart?.userCache[index]?.filter.length > 0 ? (
-                                <Tooltip title={"Demo"} arrow placement="top">
+                                <Tooltip
+                                  title={"Filters"}
+                                  arrow
+                                  placement="top"
+                                >
                                   <FilterAltIcon
                                     id={savedata?.qId}
                                     className="filter-icons"
@@ -306,14 +310,26 @@ const UserCache: React.FC = () => {
                               )}
                               {chart?.userCache[index]?.chartLabelType ===
                               "percentage" ? (
-                                <Tooltip title={"Demo"} arrow placement="top">
+                                <Tooltip title={"Number"} arrow placement="top">
                                   <NumberIcon id={savedata?.qId} />
                                 </Tooltip>
                               ) : (
-                                <PercentageIcon />
+                                <Tooltip
+                                  title={"Percentage"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <PercentageIcon />
+                                </Tooltip>
                               )}
                               {chart?.userCache[index]?.chartTranspose ? (
-                                <TransposeIcon id={savedata?.qId} />
+                                <Tooltip
+                                  title={"Transpose"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <TransposeIcon id={savedata?.qId} />
+                                </Tooltip>
                               ) : (
                                 ""
                               )}
@@ -352,15 +368,17 @@ const UserCache: React.FC = () => {
                         />
                       </Typography>
                     </div>
-                    <Divider className="border-first-line" />
-                    <Divider className="border-second-line" />
+                    <div className="user-cache__bottom-line"></div>
+                    {/* <Divider className="border-first-line" /> */}
+                    {/* <Divider className="border-second-line" /> */}
                   </div>
                 );
               })}
         </CustomScrollbar>
         <div className="user-cache__footer">
-          <Divider className="border-first-line" />
-          <Divider className="border-second-line" />
+          <div className="user-cache__bottom-line"></div>
+          {/* <Divider className="border-first-line" /> */}
+          {/* <Divider className="border-second-line" /> */}
           <div className="user-cache__footer-inr">
             <Button
               disabled={butttonshow}
