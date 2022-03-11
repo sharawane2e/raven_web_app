@@ -16,4 +16,6 @@ export class StaticText {
     "No question selected to create the chart transpose";
 
   static PIE_NOT_AVAILABLE = "Pie chart is not available for this selection";
+
+  static USER_CACHE_NOT_AVAILABLE="No question selected to add in cache";
 }

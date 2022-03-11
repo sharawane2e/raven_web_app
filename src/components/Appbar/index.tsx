@@ -25,7 +25,6 @@ import { Badge } from "@mui/material";
 // import Toaster from "../../utils/Toaster";
 // import ApiUrl from "../../enums/ApiUrl";
 // import ApiRequest from "../../utils/ApiRequest";
-import { fetchuserCache } from "../../redux/actions/chartActions";
 
 export interface AppbarProps {
   variant?: "fullWidth" | "partialWidth";
@@ -33,7 +32,7 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
-  const { userCache } = useSelector((state: RootState) => state.chart);
+  // const { userCache } = useSelector((state: RootState) => state.chart);
   const { sidebar } = useSelector((state: RootState) => state);
 
   const { variant = "partialWidth" } = props;
@@ -55,7 +54,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     dispatch(toggleSidebarMobile());
   };
   const toggleUserSidebar = () => {
-    dispatch(toggleSidebarUserCache());
+    // dispatch(toggleSidebarUserCache());
     // dispatch(fetchuserCache());
   };
 
@@ -107,7 +106,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <Badge
+        {/* <Badge
           badgeContent={userCache == undefined ? 0 : userCache.length}
           color="primary"
           className="badge-icon"
@@ -124,7 +123,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             <Cache className="cache-icon" />
             <div className="tourText">My Cache</div>
           </div>
-        </Badge>
+        </Badge> */}
         {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
          
         </div> */}

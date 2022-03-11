@@ -2,10 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
-import { QuestionType } from "../../enums/QuestionType";
-
 import { IQuestion } from "../../types/IQuestion";
-import { changeChartOptions } from "../../utils/ChartOptionFormatter";
 import {
   setChartData,
   setChartOrientation,
@@ -14,8 +11,6 @@ import {
   setChartTranspose,
   setChartFullScreen,
   setChartLoading,
-  setUserCache,
-  // getUserCache,
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -30,13 +25,10 @@ export interface IChartState {
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
-  userCache: any;
-  // getUserCache: any;
 }
 
 export const dataLabels = {
   enabled: true,
-  // format: "{point.y:.1f}%",
   style: {
     fontSize: "10px",
     textOutline: false,
@@ -72,8 +64,6 @@ const initialState: IChartState = {
   chartLabelType: ChartLabelType.PERCENTAGE,
   chartTranspose: false,
   chartfullScreen: false,
-  userCache: [],
-  // getUserCache: [],
   chartOptions: {
     title: {
       text: "",
@@ -130,16 +120,9 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
-    // const type = state.questionData?.type;
-    // let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
-
-    // if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
-    //   chartOptions = changeChartOptions(chartOptions, action.payload);
-    // }
     return {
       ...state,
       chartType: action.payload,
-      // chartOptions,
     };
   });
 
@@ -162,16 +145,6 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     chartLoading: action.payload,
   }));
-
-  builder.addCase(setUserCache, (state, action) => ({
-    ...state,
-    userCache: action.payload,
-  }));
-
-  // builder.addCase(getUserCache, (state, action) => ({
-  //   ...state,
-  //   getUserCache: action.payload,
-  // }));
 });
 
 export default chartReducer;
