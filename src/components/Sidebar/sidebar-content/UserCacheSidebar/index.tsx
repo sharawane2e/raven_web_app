@@ -55,7 +55,6 @@ import Animation from "../../../Skeleton"
 
 const UserCache: React.FC = () => {
   const { sidebar } = useSelector((state: RootState) => state);
-  const { chart } = useSelector((state: RootState) => state);
   const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
@@ -63,20 +62,6 @@ const UserCache: React.FC = () => {
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    // ApiRequest.request(ApiUrl.SAVECHART, "GET")
-    //   .then((res) => {
-    //     if (res.success) {
-    //       //Toaster.success(res.message);
-    //       dispatch(setUserCache(res?.data));
-    //     } else {
-    //       Toaster.error(res.message);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
-    //  dispatch(fetchuserCache());
-  }, []);
 
   const closeSidebar = () => {
     dispatch(toggleSidebarUserCache(false));
