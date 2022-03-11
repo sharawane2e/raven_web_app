@@ -178,6 +178,12 @@ const UserCache: React.FC = () => {
     //   .catch((error) => console.log(error));
   };
 
+  const skeletonShow =()=>{
+    return   ["1","2","3","4","5"].map((el,index:number)=>{
+        return  <Animation key={index}/>
+      })
+  }
+
   return (
     <div className="sidebar user-cache">
       <Drawer
@@ -226,7 +232,7 @@ const UserCache: React.FC = () => {
           {/* <Divider className="border-first-line" /> */}
           {/* <Divider className="border-second-line" /> */}
         </Box>
-        <Animation/>
+      {skeletonShow}
         <CustomScrollbar>
           {getUserCache.length === 0 ? (
             <div className="user-cache__no-data">no data exists</div>
