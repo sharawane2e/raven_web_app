@@ -22,6 +22,10 @@ import {
   toggleSidebarUserCache,
 } from "../../redux/actions/sidebarAction";
 import { Badge } from "@mui/material";
+import ApiRequest from "../../utils/ApiRequest";
+import ApiUrl from "../../enums/ApiUrl";
+import Toaster from "../../utils/Toaster";
+import { resetUserCache } from "../../redux/actions/userCacheActions";
 // import Toaster from "../../utils/Toaster";
 // import ApiUrl from "../../enums/ApiUrl";
 // import ApiRequest from "../../utils/ApiRequest";
@@ -55,7 +59,15 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
-    // dispatch(fetchuserCache());
+    ApiRequest.request(ApiUrl.SAVE_CHART, "GET")
+      .then((res) => {
+        if (res.success) {
+          dispatch(resetUserCache(res?.data));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const [anchorEl, setAnchorEl] = useState<
