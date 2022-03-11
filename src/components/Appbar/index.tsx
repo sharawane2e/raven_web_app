@@ -59,7 +59,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
-    ApiRequest.request(ApiUrl.SAVE_CHART, "GET")
+    ApiRequest.request(ApiUrl.SAVE_CHART, "GET",undefined,undefined,false)
       .then((res) => {
         if (res.success) {
           dispatch(resetUserCache(res?.data));
