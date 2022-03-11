@@ -1,6 +1,6 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
-    resetUserCache, setCurrentCacheId,
+    resetUserCache, setCacheLoading,
 } from "../actions/userCacheActions";
 
 export interface ISavedChart {
@@ -18,23 +18,16 @@ export interface ISavedChart {
 }
 
 export interface IUserCache{
-  currentCacheId:string,
+  cacheLoading:boolean,
   savedChart:ISavedChart[]
 }
 
 const initialState: IUserCache = {
-  currentCacheId:"",
+  cacheLoading:false,
   savedChart:[]
 };
 
 const userCacheReducer = createReducer(initialState, (builder) => {
-
-  builder.addCase(setCurrentCacheId, (state, action) => (
-    {
-      ...state,
-      currentCacheId:action.payload
-    }
-  ));
 
   builder.addCase(resetUserCache, (state, action) => (
     {
@@ -42,6 +35,15 @@ const userCacheReducer = createReducer(initialState, (builder) => {
       savedChart:[...action.payload]
     }
   ));
+
+  builder.addCase(setCacheLoading, (state, action) => (
+    {
+      ...state,
+      cacheLoading:action.payload
+    }
+  ));
+
+
 
 
 });

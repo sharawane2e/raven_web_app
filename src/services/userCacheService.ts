@@ -44,7 +44,7 @@ export const handleDeleteChartCache = (cacheIdsArr:any) =>{
     const body={
         _ids:[...cacheIdsArr]
     }
-    ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body)
+    ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body,undefined,false)
     .then((res) => {
       if (res.success) {
           store.dispatch(resetUserCache(res.data))

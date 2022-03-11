@@ -7,6 +7,7 @@ import { logOutUser } from "../services/AuthService";
 import store from "../redux/store";
 import { setChartLoading } from "../redux/actions/chartActions";
 import { timeout } from "./Utility";
+import { setCacheLoading } from "../redux/actions/userCacheActions";
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
@@ -25,7 +26,8 @@ const ApiRequest = {
     url: string,
     method: MethodType,
     data?: any,
-    params?: AxiosRequestConfig
+    params?: AxiosRequestConfig,
+    chartLoading:boolean = true
   ) {
     let response: IApiResponse = {
       success: false,
@@ -33,7 +35,12 @@ const ApiRequest = {
       data: null,
     };
     try {
-      dispatch(setChartLoading(true));
+      if(chartLoading){
+
+        dispatch(setChartLoading(true));
+      }else{
+        dispatch(setCacheLoading(true))
+      }
       const [apiResponse, timeoutResponse] = await Promise.all([
         axiosInstance(url, {
           data,
@@ -44,8 +51,10 @@ const ApiRequest = {
       ]);
       response = apiResponse.data;
       dispatch(setChartLoading(false));
+      dispatch(setCacheLoading(false));
     } catch (error: any) {
       dispatch(setChartLoading(false));
+      dispatch(setCacheLoading(false));
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {

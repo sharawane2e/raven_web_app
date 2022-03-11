@@ -33,7 +33,7 @@ const FavouriteControl: React.FC = () => {
       date: new Date(),
     };
 
-    ApiRequest.request(ApiUrl.SAVE_CHART, "POST", userCachebody)
+    ApiRequest.request(ApiUrl.SAVE_CHART, "POST", userCachebody,undefined,false)
       .then((res) => {
         if (res.success) {
           dispatch(resetUserCache(res.data))
