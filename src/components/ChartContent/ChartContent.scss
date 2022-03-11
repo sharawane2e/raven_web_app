@@ -10,6 +10,12 @@
   }
   .questioSelection {
     padding: 0px 12px;
+    @media (max-width: 1023px) {
+      padding: 0px 19px 0px 5px;
+    }
+    @media (max-width: 767px) {
+      padding: 0px 12px 0px 12px;
+    }
   }
   .MuiInputBase-input.Mui-disabled {
     opacity: 0.6;
@@ -39,20 +45,21 @@
 
   .chart-content__chart-wrapper {
     //margin: 15px 5px 10px 12px;
-    width: 98.5%;
-    height: calc(100vh - 260px);
+    width: calc(100% - 24px);
+    height: calc(100vh - 280px);
     background: map-get($map: $bg-color, $key: "white");
-    padding: 20px 15px;
+    //padding: 20px 15px;
+    //padding-right: 15px;
     border: map-get($map: $bg-color, $key: "white");
     border-radius: 3px;
     box-sizing: border-box;
     margin: 8px 12px;
     @media (max-width: 767px) {
-      margin: 15px 5px 15px 0px;
-      width: 100%;
+      //margin: 15px 5px 15px 0px;
+      width: calc(100% - 24px);
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
-      margin: 15px 5px 10px 8px;
+      //margin: 15px 5px 10px 8px;
     }
     //.highcharts-container {
     //overflow: hidden;
@@ -77,7 +84,7 @@
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: primary);
-    margin-top: 23px;
+    margin-top: 15px;
     // margin-top: 5px;
   }
 

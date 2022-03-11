@@ -69,6 +69,15 @@ $black: #000;
 $loading-color: #323c4e;
 $border-color: #e2eee2;
 
+// Table Grid
+
+$tableView-grid:(
+  "border": #423f3f,
+  "odd-bg": #2c2b2b,
+  "tabel-head":#4c4c4c,
+  "text":#b3b3b3,
+);
+
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique
   phone: 640px,
