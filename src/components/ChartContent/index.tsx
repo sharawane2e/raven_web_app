@@ -23,7 +23,7 @@ import Chart from "../Chart";
 import TableView from "../TableView";
 import OrientationControl from "../OrientationControl";
 import ChartTypeControl from "../ChartTypeControl";
-import UserCache from "../UserCache";
+import FavouriteControl from "../FavouriteControl";
 import ExportChart from "../ExportChart";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
@@ -212,7 +212,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
           <div className="chart-content__control-item">
-            <UserCache />
+            <FavouriteControl />
           </div>
           <div className="chart-content__control-item">
             <ChartTypeControl />

@@ -7,6 +7,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import tourReducer from "./tourReducer";
 import sidebarReducer from "./sidebarReducer";
+import userCacheReducer from "./userCacheReducer";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   chart: chartReducer,
   tour: tourReducer,
   sidebar: sidebarReducer,
+  userCache: userCacheReducer,
   user: persistReducer(persistConfig, userReducer),
 });
 
