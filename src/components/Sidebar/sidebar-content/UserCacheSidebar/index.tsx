@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import store, { RootState } from "../../../../redux/store";
 import CustomScrollbar from "../../../CustomScrollbar";
-import Divider from "@mui/material/Divider";
+// import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
@@ -17,9 +17,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 //   setChartTranspose,
 //   setUserCache,
 // } from "../../../../redux/actions/chartActions";
-import Toaster from "../../../../utils/Toaster";
-import ApiUrl from "../../../../enums/ApiUrl";
-import ApiRequest from "../../../../utils/ApiRequest";
+// import Toaster from "../../../../utils/Toaster";
+// import ApiUrl from "../../../../enums/ApiUrl";
+// import ApiRequest from "../../../../utils/ApiRequest";
 import { ReactComponent as ColumnChartIcon } from "../../../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../../../assets/svg/stack-chart-icon.svg";
 import { ReactComponent as TableIcon } from "../../../../assets/svg/table-icon.svg";
@@ -43,7 +43,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 //   setFilters,
 // } from "../../../../redux/actions/filterActions";
 // import { ChartType } from "../../../../enums/ChartType";
-import { changeChartType } from "../../../../services/ChartService";
+// import { changeChartType } from "../../../../services/ChartService";
 import { ReactComponent as NumberIcon } from "../../../../assets/svg/Number.svg";
 import { ReactComponent as PercentageIcon } from "../../../../assets/svg/Percentage.svg";
 import { ReactComponent as TransposeIcon } from "../../../../assets/svg/Transpose.svg";

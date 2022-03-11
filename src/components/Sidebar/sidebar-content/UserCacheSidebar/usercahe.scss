@@ -17,7 +17,7 @@
       position: fixed;
       top: 38px;
       // left: 89%;
-      z-index: 10;
+      z-index: -1;
       transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
       display: block;
       border-width: 15px 10px;
@@ -25,6 +25,7 @@
       border-color: #fff transparent transparent;
       margin-left: 230px;
       transform: rotate(180deg);
+
     }
   }
   .MuiSvgIcon-root {
