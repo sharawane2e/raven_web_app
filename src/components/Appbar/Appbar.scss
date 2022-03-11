@@ -45,6 +45,7 @@
   .user-active {
     background: $white !important;
     color: $black !important;
+    z-index: 999;
     svg {
       fill: $black !important;
     }
