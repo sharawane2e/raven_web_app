@@ -82,7 +82,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
-      {/* <UserCacheSidebar /> */}
+      <UserCacheSidebar />
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />

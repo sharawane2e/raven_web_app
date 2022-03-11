@@ -54,7 +54,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     dispatch(toggleSidebarMobile());
   };
   const toggleUserSidebar = () => {
-    // dispatch(toggleSidebarUserCache());
+    dispatch(toggleSidebarUserCache());
     // dispatch(fetchuserCache());
   };
 
@@ -106,8 +106,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        {/* <Badge
-          badgeContent={userCache == undefined ? 0 : userCache.length}
+        <Badge
+          //badgeContent={userCache == undefined ? 0 : userCache.length}
           color="primary"
           className="badge-icon"
         >
@@ -123,7 +123,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             <Cache className="cache-icon" />
             <div className="tourText">My Cache</div>
           </div>
-        </Badge> */}
+        </Badge>
         {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
          
         </div> */}

@@ -30,7 +30,12 @@
   .MuiSvgIcon-root {
     color: #c3c3c3;
   }
-
+  &__no-data {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+  }
   &__select-all {
     display: flex;
     padding-left: 8px;
