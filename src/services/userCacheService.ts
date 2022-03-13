@@ -67,27 +67,26 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
     .catch((error) => console.log(error));
 };
 
-
-export const addNewKeysToUserCache = ()=>{
+export const addNewKeysToUserCache = () => {
   const {
     userCache: { savedChart },
     chart,
     filters,
   } = store.getState();
 
-//  const updateUserCache= _.each(savedChart,function(value,key){
-//    console.log(value)
-//     _.assignIn(value,{isSelected:false,isActive:false});
-//     });
+  //  const updateUserCache= _.each(savedChart,function(value,key){
+  //    console.log(value)
+  //     _.assignIn(value,{isSelected:false,isActive:false});
+  //     });
 
-//   console.log(updateUserCache)
-const _savedChart = JSON.parse(JSON.stringify(savedChart))
-const updateUserCache = _savedChart.map(function(userCacheItem:any){
-  userCacheItem.isSelected=false;
-  userCacheItem.isActive=false;
-console.log(userCacheItem)
-  return userCacheItem;
-})
-store.dispatch(resetUserCache(updateUserCache));
-console.log(updateUserCache)
-}
+  //   console.log(updateUserCache)
+  const _savedChart = JSON.parse(JSON.stringify(savedChart));
+  const updateUserCache = _savedChart.map(function (userCacheItem: any) {
+    userCacheItem.isSelected = false;
+    userCacheItem.isActive = false;
+    console.log(userCacheItem);
+    return userCacheItem;
+  });
+  //store.dispatch(resetUserCache(updateUserCache));
+  console.log(updateUserCache);
+};
