@@ -1,7 +1,7 @@
 import { Box, Button, Drawer, Typography } from "@material-ui/core";
 import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect } from "react";
+import React, { ComponentType, useContext, useState, useEffect } from "react";
 import store, { RootState } from "../../../../redux/store";
 import CustomScrollbar from "../../../CustomScrollbar";
 // import Divider from "@mui/material/Divider";
@@ -51,9 +51,17 @@ import { ReactComponent as TransferdataIcon } from "../../../../assets/svg/trans
 import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
-import Animation from "../../../Skeleton"
+import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
+import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
 
-const UserCache: React.FC = () => {
+// import Animation from "../../../Skeleton"
+export interface UserCacheProps {
+  loaderSkeleton?: ComponentType;
+}
+
+const UserCache: React.FC<UserCacheProps> = (props) => {
+  const { loaderSkeleton } = props;
+  console.log("loaderSkeleton", loaderSkeleton);
   const { sidebar } = useSelector((state: RootState) => state);
   const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
@@ -163,11 +171,11 @@ const UserCache: React.FC = () => {
     //   .catch((error) => console.log(error));
   };
 
-  const skeletonShow =()=>{
-    return   ["1","2","3","4","5"].map((el,index:number)=>{
-        return  <Animation key={index}/>
-      })
-  }
+  // const skeletonShow =()=>{
+  //   return   ["1","2","3","4","5"].map((el,index:number)=>{
+  //       return  <Animation key={index}/>
+  //     })
+  // }
 
   return (
     <div className="sidebar user-cache">
@@ -217,149 +225,163 @@ const UserCache: React.FC = () => {
           {/* <Divider className="border-first-line" /> */}
           {/* <Divider className="border-second-line" /> */}
         </Box>
-      {skeletonShow}
-        <CustomScrollbar>
-          {getUserCache.length === 0 ? (
-            <div className="user-cache__no-data">no data exists</div>
-          ) : (
-            getUserCache.map((savedata: any, index: any) => {
-              let cacheDate = new Date(savedata?.date);
-              const curentDate = cacheDate.toLocaleString("en-us");
 
-              return (
-                <div className="user-cache__sidebar" key={index}>
-                  <div className="user-cache__cache-data">
-                    <div
-                      id={savedata?.qId}
-                      className={`user-cache__cache-data--cache-section ${
-                        activeSection ? "active-section" : ""
-                      }`}
-                      onClick={(event) => cacheShow(savedata?.qId, event)}
-                    >
-                      <Typography
+        <CustomScrollbar>
+          <CustomSkeleton
+            //loading={loadingData}
+            loading={true}
+            loaderSkeleton={UserCacheSekeleton}
+            // loaderSkeleton={loaderSkeleton}
+            skeletonCount={8}
+          >
+            {getUserCache.length === 0 ? (
+              <div className="user-cache__no-data">no data exists</div>
+            ) : (
+              getUserCache.map((savedata: any, index: any) => {
+                let cacheDate = new Date(savedata?.date);
+                const curentDate = cacheDate.toLocaleString("en-us");
+
+                return (
+                  <div className="user-cache__sidebar" key={index}>
+                    <div className="user-cache__cache-data">
+                      <div
                         id={savedata?.qId}
-                        variant="body1"
-                        component="div"
-                        className="user-cache__chart-icon-sec"
+                        className={`user-cache__cache-data--cache-section ${
+                          activeSection ? "active-section" : ""
+                        }`}
+                        onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
                         <Typography
                           id={savedata?.qId}
                           variant="body1"
                           component="div"
-                          className="user-cache__chart-icon"
-                        >
-                          {chartIcons(index)}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        id={savedata?.qId}
-                        variant="body1"
-                        component="div"
-                        className="user-cache__chart-question"
-                      >
-                        <Typography
-                          id={savedata?.qId}
-                          variant="h6"
-                          component="h6"
-                          className="user-cache__chart-headding"
-                        >
-                          {savedata?.qText}
-                        </Typography>
-                        <Typography
-                          id={savedata?.qId}
-                          variant="body1"
-                          component="div"
-                          className="user-cache__collectdata"
+                          className="user-cache__chart-icon-sec"
                         >
                           <Typography
                             id={savedata?.qId}
                             variant="body1"
                             component="div"
-                            className="user-cache__date"
+                            className="user-cache__chart-icon"
                           >
-                            {curentDate.split(",")[0]}
-                          </Typography>
-                          <Typography
-                            //   id={savedata?.qId}
-                            variant="body1"
-                            component="div"
-                            className="user-cache__colection-icon"
-                          >
-                            {savedChart[index]?.filter.length > 0 ? (
-                              <Tooltip title={"Filters"} arrow placement="top">
-                                <FilterAltIcon
-                                  id={savedata?.qId}
-                                  className="filter-icons"
-                                />
-                              </Tooltip>
-                            ) : (
-                              ""
-                            )}
-                            {savedChart[index]?.chartLabelType ===
-                            "percentage" ? (
-                              <Tooltip title={"Number"} arrow placement="top">
-                                <NumberIcon id={savedata?.qId} />
-                              </Tooltip>
-                            ) : (
-                              <Tooltip
-                                title={"Percentage"}
-                                arrow
-                                placement="top"
-                              >
-                                <PercentageIcon />
-                              </Tooltip>
-                            )}
-                            {savedChart[index]?.chartTranspose ? (
-                              <Tooltip
-                                title={"Transpose"}
-                                arrow
-                                placement="top"
-                              >
-                                <TransposeIcon id={savedata?.qId} />
-                              </Tooltip>
-                            ) : (
-                              ""
-                            )}
-                            {savedChart[index]?.qId !== "" &&
-                            savedChart[index]?.bannerQuestion !== "" ? (
-                              <TransferdataIcon />
-                            ) : (
-                              ""
-                            )}
+                            {chartIcons(index)}
                           </Typography>
                         </Typography>
+                        <Typography
+                          id={savedata?.qId}
+                          variant="body1"
+                          component="div"
+                          className="user-cache__chart-question"
+                        >
+                          <Typography
+                            id={savedata?.qId}
+                            variant="h6"
+                            component="h6"
+                            className="user-cache__chart-headding"
+                          >
+                            {savedata?.qText}
+                          </Typography>
+                          <Typography
+                            id={savedata?.qId}
+                            variant="body1"
+                            component="div"
+                            className="user-cache__collectdata"
+                          >
+                            <Typography
+                              id={savedata?.qId}
+                              variant="body1"
+                              component="div"
+                              className="user-cache__date"
+                            >
+                              {curentDate.split(",")[0]}
+                            </Typography>
+                            <Typography
+                              //   id={savedata?.qId}
+                              variant="body1"
+                              component="div"
+                              className="user-cache__colection-icon"
+                            >
+                              {savedChart[index]?.filter.length > 0 ? (
+                                <Tooltip
+                                  title={"Filters"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <FilterAltIcon
+                                    id={savedata?.qId}
+                                    className="filter-icons"
+                                  />
+                                </Tooltip>
+                              ) : (
+                                ""
+                              )}
+                              {savedChart[index]?.chartLabelType ===
+                              "percentage" ? (
+                                <Tooltip title={"Number"} arrow placement="top">
+                                  <NumberIcon id={savedata?.qId} />
+                                </Tooltip>
+                              ) : (
+                                <Tooltip
+                                  title={"Percentage"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <PercentageIcon />
+                                </Tooltip>
+                              )}
+                              {savedChart[index]?.chartTranspose ? (
+                                <Tooltip
+                                  title={"Transpose"}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <TransposeIcon id={savedata?.qId} />
+                                </Tooltip>
+                              ) : (
+                                ""
+                              )}
+                              {savedChart[index]?.qId !== "" &&
+                              savedChart[index]?.bannerQuestion !== "" ? (
+                                <TransferdataIcon />
+                              ) : (
+                                ""
+                              )}
+                            </Typography>
+                          </Typography>
+                        </Typography>
+                      </div>
+                      <Typography
+                        variant="body1"
+                        component="div"
+                        className="multi-select-btn"
+                      >
+                        <Checkbox
+                          icon={<CircleUnchecked />}
+                          checkedIcon={
+                            <CircleCheckedFilled className="checked-color" />
+                          }
+                          name={index}
+                          value={savedata?._id}
+                          className="user-cache-checkbox"
+                          sx={{ p: 0, ml: "-4px" }}
+                          checked={
+                            savedata?.isChecked == undefined
+                              ? ""
+                              : savedata?.isChecked
+                          }
+                          onChange={(event) =>
+                            handleChange(savedata?._id, event)
+                          }
+                        />
                       </Typography>
                     </div>
-                    <Typography
-                      variant="body1"
-                      component="div"
-                      className="multi-select-btn"
-                    >
-                      <Checkbox
-                        icon={<CircleUnchecked />}
-                        checkedIcon={
-                          <CircleCheckedFilled className="checked-color" />
-                        }
-                        name={index}
-                        value={savedata?._id}
-                        className="user-cache-checkbox"
-                        sx={{ p: 0, ml: "-4px" }}
-                        checked={
-                          savedata?.isChecked == undefined
-                            ? ""
-                            : savedata?.isChecked
-                        }
-                        onChange={(event) => handleChange(savedata?._id, event)}
-                      />
-                    </Typography>
+                    <div className="user-cache__bottom-line"></div>
+                    {/* <Divider className="border-first-line" /> */}
+                    {/* <Divider className="border-second-line" /> */}
                   </div>
-                  <div className="user-cache__bottom-line"></div>
-                  {/* <Divider className="border-first-line" /> */}
-                  {/* <Divider className="border-second-line" /> */}
-                </div>
-              );
-            })
-          )}
+                );
+              })
+            )}
+          </CustomSkeleton>
         </CustomScrollbar>
         <div className="user-cache__footer">
           <div className="user-cache__bottom-line"></div>
