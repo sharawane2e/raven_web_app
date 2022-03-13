@@ -24,20 +24,21 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
 import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
+import { addNewKeysToUserCache } from "../../../../services/userCacheService";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { sidebar } = useSelector((state: RootState) => state);
-  const { savedChart } = useSelector((state: RootState) => state?.userCache);
+  const {sidebar,userCache} = store.getState();
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
-  const [activeSection, setActiveSection] = useState(false);
+  const [activeSection, setActiveSection] = useState(false); // need to see
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
-  const { userCache } = store.getState();
+  const {savedChart} = userCache;
+
 
   const dispatch = useDispatch();
 
@@ -58,7 +59,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return <LineChartIcon className="chart-hover-filed" />;
     }
   };
+
   useEffect(() => {
+    // addNewKeysToUserCache()
     return setUsersCache(savedChart);
   }, [savedChart]);
 
@@ -136,12 +139,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     //   })
     //   .catch((error) => console.log(error));
   };
-
-  // const skeletonShow =()=>{
-  //   return   ["1","2","3","4","5"].map((el,index:number)=>{
-  //       return  <Animation key={index}/>
-  //     })
-  // }
 
   return (
     <div className="sidebar user-cache">
