@@ -37,7 +37,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const [activeSection, setActiveSection] = useState(false);
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
-  const{userCache} = store.getState();
+  const { userCache } = store.getState();
 
   const dispatch = useDispatch();
 
@@ -125,7 +125,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     // });
   };
 
- 
   const userCacheDelete = () => {
     // ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", userDeletebody)
     //   .then((res) => {
@@ -198,7 +197,12 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             skeletonCount={8}
           >
             {getUserCache.length === 0 ? (
-              <><div className="user-cache__no-data">No questions exists</div><div className="user-cache__no-data">Click icon to add in cache</div></>
+              <>
+                <div className="user-cache__no-data">No questions exists</div>
+                <div className="user-cache__no-data">
+                  Click icon to add in cache
+                </div>
+              </>
             ) : (
               getUserCache.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
@@ -214,52 +218,20 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                         }`}
                         onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
-                        <Typography
-                          variant="body1"
-                          component="div"
-                          className="user-cache__chart-icon-sec"
-                        >
-                          <Typography
-                            variant="body1"
-                            component="div"
-                            className="user-cache__chart-icon"
-                          >
+                        <div className="user-cache__chart-icon-sec">
+                          <div className="user-cache__chart-icon">
                             {chartIcons(index)}
-                          </Typography>
-                        </Typography>
-                        <Typography
-                  
-                          variant="body1"
-                          component="div"
-                          className="user-cache__chart-question"
-                        >
-                          <Typography
-                    
-                            variant="h6"
-                            component="h6"
-                            className="user-cache__chart-headding"
-                          >
+                          </div>
+                        </div>
+                        <div className="user-cache__chart-question">
+                          <div className="user-cache__chart-headding">
                             {savedata?.qText}
-                          </Typography>
-                          <Typography
-                    
-                            variant="body1"
-                            component="div"
-                            className="user-cache__collectdata"
-                          >
-                            <Typography
-                      
-                              variant="body1"
-                              component="div"
-                              className="user-cache__date"
-                            >
+                          </div>
+                          <div className="user-cache__collectdata">
+                            <div className="user-cache__date">
                               {curentDate.split(",")[0]}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              component="div"
-                              className="user-cache__colection-icon"
-                            >
+                            </div>
+                            <div className="user-cache__colection-icon">
                               {savedChart[index]?.filter.length > 0 ? (
                                 <Tooltip
                                   title={"Filters"}
@@ -305,15 +277,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               ) : (
                                 ""
                               )}
-                            </Typography>
-                          </Typography>
-                        </Typography>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <Typography
-                        variant="body1"
-                        component="div"
-                        className="multi-select-btn"
-                      >
+                      <div className="multi-select-btn">
                         <Checkbox
                           icon={<CircleUnchecked />}
                           checkedIcon={
@@ -332,7 +300,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             handleChange(savedata?._id, event)
                           }
                         />
-                      </Typography>
+                      </div>
                     </div>
                     <div className="user-cache__bottom-line"></div>
                     {/* <Divider className="border-first-line" /> */}
