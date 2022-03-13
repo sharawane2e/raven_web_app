@@ -1,3 +1,10 @@
+.user-cache {
+  .drawer--desktop {
+    @media (max-width: 767px) {
+      display: block !important;
+    }
+  }
+}
 .drawer {
   width: $sidebar-width;
   flex-shrink: 0;
@@ -18,6 +25,7 @@
       display: none;
     }
   }
+
   &.drawer--mobile {
     display: none;
     @media (max-width: 767px) {
