@@ -30,14 +30,14 @@ export interface UserCacheProps {
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { sidebar } = useSelector((state: RootState) => state);
-  const { savedChart } = useSelector((state: RootState) => state?.userCache);
+  const {sidebar,userCache} = store.getState();
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
-  const{userCache} = store.getState();
+  const {savedChart} = userCache;
+
 
   const dispatch = useDispatch();
 
@@ -125,7 +125,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     // });
   };
 
- 
   const userCacheDelete = () => {
     // ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", userDeletebody)
     //   .then((res) => {
@@ -137,12 +136,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     //   })
     //   .catch((error) => console.log(error));
   };
-
-  // const skeletonShow =()=>{
-  //   return   ["1","2","3","4","5"].map((el,index:number)=>{
-  //       return  <Animation key={index}/>
-  //     })
-  // }
 
   return (
     <div className="sidebar user-cache">
@@ -198,7 +191,12 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             skeletonCount={8}
           >
             {getUserCache.length === 0 ? (
-              <><div className="user-cache__no-data">No questions exists</div><div className="user-cache__no-data">Click icon to add in cache</div></>
+              <>
+                <div className="user-cache__no-data">No questions exists</div>
+                <div className="user-cache__no-data">
+                  Click icon to add in cache
+                </div>
+              </>
             ) : (
               getUserCache.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
@@ -228,13 +226,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                           </Typography>
                         </Typography>
                         <Typography
-                  
                           variant="body1"
                           component="div"
                           className="user-cache__chart-question"
                         >
                           <Typography
-                    
                             variant="h6"
                             component="h6"
                             className="user-cache__chart-headding"
@@ -242,13 +238,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             {savedata?.qText}
                           </Typography>
                           <Typography
-                    
                             variant="body1"
                             component="div"
                             className="user-cache__collectdata"
                           >
                             <Typography
-                      
                               variant="body1"
                               component="div"
                               className="user-cache__date"
