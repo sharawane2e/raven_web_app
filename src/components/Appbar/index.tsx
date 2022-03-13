@@ -26,6 +26,7 @@ import ApiRequest from "../../utils/ApiRequest";
 import ApiUrl from "../../enums/ApiUrl";
 import Toaster from "../../utils/Toaster";
 import { resetUserCache } from "../../redux/actions/userCacheActions";
+import { addNewKeysToUserCache } from "../../services/userCacheService";
 // import Toaster from "../../utils/Toaster";
 // import ApiUrl from "../../enums/ApiUrl";
 // import ApiRequest from "../../utils/ApiRequest";
@@ -62,7 +63,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     ApiRequest.request(ApiUrl.SAVE_CHART, "GET",undefined,undefined,false)
       .then((res) => {
         if (res.success) {
-          dispatch(resetUserCache(res?.data));
+          const updatedUserCache = addNewKeysToUserCache(res?.data)
+          dispatch(resetUserCache(updatedUserCache));
         } else {
           Toaster.error(res.message);
         }

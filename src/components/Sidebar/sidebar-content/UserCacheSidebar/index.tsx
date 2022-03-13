@@ -31,13 +31,15 @@ export interface UserCacheProps {
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
   const { sidebar } = useSelector((state: RootState) => state);
-  const { savedChart } = useSelector((state: RootState) => state?.userCache);
+  // const { savedChart } = useSelector((state: RootState) => state?.userCache);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
   const { userCache } = store.getState();
+  const { savedChart } = userCache;
 
   const dispatch = useDispatch();
 
@@ -58,42 +60,51 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return <LineChartIcon className="chart-hover-filed" />;
     }
   };
-  useEffect(() => {
-    return setUsersCache(savedChart);
-  }, [savedChart]);
 
-  const handleChange = (userId: any, event: any) => {
-    const { value, name, checked } = event.target;
-    if (name === "allSelect") {
-      const userMultiId = userId.map((element: any, index: any) => {
-        return element?._id;
-      });
-      setUserCacheId(userMultiId);
-      const tempUser: any = getUserCache.map((user: any, index: any) => {
-        return { ...user, isChecked: checked };
-      });
-      setUsersCache(tempUser);
-    } else {
-      const tempUser: any = getUserCache.map((user: any, index: number) =>
-        index === parseInt(name) ? { ...user, isChecked: checked } : user
-      );
-      setUsersCache(tempUser);
-      if (checked) {
-        setButtonShow(false);
-        setUserCacheId([...userCacheId, userId]);
-      } else {
-        setButtonShow(true);
-        setUserCacheId(
-          userCacheId.filter((el: any) => el !== event.target.value)
-        );
-      }
-    }
-    if (checked) {
-      setButtonShow(false);
-    } else {
-      setButtonShow(true);
-    }
+  // const handleChange = (userId: any, event: any) => {
+  //   const { value, name, checked } = event.target;
+  //   if (name === "allSelect") {
+  //     const userMultiId = userId.map((element: any, index: any) => {
+  //       return element?._id;
+  //     });
+  //     setUserCacheId(userMultiId);
+  //     const tempUser: any = getUserCache.map((user: any, index: any) => {
+  //       return { ...user, isChecked: checked };
+  //     });
+  //     setUsersCache(tempUser);
+  //   } else {
+  //     const tempUser: any = getUserCache.map((user: any, index: number) =>
+  //       index === parseInt(name) ? { ...user, isChecked: checked } : user
+  //     );
+  //     setUsersCache(tempUser);
+  //     if (checked) {
+  //       setButtonShow(false);
+  //       setUserCacheId([...userCacheId, userId]);
+  //     } else {
+  //       setButtonShow(true);
+  //       setUserCacheId(
+  //         userCacheId.filter((el: any) => el !== event.target.value)
+  //       );
+  //     }
+  //   }
+  //   if (checked) {
+  //     setButtonShow(false);
+  //   } else {
+  //     setButtonShow(true);
+  //   }
+  // };
+
+  // useEffect(()=>{
+  //   savedChart.map(function(chartElement){
+  //     chartElement.isSelected = selectAll;
+  //   })
+  // },[selectAll])
+
+  const handleSelectAll = (selectAllValue: boolean) => {
+    setSelectAll(selectAllValue);
   };
+
+  const handleSingleSelect = (savedChartId: string, selectValue: boolean) => {};
 
   const cacheShow = (cacheId: any, event: any) => {
     // dispatch(setSelectedQuestionId(cacheId));
@@ -137,12 +148,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     //   .catch((error) => console.log(error));
   };
 
-  // const skeletonShow =()=>{
-  //   return   ["1","2","3","4","5"].map((el,index:number)=>{
-  //       return  <Animation key={index}/>
-  //     })
-  // }
-
   return (
     <div className="sidebar user-cache">
       <Drawer
@@ -157,7 +162,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             component="div"
             className="user-cache__select-all"
           >
-            {getUserCache === undefined ? (
+            {savedChart.length === 0 ? (
               ""
             ) : (
               <FormControlLabel
@@ -169,13 +174,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                       <CircleCheckedFilled className="checked-color" />
                     }
                     name="allSelect"
-                    onChange={(event) => handleChange(getUserCache, event)}
+                    onChange={() => {
+                      handleSelectAll(!selectAll);
+                    }}
                     sx={{ color: "#fff" }}
-                    checked={
-                      !getUserCache.some(
-                        (checkedAll: any) => checkedAll?.isChecked !== true
-                      )
-                    }
+                    checked={selectAll}
                   />
                 }
                 label="Select All"
@@ -196,15 +199,15 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             loaderSkeleton={UserCacheSekeleton}
             skeletonCount={8}
           >
-            {getUserCache.length === 0 ? (
+            {savedChart.length === 0 ? (
               <>
-                <div className="user-cache__no-data">No questions exists</div>
                 <div className="user-cache__no-data">
+                  No questions exists <br />
                   Click icon to add in cache
                 </div>
               </>
             ) : (
-              getUserCache.map((savedata: any, index: any) => {
+              savedChart.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString("en-us");
 
@@ -291,14 +294,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                           value={savedata?._id}
                           className="user-cache-checkbox"
                           sx={{ p: 0, ml: "-4px" }}
-                          checked={
-                            savedata?.isChecked == undefined
-                              ? ""
-                              : savedata?.isChecked
-                          }
-                          onChange={(event) =>
-                            handleChange(savedata?._id, event)
-                          }
+                          checked={savedata?.isSelected}
+                          onChange={() => {
+                            handleSingleSelect(
+                              savedata?._id,
+                              !savedata?.isSelected
+                            );
+                          }}
                         />
                       </div>
                     </div>
