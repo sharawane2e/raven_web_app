@@ -4,46 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { ComponentType, useContext, useState, useEffect } from "react";
 import store, { RootState } from "../../../../redux/store";
 import CustomScrollbar from "../../../CustomScrollbar";
-// import Divider from "@mui/material/Divider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import CloseIcon from "@mui/icons-material/Close";
-// import Radio from "@mui/material/Radio";
 import { toggleSidebarUserCache } from "../../../../redux/actions/sidebarAction";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-// import {
-//   fetchuserCache,
-//   setChartData,
-//   setChartTranspose,
-//   setUserCache,
-// } from "../../../../redux/actions/chartActions";
-// import Toaster from "../../../../utils/Toaster";
-// import ApiUrl from "../../../../enums/ApiUrl";
-// import ApiRequest from "../../../../utils/ApiRequest";
 import { ReactComponent as ColumnChartIcon } from "../../../../assets/svg/column-chart-icon.svg";
 import { ReactComponent as StackChartIcon } from "../../../../assets/svg/stack-chart-icon.svg";
 import { ReactComponent as TableIcon } from "../../../../assets/svg/table-icon.svg";
 import { ReactComponent as PieChartIcon } from "../../../../assets/svg/pie-chart.svg";
 import { ReactComponent as LineChartIcon } from "../../../../assets/svg/line_chart.svg";
-// import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-// import {
-//   fetchChartData,
-//   transposeChart,
-// } from "../../../../services/ChartService";
-// import {
-//   setSelectedBannerQuestionId,
-//   setSelectedQuestionId,
-// } from "../../../../redux/actions/questionAction";
-// import { setChartOrientation } from "../../../../redux/actions/chartActions";
-// import {
-//   removeAppliedFilter,
-//   setAppliedFilters,
-//   setFilterQuestionList,
-//   setFilters,
-// } from "../../../../redux/actions/filterActions";
-// import { ChartType } from "../../../../enums/ChartType";
-// import { changeChartType } from "../../../../services/ChartService";
 import { ReactComponent as NumberIcon } from "../../../../assets/svg/Number.svg";
 import { ReactComponent as PercentageIcon } from "../../../../assets/svg/Percentage.svg";
 import { ReactComponent as TransposeIcon } from "../../../../assets/svg/Transpose.svg";
@@ -54,20 +25,19 @@ import { Tooltip } from "@material-ui/core";
 import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
 
-// import Animation from "../../../Skeleton"
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { loaderSkeleton } = props;
-  console.log("loaderSkeleton", loaderSkeleton);
   const { sidebar } = useSelector((state: RootState) => state);
   const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeSection, setActiveSection] = useState(false);
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
+
+  const{userCache} = store.getState();
 
   const dispatch = useDispatch();
 
@@ -155,10 +125,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     // });
   };
 
-  const userDeletebody = {
-    _ids: userCacheId,
-  };
-
+ 
   const userCacheDelete = () => {
     // ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", userDeletebody)
     //   .then((res) => {
@@ -222,20 +189,16 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             />
           </Typography>
           <div className="user-cache__bottom-line"></div>
-          {/* <Divider className="border-first-line" /> */}
-          {/* <Divider className="border-second-line" /> */}
         </Box>
 
         <CustomScrollbar>
           <CustomSkeleton
-            //loading={loadingData}
-            loading={true}
+            loading={userCache.cacheLoading}
             loaderSkeleton={UserCacheSekeleton}
-            // loaderSkeleton={loaderSkeleton}
             skeletonCount={8}
           >
             {getUserCache.length === 0 ? (
-              <div className="user-cache__no-data">no data exists</div>
+              <><div className="user-cache__no-data">No questions exists</div><div className="user-cache__no-data">Click icon to add in cache</div></>
             ) : (
               getUserCache.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
@@ -252,13 +215,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                         onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
                         <Typography
-                          id={savedata?.qId}
                           variant="body1"
                           component="div"
                           className="user-cache__chart-icon-sec"
                         >
                           <Typography
-                            id={savedata?.qId}
                             variant="body1"
                             component="div"
                             className="user-cache__chart-icon"
@@ -267,13 +228,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                           </Typography>
                         </Typography>
                         <Typography
-                          id={savedata?.qId}
+                  
                           variant="body1"
                           component="div"
                           className="user-cache__chart-question"
                         >
                           <Typography
-                            id={savedata?.qId}
+                    
                             variant="h6"
                             component="h6"
                             className="user-cache__chart-headding"
@@ -281,13 +242,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             {savedata?.qText}
                           </Typography>
                           <Typography
-                            id={savedata?.qId}
+                    
                             variant="body1"
                             component="div"
                             className="user-cache__collectdata"
                           >
                             <Typography
-                              id={savedata?.qId}
+                      
                               variant="body1"
                               component="div"
                               className="user-cache__date"
@@ -295,7 +256,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               {curentDate.split(",")[0]}
                             </Typography>
                             <Typography
-                              //   id={savedata?.qId}
                               variant="body1"
                               component="div"
                               className="user-cache__colection-icon"
@@ -385,8 +345,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         </CustomScrollbar>
         <div className="user-cache__footer">
           <div className="user-cache__bottom-line"></div>
-          {/* <Divider className="border-first-line" /> */}
-          {/* <Divider className="border-second-line" /> */}
           <div className="user-cache__footer-inr">
             <Button
               disabled={butttonshow}
@@ -405,10 +363,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                 //dispatch(resetFilters());
               }}
             >
-              {/* <Typography variant="body1" component="div"> */}
               Export
               <KeyboardArrowDownIcon sx={{ fill: "#fff" }} />
-              {/* </Typography> */}
             </Button>
           </div>
         </div>
