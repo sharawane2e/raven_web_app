@@ -24,6 +24,7 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
 import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
+import { addNewKeysToUserCache } from "../../../../services/userCacheService";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -33,7 +34,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const {sidebar,userCache} = store.getState();
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
-  const [activeSection, setActiveSection] = useState(false);
+  const [activeSection, setActiveSection] = useState(false); // need to see
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
 
   const {savedChart} = userCache;
@@ -58,7 +59,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return <LineChartIcon className="chart-hover-filed" />;
     }
   };
+
   useEffect(() => {
+    // addNewKeysToUserCache()
     return setUsersCache(savedChart);
   }, [savedChart]);
 
@@ -212,48 +215,20 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                         }`}
                         onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
-                        <Typography
-                          variant="body1"
-                          component="div"
-                          className="user-cache__chart-icon-sec"
-                        >
-                          <Typography
-                            variant="body1"
-                            component="div"
-                            className="user-cache__chart-icon"
-                          >
+                        <div className="user-cache__chart-icon-sec">
+                          <div className="user-cache__chart-icon">
                             {chartIcons(index)}
-                          </Typography>
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          component="div"
-                          className="user-cache__chart-question"
-                        >
-                          <Typography
-                            variant="h6"
-                            component="h6"
-                            className="user-cache__chart-headding"
-                          >
+                          </div>
+                        </div>
+                        <div className="user-cache__chart-question">
+                          <div className="user-cache__chart-headding">
                             {savedata?.qText}
-                          </Typography>
-                          <Typography
-                            variant="body1"
-                            component="div"
-                            className="user-cache__collectdata"
-                          >
-                            <Typography
-                              variant="body1"
-                              component="div"
-                              className="user-cache__date"
-                            >
+                          </div>
+                          <div className="user-cache__collectdata">
+                            <div className="user-cache__date">
                               {curentDate.split(",")[0]}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              component="div"
-                              className="user-cache__colection-icon"
-                            >
+                            </div>
+                            <div className="user-cache__colection-icon">
                               {savedChart[index]?.filter.length > 0 ? (
                                 <Tooltip
                                   title={"Filters"}
@@ -299,15 +274,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               ) : (
                                 ""
                               )}
-                            </Typography>
-                          </Typography>
-                        </Typography>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <Typography
-                        variant="body1"
-                        component="div"
-                        className="multi-select-btn"
-                      >
+                      <div className="multi-select-btn">
                         <Checkbox
                           icon={<CircleUnchecked />}
                           checkedIcon={
@@ -326,7 +297,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             handleChange(savedata?._id, event)
                           }
                         />
-                      </Typography>
+                      </div>
                     </div>
                     <div className="user-cache__bottom-line"></div>
                     {/* <Divider className="border-first-line" /> */}

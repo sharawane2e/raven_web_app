@@ -15,6 +15,8 @@ export interface ISavedChart {
     chartLabelType: string,
     chartOrientation: string,
     chartTranspose: boolean,
+    isSelected:boolean,
+    isActive:boolean,
 }
 
 export interface IUserCache{
