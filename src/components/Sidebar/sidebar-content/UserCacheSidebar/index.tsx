@@ -24,9 +24,7 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
 import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
-import {
-  resetUserCache,
-} from "../../../../redux/actions/userCacheActions";
+import { resetUserCache } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
 import {
   handleDeleteChartCache,
@@ -86,7 +84,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return <LineChartIcon className="chart-hover-filed" />;
     }
   };
-
 
   useEffect(() => {
     savedChart.map(function (chartElement) {
@@ -151,23 +148,34 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    console.log("cache show")
-    
-    const _cacheQuestion = savedChart.filter((userCacheinfo: any) => {
-      return userCacheinfo?._id === cacheId
+    console.log("cache show");
+
+    const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
+      return userCacheinfo?._id === cacheId;
     });
 
+    console.log(_cacheQuestion);
+
     dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
-
-
     changeChartType(_cacheQuestion[0]["chartType"]);
-    //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-    //     dispatch(setFilters(userCacheinfo.filter));
-    //     dispatch(setAppliedFilters(userCacheinfo.filter));
-       
-    //     console.log("userCacheinfo.chartTranspose",userCacheinfo.chartTranspose)
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"]));
+    dispatch(setFilters(_cacheQuestion[0]["filter"]));
+    dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
+    // dispatch(setChartTranspose(_cacheQuestion[0]["chartTranspose"]));
+    fetchChartData()
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+      })
+      .catch((error) => console.log(error));
 
-    //     dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+      if(_cacheQuestion[0]["chartTranspose"]){
+        setTimeout(function(){
+
+          transposeChart();
+        },5000)
+      }
+
+      // return transposeChart();
 
     //     if (userCacheinfo.chartTranspose) {
     //       fetchChartData()
