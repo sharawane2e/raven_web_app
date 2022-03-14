@@ -29,20 +29,29 @@ import {
   updateSingleCacheChart,
 } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
-import { handleDeleteChartCache, isChartInCache } from "../../../../services/userCacheService";
-import { setSelectedBannerQuestionId, setSelectedQuestionId } from "../../../../redux/actions/questionAction";
+import { handleDeleteChartCache,isChartInCache } from "../../../../services/userCacheService";
+import {
+  setSelectedBannerQuestionId,
+  setSelectedQuestionId,
+} from "../../../../redux/actions/questionAction";
 
 import {
-  fetchuserCache,
   setChartData,
   setChartTranspose,
-  setUserCache,
 } from "../../../../redux/actions/chartActions";
 import Toaster from "../../../../utils/Toaster";
 import ApiUrl from "../../../../enums/ApiUrl";
 import ApiRequest from "../../../../utils/ApiRequest";
-import { changeChartType } from "../../../../services/ChartService";
-import { removeAppliedFilter, setAppliedFilters, setFilters } from "../../../../redux/actions/filterActions";
+import {
+  changeChartType,
+  fetchChartData,
+  transposeChart,
+} from "../../../../services/ChartService";
+import {
+  removeAppliedFilter,
+  setAppliedFilters,
+  setFilters,
+} from "../../../../redux/actions/filterActions";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -185,33 +194,34 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    // dispatch(setSelectedQuestionId(cacheId));
-    // savedChart.forEach((userCacheinfo: any, index: string | number) => {
-    //   if (userCacheinfo?.qId === cacheId) {
-    //     changeChartType(savedChart[index]?.chartType);
-    //     dispatch(setFilters(userCacheinfo.filter));
-    //     dispatch(setAppliedFilters(userCacheinfo.filter));
-    //     dispatch(removeAppliedFilter(userCacheinfo.filter));
-    //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-    //     if (userCacheinfo.chartTranspose) {
-    //       fetchChartData()
-    //         .then((chartData) => {
-    //           dispatch(setChartData(chartData));
-    //           transposeChart();
-    //           dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-    //         })
-    //         .catch((error) => console.log(error));
-    //     } else {
-    //       dispatch(setChartTranspose(false));
-    //     }
-    //     fetchChartData(cacheId)
-    //       .then((chartData) => {
-    //         dispatch(setChartData(chartData));
-    //         // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
-    //       })
-    //       .catch((error) => console.log(error));
-    //   }
-    // });
+    dispatch(setSelectedQuestionId(cacheId));
+    savedChart.forEach((userCacheinfo: any, index: string | number) => {
+      if (userCacheinfo?.qId === cacheId) {
+        changeChartType(userCacheinfo?.chartType);
+        dispatch(setFilters(userCacheinfo.filter));
+        dispatch(setAppliedFilters(userCacheinfo.filter));
+        dispatch(removeAppliedFilter(userCacheinfo.filter));
+        dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
+        fetchChartData(cacheId)
+          .then((chartData) => {
+            dispatch(setChartData(chartData));
+            //dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
+          })
+          .catch((error) => console.log(error));
+        console.log(userCacheinfo)
+        if (userCacheinfo.chartTranspose) {
+          fetchChartData()
+            .then((chartData) => {
+              dispatch(setChartData(chartData));
+              transposeChart();
+              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+            })
+            .catch((error) => console.log(error));
+        } else {
+          dispatch(setChartTranspose(false));
+        }
+      }
+    });
   };
 
   const userCacheDelete = () => {
