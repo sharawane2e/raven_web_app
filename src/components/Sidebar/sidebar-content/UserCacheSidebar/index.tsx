@@ -193,28 +193,35 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(setSelectedQuestionId(cacheId));
     savedChart.forEach((userCacheinfo: any, index: string | number) => {
       if (userCacheinfo?.qId === cacheId) {
+        console.log("userCacheinfo?.chartType", userCacheinfo?.chartType);
         changeChartType(userCacheinfo?.chartType);
-        dispatch(setFilters(userCacheinfo.filter));
-        dispatch(setAppliedFilters(userCacheinfo.filter));
-        dispatch(removeAppliedFilter(userCacheinfo.filter));
         dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-        fetchChartData(cacheId)
+        dispatch(setFilters(userCacheinfo.filter));
+
+        //if (userCacheinfo.chartTranspose) {
+        fetchChartData()
           .then((chartData) => {
-            dispatch(setChartData(chartData));
-            //dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
+            if (userCacheinfo.chartTranspose) {
+              // dispatch(setAppliedFilters(userCacheinfo.filter));
+              dispatch(removeAppliedFilter(userCacheinfo.filter));
+              dispatch(setChartData(chartData));
+              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+              // transposeChart();
+            } else {
+              dispatch(setChartData(chartData));
+              dispatch(setChartTranspose(false));
+            }
           })
           .catch((error) => console.log(error));
-        if (userCacheinfo.chartTranspose) {
-          fetchChartData()
-            .then((chartData) => {
-              dispatch(setChartData(chartData));
-              transposeChart();
-              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-            })
-            .catch((error) => console.log(error));
-        } else {
-          dispatch(setChartTranspose(false));
-        }
+        // } else {
+        //   // fetchChartData(cacheId)
+        //   //   .then((chartData) => {
+        //   //     dispatch(setChartData(chartData));
+        //   //     // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
+        //   //   })
+        //   //   .catch((error) => console.log(error));
+        //   dispatch(setChartTranspose(false));
+        // }
       }
     });
   };
