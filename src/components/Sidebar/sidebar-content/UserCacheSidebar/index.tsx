@@ -158,9 +158,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     });
 
     dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
-
-
     changeChartType(_cacheQuestion[0]["chartType"]);
+
     //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
     //     dispatch(setFilters(userCacheinfo.filter));
     //     dispatch(setAppliedFilters(userCacheinfo.filter));
