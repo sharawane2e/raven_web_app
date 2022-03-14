@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setChartData,
@@ -20,23 +20,56 @@ import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 import { IFilter } from "../../../../types/IFilter";
+import { AnyArray } from "immer/dist/internal";
 
 const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
+  const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const dispatch = useDispatch();
   const {
-    filters: { filterQuestionList, filters },
+    filters: { filterQuestionList,filters },
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
-  const handleFilterSelect = (qId: string, value: IQuestionOption) => {
-    const updatedFilters = [...filters];
+  // useEffect(()=>{
+   
+  //   const _cacheFilters: any = savedChart.map((userFilter: any,index:number) => {
+  //     return userFilter?.filter;
+  //     //console.log("userFilter",userFilter)
+  //   });
+  //   //console.log("_cacheFilters",_cacheFilters)
+    
+  //  _cacheFilters.map((userId:any,index:number)=>{
+  //   // userId.map((element:any) => {
+  //     //console.log("element",userId)
+  //     if(userId==undefined){
+  //       return false;
+  //     }
+  //     else{
+  //      handleFilterSelect(userId?.qId, {
+  //        "labelCode": userId?.code,
+  //        "labelText": userId?.label,
+  //        "order": 0
+  //      });
+  //     }
+  //   // });
+  //   userId.map((label:any,code:any)=>{
+  //       // console.log("el",label,code)
+  //       label.filter(label)
+  //   })
+  //   })
+   
+  // },[savedChart])
 
+
+let handleFilterSelect = (qId: string, value: IQuestionOption) => {
+    const updatedFilters = [...filters];
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
     let values: IQuestionOption[] = filterQuestion?.value
       ? JSON.parse(JSON.stringify(filterQuestion?.value))
       : [];
     let index = -1;
+    
 
     values.forEach((v, i) => {
       if (v.labelCode === value.labelCode) {
@@ -85,7 +118,7 @@ const ChartSidebarContent: React.FC = () => {
         return filterQuestion;
       }
     );
-
+    // debugger
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
     dispatch(setFilters(updatedFilters));
   };
@@ -102,7 +135,6 @@ const ChartSidebarContent: React.FC = () => {
         })
         .catch((error) => console.log(error));
     } else {
-      debugger;
       fetchChartData()
         .then((chartData) => {
           dispatch(setChartData(chartData));
@@ -136,6 +168,19 @@ const ChartSidebarContent: React.FC = () => {
       <div className="chart-sidebar__filter-wrapper">
         <CustomScrollbar>
           <div className="chart-sidebar__filter-questions Step-3">
+            {/* {filterQuestionList.map((filterQuestion, filterIndex) => (
+              <MultiSelect
+                key={filterIndex}
+                label={filterQuestion.labelText}
+                options={filterQuestion.options}
+                value={filterQuestion.value}
+                onChange={(value: IQuestionOption) => {
+                  handleFilterSelect(filterQuestion.qId, value);
+                }}
+              />
+            ))} */}
+            {/* {console.log("filterQuestionList",filterQuestionList)}
+      */}
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
                 key={filterIndex}

@@ -49,6 +49,7 @@ import {
 } from "../../../../services/ChartService";
 import {
   setAppliedFilters,
+  setFilterQuestionList,
   setFilters,
 } from "../../../../redux/actions/filterActions";
 import { ChartType } from "../../../../enums/ChartType";
@@ -97,7 +98,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
 
     if (isChartInCache().isChartDuplicate) {
       setActiveCacheId(isChartInCache().duplicateCacheId);
-      console.log(isChartInCache().duplicateCacheId)
+      // console.log(isChartInCache().duplicateCacheId)
     }
   });
 
@@ -152,7 +153,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    console.log("cache show");
+
 
     setActiveCacheId(cacheId);
 
@@ -271,6 +272,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             {chartIcons(index)}
                           </div>
                         </div>
+                      
                         <div className="user-cache__chart-question">
                           <div className="user-cache__chart-headding">
                             {savedata?.qText}

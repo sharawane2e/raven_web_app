@@ -40,8 +40,12 @@
     display: flex;
     padding-left: 8px;
     padding-right: 8px;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
+
+    .css-j204z7-MuiFormControlLabel-root {
+      margin-right: auto;
+    }
   }
   &__bottom-line {
     width: 100%;
