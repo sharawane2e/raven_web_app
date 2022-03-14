@@ -30,19 +30,28 @@ import {
 } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
 import { handleDeleteChartCache } from "../../../../services/userCacheService";
-import { setSelectedBannerQuestionId, setSelectedQuestionId } from "../../../../redux/actions/questionAction";
+import {
+  setSelectedBannerQuestionId,
+  setSelectedQuestionId,
+} from "../../../../redux/actions/questionAction";
 
 import {
-  fetchuserCache,
   setChartData,
   setChartTranspose,
-  setUserCache,
 } from "../../../../redux/actions/chartActions";
 import Toaster from "../../../../utils/Toaster";
 import ApiUrl from "../../../../enums/ApiUrl";
 import ApiRequest from "../../../../utils/ApiRequest";
-import { changeChartType } from "../../../../services/ChartService";
-import { removeAppliedFilter, setAppliedFilters, setFilters } from "../../../../redux/actions/filterActions";
+import {
+  changeChartType,
+  fetchChartData,
+  transposeChart,
+} from "../../../../services/ChartService";
+import {
+  removeAppliedFilter,
+  setAppliedFilters,
+  setFilters,
+} from "../../../../redux/actions/filterActions";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -184,11 +193,17 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(setSelectedQuestionId(cacheId));
     savedChart.forEach((userCacheinfo: any, index: string | number) => {
       if (userCacheinfo?.qId === cacheId) {
-        changeChartType(savedChart[index]?.chartType);
+        changeChartType(userCacheinfo?.chartType);
         dispatch(setFilters(userCacheinfo.filter));
         dispatch(setAppliedFilters(userCacheinfo.filter));
         dispatch(removeAppliedFilter(userCacheinfo.filter));
         dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
+        fetchChartData(cacheId)
+          .then((chartData) => {
+            dispatch(setChartData(chartData));
+            //dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
+          })
+          .catch((error) => console.log(error));
         if (userCacheinfo.chartTranspose) {
           fetchChartData()
             .then((chartData) => {
@@ -200,12 +215,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         } else {
           dispatch(setChartTranspose(false));
         }
-        fetchChartData(cacheId)
-          .then((chartData) => {
-            dispatch(setChartData(chartData));
-            // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
-          })
-          .catch((error) => console.log(error));
       }
     });
   };
