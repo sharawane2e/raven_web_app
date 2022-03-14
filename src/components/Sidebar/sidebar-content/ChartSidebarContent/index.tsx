@@ -102,7 +102,7 @@ const ChartSidebarContent: React.FC = () => {
         })
         .catch((error) => console.log(error));
     } else {
-      debugger;
+      
       fetchChartData()
         .then((chartData) => {
           dispatch(setChartData(chartData));

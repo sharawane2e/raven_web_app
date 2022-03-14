@@ -1,4 +1,4 @@
-import { useState, useContext, MouseEvent } from "react";
+import { useState, useContext, MouseEvent, useEffect } from "react";
 import { Menu, MenuItem } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TourPlayIcon from "@material-ui/icons/PlayArrow";
@@ -60,16 +60,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
-    ApiRequest.request(ApiUrl.SAVE_CHART, "GET",undefined,undefined,false)
-      .then((res) => {
-        if (res.success) {
-          const updatedUserCache = addNewKeysToUserCache(res?.data)
-          dispatch(resetUserCache(updatedUserCache));
-        } else {
-          Toaster.error(res.message);
-        }
-      })
-      .catch((error) => console.log(error));
+    getUserCache();
   };
 
   const [anchorEl, setAnchorEl] = useState<
@@ -77,6 +68,11 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   >(null);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    getUserCache();
+  },[]);
+
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -87,6 +83,19 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   };
   const tourStart = (e: MouseEvent<Element>) => {
     dispatch(showTourGuide());
+  };
+
+  const getUserCache = () => {
+    ApiRequest.request(ApiUrl.SAVE_CHART, "GET",undefined,undefined,false)
+      .then((res) => {
+        if (res.success) {
+          const updatedUserCache = addNewKeysToUserCache(res?.data)
+          dispatch(resetUserCache(updatedUserCache));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

@@ -26,7 +26,6 @@ import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
 import {
   resetUserCache,
-  updateSingleCacheChart,
 } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
 import {
@@ -42,16 +41,13 @@ import {
   setChartData,
   setChartTranspose,
 } from "../../../../redux/actions/chartActions";
-import Toaster from "../../../../utils/Toaster";
-import ApiUrl from "../../../../enums/ApiUrl";
-import ApiRequest from "../../../../utils/ApiRequest";
+
 import {
   changeChartType,
   fetchChartData,
   transposeChart,
 } from "../../../../services/ChartService";
 import {
-  removeAppliedFilter,
   setAppliedFilters,
   setFilters,
 } from "../../../../redux/actions/filterActions";
@@ -65,10 +61,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   // const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
-  const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeCacheId, setActiveCacheId] = useState<any>("");
-  const [userCacheId, setUserCacheId] = useState<any[]>([]);
   const { userCache } = store.getState();
   const { savedChart } = userCache;
 
@@ -93,38 +87,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     }
   };
 
-  // const handleChange = (userId: any, event: any) => {
-  //   const { value, name, checked } = event.target;
-  //   if (name === "allSelect") {
-  //     const userMultiId = userId.map((element: any, index: any) => {
-  //       return element?._id;
-  //     });
-  //     setUserCacheId(userMultiId);
-  //     const tempUser: any = getUserCache.map((user: any, index: any) => {
-  //       return { ...user, isChecked: checked };
-  //     });
-  //     setUsersCache(tempUser);
-  //   } else {
-  //     const tempUser: any = getUserCache.map((user: any, index: number) =>
-  //       index === parseInt(name) ? { ...user, isChecked: checked } : user
-  //     );
-  //     setUsersCache(tempUser);
-  //     if (checked) {
-  //       setButtonShow(false);
-  //       setUserCacheId([...userCacheId, userId]);
-  //     } else {
-  //       setButtonShow(true);
-  //       setUserCacheId(
-  //         userCacheId.filter((el: any) => el !== event.target.value)
-  //       );
-  //     }
-  //   }
-  //   if (checked) {
-  //     setButtonShow(false);
-  //   } else {
-  //     setButtonShow(true);
-  //   }
-  // };
 
   useEffect(() => {
     savedChart.map(function (chartElement) {
@@ -139,7 +101,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   });
 
   useEffect(() => {
-    // console.log("main cahala hun")
     const updateCacheChart: any[] = [];
     savedChart.map(function (chartElement) {
       const updateSingleChartContent = { ...chartElement };
@@ -150,7 +111,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   }, [selectAllSelf]);
 
   useEffect(() => {
-    // console.log("main bhi chala hun")
     const savedChartLength = savedChart.length;
     let selectAll = false;
     let selectedCount = 0;
@@ -163,25 +123,19 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     });
 
     if (selectedCount === savedChartLength && selectedCount != 0) {
-      // console.log("full");
       setSelectAll(true);
       setButtonShow(false);
     } else if (selectedCount < savedChartLength && selectedCount != 0) {
-      // console.log("half");
       setSelectAll(false);
       setButtonShow(false);
     } else {
-      // console.log("pagal");
       setButtonShow(true);
     }
   }, [JSON.stringify(savedChart)]);
 
   const handleSelectAll = (selectAllValue: boolean, e: any) => {
-    // console.log(selectAllValue)
-    // console.log(e)
     setSelectAll(selectAllValue);
     if (e != undefined) {
-      //  console.log("insife if")
       setSelectAllSelf(selectAllSelf + 1);
     }
   };
@@ -200,38 +154,24 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(setSelectedQuestionId(cacheId));
     savedChart.forEach((userCacheinfo: any, index: string | number) => {
       if (userCacheinfo?.qId === cacheId) {
-        console.log("userCacheinfo?.chartType", userCacheinfo?.chartType);
+  
         changeChartType(userCacheinfo?.chartType);
         dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
         dispatch(setFilters(userCacheinfo.filter));
         dispatch(setAppliedFilters(userCacheinfo.filter));
-        //dispatch(setFilters(userCacheinfo.filter));
-        //  dispatch(setChartData(chartData));
-        //dispatch(removeAppliedFilter(userCacheinfo.filter));
-        //if (userCacheinfo.chartTranspose) {
         fetchChartData()
           .then((chartData) => {
+        
             if (userCacheinfo.chartTranspose) {
-              //dispatch(setAppliedFilters(userCacheinfo.filter));
-              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
               dispatch(setChartData(chartData));
               transposeChart();
+              dispatch(setChartTranspose(true));
             } else {
-              //  dispatch(setAppliedFilters(userCacheinfo.filter));
               dispatch(setChartData(chartData));
               dispatch(setChartTranspose(false));
             }
           })
           .catch((error) => console.log(error));
-        // } else {
-        //   // fetchChartData(cacheId)
-        //   //   .then((chartData) => {
-        //   //     dispatch(setChartData(chartData));
-        //   //     // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
-        //   //   })
-        //   //   .catch((error) => console.log(error));
-        //   dispatch(setChartTranspose(false));
-        // }
       }
     });
   };
@@ -243,7 +183,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
       (chartElement) => chartElement._id
     );
-    // console.log(deleteSavedChartsIds);
     handleDeleteChartCache(deleteSavedChartsIds);
   };
 
