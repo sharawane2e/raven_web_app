@@ -29,7 +29,7 @@ import {
   updateSingleCacheChart,
 } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
-import { handleDeleteChartCache } from "../../../../services/userCacheService";
+import { handleDeleteChartCache, isChartInCache } from "../../../../services/userCacheService";
 import { setSelectedBannerQuestionId, setSelectedQuestionId } from "../../../../redux/actions/questionAction";
 
 import {
@@ -55,7 +55,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
-  const [activeSection, setActiveSection] = useState(false);
+  const [activeCacheId, setActiveCacheId] = useState<any>('');
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
   const { userCache } = store.getState();
   const { savedChart } = userCache;
@@ -120,6 +120,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         setSelectAll(false);
       }
     });
+
+    if(isChartInCache().isChartDuplicate){
+      setActiveCacheId(isChartInCache().duplicateCacheId)
+    }
   });
 
   useEffect(() => {
@@ -181,33 +185,33 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    dispatch(setSelectedQuestionId(cacheId));
-    savedChart.forEach((userCacheinfo: any, index: string | number) => {
-      if (userCacheinfo?.qId === cacheId) {
-        changeChartType(savedChart[index]?.chartType);
-        dispatch(setFilters(userCacheinfo.filter));
-        dispatch(setAppliedFilters(userCacheinfo.filter));
-        dispatch(removeAppliedFilter(userCacheinfo.filter));
-        dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-        if (userCacheinfo.chartTranspose) {
-          fetchChartData()
-            .then((chartData) => {
-              dispatch(setChartData(chartData));
-              transposeChart();
-              dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-            })
-            .catch((error) => console.log(error));
-        } else {
-          dispatch(setChartTranspose(false));
-        }
-        fetchChartData(cacheId)
-          .then((chartData) => {
-            dispatch(setChartData(chartData));
-            // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
-          })
-          .catch((error) => console.log(error));
-      }
-    });
+    // dispatch(setSelectedQuestionId(cacheId));
+    // savedChart.forEach((userCacheinfo: any, index: string | number) => {
+    //   if (userCacheinfo?.qId === cacheId) {
+    //     changeChartType(savedChart[index]?.chartType);
+    //     dispatch(setFilters(userCacheinfo.filter));
+    //     dispatch(setAppliedFilters(userCacheinfo.filter));
+    //     dispatch(removeAppliedFilter(userCacheinfo.filter));
+    //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
+    //     if (userCacheinfo.chartTranspose) {
+    //       fetchChartData()
+    //         .then((chartData) => {
+    //           dispatch(setChartData(chartData));
+    //           transposeChart();
+    //           dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+    //         })
+    //         .catch((error) => console.log(error));
+    //     } else {
+    //       dispatch(setChartTranspose(false));
+    //     }
+    //     fetchChartData(cacheId)
+    //       .then((chartData) => {
+    //         dispatch(setChartData(chartData));
+    //         // dispatch(setChartOrientation(userCacheinfo?.chartOrientation));
+    //       })
+    //       .catch((error) => console.log(error));
+    //   }
+    // });
   };
 
   const userCacheDelete = () => {
@@ -290,7 +294,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                       <div
                         id={savedata?.qId}
                         className={`user-cache__cache-data--cache-section ${
-                          activeSection ? "active-section" : ""
+                          activeCacheId==savedata?._id ? "active-section" : ""
                         }`}
                         onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
