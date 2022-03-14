@@ -58,7 +58,8 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
   ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body, undefined, false)
     .then((res) => {
       if (res.success) {
-        store.dispatch(resetUserCache(res.data));
+        const updatedSavedChart = addNewKeysToUserCache(res.data);
+        store.dispatch(resetUserCache(updatedSavedChart));
         Toaster.success(res.message);
       } else {
         Toaster.error(res.message);

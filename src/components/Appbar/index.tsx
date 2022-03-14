@@ -37,7 +37,7 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
-  // const { userCache } = useSelector((state: RootState) => state.chart);
+  const { userCache } = useSelector((state: RootState) => state);
   const { sidebar } = useSelector((state: RootState) => state);
 
   const { variant = "partialWidth" } = props;
@@ -121,7 +121,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <div className="tourText">Start tour</div>
         </div>
         <Badge
-          //badgeContent={userCache == undefined ? 0 : userCache.length}
+          badgeContent={userCache.savedChart == undefined ? 0 : userCache.savedChart.length}
           color="primary"
           className="badge-icon"
         >
