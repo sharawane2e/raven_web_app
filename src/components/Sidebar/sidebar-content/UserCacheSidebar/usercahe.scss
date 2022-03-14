@@ -25,7 +25,6 @@
       border-color: #fff transparent transparent;
       margin-left: 230px;
       transform: rotate(180deg);
-
     }
   }
   .MuiSvgIcon-root {
@@ -72,17 +71,7 @@
       }
     }
   }
-  .active-section {
-    + .user-cache__chart-icon {
-      border-color: $white;
-    }
-    + .chart-hover-filed path {
-      fill: map-get($map: $bg-color, $key: "accent");
-    }
-    + .user-cache__chart-headding {
-      color: $white;
-    }
-  }
+
   &__chart-icon-sec {
     max-width: 10.666667%;
     svg {
@@ -193,5 +182,15 @@
     svg {
       margin-left: 5px;
     }
+  }
+}
+
+.user-cache__cache-data--active-section {
+  .chart-hover-filed path {
+    fill: map-get($map: $bg-color, $key: "accent");
+  }
+
+  .user-cache__chart-headding {
+    color: map-get($map: $bg-color, $key: secondary);
   }
 }

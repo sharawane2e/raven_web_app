@@ -3,7 +3,6 @@ import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
 import { IChartState } from "../reducers/chartReducer";
 
-
 export const setChartData = createAction<IChartState>("SET_CHART_DATA");
 
 export const setChartOrientation = createAction<ChartOrientation>(
@@ -21,5 +20,3 @@ export const setChartTranspose = createAction<any>("SET_CHART_Transpose");
 export const setChartFullScreen = createAction<boolean>("SET_CHART_FULLSCREEN");
 
 export const setChartLoading = createAction<boolean>("SET_CHART_SCREEN");
-
-

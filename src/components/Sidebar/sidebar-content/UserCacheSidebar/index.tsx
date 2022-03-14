@@ -29,7 +29,10 @@ import {
   updateSingleCacheChart,
 } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
-import { handleDeleteChartCache } from "../../../../services/userCacheService";
+import {
+  handleDeleteChartCache,
+  isChartInCache,
+} from "../../../../services/userCacheService";
 import {
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
@@ -64,7 +67,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [getUserCache, setUsersCache] = useState<any[]>([]);
   const [butttonshow, setButtonShow] = useState(true);
-  const [activeSection, setActiveSection] = useState(false);
+  const [activeCacheId, setActiveCacheId] = useState<any>("");
   const [userCacheId, setUserCacheId] = useState<any[]>([]);
   const { userCache } = store.getState();
   const { savedChart } = userCache;
@@ -129,6 +132,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         setSelectAll(false);
       }
     });
+
+    if (isChartInCache().isChartDuplicate) {
+      setActiveCacheId(isChartInCache().duplicateCacheId);
+    }
   });
 
   useEffect(() => {
@@ -197,17 +204,20 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         changeChartType(userCacheinfo?.chartType);
         dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
         dispatch(setFilters(userCacheinfo.filter));
-
+        dispatch(setAppliedFilters(userCacheinfo.filter));
+        //dispatch(setFilters(userCacheinfo.filter));
+        //  dispatch(setChartData(chartData));
+        //dispatch(removeAppliedFilter(userCacheinfo.filter));
         //if (userCacheinfo.chartTranspose) {
         fetchChartData()
           .then((chartData) => {
             if (userCacheinfo.chartTranspose) {
-              // dispatch(setAppliedFilters(userCacheinfo.filter));
-              dispatch(removeAppliedFilter(userCacheinfo.filter));
-              dispatch(setChartData(chartData));
+              //dispatch(setAppliedFilters(userCacheinfo.filter));
               dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-              // transposeChart();
+              dispatch(setChartData(chartData));
+              transposeChart();
             } else {
+              //  dispatch(setAppliedFilters(userCacheinfo.filter));
               dispatch(setChartData(chartData));
               dispatch(setChartTranspose(false));
             }
@@ -306,7 +316,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                       <div
                         id={savedata?.qId}
                         className={`user-cache__cache-data--cache-section ${
-                          activeSection ? "active-section" : ""
+                          activeCacheId == savedata?._id
+                            ? "user-cache__cache-data--active-section"
+                            : ""
                         }`}
                         onClick={(event) => cacheShow(savedata?.qId, event)}
                       >
