@@ -60,7 +60,7 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
       if (res.success) {
         const updatedSavedChart = addNewKeysToUserCache(res.data);
         store.dispatch(resetUserCache(updatedSavedChart));
-        Toaster.success(res.message);
+        Toaster.warn(res.message);
       } else {
         Toaster.error(res.message);
       }
@@ -69,15 +69,13 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
 };
 
 export const addNewKeysToUserCache = (savedChart:any) => {
-
   const _savedChart = JSON.parse(JSON.stringify(savedChart));
   const updateUserCache = _savedChart.map(function (userCacheItem: any) {
     userCacheItem.isSelected = false;
     userCacheItem.isActive = false;
-    // console.log(userCacheItem);
     return userCacheItem;
   });
 
   return updateUserCache;
-  // store.dispatch(resetUserCache(updateUserCache));
+
 };

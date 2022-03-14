@@ -24,9 +24,7 @@ import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import { Tooltip } from "@material-ui/core";
 import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
 import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
-import {
-  resetUserCache,
-} from "../../../../redux/actions/userCacheActions";
+import { resetUserCache } from "../../../../redux/actions/userCacheActions";
 import _ from "lodash";
 import {
   handleDeleteChartCache,
@@ -39,6 +37,8 @@ import {
 
 import {
   setChartData,
+  setChartLabel,
+  setChartOrientation,
   setChartTranspose,
 } from "../../../../redux/actions/chartActions";
 
@@ -51,6 +51,7 @@ import {
   setAppliedFilters,
   setFilters,
 } from "../../../../redux/actions/filterActions";
+import { ChartType } from "../../../../enums/ChartType";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -74,19 +75,18 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const chartIcons = (index: any) => {
-    if (savedChart[index]?.chartType == 1) {
+    if (savedChart[index]?.chartType == ChartType.COLUMN) {
       return <ColumnChartIcon className="chart-hover-filed" />;
-    } else if (savedChart[index]?.chartType == 2) {
+    } else if (savedChart[index]?.chartType == ChartType.STACK) {
       return <StackChartIcon className="chart-hover-filed" />;
-    } else if (savedChart[index]?.chartType == 3) {
+    } else if (savedChart[index]?.chartType == ChartType.TABLE) {
       return <TableIcon className="chart-hover-filed" />;
-    } else if (savedChart[index]?.chartType == 4) {
+    } else if (savedChart[index]?.chartType == ChartType.PIE) {
       return <PieChartIcon className="chart-hover-filed" />;
-    } else if (savedChart[index]?.chartType == 5) {
+    } else if (savedChart[index]?.chartType == ChartType.LINE) {
       return <LineChartIcon className="chart-hover-filed" />;
     }
   };
-
 
   useEffect(() => {
     savedChart.map(function (chartElement) {
@@ -97,6 +97,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
 
     if (isChartInCache().isChartDuplicate) {
       setActiveCacheId(isChartInCache().duplicateCacheId);
+      console.log(isChartInCache().duplicateCacheId)
     }
   });
 
@@ -151,39 +152,33 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    console.log("cache show")
-    
-    const _cacheQuestion = savedChart.filter((userCacheinfo: any) => {
-      return userCacheinfo?._id === cacheId
+    console.log("cache show");
+
+    setActiveCacheId(cacheId);
+
+    const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
+      return userCacheinfo?._id === cacheId;
     });
 
     dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
-    changeChartType(_cacheQuestion[0]["chartType"]);
+    
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"]));
+    dispatch(setFilters(_cacheQuestion[0]["filter"]));
+    dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
 
-    //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-    //     dispatch(setFilters(userCacheinfo.filter));
-    //     dispatch(setAppliedFilters(userCacheinfo.filter));
-       
-    //     console.log("userCacheinfo.chartTranspose",userCacheinfo.chartTranspose)
-
-    //     dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-
-    //     if (userCacheinfo.chartTranspose) {
-    //       fetchChartData()
-    //         .then((chartData) => {
-    //           dispatch(setChartData(chartData));
-    //           transposeChart();
-    //           dispatch(setChartTranspose(userCacheinfo.chartTranspose));
-    //         })
-    //         .catch((error) => console.log(error));
-    //     } else {
-    //       //debugger;
-    //       fetchChartData()
-    //         .then((chartData) => {
-    //           dispatch(setChartData(chartData));
-    //         })
-    //         .catch((error) => console.log(error));
-    //     }
+    fetchChartData()
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+        changeChartType(_cacheQuestion[0]["chartType"]);
+        dispatch(setChartOrientation(_cacheQuestion[0]["chartOrientation"]))
+        dispatch(setChartLabel(_cacheQuestion[0]["chartLabelType"]))
+        dispatch(setChartTranspose(false));
+        if(_cacheQuestion[0]["chartTranspose"]){
+            transposeChart();
+        }
+      })
+      .catch((error) => console.log(error));
+    
   };
 
   const userCacheDelete = () => {
@@ -191,9 +186,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       (chartElement) => chartElement.isSelected == true
     );
     const deleteSavedChartsIds = deleteSavedCharts.map(
-      (chartElement) => chartElement._id
+        (chartElement) => chartElement._id
     );
-    handleDeleteChartCache(deleteSavedChartsIds);
+         handleDeleteChartCache(deleteSavedChartsIds);
   };
 
   return (
@@ -263,7 +258,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                   <div className="user-cache__sidebar" key={index}>
                     <div className="user-cache__cache-data">
                       <div
-                        id={savedata?.qId}
+                        id={savedata?._id}
                         className={`user-cache__cache-data--cache-section ${
                           activeCacheId == savedata?._id
                             ? "user-cache__cache-data--active-section"
@@ -301,10 +296,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               )}
                               {savedChart[index]?.chartLabelType ===
                               "percentage" ? (
-                                <Tooltip title={"Number"} arrow placement="top">
-                                  <NumberIcon id={savedata?.qId} />
-                                </Tooltip>
-                              ) : (
                                 <Tooltip
                                   title={"Percentage"}
                                   arrow
@@ -312,6 +303,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                                 >
                                   <PercentageIcon />
                                 </Tooltip>
+                              ) : (
+                                <Tooltip title={"Number"} arrow placement="top">
+                                <NumberIcon id={savedata?.qId} />
+                              </Tooltip>
+                               
                               )}
                               {savedChart[index]?.chartTranspose ? (
                                 <Tooltip

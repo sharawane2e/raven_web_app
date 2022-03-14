@@ -13,7 +13,7 @@
     color: map-get($map: $bg-color, $key: secondary);
     box-shadow: -9px 33px 47px 0px $black;
     &::before {
-      content: "";
+      content: '';
       position: fixed;
       top: 38px;
       // left: 89%;
@@ -64,7 +64,7 @@
         border-color: map-get($map: $bg-color, $key: secondary);
       }
       &:hover .chart-hover-filed path {
-        fill: map-get($map: $bg-color, $key: "accent");
+        fill: map-get($map: $bg-color, $key: 'accent');
       }
       &:hover .user-cache__chart-headding {
         color: map-get($map: $bg-color, $key: secondary);
@@ -155,11 +155,11 @@
     justify-content: end;
   }
   .checked-color {
-    color: map-get($map: $bg-color, $key: "accent") !important;
+    color: map-get($map: $bg-color, $key: 'accent') !important;
   }
 }
 .border-first-line {
-  border-color: map-get($map: $bg-color, $key: "dark") !important;
+  border-color: map-get($map: $bg-color, $key: 'dark') !important;
 }
 .border-second-line {
   border-color: map-get($map: $bg-color, $key: secondary-shade) !important;
@@ -173,7 +173,7 @@
   span {
     position: relative;
     &::after {
-      content: "";
+      content: '';
       border-left: 2px solid #3939394a;
       position: absolute;
       left: 48px;
@@ -187,7 +187,7 @@
 
 .user-cache__cache-data--active-section {
   .chart-hover-filed path {
-    fill: map-get($map: $bg-color, $key: "accent");
+    fill: map-get($map: $bg-color, $key: 'accent');
   }
 
   .user-cache__chart-headding {

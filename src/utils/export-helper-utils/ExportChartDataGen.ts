@@ -8,6 +8,7 @@ import { rankChartDataGen } from "./RankQuesUtils";
 import { singleChartDataGen } from "./SingleQuesUtils";
 
 export function chartDataGen() {
+  // debugger
   let seriesData = [];
   const {
     chart: { chartData, questionData, bannerQuestionData, baseCount },
@@ -37,5 +38,6 @@ export function chartDataGen() {
       seriesData = rankChartDataGen(questionData, chartData, baseCount);
     }
   }
+  
   return seriesData;
 }
