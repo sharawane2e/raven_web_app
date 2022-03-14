@@ -151,29 +151,40 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-    dispatch(setSelectedQuestionId(cacheId));
-    savedChart.forEach((userCacheinfo: any, index: string | number) => {
-      if (userCacheinfo?.qId === cacheId) {
-  
-        changeChartType(userCacheinfo?.chartType);
-        dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
-        dispatch(setFilters(userCacheinfo.filter));
-        dispatch(setAppliedFilters(userCacheinfo.filter));
-        fetchChartData()
-          .then((chartData) => {
-        
-            if (userCacheinfo.chartTranspose) {
-              dispatch(setChartData(chartData));
-              transposeChart();
-              dispatch(setChartTranspose(true));
-            } else {
-              dispatch(setChartData(chartData));
-              dispatch(setChartTranspose(false));
-            }
-          })
-          .catch((error) => console.log(error));
-      }
+    console.log("cache show")
+    
+    const _cacheQuestion = savedChart.filter((userCacheinfo: any) => {
+      return userCacheinfo?._id === cacheId
     });
+
+    dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
+
+
+    changeChartType(_cacheQuestion[0]["chartType"]);
+    //     dispatch(setSelectedBannerQuestionId(userCacheinfo.bannerQuestion));
+    //     dispatch(setFilters(userCacheinfo.filter));
+    //     dispatch(setAppliedFilters(userCacheinfo.filter));
+       
+    //     console.log("userCacheinfo.chartTranspose",userCacheinfo.chartTranspose)
+
+    //     dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+
+    //     if (userCacheinfo.chartTranspose) {
+    //       fetchChartData()
+    //         .then((chartData) => {
+    //           dispatch(setChartData(chartData));
+    //           transposeChart();
+    //           dispatch(setChartTranspose(userCacheinfo.chartTranspose));
+    //         })
+    //         .catch((error) => console.log(error));
+    //     } else {
+    //       //debugger;
+    //       fetchChartData()
+    //         .then((chartData) => {
+    //           dispatch(setChartData(chartData));
+    //         })
+    //         .catch((error) => console.log(error));
+    //     }
   };
 
   const userCacheDelete = () => {
@@ -259,7 +270,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             ? "user-cache__cache-data--active-section"
                             : ""
                         }`}
-                        onClick={(event) => cacheShow(savedata?.qId, event)}
+                        onClick={(event) => cacheShow(savedata?._id, event)}
                       >
                         <div className="user-cache__chart-icon-sec">
                           <div className="user-cache__chart-icon">
