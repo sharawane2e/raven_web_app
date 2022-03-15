@@ -38,6 +38,7 @@ interface MultiSelectProps extends SelectProps {
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const { options, value = [], label } = props;
+  console.log("value",value)
 
   return (
     <FormControl className="multi-select">
@@ -48,6 +49,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         displayEmpty
         value={value}
         input={<Input />}
+        defaultChecked={true}
         renderValue={(selected) => {
           if ((selected as IQuestionOption[]).length === 0) {
             return <em>{props.placeholder || "Please select"}</em>;

@@ -59,7 +59,9 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
     .then((res) => {
       if (res.success) {
         const updatedSavedChart = addNewKeysToUserCache(res.data);
+        console.log("demo",updatedSavedChart)
         store.dispatch(resetUserCache(updatedSavedChart));
+        
         Toaster.warn(res.message);
       } else {
         Toaster.error(res.message);

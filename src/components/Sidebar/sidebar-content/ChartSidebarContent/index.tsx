@@ -21,6 +21,8 @@ import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 import { IFilter } from "../../../../types/IFilter";
 import { AnyArray } from "immer/dist/internal";
+import { RequiredNumberSchema } from "yup/lib/number";
+import { values } from "lodash";
 
 const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -31,46 +33,22 @@ const ChartSidebarContent: React.FC = () => {
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
-  // useEffect(()=>{
+// console.log("savedChart",savedChart?.filter)  
    
-  //   const _cacheFilters: any = savedChart.map((userFilter: any,index:number) => {
-  //     return userFilter?.filter;
-  //     //console.log("userFilter",userFilter)
-  //   });
-  //   //console.log("_cacheFilters",_cacheFilters)
-    
-  //  _cacheFilters.map((userId:any,index:number)=>{
-  //   // userId.map((element:any) => {
-  //     //console.log("element",userId)
-  //     if(userId==undefined){
-  //       return false;
-  //     }
-  //     else{
-  //      handleFilterSelect(userId?.qId, {
-  //        "labelCode": userId?.code,
-  //        "labelText": userId?.label,
-  //        "order": 0
-  //      });
-  //     }
-  //   // });
-  //   userId.map((label:any,code:any)=>{
-  //       // console.log("el",label,code)
-  //       label.filter(label)
-  //   })
-  //   })
-   
-  // },[savedChart])
-
-
+// const _cacheFilters: any = filters.map((filter: any,index:number) => {
+//   return filter;
+//   //console.log("userFilter",userFilter)
+// });
+//console.log("_cacheFilters",_cacheFilters)
 let handleFilterSelect = (qId: string, value: IQuestionOption) => {
+  
     const updatedFilters = [...filters];
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
     let values: IQuestionOption[] = filterQuestion?.value
       ? JSON.parse(JSON.stringify(filterQuestion?.value))
       : [];
     let index = -1;
-    
-
+   
     values.forEach((v, i) => {
       if (v.labelCode === value.labelCode) {
         index = i;
@@ -112,6 +90,7 @@ let handleFilterSelect = (qId: string, value: IQuestionOption) => {
 
     const updatedfilterQuestionList = filterQuestionList.map(
       (filterQuestion) => {
+        //debugger
         if (filterQuestion.qId === qId) {
           return { ...filterQuestion, value: values };
         }
@@ -119,9 +98,31 @@ let handleFilterSelect = (qId: string, value: IQuestionOption) => {
       }
     );
     // debugger
+    console.log("updatedfilterQuestionList",updatedfilterQuestionList)
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
     dispatch(setFilters(updatedFilters));
   };
+
+
+// _cacheFilters.map((userId:any,index:number)=>{
+ 
+//     // if(userId==undefined){
+//     //   return false;
+//     // }
+//     // else{
+//    const  valuesData={
+//     "labelCode": userId?.code,
+//     "labelText": userId?.label,
+//     "order": 0
+//    }
+    
+//    handleFilterSelect(userId?.qId,valuesData);
+
+//     //}
+
+
+//   });
+
 
   const applyFilters = () => {
     const { chart } = store.getState();
@@ -189,9 +190,11 @@ let handleFilterSelect = (qId: string, value: IQuestionOption) => {
                 value={filterQuestion.value}
                 onChange={(value: IQuestionOption) => {
                   handleFilterSelect(filterQuestion.qId, value);
-                }}
+                } } 
+                
               />
             ))}
+            
           </div>
         </CustomScrollbar>
       </div>

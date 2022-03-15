@@ -143,6 +143,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const handleSingleSelect = (savedChartId: string, selectValue: boolean) => {
+    setActiveCacheId(savedChartId)
     const _savedChart = JSON.parse(JSON.stringify(savedChart));
     _savedChart.forEach(function (singleCacheChart: any) {
       if (singleCacheChart._id === savedChartId) {
@@ -153,19 +154,15 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const cacheShow = (cacheId: any, event: any) => {
-
-
-    setActiveCacheId(cacheId);
-
-    const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
+   setActiveCacheId(cacheId);
+  const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
     });
 
     dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
-    
     dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"]));
-    dispatch(setFilters(_cacheQuestion[0]["filter"]));
     dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
+    dispatch(setFilters(_cacheQuestion[0]["filter"]));
 
     fetchChartData()
       .then((chartData) => {
@@ -189,7 +186,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
         (chartElement) => chartElement._id
     );
-         handleDeleteChartCache(deleteSavedChartsIds);
+     handleDeleteChartCache(deleteSavedChartsIds);
   };
 
   return (
@@ -254,14 +251,15 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               savedChart.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString("en-us");
-
+                console.log("savedata",savedata?.isSelected)
+                console.log("savedata",savedata?._id)
                 return (
                   <div className="user-cache__sidebar" key={index}>
                     <div className="user-cache__cache-data">
                       <div
                         id={savedata?._id}
                         className={`user-cache__cache-data--cache-section ${
-                          activeCacheId == savedata?._id
+                          activeCacheId == savedata?._id || savedata?.isSelected
                             ? "user-cache__cache-data--active-section"
                             : ""
                         }`}
@@ -324,7 +322,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               )}
                               {savedChart[index]?.qId !== "" &&
                               savedChart[index]?.bannerQuestion !== "" ? (
-                                <TransferdataIcon />
+                                <Tooltip
+                                title={"transferdata"}
+                                arrow
+                                placement="top"
+                              >
+                                <TransferdataIcon className="transferdata-icon"/>
+                                </Tooltip>
                               ) : (
                                 ""
                               )}
@@ -353,8 +357,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                       </div>
                     </div>
                     <div className="user-cache__bottom-line"></div>
-                    {/* <Divider className="border-first-line" /> */}
-                    {/* <Divider className="border-second-line" /> */}
                   </div>
                 );
               })
