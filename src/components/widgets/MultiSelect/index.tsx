@@ -38,7 +38,6 @@ interface MultiSelectProps extends SelectProps {
 
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
   const { options, value = [], label } = props;
-  console.log("value",value)
 
   return (
     <FormControl className="multi-select">

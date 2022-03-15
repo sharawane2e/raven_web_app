@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setChartData,
@@ -20,9 +20,9 @@ import { IQuestionOption } from "../../../../types/IBaseQuestion";
 import CustomScrollbar from "../../../CustomScrollbar";
 import MultiSelect from "../../../widgets/MultiSelect";
 import { IFilter } from "../../../../types/IFilter";
-import { AnyArray } from "immer/dist/internal";
-import { RequiredNumberSchema } from "yup/lib/number";
-import { values } from "lodash";
+// import { AnyArray } from "immer/dist/internal";
+// import { RequiredNumberSchema } from "yup/lib/number";
+// import { values } from "lodash";
 
 const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -33,13 +33,21 @@ const ChartSidebarContent: React.FC = () => {
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
-// console.log("savedChart",savedChart?.filter)  
    
 // const _cacheFilters: any = filters.map((filter: any,index:number) => {
-//   return filter;
+//   return {"labelCode":filter?.code,"labelText":filter?.label,"order":0};
 //   //console.log("userFilter",userFilter)
 // });
-//console.log("_cacheFilters",_cacheFilters)
+
+// const _cacheId: any = filters.map((filters: any,index:number) => {
+//   return filters?.qId
+//   //console.log("userFilter",userFilter)
+// });
+
+// //dispatch(setFilterQuestionList(_cacheFilters))
+
+
+
 let handleFilterSelect = (qId: string, value: IQuestionOption) => {
   
     const updatedFilters = [...filters];
@@ -104,26 +112,6 @@ let handleFilterSelect = (qId: string, value: IQuestionOption) => {
   };
 
 
-// _cacheFilters.map((userId:any,index:number)=>{
- 
-//     // if(userId==undefined){
-//     //   return false;
-//     // }
-//     // else{
-//    const  valuesData={
-//     "labelCode": userId?.code,
-//     "labelText": userId?.label,
-//     "order": 0
-//    }
-    
-//    handleFilterSelect(userId?.qId,valuesData);
-
-//     //}
-
-
-//   });
-
-
   const applyFilters = () => {
     const { chart } = store.getState();
     dispatch(setAppliedFilters(filters));
@@ -184,13 +172,14 @@ let handleFilterSelect = (qId: string, value: IQuestionOption) => {
       */}
             {filterQuestionList.map((filterQuestion, filterIndex) => (
               <MultiSelect
-                key={filterIndex}
-                label={filterQuestion.labelText}
-                options={filterQuestion.options}
-                value={filterQuestion.value}
-                onChange={(value: IQuestionOption) => {
-                  handleFilterSelect(filterQuestion.qId, value);
-                } } 
+              key={filterIndex}
+              label={filterQuestion.labelText}
+              options={filterQuestion.options}
+              value={filterQuestion.value}
+              onChange={(value: IQuestionOption) => {
+                handleFilterSelect(filterQuestion.qId, value);
+             
+              } } 
                 
               />
             ))}

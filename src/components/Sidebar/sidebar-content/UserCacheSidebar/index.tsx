@@ -153,8 +153,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(resetUserCache(_savedChart));
   };
 
-  const cacheShow = (cacheId: any, event: any) => {
-   setActiveCacheId(cacheId);
+  const cacheShow = (cacheId: any, event: any,selectValue: boolean) => {
+   setActiveCacheId(selectValue);
   const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
     });
@@ -251,8 +251,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               savedChart.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString("en-us");
-                console.log("savedata",savedata?.isSelected)
-                console.log("savedata",savedata?._id)
+              
                 return (
                   <div className="user-cache__sidebar" key={index}>
                     <div className="user-cache__cache-data">
@@ -263,7 +262,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                             ? "user-cache__cache-data--active-section"
                             : ""
                         }`}
-                        onClick={(event) => cacheShow(savedata?._id, event)}
+                        onClick={(event) => cacheShow(savedata?._id, event,savedata?.isSelected)}
                       >
                         <div className="user-cache__chart-icon-sec">
                           <div className="user-cache__chart-icon">
@@ -323,7 +322,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               {savedChart[index]?.qId !== "" &&
                               savedChart[index]?.bannerQuestion !== "" ? (
                                 <Tooltip
-                                title={"transferdata"}
+                                title={"Transfer data"}
                                 arrow
                                 placement="top"
                               >

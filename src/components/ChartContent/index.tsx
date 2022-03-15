@@ -203,6 +203,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     />
   );
 
+
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
