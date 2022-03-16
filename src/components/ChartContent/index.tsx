@@ -47,6 +47,7 @@ import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
 import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
+import Chapter from "../Chapter";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -208,6 +209,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
+          <div className="chart-content__control-item">
+            <Chapter />
+          </div>
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
