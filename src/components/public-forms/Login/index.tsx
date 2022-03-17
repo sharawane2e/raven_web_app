@@ -1,19 +1,19 @@
-import { Button } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import LoginSchema from "../../../validation-schema/LoginSchema";
-import InputField from "../../widgets/InputFields";
-import { Link, useHistory } from "react-router-dom";
-import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
-import ApiRequest from "../../../utils/ApiRequest";
-import ApiUrl from "../../../enums/ApiUrl";
-import Toaster from "../../../utils/Toaster";
-import { promptMessages } from "../../../constants/messages";
-import WebUrl from "../../../enums/WebUrl";
-import { AppDispatch } from "../../../redux/store";
-import { useDispatch } from "react-redux";
-import { setUserProfile } from "../../../redux/actions/userActions";
-import LocalStorageUtils from "../../../utils/LocalStorageUtils";
+import { Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import LoginSchema from '../../../validation-schema/LoginSchema';
+import InputField from '../../widgets/InputFields';
+import { Link, useHistory } from 'react-router-dom';
+import withLoader, { WithLoaderProps } from '../../../hoc/withLoader';
+import ApiRequest from '../../../utils/ApiRequest';
+import ApiUrl from '../../../enums/ApiUrl';
+import Toaster from '../../../utils/Toaster';
+import { promptMessages } from '../../../constants/messages';
+import WebUrl from '../../../enums/WebUrl';
+import { AppDispatch } from '../../../redux/store';
+import { useDispatch } from 'react-redux';
+import { setUserProfile } from '../../../redux/actions/userActions';
+import LocalStorageUtils from '../../../utils/LocalStorageUtils';
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -26,7 +26,7 @@ const Login: React.FC<LoginProps> = (props) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(LoginSchema),
-    mode: "onBlur",
+    mode: 'onBlur',
   });
 
   const dispatch: AppDispatch = useDispatch();
@@ -36,7 +36,7 @@ const Login: React.FC<LoginProps> = (props) => {
   const onSubmit = (data: any) => {
     props.startLoading(promptMessages.LOGGING_IN);
 
-    ApiRequest.request(ApiUrl.LOGIN, "POST", data)
+    ApiRequest.request(ApiUrl.LOGIN, 'POST', data)
       .then((res) => {
         if (res.success) {
           dispatch(setUserProfile(res.data));
@@ -62,23 +62,23 @@ const Login: React.FC<LoginProps> = (props) => {
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="public-form__heading">Login</div>
         <InputField
-          {...register("email")}
+          {...register('email')}
           id="email"
           required
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onChange={(e) => handleChange(e, "email")}
+          onChange={(e) => handleChange(e, 'email')}
         />
         <InputField
-          {...register("password")}
+          {...register('password')}
           id="password"
           label="Password"
           required
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
-          onChange={(e) => handleChange(e, "password")}
+          onChange={(e) => handleChange(e, 'password')}
         />
 
         <Button type="submit" className="button--primary">
