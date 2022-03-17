@@ -47,6 +47,9 @@ import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
+import BrandLogo from '../BrandLogo';
+import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
+// import { ReactComponent as BrandLogoIcon } from '../../assets/svg/brand-logo.svg';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -361,16 +364,27 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           <Chart />
         )}
-        <div className="chart-content__base-count">
-          Sample Size: {baseCount}
-          {/* executives across Global 2000 enterprises */}
-          {/* <br /> */}
-          {/* Source: HFS Pulse, H1 2021 */}
-          {/* Source: E2E Research, 2021 */}
-        </div>
-        <div className="chart-content__info">
-          Note: Sample size reflects selections from filter and cross-tab menus,
-          not in-legend selections.
+        <div className="chart-content-footer">
+          <div className="chart-content-footer--inr">
+            <div className="chart-content__base-count">
+              Sample Size: {baseCount}
+              {/* executives across Global 2000 enterprises */}
+              {/* <br /> */}
+              {/* Source: HFS Pulse, H1 2021 */}
+              {/* Source: E2E Research, 2021 */}
+            </div>
+            <div className="chart-content__info">
+              Note: Sample size reflects selections from filter and cross-tab
+              menus, not in-legend selections.
+            </div>
+          </div>
+          <div className="appbar__logo-wrapper">
+            <RavenBrandLogo />
+            {/* <BrandLogo
+              className="appbar__brand-logo"
+              // onClick={() => history.push('/home')}
+            /> */}
+          </div>
         </div>
       </div>
     </div>

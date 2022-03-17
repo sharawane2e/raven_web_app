@@ -20,6 +20,7 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      color: map-get($map: $bg-color, $key: dark);
     }
   }
   .previous,
@@ -42,7 +43,7 @@
     }
 
     .label {
-      color: map-get($map: $text-color, $key: partial-light);
+      color: map-get($map: $bg-color, $key: dark);
       @media (max-width: 768px) {
         margin-right: 20px !important;
       }
@@ -53,7 +54,7 @@
     justify-content: space-between;
     align-items: center;
     > div {
-      color: $white;
+      color: map-get($map: $bg-color, $key: dark);
     }
     @media (max-width: 768px) {
       color: #dfdfdf;
@@ -98,7 +99,7 @@
     display: flex;
     align-items: center;
     .label {
-      color: map-get($map: $text-color, $key: partial-light);
+      color: map-get($map: $bg-color, $key: dark);
     }
 
     .MuiFormControl-root {

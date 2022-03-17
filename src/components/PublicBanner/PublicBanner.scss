@@ -22,7 +22,7 @@
       font-weight: 700;
       margin-bottom: 0px;
       .brandColor {
-        color: map-get($map: $text-color, $key: accent);
+        color: $brand-color;
       }
     }
     .public-banner__title__logstext {

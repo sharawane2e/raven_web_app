@@ -14,8 +14,7 @@ import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { setUserProfile } from '../../../redux/actions/userActions';
 import LocalStorageUtils from '../../../utils/LocalStorageUtils';
-import lumanityLogo from '../../../assets/svg/lumanity-logo.svg';
-import BoehringeLogo from '../../../assets/svg/boehringe-logo.svg';
+import ClientsLogo from '../../ClientsLogo';
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -62,13 +61,8 @@ const Login: React.FC<LoginProps> = (props) => {
   return (
     <div className="login public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="public-form__logos">
-          <div className="public-form__logos--first-logo">
-            <img src={BoehringeLogo} />
-          </div>
-          <div className="public-form__logos--second-logo">
-            <img src={lumanityLogo} />
-          </div>
+        <div className="public-form__client-logo">
+          <ClientsLogo />
         </div>
         <div className="public-form__heading">Login</div>
         <InputField
@@ -91,7 +85,7 @@ const Login: React.FC<LoginProps> = (props) => {
           onChange={(e) => handleChange(e, 'password')}
         />
 
-        <Button type="submit" className="button--primary">
+        <Button type="submit" className="button--primary btn-login-color">
           Login
         </Button>
         <Link className="public-form__link" to={WebUrl.FORGOT_PASSWORD}>

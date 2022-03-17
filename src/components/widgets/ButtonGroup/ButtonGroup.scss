@@ -22,14 +22,14 @@
         color: map-get($map: $text-color, $key: accent);
         svg {
           path {
-            fill: map-get($map: $text-color, $key: accent);
+            fill: map-get($map: $bg-color, $key: accent);
           }
 
           line {
-            stroke: map-get($map: $text-color, $key: accent);
+            stroke: map-get($map: $bg-color, $key: accent);
           }
         }
-        border-color: map-get($map: $text-color, $key: accent);
+        border-color: map-get($map: $bg-color, $key: accent);
       }
     }
   }

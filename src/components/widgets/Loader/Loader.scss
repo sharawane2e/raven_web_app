@@ -1,7 +1,7 @@
 .loader--wrapper {
   height: 100%;
   width: 100%;
-  background: $black;
+  background: map-get($map: $bg-color, $key: primary);
   position: absolute;
   left: 0;
   top: 0;
@@ -27,7 +27,7 @@
   }
 
   30% {
-    background-color: #f1ad0f;
+    background-color: #fff;
   }
   50% {
     height: 100px;
@@ -35,7 +35,7 @@
   }
 
   80% {
-    background-color: #f1ad0f;
+    background-color: #fff;
   }
 
   100% {

@@ -35,7 +35,7 @@ $text-color: (
   'accent': #003366,
   'light': #fff,
   'partial-light': #dfdfdf,
-  'primary': #dfdfdf,
+  'primary': #878787,
   'primary-dark': #000,
   'primary-fade': #dfdfdf,
   'fade': #dfdfdf,
@@ -65,6 +65,8 @@ $black: #000;
 $white: #fff;
 $box-color: #c9c9c9;
 $filter-text-color: #343434;
+$brand-color: #f1ad0f;
+$border-color: #e1e3e7;
 
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique
