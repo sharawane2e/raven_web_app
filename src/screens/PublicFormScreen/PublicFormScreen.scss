@@ -38,8 +38,8 @@
       flex-direction: column;
       align-items: flex-start;
       width: 90%;
-      padding: 80px 40px;
-      background: map-get($map: $bg-color, $key: secondary);
+      padding: 30px 40px 80px 40px;
+      background: map-get($map: $bg-color, $key: "white");
       border: 1px solid map-get($map: $bg-color, $key: #000);
       margin-right: 90px;
       .MuiInputBase-root {
@@ -62,6 +62,10 @@
       font-weight: bold;
       margin-bottom: 2.5rem; //40px;
       color: map-get($map: $text-color, $key: primary);
+    }
+    .public-form__client-logo{
+      text-align: center;
+      padding-bottom: 2rem;
     }
   }
 
