@@ -32,7 +32,7 @@ $font-weight: (
 );
 
 $text-color: (
-  'accent': #f1ad0f,
+  'accent': #003366,
   'light': #fff,
   'partial-light': #dfdfdf,
   'primary': #dfdfdf,
@@ -45,16 +45,16 @@ $text-color: (
 );
 
 $bg-color: (
-  'accent': #f1ad0f,
-  'primary': #070707,
-  'secondary': #393939,
-  'secondary-shade': #dfdfdf,
+  'accent': #0066cc,
+  'primary': #001a33,
+  'secondary': #003366,
+  'secondary-shade': #fff,
   'white': #ffffff,
-  'secondary-dark': #1e1e1e,
+  'secondary-dark': #001a33,
   'secondary-light': #bebebe2e,
   'grayLight': #f7f7f7,
   'dark': #848484,
-  'fade': #f2f2f2,
+  'fade': #fff,
   'success': #78bf63,
   'info': #f1b202,
   'silver-chalice': #adadad,
@@ -63,6 +63,8 @@ $bg-color: (
 $sidebar-width: 16.875rem; // 270px
 $black: #000;
 $white: #fff;
+$box-color: #c9c9c9;
+$filter-text-color: #343434;
 
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique

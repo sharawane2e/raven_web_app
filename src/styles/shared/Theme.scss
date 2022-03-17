@@ -1,6 +1,6 @@
 // Input Field
 .input-field__label {
-  color: map-get($map: $text-color, $key: primary);
+  //color: map-get($map: $text-color, $key: primary);
   display: flex;
   align-items: center;
 
@@ -17,7 +17,7 @@
 .input-field__endontment-icon {
   cursor: pointer;
   font-size: map-get($map: $text-size, $key: regular);
-  color: map-get($map: $text-color, $key: "primary");
+  color: map-get($map: $text-color, $key: 'primary');
   opacity: 0.8;
 }
 .MuiFormControl-root {
@@ -133,14 +133,14 @@
   margin: 3px;
   svg {
     width: map-get($map: $text-size, $key: regular);
-    color: map-get($map: $text-color, $key: primary);
+    color: $filter-text-color;
   }
 }
 
 .highcharts-data-label {
   text {
     // fill: white !important;
-    font-family: "Nunito Sans", sans-serif !important;
+    font-family: 'Nunito Sans', sans-serif !important;
     font-weight: normal !important;
   }
 }

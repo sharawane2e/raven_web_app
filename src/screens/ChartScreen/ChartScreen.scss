@@ -2,7 +2,7 @@
   .content-area {
     //padding: 10px 30px;
     margin-top: -6px;
-    background: map-get($map: $bg-color, $key: secondary-dark);
+    background: $white;
     @media (max-width: 767px) {
       padding: 10px 5px;
     }
@@ -31,10 +31,10 @@
 
 .chart-screen__chart-wrapper-table {
   .MuiDialog-paper {
-    background: map-get($map: $bg-color, $key: "primary");
+    background: map-get($map: $bg-color, $key: 'primary');
   }
 
   .cross--btn {
-    background: map-get($map: $bg-color, $key: "white");
+    background: map-get($map: $bg-color, $key: 'white');
   }
 }

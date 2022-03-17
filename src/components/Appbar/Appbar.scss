@@ -108,7 +108,7 @@
     color: map-get($map: $text-color, $key: primary);
 
     .down-arrow-icon {
-      color: map-get($map: $text-color, $key: accent);
+      color: $white;
       // cursor: pointer;
     }
   }
@@ -122,7 +122,7 @@
     &::after,
     div {
       background: map-get($map: $text-color, $key: fade);
-      content: "";
+      content: '';
       display: block;
       height: 2px;
       border-radius: 3px;
