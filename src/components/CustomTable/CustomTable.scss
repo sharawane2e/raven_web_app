@@ -7,8 +7,8 @@
 
       &.selected {
         a {
-          background-color: map-get($map: $bg-color, $key: "dark");
-          color: map-get($map: $text-color, $key: "partial-light");
+          background-color: map-get($map: $bg-color, $key: 'dark');
+          color: map-get($map: $text-color, $key: 'partial-light');
         }
       }
     }
@@ -52,6 +52,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    > div {
+      color: $white;
+    }
     @media (max-width: 768px) {
       color: #dfdfdf;
     }
@@ -148,7 +151,7 @@
       flex: 1;
       font-size: map-get($map: $text-size, $key: small);
       font-weight: 800;
-      color: map-get($map: $text-color, $key: "primary-fade");
+      color: map-get($map: $text-color, $key: 'primary-fade');
       display: flex;
       align-items: center;
       // justify-content: space-between;
@@ -184,10 +187,10 @@
       align-items: center;
       min-height: 3.75rem; //60px;
       &:nth-child(odd) {
-        background: map-get($map: $bg-color, $key: "secondary");
+        background: map-get($map: $bg-color, $key: 'secondary');
       }
       &:nth-child(even) {
-        background: map-get($map: $bg-color, $key: "secondary-dark");
+        background: map-get($map: $bg-color, $key: 'secondary-dark');
       }
 
       > div {
