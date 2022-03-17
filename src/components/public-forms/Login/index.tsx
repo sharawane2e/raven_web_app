@@ -14,8 +14,8 @@ import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { setUserProfile } from '../../../redux/actions/userActions';
 import LocalStorageUtils from '../../../utils/LocalStorageUtils';
-import { ReactComponent as lumanityLogo } from '../../assets/svg/lumanity-logo.svg';
-import BoehringeLogo from '../../assets/svg/boehringe_logo.svg';
+import lumanityLogo from '../../../assets/svg/lumanity-logo.svg';
+import BoehringeLogo from '../../../assets/svg/boehringe-logo.svg';
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -63,8 +63,12 @@ const Login: React.FC<LoginProps> = (props) => {
     <div className="login public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="public-form__logos">
-          <div className="public-form__logos--first-logo">Fist Logo</div>
-          <div className="public-form__logos--second-logo">Seond logo</div>
+          <div className="public-form__logos--first-logo">
+            <img src={BoehringeLogo} />
+          </div>
+          <div className="public-form__logos--second-logo">
+            <img src={lumanityLogo} />
+          </div>
         </div>
         <div className="public-form__heading">Login</div>
         <InputField
