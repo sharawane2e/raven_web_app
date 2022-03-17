@@ -209,7 +209,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
-          <div className="chart-content__control-item">
+          <div className="chart-content__control-item chart-content__chapter-select">
             <Chapter />
           </div>
           <div className="chart-content__control-item">

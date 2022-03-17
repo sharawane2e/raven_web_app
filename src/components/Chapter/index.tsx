@@ -50,7 +50,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
         //   placeholder={StaticText.QUESTION_LABEL}
         valueKey="qId"
         labelKey="labelText"
-        className="single_select_area Step-7"
+        className="single_select_area chapter-selection"
         disabledPredicate={(value) => value === selectedBannerQuestionId}
         MenuProps={{
           classes: { paper: 'testing' },
