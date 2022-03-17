@@ -1,6 +1,6 @@
 .public-form-screen {
   position: relative;
-  background: url("../../assets/images/login_bg.png");
+  background: url('../../assets/images/login_bg.png');
   background-size: 100% 100%;
 
   @media only screen and (max-width: 960px) {
@@ -39,8 +39,8 @@
       align-items: flex-start;
       width: 90%;
       padding: 80px 40px;
-      background: map-get($map: $bg-color, $key: secondary);
-      border: 1px solid map-get($map: $bg-color, $key: #000);
+      background: $white;
+      // border: 1px solid map-get($map: $bg-color, $key: #000);
       margin-right: 90px;
       .MuiInputBase-root {
         background: map-get($map: $bg-color, $key: secondary-shade);
