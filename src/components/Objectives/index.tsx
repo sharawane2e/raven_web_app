@@ -24,12 +24,11 @@ const Objectives = (props: Props) => {
             <BusinessObjective />
             <div className="objectives--content--text objectives--content--border">
               <p>
-                <b className="objectives--content--text objectives--content--text--blue">Business Objective: </b> In order to better meet the needs of existing and potential clients and
-                to successfully grow our business, it is important to understand the
-                perspectives of executive level financial officers at both public and private
-                institutions and corporations. Specifically, we need to:
+                <b className="objectives--content--text objectives--content--text--blue">Business Objective: </b> BI has defined obesity as an area of strategic importance and is investigating several compounds in clinical development, mainly injectables.​
+
+However, basic data on PwO is missing and BI does not have a clear understanding of who these individuals are.
               </p>
-              <ul>
+              {/* <ul>
                 <li>
                   <p>Better understand our target audience</p>
                 </li>
@@ -42,7 +41,7 @@ const Objectives = (props: Props) => {
                 <li>
                   <p>Grow our market share in key geographic regions</p>
                 </li>
-              </ul>
+              </ul> */}
               {/* <p>
                 This includes uncovering the nuances that come up with the Hard
                 Rock brand name and how that name might be helpful (or not) in
@@ -55,9 +54,9 @@ const Objectives = (props: Props) => {
             <ResearchObjective />
             <div className="objectives--content--text objectives--content--border">
               <p>
-                <b className="objectives--content--text objectives--content--text--blue">Research Objective: </b>: Key objectives for this research include:
+                <b className="objectives--content--text objectives--content--text--blue">Research Objective: </b>: Research is needed to understand which criteria distinguish PwO from the general population, validate hypotheses and explore some of the myths surrounding this population.
               </p>
-              <ul>
+              {/* <ul>
                 <li>
                 <p>Better understand our target audience
                   </p>
@@ -78,76 +77,79 @@ const Objectives = (props: Props) => {
                 Grow our market share in key geographic regions
                 </p>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
 
         </div>
-        <div className="objectives--container container--right">
+        {/* <div className="objectives--container container--right">
           <SHFFinancial className="objectives--container container--right-svg" />
-        </div>
+        </div> */}
         <div className="clearAll"></div>
         
       </div>
-      <h2>OBJECTIVES</h2>
-        <div className="carousal-section">
-          <Grid container justifyContent="center" spacing={2}>
-            {/* {[0, 1, 2,3,4].map((value) => ( */}
-              <Grid item>
-                <Paper sx={{ height: 180, width: 20 }} >
-                    <div className="card-image">
-                    <OnlineSurveyIcon/>
-                    </div>
-                <div className="card-title">
-                    Online Survey
-                </div>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper sx={{ height: 180, width: 20 }} >
-                    <div className="card-image">
-                    <TotalRBIcon/>
-                    </div>
-                <div className="card-title">
-                Total = 1,000 Florida Residents = 800 Florida Visitors = 200
-                </div>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper sx={{ height: 180, width: 20 }} >
-                    <div className="card-image">
-                    <PopulationIcon/>
-                    </div>
-                <div className="card-title">
-                Population:Ages 21+
-                </div>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper sx={{ height: 180, width: 20 }} >
-                    <div className="card-image">
-                    <FolridaMapIcon/>
-                    </div>
-                <div className="card-title">
-                      Profile the sports bettor in Florida
-                </div>
-                </Paper>
-              </Grid>
-              <Grid item>
-                <Paper sx={{ height: 180, width: 20 }} >
-                    <div className="card-image">
-                    <CalendarIcon/>
-                    </div>
-                <div className="card-title">
-                Fielded:August 2021
-                </div>
-                </Paper>
-              </Grid>
-            {/* ))} */}
-          </Grid>
-        </div>
+
     </div>
   );
 };
 
 export default Objectives;
+
+
+// <h2>OBJECTIVES</h2>
+// {/* <div className="carousal-section">
+//           <Grid container justifyContent="center" spacing={2}>
+//             {/* {[0, 1, 2,3,4].map((value) => ( */}
+//               <Grid item>
+//                 <Paper sx={{ height: 180, width: 20 }} >
+//                     <div className="card-image">
+//                     <OnlineSurveyIcon/>
+//                     </div>
+//                 <div className="card-title">
+//                     Online Survey
+//                 </div>
+//                 </Paper>
+//               </Grid>
+//               <Grid item>
+//                 <Paper sx={{ height: 180, width: 20 }} >
+//                     <div className="card-image">
+//                     <TotalRBIcon/>
+//                     </div>
+//                 <div className="card-title">
+//                 Total = 1,000 Florida Residents = 800 Florida Visitors = 200
+//                 </div>
+//                 </Paper>
+//               </Grid>
+//               <Grid item>
+//                 <Paper sx={{ height: 180, width: 20 }} >
+//                     <div className="card-image">
+//                     <PopulationIcon/>
+//                     </div>
+//                 <div className="card-title">
+//                 Population:Ages 21+
+//                 </div>
+//                 </Paper>
+//               </Grid>
+//               <Grid item>
+//                 <Paper sx={{ height: 180, width: 20 }} >
+//                     <div className="card-image">
+//                     <FolridaMapIcon/>
+//                     </div>
+//                 <div className="card-title">
+//                       Profile the sports bettor in Florida
+//                 </div>
+//                 </Paper>
+//               </Grid>
+//               <Grid item>
+//                 <Paper sx={{ height: 180, width: 20 }} >
+//                     <div className="card-image">
+//                     <CalendarIcon/>
+//                     </div>
+//                 <div className="card-title">
+//                 Fielded:August 2021
+//                 </div>
+//                 </Paper>
+//               </Grid>
+//             {/* ))} */}
+//           </Grid>
+//         </div> */}
