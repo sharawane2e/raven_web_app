@@ -82,9 +82,9 @@ However, basic data on PwO is missing and BI does not have a clear understanding
           </div>
 
         </div>
-        {/* <div className="objectives--container container--right">
+        <div className="objectives--container container--right">
           <SHFFinancial className="objectives--container container--right-svg" />
-        </div> */}
+        </div>
         <div className="clearAll"></div>
         
       </div>
