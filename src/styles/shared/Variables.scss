@@ -1,66 +1,68 @@
 $text-size: (
-  "xsmall": 0.75rem,
+  'xsmall': 0.75rem,
   // 11px
-  "small": 0.875rem,
+  'small': 0.875rem,
   // 14px
-  "regular": 1rem,
+  'regular': 1rem,
   // 16px
-  "large": 1.25rem,
+  'large': 1.25rem,
   // 20px
-  "xlarge": 1.5rem,
+  'xlarge': 1.5rem,
   // 24px
 );
 $heading-size: (
-  "xsmall": 1.75rem,
+  'xsmall': 1.75rem,
   // 28px
-  "small": 2rem,
+  'small': 2rem,
   // 32px
-  "regular": 2.5rem,
+  'regular': 2.5rem,
   // 40px
-  "large": 3.5rem,
+  'large': 3.5rem,
   // 56px
-  "xlarge": 4.5rem,
+  'xlarge': 4.5rem,
   // 72px
-  "giant": 5.5rem,
+  'giant': 5.5rem,
   // 88px
-  "giant-large": 6rem,
+  'giant-large': 6rem,
   // 96px
 );
 $font-weight: (
-  "bold": bold,
-  "medium": 500,
+  'bold': bold,
+  'medium': 500,
 );
 
 $text-color: (
-  "accent": #f1ad0f,
-  "light": #fff,
-  "partial-light": #dfdfdf,
-  "primary": #dfdfdf,
-  "primary-dark": #000,
-  "primary-fade": #dfdfdf,
-  "fade": #dfdfdf,
-  "danger": red,
-  "border": #dee2e6,
-  "link": #491d40,
+  'accent': #f1ad0f,
+  'light': #fff,
+  'partial-light': #dfdfdf,
+  'primary': #dfdfdf,
+  'primary-dark': #000,
+  'primary-fade': #dfdfdf,
+  'fade': #dfdfdf,
+  'danger': red,
+  'border': #dee2e6,
+  'link': #491d40,
 );
 
 $bg-color: (
-  "accent": #f1ad0f,
-  "primary": #070707,
-  "secondary": #393939,
-  "secondary-shade": #dfdfdf,
-  "white": #ffffff,
-  "secondary-dark": #1e1e1e,
-  "secondary-light": #bebebe2e,
-  "grayLight": #f7f7f7,
-  "dark": #848484,
-  "fade": #f2f2f2,
-  "success": #78bf63,
-  "info": #f1b202,
-  "silver-chalice": #adadad,
+  'accent': #f1ad0f,
+  'primary': #070707,
+  'secondary': #393939,
+  'secondary-shade': #dfdfdf,
+  'white': #ffffff,
+  'secondary-dark': #1e1e1e,
+  'secondary-light': #bebebe2e,
+  'grayLight': #f7f7f7,
+  'dark': #848484,
+  'fade': #f2f2f2,
+  'success': #78bf63,
+  'info': #f1b202,
+  'silver-chalice': #adadad,
 );
 
 $sidebar-width: 16.875rem; // 270px
+$black: #000;
+$white: #fff;
 
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique

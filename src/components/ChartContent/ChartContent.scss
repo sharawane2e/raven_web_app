@@ -38,11 +38,11 @@
 
   .chart-content__chart-wrapper {
     //margin: 15px 5px 10px 12px;
-    width: 98.5%;
-    height: calc(100vh - 260px);
-    background: map-get($map: $bg-color, $key: "white");
+    width: calc(100% - 24px);
+    height: calc(100vh - 280px);
+    background: map-get($map: $bg-color, $key: 'white');
     padding: 20px 15px;
-    border: map-get($map: $bg-color, $key: "white");
+    border: map-get($map: $bg-color, $key: 'white');
     border-radius: 3px;
     box-sizing: border-box;
     margin: 8px 12px;
@@ -63,7 +63,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "primary");
+    background: map-get($map: $bg-color, $key: 'primary');
   }
   .wave-button {
     height: 30px;
@@ -160,7 +160,7 @@
     &::after,
     div {
       background: map-get($map: $text-color, $key: fade);
-      content: "";
+      content: '';
       display: block;
       height: 1px;
       border-radius: 3px;
@@ -261,7 +261,7 @@
   box-sizing: border-box;
 }
 .chart-content__control-menu {
-  background: map-get($map: $bg-color, $key: "secondary");
+  background: map-get($map: $bg-color, $key: 'secondary');
 }
 .cursor-pointer {
   cursor: pointer;
