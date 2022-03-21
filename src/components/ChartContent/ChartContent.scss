@@ -17,7 +17,6 @@
     display: flex;
     align-items: center;
     padding: 0.4rem 0px;
-    //min-width: 550px;
     @media (max-width: 960px) {
       display: none;
     }
@@ -27,17 +26,7 @@
     justify-content: flex-end;
   }
 
-  // .button-group {
-  //   margin: 0 10px;
-  //   min-width: 5rem;
-
-  //   &:last-child {
-  //     margin-right: 0;
-  //   }
-  // }
-
   .chart-content__chart-wrapper {
-    //margin: 15px 5px 10px 12px;
     width: calc(100% - 24px);
     height: calc(100vh - 318px);
     background: map-get($map: $bg-color, $key: 'white');
@@ -54,10 +43,6 @@
     @media screen and (min-width: 768px) and (max-width: 1023px) {
       margin: 15px 5px 10px 8px;
     }
-    //.highcharts-container {
-    //overflow: hidden;
-    //border-radius: 3px;
-    //}
     .highcharts-background {
       fill: transparent;
     }
@@ -75,7 +60,8 @@
   }
   .chart-content-footer {
     display: flex;
-    width: 100%;
+    width: calc(100% - -33px);
+    margin-left: -14px;
     margin-top: 30px;
     &--inr {
       width: 90%;
@@ -85,10 +71,7 @@
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: 'base-color');
-    // margin-top: 23px;
-
     display: block;
-    // margin-top: 5px;
   }
 
   .chart-content__info {
@@ -96,8 +79,6 @@
     font-style: italic;
     color: map-get($map: $text-color, $key: 'base-color');
     margin-top: 1px;
-
-    // margin-top: 5px;
   }
   .title__Block {
     display: flex;
@@ -138,25 +119,18 @@
   }
 
   .button-group {
-    //display: block;
     flex-direction: unset;
     .MuiGrid-root {
-      //display: inline-block;
       .button.MuiButtonBase-root {
         margin: 0px 5px 0px;
       }
     }
     .button-group__group-title {
-      //display: block;
-      //margin-bottom: 4px;
       min-width: fit-content;
       padding-right: 7px;
       padding-top: 2px;
     }
   }
-  // .chartTyle__option {
-  //   min-width: 200px;
-  // }
 
   .menu-icon {
     width: 14px;
@@ -167,7 +141,6 @@
     padding: 0.24rem;
     border: 1px solid map-get($map: $text-color, $key: fade);
     border-radius: 50%;
-    //padding: 0.625rem 0; //10px 0px;
     &::before,
     &::after,
     div {
@@ -182,9 +155,6 @@
   }
 
   &.sidebar-open {
-    // width: calc(100% - #{$sidebar-width});
-    // margin-left: $sidebar-width;
-
     @media (min-width: 769px) {
       .menu-icon {
         div {
@@ -210,25 +180,7 @@
     .appbar__brand-logo {
       display: block;
     }
-
-    // .appbar__left-panel {
-    //   margin-left: $sidebar-width;
-    // }
   }
-  // .button-group__button-wrapper {
-  //   div {
-  //     &:first-child {
-  //       .button-group__button {
-  //         margin-left: 0;
-  //       }
-  //     }
-  //     &:last-child {
-  //       .button-group__button {
-  //         margin-left: 0;
-  //       }
-  //     }
-  //   }
-  // }
   &__control-item:not(:last-child) {
     border-right: 2px solid map-get($map: $bg-color, $key: silver-chalice);
     border-radius: 1px;

@@ -23,5 +23,5 @@
 }
 .MuiSvgIcon-root {
   cursor: pointer;
-  //color: map-get($map: $text-color, $key: light);
+  color: map-get($map: $bg-color, $key: 'primary');
 }

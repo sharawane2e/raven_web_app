@@ -82,7 +82,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push('/home')}
           /> */}
           <div className="public-form__client-logo client-logo__icons">
-            <Boehringer />
+            <Boehringer onClick={() => history.push('/home')} />
           </div>
         </div>
         <div

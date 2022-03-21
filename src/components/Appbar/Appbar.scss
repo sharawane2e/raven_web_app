@@ -87,7 +87,9 @@
     }
     .client-logo {
       width: 100%;
+
       &__icons {
+        cursor: pointer;
         padding: 10px 25px;
         #logo-primary-contrast {
           path {

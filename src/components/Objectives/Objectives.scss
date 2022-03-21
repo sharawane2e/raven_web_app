@@ -2,13 +2,6 @@
   display: flex;
 
   &--container {
-    // &--left {
-    //   flex: 70%;
-    // }
-    // &--right {
-    //   flex: 30%;
-    //   background-color: #dfdfdf;
-    // }
     svg {
       height: 100%;
       width: 100%;
@@ -52,7 +45,7 @@
         li {
           list-style: none;
           & ::before {
-            content: " ";
+            content: ' ';
             width: 0;
             height: 0;
             border-top: 10px solid #0000ff9c;
@@ -82,62 +75,6 @@ h2 {
   padding-left: 30px;
 }
 
-// .objectives {
-//   display: flex;
-
-//   .left-Area {
-//     flex: 70%;
-//     .leftContain {
-//       display: flex;
-//       margin-left: 5px;
-//       margin-right: 10px;
-//       p {
-//         padding-left: 10px;
-//         margin-top: 2px;
-//       }
-//       ul {
-//         li {
-//           list-style: none;
-//           & ::before {
-//             content: " ";
-//             width: 0;
-//             height: 0;
-//             border-top: 10px solid #0000ff9c;
-//             border-left: 10px solid transparent;
-//             position: absolute;
-//             left: 92px;
-//             margin-top: 7px;
-//           }
-//         }
-//       }
-//       .left-line {
-//         border-left: 1px solid lightgray;
-//         padding-right: 5px;
-//       }
-
-//       svg {
-//         width: 50px;
-//       }
-//     }
-//   }
-//   .right {
-//     height: 100vh;
-//     background-color: #dfdfdf;
-//     flex: 30%;
-//     svg {
-//       width: 93%;
-//       height: 530px;
-//       padding: 10px;
-//     }
-//   }
-// }
-// .makeStyles-root-1 {
-//   overflow: visible !important;
-//   //   height: 100vh;
-// }
-// .makeStyles-itemWrapper-3 {
-//   height: inherit !important;
-// }
 .carousal-section {
   width: 100%;
   .MuiGrid-container {
@@ -154,10 +91,6 @@ h2 {
     padding-bottom: 20px;
     padding-left: 8px;
     padding-right: 8px;
-
-    //   &:first-child {
-    //     padding-left: 15px;
-    //   }
     &:last-child {
       border-right: none;
     }
@@ -173,7 +106,7 @@ h2 {
   }
   .card-image {
     text-align: center;
-    padding: 20px 20px 10px 20px; 
+    padding: 20px 20px 10px 20px;
     & svg {
       height: 80px;
     }
@@ -227,6 +160,6 @@ h2 {
     }
   }
 }
-.css-1vioaa7-MuiPaper-root{
+.css-1vioaa7-MuiPaper-root {
   height: 210px;
 }
