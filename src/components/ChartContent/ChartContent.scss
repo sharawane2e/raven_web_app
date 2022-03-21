@@ -28,7 +28,7 @@
 
   .chart-content__chart-wrapper {
     width: calc(100% - 24px);
-    height: calc(100vh - 318px);
+    height: calc(100vh - 275px);
     background: map-get($map: $bg-color, $key: 'white');
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: 'white');

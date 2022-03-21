@@ -294,7 +294,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </Button> */}
       <div className="questioSelection">
         <Grid container spacing={0}>
-          <Grid xs={12}>
+          <Grid xs={8} className="md-space-4">
             <SingleSelect
               options={questionList}
               value={selectedQuestionId}
@@ -312,7 +312,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               handleOpen={handleQSelectionOpen}
             />
           </Grid>
-          <Grid xs={12}>
+          <Grid xs={4}>
             {questions.disableBannerQuestion ? (
               <Tooltip
                 title={StaticText.BANNER_SELECTION_EXCEPTION}
