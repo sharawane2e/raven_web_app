@@ -4,7 +4,7 @@
   }
 
   .admin-sidebar__nav-item {
-    transition: background 300ms linear;
+    transition: background 0ms linear;
 
     span:nth-child(1) {
       flex: 1;
@@ -25,11 +25,12 @@
     }
 
     &.active-link {
+      background-color: map-get($map: $bg-color, $key: 'accent');
       span {
-        color: map-get($map: $text-color, $key: accent);
+        color: map-get($map: $text-color, $key: light);
       }
       svg path {
-        fill: map-get($map: $text-color, $key: accent);
+        fill: map-get($map: $text-color, $key: light);
       }
     }
 

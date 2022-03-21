@@ -31,7 +31,7 @@
 
 .chart-screen__chart-wrapper-table {
   .MuiDialog-paper {
-    background: map-get($map: $bg-color, $key: 'primary');
+    background: map-get($map: $bg-color, $key: 'light');
   }
 
   .cross--btn {

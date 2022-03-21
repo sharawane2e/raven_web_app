@@ -1,7 +1,7 @@
 import React from 'react';
 import './Objectives.scss';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+// import Grid from '@mui/material/Grid';
+// import Paper from '@mui/material/Paper';
 import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
 import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
 // import { ReactComponent as SHFFinancial } from '../../assets/svg/SHF_Financial_Logo.svg';

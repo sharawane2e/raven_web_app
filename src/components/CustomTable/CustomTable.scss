@@ -146,13 +146,13 @@
   .rc__header {
     display: flex;
     padding: 0 10px;
-    background-color: map-get($map: $bg-color, $key: primary);
+    background-color: map-get($map: $bg-color, $key: 'secondary-light');
     > div {
       padding: 10px 0;
       flex: 1;
       font-size: map-get($map: $text-size, $key: small);
       font-weight: 800;
-      color: map-get($map: $text-color, $key: 'primary-fade');
+      color: map-get($map: $text-color, $key: 'secondary-dark');
       display: flex;
       align-items: center;
       // justify-content: space-between;
@@ -268,7 +268,7 @@
     margin-left: 5px;
   }
   svg {
-    color: #dfdfdf;
+    //color: #dfdfdf;
   }
 
   .asc-icon,

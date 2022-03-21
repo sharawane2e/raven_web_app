@@ -64,7 +64,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: 'primary');
+    background: map-get($map: $bg-color, $key: 'secondary-shade');
   }
   .wave-button {
     height: 30px;
