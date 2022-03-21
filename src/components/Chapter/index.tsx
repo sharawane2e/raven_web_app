@@ -1,14 +1,25 @@
 import { useState, useContext, MouseEvent, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StaticText } from '../../constants/StaticText';
+import ApiUrl from '../../enums/ApiUrl';
+import { setChapters } from '../../redux/actions/chapterActions';
 import store, { RootState } from '../../redux/store';
+import { IChapter } from '../../types/IChapter';
+import ApiRequest from '../../utils/ApiRequest';
 import SingleSelect from '../widgets/SingleSelect';
 
 interface ChapterProps {
   variant?: 'fullWidth' | 'partialWidth';
 }
 
+
+
 const Chapter: React.FC<ChapterProps> = (props) => {
+  
+  useEffect(()=>{
+    fetchChaptersList();
+  },[])
+
   const [openQSelection, setOpenQSelection] = useState(false);
   const {
     questions,
@@ -23,7 +34,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     sidebar: { open },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
-  //const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
   const {
     questionList,
     selectedQuestionId,
@@ -33,6 +44,18 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   const handleQuestionChange = (value: string) => {
     console.log('chnaged show');
   };
+
+  const fetchChaptersList = async () =>{
+    const res = await ApiRequest.request(ApiUrl.CHAPTERS,"GET");
+    console.log(res);
+    if(res.success){
+
+      dispatch(setChapters(res.data));
+    }else{
+      
+    }
+    
+  }
 
   const handleQSelectionOpen = () => {
     setOpenQSelection(true);
