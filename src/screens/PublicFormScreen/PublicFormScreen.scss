@@ -62,7 +62,10 @@
       // font-weight: bold;
       margin-top: 1rem;
       margin-bottom: 1.75rem; //40px;
-      color: map-get($map: $text-color, $key: primary);
+      color: $hedding-color;
+    }
+    .forgot-password-hedding {
+      font-size: 1.75rem;
     }
     .public-form__client-logo {
       text-align: center;

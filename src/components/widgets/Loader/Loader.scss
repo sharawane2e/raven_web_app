@@ -23,11 +23,11 @@
 }
 @keyframes loading {
   0% {
-    background-color: #323c4e;
+    background-color: map-get($map: $bg-color, $key: 'accent');
   }
 
   30% {
-    background-color: #fff;
+    background-color: map-get($map: $bg-color, $key: 'info');
   }
   50% {
     height: 100px;
@@ -35,18 +35,18 @@
   }
 
   80% {
-    background-color: #fff;
+    background-color: map-get($map: $bg-color, $key: 'info');
   }
 
   100% {
-    background-color: #323c4e;
+    background-color: map-get($map: $bg-color, $key: 'accent');
   }
 }
 
 @mixin inner() {
   height: 10px;
   width: 30px;
-  background-color: #fff;
+  background-color: map-get($map: $bg-color, $key: 'info');
   display: inline-block;
   margin-top: 90px;
   -webkit-animation: loading 2.5s infinite;

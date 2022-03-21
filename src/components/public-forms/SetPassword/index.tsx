@@ -1,17 +1,17 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import ApiUrl from "../../../enums/ApiUrl";
-import withLoader, { WithLoaderProps } from "../../../hoc/withLoader";
-import ApiRequest from "../../../utils/ApiRequest";
-import Toaster from "../../../utils/Toaster";
-import SetPasswordSchema from "../../../validation-schema/SetPasswordSchema";
-import InputField from "../../widgets/InputFields";
-import { parse } from "query-string";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import ApiUrl from '../../../enums/ApiUrl';
+import withLoader, { WithLoaderProps } from '../../../hoc/withLoader';
+import ApiRequest from '../../../utils/ApiRequest';
+import Toaster from '../../../utils/Toaster';
+import SetPasswordSchema from '../../../validation-schema/SetPasswordSchema';
+import InputField from '../../widgets/InputFields';
+import { parse } from 'query-string';
 
 export interface SetPasswordProps extends WithLoaderProps {
-  variant: "set" | "reset";
+  variant: 'set' | 'reset';
 }
 
 const SetPassword: React.FC<SetPasswordProps> = (props) => {
@@ -23,7 +23,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
     setValue,
   } = useForm({
     resolver: yupResolver(SetPasswordSchema),
-    mode: "all",
+    mode: 'all',
   });
 
   const history = useHistory();
@@ -31,22 +31,22 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
   const { email, token } = parse(location.search);
 
   const text =
-    props.variant === "set"
+    props.variant === 'set'
       ? {
-          heading: "Set password",
-          button: "Activate account",
+          heading: 'Set password',
+          button: 'Activate account',
         }
       : {
-          heading: "Reset password",
-          button: "Save password",
+          heading: 'Reset password',
+          button: 'Save password',
         };
 
   const onSubmit = (data: any) => {
     props.startLoading();
     const url =
-      props.variant === "set" ? ApiUrl.SET_PASSWORD : ApiUrl.RESET_PASSWORD;
+      props.variant === 'set' ? ApiUrl.SET_PASSWORD : ApiUrl.RESET_PASSWORD;
 
-    ApiRequest.request(url, "POST", {
+    ApiRequest.request(url, 'POST', {
       email,
       token,
       password: data.password,
@@ -54,7 +54,7 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
       .then((res) => {
         if (res.success) {
           Toaster.success(res.message);
-          history.push("/login");
+          history.push('/login');
         } else {
           Toaster.error(res.message);
         }
@@ -74,32 +74,32 @@ const SetPassword: React.FC<SetPasswordProps> = (props) => {
         <div className="public-form__heading">{text.heading}</div>
 
         <InputField
-          {...register("password")}
+          {...register('password')}
           id="password"
           label="Password"
           required
           error={!!errors.password}
           helperText={errors?.password?.message}
           type="password"
-          onChange={(e) => handleChange(e, "password")}
+          onChange={(e) => handleChange(e, 'password')}
           showLabelInfo
         />
 
         <InputField
-          {...register("confirmPassword")}
+          {...register('confirmPassword')}
           id="confirmPassword"
           label="Confirm Password"
           required
           error={!!errors.confirmPassword}
           helperText={errors?.confirmPassword?.message}
           type="password"
-          onChange={(e) => handleChange(e, "confirmPassword")}
+          onChange={(e) => handleChange(e, 'confirmPassword')}
           showLabelInfo
         />
-        <Button type="submit" className="button--primary">
+        <Button type="submit" className="button--primary btn-login-color">
           {text.button}
         </Button>
-        {props.variant === "reset" && (
+        {props.variant === 'reset' && (
           <Link className="public-form__link" to="/login">
             Back to login
           </Link>
