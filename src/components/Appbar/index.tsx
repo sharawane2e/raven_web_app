@@ -21,6 +21,8 @@ import {
 } from '../../redux/actions/sidebarAction';
 import ClientsLogo from '../ClientsLogo';
 
+import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
+
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
 }
@@ -80,7 +82,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push('/home')}
           /> */}
           <div className="public-form__client-logo client-logo__icons">
-            <ClientsLogo />
+            <Boehringer />
           </div>
         </div>
         <div
@@ -92,7 +94,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Cello-210394 Dashboard</div>
+        <div className="appbar__heading">210394 Dashboard</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>

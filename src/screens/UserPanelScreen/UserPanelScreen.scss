@@ -22,5 +22,6 @@
   background: map-get($map: $bg-color, $key: secondary-shade);
 }
 .MuiSvgIcon-root {
-  color: map-get($map: $text-color, $key: primary-dark);
+  cursor: pointer;
+  //color: map-get($map: $text-color, $key: light);
 }

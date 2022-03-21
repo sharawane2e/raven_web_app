@@ -188,10 +188,10 @@
       align-items: center;
       min-height: 3.75rem; //60px;
       &:nth-child(odd) {
-        background: map-get($map: $bg-color, $key: 'secondary');
+        background: map-get($map: $bg-color, $key: 'light');
       }
       &:nth-child(even) {
-        background: map-get($map: $bg-color, $key: 'secondary-dark');
+        background: map-get($map: $text-color, $key: 'primary');
       }
 
       > div {
@@ -213,7 +213,7 @@
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: map-get($map: $text-color, $key: primary-fade);
+      color: map-get($map: $text-color, $key: 'primary-dark');
       .cell-label {
         display: none;
       }

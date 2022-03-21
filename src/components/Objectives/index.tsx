@@ -4,6 +4,7 @@ import './Objectives.scss';
 // import Paper from '@mui/material/Paper';
 import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
 import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
+import { ReactComponent as Nationally } from '../../assets/svg/nationally.svg';
 // import { ReactComponent as SHFFinancial } from '../../assets/svg/SHF_Financial_Logo.svg';
 
 // import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online_survey.svg';
@@ -90,7 +91,7 @@ const Objectives = (props: Props) => {
             </div>
           </div>
           <div className="objectives--content">
-            <ResearchObjective />
+            <Nationally />
             <div className="objectives--content--text objectives--content--border">
               <p>
                 <b className="objectives--content--text objectives--content--text--blue">
