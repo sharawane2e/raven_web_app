@@ -84,7 +84,7 @@
 
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
-    color: map-get($map: $text-color, $key: primary);
+    color: map-get($map: $text-color, $key: 'base-color');
     // margin-top: 23px;
 
     display: block;
@@ -94,7 +94,7 @@
   .chart-content__info {
     font-size: map-get($map: $text-size, $key: xsmall);
     font-style: italic;
-    color: map-get($map: $text-color, $key: primary);
+    color: map-get($map: $text-color, $key: 'base-color');
     margin-top: 1px;
 
     // margin-top: 5px;

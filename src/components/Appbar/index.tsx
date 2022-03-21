@@ -1,33 +1,34 @@
-import { useState, useContext, MouseEvent } from "react";
-import { Menu, MenuItem } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import TourPlayIcon from "@material-ui/icons/PlayArrow";
-import clsx from "clsx";
-import BrandLogo from "../BrandLogo";
-import { SidebarContext } from "../../contexts/SidebarContext";
-import ProfileAvatar from "../widgets/ProfileAvatar";
-import { logOutUser } from "../../services/AuthService";
-import { useHistory } from "react-router";
-import { ReactComponent as LogOutIcon } from "../../assets/svg/logout-icon.svg";
-import { ReactComponent as AdminIcon } from "../../assets/svg/admin-icon.svg";
-import { ReactComponent as EditProfileIcon } from "../../assets/svg/edit-profile-icon.svg";
-import { ReactComponent as PasswordIcon } from "../../assets/svg/password-icon.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { showTourGuide } from "../../redux/actions/tourAction";
+import { useState, useContext, MouseEvent } from 'react';
+import { Menu, MenuItem } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TourPlayIcon from '@material-ui/icons/PlayArrow';
+import clsx from 'clsx';
+import BrandLogo from '../BrandLogo';
+import { SidebarContext } from '../../contexts/SidebarContext';
+import ProfileAvatar from '../widgets/ProfileAvatar';
+import { logOutUser } from '../../services/AuthService';
+import { useHistory } from 'react-router';
+import { ReactComponent as LogOutIcon } from '../../assets/svg/logout-icon.svg';
+import { ReactComponent as AdminIcon } from '../../assets/svg/admin-icon.svg';
+import { ReactComponent as EditProfileIcon } from '../../assets/svg/edit-profile-icon.svg';
+import { ReactComponent as PasswordIcon } from '../../assets/svg/password-icon.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { showTourGuide } from '../../redux/actions/tourAction';
 import {
   toggleSidebar,
   toggleSidebarMobile,
-} from "../../redux/actions/sidebarAction";
+} from '../../redux/actions/sidebarAction';
+import ClientsLogo from '../ClientsLogo';
 
 export interface AppbarProps {
-  variant?: "fullWidth" | "partialWidth";
+  variant?: 'fullWidth' | 'partialWidth';
 }
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
 
-  const { variant = "partialWidth" } = props;
+  const { variant = 'partialWidth' } = props;
   // const {
   //   open: sidebarOpen,
   //   toggleSidebarOpen,
@@ -36,7 +37,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   // } = useContext(SidebarContext);
 
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
-    (state: RootState) => state.sidebar
+    (state: RootState) => state.sidebar,
   );
 
   const toggleSidebarOpen = () => {
@@ -66,18 +67,21 @@ const Appbar: React.FC<AppbarProps> = (props) => {
 
   return (
     <div
-      className={clsx("appbar", {
-        "full-width": variant === "fullWidth",
-        "sidebar-open": !sidebarOpen,
-        "mobile-sidebar-open": openMobileDrawer,
+      className={clsx('appbar', {
+        'full-width': variant === 'fullWidth',
+        'sidebar-open': !sidebarOpen,
+        'mobile-sidebar-open': openMobileDrawer,
       })}
     >
       <div className="appbar__left-panel">
-        <div className="appbar__logo-wrapper">
-          <BrandLogo
+        <div className="appbar__logo-wrapper client-logo">
+          {/* <BrandLogo
             className="appbar__brand-logo"
-            onClick={() => history.push("/home")}
-          />
+            onClick={() => history.push('/home')}
+          /> */}
+          <div className="public-form__client-logo client-logo__icons">
+            <ClientsLogo />
+          </div>
         </div>
         <div
           className="menu-icon"
@@ -88,7 +92,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Next Generation Finance Survey</div>
+        <div className="appbar__heading">Cello-210394 Dashboard</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
@@ -97,7 +101,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         </div>
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
           <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-            <ProfileAvatar text={user?.name || ""} />
+            <ProfileAvatar text={user?.name || ''} />
             <ExpandMoreIcon className="down-arrow-icon" />
           </div>
         </div>
@@ -107,26 +111,25 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         id="menu"
         keepMounted
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: 'top',
+          horizontal: 'right',
         }}
         getContentAnchorEl={null}
         open={Boolean(anchorEl)}
         onClose={closeMenu}
         disableAutoFocusItem
-        PaperProps={{ elevation: 0, className: "appbar__menu" }}
+        PaperProps={{ elevation: 0, className: 'appbar__menu' }}
       >
-       
         <MenuItem className="appbar__menu-item profile" disabled>
           {user?.name}
         </MenuItem>
         {user?.isAdmin || user?.isKeyAdmin ? (
           <MenuItem
-            onClick={() => history.push("/admin")}
+            onClick={() => history.push('/admin')}
             className="appbar__menu-item"
           >
             <span>
@@ -142,7 +145,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <span>Edit Profile</span>
         </MenuItem>
         <MenuItem
-          onClick={() => history.push("/change-password")}
+          onClick={() => history.push('/change-password')}
           className="appbar__menu-item"
         >
           <span>

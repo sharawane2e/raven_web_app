@@ -76,12 +76,30 @@
     -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    //background: map-get($map: $bg-color, $key: primary);
     background: map-get($map: $bg-color, $key: primary);
+
     @media (max-width: 768px) {
       border: none;
       width: 100%;
       box-shadow: none;
       background: none;
+    }
+    .client-logo {
+      width: 100%;
+      &__icons {
+        padding: 10px 25px;
+        #logo-primary-contrast {
+          path {
+            fill: $white;
+          }
+        }
+        #logo {
+          #Path_13556 {
+            fill: $white;
+          }
+        }
+      }
     }
   }
 
@@ -121,7 +139,7 @@
     &::before,
     &::after,
     div {
-      background: map-get($map: $text-color, $key: fade);
+      background: map-get($map: $text-color, $key: primary);
       content: '';
       display: block;
       height: 2px;

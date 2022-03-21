@@ -1,7 +1,7 @@
 .admin-panel {
   .admin-panel__page-title {
     margin: 15px 0;
-    color: map-get($map: $text-color, $key: primary);
+    color: map-get($map: $text-color, $key: 'base-color');
     font-size: map-get($map: $text-size, $key: large);
     font-weight: 600;
     padding-left: 12px;

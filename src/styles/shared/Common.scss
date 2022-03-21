@@ -29,7 +29,7 @@ h6 {
   background-color: $white;
   &.sidebar-open {
     margin-left: $sidebar-width;
-    margin-top: -6px;
+    // margin-top: -6px;
   }
 
   @media (max-width: 768px) {

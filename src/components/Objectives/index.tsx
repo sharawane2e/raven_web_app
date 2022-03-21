@@ -4,13 +4,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
 import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
-import { ReactComponent as SHFFinancial } from '../../assets/svg/SHF_Financial_Logo.svg';
+// import { ReactComponent as SHFFinancial } from '../../assets/svg/SHF_Financial_Logo.svg';
 
-import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online_survey.svg';
-import { ReactComponent as CalendarIcon } from '../../assets/svg/calendar_icon.svg';
-import { ReactComponent as TotalRBIcon } from '../../assets/svg/total_RB.svg';
-import { ReactComponent as PopulationIcon } from '../../assets/svg/population.svg';
-import { ReactComponent as FolridaMapIcon } from '../../assets/svg/florida_map.svg';
+// import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online_survey.svg';
+// import { ReactComponent as CalendarIcon } from '../../assets/svg/calendar_icon.svg';
+// import { ReactComponent as TotalRBIcon } from '../../assets/svg/total_RB.svg';
+// import { ReactComponent as PopulationIcon } from '../../assets/svg/population.svg';
+// import { ReactComponent as FolridaMapIcon } from '../../assets/svg/florida_map.svg';
 
 interface Props {}
 
