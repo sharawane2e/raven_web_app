@@ -5,7 +5,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-  background: #070707;
+  // background-color: #fd2828;
+  background: rgba($color: #001a33, $alpha: 0.96);
 }
 
 code {
