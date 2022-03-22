@@ -94,7 +94,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">210394 Dashboard</div>
+        <div className="appbar__heading">210394 - WWAWK about PwO Dashboard</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
