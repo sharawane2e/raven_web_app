@@ -83,6 +83,7 @@ const getSingleChartOptions = (
   } = chartOptionsData;
 
   if (selectedBannerQuestionId) {
+
     const categories: string[] = [];
     const series: any[] = [];
 
@@ -193,6 +194,7 @@ const getSingleChartOptions = (
       series,
     };
   } else {
+   
     const data: any[] = [];
     for (
       let optionIndex = 0;
