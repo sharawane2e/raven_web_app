@@ -161,15 +161,13 @@ export const removeEmptyDataLengends = (
 };
 export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
-    var largestBase = baseCount.reduce((basevalue, bcount) =>
-      basevalue.count > bcount.count ? basevalue : bcount
-    ).count;
-    console.log("maxA", largestBase);
     if (question.type === QuestionType.GRID_MULTI) {
       return baseCount[0]?.baseCount[0]?.baseCount || 0;
     } else if (question.type === QuestionType.RANK) {
       // return baseCount[0]?.count;
-      return largestBase;
+      return baseCount.reduce((basevalue, bcount) =>
+        basevalue.count > bcount.count ? basevalue : bcount
+      ).count;
     } else {
       return baseCount[0]?.baseCount || 0;
     }
@@ -178,6 +176,8 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
 };
 
 export const changeChartType = (newChartType: ChartType) => {
+  console.log("newChartType", newChartType);
+
   const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -238,6 +238,7 @@ export const changeChartType = (newChartType: ChartType) => {
     //   type: "pie",
     // };
   } else {
+    //  debugger;
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
@@ -246,7 +247,7 @@ export const changeChartType = (newChartType: ChartType) => {
       },
       ...getChartOptions(),
     };
-    dispatch(setChartType(ChartType.PIE));
+    dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));

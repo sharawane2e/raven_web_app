@@ -20,11 +20,9 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
   const { chartType } = chart;
-  const { questionData,bannerQuestionData } = chart;
+  // const { questionData, bannerQuestionData } = chart;
 
   const buttonConfig: ButtonGroupConfig[] = [
-  
-    
     {
       tooltip: "Column chart",
       renderChild: () => <ColumnChartIcon />,
