@@ -105,10 +105,10 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        // console.log(optionData);
+        console.log(optionData);
 
         let count = 0;
-        
+        // debugger;
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
@@ -218,7 +218,7 @@ const getSingleChartOptions = (
       } else {
         plotValue = count;
       }
-      
+      // debugger;
 
       if (plotValue > 0)
         data.push({
@@ -231,11 +231,10 @@ const getSingleChartOptions = (
     }
 
     const series: any[] = [];
-    // console.log("chartType", chartType);
+
     if (chartType === ChartType.STACK) {
-      //debugger;
       data.map((element: any, index: number) => {
-        //  console.log("element", element);
+        console.log("element", element);
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -299,31 +298,14 @@ const getRankChartOptions = (
       subGroupIndex < subGroups.length;
       subGroupIndex++
     ) {
+      // debugger;
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
       const optionData = chartData.find((c: any) => c._id === subGroup.qId);
-      let rankWiseBaseCount = 0;
-
-      for (
-        let scaleIndex = 0;
-        scaleIndex < questionData.scale.length;
-        scaleIndex++
-      ){
-        const scale = questionData.scale[scaleIndex];
-        optionData.options.map((currentValue:any)=>{
-          
-          if(currentValue.option==scale.labelCode){
-            rankWiseBaseCount = rankWiseBaseCount+ currentValue.count;
-          }
-        }
-        )
-
-        // rankWiseBaseCount = rankWiseBaseCount+baseCount;
-      }
 
       let count = 0;
-      let label;
-     
+      let label: any;
+
       if (optionData) {
         label = optionData.options.find(
           (option: any) => option.option === scale.labelCode
@@ -334,12 +316,32 @@ const getRankChartOptions = (
         }
       }
       const base = optionData?.baseCount || baseCount;
+
+      let newBaseCount = 0;
+
+      chartData.forEach(function (cv: any, index: any) {
+        console.log(cv["options"]);
+
+        cv["options"].forEach(function (cv2: any, index2: any) {
+          // console.log("cv2",cv2);
+          // console.log("cv2.option",cv2.option);
+          // console.log("label.option",label.option);
+          if (label) {
+            if (cv2.option == label.option) {
+              newBaseCount = newBaseCount + cv2.count;
+            }
+          }
+        });
+      });
+
+      console.log("newBaseCount" + newBaseCount);
+
       let plotValue;
-      let percentageValue = (count / rankWiseBaseCount) * 100;
+      let percentageValue = (count / newBaseCount) * 100;
       let numberValue = count;
       // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / rankWiseBaseCount) * 100;
+        plotValue = (count / newBaseCount) * 100;
       } else {
         plotValue = count;
       }
@@ -381,6 +383,7 @@ const getRankChartOptions = (
     series,
   };
 };
+
 const getGridChartOptions = (
   questionData: IQuestion,
   chartData: any,
@@ -419,7 +422,7 @@ const getGridChartOptions = (
 
       let count = 0;
       let label;
-     
+      // debugger;
       if (optionData) {
         label = optionData.options.find(
           (option: any) => option.option === scale.labelCode
@@ -442,6 +445,7 @@ const getGridChartOptions = (
 
       // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
+        console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
@@ -652,7 +656,7 @@ export const getPlotOptions = (
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    //console.log("line chart", plotOptions);
+    console.log("line chart", plotOptions);
     plotOptions["line"] = {
       // allowPointSelect: false,
       // cursor: "pointer",
