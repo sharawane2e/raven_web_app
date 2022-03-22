@@ -3,6 +3,7 @@ import {
   pptTemplateKey,
   primaryBarColor,
   pptBackgroundColor,
+  clientBrandingLogo,
 } from "../../constants/Variables";
 import { ISlideConfig } from "../../types/ISlideConfig";
 
@@ -92,7 +93,8 @@ export const setDefaultSlideProperties = (
 
     {
       text: {
-        text: copyRightText,
+        //text: copyRightText,
+        text: "",
         options: {
           x: 1.6,
           y: 5.38,
@@ -104,7 +106,7 @@ export const setDefaultSlideProperties = (
         },
       },
     },
-    { image: { x: 0.38, y: 5.15, w: 1.2, h: 0.4, data: logoBase64String } },
+    { image: { x: 0.3, y: 5.23, w: 2.2, h: 0.30, data: clientBrandingLogo } },
   ];
 
   if (bannerQuestionText) {
