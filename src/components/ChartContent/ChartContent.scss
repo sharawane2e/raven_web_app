@@ -29,9 +29,9 @@
   .chart-content__chart-wrapper {
     width: calc(100% - 24px);
     height: calc(100vh - 275px);
-    background: map-get($map: $bg-color, $key: 'white');
+    background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
-    border: map-get($map: $bg-color, $key: 'white');
+    border: map-get($map: $bg-color, $key: "white");
     border-radius: 3px;
     box-sizing: border-box;
     margin: 8px 12px;
@@ -49,7 +49,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: 'secondary-shade');
+    background: map-get($map: $bg-color, $key: "secondary-shade");
   }
   .wave-button {
     height: 30px;
@@ -63,6 +63,7 @@
     width: calc(100% - -33px);
     margin-left: -14px;
     margin-top: 30px;
+    justify-content: space-between;
     &--inr {
       width: 90%;
     }
@@ -70,14 +71,14 @@
 
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
-    color: map-get($map: $text-color, $key: 'base-color');
+    color: map-get($map: $text-color, $key: "base-color");
     display: block;
   }
 
   .chart-content__info {
     font-size: map-get($map: $text-size, $key: xsmall);
     font-style: italic;
-    color: map-get($map: $text-color, $key: 'base-color');
+    color: map-get($map: $text-color, $key: "base-color");
     margin-top: 1px;
   }
   .title__Block {
@@ -145,7 +146,7 @@
     &::after,
     div {
       background: map-get($map: $text-color, $key: fade);
-      content: '';
+      content: "";
       display: block;
       height: 1px;
       border-radius: 3px;
@@ -226,7 +227,7 @@
   box-sizing: border-box;
 }
 .chart-content__control-menu {
-  background: map-get($map: $bg-color, $key: 'secondary');
+  background: map-get($map: $bg-color, $key: "secondary");
 }
 .cursor-pointer {
   cursor: pointer;
