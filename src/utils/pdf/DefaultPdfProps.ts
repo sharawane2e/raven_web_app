@@ -4,8 +4,8 @@ import jsPDF from "jspdf";
 import "svg2pdf.js";
 
 import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
-import { sourceText, copyRightText } from "../../constants/Variables";
-import { logoBase64String, primaryBarColor } from "../../constants/Variables";
+//import { clientBrandLogo} from "../../constants/Variables";
+import { clientBrandingLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
 import { hexToRgb } from "@material-ui/core";
 
 export const setDefaultPdfPageProperties = async (
@@ -50,10 +50,10 @@ export const setDefaultPdfPageProperties = async (
   // doc.text(sourceText || "", sourceX, sourceY);
   // doc.setFontSize(6);
   doc.setTextColor(127, 127, 127);
-  doc.text(copyRightText || "", copyRightX, copyRightY);
+  doc.text("" || "", copyRightX, copyRightY);
   doc.setDrawColor(0);
   doc.setFillColor(hexToRgb(primaryBarColor));
   doc.rect(5, 0, 3, 12, "F");
 
-  doc.addImage(logoBase64String, "JPEG", logoX, logoY, 25, 12);
+  doc.addImage(clientBrandingLogo, "JPEG", baseX, baseY+22, 55, 9);
 };
