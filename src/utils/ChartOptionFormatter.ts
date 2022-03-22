@@ -108,7 +108,7 @@ const getSingleChartOptions = (
         console.log(optionData);
 
         let count = 0;
-        // debugger;
+        
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
@@ -218,7 +218,7 @@ const getSingleChartOptions = (
       } else {
         plotValue = count;
       }
-      // debugger;
+      
 
       if (plotValue > 0)
         data.push({
@@ -304,7 +304,7 @@ const getGridChartOptions = (
 
       let count = 0;
       let label;
-      // debugger;
+     
       if (optionData) {
         label = optionData.options.find(
           (option: any) => option.option === scale.labelCode
