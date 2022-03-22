@@ -161,10 +161,15 @@ export const removeEmptyDataLengends = (
 };
 export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
+    var largestBase = baseCount.reduce((basevalue, bcount) =>
+      basevalue.count > bcount.count ? basevalue : bcount
+    ).count;
+    console.log("maxA", largestBase);
     if (question.type === QuestionType.GRID_MULTI) {
       return baseCount[0]?.baseCount[0]?.baseCount || 0;
     } else if (question.type === QuestionType.RANK) {
-      return baseCount[0]?.count;
+      // return baseCount[0]?.count;
+      return largestBase;
     } else {
       return baseCount[0]?.baseCount || 0;
     }
