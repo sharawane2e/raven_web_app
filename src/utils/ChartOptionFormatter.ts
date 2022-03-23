@@ -11,7 +11,7 @@ import store from "../redux/store";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
-import { omit } from "lodash";
+import { find, omit } from "lodash";
 import { ChartOrientation } from "../enums/ChartOrientation";
 
 export const getChartOptions = (
@@ -33,7 +33,7 @@ export const getChartOptions = (
           chartOptionsData
         );
       case QuestionType.MULTI:
-        return getSingleChartOptions(
+        return getMultiChartOptions(
           questionData,
           chartData,
           baseCount,
@@ -55,6 +55,224 @@ export const getChartOptions = (
   }
 };
 
+const getMultiChartOptions = (
+  questionData: IQuestion,
+  chartData: any[],
+  baseCount: number,
+  bannerQuestionData: IQuestion | null,
+  chartOptionsData: any
+): any => {
+  // debugger;
+  const {
+    questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
+  } = store.getState();
+
+  const {
+    chart: { chartLabelType, chartOptions },
+  } = store.getState();
+
+  const {
+    chart: { chartType },
+  } = store.getState();
+
+  const {
+    plotOptions: {
+      series: {
+        dataLabels: { format },
+      },
+    },
+  } = chartOptionsData;
+
+  if (selectedBannerQuestionId) {
+    const categories: string[] = [];
+    const series: any[] = [];
+
+    questionData.options.forEach((option) => {
+      categories.push(option.labelText);
+    });
+
+    const subGroups = questionData.options.filter((option: IQuestionOption) => {
+      const subGroup = chartData[0][option.labelCode];
+      if (subGroup && subGroup?.length) return true;
+      return false;
+    });
+
+    // @ts-ignore
+    for (let index = 0; index < bannerQuestionData?.options.length; index++) {
+      const bannerQuesOption = bannerQuestionData?.options[index];
+      const data: any[] = [];
+
+      for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
+        const quesOption = subGroups[quesIndex];
+
+        let optionData = chartData[0][quesOption.labelCode];
+        // console.log(optionData);
+
+        let count = 0;
+        // debugger;
+        if (optionData) {
+          const label = optionData.find(
+            // @ts-ignore
+            (option: any) => option.labelCode === bannerQuesOption.labelCode
+          );
+
+          let localBase = optionData?.reduce(
+            (sum: number, option: any) => sum + option.count,
+            0
+          );
+
+          const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
+        const bannerQuestionType = bannerQuestion.type;
+
+          if(bannerQuestionType==QuestionType.MULTI){
+            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode}).count;
+          }
+
+          if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
+            count = (label.count / localBase) * 100;
+          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
+            count = label.count;
+          }
+
+          // if (label) {
+
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          // } else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+
+          //   });
+          // }
+          if (label) {
+            let percentageValue = (label.count / localBase) * 100;
+            let numberValue = label.count;
+            data.push({
+              name: quesOption.labelText,
+              // y: +count.toFixed(decimalPrecision),
+              y: count !== null ? round(count, decimalPrecision) : 0,
+              percentageValue,
+              numberValue,
+            });
+          }
+
+          // if(chartType==ChartType.LINE){
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count !== null ? round(count, decimalPrecision) : 0,
+          //     percentageValue,
+          //     numberValue
+          //   });
+          // }
+          // else {
+          //   data.push({
+          //     name: quesOption.labelText,
+          //     // y: +count.toFixed(decimalPrecision),
+          //     y: count > 0 ? round(count, decimalPrecision) : null,
+          //     percentageValue,
+          //     numberValue,
+          //   });
+          //}
+        }
+      }
+
+      if (data.length)
+        series.push({
+          name: bannerQuesOption?.labelText,
+          color: index < colorArr.length ? colorArr[index] : undefined,
+          data,
+          dataLabels,
+        });
+    }
+
+    return {
+      legend: {
+        enabled: true,
+      },
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  } else {
+    const data: any[] = [];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.options.length;
+      optionIndex++
+    ) {
+      const option = questionData.options[optionIndex];
+      const label = chartData.find(
+        (record: { labelCode: string; count: number }) =>
+          record.labelCode === option.labelCode
+      );
+      let count = 0;
+      if (label) {
+        count = label.count;
+      }
+      // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
+      let plotValue;
+      // plotValue = (count / baseCount) * 100;
+      let percentageValue = (count / baseCount) * 100;
+      let numberValue = count;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
+        plotValue = (count / baseCount) * 100;
+      } else {
+        plotValue = count;
+      }
+      // debugger;
+
+      if (plotValue > 0)
+        data.push({
+          name: option.labelText,
+          // y: round(plotValue, decimalPrecision),
+          y: plotValue,
+          percentageValue,
+          numberValue,
+        });
+    }
+
+    const series: any[] = [];
+
+    if (chartType === ChartType.STACK) {
+      data.map((element: any, index: number) => {
+        console.log("element", element);
+        const name = element.name;
+        const color = colorArr[index];
+        const data = [
+          {
+            name: questionData.labelText,
+            y: element.y,
+            numberValue: element.numberValue,
+            percentageValue: element.percentageValue,
+          },
+        ];
+        series.push({ name, color, data, dataLabels });
+      });
+    } else {
+      series.push({
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      });
+    }
+
+    return {
+      legend: {
+        enabled: false,
+      },
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  }
+};
 const getSingleChartOptions = (
   questionData: IQuestion,
   chartData: any[],
@@ -105,7 +323,7 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        console.log(optionData);
+        // console.log(optionData);
 
         let count = 0;
         // debugger;

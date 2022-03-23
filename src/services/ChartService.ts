@@ -14,6 +14,7 @@ import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import { colorArr } from "../constants/Variables";
+import { find } from "lodash";
 
 export const fetchChartData = async (
   qId?: string,
@@ -21,8 +22,8 @@ export const fetchChartData = async (
 ) => {
   const {
     filters: { appliedFilters },
-    questions: { questionList, selectedQuestionId, selectedBannerQuestionId },
-    chart,
+    questions: { questionList, selectedQuestionId, selectedBannerQuestionId,bannerQuestionList },
+    chart
   } = store.getState();
 
   let chartData: IChartState = JSON.parse(JSON.stringify(chart));
@@ -49,12 +50,16 @@ export const fetchChartData = async (
     const bannerQuesId = bannerQuestionId
       ? bannerQuestionId
       : selectedBannerQuestionId;
+    const type = questionList.find((ques: any) => ques.qId === quesId)?.type || "";
     const body = {
       qId: quesId,
-      type: questionList.find((ques: any) => ques.qId === quesId)?.type || "",
+      type: type,
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
     };
+
+    
+
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
     // debugger;
@@ -77,6 +82,28 @@ export const fetchChartData = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
+      if(bannerQuesId){
+
+        const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
+        const bannerQuestionType = bannerQuestion.type;
+    
+        if(bannerQuestionType==QuestionType.MULTI && type){
+          const baseChartresponse = await ApiRequest.request(ApiUrl.CHART, "POST", {...body,bannerQuestion:""});
+          console.log(baseChartresponse.data.chartData)
+          // chart.chartData[0] = baseChartresponse.data.chartData;
+          chartData.chartData.push(baseChartresponse.data.chartData);
+          // chartData.chartOptions = {
+          //   ...chart.chartOptions,
+          //   ...getChartOptions(
+          //     chartData.questionData,
+          //     chartData.chartData,
+          //     chartData.baseCount,
+          //     response.data.bannerQuestionData
+          //   ),
+          // };
+        }
+      }
+
       chartData.chartOptions = {
         ...chart.chartOptions,
         ...getChartOptions(
@@ -86,6 +113,9 @@ export const fetchChartData = async (
           response.data.bannerQuestionData
         ),
       };
+      // debugger;
+
+     
     }
   } catch (error) {
     console.log(error);
