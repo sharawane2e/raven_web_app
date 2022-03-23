@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from "react";
-import ApiUrl from "../enums/ApiUrl";
-import ApiRequest from "../utils/ApiRequest";
+import { createContext, useEffect, useState } from 'react';
+import ApiUrl from '../enums/ApiUrl';
+import ApiRequest from '../utils/ApiRequest';
 
 interface FilterContextProviderProps {}
 export interface IFilterList {
@@ -36,7 +36,7 @@ const FilterContextProvider: React.FC<FilterContextProviderProps> = (props) => {
   const [filters, setFilters] = useState<IFilter[]>([]);
 
   useEffect(() => {
-    ApiRequest.request(ApiUrl.FILTER, "GET").then((res) => {
+    ApiRequest.request(ApiUrl.FILTER, 'GET').then((res) => {
       if (res.success) {
         const filterList: IFilterList[] = [];
         res.data?.forEach((filter: any) => {
@@ -49,7 +49,7 @@ const FilterContextProvider: React.FC<FilterContextProviderProps> = (props) => {
           });
         });
 
-        setFilterList(filterList);
+        //setFilterList(filterList);
       }
     });
   }, []);

@@ -46,6 +46,7 @@ export function singleChartDataGen(
   ];
 
   if (chartType === ChartType.STACK) {
+
     const stackSeriesData: any = [];
     const label: string = questionData.questionText;
     seriesData[0].labels.forEach((ele: any, index: number) => {

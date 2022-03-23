@@ -2,7 +2,7 @@ export interface IChapter {
     _id: string;
     active: boolean;
     chapterId: string;
-    chapterName: string;
+    labelText: string;
     order: string;
     BannersQIds:string[];
     FiltersQIds:string[];

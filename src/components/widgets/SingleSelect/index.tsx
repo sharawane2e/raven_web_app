@@ -1,7 +1,7 @@
-import { FormControl, MenuItem, Select, SelectProps } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import clsx from "clsx";
-import CustomScrollbar from "../../CustomScrollbar";
+import { FormControl, MenuItem, Select, SelectProps } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import clsx from 'clsx';
+import CustomScrollbar from '../../CustomScrollbar';
 
 interface SingleSelectProps extends SelectProps {
   options: any[];
@@ -49,34 +49,36 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
         displayEmpty
         className={props.className}
         disabled={props.disabled}
-        inputProps={{ "aria-label": "Without label" }}
+        inputProps={{ 'aria-label': 'Without label' }}
         IconComponent={ExpandMoreIcon}
         open={open}
         MenuProps={{
           elevation: 1,
           anchorOrigin: {
-            vertical: "bottom",
-            horizontal: "left",
+            vertical: 'bottom',
+            horizontal: 'left',
           },
           transformOrigin: {
-            vertical: "top",
-            horizontal: "left",
+            vertical: 'top',
+            horizontal: 'left',
           },
           MenuListProps: {
-            className: "single-select__menu-list",
+            className: 'single-select__menu-list',
           },
           ...props.MenuProps,
         }}
         renderValue={(selected) => {
           if (!selected) {
-            return <span>{placeholder ? placeholder : "Please select"}</span>;
+            return <span>{placeholder ? placeholder : 'Please select'}</span>;
           }
           if (valueKey && labelKey) {
-            const label = options.find(
-              (option) => option[valueKey] === selected
-            )[labelKey];
-            return <span>{label ? label : ""}</span>;
+            // const label = options.find(
+            //   (option) => option[valueKey] === selected,
+            // )[labelKey];
+            // console.log('labelKey', labelKey, valueKey);
+            // return <span>{label ? label : ''}</span>;
           }
+
           return <span>{selected as any}</span>;
         }}
         onClose={handleClose}
@@ -85,16 +87,18 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
       >
         <CustomScrollbar autoHeight>
           <MenuItem value="" disabled>
-            {placeholder ? placeholder : "Please select"}
+            {placeholder ? placeholder : 'Please select'}
           </MenuItem>
           {options?.map((option: any, index: number) => {
             const optionVal = valueKey ? option[valueKey] : option;
+
             return (
               <MenuItem
+                // defaultValue={'1'}
                 key={index}
                 value={optionVal}
                 className={clsx({
-                  "selected-value": optionVal === value,
+                  'selected-value': optionVal === value,
                 })}
                 onClick={() => onItemSelect && onItemSelect(optionVal)}
                 disabled={

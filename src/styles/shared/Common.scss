@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Avenir", Arial;
+  font-family: 'Avenir', Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
@@ -9,7 +9,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
@@ -62,4 +62,16 @@ html {
       }
     }
   }
+}
+.chapter-dropdown {
+  width: 150px;
+  // border-radius: 0 !important;
+  // background: red !important;
+  // color: #070707;
+  // .MuiSelect-root {
+  //   background-color: red !important;
+  // }
+  // .single-select__menu-list .selected-value {
+  //   background-color: red !important;
+  // }
 }
