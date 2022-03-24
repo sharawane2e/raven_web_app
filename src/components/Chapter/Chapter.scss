@@ -3,19 +3,26 @@
     box-sizing: border-box;
     // min-height: calc(1.5em + 22px);
     min-width: 250px;
+    width: 250px;
     background: #0e4e8e;
     border: 1px solid #0e4e8e;
     padding: 8px;
     text-align: left;
     line-height: 1.2;
+    font-size: 14px;
     color: #fff;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
   }
   ul {
     box-sizing: border-box;
     padding: 0px;
     margin: 0px 0;
     min-width: 250px;
+    width: 250px;
     background: #0e4e8e;
     color: #fff;
     overflow: auto;
@@ -27,6 +34,10 @@
     padding: 8px;
     cursor: poinetr;
     border-bottom: 1px solid #fff;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:last-of-type {
       border-bottom: none;
     }

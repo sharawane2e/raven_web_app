@@ -2,10 +2,8 @@ import { createReducer } from "@reduxjs/toolkit";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
-import { QuestionType } from "../../enums/QuestionType";
-
 import { IQuestion } from "../../types/IQuestion";
-import { changeChartOptions } from "../../utils/ChartOptionFormatter";
+
 import {
   setChartData,
   setChartOrientation,
@@ -14,7 +12,7 @@ import {
   setChartTranspose,
   setChartFullScreen,
   setChartLoading,
-  resetChart
+  resetChart,
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -109,7 +107,6 @@ const initialState: IChartState = {
 };
 
 const chartReducer = createReducer(initialState, (builder) => {
-  
   builder.addCase(setChartData, (state, action) => ({
     ...state,
     ...action.payload,
@@ -162,15 +159,15 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
   builder.addCase(resetChart, (state, action) => ({
     ...state,
-    questionData:null,
+    questionData: null,
     chartData: [],
-    chartOptions:{
+    chartOptions: {
       title: {
         text: "",
       },
       chart: {
         type: "column",
-  
+
         style: {
           fontFamily: `"Avenir", Arial`,
         },
@@ -197,9 +194,9 @@ const chartReducer = createReducer(initialState, (builder) => {
           data: [],
         },
       ],
-    },baseCount: 0,
+    },
+    baseCount: 0,
   }));
- 
 });
 
 export default chartReducer;
