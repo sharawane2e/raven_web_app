@@ -48,6 +48,7 @@ import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
 import Chapter from '../Chapter';
+import _ from 'lodash';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -74,6 +75,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       bannerQuestionData,
     },
     sidebar: { open },
+    chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -84,12 +86,72 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     selectedBannerQuestionId,
   } = questions;
 
-  const toggleSidebarOpen = () => {
-    dispatch(toggleSidebar());
-  };
-  const toggleMobileSidebar = () => {
-    dispatch(toggleSidebarMobile());
-  };
+  useEffect(() => {
+    dispatch(fetchQuestionList());
+    dispatch(fetchBannerQuestionList());
+  }, []);
+  let updateQuestionList: any[] = [];
+  let updateBannerList: any[] = [];
+
+  //let updatedQuestionList = questionList;
+  if (selectedChapterId && allChapters) {
+    const selectchapterObject = _.find(allChapters, function (o) {
+      return o.chapterId === selectedChapterId;
+    });
+    // const QuestionsQIds = selectchapterObject.QuestionsQIds;
+    // console.log('selectchapterObject', selectchapterObject?.chapterId);
+    // // console.log('QuestionsQIds', QuestionsQIds);
+    // console.log('questionList', questionList);
+
+    // let updatedQuestionList = _.filter(questionList, function (o) {
+    //   console.log('o', QuestionsQIds.indexOf(o.qId));
+    //   return QuestionsQIds.indexOf(o.qId);
+    // });
+    //console.log('updatedQuestionList', updatedQuestionList);
+
+    //const chpaterWiseQuestionBanner = (chapterId: any) => {
+    const sortedChapterOrder = _.sortBy(allChapters, ['order']);
+
+    sortedChapterOrder.forEach((chapterData: any, index) => {
+      // console.log('chapterData', chapterData);
+      if (chapterData['chapterId'] === selectchapterObject?.chapterId) {
+        // console.log('sortedChapterOrder', chapterData?.QuestionsQIds);
+        for (let i = 0; i < chapterData?.QuestionsQIds.length; i++) {
+          for (let j = 0; j < questions?.questionList.length; j++) {
+            // console.log(
+            //   'chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId',
+            //   chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId,
+            // );
+            if (chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId)
+              updateQuestionList.push(questions?.questionList[j]);
+            // dispatch(setFilterQuestionList(updatedList));
+          }
+        }
+
+        // for (let k = 0; k < chapterData?.BannersQIds.length; k++) {
+        //   for (let p = 0; p < questions?.bannerQuestionList.length; p++) {
+        //     console.log('chapterData', chapterData?.QuestionsQIds[k]);
+        //     console.log('banner', questions?.bannerQuestionList[p].qId);
+        //   }
+        //   //   //debugger;
+        //   //   for (let j = 0; j < questions?.bannerQuestionList.length; j++) {
+        //   //     console.log('daa', chapterData?.QuestionsQIds[i]);
+        //   //     console.log('second', questions?.bannerQuestionList[j].qId);
+        //   //     //     if (
+        //   //     //       chapterData?.QuestionsQIds[i] ==
+        //   //     //       questions?.bannerQuestionList[j].qId
+        //   //     //     )
+        //   //     //       //updateQuestionList.push(questions?.questionList[j]);
+        //   //     //       updateBannerList.push(questions?.bannerQuestionList[j]);
+        //   //   }
+        // }
+      }
+    });
+    //console.log('updateQuestionList', updateQuestionList);
+
+    // console.log('updateBannerList', updateBannerList);
+    //};
+  }
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -98,20 +160,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
-  const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
-    if (!open) {
-      dispatch(toggleSidebar(true));
-    }
-    setTimeout(() => {
-      dispatch(showTourGuide());
-    }, 300);
-  };
-
-  useEffect(() => {
-    dispatch(fetchQuestionList());
-    dispatch(fetchBannerQuestionList());
-  }, []);
 
   useEffect(() => {
     if (
@@ -204,14 +252,15 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
-        <Grid item className="title__Block">
-          <Breadcrum pageTitle="Reports" />
+        <Grid item className="title__Block chapter--drop-dwon">
+          {/* <Breadcrum pageTitle="Reports" /> */}
+          {/* <div className="chart-content__control-item"> */}
+          <Chapter />
+          {/* </div> */}
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
-          <div className="chart-content__control-item">
-            <Chapter />
-          </div>
+
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
@@ -297,7 +346,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
             <SingleSelect
-              options={questionList}
+              options={updateQuestionList}
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}

@@ -1,0 +1,38 @@
+.chapter--drop-dwon {
+  .custom-dropdown {
+    box-sizing: border-box;
+    // min-height: calc(1.5em + 22px);
+    min-width: 250px;
+    background: #0e4e8e;
+    border: 1px solid #0e4e8e;
+    padding: 8px;
+    text-align: left;
+    line-height: 1.2;
+    color: #fff;
+    cursor: pointer;
+  }
+  ul {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px 0;
+    min-width: 250px;
+    background: #0e4e8e;
+    color: #fff;
+    overflow: auto;
+    outline: 0px;
+  }
+  ul li {
+    cursor: pointer;
+    list-style: none;
+    padding: 8px;
+    cursor: poinetr;
+    border-bottom: 1px solid #fff;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .css-1oq6cg.Mui-selected {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}

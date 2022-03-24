@@ -72,11 +72,11 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
             return <span>{placeholder ? placeholder : 'Please select'}</span>;
           }
           if (valueKey && labelKey) {
-            // const label = options.find(
-            //   (option) => option[valueKey] === selected,
-            // )[labelKey];
+            const label = options.find(
+              (option) => option[valueKey] === selected,
+            )[labelKey];
             // console.log('labelKey', labelKey, valueKey);
-            // return <span>{label ? label : ''}</span>;
+            return <span>{label ? label : ''}</span>;
           }
 
           return <span>{selected as any}</span>;

@@ -4,6 +4,7 @@ import { IBannerQuestion } from "../../types/IBannerQuestion";
 import { IQuestion } from "../../types/IQuestion";
 import ApiRequest from "../../utils/ApiRequest";
 import { AppDispatch } from "../store";
+import { setSelectedChapterId } from "./chapterActions";
 
 export const setSelectedQuestionId = createAction<string>(
   "SET_SELECTED_QUESTION_ID"
@@ -25,6 +26,7 @@ export const toggleBannerQuestionDisablity = createAction<boolean | undefined>(
 
 export const fetchQuestionList = () => async (dispatch: AppDispatch) => {
   try {
+   
     const res = await ApiRequest.request(ApiUrl.QUESTION, "GET");
     if (res.success) {
       const questionList: IQuestion[] = res.data;
@@ -35,6 +37,7 @@ export const fetchQuestionList = () => async (dispatch: AppDispatch) => {
         else return 0;
       });
 
+     
       dispatch(setQuestionList(questionList));
     }
   } catch (error) {
