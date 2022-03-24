@@ -68,7 +68,7 @@ const getMultiChartOptions = (
   } = store.getState();
 
   const {
-    chart: { chartLabelType, chartOptions },
+    chart: { chartLabelType, chartOptions,chartTranspose },
   } = store.getState();
 
   const {
@@ -84,6 +84,7 @@ const getMultiChartOptions = (
   } = chartOptionsData;
 
   if (selectedBannerQuestionId) {
+    // debugger;
     const categories: string[] = [];
     const series: any[] = [];
 
@@ -122,7 +123,7 @@ const getMultiChartOptions = (
           );
 
           const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
-        const bannerQuestionType = bannerQuestion.type;
+          const bannerQuestionType = bannerQuestion.type;
 
           if(bannerQuestionType==QuestionType.MULTI){
             localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode}).count;
