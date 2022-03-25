@@ -14,6 +14,7 @@ import {
   setChartTranspose,
   setChartFullScreen,
   setChartLoading,
+  resetChart,
 } from "../actions/chartActions";
 
 export interface IChartState {
@@ -157,6 +158,46 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(setChartLoading, (state, action) => ({
     ...state,
     chartLoading: action.payload,
+  }));
+  builder.addCase(resetChart, (state, action) => ({
+    ...state,
+    questionData: null,
+    chartData: [],
+    chartOptions: {
+      title: {
+        text: "",
+      },
+      chart: {
+        type: "column",
+
+        style: {
+          fontFamily: `"Avenir", Arial`,
+        },
+      },
+      legend: {
+        enabled: false,
+        reversed: false,
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:
+          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>",
+      },
+      xAxis: {
+        type: "category",
+      },
+      yAxis: {
+        visible: false,
+        reversedStacks: false,
+      },
+      plotOptions: defaultPlotOptions,
+      series: [
+        {
+          data: [],
+        },
+      ],
+    },
+    baseCount: 0,
   }));
 });
 

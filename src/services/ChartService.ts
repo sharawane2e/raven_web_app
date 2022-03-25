@@ -87,7 +87,7 @@ export const fetchChartData = async (
 
       if(bannerQuesId){
 
-        const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
+        const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
         const bannerQuestionType = bannerQuestion.type;
     
         if(bannerQuestionType==QuestionType.MULTI && type){

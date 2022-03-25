@@ -207,11 +207,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
-        <Grid item className="title__Block">
-          <div className="chart-content__control-item chart-content__chapter-select">
-            <Chapter />
-          </div>
+        <Grid item className="title__Block chapter--drop-dwon">
           {/* <Breadcrum pageTitle="Reports" /> */}
+          {/* <div className="chart-content__control-item"> */}
+          <Chapter />
+          {/* </div> */}
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
