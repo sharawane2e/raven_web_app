@@ -120,9 +120,9 @@ const getMultiChartOptions = (
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0
-          );
+          ); 
 
-          const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
+          const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
           const bannerQuestionType = bannerQuestion.type;
 
           if(bannerQuestionType==QuestionType.MULTI){
