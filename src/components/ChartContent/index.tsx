@@ -50,6 +50,7 @@ import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.
 import BrandLogo from '../BrandLogo';
 import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
 // import { ReactComponent as BrandLogoIcon } from '../../assets/svg/brand-logo.svg';
+import Chapter from '../Chapter';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -207,10 +208,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
         <Grid item className="title__Block">
-          <Breadcrum pageTitle="Reports" />
+          <div className="chart-content__control-item chart-content__chapter-select">
+            <Chapter />
+          </div>
+          {/* <Breadcrum pageTitle="Reports" /> */}
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
+
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
