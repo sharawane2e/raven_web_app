@@ -2,6 +2,7 @@ import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
 import {
   setChartData,
+  setChartLoading,
   setChartOrientation,
   setChartTranspose,
   setChartType,
@@ -13,7 +14,10 @@ import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-import { colorArr } from "../constants/Variables";
+import { colorArr,decimalPrecision } from "../constants/Variables";
+import { find } from "lodash";
+import { dataLabels } from "../redux/reducers/chartReducer";
+import { round } from "../utils/Utility";
 
 export const fetchChartData = async (
   qId?: string,
@@ -21,8 +25,8 @@ export const fetchChartData = async (
 ) => {
   const {
     filters: { appliedFilters },
-    questions: { questionList, selectedQuestionId, selectedBannerQuestionId },
-    chart,
+    questions: { questionList, selectedQuestionId, selectedBannerQuestionId,bannerQuestionList },
+    chart
   } = store.getState();
 
   let chartData: IChartState = JSON.parse(JSON.stringify(chart));
@@ -49,12 +53,16 @@ export const fetchChartData = async (
     const bannerQuesId = bannerQuestionId
       ? bannerQuestionId
       : selectedBannerQuestionId;
+    const type = questionList.find((ques: any) => ques.qId === quesId)?.type || "";
     const body = {
       qId: quesId,
-      type: questionList.find((ques: any) => ques.qId === quesId)?.type || "",
+      type: type,
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
     };
+
+    
+
 
     const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
     // debugger;
@@ -77,6 +85,30 @@ export const fetchChartData = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
+      if(bannerQuesId){
+
+        const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
+        const bannerQuestionType = bannerQuestion.type;
+    
+        if(bannerQuestionType==QuestionType.MULTI && type){
+          const baseChartresponse = await ApiRequest.request(ApiUrl.CHART, "POST", {...body,bannerQuestion:""});
+          // const bannerChartResponse = await ApiRequest.request(ApiUrl.CHART, "POST", {...body,qId:bannerQuesId,bannerQuestion:""});
+        //  console.log(baseChartresponse.data.chartData)
+          // chart.chartData[0] = baseChartresponse.data.chartData;
+          chartData.chartData.push(baseChartresponse.data.chartData);
+          // chartData.chartData.push(bannerChartResponse.data.chartData);
+          // chartData.chartOptions = {
+          //   ...chart.chartOptions,
+          //   ...getChartOptions(
+          //     chartData.questionData,
+          //     chartData.chartData,
+          //     chartData.baseCount,
+          //     response.data.bannerQuestionData
+          //   ),
+          // };
+        }
+      }
+
       chartData.chartOptions = {
         ...chart.chartOptions,
         ...getChartOptions(
@@ -86,6 +118,9 @@ export const fetchChartData = async (
           response.data.bannerQuestionData
         ),
       };
+      // debugger;
+
+     
     }
   } catch (error) {
     console.log(error);
@@ -122,6 +157,7 @@ export const removeEmptyDataLengends = (
   question: IQuestion,
   bannerQuestionData: any
 ) => {
+  
   const chartDataClone = JSON.parse(JSON.stringify(chartData));
   const uniqueLengends: any = [];
   const filteredOptions: any = [];
@@ -261,13 +297,138 @@ export const changeChartType = (newChartType: ChartType) => {
   }
 };
 
-export const transposeChart = () => {
-  const { chart } = store.getState();
+export const transposeChart = async() => {
+ 
+  const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
+  let chartData: IChartState = JSON.parse(JSON.stringify(chart));
+  if(chart.questionData?.type == QuestionType.MULTI && chart.bannerQuestionData?.type == QuestionType.MULTI){
+    // debugger;
+    //dispatch(setChartLoading(false));
+    if(transposed){
+      // debugger;
+     const chartData =  await fetchChartData(questions.selectedBannerQuestionId, questions.selectedQuestionId)
+      dispatch(setChartData(chartData));
+      dispatch(setChartTranspose(transposed));
+      
+    }else{
+      // dispatch(setChartLoading(false));
+      const chartData = await  fetchChartData(questions.selectedQuestionId,questions.selectedBannerQuestionId);
+     dispatch(setChartData(chartData));
+      dispatch(setChartTranspose(transposed));
 
-  if (
+    }
+
+
+
+    // const body = {
+    //   qId: questions.selectedBannerQuestionId,
+    //   type: QuestionType.MULTI,
+    //   filters: "",
+    //   bannerQuestion: questions.selectedQuestionId,
+    // };
+
+    // const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
+
+    // if(response.success){
+
+    //   const baseChartresponse = await ApiRequest.request(ApiUrl.CHART, "POST", {...body,bannerQuestion:""});
+
+    //   chartDataClone.chartData[1] = baseChartresponse.data.chartData;
+
+    //   chartDataClone.chartOptions = {
+    //     ...chart.chartOptions,
+    //     ...getChartOptions(
+    //       chartData.questionData,
+    //       chartData.chartData,
+    //       chartData.baseCount,
+    //       response.data.bannerQuestionData
+    //     ),
+    //   };
+
+    //   dispatch(setChartData(chartDataClone))
+    // }
+
+    // debugger;
+    // const categories: string[] = [];
+    // const series: any[] = [];
+
+    // if(transposed){
+    //   chartDataClone.bannerQuestionData.options.forEach((option)=>{
+    //     categories.push(option.labelText)
+    //   })
+
+    //   const subGroups = chartDataClone.bannerQuestionData.options.filter((option: IQuestionOption) => {
+    //     const subGroup = chartDataClone.chartData[0][option.labelCode];
+    //     if (subGroup && subGroup?.length) return true;
+    //     return false;
+    //   });
+
+    //   for (let index = 0; index < chartDataClone.questionData?.options.length; index++) {
+    //     const bannerQuesOption = chartDataClone.questionData?.options[index];
+    //     const data: any[] = [];
+
+    //     for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
+    //       const quesOption = subGroups[quesIndex];
+    //       let optionData = chartDataClone.chartData[0][quesOption.labelCode];
+
+    //       let count = 0;
+    //       if (optionData) {
+    //         const label = optionData.find(
+    //           // @ts-ignore
+    //           (option: any) => option.labelCode === chartDataClone.questionData.labelCode
+    //         );
+  
+    //         let localBase = 0; 
+            
+    //         localBase = find(chartData[2],function(o){return o.labelCode===quesOption.labelCode}).count;
+            
+  
+    //         if (chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE && label) {
+    //           count = (label.count / localBase) * 100;
+    //         } else if (chartDataClone.chartLabelType === ChartLabelType.NUMBER && label) {
+    //           count = label.count;
+    //         }
+  
+           
+    //         if (label) {
+    //           let percentageValue = (label.count / localBase) * 100;
+    //           let numberValue = label.count;
+    //           data.push({
+    //             name: quesOption.labelText,
+    //             // y: +count.toFixed(decimalPrecision),
+    //             y: count !== null ? round(count, decimalPrecision) : 0,
+    //             percentageValue,
+    //             numberValue,
+    //           });
+    //         }
+  
+    //       }
+
+    //     }
+
+    //     if (data.length)
+    //     series.push({
+    //       name: bannerQuesOption?.labelText,
+    //       color: index < colorArr.length ? colorArr[index] : undefined,
+    //       data,
+    //       dataLabels,
+    //     });
+
+    //   }
+
+     
+
+
+    // }
+
+    // console.log(series)
+    
+  }
+
+  else if (
     chartDataClone.questionData.type == QuestionType.RANK ||
     chartDataClone.questionData.type == QuestionType.GRID
   ) {
@@ -409,15 +570,19 @@ export const transposeChart = () => {
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
   }
-  chartDataClone.chartOptions = {
-    ...chart.chartOptions,
-    ...getChartOptions(
-      chartDataClone.questionData,
-      chartDataClone.chartData,
-      chartDataClone.baseCount,
-      chartDataClone.bannerQuestionData
-    ),
-  };
-  dispatch(setChartData(chartDataClone));
-  dispatch(setChartTranspose(transposed));
+
+  else if(chart.questionData?.type !== QuestionType.MULTI && chart.bannerQuestionData?.type !== QuestionType.MULTI){
+
+    chartDataClone.chartOptions = {
+      ...chart.chartOptions,
+      ...getChartOptions(
+        chartDataClone.questionData,
+        chartDataClone.chartData,
+        chartDataClone.baseCount,
+        chartDataClone.bannerQuestionData
+      ),
+    };
+    dispatch(setChartData(chartDataClone));
+    dispatch(setChartTranspose(transposed));
+  }
 };
