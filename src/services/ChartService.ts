@@ -176,8 +176,7 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
 };
 
 export const changeChartType = (newChartType: ChartType) => {
-  console.log("newChartType", newChartType);
-
+  //console.log("newChartType", newChartType);
   const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -187,7 +186,9 @@ export const changeChartType = (newChartType: ChartType) => {
   if (
     chart?.questionData?.type === QuestionType.SINGLE &&
     newChartType === ChartType.COLUMN
+    
   ) {
+    
     dispatch(setChartType(ChartType.COLUMN));
     //dispatch(setChartData(chartDataClone));
     chartDataClone.chartOptions = {
@@ -239,6 +240,8 @@ export const changeChartType = (newChartType: ChartType) => {
     // };
   } else {
     //  debugger;
+    dispatch(setChartType(ChartType.STACK));
+    
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
@@ -247,7 +250,7 @@ export const changeChartType = (newChartType: ChartType) => {
       },
       ...getChartOptions(),
     };
-    dispatch(setChartType(ChartType.STACK));
+    
     chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));

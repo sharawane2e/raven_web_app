@@ -20,9 +20,10 @@ const TableView: React.FC<TableProps> = (props) => {
         <div className="TableView">
           {tableData.map((row: any) => (
             <div className="Table-row">
-              {row.map((col: any) => (
-                <div className="Table-row-item">{col}</div>
-              ))}
+              {row.map((col: any) => {
+                console.log("data", col);
+                return <div className="Table-row-item">{col}</div>;
+              })}
             </div>
           ))}
         </div>

@@ -163,3 +163,54 @@ h2 {
 .css-1vioaa7-MuiPaper-root {
   height: 210px;
 }
+
+
+.nation-container{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem auto 0 72px;
+}
+.nation-container__card{
+  border: solid 1px #acacac;
+  display: flex;
+  padding: 10px 10px 3px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  flex: 0 0 14%;
+}
+.nation-container__left {
+    flex: 0 0 auto;
+    padding-right: 10px;
+}
+.nation-container__right {
+  flex: 0 0 65%;
+}
+.nation-container__right b {
+  color:#0193D5;
+  font-size: 14px;
+}
+.nation-container__right p {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+@media only screen and (min-width: 280px) and (max-width: 767px) {
+.nation-container__card{
+  flex: auto;
+  width: 100%;
+}
+.nation-container__left {
+flex: 0 0 auto;
+}
+}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+.nation-container__card {
+    flex: 0 0 29%;
+}
+}
+@media only screen and (min-width: 1024px) and (max-width: 1280px) {
+  .nation-container__card {
+      flex: 0 0 35%;
+  }
+}

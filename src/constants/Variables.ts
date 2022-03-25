@@ -1,6 +1,23 @@
 export const accessTokenKey = "nxtgen_dashboard_access_token";
 
 export const colorArr = [
+
+"#003870",
+"#0058B0",
+"#006BD6",
+"#0078F0",
+"#0BAADB",
+"#56C4E6",
+"#ECECEC",
+"#DEDEDE",
+"#C9C9C9",
+"#AFB9B9",
+"#FFA287",
+"#FF8A68",
+"#F2704A",
+"#FBBC29",
+"#F1AD0F",
+"#E29E00",
   // "#723c82",
   // "#f17238",
   // "#f59562",
@@ -17,19 +34,19 @@ export const colorArr = [
   // "#ffcb79",
   // "#ffef9a",
   // --------
-  "#F1AD0F",
-  "#323C4E",
-  "#47769E",
-  "#7A94B0",
-  "#A3ABAE",
-  "#CCCCCC",
-  "#ECECEC",
-  "#F5D491",
-  "#F9B9B7",
-  "#F06C9B",
-  "#96C9DC",
-  "#61A0AF",
-  "#2A4C65",
+  //"#F1AD0F",
+  //"#323C4E",
+  //"#47769E",
+  //"#7A94B0",
+  //"#A3ABAE",
+  //"#CCCCCC",
+  //"#ECECEC",
+  //"#F5D491",
+  //"#F9B9B7",
+  //"#F06C9B",
+  //"#96C9DC",
+  //"#61A0AF",
+  //"#2A4C65",
   // ------
   //"#CC6933",
   //"#E37439",
@@ -48,7 +65,7 @@ export const colorArr = [
   //"#7A94B0",
 ];
 
-export const primaryBarColor = "#F1AD0F";
+export const primaryBarColor = "#003870";
 // export const primaryBarColor = "#070707";
 
 export const decimalPrecision = 1;

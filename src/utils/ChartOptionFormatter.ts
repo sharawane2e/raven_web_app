@@ -73,7 +73,7 @@ const getSingleChartOptions = (
   const {
     chart: { chartType },
   } = store.getState();
-
+  
   const {
     plotOptions: {
       series: {
@@ -81,7 +81,7 @@ const getSingleChartOptions = (
       },
     },
   } = chartOptionsData;
-
+  
   if (selectedBannerQuestionId) {
     const categories: string[] = [];
     const series: any[] = [];
@@ -177,9 +177,10 @@ const getSingleChartOptions = (
       }
 
       if (data.length)
+      
         series.push({
           name: bannerQuesOption?.labelText,
-          color: index < colorArr.length ? colorArr[index] : undefined,
+          color: index > colorArr.length ? colorArr[index] : undefined,
           data,
           dataLabels,
         });
@@ -233,6 +234,7 @@ const getSingleChartOptions = (
     const series: any[] = [];
 
     if (chartType === ChartType.STACK) {
+     console.log("Stack")
       data.map((element: any, index: number) => {
         console.log("element", element);
         const name = element.name;
@@ -248,6 +250,7 @@ const getSingleChartOptions = (
         series.push({ name, color, data, dataLabels });
       });
     } else {
+      //console.log(ChartType.STACK)
       series.push({
         color: primaryBarColor,
         name: questionData.labelText,
@@ -572,6 +575,7 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   const newChartOptions = { ...chartOptions };
 
   if (type === ChartType.COLUMN) {
+    
   } else if (type === ChartType.STACK) {
   }
 
@@ -615,6 +619,7 @@ export const getPlotOptions = (
   plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
 
   if (chartType === ChartType.STACK) {
+    //debugger
     plotOptions["column"] = {
       stacking: "normal",
     };
@@ -625,6 +630,7 @@ export const getPlotOptions = (
     }`;
     plotOptions["series"].dataLabels.y = undefined;
     plotOptions["series"].dataLabels.rotation = 0;
+    
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
@@ -656,7 +662,6 @@ export const getPlotOptions = (
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    console.log("line chart", plotOptions);
     plotOptions["line"] = {
       // allowPointSelect: false,
       // cursor: "pointer",

@@ -65,7 +65,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const tourStart = (e: MouseEvent<Element>) => {
     // alert("sss")
     dispatch(showTourGuide());
-  };
+  };  
 
   return (
     <div
@@ -82,7 +82,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push('/home')}
           /> */}
           <div className="public-form__client-logo client-logo__icons">
-            <Boehringer onClick={() => history.push('/home')} />
+            <Boehringer onClick={() => {window.location.href="/home"}} />
           </div>
         </div>
         <div
