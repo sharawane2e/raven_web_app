@@ -1,10 +1,7 @@
-import { useState, useContext, MouseEvent, useEffect } from 'react';
-import Breadcrum from '../widgets/Breadcrum';
+import { useState, MouseEvent, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { SidebarContext } from '../../contexts/SidebarContext';
-import { AppDispatch, RootState } from '../../redux/store';
+import { RootState } from '../../redux/store';
 import {
   fetchBannerQuestionList,
   fetchQuestionList,
@@ -29,17 +26,9 @@ import { ChartType } from '../../enums/ChartType';
 import { StaticText } from '../../constants/StaticText';
 import { Tooltip } from '@material-ui/core';
 import Toaster from '../../utils/Toaster';
-import { Menu, MenuItem, Chip } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ChartOptionsControl from '../ChartOptionsControl';
-// import Tooltip from "@material-ui/Tooltip";
-import { showTourGuide } from '../../redux/actions/tourAction';
 import store from '../../redux/store';
-import TourPlayIcon from '@material-ui/icons/PlayArrow';
-import {
-  toggleSidebar,
-  toggleSidebarMobile,
-} from '../../redux/actions/sidebarAction';
 import ChartTransposeControl from '../ChartTransposeControl';
 import clsx from 'clsx';
 import LabelTypeControl from '../LabelTypeControl';
@@ -47,9 +36,7 @@ import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
-import BrandLogo from '../BrandLogo';
 import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
-// import { ReactComponent as BrandLogoIcon } from '../../assets/svg/brand-logo.svg';
 import Chapter from '../Chapter';
 
 interface ChartContentProps {
@@ -68,15 +55,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: {
-      chartLoading,
-      questionData,
-      baseCount,
-      chartType,
-      chartData,
-      bannerQuestionData,
-    },
-    sidebar: { open },
+    chart: { chartLoading, questionData, baseCount, chartType },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -87,28 +66,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     selectedBannerQuestionId,
   } = questions;
 
-  const toggleSidebarOpen = () => {
-    dispatch(toggleSidebar());
-  };
-  const toggleMobileSidebar = () => {
-    dispatch(toggleSidebarMobile());
-  };
-
   const closeMenu = () => {
     setAnchorEl(null);
   };
 
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
-  };
-  const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
-    if (!open) {
-      dispatch(toggleSidebar(true));
-    }
-    setTimeout(() => {
-      dispatch(showTourGuide());
-    }, 300);
   };
 
   useEffect(() => {
@@ -340,10 +303,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         })}
       >
         {/* <ChartTransposeControl /> */}
-        {/* <ChartOptionsControl /> */}
-
-        {/* {questionData?.type !== QuestionType.SINGLE || 
-        (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
         {chart?.questionData === null ? (
           <div className="noQuestion--selected">
             <No_Question_Selected
@@ -373,10 +332,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <div className="chart-content-footer--inr">
             <div className="chart-content__base-count">
               Sample Size: {baseCount}
-              {/* executives across Global 2000 enterprises */}
-              {/* <br /> */}
-              {/* Source: HFS Pulse, H1 2021 */}
-              {/* Source: E2E Research, 2021 */}
             </div>
             <div className="chart-content__info">
               Note: Sample size reflects selections from filter and cross-tab

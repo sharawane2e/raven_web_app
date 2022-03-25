@@ -18,9 +18,10 @@ import OptionUnstyled, {
 } from '@mui/base/OptionUnstyled';
 import { styled } from '@mui/system';
 import PopperUnstyled from '@mui/base/PopperUnstyled';
-import { resetChart } from '../../redux/actions/chartActions';
+import { resetChart, setChartType } from '../../redux/actions/chartActions';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
 import Toaster from '../../utils/Toaster';
+import { ChartType } from '../../enums/ChartType';
 
 interface ChapterProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -54,8 +55,9 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     setDropdwonValue(chapterId);
     getChartOptions();
     dispatch(setSelectedQuestionId(''));
+    dispatch(setChartType(ChartType.COLUMN));
     dispatch(resetChart(['']));
-    //Toaster.success("Chapters Applied");
+    Toaster.success('Chapter Applied');
   };
 
   const StyledPopper = styled(PopperUnstyled)`
@@ -80,7 +82,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   const StyledOption = styled(OptionUnstyled)(
     () => `
     &.${optionUnstyledClasses.selected} {
-      background-color: #000;
+      background-color: #3369A0;
       color: #fff;
     }
     `,
