@@ -13,6 +13,7 @@ export function bannerChartDataGen(
   bannerQuestionData: any
 ) {
   
+  // debugger;
   const {
     chart:{chartLabelType},
     questions:{bannerQuestionList,selectedBannerQuestionId}
@@ -22,7 +23,9 @@ export function bannerChartDataGen(
   );
   let seriesData: Array<Object> = [];
   const chartDataComplete = chartData[0];
-  bannerQuestionData.options.forEach((scaleOption: IQuestionOption) => {
+
+  if(bannerQuestionData)
+  bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
     seriesData.push({
       name: scaleOption.labelText,
       labels,
@@ -36,7 +39,7 @@ export function bannerChartDataGen(
             );
 
             const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
-        const bannerQuestionType = bannerQuestion.type;
+        const bannerQuestionType = bannerQuestion?.type;
 
         if(bannerQuestionType==QuestionType.MULTI){
           base = find(chartData[1],function(o){return o.labelCode===option.labelCode}).count;
