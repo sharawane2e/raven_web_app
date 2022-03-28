@@ -22,7 +22,7 @@ export function bannerChartDataGen(
   );
   let seriesData: Array<Object> = [];
   const chartDataComplete = chartData[0];
-  console.log("bannerQuestionData.options",bannerQuestionData.options)
+  //console.log("bannerQuestionData.options",bannerQuestionData.options)
 
   bannerQuestionData.options.forEach((scaleOption: IQuestionOption) => {
     if(seriesData)

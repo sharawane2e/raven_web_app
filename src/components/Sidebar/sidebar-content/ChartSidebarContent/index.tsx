@@ -1,25 +1,32 @@
-import { Button } from "@material-ui/core";
-import { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  Button,
+  Checkbox,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+} from '@material-ui/core';
+import { memo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setChartData,
   setChartTranspose,
-} from "../../../../redux/actions/chartActions";
+} from '../../../../redux/actions/chartActions';
 import {
   resetFilters,
   setAppliedFilters,
   setFilterQuestionList,
   setFilters,
-} from "../../../../redux/actions/filterActions";
-import store, { RootState } from "../../../../redux/store";
+} from '../../../../redux/actions/filterActions';
+import store, { RootState } from '../../../../redux/store';
 import {
   fetchChartData,
   transposeChart,
-} from "../../../../services/ChartService";
-import { IQuestionOption } from "../../../../types/IBaseQuestion";
-import CustomScrollbar from "../../../CustomScrollbar";
-import MultiSelect from "../../../widgets/MultiSelect";
-import { IFilter } from "../../../../types/IFilter";
+} from '../../../../services/ChartService';
+import { IQuestionOption } from '../../../../types/IBaseQuestion';
+import CustomScrollbar from '../../../CustomScrollbar';
+import MultiSelect from '../../../widgets/MultiSelect';
+import { IFilter } from '../../../../types/IFilter';
+import { values } from 'lodash';
 
 const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -42,7 +49,7 @@ const ChartSidebarContent: React.FC = () => {
       if (v.labelCode === value.labelCode) {
         index = i;
         const filterIndex = updatedFilters.findIndex(
-          (filter) => filter.qId === qId && filter.code === v.labelCode
+          (filter) => filter.qId === qId && filter.code === v.labelCode,
         );
         updatedFilters.splice(filterIndex, 1);
       }
@@ -70,9 +77,9 @@ const ChartSidebarContent: React.FC = () => {
       if (!filterExists) {
         updatedFilters.push({
           qId: qId,
-          code: filterValue?.labelCode || "",
-          label: filterValue?.labelText || "",
-          questionLabel: filterQuestion?.labelText || "",
+          code: filterValue?.labelCode || '',
+          label: filterValue?.labelText || '',
+          questionLabel: filterQuestion?.labelText || '',
         });
       }
     }
@@ -83,7 +90,7 @@ const ChartSidebarContent: React.FC = () => {
           return { ...filterQuestion, value: values };
         }
         return filterQuestion;
-      }
+      },
     );
 
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
@@ -108,6 +115,70 @@ const ChartSidebarContent: React.FC = () => {
         })
         .catch((error) => console.log(error));
     }
+  };
+  const handleFilterSelectAll = (
+    qId: string,
+
+    selectedValues: IQuestionOption[],
+  ) => {
+    const updatedFilters = [...filters];
+
+    const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
+
+    let values: IQuestionOption[] = filterQuestion?.value
+      ? JSON.parse(JSON.stringify(filterQuestion?.value))
+      : [];
+
+    const blank: IQuestionOption[] = [];
+
+    if (selectedValues.length <= 0) {
+      values = blank;
+    } else {
+      values = selectedValues;
+    }
+
+    for (let index = 0; index < values.length; index++) {
+      const filterValue = values[index];
+
+      let filterExists: boolean = false;
+
+      for (let filterIndex = 0; filterIndex < filters.length; filterIndex++) {
+        const appliedFilter = filters[filterIndex];
+
+        if (
+          appliedFilter.qId === qId &&
+          appliedFilter.code === filterValue.labelCode
+        ) {
+          filterExists = true;
+        }
+      }
+
+      if (!filterExists) {
+        updatedFilters.push({
+          qId: qId,
+
+          code: filterValue?.labelCode || '',
+
+          label: filterValue?.labelText || '',
+
+          questionLabel: filterQuestion?.labelText || '',
+        });
+      }
+    }
+
+    const updatedfilterQuestionList = filterQuestionList.map(
+      (filterQuestion) => {
+        if (filterQuestion.qId === qId) {
+          return { ...filterQuestion, value: values };
+        }
+
+        return filterQuestion;
+      },
+    );
+
+    dispatch(setFilterQuestionList(updatedfilterQuestionList));
+
+    dispatch(setFilters(updatedFilters));
   };
 
   const removeFilter = (filter: IFilter | IFilter[]) => {
@@ -143,6 +214,9 @@ const ChartSidebarContent: React.FC = () => {
                 value={filterQuestion.value}
                 onChange={(value: IQuestionOption) => {
                   handleFilterSelect(filterQuestion.qId, value);
+                }}
+                onSelectAll={(values: IQuestionOption[]) => {
+                  handleFilterSelectAll(filterQuestion.qId, values);
                 }}
               />
             ))}

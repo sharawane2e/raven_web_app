@@ -142,7 +142,7 @@
     &::after,
     div {
       background: map-get($map: $text-color, $key: primary);
-      content: "";
+      content: '';
       display: block;
       height: 2px;
       border-radius: 3px;

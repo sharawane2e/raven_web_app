@@ -22,6 +22,7 @@ import { resetChart, setChartType } from '../../redux/actions/chartActions';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
 import Toaster from '../../utils/Toaster';
 import { ChartType } from '../../enums/ChartType';
+import { StaticText } from '../../constants/StaticText';
 
 interface ChapterProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -57,7 +58,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     dispatch(setSelectedQuestionId(''));
     dispatch(setChartType(ChartType.COLUMN));
     dispatch(resetChart(['']));
-    Toaster.success('Chapter Applied');
+    Toaster.success(StaticText?.CHART_APPLIED);
   };
 
   const StyledPopper = styled(PopperUnstyled)`

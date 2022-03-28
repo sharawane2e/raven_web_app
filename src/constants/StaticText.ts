@@ -16,4 +16,8 @@ export class StaticText {
     "No question selected to create the chart transpose";
 
   static PIE_NOT_AVAILABLE = "Pie chart is not available for this selection";
+
+  static DISABLED_CHART_LAND = "Chart landsacpe not allowed";
+
+  static CHART_APPLIED="Chapter Applied";
 }

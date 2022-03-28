@@ -28,6 +28,9 @@
     .multi-select__placeholder {
       font-size: map-get($map: $text-size, $key: small);
     }
+    .multi-select__checkbox {
+      margin: 3px 0 3px 0;
+    }
     .MuiTypography-root {
       margin-left: 8px;
     }
