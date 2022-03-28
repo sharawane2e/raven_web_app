@@ -15,10 +15,12 @@ const TableView: React.FC<TableProps> = (props) => {
 
   const { chart } = store.getState();
   const { chartData } = useSelector((state: RootState) => state.chart);
+
+  console.log(chartData)
   
   const tranposedTableData:any[] = [];
   const tranposedTableDataMin:any[] = [];
-  const totalColumnVal:any = ["Total"]
+  const totalFinalVal:any = [];
 
   if(tableData.length != 0){
     
@@ -26,31 +28,46 @@ const TableView: React.FC<TableProps> = (props) => {
       const parentIndex = index;
       
      const updateRow:any[] = [];
-     const totalColumn:any[] = ["Total"];
+     const totalColumn:any[] = [];
+     let totalColumnVal=0;
       tableData.map((row:any,rowIndex:number)=>{
-
+        
         if(rowIndex != 0){
-         
+          //let totalColumnVal=0;
           if(row[parentIndex].toString().indexOf("%") != -1){ 
             let cnvCell:any = row[parentIndex].split("%")[0];                             
             updateRow.push(cnvCell);
-            totalColumn.push(cnvCell)
-                   
+             
+            if(row[parentIndex] !=0){
+              totalColumnVal += parseFloat(cnvCell);
+            }
+            //console.log(totalColumnVal + cnvCell);                  
           }else{
             let cnvCell:any = row[parentIndex];     
             updateRow.push(cnvCell);
-            totalColumn.push(cnvCell)            
+            if(row[parentIndex] !=0){
+              totalColumnVal += parseFloat(cnvCell);
+            }
+            //console.log(cnvCell)        
           }
-          console.log(totalColumn)
-        }
-      })
-     
+          //console.log(totalColumnVal)
+          //console.log(totalColumnVal)
+          //totalColumn[parentIndex]=(totalColumnVal)          
+        }  
+          
+      });
       
       tranposedTableData.push(Math.max(...updateRow));
       tranposedTableDataMin.push(Math.min(...updateRow))
-  
+     
+      //if(parentIndex !=0){
+      totalFinalVal.push(totalColumnVal);
+      //}
+      //console.log(totalFinalVal)
+      
     });
-  
+   
+    //console.log(totalFinalVal)
 
   }
   
@@ -94,7 +111,31 @@ const TableView: React.FC<TableProps> = (props) => {
             </div>
           ))}
         </div>
-        
+        <div className="TableView topset">
+            <div className="Table-row">
+              {
+              
+              totalFinalVal.map((col: any,colIndex:number) => {
+                let finalcol="Total"
+                if (colIndex==0){
+                  finalcol="Total";
+                }
+                else{
+                  finalcol=parseFloat(col.toFixed(1))+"%";
+                }
+                
+                return <>
+                  {
+                    chart.chartLabelType===ChartLabelType.PERCENTAGE?<div className="Table-row-item totalBold">{finalcol}</div>:<>
+                      <div className="Table-row-item totalBold">{finalcol}</div>
+                    </>
+                  }
+                </>
+              })
+              
+              }
+            </div>
+          </div>
       </div>
     </Scrollbars>
   );
