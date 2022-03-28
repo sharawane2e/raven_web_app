@@ -12,6 +12,8 @@ import { memo, useState } from 'react';
 import CustomScrollbar from '../../CustomScrollbar';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { IQuestionOption } from '../../../types/IBaseQuestion';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilters } from '../../../redux/actions/filterActions';
 export interface IMultiSelectOptions {
   /**
    * value to be stored as selection result
@@ -36,12 +38,14 @@ interface MultiSelectProps extends SelectProps {
   onSelectAll: (values: IQuestionOption[]) => void;
 }
 const MultiSelect: React.FC<MultiSelectProps> = (props) => {
+  const dispatch = useDispatch();
   let { options, value = [], label } = props;
   const selectAll = (event: any) => {
     if (event.target.checked) {
       props.onSelectAll(options);
     } else {
       props.onSelectAll([]);
+      dispatch(setFilters([]));
     }
   };
   return (
