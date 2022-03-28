@@ -38,6 +38,7 @@ import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Ques
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
 import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
 import Chapter from '../Chapter';
+import _ from 'lodash';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -56,6 +57,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const {
     questions,
     chart: { chartLoading, questionData, baseCount, chartType },
+    chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -78,6 +80,27 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
   }, []);
+
+  let updateQuestionList: any[] = [];
+  let updateBannerList: any[] = [];
+  if (selectedChapterId && allChapters) {
+    const selectchapterObject = _.find(allChapters, function (o) {
+      return o.chapterId === selectedChapterId;
+    });
+    const sortedChapterOrder = _.sortBy(allChapters, ['order']);
+    sortedChapterOrder.forEach((chapterData: any, index) => {
+      // console.log('chapterData', chapterData);
+      if (chapterData['chapterId'] === selectchapterObject?.chapterId) {
+        // console.log('sortedChapterOrder', chapterData?.QuestionsQIds);
+        for (let i = 0; i < chapterData?.QuestionsQIds.length; i++) {
+          for (let j = 0; j < questions?.questionList.length; j++) {
+            if (chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId)
+              updateQuestionList.push(questions?.questionList[j]);
+          }
+        }
+      }
+    });
+  }
 
   useEffect(() => {
     if (
@@ -264,7 +287,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
             <SingleSelect
-              options={questionList}
+              options={updateQuestionList}
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}

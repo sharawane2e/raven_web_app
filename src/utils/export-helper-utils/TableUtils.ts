@@ -21,7 +21,7 @@ export function tableChartDataGen() {
     let subRow: any = [];
 
     //console.log("labels",seriesData[0])
-    if(seriesData[0]){
+   // if(seriesData[0]){
       for (let k = 0; k < seriesData[0].labels.length; k++) {
         seriesData.forEach((d: any) => {
           if(chartLabelType===ChartLabelType.PERCENTAGE){
@@ -45,7 +45,7 @@ export function tableChartDataGen() {
   
         subRow = [];
       }
-    }
+    //}
 
     
   }

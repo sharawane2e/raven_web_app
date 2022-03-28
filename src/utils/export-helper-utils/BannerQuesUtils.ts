@@ -22,7 +22,10 @@ export function bannerChartDataGen(
   );
   let seriesData: Array<Object> = [];
   const chartDataComplete = chartData[0];
+  console.log("bannerQuestionData.options",bannerQuestionData.options)
+
   bannerQuestionData.options.forEach((scaleOption: IQuestionOption) => {
+    if(seriesData)
     seriesData.push({
       name: scaleOption.labelText,
       labels,
@@ -35,7 +38,7 @@ export function bannerChartDataGen(
               0
             );
 
-            const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
+            const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
         const bannerQuestionType = bannerQuestion.type;
 
         if(bannerQuestionType==QuestionType.MULTI){
