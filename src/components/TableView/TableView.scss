@@ -87,6 +87,7 @@
   padding: 0.5em;
   word-break: break-word;
 }
+
 .Table-row .Table-row-item:nth-of-type(1) {
   flex-grow: 3;
 }
@@ -166,10 +167,18 @@
 
 .maxValue{
   background-color: #b8e08c;
+  font-weight: 600;
 }
 .minValue{
   background: #fbd9d4;
+  font-weight: 600;
 }
 .Set-mr-top{
   margin-top: -9px;
+}
+.Table-row-item.totalBold{
+  font-weight: 600;
+}
+.topset{
+  margin-top: -10px;
 }
