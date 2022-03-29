@@ -175,11 +175,12 @@ h2 {
   border: solid 1px #acacac;
   display: flex;
   border-radius: 4px;
-  flex: 0 0 30.33%;
+  flex: 0 0 22.33%;
   padding: 5px;
   margin-right: 13px;
   margin-bottom: 10px;
-  &:nth-child(3) {
+  align-items: center;
+  &:nth-child(4) {
     margin-right: 0px;
   }
   &:last-child {
@@ -213,7 +214,7 @@ h2 {
   }
 }
 @media only screen and (min-width: 1025px) and (max-width: 1280px) {
-  // .nation-container__card {
-  //   flex: 0 0 35%;
-  // }
+  .nation-container__card {
+    flex: 0 0 21.33%;
+  }
 }
