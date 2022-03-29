@@ -14,7 +14,7 @@
       <rect x="0.5" y="0.5" width="55" height="37" rx="3.5" fill="none"/>
     </g>
     <g transform="matrix(1, 0, 0, 1, 311.5, 194)" filter="url(#OTHER)">
-      <text id="OTHER-3" data-name="OTHER" transform="translate(4.5 24)" fill="#707070" font-size="14" font-family="NunitoSans-Bold, Nunito Sans" font-weight="700"><tspan x="0" y="0">OTHER</tspan></text>
+      <text id="OTHER-3" data-name="OTHER" transform="translate(4.5 24)" fill="#707070" font-size="14" font-family="NunitoSans-Bold, Nunito Sans" font-weight="700"><tspan x="0" y="0">TOTAL</tspan></text>
     </g>
   </g>
 </svg>

@@ -11,13 +11,13 @@ import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest, { ApiRequestMulti } from "../utils/ApiRequest";
 import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
-import { ChartLabelType } from "../enums/ChartLabelType";
+// import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-import { colorArr,decimalPrecision } from "../constants/Variables";
+// import { colorArr,decimalPrecision } from "../constants/Variables";
 import { find } from "lodash";
-import { dataLabels } from "../redux/reducers/chartReducer";
-import { round } from "../utils/Utility";
+// import { dataLabels } from "../redux/reducers/chartReducer";
+// import { round } from "../utils/Utility";
 
 export const fetchChartData = async (
   qId?: string,

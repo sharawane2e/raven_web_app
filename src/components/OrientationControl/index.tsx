@@ -6,10 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { setChartOrientation } from '../../redux/actions/chartActions';
 import store from '../../redux/store';
-import {
-  getChartOptions,
-  getPlotOptions,
-} from '../../utils/ChartOptionFormatter';
+import { getPlotOptions } from '../../utils/ChartOptionFormatter';
 import { setChartData } from '../../redux/actions/chartActions';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
