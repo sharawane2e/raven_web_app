@@ -64,11 +64,11 @@ const getMultiChartOptions = (
 ): any => {
   // debugger;
   const {
-    questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
+    questions: { selectedBannerQuestionId, questionList, bannerQuestionList },
   } = store.getState();
 
   const {
-    chart: { chartLabelType, chartOptions,chartTranspose },
+    chart: { chartLabelType, chartOptions, chartTranspose },
   } = store.getState();
 
   const {
@@ -120,13 +120,17 @@ const getMultiChartOptions = (
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0
-          ); 
+          );
 
-          const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
+          const bannerQuestion: any = find(bannerQuestionList, function (o) {
+            return o.qId === selectedBannerQuestionId;
+          });
           const bannerQuestionType = bannerQuestion.type;
 
-          if(bannerQuestionType==QuestionType.MULTI){
-            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode})?.count;
+          if (bannerQuestionType == QuestionType.MULTI) {
+            localBase = find(chartData[1], function (o) {
+              return o.labelCode === quesOption.labelCode;
+            })?.count;
           }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
@@ -161,7 +165,7 @@ const getMultiChartOptions = (
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
               numberValue,
-              localBase
+              localBase,
             });
           }
 
@@ -237,7 +241,7 @@ const getMultiChartOptions = (
           y: plotValue,
           percentageValue,
           numberValue,
-          baseCount:baseCount
+          baseCount: baseCount,
         });
     }
 
@@ -295,7 +299,7 @@ const getSingleChartOptions = (
   const {
     chart: { chartType },
   } = store.getState();
-  
+
   const {
     plotOptions: {
       series: {
@@ -303,7 +307,7 @@ const getSingleChartOptions = (
       },
     },
   } = chartOptionsData;
-  
+
   if (selectedBannerQuestionId) {
     const categories: string[] = [];
     const series: any[] = [];
@@ -346,8 +350,10 @@ const getSingleChartOptions = (
             0
           );
 
-          if(bannerQuestionData?.type==QuestionType.MULTI){
-            localBase = find(chartData[1],{'labelCode':quesOption.labelCode})?.count;
+          if (bannerQuestionData?.type == QuestionType.MULTI) {
+            localBase = find(chartData[1], {
+              labelCode: quesOption.labelCode,
+            })?.count;
           }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
@@ -382,7 +388,7 @@ const getSingleChartOptions = (
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
               numberValue,
-              baseCount:localBase
+              baseCount: localBase,
             });
           }
 
@@ -408,7 +414,6 @@ const getSingleChartOptions = (
       }
 
       if (data.length)
-      
         series.push({
           name: bannerQuesOption?.labelText,
           color: index > colorArr.length ? colorArr[index] : undefined,
@@ -459,16 +464,17 @@ const getSingleChartOptions = (
           y: plotValue,
           percentageValue,
           numberValue,
-          baseCount:baseCount
+          baseCount: baseCount,
         });
     }
 
     const series: any[] = [];
 
     if (chartType === ChartType.STACK) {
-     console.log("Stack")
+      // console.log("Stack");
       data.map((element: any, index: number) => {
-        console.log("element", element);
+        // console.log("element", element);
+
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -477,6 +483,7 @@ const getSingleChartOptions = (
             y: element.y,
             numberValue: element.numberValue,
             percentageValue: element.percentageValue,
+            baseCount: element.baseCount,
           },
         ];
         series.push({ name, color, data, dataLabels });
@@ -558,7 +565,7 @@ const getRankChartOptions = (
         // console.log(cv["options"]);
 
         cv["options"].forEach(function (cv2: any, index2: any) {
-           console.log("cv2",cv2);
+          console.log("cv2", cv2);
           // console.log("cv2.option",cv2.option);
           // console.log("label.option",label.option);
           if (label) {
@@ -589,7 +596,7 @@ const getRankChartOptions = (
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
           percentageValue,
           numberValue,
-          baseCount:newBaseCount
+          baseCount: newBaseCount,
         });
       } else {
         data.push({
@@ -597,7 +604,7 @@ const getRankChartOptions = (
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
           percentageValue,
           numberValue,
-          baseCount:newBaseCount
+          baseCount: newBaseCount,
         });
       }
 
@@ -688,7 +695,7 @@ const getGridChartOptions = (
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
           percentageValue,
           numberValue,
-          baseCount:base
+          baseCount: base,
         });
       } else {
         data.push({
@@ -696,7 +703,7 @@ const getGridChartOptions = (
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
           percentageValue,
           numberValue,
-          baseCount:base
+          baseCount: base,
         });
       }
 
@@ -782,13 +789,17 @@ const getGridMultiChartOptions = (
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
-          baseCount:base
+          baseCount: base,
+          percentageValue,
+          numberValue,
         });
       } else {
         data.push({
           name: subGroup.labelText,
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-          baseCount:base
+          percentageValue,
+          numberValue,
+          baseCount: base,
         });
       }
     }
@@ -813,7 +824,6 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   const newChartOptions = { ...chartOptions };
 
   if (type === ChartType.COLUMN) {
-    
   } else if (type === ChartType.STACK) {
   }
 
@@ -868,7 +878,6 @@ export const getPlotOptions = (
     }`;
     plotOptions["series"].dataLabels.y = undefined;
     plotOptions["series"].dataLabels.rotation = 0;
-    
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
