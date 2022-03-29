@@ -180,4 +180,5 @@
 }
 .topset {
   margin-top: -10px;
+  background-color: map-get($map: $text-color, $key: 'primary-fade');
 }
