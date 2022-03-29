@@ -52,13 +52,19 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   };
 
   const handleChapterChange = (chapterId: any) => {
+    // console.log('chapterId', chapterId);
     dispatch(setSelectedChapterId(chapterId));
     setDropdwonValue(chapterId);
     getChartOptions();
     dispatch(setSelectedQuestionId(''));
     dispatch(setChartType(ChartType.COLUMN));
     dispatch(resetChart(['']));
-    Toaster.success(StaticText?.CHART_APPLIED);
+    //if (dropwDwonvalue !== '1') {
+    const findIds: any = _.find(allChapters, {
+      chapterId: chapterId.toString(),
+    });
+    Toaster.success(`${StaticText?.CHART_APPLIED} ${findIds?.labelText}`);
+    //}
   };
 
   const StyledPopper = styled(PopperUnstyled)`

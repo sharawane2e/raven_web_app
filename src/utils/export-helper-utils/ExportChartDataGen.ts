@@ -13,12 +13,13 @@ export function chartDataGen() {
     chart: { chartData, questionData, bannerQuestionData, baseCount },
     questions: { selectedBannerQuestionId },
   } = store.getState();
-
+//debugger
   if (
     selectedBannerQuestionId &&
     (questionData?.type === QuestionType.SINGLE ||
       questionData?.type === QuestionType.MULTI)
   ) {
+    
     seriesData = bannerChartDataGen(
       questionData,
       chartData,

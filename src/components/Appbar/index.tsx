@@ -1,10 +1,8 @@
-import { useState, useContext, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TourPlayIcon from '@material-ui/icons/PlayArrow';
 import clsx from 'clsx';
-import BrandLogo from '../BrandLogo';
-import { SidebarContext } from '../../contexts/SidebarContext';
 import ProfileAvatar from '../widgets/ProfileAvatar';
 import { logOutUser } from '../../services/AuthService';
 import { useHistory } from 'react-router';
@@ -19,7 +17,6 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from '../../redux/actions/sidebarAction';
-import ClientsLogo from '../ClientsLogo';
 
 import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
 
@@ -63,9 +60,11 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     setAnchorEl(e.currentTarget);
   };
   const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
     dispatch(showTourGuide());
   };
+  function refreshPage() {
+    window.location.reload();
+  }
 
   return (
     <div
@@ -82,7 +81,8 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             onClick={() => history.push('/home')}
           /> */}
           <div className="public-form__client-logo client-logo__icons">
-            <Boehringer onClick={() => history.push('/home')} />
+            {/* <Boehringer onClick={() => history.push('/home')} /> */}
+            <Boehringer onClick={refreshPage} />
           </div>
         </div>
         <div

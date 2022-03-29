@@ -4,13 +4,13 @@
     // min-height: calc(1.5em + 22px);
     min-width: 300px;
     width: 300px;
-    background: $drop-button-color;
+    background: rgba(255, 255, 255, 0.78);
+    color: #000;
     border: 1px solid $drop-button-color;
     padding: 8px;
     text-align: left;
     font-size: 11px;
     line-height: 1.2;
-    color: $white;
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;

@@ -19,5 +19,6 @@ export class StaticText {
 
   static DISABLED_CHART_LAND = "Chart landsacpe not allowed";
 
-  static CHART_APPLIED="Chapter Applied";
+  static CHART_APPLIED="Chapter changed to";
+  
 }

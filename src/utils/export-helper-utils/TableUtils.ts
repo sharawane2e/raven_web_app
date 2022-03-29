@@ -10,7 +10,7 @@ export function tableChartDataGen() {
 
   let rows = [];
 
-  const {chart:{chartLabelType}} = store.getState();
+  const {chart} = store.getState();
 
   if (seriesData) {
     let scale: any = [];
@@ -20,11 +20,11 @@ export function tableChartDataGen() {
     rows.push(["", ...scale]);
     let subRow: any = [];
 
-    console.log(seriesData[0])
-   // if(seriesData[0]){
+    // console.log(seriesData[0])
+   if(seriesData[0])
       for (let k = 0; k < seriesData[0].labels.length; k++) {
         seriesData.forEach((d: any) => {
-          if(chartLabelType===ChartLabelType.PERCENTAGE){
+          if(chart?.chartLabelType===ChartLabelType.PERCENTAGE){
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + "%");
               //subRow.push(round(d.values[k], 1));

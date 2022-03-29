@@ -42,7 +42,7 @@ export function bannerChartDataGen(
         const bannerQuestionType = bannerQuestion?.type;
 
         if(bannerQuestionType==QuestionType.MULTI){
-          base = find(chartData[1],function(o){return o.labelCode===option.labelCode}).count;
+          base = find(chartData[1],function(o){return o.labelCode===option.labelCode})?.count;
         }
 
 
