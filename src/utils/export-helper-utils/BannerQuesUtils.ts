@@ -13,7 +13,6 @@ export function bannerChartDataGen(
   bannerQuestionData: any
 ) {
   
-  // debugger;
   const {
     chart:{chartLabelType},
     questions:{bannerQuestionList,selectedBannerQuestionId}

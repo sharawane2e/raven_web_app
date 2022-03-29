@@ -126,7 +126,7 @@ const getMultiChartOptions = (
           const bannerQuestionType = bannerQuestion.type;
 
           if(bannerQuestionType==QuestionType.MULTI){
-            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode}).count;
+            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode})?.count;
           }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
@@ -281,6 +281,7 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
+  // debugger;
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -324,6 +325,10 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
+
+        // if(bannerQuestionData?.type===QuestionType.MULTI){
+        //   optionData = chartData[1][quesOption.labelCode];
+        // }
         // console.log(optionData);
 
         let count = 0;
@@ -334,10 +339,14 @@ const getSingleChartOptions = (
             (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
-          const localBase = optionData?.reduce(
+          let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0
           );
+
+          if(bannerQuestionData?.type==QuestionType.MULTI){
+            localBase = find(chartData[1],{'labelCode':quesOption.labelCode})?.count;
+          }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
