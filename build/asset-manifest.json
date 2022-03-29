@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/cello/210394/static/css/main.3c4d26f6.chunk.css",
-    "main.js": "/cello/210394/static/js/main.0bbe30b4.chunk.js",
-    "main.js.map": "/cello/210394/static/js/main.0bbe30b4.chunk.js.map",
-    "runtime-main.js": "/cello/210394/static/js/runtime-main.5ae0c4b4.js",
-    "runtime-main.js.map": "/cello/210394/static/js/runtime-main.5ae0c4b4.js.map",
+    "main.css": "/cello/210394/static/css/main.612d040d.chunk.css",
+    "main.js": "/cello/210394/static/js/main.6eb7c1f0.chunk.js",
+    "main.js.map": "/cello/210394/static/js/main.6eb7c1f0.chunk.js.map",
+    "runtime-main.js": "/cello/210394/static/js/runtime-main.7f66319a.js",
+    "runtime-main.js.map": "/cello/210394/static/js/runtime-main.7f66319a.js.map",
     "static/css/2.029a9c87.chunk.css": "/cello/210394/static/css/2.029a9c87.chunk.css",
-    "static/js/2.01534168.chunk.js": "/cello/210394/static/js/2.01534168.chunk.js",
-    "static/js/2.01534168.chunk.js.map": "/cello/210394/static/js/2.01534168.chunk.js.map",
-    "static/js/3.5ec238c0.chunk.js": "/cello/210394/static/js/3.5ec238c0.chunk.js",
-    "static/js/3.5ec238c0.chunk.js.map": "/cello/210394/static/js/3.5ec238c0.chunk.js.map",
+    "static/js/2.267cd6ee.chunk.js": "/cello/210394/static/js/2.267cd6ee.chunk.js",
+    "static/js/2.267cd6ee.chunk.js.map": "/cello/210394/static/js/2.267cd6ee.chunk.js.map",
+    "static/js/3.48fe3ee0.chunk.js": "/cello/210394/static/js/3.48fe3ee0.chunk.js",
+    "static/js/3.48fe3ee0.chunk.js.map": "/cello/210394/static/js/3.48fe3ee0.chunk.js.map",
     "static/js/4.70c86df0.chunk.js": "/cello/210394/static/js/4.70c86df0.chunk.js",
     "static/js/4.70c86df0.chunk.js.map": "/cello/210394/static/js/4.70c86df0.chunk.js.map",
     "static/js/5.ee7c1f47.chunk.js": "/cello/210394/static/js/5.ee7c1f47.chunk.js",
@@ -18,9 +18,9 @@
     "static/js/6.c779fa3e.chunk.js.map": "/cello/210394/static/js/6.c779fa3e.chunk.js.map",
     "index.html": "/cello/210394/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/cello/210394/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.3c4d26f6.chunk.css.map": "/cello/210394/static/css/main.3c4d26f6.chunk.css.map",
-    "static/js/2.01534168.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.01534168.chunk.js.LICENSE.txt",
-    "static/js/3.5ec238c0.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.5ec238c0.chunk.js.LICENSE.txt",
+    "static/css/main.612d040d.chunk.css.map": "/cello/210394/static/css/main.612d040d.chunk.css.map",
+    "static/js/2.267cd6ee.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.267cd6ee.chunk.js.LICENSE.txt",
+    "static/js/3.48fe3ee0.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.48fe3ee0.chunk.js.LICENSE.txt",
     "static/js/4.70c86df0.chunk.js.LICENSE.txt": "/cello/210394/static/js/4.70c86df0.chunk.js.LICENSE.txt",
     "static/js/5.ee7c1f47.chunk.js.LICENSE.txt": "/cello/210394/static/js/5.ee7c1f47.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/cello/210394/static/media/login_bg.07b9c2c7.png",
@@ -29,6 +29,7 @@
     "static/media/No_Question_Selected.3047d29e.svg": "/cello/210394/static/media/No_Question_Selected.3047d29e.svg",
     "static/media/No_data_found.bc1729fe.svg": "/cello/210394/static/media/No_data_found.bc1729fe.svg",
     "static/media/Number.12fc646d.svg": "/cello/210394/static/media/Number.12fc646d.svg",
+    "static/media/Other.5d4fec48.svg": "/cello/210394/static/media/Other.5d4fec48.svg",
     "static/media/Percentage.7f712ecb.svg": "/cello/210394/static/media/Percentage.7f712ecb.svg",
     "static/media/Transpose.17f674ac.svg": "/cello/210394/static/media/Transpose.17f674ac.svg",
     "static/media/admin-icon.631ad5fd.svg": "/cello/210394/static/media/admin-icon.631ad5fd.svg",
@@ -64,10 +65,10 @@
     "static/media/users-alt.9bee69bb.svg": "/cello/210394/static/media/users-alt.9bee69bb.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.5ae0c4b4.js",
+    "static/js/runtime-main.7f66319a.js",
     "static/css/2.029a9c87.chunk.css",
-    "static/js/2.01534168.chunk.js",
-    "static/css/main.3c4d26f6.chunk.css",
-    "static/js/main.0bbe30b4.chunk.js"
+    "static/js/2.267cd6ee.chunk.js",
+    "static/css/main.612d040d.chunk.css",
+    "static/js/main.6eb7c1f0.chunk.js"
   ]
 }
