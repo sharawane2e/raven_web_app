@@ -59,4 +59,6 @@ export const tableConfig: pptxgen.TableProps = {
   autoPageCharWeight: 10,
   autoPageRepeatHeader: true,
   autoPageSlideStartY: 0.9,
+  fill:{color:"#b8e08c"},
+  
 };

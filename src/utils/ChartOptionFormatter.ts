@@ -126,7 +126,7 @@ const getMultiChartOptions = (
           const bannerQuestionType = bannerQuestion.type;
 
           if(bannerQuestionType==QuestionType.MULTI){
-            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode}).count;
+            localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode})?.count;
           }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
@@ -161,6 +161,7 @@ const getMultiChartOptions = (
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
               numberValue,
+              localBase
             });
           }
 
@@ -236,6 +237,7 @@ const getMultiChartOptions = (
           y: plotValue,
           percentageValue,
           numberValue,
+          baseCount:baseCount
         });
     }
 
@@ -281,6 +283,7 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
+  // debugger;
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -324,6 +327,10 @@ const getSingleChartOptions = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
+
+        // if(bannerQuestionData?.type===QuestionType.MULTI){
+        //   optionData = chartData[1][quesOption.labelCode];
+        // }
         // console.log(optionData);
 
         let count = 0;
@@ -334,10 +341,14 @@ const getSingleChartOptions = (
             (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
-          const localBase = optionData?.reduce(
+          let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0
           );
+
+          if(bannerQuestionData?.type==QuestionType.MULTI){
+            localBase = find(chartData[1],{'labelCode':quesOption.labelCode})?.count;
+          }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
             count = (label.count / localBase) * 100;
@@ -371,6 +382,7 @@ const getSingleChartOptions = (
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
               numberValue,
+              baseCount:localBase
             });
           }
 
@@ -447,6 +459,7 @@ const getSingleChartOptions = (
           y: plotValue,
           percentageValue,
           numberValue,
+          baseCount:baseCount
         });
     }
 
@@ -542,10 +555,10 @@ const getRankChartOptions = (
       let newBaseCount = 0;
 
       chartData.forEach(function (cv: any, index: any) {
-        console.log(cv["options"]);
+        // console.log(cv["options"]);
 
         cv["options"].forEach(function (cv2: any, index2: any) {
-          // console.log("cv2",cv2);
+           console.log("cv2",cv2);
           // console.log("cv2.option",cv2.option);
           // console.log("label.option",label.option);
           if (label) {
@@ -576,6 +589,7 @@ const getRankChartOptions = (
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
           percentageValue,
           numberValue,
+          baseCount:newBaseCount
         });
       } else {
         data.push({
@@ -583,6 +597,7 @@ const getRankChartOptions = (
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
           percentageValue,
           numberValue,
+          baseCount:newBaseCount
         });
       }
 
@@ -673,6 +688,7 @@ const getGridChartOptions = (
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
           percentageValue,
           numberValue,
+          baseCount:base
         });
       } else {
         data.push({
@@ -680,6 +696,7 @@ const getGridChartOptions = (
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
           percentageValue,
           numberValue,
+          baseCount:base
         });
       }
 
@@ -765,11 +782,13 @@ const getGridMultiChartOptions = (
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+          baseCount:base
         });
       } else {
         data.push({
           name: subGroup.labelText,
           y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          baseCount:base
         });
       }
     }
@@ -813,7 +832,7 @@ const getToolTip = () => {
   tooltip["headerFormat"] =
     '<span style="font-size:11px">{series.name}</span><br>';
   tooltip["pointFormat"] =
-    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
 
   // if (chartLabelType === ChartLabelType.PERCENTAGE) {
   //   tooltip["headerFormat"] =

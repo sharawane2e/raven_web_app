@@ -95,7 +95,7 @@ export const fetchChartData = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
-      if(bannerQuesId){
+      // if(bannerQuesId){
 
         
         if(bannerQuestionType==QuestionType.MULTI && type){
@@ -104,21 +104,38 @@ export const fetchChartData = async (
           const baseChartresponse = await ApiRequestMulti.request(ApiUrl.CHART, "POST", updatedBody);
           console.log(baseChartresponse.data.chartData)
           chartData.chartData.push(baseChartresponse.data.chartData);
+
+          chartData.chartOptions = {
+            ...chart.chartOptions,
+            ...getChartOptions(
+              chartData.questionData,
+              chartData.chartData,
+              chartData.baseCount,
+              response.data.bannerQuestionData
+            ),
+          };
+          // debugger;
+          
+          dispatch(setChartLoading(false))
         }
+      // }
+
+      else{
+        chartData.chartOptions = {
+          ...chart.chartOptions,
+          ...getChartOptions(
+            chartData.questionData,
+            chartData.chartData,
+            chartData.baseCount,
+            response.data.bannerQuestionData
+          ),
+        };
       }
 
-      chartData.chartOptions = {
-        ...chart.chartOptions,
-        ...getChartOptions(
-          chartData.questionData,
-          chartData.chartData,
-          chartData.baseCount,
-          response.data.bannerQuestionData
-        ),
-      };
+     
       // debugger;
       
-      dispatch(setChartLoading(false))
+      // dispatch(setChartLoading(false))
      
     }
   } catch (error) {
@@ -297,6 +314,7 @@ export const changeChartType = (newChartType: ChartType) => {
 };
 
 export const transposeChart = () => {
+  // debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -462,6 +480,7 @@ export const transposeChart = () => {
 
 
 export const transposeChartMulti = async() =>{
+  debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));

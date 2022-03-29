@@ -181,7 +181,7 @@ const chartReducer = createReducer(initialState, (builder) => {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat:
-          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>",
+          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>",
       },
       xAxis: {
         type: "category",

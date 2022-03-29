@@ -29,6 +29,8 @@ export function pptDataGen(
     chart: { chartType, chartOrientation,chartLabelType },
   } = store.getState();
 
+  debugger
+
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let seriesData: any[] = [];
@@ -36,7 +38,9 @@ export function pptDataGen(
 
   seriesData = chartDataGen();
 
+  
   if (chartType === ChartType.TABLE) {
+    //Used this code for table 
     const row = tableChartDataGen();
     slide.addTable(row, {
       ...tableConfig,
