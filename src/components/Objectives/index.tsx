@@ -1,14 +1,14 @@
-import "./Objectives.scss";
-import { ReactComponent as ResearchObjective } from "../../assets/svg/research_objective.svg";
-import { ReactComponent as BusinessObjective } from "../../assets/svg/business_objective.svg";
-import { ReactComponent as Nationally } from "../../assets/svg/nationally.svg";
-import { ReactComponent as BrazilFlog } from "../../assets/svg/brazilFlag.svg";
-import { ReactComponent as ChinaIconFlag } from "../../assets/svg/chinaFlag.svg";
-import { ReactComponent as GermanyIconFlag } from "../../assets/svg/germanyFlag.svg";
-import { ReactComponent as JapanIconFlag } from "../../assets/svg/japanFlag.svg";
-import { ReactComponent as UkFlag } from "../../assets/svg/ukFlag.svg";
-import { ReactComponent as UsFlag } from "../../assets/svg/usFlag.svg";
-import { ReactComponent as Other } from "../../assets/svg/Other.svg";
+import './Objectives.scss';
+import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
+import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
+import { ReactComponent as Nationally } from '../../assets/svg/nationally.svg';
+import { ReactComponent as BrazilFlog } from '../../assets/svg/brazilFlag.svg';
+import { ReactComponent as ChinaIconFlag } from '../../assets/svg/chinaFlag.svg';
+import { ReactComponent as GermanyIconFlag } from '../../assets/svg/germanyFlag.svg';
+import { ReactComponent as JapanIconFlag } from '../../assets/svg/japanFlag.svg';
+import { ReactComponent as UkFlag } from '../../assets/svg/ukFlag.svg';
+import { ReactComponent as UsFlag } from '../../assets/svg/usFlag.svg';
+import { ReactComponent as Other } from '../../assets/svg/Other.svg';
 
 interface Props {}
 
@@ -17,7 +17,7 @@ const Objectives = (props: Props) => {
     <div className="combinedScreen">
       <div className="objectives">
         <div className="objectives--container container--left">
-          <h2>OBJECTIVES</h2>
+          <h2>Project Overview and Sample</h2>
           <div className="objectives--content">
             <BusinessObjective />
             <div className="objectives--content--text objectives--content--border">
