@@ -22,6 +22,7 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions
 ): any => {
+  
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -62,10 +63,15 @@ const getMultiChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  // debugger;
+  debugger;
+  // const {
+  //   questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
+  // } = store.getState();
   const {
-    questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
+    questions: {questionList,bannerQuestionList },
   } = store.getState();
+
+  const selectedBannerQuestionId = bannerQuestionData?.qId
 
   const {
     chart: { chartLabelType, chartOptions,chartTranspose },
@@ -125,7 +131,7 @@ const getMultiChartOptions = (
           const bannerQuestion:any = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
           const bannerQuestionType = bannerQuestion.type;
 
-          if(bannerQuestionType==QuestionType.MULTI){
+          if(bannerQuestionType==QuestionType.MULTI){ //this is working in multi 2 multi
             localBase = find(chartData[1],function(o){return o.labelCode===quesOption.labelCode})?.count;
           }
 

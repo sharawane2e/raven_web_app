@@ -21,7 +21,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
     {
         tooltip: "Transpose",
         renderChild: () => <TransposeIcon />,
-        onClick: () => (questionData?.type == QuestionType.MULTI && bannerQuestionData?.type == QuestionType.MULTI)?transposeChartMulti():transposeChart(),
+        onClick: () => ((questionData?.type == QuestionType.MULTI && bannerQuestionData?.type == QuestionType.MULTI)||(questionData?.type == QuestionType.SINGLE && bannerQuestionData?.type == QuestionType.MULTI))?transposeChartMulti():transposeChart(),
         active: chartTranspose,
         disabled:
           (questionData?.type === QuestionType.SINGLE &&
