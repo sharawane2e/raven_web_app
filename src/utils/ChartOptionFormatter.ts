@@ -565,7 +565,7 @@ const getRankChartOptions = (
         // console.log(cv["options"]);
 
         cv["options"].forEach(function (cv2: any, index2: any) {
-          console.log("cv2", cv2);
+          // console.log("cv2", cv2);
           // console.log("cv2.option",cv2.option);
           // console.log("label.option",label.option);
           if (label) {
@@ -576,7 +576,7 @@ const getRankChartOptions = (
         });
       });
 
-      console.log("newBaseCount" + newBaseCount);
+      // console.log("newBaseCount" + newBaseCount);
 
       let plotValue;
       let percentageValue = (count / newBaseCount) * 100;
