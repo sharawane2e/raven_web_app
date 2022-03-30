@@ -1,14 +1,14 @@
-import './Objectives.scss';
-import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
-import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
-import { ReactComponent as Nationally } from '../../assets/svg/nationally.svg';
-import { ReactComponent as BrazilFlog } from '../../assets/svg/brazilFlag.svg';
-import { ReactComponent as ChinaIconFlag } from '../../assets/svg/chinaFlag.svg';
-import { ReactComponent as GermanyIconFlag } from '../../assets/svg/germanyFlag.svg';
-import { ReactComponent as JapanIconFlag } from '../../assets/svg/japanFlag.svg';
-import { ReactComponent as UkFlag } from '../../assets/svg/ukFlag.svg';
-import { ReactComponent as UsFlag } from '../../assets/svg/usFlag.svg';
-import { ReactComponent as Other } from '../../assets/svg/Other.svg';
+import "./Objectives.scss";
+import { ReactComponent as ResearchObjective } from "../../assets/svg/research_objective.svg";
+import { ReactComponent as BusinessObjective } from "../../assets/svg/business_objective.svg";
+import { ReactComponent as Nationally } from "../../assets/svg/nationally.svg";
+import { ReactComponent as BrazilFlog } from "../../assets/svg/brazilFlag.svg";
+import { ReactComponent as ChinaIconFlag } from "../../assets/svg/chinaFlag.svg";
+import { ReactComponent as GermanyIconFlag } from "../../assets/svg/germanyFlag.svg";
+import { ReactComponent as JapanIconFlag } from "../../assets/svg/japanFlag.svg";
+import { ReactComponent as UkFlag } from "../../assets/svg/ukFlag.svg";
+import { ReactComponent as UsFlag } from "../../assets/svg/usFlag.svg";
+import { ReactComponent as Other } from "../../assets/svg/Other.svg";
 
 interface Props {}
 
@@ -68,7 +68,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>165</b>
+            <b>966</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -77,7 +77,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>555</b>
+            <b>781</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -86,7 +86,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>264</b>
+            <b>790</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -95,7 +95,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>213</b>
+            <b>662</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -104,7 +104,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>932</b>
+            <b>1142</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -113,7 +113,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>259</b>
+            <b>703</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -122,7 +122,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>2388</b>
+            <b>5044</b>
           </div>
         </div>
       </div>
