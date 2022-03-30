@@ -18,11 +18,16 @@ import OptionUnstyled, {
 } from '@mui/base/OptionUnstyled';
 import { styled } from '@mui/system';
 import PopperUnstyled from '@mui/base/PopperUnstyled';
-import { resetChart, setChartType } from '../../redux/actions/chartActions';
+import {
+  resetChart,
+  setChartLabel,
+  setChartType,
+} from '../../redux/actions/chartActions';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
 import Toaster from '../../utils/Toaster';
 import { ChartType } from '../../enums/ChartType';
 import { StaticText } from '../../constants/StaticText';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 interface ChapterProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -58,6 +63,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     getChartOptions();
     dispatch(setSelectedQuestionId(''));
     dispatch(setChartType(ChartType.COLUMN));
+    dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
     dispatch(resetChart(['']));
     //if (dropwDwonvalue !== '1') {
     const findIds: any = _.find(allChapters, {
