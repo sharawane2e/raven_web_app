@@ -348,9 +348,11 @@ export const transposeChart = () => {
     });
 
     newSubGroup.forEach((col: any, index: number) => {
+     
       const options: any = [];
       let baseCount: number = 0;
       chartDataClone.chartData.forEach((data: any, index: number) => {
+        // debugger;
         const count: number = data.options.find(
           (subOption: any) => subOption.option === col.qId
         )?.count;
@@ -525,7 +527,9 @@ export const transposeChart = () => {
         chartDataClone.questionData,
         chartDataClone.chartData,
         chartDataClone.baseCount,
-        chartDataClone.bannerQuestionData
+        chartDataClone.bannerQuestionData,
+        undefined,
+        transposed
       ),
     };
     dispatch(setChartData(chartDataClone));

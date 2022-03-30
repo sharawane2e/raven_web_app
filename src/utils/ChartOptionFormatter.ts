@@ -11,7 +11,7 @@ import store from "../redux/store";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
-import { find, omit } from "lodash";
+import _, { find, omit } from "lodash";
 import { ChartOrientation } from "../enums/ChartOrientation";
 
 export const getChartOptions = (
@@ -20,7 +20,8 @@ export const getChartOptions = (
   baseCount: number = store.getState().chart.baseCount,
   bannerQuestionData: IQuestion | null = store.getState().chart
     .bannerQuestionData,
-  chartOptionsData: any = store.getState().chart.chartOptions
+  chartOptionsData: any = store.getState().chart.chartOptions,
+  transposed:boolean = store.getState().chart.chartTranspose
 ): any => {
   if (questionData !== null) {
     switch (questionData.type) {
@@ -41,7 +42,7 @@ export const getChartOptions = (
           chartOptionsData
         );
       case QuestionType.RANK:
-        return getRankChartOptions(questionData, chartData, baseCount);
+        return getRankChartOptions(questionData, chartData, baseCount,transposed);
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
@@ -511,8 +512,10 @@ const getSingleChartOptions = (
 const getRankChartOptions = (
   questionData: IQuestion,
   chartData: any,
-  baseCount: number
+  baseCount: number,
+  transposed:boolean
 ): any => {
+  // debugger;
   const categories = [];
   const series = [];
 
@@ -533,6 +536,7 @@ const getRankChartOptions = (
     scaleIndex < questionData.scale.length;
     scaleIndex++
   ) {
+    // debugger;
     const scale = questionData.scale[scaleIndex];
     const data: any[] = [];
     for (
@@ -561,20 +565,37 @@ const getRankChartOptions = (
 
       let newBaseCount = 0;
 
-      chartData.forEach(function (cv: any, index: any) {
-        // console.log(cv["options"]);
+      // chartData.forEach(function (cv: any, index: any) {
+      //   // debugger;
+      //   // console.log(cv["options"]);
 
-        cv["options"].forEach(function (cv2: any, index2: any) {
-          // console.log("cv2", cv2);
-          // console.log("cv2.option",cv2.option);
-          // console.log("label.option",label.option);
-          if (label) {
-            if (cv2.option == label.option) {
-              newBaseCount = newBaseCount + cv2.count;
-            }
+      //   cv["options"].forEach(function (cv2: any, index2: any) {
+      //     // debugger;
+      //     // console.log("cv2", cv2);
+      //     // console.log("cv2.option",cv2.option);
+      //     // console.log("label.option",label.option);
+      //     if (label) {
+      //       if (cv2.option == label.option) {
+      //         newBaseCount = newBaseCount + cv2.count;
+      //       }
+      //     }
+      //   });
+      // });
+
+      if(transposed){
+        newBaseCount = _.sumBy(optionData.options,function(o:any){
+          return o.count;
+        })
+      }else{
+        chartData.forEach(function(eachRowData:any){
+          // debugger;
+          const chartOptionObject:any =_.filter(eachRowData.options,{option:scale.labelCode});
+          if(chartOptionObject.length){
+            newBaseCount = newBaseCount + chartOptionObject[0]["count"];
           }
-        });
-      });
+        })
+      }
+     
 
       // console.log("newBaseCount" + newBaseCount);
 
@@ -871,22 +892,20 @@ export const getPlotOptions = (
     plotOptions["column"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "{point.y:.1f}%"
         : "{point.y:.0f}"
-    }`;
+      }`;
     plotOptions["series"].dataLabels.y = undefined;
     plotOptions["series"].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "{point.y:.1f}%"
         : "{point.y:.0f}"
-    }`;
+      }`;
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
       plotOptions["series"].dataLabels.y = -20;
       plotOptions["series"].dataLabels.rotation = -90;
@@ -899,11 +918,10 @@ export const getPlotOptions = (
       allowPointSelect: false,
       cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "<b>{point.name}</b>: {point.percentage:.1f}%"
         : "<b>{point.name}</b>: {point.y:.0f}"
-    }`;
+      }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;
     delete plotOptions["series"].dataLabels.y;
@@ -913,11 +931,10 @@ export const getPlotOptions = (
       // allowPointSelect: false,
       // cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    plotOptions["series"].dataLabels.format = `${chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
         ? "{point.y:.1f}%"
         : "{point.y:.0f}"
-    }`;
+      }`;
   } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;

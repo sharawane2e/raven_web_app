@@ -17,7 +17,8 @@ import _,{ filter } from "lodash";
 export function rankChartDataGen(
   questionData: any,
   chartData: any,
-  baseCount: any
+  baseCount: any,
+  chartTranspose:boolean
 ) {
   // debugger;
   
@@ -43,15 +44,19 @@ export function rankChartDataGen(
         // const base = subGroupData?.baseCount || baseCount; // this base coming from backend and will not work anymore
 
         let base = 0;
-        
-        chartData.forEach(function(eachRowData:any){
-          const chartOptionObject:any =_.filter(eachRowData.options,{option:scaleOption.labelCode});
-          if(chartOptionObject.length){
-               base = base + chartOptionObject[0]["count"];
-          }
-        })
 
-        
+        if(chartTranspose){
+          base = _.sumBy(subGroupData.options,function(o:any){
+            return o.count;
+          })
+        }else{
+          chartData.forEach(function(eachRowData:any){
+            const chartOptionObject:any =_.filter(eachRowData.options,{option:scaleOption.labelCode});
+            if(chartOptionObject.length){
+                 base = base + chartOptionObject[0]["count"];
+            }
+          })
+        }
         
         if (subGroupData) {
           const data = subGroupData?.options?.find(

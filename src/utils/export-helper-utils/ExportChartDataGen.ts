@@ -10,10 +10,9 @@ import { singleChartDataGen } from "./SingleQuesUtils";
 export function chartDataGen() {
   let seriesData = [];
   const {
-    chart: { chartData, questionData, bannerQuestionData, baseCount },
+    chart: { chartData, questionData, bannerQuestionData, baseCount,chartTranspose },
     questions: { selectedBannerQuestionId },
   } = store.getState();
-//debugger
   if (
     selectedBannerQuestionId &&
     (questionData?.type === QuestionType.SINGLE ||
@@ -35,7 +34,7 @@ export function chartDataGen() {
     } else if (questionData?.type === QuestionType.GRID_MULTI) {
       seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.RANK) {
-      seriesData = rankChartDataGen(questionData, chartData, baseCount);
+      seriesData = rankChartDataGen(questionData, chartData, baseCount,chartTranspose);
     }
   }
   return seriesData;
