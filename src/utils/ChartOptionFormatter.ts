@@ -64,7 +64,7 @@ const getMultiChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  //debugger;
+  // debugger;
   // const {
   //   questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
   // } = store.getState();

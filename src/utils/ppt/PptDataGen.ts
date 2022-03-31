@@ -29,7 +29,7 @@ export function pptDataGen(
     chart: { chartType, chartOrientation,chartLabelType },
   } = store.getState();
 
-  debugger
+  // debugger
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
