@@ -539,7 +539,7 @@ export const transposeChart = () => {
 
 
 export const transposeChartMulti = async() =>{
-  debugger;
+  // debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));

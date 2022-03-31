@@ -3,7 +3,7 @@ import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
 import { round } from "../Utility";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
-import { find } from "lodash";
+import _, { find } from "lodash";
 import { QuestionType } from "../../enums/QuestionType";
 
 
@@ -12,7 +12,12 @@ export function bannerChartDataGen(
   chartData: any,
   bannerQuestionData: any
 ) {
-  
+  // debugger;
+  // console.log("bannerQuestionData");
+  // console.log(bannerQuestionData);
+  // console.log("questionData");
+  // console.log(questionData);
+ 
   const {
     chart:{chartLabelType},
     questions:{bannerQuestionList,selectedBannerQuestionId}
@@ -25,10 +30,12 @@ export function bannerChartDataGen(
 
   if(bannerQuestionData)
   bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
+    // debugger;
     seriesData.push({
       name: scaleOption.labelText,
       labels,
       values: questionData.options.map((option: IQuestionOption) => {
+        // debugger;
         if (option.labelCode in chartDataComplete) {
           const obj = chartDataComplete[option.labelCode] || [];
           if (obj && obj.length > 0) {
@@ -37,11 +44,23 @@ export function bannerChartDataGen(
               0
             );
 
-            const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===selectedBannerQuestionId});
+            const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuestionData?.qId});
         const bannerQuestionType = bannerQuestion?.type;
 
-        if(bannerQuestionType==QuestionType.MULTI){
+        if(bannerQuestionData.type==QuestionType.MULTI && questionData.type==QuestionType.MULTI){
+          console.log("Multi 2 Multi");
           base = find(chartData[1],function(o){return o.labelCode===option.labelCode})?.count;
+        }
+
+        if(bannerQuestionData.type==QuestionType.MULTI && questionData.type==QuestionType.SINGLE){
+          console.log("Single 2 Multi");
+          base = find(chartData[1],function(o){return o.labelCode===option.labelCode})?.count;
+        }
+
+        if(bannerQuestionData.type==QuestionType.SINGLE && questionData.type==QuestionType.MULTI){
+          console.log("Multi 2 Single");
+          // debugger;
+          base = _.sumBy(chartData[0][option.labelCode],function(o:any){return o.count});
         }
 
 
