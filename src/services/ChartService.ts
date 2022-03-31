@@ -11,13 +11,9 @@ import { IChartState } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import ApiRequest, { ApiRequestMulti } from "../utils/ApiRequest";
 import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
-// import { ChartLabelType } from "../enums/ChartLabelType";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-// import { colorArr,decimalPrecision } from "../constants/Variables";
 import { find } from "lodash";
-// import { dataLabels } from "../redux/reducers/chartReducer";
-// import { round } from "../utils/Utility";
 
 export const fetchChartData = async (
   qId?: string,
@@ -67,12 +63,9 @@ export const fetchChartData = async (
       bannerQuestion: bannerQuesId,
     };
 
-   
-
-    let response:any = "";
-    // debugger;
-
-    if(bannerQuestionType==QuestionType.MULTI && type){
+   let response:any = "";
+ 
+ if(bannerQuestionType==QuestionType.MULTI && type){
       dispatch(setChartLoading(true))
       response = await ApiRequestMulti.request(ApiUrl.CHART, "POST", body);
     }else{
@@ -98,11 +91,7 @@ export const fetchChartData = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
-      // if(bannerQuesId){
-
-        
-        if(bannerQuestionType==QuestionType.MULTI && type){
-          // debugger;
+    if(bannerQuestionType==QuestionType.MULTI && type){
           const updatedBody = {...body,bannerQuestion:""};
           const baseChartresponse = await ApiRequestMulti.request(ApiUrl.CHART, "POST", updatedBody);
           console.log(baseChartresponse.data.chartData)
@@ -117,11 +106,8 @@ export const fetchChartData = async (
               response.data.bannerQuestionData
             ),
           };
-          // debugger;
-          
-          dispatch(setChartLoading(false))
+     dispatch(setChartLoading(false))
         }
-      // }
 
       else{
         chartData.chartOptions = {
@@ -134,13 +120,7 @@ export const fetchChartData = async (
           ),
         };
       }
-
-     
-      // debugger;
-      
-      // dispatch(setChartLoading(false))
-     
-    }
+  }
   } catch (error) {
     console.log(error);
   }
@@ -540,32 +520,24 @@ export const transposeChart = () => {
   
 };
 
-
 export const transposeChartMulti = async() =>{
- // debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
-  let chartData: IChartState = JSON.parse(JSON.stringify(chart));
 
-    // if(chart.questionData?.type == QuestionType.MULTI && chart.bannerQuestionData?.type == QuestionType.MULTI){
-    // debugger;
-    dispatch(setChartLoading(false));
+   dispatch(setChartLoading(false));
     if(transposed){
-      // debugger;
      const chartData =  await fetchChartData(questions.selectedBannerQuestionId, questions.selectedQuestionId,)
 
       dispatch(setChartData(chartData));
       dispatch(setChartTranspose(transposed));
       
     }else{
-      // dispatch(setChartLoading(false));
       const chartData = await  fetchChartData(questions.selectedQuestionId,questions.selectedBannerQuestionId);
      dispatch(setChartData(chartData));
       dispatch(setChartTranspose(transposed));
 
     }
-    
-  // }
+
 }

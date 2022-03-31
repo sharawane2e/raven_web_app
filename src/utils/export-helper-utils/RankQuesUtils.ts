@@ -1,18 +1,8 @@
-// import { gridChartDataGen } from "./GridQuesUtils";
-
-// export function rankChartDataGen(
-//   questionData: any,
-//   chartData: any,
-//   baseCount: any
-// ) {
-//   return gridChartDataGen(questionData, chartData, baseCount);
-// }
-
 import { decimalPrecision } from "../../constants/Variables";
 import { round } from "../Utility";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
-import _,{ filter } from "lodash";
+import _ from "lodash";
 
 export function rankChartDataGen(
   questionData: any,

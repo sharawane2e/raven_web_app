@@ -9,11 +9,9 @@ const initialState = {
 
 const sidebarReducer = createReducer(initialState, (builder) => {
   builder.addCase(toggleSidebar, (state, action) => {
-    // debugger;
     return {
       ...state,
       open: action.payload === undefined ? !state.open : !!action.payload,
-      //   open: !state.open,
     };
   });
   builder.addCase(toggleSidebarMobile, (state, action) => {
