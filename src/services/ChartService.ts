@@ -55,7 +55,11 @@ export const fetchChartData = async (
     const bannerQuesId = bannerQuestionId
       ? bannerQuestionId
       : selectedBannerQuestionId;
+     // debugger
     const type = questionList.find((ques: any) => ques.qId === quesId)?.type || "";
+   const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
+   const bannerQuestionType = bannerQuestion?.type;
+
     const body = {
       qId: quesId,
       type: type,
@@ -63,8 +67,7 @@ export const fetchChartData = async (
       bannerQuestion: bannerQuesId,
     };
 
-    const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
-    const bannerQuestionType = bannerQuestion?.type;
+   
 
     let response:any = "";
     // debugger;
@@ -314,7 +317,7 @@ export const changeChartType = (newChartType: ChartType) => {
 };
 
 export const transposeChart = () => {
-  // debugger;
+  //debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -539,7 +542,7 @@ export const transposeChart = () => {
 
 
 export const transposeChartMulti = async() =>{
-  debugger;
+ // debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -551,7 +554,7 @@ export const transposeChartMulti = async() =>{
     dispatch(setChartLoading(false));
     if(transposed){
       // debugger;
-     const chartData =  await fetchChartData(questions.selectedBannerQuestionId, questions.selectedQuestionId)
+     const chartData =  await fetchChartData(questions.selectedBannerQuestionId, questions.selectedQuestionId,)
 
       dispatch(setChartData(chartData));
       dispatch(setChartTranspose(transposed));
