@@ -17,7 +17,7 @@ import {
   toggleSidebar,
   toggleSidebarMobile,
 } from '../../redux/actions/sidebarAction';
-
+import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
 
 export interface AppbarProps {
@@ -82,8 +82,9 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           /> */}
           <div className="public-form__client-logo client-logo__icons">
             {/* <Boehringer onClick={() => history.push('/home')} /> */}
-            <Boehringer onClick={refreshPage} />
+            <Boehringer />
           </div>
+          <HomeIcon className="home-icon" onClick={refreshPage} />
         </div>
         <div
           className="menu-icon"
