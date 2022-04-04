@@ -57,8 +57,8 @@ export const tableConfig: pptxgen.TableProps = {
   autoPageHeaderRows: 1,
   autoPageLineWeight: 10,
   autoPageCharWeight: 10,
-  autoPageRepeatHeader: false,
+  autoPageRepeatHeader: true,
   autoPageSlideStartY: 0.9,
-  fontFace: "Arial" 
-    
+  // fill:{color:"#b8e08c"},
+  
 };
