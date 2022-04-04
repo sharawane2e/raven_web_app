@@ -214,7 +214,7 @@ const getMultiChartOptions = (
 
     if (chartType === ChartType.STACK) {
       data.map((element: any, index: number) => {
-        console.log("element", element);
+        //console.log("element", element);
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -223,6 +223,7 @@ const getMultiChartOptions = (
             y: element.y,
             numberValue: element.numberValue,
             percentageValue: element.percentageValue,
+            baseCount:baseCount
           },
         ];
         series.push({ name, color, data, dataLabels });

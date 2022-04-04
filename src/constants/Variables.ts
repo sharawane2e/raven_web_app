@@ -1,4 +1,4 @@
-export const accessTokenKey = "nxtgen_dashboard_access_token";
+export const accessTokenKey = "cello_dashboard_access_token";
 
 export const colorArr = [
 

@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cello/210394/static/css/main.c7499c28.chunk.css",
-    "main.js": "/cello/210394/static/js/main.6107614c.chunk.js",
-    "main.js.map": "/cello/210394/static/js/main.6107614c.chunk.js.map",
+    "main.js": "/cello/210394/static/js/main.22eaff8a.chunk.js",
+    "main.js.map": "/cello/210394/static/js/main.22eaff8a.chunk.js.map",
     "runtime-main.js": "/cello/210394/static/js/runtime-main.7d689b50.js",
     "runtime-main.js.map": "/cello/210394/static/js/runtime-main.7d689b50.js.map",
     "static/css/2.029a9c87.chunk.css": "/cello/210394/static/css/2.029a9c87.chunk.css",
@@ -69,6 +69,6 @@
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.95fd5194.chunk.js",
     "static/css/main.c7499c28.chunk.css",
-    "static/js/main.6107614c.chunk.js"
+    "static/js/main.22eaff8a.chunk.js"
   ]
 }
