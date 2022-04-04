@@ -513,6 +513,7 @@ export const transposeChart = () => {
         chartDataClone.bannerQuestionData,
         undefined,
         transposed
+
       ),
     };
     dispatch(setChartData(chartDataClone));

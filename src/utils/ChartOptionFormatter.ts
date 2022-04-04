@@ -64,10 +64,7 @@ const getMultiChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any
 ): any => {
-  // debugger;
-  // const {
-  //   questions: { selectedBannerQuestionId, questionList,bannerQuestionList },
-  // } = store.getState();
+  
   const {
     questions: {questionList,bannerQuestionList },
   } = store.getState();
@@ -91,7 +88,6 @@ const getMultiChartOptions = (
   } = chartOptionsData;
 
   if (selectedBannerQuestionId) {
-    // debugger;
     const categories: string[] = [];
     const series: any[] = [];
 
@@ -144,23 +140,6 @@ const getMultiChartOptions = (
             count = label.count;
           }
 
-          // if (label) {
-
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-          //     percentageValue,
-          //     numberValue,
-          //   });
-          // } else {
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-
-          //   });
-          // }
           if (label) {
             let percentageValue = (label.count / localBase) * 100;
             let numberValue = label.count;
@@ -170,28 +149,9 @@ const getMultiChartOptions = (
               y: count !== null ? round(count, decimalPrecision) : 0,
               percentageValue,
               numberValue,
-              localBase,
+              baseCount:localBase,
             });
           }
-
-          // if(chartType==ChartType.LINE){
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count !== null ? round(count, decimalPrecision) : 0,
-          //     percentageValue,
-          //     numberValue
-          //   });
-          // }
-          // else {
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-          //     percentageValue,
-          //     numberValue,
-          //   });
-          //}
         }
       }
 
@@ -237,7 +197,7 @@ const getMultiChartOptions = (
       } else {
         plotValue = count;
       }
-      // debugger;
+     
 
       if (plotValue > 0)
         data.push({
@@ -367,23 +327,7 @@ const getSingleChartOptions = (
             count = label.count;
           }
 
-          // if (label) {
-
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-          //     percentageValue,
-          //     numberValue,
-          //   });
-          // } else {
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-
-          //   });
-          // }
+         
           if (label) {
             let percentageValue = (label.count / localBase) * 100;
             let numberValue = label.count;
@@ -397,24 +341,7 @@ const getSingleChartOptions = (
             });
           }
 
-          // if(chartType==ChartType.LINE){
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count !== null ? round(count, decimalPrecision) : 0,
-          //     percentageValue,
-          //     numberValue
-          //   });
-          // }
-          // else {
-          //   data.push({
-          //     name: quesOption.labelText,
-          //     // y: +count.toFixed(decimalPrecision),
-          //     y: count > 0 ? round(count, decimalPrecision) : null,
-          //     percentageValue,
-          //     numberValue,
-          //   });
-          //}
+        
         }
       }
 
@@ -450,9 +377,7 @@ const getSingleChartOptions = (
       if (label) {
         count = label.count;
       }
-      // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
       let plotValue;
-      // plotValue = (count / baseCount) * 100;
       let percentageValue = (count / baseCount) * 100;
       let numberValue = count;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -460,9 +385,7 @@ const getSingleChartOptions = (
       } else {
         plotValue = count;
       }
-      // debugger;
-
-      if (plotValue > 0)
+           if (plotValue > 0)
         data.push({
           name: option.labelText,
           // y: round(plotValue, decimalPrecision),
@@ -476,10 +399,7 @@ const getSingleChartOptions = (
     const series: any[] = [];
 
     if (chartType === ChartType.STACK) {
-      // console.log("Stack");
       data.map((element: any, index: number) => {
-        // console.log("element", element);
-
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -569,22 +489,6 @@ const getRankChartOptions = (
 
       let newBaseCount = 0;
 
-      // chartData.forEach(function (cv: any, index: any) {
-      //   // debugger;
-      //   // console.log(cv["options"]);
-
-      //   cv["options"].forEach(function (cv2: any, index2: any) {
-      //     // debugger;
-      //     // console.log("cv2", cv2);
-      //     // console.log("cv2.option",cv2.option);
-      //     // console.log("label.option",label.option);
-      //     if (label) {
-      //       if (cv2.option == label.option) {
-      //         newBaseCount = newBaseCount + cv2.count;
-      //       }
-      //     }
-      //   });
-      // });
 
       if(transposed){
         newBaseCount = _.sumBy(optionData.options,function(o:any){
@@ -600,20 +504,15 @@ const getRankChartOptions = (
         })
       }
      
-
-      // console.log("newBaseCount" + newBaseCount);
-
-      let plotValue;
+   let plotValue;
       let percentageValue = (count / newBaseCount) * 100;
       let numberValue = count;
-      // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / newBaseCount) * 100;
       } else {
         plotValue = count;
       }
 
-      // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
         console.log(plotValue);
         data.push({
@@ -714,7 +613,7 @@ const getGridChartOptions = (
 
       // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
-        console.log(plotValue);
+        //console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
@@ -757,6 +656,7 @@ const getGridMultiChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
+  debugger
   const categories = [];
   const series = [];
 
@@ -868,18 +768,6 @@ const getToolTip = () => {
     '<span style="font-size:11px">{series.name}</span><br>';
   tooltip["pointFormat"] =
     "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
-
-  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
-  //   tooltip["headerFormat"] =
-  //     '<span style="font-size:11px">{series.name}</span><br>';
-  //   tooltip["pointFormat"] =
-  //     "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>";
-  // } else {
-  //   tooltip["headerFormat"] =
-  //     '<span style="font-size:11px">{series.name}</span><br>';
-  //   tooltip["pointFormat"] =
-  //     "<span>{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>";
-  // }
 
   return tooltip;
 };
