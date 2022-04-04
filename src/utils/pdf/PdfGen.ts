@@ -64,12 +64,37 @@ export const generatePdf = async () => {
       qWordBreak,
       lWordBreak
     );
-    const row = tableChartDataGen();
+    const tableRows = tableChartDataGen();
     autoTable(doc, { html: "#my-table" });
+
+
+    const [maxValue,minValue] = tableRows?.minmax[0];
+  
+     var output:any = [];
+  
+      tableRows.rows.forEach((rowData)=>{
+        var rowArray:any = [];
+       rowData.forEach(function(item, index) {
+        const currentMax = maxValue?.[index-1];
+        const currentMin = minValue?.[index-1];
+        const options = {
+          fillColor : 'ffffff',
+          bold: false
+        }
+        if(rowData[index]===currentMax) {options['fillColor']='b8e08c';options['bold']=true;}
+        else if(rowData[index]===currentMin) {options['fillColor']='fbd9d4';options['bold']=true;};
+         rowArray.push({ content:rowData[index], styles:{ ...options} })
+   
+      });
+  
+      output.push(rowArray);
+      })
+  
 
     autoTable(doc, {
       // head: [row[0]],
-      body: [...row],
+      body: output,
+      //body: [...tableRow?.rows],
       startY: 40,
       styles: { fontSize: 6 },
     });
@@ -144,3 +169,4 @@ export const generatePdf = async () => {
 
   doc.save(exportPrefix + questionData?.labelText + ".pdf");
 };
+

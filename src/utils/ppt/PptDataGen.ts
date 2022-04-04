@@ -29,8 +29,6 @@ export function pptDataGen(
     chart: { chartType, chartOrientation,chartLabelType },
   } = store.getState();
 
-  // debugger
-
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let seriesData: any[] = [];
@@ -38,14 +36,36 @@ export function pptDataGen(
 
   seriesData = chartDataGen();
 
-  
   if (chartType === ChartType.TABLE) {
-    //Used this code for table 
-    const row = tableChartDataGen();
-    slide.addTable(row, {
-      ...tableConfig,
+  
+    const tableRows = tableChartDataGen();
+
+  const [maxValue,minValue] = tableRows?.minmax[0];
+
+   var output:any = [];
+
+    tableRows.rows.forEach((rowData)=>{
+      var rowArray:any = [];
+     rowData.forEach(function(item, index) {
+      const currentMax = maxValue?.[index-1];
+      const currentMin = minValue?.[index-1];
+      const options = {
+        fill : 'ffffff',
+        bold: false
+      }
+      if(rowData[index]===currentMax) {options['fill']='b8e08c';options['bold']=true;}
+      else if(rowData[index]===currentMin) {options['fill']='fbd9d4';options['bold']=true;};
+       rowArray.push({ text:rowData[index], options:{ ...options} })
+ 
     });
-  } else {
+
+    output.push(rowArray);
+    })
+
+    slide.addTable( output, {...tableConfig} );
+
+  } 
+  else {
     let pptChartType;
 
     if (chartType === ChartType.LINE) {
@@ -93,3 +113,4 @@ export function pptDataGen(
   }
   return slide;
 }
+
