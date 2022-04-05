@@ -8,4 +8,6 @@ export interface IQuestion extends IBaseQuestion {
   active: boolean;
   netAllowed: boolean;
   labelText: string;
+  isGroupNet:boolean;
+  groupNetData:any[];
 }

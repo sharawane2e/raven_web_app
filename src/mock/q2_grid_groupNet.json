@@ -136,12 +136,12 @@
       "isGroupNet": true,
       "groupNetData": [
         {
-          "seriesName": "Top",
-          "scaleLabelCodes": [1, 2, 3]
+          "labelText": "Top",
+          "labelCode": ["1", "2"]
         },
-        { "seriesName": "Medium", "scaleLabelCodes": [5] },
-        { "seriesName": "Low", "scaleLabelCodes": [6, 7] },
-        { "seriesName": "Lowest", "scaleLabelCodes": [6, 7] }
+        { "labelText": "Medium", "labelCode": ["5"] },
+        { "labelText": "Low", "labelCode": ["6", "7"] },
+        { "labelText": "Lowest", "labelCode": ["8", "9"] }
       ],
       "isMean": true,
       "split": false,

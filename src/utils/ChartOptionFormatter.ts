@@ -558,7 +558,7 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
-  debugger;
+ 
   const categories = [];
   const series = [];
 
@@ -574,12 +574,22 @@ const getGridChartOptions = (
     chart: { chartLabelType, chartType },
   } = store.getState();
 
+  const scales = [...questionData.scale]
+
+  if(questionData.isGroupNet){
+    scales.push(...questionData.groupNetData)
+  }
+
   for (
     let scaleIndex = 0;
-    scaleIndex < questionData.scale.length;
+    scaleIndex < scales.length;
     scaleIndex++
   ) {
-    const scale = questionData.scale[scaleIndex];
+    if(scaleIndex>8){
+
+      debugger;
+    }
+    const scale = scales[scaleIndex];
     const data: any[] = [];
     for (
       let subGroupIndex = 0;
@@ -593,15 +603,33 @@ const getGridChartOptions = (
       let count = 0;
       let label;
       // debugger;
-      if (optionData) {
-        label = optionData.options.find(
-          (option: any) => option.option === scale.labelCode
-        );
 
-        if (label) {
-          count = label.count;
+      if(_.isArray(scale.labelCode)){
+        if (optionData) {
+
+          const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
+          count = _.sumBy(labels,function(o){return o.count})
+          // label = optionData.options.find(
+          //   (option: any) => option.option === scale.labelCode
+          // );
+  
+          // if (label) {
+          //   count = label.count;
+          // }
+        }
+
+      }else{
+        if (optionData) {
+          label = optionData.options.find(
+            (option: any) => option.option === scale.labelCode
+          );
+  
+          if (label) {
+            count = label.count;
+          }
         }
       }
+     
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       let percentageValue = (count / base) * 100;
@@ -643,6 +671,8 @@ const getGridChartOptions = (
         dataLabels,
       });
   }
+
+  debugger;
 
   return {
     legend: {
