@@ -1,0 +1,395 @@
+{
+  "success": true,
+  "data": {
+    "questionData": {
+      "_id": "624c3bd371a2053e383beb9f",
+      "scale": [
+        { "labelText": "Daily", "labelCode": "1", "order": 0 },
+        { "labelText": "2-3 times a week", "labelCode": "2", "order": 0 },
+        { "labelText": "Weekly", "labelCode": "3", "order": 0 },
+        { "labelText": "2-3 times a month", "labelCode": "4", "order": 0 },
+        { "labelText": "Once a month", "labelCode": "5", "order": 0 },
+        {
+          "labelText": "Every other month or so",
+          "labelCode": "6",
+          "order": 0
+        },
+        { "labelText": "2-3 times a year", "labelCode": "7", "order": 0 },
+        {
+          "labelText": "Once a year / Less often",
+          "labelCode": "8",
+          "order": 0
+        },
+        { "labelText": "Never", "labelCode": "9", "order": 0 }
+      ],
+      "subGroups": [
+        {
+          "qId": "q2_1",
+          "labelText": "Walking - shorter walks, e.g. around neighbourhood ",
+          "questionText": "Walking - shorter walks, e.g. around neighbourhood ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_2",
+          "labelText": "Walking - longer walks / hikes ",
+          "questionText": "Walking - longer walks / hikes ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_3",
+          "labelText": "Cycling ",
+          "questionText": "Cycling ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_4",
+          "labelText": "Running / jogging ",
+          "questionText": "Running / jogging ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_5",
+          "labelText": "Swimming ",
+          "questionText": "Swimming ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_6",
+          "labelText": "Exercise at home ",
+          "questionText": "Exercise at home ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_7",
+          "labelText": "Strength training ",
+          "questionText": "Strength training ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_8",
+          "labelText": "High impact exercise (e.g. Zumba, Aerobics) ",
+          "questionText": "High impact exercise (e.g. Zumba, Aerobics) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_9",
+          "labelText": "Low impact exercise (e.g. yoga, tai chi, pilates) ",
+          "questionText": "Low impact exercise (e.g. yoga, tai chi, pilates) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_10",
+          "labelText": "Martial arts (e.g. karate, kung fu, jiu jitsu) ",
+          "questionText": "Martial arts (e.g. karate, kung fu, jiu jitsu) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_11",
+          "labelText": "Dancing (e.g. ballroom dance, jazz dance) ",
+          "questionText": "Dancing (e.g. ballroom dance, jazz dance) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_12",
+          "labelText": "Winter sports (e.g. skiing, snowboarding, skating) ",
+          "questionText": "Winter sports (e.g. skiing, snowboarding, skating) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_13",
+          "labelText": "Water sports (e.g. surf, windsurf, kite surf, diving, etc.) ",
+          "questionText": "Water sports (e.g. surf, windsurf, kite surf, diving, etc.) ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_14",
+          "labelText": "Other individual sports ",
+          "questionText": "Other individual sports ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_15",
+          "labelText": "Other team sports ",
+          "questionText": "Other team sports ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_16",
+          "labelText": "Going to the gym ",
+          "questionText": "Going to the gym ",
+          "type": "S"
+        },
+        {
+          "qId": "q2_17",
+          "labelText": "Team sports (e.g. basketball, soccer, handball etc.) ",
+          "questionText": "Team sports (e.g. basketball, soccer, handball etc.) ",
+          "type": "S"
+        }
+      ],
+      "options": [],
+      "qId": "q2",
+      "questionText": "Walking - shorter walks, e.g. around neighbourhood (Approximately, how often do you do each of the below types of activities?)",
+      "type": "G",
+      "chartType": [],
+      "order": 9,
+      "netAllowed": false,
+      "isGroupNet": true,
+      "groupNetData": [
+        {
+          "seriesName": "Top",
+          "scaleLabelCodes": [1, 2, 3]
+        },
+        { "seriesName": "Medium", "scaleLabelCodes": [5] },
+        { "seriesName": "Low", "scaleLabelCodes": [6, 7] },
+        { "seriesName": "Lowest", "scaleLabelCodes": [6, 7] }
+      ],
+      "isMean": true,
+      "split": false,
+      "active": true,
+      "labelText": "q2-Approximately, how often do you do each of the below types of activities? "
+    },
+    "bannerQuestionData": null,
+    "chartData": [
+      {
+        "_id": "q2_15",
+        "options": [
+          { "option": "5", "count": 168 },
+          { "option": "6", "count": 147 },
+          { "option": "1", "count": 134 },
+          { "option": "3", "count": 277 },
+          { "option": "9", "count": 3409 },
+          { "option": "8", "count": 305 },
+          { "option": "4", "count": 215 },
+          { "option": "2", "count": 238 },
+          { "option": "7", "count": 151 }
+        ]
+      },
+      {
+        "_id": "q2_12",
+        "options": [
+          { "option": "2", "count": 141 },
+          { "option": "3", "count": 156 },
+          { "option": "8", "count": 534 },
+          { "option": "7", "count": 256 },
+          { "option": "4", "count": 129 },
+          { "option": "6", "count": 105 },
+          { "option": "5", "count": 117 },
+          { "option": "1", "count": 93 },
+          { "option": "9", "count": 3513 }
+        ]
+      },
+      {
+        "_id": "q2_11",
+        "options": [
+          { "option": "1", "count": 159 },
+          { "option": "7", "count": 196 },
+          { "option": "2", "count": 271 },
+          { "option": "9", "count": 3205 },
+          { "option": "8", "count": 410 },
+          { "option": "6", "count": 149 },
+          { "option": "3", "count": 288 },
+          { "option": "5", "count": 153 },
+          { "option": "4", "count": 213 }
+        ]
+      },
+      {
+        "_id": "q2_2",
+        "options": [
+          { "option": "7", "count": 212 },
+          { "option": "3", "count": 699 },
+          { "option": "1", "count": 803 },
+          { "option": "5", "count": 302 },
+          { "option": "6", "count": 227 },
+          { "option": "9", "count": 1188 },
+          { "option": "8", "count": 276 },
+          { "option": "2", "count": 844 },
+          { "option": "4", "count": 493 }
+        ]
+      },
+      {
+        "_id": "q2_9",
+        "options": [
+          { "option": "2", "count": 594 },
+          { "option": "5", "count": 142 },
+          { "option": "6", "count": 111 },
+          { "option": "1", "count": 406 },
+          { "option": "4", "count": 236 },
+          { "option": "7", "count": 128 },
+          { "option": "9", "count": 2677 },
+          { "option": "8", "count": 270 },
+          { "option": "3", "count": 480 }
+        ]
+      },
+      {
+        "_id": "q2_17",
+        "options": [
+          { "option": "5", "count": 174 },
+          { "option": "7", "count": 152 },
+          { "option": "2", "count": 375 },
+          { "option": "6", "count": 150 },
+          { "option": "1", "count": 185 },
+          { "option": "9", "count": 3070 },
+          { "option": "8", "count": 307 },
+          { "option": "3", "count": 365 },
+          { "option": "4", "count": 266 }
+        ]
+      },
+      {
+        "_id": "q2_14",
+        "options": [
+          { "option": "8", "count": 307 },
+          { "option": "4", "count": 282 },
+          { "option": "3", "count": 368 },
+          { "option": "6", "count": 125 },
+          { "option": "5", "count": 155 },
+          { "option": "9", "count": 3109 },
+          { "option": "1", "count": 201 },
+          { "option": "7", "count": 138 },
+          { "option": "2", "count": 359 }
+        ]
+      },
+      {
+        "_id": "q2_13",
+        "options": [
+          { "option": "3", "count": 170 },
+          { "option": "6", "count": 147 },
+          { "option": "5", "count": 126 },
+          { "option": "1", "count": 101 },
+          { "option": "9", "count": 3537 },
+          { "option": "7", "count": 224 },
+          { "option": "8", "count": 427 },
+          { "option": "4", "count": 163 },
+          { "option": "2", "count": 149 }
+        ]
+      },
+      {
+        "_id": "q2_4",
+        "options": [
+          { "option": "6", "count": 112 },
+          { "option": "3", "count": 451 },
+          { "option": "5", "count": 140 },
+          { "option": "8", "count": 257 },
+          { "option": "1", "count": 505 },
+          { "option": "2", "count": 701 },
+          { "option": "7", "count": 131 },
+          { "option": "4", "count": 266 },
+          { "option": "9", "count": 2481 }
+        ]
+      },
+      {
+        "_id": "q2_6",
+        "options": [
+          { "option": "5", "count": 166 },
+          { "option": "7", "count": 113 },
+          { "option": "2", "count": 1047 },
+          { "option": "3", "count": 577 },
+          { "option": "9", "count": 1318 },
+          { "option": "1", "count": 1136 },
+          { "option": "4", "count": 329 },
+          { "option": "8", "count": 216 },
+          { "option": "6", "count": 142 }
+        ]
+      },
+      {
+        "_id": "q2_8",
+        "options": [
+          { "option": "2", "count": 394 },
+          { "option": "5", "count": 163 },
+          { "option": "3", "count": 389 },
+          { "option": "7", "count": 126 },
+          { "option": "4", "count": 233 },
+          { "option": "8", "count": 307 },
+          { "option": "1", "count": 219 },
+          { "option": "6", "count": 127 },
+          { "option": "9", "count": 3086 }
+        ]
+      },
+      {
+        "_id": "q2_1",
+        "options": [
+          { "option": "4", "count": 263 },
+          { "option": "1", "count": 2037 },
+          { "option": "7", "count": 81 },
+          { "option": "8", "count": 116 },
+          { "option": "3", "count": 588 },
+          { "option": "6", "count": 99 },
+          { "option": "5", "count": 110 },
+          { "option": "9", "count": 622 },
+          { "option": "2", "count": 1128 }
+        ]
+      },
+      {
+        "_id": "q2_16",
+        "options": [
+          { "option": "6", "count": 101 },
+          { "option": "3", "count": 369 },
+          { "option": "7", "count": 123 },
+          { "option": "9", "count": 2856 },
+          { "option": "5", "count": 129 },
+          { "option": "1", "count": 414 },
+          { "option": "4", "count": 205 },
+          { "option": "8", "count": 306 },
+          { "option": "2", "count": 541 }
+        ]
+      },
+      {
+        "_id": "q2_5",
+        "options": [
+          { "option": "2", "count": 307 },
+          { "option": "3", "count": 386 },
+          { "option": "7", "count": 488 },
+          { "option": "8", "count": 527 },
+          { "option": "6", "count": 239 },
+          { "option": "5", "count": 242 },
+          { "option": "9", "count": 2386 },
+          { "option": "4", "count": 346 },
+          { "option": "1", "count": 123 }
+        ]
+      },
+      {
+        "_id": "q2_7",
+        "options": [
+          { "option": "1", "count": 405 },
+          { "option": "5", "count": 169 },
+          { "option": "3", "count": 445 },
+          { "option": "7", "count": 106 },
+          { "option": "8", "count": 292 },
+          { "option": "2", "count": 595 },
+          { "option": "4", "count": 265 },
+          { "option": "9", "count": 2635 },
+          { "option": "6", "count": 132 }
+        ]
+      },
+      {
+        "_id": "q2_3",
+        "options": [
+          { "option": "6", "count": 161 },
+          { "option": "1", "count": 386 },
+          { "option": "7", "count": 170 },
+          { "option": "3", "count": 506 },
+          { "option": "8", "count": 325 },
+          { "option": "9", "count": 2319 },
+          { "option": "2", "count": 597 },
+          { "option": "4", "count": 377 },
+          { "option": "5", "count": 203 }
+        ]
+      },
+      {
+        "_id": "q2_10",
+        "options": [
+          { "option": "6", "count": 88 },
+          { "option": "5", "count": 112 },
+          { "option": "8", "count": 293 },
+          { "option": "4", "count": 141 },
+          { "option": "9", "count": 3852 },
+          { "option": "1", "count": 112 },
+          { "option": "7", "count": 112 },
+          { "option": "3", "count": 159 },
+          { "option": "2", "count": 175 }
+        ]
+      }
+    ],
+    "baseCount": [{ "baseCount": 5044 }]
+  },
+  "message": "Chart generated"
+}

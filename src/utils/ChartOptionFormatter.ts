@@ -558,6 +558,7 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
+  debugger;
   const categories = [];
   const series = [];
 

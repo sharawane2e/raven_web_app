@@ -7,6 +7,7 @@ import { logOutUser } from "../services/AuthService";
 import store from "../redux/store";
 import { setChartLoading } from "../redux/actions/chartActions";
 import { timeout } from "./Utility";
+import q2_grid_groupNet from '../mock/q2_grid_groupNet.json';
 
 export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
 
@@ -27,6 +28,7 @@ const ApiRequest = {
     data?: any,
     params?: AxiosRequestConfig
   ) {
+    if(data?.qId==='q2') return q2_grid_groupNet;
     let response: IApiResponse = {
       success: false,
       message: errorMessages.SERVER_ERROR,
