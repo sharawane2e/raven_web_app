@@ -10,16 +10,19 @@ export function gridChartDataGen(
 ) {
   let labels: any = [];
   let seriesData: any[] = [];
+  let labelsCode:any [];
 
   const {
     chart: { chartLabelType },
   } = store.getState();
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
+  labelsCode = questionData.scale.map((subGroup: any) => subGroup.labelCode);
   questionData.scale.forEach((scaleOption: any) => {
     seriesData.push({
       name: scaleOption.labelText,
       labels,
+      labelsCode,
       values: questionData.subGroups.map((subGroup: any) => {
         const subGroupData = chartData.find(
           (data: any) => data._id === subGroup.qId

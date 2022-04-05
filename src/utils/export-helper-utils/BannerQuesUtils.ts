@@ -20,6 +20,9 @@ export function bannerChartDataGen(
   const labels: Array<string> = questionData.options.map(
     (label: IQuestionOption) => label.labelText
   );
+  //const labelsCode: Array<string> = questionData.options.map(
+    //(label: IQuestionOption) => label.labelCode
+  //);
   let seriesData: Array<Object> = [];
   const chartDataComplete = chartData[0];
 
@@ -27,6 +30,7 @@ export function bannerChartDataGen(
   bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
     seriesData.push({
       name: scaleOption.labelText,
+      //labelsCode,
       labels,
       values: questionData.options.map((option: IQuestionOption) => {
         if (option.labelCode in chartDataComplete) {
@@ -37,7 +41,7 @@ export function bannerChartDataGen(
               0
             );
 
-        //     const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuestionData?.qId});
+        // const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuestionData?.qId});
         // const bannerQuestionType = bannerQuestion?.type;
 
         if(bannerQuestionData.type==QuestionType.MULTI && questionData.type==QuestionType.MULTI){

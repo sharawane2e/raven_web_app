@@ -55,7 +55,7 @@ export function pptDataGen(
       }
       if(rowData[index]===currentMax) {options['fill']='b8e08c';options['bold']=true;}
       else if(rowData[index]===currentMin) {options['fill']='fbd9d4';options['bold']=true;};
-       rowArray.push({ text:rowData[index], options:{ ...options} })
+       rowArray.push({ text:rowData[index].toString(), options:{ ...options} })
  
     });
 

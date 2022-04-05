@@ -8,9 +8,9 @@ export function tableChartDataGen() {
 
   seriesData = chartDataGen();
 
-  // let complteTable = [];
   let rows = [];
   let minmax = [];
+  //let nettingStr = [];
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
@@ -22,68 +22,91 @@ export function tableChartDataGen() {
     seriesData.forEach((index: any) => {
       scale.push(index.name);
     });
-    rows.push(["", ...scale, "Total"]);
+    rows.push(["", ...scale, "Total", "Top"]);
     let subRow: any = [];
-    let totalRow:any = [];    
+    let totalRow:any = [];
+    let topFirst:any = [];    
 
-    // console.log(seriesData[0])
    if(seriesData[0])
       for (let k = 0; k < seriesData[0].labels.length; k++) {
         let totalrowSub=0;
-        //const updateRow: any[] = [];
+        let topFisrtSub=0;
+
+        //console.log(seriesData[0].labelsCode);
         
-        seriesData.forEach((d: any) => {          
+        seriesData.forEach((d: any, index:any) => { 
+          
+          //console.log(d.labelsCode[index] == "1" || d.labelsCode[index] == "2")
+          
           if(chart?.chartLabelType===ChartLabelType.PERCENTAGE){
-            if (d.values[k]) {
-              //subRow.push(round(d.values[k], 1) + "%");
+            if (d.values[k]) {              
               subRow.push(round(d.values[k], 1) + "%");
               totalrowSub += parseFloat(d.values[k]);
-              //updateRow.push(d.values[k]);
+              if(d.labelsCode[index] == "1" || d.labelsCode[index] == "2"){
+                topFisrtSub += parseFloat(d.values[k]);
+              }  
 
             } else {
-              //subRow.push(0 + "%");
               subRow.push(0 + "%");
               totalrowSub += 0;
-              //updateRow.push(d.values[k]);
+              topFisrtSub += 0;
             }
           }else{
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
               totalrowSub += parseFloat(d.values[k]);
-              //updateRow.push(d.values[k]);
-              //totalColomn.push(d.values)
+              if(d.labelsCode[index] == "1" || d.labelsCode[index] == "2"){
+                topFisrtSub += parseFloat(d.values[k]);
+              } 
             } else {
               subRow.push(0);
               totalrowSub += 0;
-              //updateRow.push(d.values[k]);
-              //totalColumnSub += parseFloat(d.values)
+              topFisrtSub +=0;
             }
           }
           
           
         });
         
-        //tranposedTableData.push(Math.max(...updateRow));
-        //tranposedTableDataMin.push(Math.min(...updateRow));
-       
         if(chart?.chartLabelType===ChartLabelType.PERCENTAGE){
           totalRow.push(round(totalrowSub, 1) + "%");
-          //console.log(totalrowSub)
+          topFirst.push(round(topFisrtSub, 1) + "%");
         }else{
           totalRow.push(round(totalrowSub, 1));
-          //console.log(totalrowSub)
+          topFirst.push(round(topFisrtSub, 1));
         }
         
-        //console.log(subRow);
-        rows.push([seriesData[0].labels[k], ...subRow, ...totalRow]);
+        rows.push([seriesData[0].labels[k], ...subRow, ...totalRow, ...topFirst]);
         
         minmax.push([tranposedTableData, tranposedTableDataMin]);
-        //console.log(subRow);
         subRow = [];
         totalRow= [];
+        topFirst=[];
         
       }
-}
+  }
+
+  seriesData.forEach((seriesValue: any, ind:any) => {
+
+    seriesValue.values.forEach((val: any, cIndex:any) => {
+      
+      //console.log(val)
+      if(seriesValue.labelsCode[cIndex] === "1"){
+        //console.log(val)
+      }
+      if(seriesValue.labelsCode[cIndex] === "2"){
+        //console.log(val)
+      }
+      //if(seriesValue.labelsCode[cIndex] === "1" || seriesValue.labelsCode[cIndex] === "2"){
+        //console.log(val);
+      //}
+    });
+
+    
+
+    
+  });
+
   let tColomn:any = [];
   
   seriesData.forEach((index: any) => {
@@ -128,11 +151,12 @@ export function tableChartDataGen() {
    
   });
   
-  //console.log(tColomn);
 
   minmax.push([tranposedTableData, tranposedTableDataMin]);
+  //nettingStr.push(["9", "10"]);
 
   rows.push(["Total", ...tColomn, ""]);
+  
   const complteTable={rows, minmax};
 
   return complteTable;
