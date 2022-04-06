@@ -94,7 +94,7 @@ export const fetchChartData = async (
     if(bannerQuestionType==QuestionType.MULTI && type){
           const updatedBody = {...body,bannerQuestion:""};
           const baseChartresponse = await ApiRequestMulti.request(ApiUrl.CHART, "POST", updatedBody);
-          console.log(baseChartresponse.data.chartData)
+          // console.log(baseChartresponse.data.chartData)
           chartData.chartData.push(baseChartresponse.data.chartData);
 
           chartData.chartOptions = {
@@ -156,7 +156,7 @@ export const removeEmptyDataLengends = (
   question: IQuestion,
   bannerQuestionData: any
 ) => {
-  debugger;
+  // debugger;
   
   const chartDataClone = JSON.parse(JSON.stringify(chartData));
   const uniqueLengends: any = [];
