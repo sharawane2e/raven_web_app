@@ -576,9 +576,9 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale]
 
-  if(questionData.isGroupNet){
-    scales.push(...questionData.groupNetData)
-  }
+  // if(questionData.isGroupNet){
+  //   scales.push(...questionData.groupNetData)
+  // }
 
   for (
     let scaleIndex = 0;
