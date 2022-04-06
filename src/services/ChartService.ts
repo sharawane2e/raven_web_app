@@ -13,7 +13,7 @@ import ApiRequest, { ApiRequestMulti } from "../utils/ApiRequest";
 import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
-import { find } from "lodash";
+import _, { find } from "lodash";
 
 export const fetchChartData = async (
   qId?: string,
@@ -156,6 +156,7 @@ export const removeEmptyDataLengends = (
   question: IQuestion,
   bannerQuestionData: any
 ) => {
+  debugger;
   
   const chartDataClone = JSON.parse(JSON.stringify(chartData));
   const uniqueLengends: any = [];
@@ -190,6 +191,10 @@ export const removeEmptyDataLengends = (
       if (uniqueLengends.includes(obj.labelCode)) filteredOptions.push(obj);
     });
     question.scale = filteredOptions;
+  }
+
+    if(question.isGroupNet){
+      question.scale.push(...question.groupNetData)
   }
 
   return [question, bannerQuestionData];
@@ -364,6 +369,7 @@ export const transposeChart = () => {
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
   } else if(  chartDataClone.questionData.type == QuestionType.GRID){
+    
     const newSubGroup: any = [];
     const newScale: any = [];
     const newChartData: any = [];
@@ -389,16 +395,28 @@ export const transposeChart = () => {
     newSubGroup.forEach((col: any, index: number) => {
       const options: any = [];
       let baseCount: number = 0;
-      chartDataClone.chartData.forEach((data: any, index: number) => {
-        const count: number = data.options.find(
-          (subOption: any) => subOption.option === col.qId
-        )?.count;
+      chartDataClone.chartData.forEach((data: any) => {
+        // if(index==9)debugger;
+        // const count: number = data.options.find(
+        //   (subOption: any) => subOption.option === col.qId
+        // )?.count;
+        const labels = _.filter(data.options,function(o){
+          if(_.isArray(col.qId)){
+
+            return col.qId.indexOf(o.option) != -1
+          }else{
+            return col.qId === o.option;
+          }  
+        
+        });
+        const count = _.sumBy(labels,function(o){return o.count})
+
         options.push({
           option: data._id,
           count: count == undefined ? 0 : count,
         });
 
-        baseCount += count == undefined ? 0 : count;
+        baseCount += count == undefined||_.isArray(data._id) ? 0 : count;
       });
       if (
         chartDataClone.questionData.type == QuestionType.GRID ||

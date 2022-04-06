@@ -440,7 +440,6 @@ const getRankChartOptions = (
   baseCount: number,
   transposed:boolean
 ): any => {
-  // debugger;
   const categories = [];
   const series = [];
 
@@ -558,7 +557,7 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
- 
+//  debugger;
   const categories = [];
   const series = [];
 
@@ -576,9 +575,9 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale]
 
-  if(questionData.isGroupNet){
-    scales.push(...questionData.groupNetData)
-  }
+  // if(questionData.isGroupNet){
+  //   scales.push(...questionData.groupNetData)
+  // }
 
   for (
     let scaleIndex = 0;
@@ -587,7 +586,7 @@ const getGridChartOptions = (
   ) {
     if(scaleIndex>8){
 
-      debugger;
+      // debugger;
     }
     const scale = scales[scaleIndex];
     const data: any[] = [];
@@ -607,7 +606,16 @@ const getGridChartOptions = (
       if(_.isArray(scale.labelCode)){
         if (optionData) {
 
-          const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
+          const labels = _.filter(optionData.options,function(o){
+            if(_.isArray()){
+
+              return scale.labelCode.indexOf(o.option) != -1
+            }else{
+
+              return scale.labelCode===o.option;
+            }
+          });
+
           count = _.sumBy(labels,function(o){return o.count})
           // label = optionData.options.find(
           //   (option: any) => option.option === scale.labelCode
@@ -672,7 +680,7 @@ const getGridChartOptions = (
       });
   }
 
-  debugger;
+  // debugger;
 
   return {
     legend: {
@@ -688,7 +696,7 @@ const getGridMultiChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
-  debugger
+  // debugger
   const categories = [];
   const series = [];
 
