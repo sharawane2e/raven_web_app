@@ -1,5 +1,5 @@
 import { decimalPrecision } from "../../constants/Variables";
-import { round } from "../Utility";
+import { getMatchedfilter, getmatchedFind, round } from "../Utility";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import _ from "lodash";
@@ -31,25 +31,32 @@ export function gridChartDataGen(
       name: scaleOption.labelText,
       labels,
       values: questionData.subGroups.map((subGroup: any) => {
-        const subGroupData = chartData.find(
-          (data: any) => data._id === subGroup.qId
-        );
+        // let subGroupData:any = "";
+        // if(_.isArray(subGroup.qId)){
+        //   subGroupData = chartData.find(
+        //     (data: any) => +_.isEqual( data._id,subGroup.qId)
+        //   );
+        // }else{
+        //   subGroupData = chartData.find(
+        //     (data: any) => data._id === subGroup.qId
+        //   );
+        // }
+
+        const subGroupData = getmatchedFind(chartData,'_id',subGroup.qId);
+       
         const base = subGroupData?.baseCount || baseCount;
         if (subGroupData) {
-          // if(index==8)debugger;
-          const dollar = subGroupData?.options?.find(
-            (scaleData: any) => scaleData.option === scaleOption.labelCode
-          )?.count;
 
-          const labels = _.filter(subGroupData?.options,function(o){
+          // const labels = _.filter(subGroupData?.options,function(o){
 
-            if(_.isArray(scaleOption.labelCode)){
-              return scaleOption.labelCode.indexOf(o.option) != -1;
-            }else{
-              return scaleOption.labelCode ===o.option;
-            }
+          //   if(_.isArray(scaleOption.labelCode)){
+          //     return scaleOption.labelCode.indexOf(o.option) != -1;
+          //   }else{
+          //     return scaleOption.labelCode ===o.option;
+          //   }
             
-          });
+          // });
+          const labels = getMatchedfilter(subGroupData?.options,'option',scaleOption.labelCode)
           const data = _.sumBy(labels,function(o){return o.count})
 
           if (chartLabelType === ChartLabelType.PERCENTAGE) {

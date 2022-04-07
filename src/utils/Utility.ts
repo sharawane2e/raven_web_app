@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { decimalPrecision } from "../constants/Variables";
 
 export function round(value: number, precision: number) {
@@ -12,4 +13,31 @@ export function formatTableData(value: number, divisor: number) {
 
 export function timeout(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function getmatchedFind(collection:any,collectionKey:any,compareWith:any){
+  if(_.isArray(compareWith)){
+    return (collection.find(
+      (data: any) => +_.isEqual( data[collectionKey],compareWith)
+    ));
+  }else{
+    return (
+      collection.find(
+        (data: any) => data[collectionKey] === compareWith
+      )
+    )
+  }
+
+}
+
+export function getMatchedfilter(collection:any,collectionKey:any,compareWith:any){
+  return(_.filter(collection,function(o){
+
+    if(_.isArray(compareWith)){
+      return compareWith.indexOf(o[collectionKey]) != -1;
+    }else{
+      return compareWith ===o[collectionKey];
+    }
+    
+  }));
 }

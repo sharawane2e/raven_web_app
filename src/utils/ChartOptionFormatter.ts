@@ -10,7 +10,7 @@ import { dataLabels } from "../redux/reducers/chartReducer";
 import store from "../redux/store";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { IQuestion } from "../types/IQuestion";
-import { round } from "./Utility";
+import { getMatchedfilter, getmatchedFind, round } from "./Utility";
 import _, { find, omit } from "lodash";
 import { ChartOrientation } from "../enums/ChartOrientation";
 
@@ -563,9 +563,25 @@ const getGridChartOptions = (
   const series = [];
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
-    const subGroupData = chartData.find(
-      (data: any) => data._id === subGroup.qId
-    );
+    // let subGroupData:any="";
+    // if(_.isArray(subGroup.qId)){
+
+    //   // subGroupData = chartData.find(
+    //   //   (data: any) => data._id === subGroup.qId
+    //   // );
+    //   subGroupData = chartData.find(
+    //     (data: any) => +_.isEqual( data._id,subGroup.qId)
+    //   );
+    //   // subGroupData = _.isEqual(subGroup,subGroup.qId)
+
+    // }else{
+
+    //   subGroupData = chartData.find(
+    //     (data: any) => data._id === subGroup.qId
+    //   );
+    // }
+
+    const subGroupData = getmatchedFind(chartData,'_id',subGroup.qId);
     if (subGroupData && subGroupData.options.length) return true;
     return false;
   });
@@ -598,37 +614,59 @@ const getGridChartOptions = (
     ) {
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
-      const optionData = chartData.find((c: any) => c._id === subGroup.qId);
 
-      let count = 0;
-      let label;
+      // let optionData:any="";
+
+      // if(_.isArray(subGroup.qId)){
+      //   optionData = chartData.find(
+      //     (data: any) => +_.isEqual( data._id,subGroup.qId)
+      //   );
+      // }else{
+      //   optionData = chartData.find((c: any) => c._id === subGroup.qId);
+      // }
+
+      const optionData = getmatchedFind(chartData,'_id',subGroup.qId);
+
+      // let count = 0;
+      // let label;
       // debugger;
 
-      if(_.isArray(scale.labelCode)){
-        if (optionData) {
+      // if(_.isArray(scale.labelCode)){
+      //   // debugger;
+      //   // if (optionData) {
 
-          const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
-          count = _.sumBy(labels,function(o){return o.count})
-          // label = optionData.options.find(
-          //   (option: any) => option.option === scale.labelCode
-          // );
+      //     const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
+      //     count = _.sumBy(labels,function(o){return o.count})
+      //     // label = optionData.options.find(
+      //     //   (option: any) => option.option === scale.labelCode
+      //     // );
   
-          // if (label) {
-          //   count = label.count;
-          // }
-        }
+      //     // if (label) {
+      //     //   count = label.count;
+      //     // }
+      //   // }
 
-      }else{
-        if (optionData) {
-          label = optionData.options.find(
-            (option: any) => option.option === scale.labelCode
-          );
-  
-          if (label) {
-            count = label.count;
-          }
-        }
-      }
+      // }else{
+      //   if (optionData) {
+      //     if(_.isArray(optionData._id)){
+      //       const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
+      //       count = _.sumBy(labels,function(o){return o.count})
+
+      //     }else{
+      //       label = optionData.options.find(
+      //         (option: any) => option.option === scale.labelCode
+      //       );
+    
+      //       if (label) {
+      //         count = label.count;
+      //       }
+      //     }
+         
+      //   }
+      // }
+
+      const labels = getMatchedfilter(optionData.options,'option',scale.labelCode);
+      const count =  _.sumBy(labels,function(o){return o.count});
      // console.log("base count",count)
      
       const base = optionData?.baseCount || baseCount;
