@@ -5,10 +5,8 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function tableChartDataGen() {
   let seriesData = [];
+   seriesData = chartDataGen();
 
-  seriesData = chartDataGen();
-
-  // let complteTable = [];
   let rows = [];
   let minmax = [];
 
@@ -25,60 +23,65 @@ export function tableChartDataGen() {
     rows.push(["", ...scale, "Total"]);
     let subRow: any = [];
     let totalRow:any = [];    
-
+    let scaleIndex:any =0;
     // console.log(seriesData[0])
+    let scaleLength:any=""
+    if(chart.questionData?.groupNetData){
+      scaleLength = chart.questionData?.groupNetData.length;
+    }
+    console.log("scaleLength",scaleLength)
+    
+    
+    if(chart.chartTranspose){
+      scaleIndex = scale.length
+    }else{
+      scaleIndex = scale.length-scaleLength
+    }
+
    if(seriesData[0])
+      
       for (let k = 0; k < seriesData[0].labels.length; k++) {
         let totalrowSub=0;
-        //const updateRow: any[] = [];
         
-        seriesData.forEach((d: any) => {          
+        
+        seriesData.forEach((d: any, rIndex:any) => {          
           if(chart?.chartLabelType===ChartLabelType.PERCENTAGE){
             if (d.values[k]) {
-              //subRow.push(round(d.values[k], 1) + "%");
               subRow.push(round(d.values[k], 1) + "%");
-              totalrowSub += parseFloat(d.values[k]);
-              //updateRow.push(d.values[k]);
+              if(rIndex < scaleIndex){
+                 totalrowSub += parseFloat(d.values[k]);
+               }
 
             } else {
-              //subRow.push(0 + "%");
               subRow.push(0 + "%");
               totalrowSub += 0;
-              //updateRow.push(d.values[k]);
             }
           }else{
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-              totalrowSub += parseFloat(d.values[k]);
-              //updateRow.push(d.values[k]);
-              //totalColomn.push(d.values)
+              if(rIndex < scaleIndex){
+                totalrowSub += parseFloat(d.values[k]);
+              }
             } else {
               subRow.push(0);
               totalrowSub += 0;
-              //updateRow.push(d.values[k]);
-              //totalColumnSub += parseFloat(d.values)
             }
           }
           
           
         });
+
+
         
-        //tranposedTableData.push(Math.max(...updateRow));
-        //tranposedTableDataMin.push(Math.min(...updateRow));
-       
         if(chart?.chartLabelType===ChartLabelType.PERCENTAGE){
           totalRow.push(round(totalrowSub, 1) + "%");
-          //console.log(totalrowSub)
         }else{
           totalRow.push(round(totalrowSub, 1));
-          //console.log(totalrowSub)
         }
         
-        //console.log(subRow);
         rows.push([seriesData[0].labels[k], ...subRow, ...totalRow]);
         
         minmax.push([tranposedTableData, tranposedTableDataMin]);
-        //console.log(subRow);
         subRow = [];
         totalRow= [];
         

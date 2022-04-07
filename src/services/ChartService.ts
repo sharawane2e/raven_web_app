@@ -14,6 +14,7 @@ import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
 import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import _, { find } from "lodash";
+import { getMatchedfilter } from "../utils/Utility";
 
 export const fetchChartData = async (
   qId?: string,
@@ -51,7 +52,7 @@ export const fetchChartData = async (
     const bannerQuesId = bannerQuestionId
       ? bannerQuestionId
       : selectedBannerQuestionId;
-     // debugger
+
     const type = questionList.find((ques: any) => ques.qId === quesId)?.type || "";
    const bannerQuestion = find(bannerQuestionList,function(o){return o.qId===bannerQuesId});
    const bannerQuestionType = bannerQuestion?.type;
@@ -204,7 +205,6 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
     if (question.type === QuestionType.GRID_MULTI) {
       return baseCount[0]?.baseCount[0]?.baseCount || 0;
     } else if (question.type === QuestionType.RANK) {
-      // return baseCount[0]?.count;
       return baseCount.reduce((basevalue, bcount) =>
         basevalue.count > bcount.count ? basevalue : bcount
       ).count;
@@ -230,7 +230,6 @@ export const changeChartType = (newChartType: ChartType) => {
   ) {
     
     dispatch(setChartType(ChartType.COLUMN));
-    //dispatch(setChartData(chartDataClone));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
@@ -256,10 +255,6 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
     dispatch(setChartOrientation(lineSetportrait));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "line",
-    // };
   } else if (newChartType === ChartType.PIE) {
     dispatch(setChartType(ChartType.PIE));
 
@@ -274,15 +269,10 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "pie",
-    // };
   } else {
-    //  debugger;
+
     dispatch(setChartType(ChartType.STACK));
-    
-    chartDataClone.chartOptions = {
+     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions["chart"],
@@ -292,27 +282,19 @@ export const changeChartType = (newChartType: ChartType) => {
     };
     
     chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
-
     dispatch(setChartData(chartDataClone));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "column",
-    // };
   }
 };
 
 export const transposeChart = () => {
-  //debugger;
   const { chart,questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
-  // let chartData: IChartState = JSON.parse(JSON.stringify(chart));
 
   if (
     chartDataClone.questionData.type == QuestionType.RANK 
   ) {
-    // debugger
     const newSubGroup: any = [];
     const newScale: any = [];
     const newChartData: any = [];
@@ -340,7 +322,7 @@ export const transposeChart = () => {
       const options: any = [];
       let baseCount: number = 0;
       chartDataClone.chartData.forEach((data: any, index: number) => {
-        // debugger;
+  ;
         const count: number = data.options.find(
           (subOption: any) => subOption.option === col.qId
         )?.count;
@@ -396,21 +378,8 @@ export const transposeChart = () => {
       const options: any = [];
       let baseCount: number = 0;
       chartDataClone.chartData.forEach((data: any) => {
-        // if(index==9)debugger;
-        // const count: number = data.options.find(
-        //   (subOption: any) => subOption.option === col.qId
-        // )?.count;
-        const labels = _.filter(data.options,function(o){
-          if(_.isArray(col.qId)){
-
-            return col.qId.indexOf(o.option) != -1
-          }else{
-            return col.qId === o.option;
-          }  
-        
-        });
-        const count = _.sumBy(labels,function(o){return o.count})
-
+        const labels = getMatchedfilter(data.options,'option',col.qId);
+        const count =  _.sumBy(labels,function(o){return o.count});
         options.push({
           option: data._id,
           count: count == undefined ? 0 : count,
@@ -494,7 +463,7 @@ export const transposeChart = () => {
         const count: number = data.options.find(
           (subOption: any) => subOption.option === col.qId
         )?.count;
-        // debugger;
+  ;
         withoutTransposeBaseCount = data.options.find((subOption: any) => {
           if (subOption.option === col.qId && subOption.baseCount) {
             return subOption.baseCount;

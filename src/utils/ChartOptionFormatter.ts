@@ -563,25 +563,7 @@ const getGridChartOptions = (
   const series = [];
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
-    // let subGroupData:any="";
-    // if(_.isArray(subGroup.qId)){
-
-    //   // subGroupData = chartData.find(
-    //   //   (data: any) => data._id === subGroup.qId
-    //   // );
-    //   subGroupData = chartData.find(
-    //     (data: any) => +_.isEqual( data._id,subGroup.qId)
-    //   );
-    //   // subGroupData = _.isEqual(subGroup,subGroup.qId)
-
-    // }else{
-
-    //   subGroupData = chartData.find(
-    //     (data: any) => data._id === subGroup.qId
-    //   );
-    // }
-
-    const subGroupData = getmatchedFind(chartData,'_id',subGroup.qId);
+  const subGroupData = getmatchedFind(chartData,'_id',subGroup.qId);
     if (subGroupData && subGroupData.options.length) return true;
     return false;
   });
@@ -592,19 +574,13 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale]
 
-  // if(questionData.isGroupNet){
-  //   scales.push(...questionData.groupNetData)
-  // }
 
   for (
     let scaleIndex = 0;
     scaleIndex < scales.length;
     scaleIndex++
   ) {
-    // if(scaleIndex>8){
 
-    //   debugger;
-    // }
     const scale = scales[scaleIndex];
     const data: any[] = [];
     for (
@@ -615,74 +591,22 @@ const getGridChartOptions = (
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
 
-      // let optionData:any="";
-
-      // if(_.isArray(subGroup.qId)){
-      //   optionData = chartData.find(
-      //     (data: any) => +_.isEqual( data._id,subGroup.qId)
-      //   );
-      // }else{
-      //   optionData = chartData.find((c: any) => c._id === subGroup.qId);
-      // }
-
       const optionData = getmatchedFind(chartData,'_id',subGroup.qId);
-
-      // let count = 0;
-      // let label;
-      // debugger;
-
-      // if(_.isArray(scale.labelCode)){
-      //   // debugger;
-      //   // if (optionData) {
-
-      //     const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
-      //     count = _.sumBy(labels,function(o){return o.count})
-      //     // label = optionData.options.find(
-      //     //   (option: any) => option.option === scale.labelCode
-      //     // );
-  
-      //     // if (label) {
-      //     //   count = label.count;
-      //     // }
-      //   // }
-
-      // }else{
-      //   if (optionData) {
-      //     if(_.isArray(optionData._id)){
-      //       const labels = _.filter(optionData.options,function(o){return scale.labelCode.indexOf(o.option) != -1});
-      //       count = _.sumBy(labels,function(o){return o.count})
-
-      //     }else{
-      //       label = optionData.options.find(
-      //         (option: any) => option.option === scale.labelCode
-      //       );
-    
-      //       if (label) {
-      //         count = label.count;
-      //       }
-      //     }
-         
-      //   }
-      // }
 
       const labels = getMatchedfilter(optionData.options,'option',scale.labelCode);
       const count =  _.sumBy(labels,function(o){return o.count});
-     // console.log("base count",count)
      
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;
-      // plotValue = (count / baseCount) * 100;
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
       } else {
         plotValue = count;
       }
 
-      // if (plotValue > 0) {
       if (chartType == ChartType.LINE) {
-        //console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
@@ -700,7 +624,6 @@ const getGridChartOptions = (
         });
       }
 
-      // }
     }
     if (data.length)
       series.push({
@@ -710,8 +633,6 @@ const getGridChartOptions = (
         dataLabels,
       });
   }
-
-  // debugger;
 
   return {
     legend: {
