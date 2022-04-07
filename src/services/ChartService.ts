@@ -157,14 +157,15 @@ export const removeEmptyDataLengends = (
   question: IQuestion,
   bannerQuestionData: any
 ) => {
-  // debugger;
-  
+
+  const questionCopy = {...question};
+    
   const chartDataClone = JSON.parse(JSON.stringify(chartData));
   const uniqueLengends: any = [];
   const filteredOptions: any = [];
   if (
-    (question.type === QuestionType.SINGLE ||
-      question.type === QuestionType.MULTI) &&
+    (questionCopy.type === QuestionType.SINGLE ||
+      questionCopy.type === QuestionType.MULTI) &&
     bannerQuestionData !== null
   ) {
     Object.values(chartDataClone[0]).forEach((obj: any) => {
@@ -178,27 +179,30 @@ export const removeEmptyDataLengends = (
     });
     bannerQuestionData.options = filteredOptions;
   } else if (
-    question.type === QuestionType.GRID ||
-    question.type === QuestionType.GRID_MULTI ||
-    question.type === QuestionType.RANK
+    questionCopy.type === QuestionType.GRID ||
+    questionCopy.type === QuestionType.GRID_MULTI ||
+    questionCopy.type === QuestionType.RANK
   ) {
+      // debugger;
     Object.values(chartDataClone).forEach((obj: any) => {
       obj.options.forEach((subArr: any) => {
         if (!uniqueLengends.includes(subArr.option))
           uniqueLengends.push(subArr.option);
       });
     });
-    question.scale.forEach((obj: any) => {
+    questionCopy.scale.forEach((obj: any) => {
       if (uniqueLengends.includes(obj.labelCode)) filteredOptions.push(obj);
     });
-    question.scale = filteredOptions;
+    // questionCopy.scale = [];
+    // questionCopy.scale.length = 0;
+    questionCopy.scale = filteredOptions;
   }
 
-    if(question.isGroupNet){
-      question.scale.push(...question.groupNetData)
+    if(questionCopy.isGroupNet){
+      questionCopy.scale.push(...questionCopy.groupNetData)
   }
 
-  return [question, bannerQuestionData];
+  return [questionCopy, bannerQuestionData];
 };
 export const computeBaseCount = (baseCount: any, question: IQuestion) => {
   if (Array.isArray(baseCount)) {
