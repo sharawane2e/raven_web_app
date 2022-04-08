@@ -29,7 +29,7 @@ const ApiRequest = {
     data?: any,
     params?: AxiosRequestConfig,
   ) {
-    if (data?.qId === 'q2') return q2_grid_groupNet;
+    //if (data?.qId === 'q2') return q2_grid_groupNet;
     if (data?.qId === 'q8') return q8_grid_groupNet;
     let response: IApiResponse = {
       success: false,
