@@ -92,7 +92,7 @@ export function tableChartDataGen() {
       }
     }
     if (chart.chartTranspose) {
-      columnValues.splice(-4);
+      columnValues.splice(-3);
     }
 
     if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
