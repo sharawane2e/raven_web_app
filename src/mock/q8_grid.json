@@ -1,0 +1,282 @@
+{
+  "success": true,
+  "data": {
+    "questionData": {
+      "_id": "624c4109c5e1a4035f7bf6d1",
+      "scale": [
+        { "labelText": "1 Strongly disagree", "labelCode": "1", "order": 0 },
+        { "labelText": "2", "labelCode": "2", "order": 0 },
+        { "labelText": "3", "labelCode": "3", "order": 0 },
+        {
+          "labelText": "4 Neither agree nor disagree",
+          "labelCode": "4",
+          "order": 0
+        },
+        { "labelText": "5", "labelCode": "5", "order": 0 },
+        { "labelText": "6", "labelCode": "6", "order": 0 },
+        { "labelText": "7 Strongly agree", "labelCode": "7", "order": 0 }
+      ],
+      "subGroups": [
+        {
+          "qId": "q8_1",
+          "labelText": "In general, I am responsible for managing my own health ",
+          "questionText": "In general, I am responsible for managing my own health ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_2",
+          "labelText": "I consult with family and friends when managing my health ",
+          "questionText": "I consult with family and friends when managing my health ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_3",
+          "labelText": "I rely on my doctor for managing my health ",
+          "questionText": "I rely on my doctor for managing my health ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_4",
+          "labelText": "I can tell my doctor about concerns I have about my health or treatment ",
+          "questionText": "I can tell my doctor about concerns I have about my health or treatment ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_5",
+          "labelText": "I feel I can request the best treatment possible from my healthcare provider ",
+          "questionText": "I feel I can request the best treatment possible from my healthcare provider ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_6",
+          "labelText": "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "questionText": "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_7",
+          "labelText": "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "questionText": "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_8",
+          "labelText": "I actively seek out information if I have any health concerns ",
+          "questionText": "I actively seek out information if I have any health concerns ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_9",
+          "labelText": "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "questionText": "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_10",
+          "labelText": "I feel my doctor is not making time for me ",
+          "questionText": "I feel my doctor is not making time for me ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_11",
+          "labelText": "My doctor makes me feel like issues I bring up are my fault ",
+          "questionText": "My doctor makes me feel like issues I bring up are my fault ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_12",
+          "labelText": "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "questionText": "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "type": "S"
+        },
+        {
+          "qId": "q8_13",
+          "labelText": "I believe maintaining my health is a partnership between my doctor and me ",
+          "questionText": "I believe maintaining my health is a partnership between my doctor and me ",
+          "type": "S"
+        }
+      ],
+      "options": [],
+      "qId": "q8",
+      "questionText": "In general, I am responsible for managing my own health (How much do you agree or disagree with each of the following statements, in relation to managing your health? Please answer based on how you feel about your own health.)",
+      "type": "G",
+      "chartType": [],
+      "order": 15,
+      "netAllowed": false,
+      "isGroupNet": true,
+      "groupNetData": [
+        {
+          "labelText": "Top",
+          "labelCode": ["1", "2"]
+        },
+        { "labelText": "Middle", "labelCode": ["3", "4", "5"] },
+        { "labelText": "Bottom", "labelCode": ["6", "7"] }
+      ],
+      "isMean": true,
+      "split": false,
+      "active": true,
+      "labelText": "q8-In general, I am responsible for managing my own health"
+    },
+    "bannerQuestionData": null,
+    "chartData": [
+      {
+        "_id": "q8_1",
+        "options": [
+          { "option": "4", "count": 531 },
+          { "option": "5", "count": 843 },
+          { "option": "2", "count": 89 },
+          { "option": "7", "count": 1923 },
+          { "option": "3", "count": 159 },
+          { "option": "1", "count": 169 },
+          { "option": "6", "count": 1330 }
+        ]
+      },
+      {
+        "_id": "q8_9",
+        "options": [
+          { "option": "7", "count": 989 },
+          { "option": "1", "count": 374 },
+          { "option": "4", "count": 1429 },
+          { "option": "6", "count": 794 },
+          { "option": "5", "count": 807 },
+          { "option": "3", "count": 381 },
+          { "option": "2", "count": 270 }
+        ]
+      },
+      {
+        "_id": "q8_3",
+        "options": [
+          { "option": "1", "count": 678 },
+          { "option": "4", "count": 1184 },
+          { "option": "6", "count": 612 },
+          { "option": "3", "count": 564 },
+          { "option": "7", "count": 784 },
+          { "option": "5", "count": 681 },
+          { "option": "2", "count": 541 }
+        ]
+      },
+      {
+        "_id": "q8_11",
+        "options": [
+          { "option": "7", "count": 263 },
+          { "option": "2", "count": 654 },
+          { "option": "6", "count": 305 },
+          { "option": "1", "count": 1658 },
+          { "option": "4", "count": 1242 },
+          { "option": "3", "count": 550 },
+          { "option": "5", "count": 372 }
+        ]
+      },
+      {
+        "_id": "q8_2",
+        "options": [
+          { "option": "3", "count": 469 },
+          { "option": "4", "count": 1176 },
+          { "option": "7", "count": 563 },
+          { "option": "5", "count": 936 },
+          { "option": "6", "count": 746 },
+          { "option": "1", "count": 727 },
+          { "option": "2", "count": 427 }
+        ]
+      },
+      {
+        "_id": "q8_4",
+        "options": [
+          { "option": "2", "count": 188 },
+          { "option": "5", "count": 867 },
+          { "option": "7", "count": 1443 },
+          { "option": "1", "count": 294 },
+          { "option": "3", "count": 276 },
+          { "option": "4", "count": 940 },
+          { "option": "6", "count": 1036 }
+        ]
+      },
+      {
+        "_id": "q8_13",
+        "options": [
+          { "option": "7", "count": 1141 },
+          { "option": "3", "count": 363 },
+          { "option": "6", "count": 904 },
+          { "option": "5", "count": 947 },
+          { "option": "4", "count": 1112 },
+          { "option": "1", "count": 350 },
+          { "option": "2", "count": 227 }
+        ]
+      },
+      {
+        "_id": "q8_7",
+        "options": [
+          { "option": "3", "count": 666 },
+          { "option": "2", "count": 606 },
+          { "option": "4", "count": 1118 },
+          { "option": "5", "count": 750 },
+          { "option": "7", "count": 584 },
+          { "option": "6", "count": 552 },
+          { "option": "1", "count": 768 }
+        ]
+      },
+      {
+        "_id": "q8_5",
+        "options": [
+          { "option": "3", "count": 356 },
+          { "option": "6", "count": 935 },
+          { "option": "4", "count": 1199 },
+          { "option": "1", "count": 303 },
+          { "option": "7", "count": 1069 },
+          { "option": "5", "count": 940 },
+          { "option": "2", "count": 242 }
+        ]
+      },
+      {
+        "_id": "q8_10",
+        "options": [
+          { "option": "1", "count": 1366 },
+          { "option": "4", "count": 1281 },
+          { "option": "6", "count": 342 },
+          { "option": "7", "count": 335 },
+          { "option": "2", "count": 678 },
+          { "option": "5", "count": 413 },
+          { "option": "3", "count": 629 }
+        ]
+      },
+      {
+        "_id": "q8_12",
+        "options": [
+          { "option": "6", "count": 548 },
+          { "option": "7", "count": 664 },
+          { "option": "2", "count": 578 },
+          { "option": "4", "count": 994 },
+          { "option": "1", "count": 1023 },
+          { "option": "5", "count": 697 },
+          { "option": "3", "count": 540 }
+        ]
+      },
+      {
+        "_id": "q8_6",
+        "options": [
+          { "option": "1", "count": 662 },
+          { "option": "7", "count": 998 },
+          { "option": "3", "count": 350 },
+          { "option": "4", "count": 1234 },
+          { "option": "5", "count": 732 },
+          { "option": "6", "count": 760 },
+          { "option": "2", "count": 308 }
+        ]
+      },
+      {
+        "_id": "q8_8",
+        "options": [
+          { "option": "4", "count": 816 },
+          { "option": "3", "count": 278 },
+          { "option": "2", "count": 193 },
+          { "option": "1", "count": 238 },
+          { "option": "6", "count": 1091 },
+          { "option": "7", "count": 1455 },
+          { "option": "5", "count": 973 }
+        ]
+      }
+    ],
+    "baseCount": [{ "baseCount": 5044 }]
+  },
+  "message": "Chart generated"
+}

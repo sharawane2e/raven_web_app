@@ -1,15 +1,16 @@
-import axios, { AxiosRequestConfig } from "axios";
-import IApiResponse from "../types/IApiResponse";
-import LocalStorageUtils from "./LocalStorageUtils";
-import Toaster from "./Toaster";
-import { errorMessages } from "../constants/messages";
-import { logOutUser } from "../services/AuthService";
-import store from "../redux/store";
-import { setChartLoading } from "../redux/actions/chartActions";
-import { timeout } from "./Utility";
+import axios, { AxiosRequestConfig } from 'axios';
+import IApiResponse from '../types/IApiResponse';
+import LocalStorageUtils from './LocalStorageUtils';
+import Toaster from './Toaster';
+import { errorMessages } from '../constants/messages';
+import { logOutUser } from '../services/AuthService';
+import store from '../redux/store';
+import { setChartLoading } from '../redux/actions/chartActions';
+import { timeout } from './Utility';
 import q2_grid_groupNet from '../mock/q2_grid_groupNet.json';
+import q8_grid_groupNet from '../mock/q8_grid.json';
 
-export type MethodType = "GET" | "POST" | "DELETE" | "PUT" | "PATCH";
+export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
@@ -17,7 +18,7 @@ const axiosInstance = axios.create({
 
 const token = LocalStorageUtils.getToken();
 if (token) {
-  axiosInstance.defaults.headers.common["Authorization"] = "bearer " + token;
+  axiosInstance.defaults.headers.common['Authorization'] = 'bearer ' + token;
 }
 const { dispatch } = store;
 
@@ -26,9 +27,10 @@ const ApiRequest = {
     url: string,
     method: MethodType,
     data?: any,
-    params?: AxiosRequestConfig
+    params?: AxiosRequestConfig,
   ) {
-    if(data?.qId==='q2') return q2_grid_groupNet;
+    if (data?.qId === 'q2') return q2_grid_groupNet;
+    if (data?.qId === 'q8') return q8_grid_groupNet;
     let response: IApiResponse = {
       success: false,
       message: errorMessages.SERVER_ERROR,
@@ -66,10 +68,10 @@ const ApiRequest = {
 
   setAuthToken: function (token?: string) {
     if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] =
-        "bearer " + token;
+      axiosInstance.defaults.headers.common['Authorization'] =
+        'bearer ' + token;
     } else {
-      delete axiosInstance.defaults.headers.common["Authorization"];
+      delete axiosInstance.defaults.headers.common['Authorization'];
     }
   },
 };
@@ -78,7 +80,7 @@ export const ApiRequestMulti = {
     url: string,
     method: MethodType,
     data?: any,
-    params?: AxiosRequestConfig
+    params?: AxiosRequestConfig,
   ) {
     let response: IApiResponse = {
       success: false,
@@ -117,10 +119,10 @@ export const ApiRequestMulti = {
 
   setAuthToken: function (token?: string) {
     if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] =
-        "bearer " + token;
+      axiosInstance.defaults.headers.common['Authorization'] =
+        'bearer ' + token;
     } else {
-      delete axiosInstance.defaults.headers.common["Authorization"];
+      delete axiosInstance.defaults.headers.common['Authorization'];
     }
   },
 };
