@@ -15,7 +15,7 @@ import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
 
 import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
-import { slice } from "lodash";
+import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 
@@ -26,7 +26,7 @@ export function pptDataGen(
   chartSettings: pptxgen.IChartOpts
 ) {
   const {
-    chart: { chartType, chartOrientation,chartLabelType },
+    chart: { chartType, chartOrientation,chartLabelType,questionData },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -67,7 +67,7 @@ export function pptDataGen(
   } 
   else {
     let pptChartType;
-
+    
     if (chartType === ChartType.LINE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.line;
@@ -75,11 +75,24 @@ export function pptDataGen(
     else if (chartType === ChartType.PIE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
-    } else {
-      chartColors =
-        seriesData.length > 1
-          ? slice(colorArr, 0, seriesData.length)
-          : [primaryBarColor];
+    } else {    
+        if(seriesData.length > 1){
+          chartColors =slice(colorArr, 0, seriesData.length)
+        }else{
+          // const colorArray:string[] = [];
+
+          // seriesData[0]?.labels.forEach(function(labelText:any){
+          //   const seriesObject = _.find(questionData?.options,function(o){return o.labelText===labelText});
+          //   if(seriesObject?.labelCode.split("_")[0]=='N'){
+          //     colorArray.push('#F8971C');
+          //   }else{
+          //     colorArray.push(primaryBarColor);
+          //   }
+          // })
+
+          chartColors = [primaryBarColor];
+          
+        }
       pptChartType = pptxGenJsObj.ChartType.bar;
 
       if (chartOrientation === ChartOrientation.LANDSCAPE) {
