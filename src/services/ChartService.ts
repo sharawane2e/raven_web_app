@@ -228,8 +228,9 @@ export const changeChartType = (newChartType: ChartType) => {
   chartDataClone.chartType = newChartType;
 
   if (
-    chart?.questionData?.type === QuestionType.SINGLE &&
-    newChartType === ChartType.COLUMN
+    (chart?.questionData?.type === QuestionType.SINGLE &&
+    newChartType === ChartType.COLUMN)||(chart?.questionData?.type === QuestionType.MULTI &&
+      newChartType === ChartType.COLUMN)
     
   ) {
     
