@@ -1,0 +1,70 @@
+{
+  "success": true,
+  "data": {
+    "questionData": {
+      "_id": "625420a38bb367533cafda98",
+      "scale": [
+        {
+          "labelText": "1 Within my own ethnicity / culture being a higher weight is perceived as healthy or a sign of wealth",
+          "labelCode": "1",
+          "order": 0
+        },
+        { "labelText": "2", "labelCode": "2", "order": 0 },
+        { "labelText": "3", "labelCode": "3", "order": 0 },
+        { "labelText": "4 Neutral", "labelCode": "4", "order": 0 },
+        { "labelText": "5", "labelCode": "5", "order": 0 },
+        { "labelText": "6", "labelCode": "6", "order": 0 },
+        {
+          "labelText": "7 Within my own ethnicity / culture being a lower weight is perceived as healthy or a sign of wealth",
+          "labelCode": "7",
+          "order": 0
+        }
+      ],
+      "subGroups": [
+        {
+          "qId": "q24x3_5",
+          "labelText": "Within my own ethnicity / culture being OR Being a higher / lower weight",
+          "questionText": "Within my own ethnicity / culture being OR Being a higher / lower weight",
+          "type": "S"
+        }
+      ],
+      "options": [],
+      "qId": "q24x3",
+      "questionText": "HIDDEN QUESTION - WILL NOT BE VISIBLE IN LIVE MODE, THIS IS JUST VISIBLE FOR TESTING PURPOSES AND WILL NOT BE TRANSLATED //HIDDEN : To punch from tool",
+      "type": "G",
+      "chartType": [],
+      "order": 42,
+      "netAllowed": false,
+      "isGroupNet": true,
+      "groupNetData": [
+        {
+          "labelText": "Top-2 box",
+          "labelCode": ["1", "2"]
+        },
+        { "labelText": "Neutral", "labelCode": ["3", "4", "5"] },
+        { "labelText": "Bottom-2 box", "labelCode": ["6", "7"] }
+      ],
+      "isMean": true,
+      "split": false,
+      "active": true,
+      "labelText": "q24x3-Within my own ethnicity / culture being OR Being a higher / lower weight"
+    },
+    "bannerQuestionData": null,
+    "chartData": [
+      {
+        "_id": "q24x3_5",
+        "options": [
+          { "option": "2", "count": 277 },
+          { "option": "6", "count": 1142 },
+          { "option": "7", "count": 551 },
+          { "option": "5", "count": 1305 },
+          { "option": "4", "count": 1132 },
+          { "option": "3", "count": 529 },
+          { "option": "1", "count": 164 }
+        ]
+      }
+    ],
+    "baseCount": [{ "baseCount": 5900 }]
+  },
+  "message": "Chart generated"
+}

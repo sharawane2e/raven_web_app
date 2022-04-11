@@ -2,7 +2,7 @@
   "success": true,
   "data": {
     "questionData": {
-      "_id": "624c4109c5e1a4035f7bf6d1",
+      "_id": "62541bd48bb367533cafc245",
       "scale": [
         { "labelText": "1 Strongly disagree", "labelCode": "1", "order": 0 },
         { "labelText": "2", "labelCode": "2", "order": 0 },
@@ -106,11 +106,11 @@
       "isGroupNet": true,
       "groupNetData": [
         {
-          "labelText": "Top",
+          "labelText": "Top 2 box",
           "labelCode": ["1", "2"]
         },
-        { "labelText": "Middle", "labelCode": ["3", "4", "5"] },
-        { "labelText": "Bottom", "labelCode": ["6", "7"] }
+        { "labelText": "Medium 3 box", "labelCode": ["3", "4", "5"] },
+        { "labelText": "Bottom 2 box", "labelCode": ["6", "7"] }
       ],
       "isMean": true,
       "split": false,
@@ -120,163 +120,163 @@
     "bannerQuestionData": null,
     "chartData": [
       {
-        "_id": "q8_1",
-        "options": [
-          { "option": "4", "count": 531 },
-          { "option": "5", "count": 843 },
-          { "option": "2", "count": 89 },
-          { "option": "7", "count": 1923 },
-          { "option": "3", "count": 159 },
-          { "option": "1", "count": 169 },
-          { "option": "6", "count": 1330 }
-        ]
-      },
-      {
-        "_id": "q8_9",
-        "options": [
-          { "option": "7", "count": 989 },
-          { "option": "1", "count": 374 },
-          { "option": "4", "count": 1429 },
-          { "option": "6", "count": 794 },
-          { "option": "5", "count": 807 },
-          { "option": "3", "count": 381 },
-          { "option": "2", "count": 270 }
-        ]
-      },
-      {
-        "_id": "q8_3",
-        "options": [
-          { "option": "1", "count": 678 },
-          { "option": "4", "count": 1184 },
-          { "option": "6", "count": 612 },
-          { "option": "3", "count": 564 },
-          { "option": "7", "count": 784 },
-          { "option": "5", "count": 681 },
-          { "option": "2", "count": 541 }
-        ]
-      },
-      {
-        "_id": "q8_11",
-        "options": [
-          { "option": "7", "count": 263 },
-          { "option": "2", "count": 654 },
-          { "option": "6", "count": 305 },
-          { "option": "1", "count": 1658 },
-          { "option": "4", "count": 1242 },
-          { "option": "3", "count": 550 },
-          { "option": "5", "count": 372 }
-        ]
-      },
-      {
-        "_id": "q8_2",
-        "options": [
-          { "option": "3", "count": 469 },
-          { "option": "4", "count": 1176 },
-          { "option": "7", "count": 563 },
-          { "option": "5", "count": 936 },
-          { "option": "6", "count": 746 },
-          { "option": "1", "count": 727 },
-          { "option": "2", "count": 427 }
-        ]
-      },
-      {
-        "_id": "q8_4",
-        "options": [
-          { "option": "2", "count": 188 },
-          { "option": "5", "count": 867 },
-          { "option": "7", "count": 1443 },
-          { "option": "1", "count": 294 },
-          { "option": "3", "count": 276 },
-          { "option": "4", "count": 940 },
-          { "option": "6", "count": 1036 }
-        ]
-      },
-      {
-        "_id": "q8_13",
-        "options": [
-          { "option": "7", "count": 1141 },
-          { "option": "3", "count": 363 },
-          { "option": "6", "count": 904 },
-          { "option": "5", "count": 947 },
-          { "option": "4", "count": 1112 },
-          { "option": "1", "count": 350 },
-          { "option": "2", "count": 227 }
-        ]
-      },
-      {
-        "_id": "q8_7",
-        "options": [
-          { "option": "3", "count": 666 },
-          { "option": "2", "count": 606 },
-          { "option": "4", "count": 1118 },
-          { "option": "5", "count": 750 },
-          { "option": "7", "count": 584 },
-          { "option": "6", "count": 552 },
-          { "option": "1", "count": 768 }
-        ]
-      },
-      {
-        "_id": "q8_5",
-        "options": [
-          { "option": "3", "count": 356 },
-          { "option": "6", "count": 935 },
-          { "option": "4", "count": 1199 },
-          { "option": "1", "count": 303 },
-          { "option": "7", "count": 1069 },
-          { "option": "5", "count": 940 },
-          { "option": "2", "count": 242 }
-        ]
-      },
-      {
         "_id": "q8_10",
         "options": [
-          { "option": "1", "count": 1366 },
-          { "option": "4", "count": 1281 },
-          { "option": "6", "count": 342 },
-          { "option": "7", "count": 335 },
-          { "option": "2", "count": 678 },
-          { "option": "5", "count": 413 },
-          { "option": "3", "count": 629 }
-        ]
-      },
-      {
-        "_id": "q8_12",
-        "options": [
-          { "option": "6", "count": 548 },
-          { "option": "7", "count": 664 },
-          { "option": "2", "count": 578 },
-          { "option": "4", "count": 994 },
-          { "option": "1", "count": 1023 },
-          { "option": "5", "count": 697 },
-          { "option": "3", "count": 540 }
+          { "option": "3", "count": 738 },
+          { "option": "4", "count": 1518 },
+          { "option": "1", "count": 1607 },
+          { "option": "5", "count": 469 },
+          { "option": "7", "count": 389 },
+          { "option": "2", "count": 783 },
+          { "option": "6", "count": 396 }
         ]
       },
       {
         "_id": "q8_6",
         "options": [
-          { "option": "1", "count": 662 },
-          { "option": "7", "count": 998 },
-          { "option": "3", "count": 350 },
-          { "option": "4", "count": 1234 },
-          { "option": "5", "count": 732 },
-          { "option": "6", "count": 760 },
-          { "option": "2", "count": 308 }
+          { "option": "1", "count": 744 },
+          { "option": "2", "count": 354 },
+          { "option": "4", "count": 1431 },
+          { "option": "6", "count": 893 },
+          { "option": "7", "count": 1219 },
+          { "option": "5", "count": 853 },
+          { "option": "3", "count": 406 }
+        ]
+      },
+      {
+        "_id": "q8_4",
+        "options": [
+          { "option": "3", "count": 329 },
+          { "option": "7", "count": 1694 },
+          { "option": "4", "count": 1094 },
+          { "option": "5", "count": 1013 },
+          { "option": "6", "count": 1214 },
+          { "option": "1", "count": 341 },
+          { "option": "2", "count": 215 }
+        ]
+      },
+      {
+        "_id": "q8_1",
+        "options": [
+          { "option": "5", "count": 975 },
+          { "option": "7", "count": 2245 },
+          { "option": "4", "count": 652 },
+          { "option": "1", "count": 187 },
+          { "option": "6", "count": 1532 },
+          { "option": "3", "count": 197 },
+          { "option": "2", "count": 112 }
+        ]
+      },
+      {
+        "_id": "q8_11",
+        "options": [
+          { "option": "4", "count": 1479 },
+          { "option": "7", "count": 309 },
+          { "option": "3", "count": 632 },
+          { "option": "1", "count": 1927 },
+          { "option": "6", "count": 357 },
+          { "option": "5", "count": 455 },
+          { "option": "2", "count": 741 }
+        ]
+      },
+      {
+        "_id": "q8_13",
+        "options": [
+          { "option": "3", "count": 425 },
+          { "option": "6", "count": 1048 },
+          { "option": "1", "count": 412 },
+          { "option": "7", "count": 1363 },
+          { "option": "4", "count": 1311 },
+          { "option": "5", "count": 1090 },
+          { "option": "2", "count": 251 }
+        ]
+      },
+      {
+        "_id": "q8_12",
+        "options": [
+          { "option": "1", "count": 1163 },
+          { "option": "7", "count": 824 },
+          { "option": "5", "count": 805 },
+          { "option": "3", "count": 633 },
+          { "option": "6", "count": 639 },
+          { "option": "2", "count": 664 },
+          { "option": "4", "count": 1172 }
+        ]
+      },
+      {
+        "_id": "q8_3",
+        "options": [
+          { "option": "3", "count": 660 },
+          { "option": "5", "count": 778 },
+          { "option": "4", "count": 1384 },
+          { "option": "1", "count": 777 },
+          { "option": "6", "count": 719 },
+          { "option": "2", "count": 609 },
+          { "option": "7", "count": 973 }
         ]
       },
       {
         "_id": "q8_8",
         "options": [
-          { "option": "4", "count": 816 },
-          { "option": "3", "count": 278 },
-          { "option": "2", "count": 193 },
-          { "option": "1", "count": 238 },
-          { "option": "6", "count": 1091 },
-          { "option": "7", "count": 1455 },
-          { "option": "5", "count": 973 }
+          { "option": "4", "count": 962 },
+          { "option": "5", "count": 1141 },
+          { "option": "2", "count": 207 },
+          { "option": "6", "count": 1255 },
+          { "option": "7", "count": 1742 },
+          { "option": "1", "count": 264 },
+          { "option": "3", "count": 329 }
+        ]
+      },
+      {
+        "_id": "q8_2",
+        "options": [
+          { "option": "5", "count": 1075 },
+          { "option": "3", "count": 551 },
+          { "option": "1", "count": 832 },
+          { "option": "6", "count": 870 },
+          { "option": "7", "count": 684 },
+          { "option": "4", "count": 1399 },
+          { "option": "2", "count": 489 }
+        ]
+      },
+      {
+        "_id": "q8_7",
+        "options": [
+          { "option": "2", "count": 673 },
+          { "option": "1", "count": 872 },
+          { "option": "5", "count": 889 },
+          { "option": "4", "count": 1326 },
+          { "option": "6", "count": 653 },
+          { "option": "7", "count": 725 },
+          { "option": "3", "count": 762 }
+        ]
+      },
+      {
+        "_id": "q8_9",
+        "options": [
+          { "option": "1", "count": 433 },
+          { "option": "7", "count": 1170 },
+          { "option": "2", "count": 317 },
+          { "option": "5", "count": 929 },
+          { "option": "3", "count": 446 },
+          { "option": "4", "count": 1660 },
+          { "option": "6", "count": 945 }
+        ]
+      },
+      {
+        "_id": "q8_5",
+        "options": [
+          { "option": "6", "count": 1083 },
+          { "option": "1", "count": 351 },
+          { "option": "2", "count": 279 },
+          { "option": "4", "count": 1439 },
+          { "option": "3", "count": 410 },
+          { "option": "7", "count": 1255 },
+          { "option": "5", "count": 1083 }
         ]
       }
     ],
-    "baseCount": [{ "baseCount": 5044 }]
+    "baseCount": [{ "baseCount": 5900 }]
   },
   "message": "Chart generated"
 }
