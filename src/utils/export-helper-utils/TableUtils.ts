@@ -2,6 +2,7 @@ import { round } from '../Utility';
 import { chartDataGen } from './ExportChartDataGen';
 import store from '../../redux/store';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from '../../enums/QuestionType';
 
 export function tableChartDataGen() {
   let seriesData = [];
@@ -43,9 +44,25 @@ export function tableChartDataGen() {
           if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
-              if (rIndex < scaleIndex) {
-                totalrowSub += parseFloat(d.values[k]);
+              let netsLabelcode=chart.bannerQuestionData?.options[rIndex].labelCode.split("_")[0]
+              //console.log(chart.bannerQuestionData?.options[rIndex].labelCode)
+              if (chart.chartTranspose) {
+                if (netsLabelcode === "N") {  
+                  //console.log("tranpose")              
+                  totalrowSub += 0;
+                }else{
+                  totalrowSub += parseFloat(d.values[k]);
+                }
+              }else{
+                if (rIndex < scaleIndex) {  
+                  //console.log("Non Tranpose")               
+                  totalrowSub += parseFloat(d.values[k]);
+                }
               }
+
+              
+              
+              
             } else {
               subRow.push(0 + '%');
               totalrowSub += 0;
@@ -91,7 +108,10 @@ export function tableChartDataGen() {
         updateRow.push(columnValues[i]);
       }
     }
-    if (chart.chartTranspose) {
+    // if (chart.chartTranspose) {
+    //   columnValues.splice(-3);
+    // }
+    if ( chart.chartTranspose && chart?.questionData?.type === QuestionType.GRID) {
       columnValues.splice(-3);
     }
 
