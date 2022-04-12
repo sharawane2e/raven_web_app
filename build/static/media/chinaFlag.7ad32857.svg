@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="63" height="44" viewBox="0 0 63 44">
+  <defs>
+    <clipPath id="clip-Login_1">
+      <rect width="63" height="44"/>
+    </clipPath>
+  </defs>
+  <g id="Login_1" data-name="Login – 1" clip-path="url(#clip-Login_1)">
+    <rect width="63" height="44" fill="#fff"/>
+    <g id="Flag_of_the_People_s_Republic_of_China" data-name="Flag_of_the_People&apos;s_Republic_of_China">
+      <rect id="Rectangle_2622" data-name="Rectangle 2622" width="66" height="47" fill="#ee1c25"/>
+      <path id="Path_13579" data-name="Path 13579" d="M3.424-3,7.3,8.94-2.853,1.56H9.7L-.456,8.94Z" transform="translate(7.576 7.4)" fill="#ff0"/>
+      <path id="Path_13580" data-name="Path 13580" d="M2.092,0,3.385,3.98,0,1.52H4.185L.8,3.98Z" transform="translate(20.935 1.557) rotate(23.036)" fill="#ff0"/>
+      <path id="Path_13581" data-name="Path 13581" d="M2.092,0,3.385,3.98,0,1.52H4.185L.8,3.98Z" transform="matrix(0.696, 0.718, -0.718, 0.696, 26.522, 5.766)" fill="#ff0"/>
+      <path id="Path_13582" data-name="Path 13582" d="M2.092,0,3.385,3.98,0,1.52H4.185L.8,3.98Z" transform="matrix(0.343, 0.939, -0.939, 0.343, 27.749, 13.663)" fill="#ff0"/>
+      <path id="Path_13583" data-name="Path 13583" d="M2.092,0,3.385,3.98,0,1.52H4.185L.8,3.98Z" transform="translate(20.818 18.318) rotate(20.66)" fill="#ff0"/>
+    </g>
+  </g>
+</svg>

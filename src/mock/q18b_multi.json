@@ -1,0 +1,174 @@
+{
+  "success": true,
+  "data": {
+    "questionData": {
+      "_id": "625409ee01a74835605435a4",
+      "scale": [],
+      "subGroups": [],
+      "options": [
+        {
+          "labelText": "Self-managed diet change (e.g. diet plans, changes in eating habits, intermittent fasting) ",
+          "labelCode": "1",
+          "order": 0,
+          "variableId": "q18b_1"
+        },
+        {
+          "labelText": "Self - managed enhanced exercise regimens ",
+          "labelCode": "2",
+          "order": 0,
+          "variableId": "q18b_2"
+        },
+        {
+          "labelText": "Enrolled in a diet program (e.g. Weight Watchers, Noom^f('H0').any('4')?\", Slimming World\":\"\"^^f('H0').any('2')?\", Vigilantes do Peso\":\"\"^^f('H0').any('3')?\", Gymondo\":\"\"^) ",
+          "labelCode": "3",
+          "order": 0,
+          "variableId": "q18b_3"
+        },
+        {
+          "labelText": "Weight management foods (e.g. shakes, bars, prepared meals^f('H0').any('2')?\", Herbalife, PronoKal\":\"\"^^f('H0').any('3')?\", Almased\":\"\"^) ",
+          "labelCode": "4",
+          "order": 0,
+          "variableId": "q18b_4"
+        },
+        {
+          "labelText": "Over-the-counter medication ",
+          "labelCode": "5",
+          "order": 0,
+          "variableId": "q18b_5"
+        },
+        {
+          "labelText": "Prescription medication ",
+          "labelCode": "6",
+          "order": 0,
+          "variableId": "q18b_6"
+        },
+        {
+          "labelText": "Bariatric surgery ",
+          "labelCode": "7",
+          "order": 0,
+          "variableId": "q18b_7"
+        },
+        {
+          "labelText": "Psychotherapy/ behavioural therapy ",
+          "labelCode": "8",
+          "order": 0,
+          "variableId": "q18b_8"
+        },
+        {
+          "labelText": "Paid/ free apps & virtual/ digital coaching services ",
+          "labelCode": "9",
+          "order": 0,
+          "variableId": "q18b_9"
+        },
+        {
+          "labelText": "Oral gastric balloon devices/  capsules ",
+          "labelCode": "10",
+          "order": 0,
+          "variableId": "q18b_10"
+        },
+        {
+          "labelText": "Online research / Patient forums / Social media groups (e.g. Facebook) ",
+          "labelCode": "11",
+          "order": 0,
+          "variableId": "q18b_11"
+        },
+        {
+          "labelText": "Nutritional and exercise programme with a personal trainer ",
+          "labelCode": "12",
+          "order": 0,
+          "variableId": "q18b_12"
+        },
+        {
+          "labelText": "Nutritional programme created and tracked by health care professional ",
+          "labelCode": "13",
+          "order": 0,
+          "variableId": "q18b_13"
+        },
+        {
+          "labelText": "Dieting/ exercising/ help with/ from my friends/ family ",
+          "labelCode": "14",
+          "order": 0,
+          "variableId": "q18b_14"
+        },
+        {
+          "labelText": "Other, please specify ",
+          "labelCode": "15",
+          "order": 0,
+          "variableId": "q18b_15"
+        },
+        {
+          "labelText": "Diet and Exercise ",
+          "labelCode": "N1",
+          "order": 0,
+          "variableId": "q18b_16"
+        },
+        {
+          "labelText": "Online / Digital",
+          "labelCode": "N2",
+          "order": 0,
+          "variableId": "q18b_17"
+        },
+        {
+          "labelText": "Programmes",
+          "labelCode": "N3",
+          "order": 0,
+          "variableId": "q18b_18"
+        },
+        {
+          "labelText": "Medical Intervention",
+          "labelCode": "N4",
+          "order": 0,
+          "variableId": "q18b_19"
+        }
+      ],
+      "qId": "q18b",
+      "questionText": "In relation to your most successful weight loss attempt, what method did you use to lose weight?",
+      "type": "M",
+      "chartType": [],
+      "order": 33,
+      "netAllowed": false,
+      "isGroupNet": true,
+
+      "groupNetData": [
+        {
+          "labelText": "Diet & Exercise",
+          "labelCode": ["1", "2", "4", "14"]
+        },
+        { "labelText": "Online/Digital", "labelCode": ["9", "11"] },
+        { "labelText": "Programers", "labelCode": ["3", "12", "13"] },
+        {
+          "labelText": "Medical Intervention",
+          "labelCode": ["5", "6", "7", "8", "10"]
+        }
+      ],
+      "isMean": true,
+      "split": false,
+      "active": true,
+      "labelText": "q18b-In relation to your most successful weight loss attempt, what method did you use to lose weight?"
+    },
+    "bannerQuestionData": null,
+    "chartData": [
+      { "labelCode": "6", "count": 107 },
+      { "labelCode": "N2", "count": 357 },
+      { "labelCode": "3", "count": 280 },
+      { "labelCode": "10", "count": 40 },
+      { "labelCode": "15", "count": 197 },
+      { "labelCode": "12", "count": 261 },
+      { "labelCode": "14", "count": 977 },
+      { "labelCode": "1", "count": 1751 },
+      { "labelCode": "13", "count": 215 },
+      { "labelCode": "N4", "count": 613 },
+      { "labelCode": "N3", "count": 328 },
+      { "labelCode": "11", "count": 210 },
+      { "labelCode": "4", "count": 589 },
+      { "labelCode": "8", "count": 100 },
+      { "labelCode": "N1", "count": 2501 },
+      { "labelCode": "2", "count": 999 },
+      { "labelCode": "5", "count": 141 },
+      { "labelCode": "9", "count": 208 },
+      { "labelCode": "7", "count": 43 }
+    ],
+    "baseCount": [{ "baseCount": 2866 }]
+  },
+  "message": "Chart generated"
+}
