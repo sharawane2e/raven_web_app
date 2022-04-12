@@ -47,15 +47,10 @@ export function tableChartDataGen() {
           if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
-              if (chartTransposeState) {
+              if (rIndex < scaleIndex) {
+                totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
                   totalrowSub += 0;
-                } else {
-                  totalrowSub += parseFloat(d.values[k]);
-                }
-              } else {
-                if (rIndex < scaleIndex) {
-                  totalrowSub += parseFloat(d.values[k]);
                 }
               }
             } else {
@@ -65,15 +60,13 @@ export function tableChartDataGen() {
           } else {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-              if (chartTransposeState) {
+
+              totalrowSub += parseFloat(d.values[k]);
+
+              if (rIndex < scaleIndex) {
+                totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
                   totalrowSub += 0;
-                } else {
-                  totalrowSub += parseFloat(d.values[k]);
-                }
-              } else {
-                if (rIndex < scaleIndex) {
-                  totalrowSub += parseFloat(d.values[k]);
                 }
               }
             } else {
@@ -120,7 +113,7 @@ export function tableChartDataGen() {
       }
 
       if (
-        chart.chartTranspose &&
+        !chart.chartTranspose &&
         chart?.questionData?.type === QuestionType.GRID
       ) {
         columnValues.splice(-scaleLength);

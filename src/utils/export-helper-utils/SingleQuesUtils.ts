@@ -1,13 +1,13 @@
-import { decimalPrecision } from "../../constants/Variables";
-import { round } from "../Utility";
-import store from "../../redux/store";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { ChartType } from "../../enums/ChartType";
+import { decimalPrecision } from '../../constants/Variables';
+import { round } from '../Utility';
+import store from '../../redux/store';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartType } from '../../enums/ChartType';
 
 export function singleChartDataGen(
   questionData: any,
   chartData: any,
-  baseCount: any
+  baseCount: any,
 ) {
   let labels: any = [];
   let values: any = [];
@@ -20,7 +20,7 @@ export function singleChartDataGen(
 
   options.forEach((option: any) => {
     const dataObj = chartData.find(
-      (data: any) => data.labelCode === option.labelCode
+      (data: any) => data.labelCode === option.labelCode,
     );
 
     labels.push(option.labelText);
