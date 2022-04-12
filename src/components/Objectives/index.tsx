@@ -68,7 +68,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>966</b>
+            <b>1250</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -77,7 +77,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>781</b>
+            <b>1000</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -86,7 +86,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>790</b>
+            <b>800</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -95,7 +95,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>662</b>
+            <b>800</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -104,7 +104,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>1142</b>
+            <b>1250</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -113,7 +113,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>703</b>
+            <b>800</b>
           </div>
         </div>
         <div className="nation-container__card">
@@ -122,7 +122,7 @@ const Objectives = (props: Props) => {
           </div>
           <div className="nation-container__right">
             <p>Sample Size</p>
-            <b>5044</b>
+            <b>5900</b>
           </div>
         </div>
       </div>
