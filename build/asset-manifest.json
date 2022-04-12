@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/cello/210394/static/css/main.1e587983.chunk.css",
-    "main.js": "/cello/210394/static/js/main.07ebbce8.chunk.js",
-    "main.js.map": "/cello/210394/static/js/main.07ebbce8.chunk.js.map",
-    "runtime-main.js": "/cello/210394/static/js/runtime-main.a587b772.js",
-    "runtime-main.js.map": "/cello/210394/static/js/runtime-main.a587b772.js.map",
+    "main.css": "/cello/210394/static/css/main.09a9a989.chunk.css",
+    "main.js": "/cello/210394/static/js/main.a41890e4.chunk.js",
+    "main.js.map": "/cello/210394/static/js/main.a41890e4.chunk.js.map",
+    "runtime-main.js": "/cello/210394/static/js/runtime-main.523ba47c.js",
+    "runtime-main.js.map": "/cello/210394/static/js/runtime-main.523ba47c.js.map",
     "static/css/2.029a9c87.chunk.css": "/cello/210394/static/css/2.029a9c87.chunk.css",
-    "static/js/2.3c6f2967.chunk.js": "/cello/210394/static/js/2.3c6f2967.chunk.js",
-    "static/js/2.3c6f2967.chunk.js.map": "/cello/210394/static/js/2.3c6f2967.chunk.js.map",
-    "static/js/3.6c611a31.chunk.js": "/cello/210394/static/js/3.6c611a31.chunk.js",
-    "static/js/3.6c611a31.chunk.js.map": "/cello/210394/static/js/3.6c611a31.chunk.js.map",
+    "static/js/2.60080393.chunk.js": "/cello/210394/static/js/2.60080393.chunk.js",
+    "static/js/2.60080393.chunk.js.map": "/cello/210394/static/js/2.60080393.chunk.js.map",
+    "static/js/3.f7d5a302.chunk.js": "/cello/210394/static/js/3.f7d5a302.chunk.js",
+    "static/js/3.f7d5a302.chunk.js.map": "/cello/210394/static/js/3.f7d5a302.chunk.js.map",
     "static/js/4.4912c3ec.chunk.js": "/cello/210394/static/js/4.4912c3ec.chunk.js",
     "static/js/4.4912c3ec.chunk.js.map": "/cello/210394/static/js/4.4912c3ec.chunk.js.map",
     "static/js/5.25ce95ea.chunk.js": "/cello/210394/static/js/5.25ce95ea.chunk.js",
@@ -18,9 +18,9 @@
     "static/js/6.4baf7054.chunk.js.map": "/cello/210394/static/js/6.4baf7054.chunk.js.map",
     "index.html": "/cello/210394/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/cello/210394/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.1e587983.chunk.css.map": "/cello/210394/static/css/main.1e587983.chunk.css.map",
-    "static/js/2.3c6f2967.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.3c6f2967.chunk.js.LICENSE.txt",
-    "static/js/3.6c611a31.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.6c611a31.chunk.js.LICENSE.txt",
+    "static/css/main.09a9a989.chunk.css.map": "/cello/210394/static/css/main.09a9a989.chunk.css.map",
+    "static/js/2.60080393.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.60080393.chunk.js.LICENSE.txt",
+    "static/js/3.f7d5a302.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.f7d5a302.chunk.js.LICENSE.txt",
     "static/js/4.4912c3ec.chunk.js.LICENSE.txt": "/cello/210394/static/js/4.4912c3ec.chunk.js.LICENSE.txt",
     "static/js/5.25ce95ea.chunk.js.LICENSE.txt": "/cello/210394/static/js/5.25ce95ea.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/cello/210394/static/media/login_bg.07b9c2c7.png",
@@ -65,10 +65,10 @@
     "static/media/users-alt.b083882c.svg": "/cello/210394/static/media/users-alt.b083882c.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.a587b772.js",
+    "static/js/runtime-main.523ba47c.js",
     "static/css/2.029a9c87.chunk.css",
-    "static/js/2.3c6f2967.chunk.js",
-    "static/css/main.1e587983.chunk.css",
-    "static/js/main.07ebbce8.chunk.js"
+    "static/js/2.60080393.chunk.js",
+    "static/css/main.09a9a989.chunk.css",
+    "static/js/main.a41890e4.chunk.js"
   ]
 }
