@@ -18,6 +18,7 @@ export function tableChartDataGen() {
   const { chart } = store.getState();
 
   if (seriesData) {
+    debugger;
     let scale: any = [];
     seriesData.forEach((index: any) => {
       scale.push(index.name);
@@ -26,11 +27,12 @@ export function tableChartDataGen() {
     let subRow: any = [];
     let totalRow: any = [];
     let scaleIndex: any = 0;
+    let chartTransposeState = !chart.chartTranspose;
 
     if (chart.questionData?.groupNetData) {
       scaleLength = chart.questionData?.groupNetData.length;
     }
-    if (chart.chartTranspose) {
+    if (chartTransposeState) {
       scaleIndex = scale.length;
     } else {
       scaleIndex = scale.length - scaleLength;
@@ -41,14 +43,12 @@ export function tableChartDataGen() {
         let totalrowSub = 0;
 
         seriesData.forEach((d: any, rIndex: any) => {
+          let netsLabelcode =
+            chart.bannerQuestionData?.options[rIndex].labelCode.split("_")[0];
           if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + "%");
-              let netsLabelcode =
-                chart.bannerQuestionData?.options[rIndex].labelCode.split(
-                  "_"
-                )[0];
-              if (chart.chartTranspose) {
+              if (chartTransposeState) {
                 if (netsLabelcode === "N") {
                   totalrowSub += 0;
                 } else {
@@ -66,8 +66,16 @@ export function tableChartDataGen() {
           } else {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-              if (rIndex < scaleIndex) {
-                totalrowSub += parseFloat(d.values[k]);
+              if (chartTransposeState) {
+                if (netsLabelcode === "N") {
+                  totalrowSub += 0;
+                } else {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
+              } else {
+                if (rIndex < scaleIndex) {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
               }
             } else {
               subRow.push(0);
@@ -87,71 +95,71 @@ export function tableChartDataGen() {
         subRow = [];
         totalRow = [];
       }
-  }
-  let tColomn: any = [];
 
-  seriesData.forEach((series: any) => {
-    let getColumnSum = 0;
-    let columnValues = series.values;
+    let tColomn: any = [];
 
-    let results: any = chart.questionData?.options.filter(function (option) {
-      if (option.labelCode.split("_")[0] == "N") {
-        return true;
+    seriesData.forEach((series: any) => {
+      let getColumnSum = 0;
+      let columnValues = series.values;
+
+      let results: any = chart.questionData?.options.filter(function (option) {
+        if (option.labelCode.split("_")[0] == "N") {
+          return true;
+        }
+      });
+      lablecode_length = results.length;
+
+      const updateRow: any[] = [];
+      //let getColoumnTotal = columnValues.reduce((partialSum:any, a:any) => partialSum + a, 0);
+      for (var i = 0; i < columnValues.length; i++) {
+        if (typeof columnValues[i] === "undefined") {
+          columnValues[i] = 0;
+          updateRow.push(columnValues[i]);
+        } else {
+          updateRow.push(columnValues[i]);
+        }
       }
-    });
-    lablecode_length = results.length;
 
-    const updateRow: any[] = [];
-    //let getColoumnTotal = columnValues.reduce((partialSum:any, a:any) => partialSum + a, 0);
-    for (var i = 0; i < columnValues.length; i++) {
-      if (typeof columnValues[i] === "undefined") {
-        columnValues[i] = 0;
-        updateRow.push(columnValues[i]);
+      if (
+        chart.chartTranspose &&
+        chart?.questionData?.type === QuestionType.GRID
+      ) {
+        columnValues.splice(-scaleLength);
+      }
+
+      if (QuestionType.MULTI && lablecode_length > 0) {
+        columnValues.splice(-lablecode_length);
+      }
+
+      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+        tranposedTableData.push(Math.max(...updateRow) + "%");
+        tranposedTableDataMin.push(Math.min(...updateRow) + "%");
       } else {
-        updateRow.push(columnValues[i]);
+        tranposedTableData.push(Math.max(...updateRow));
+        tranposedTableDataMin.push(Math.min(...updateRow));
       }
-    }
 
-    if (
-      chart.chartTranspose &&
-      chart?.questionData?.type === QuestionType.GRID
-    ) {
-      columnValues.splice(-scaleLength);
-    }
+      let getColoumnTotal = series.values
+        .filter(function (x: any) {
+          return typeof x === "number";
+        }) // remove any non numbers
+        .reduce(function (s: number, v: number) {
+          return s + Number(v);
+        }, 0);
 
-    if (QuestionType.MULTI && lablecode_length > 0) {
-      columnValues.splice(-lablecode_length);
-    }
+      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+        tColomn.push(round(getColoumnTotal, 1) + "%");
+      } else {
+        tColomn.push(round(getColoumnTotal, 1));
+      }
 
-    if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
-      tranposedTableData.push(Math.max(...updateRow) + "%");
-      tranposedTableDataMin.push(Math.min(...updateRow) + "%");
-    } else {
-      tranposedTableData.push(Math.max(...updateRow));
-      tranposedTableDataMin.push(Math.min(...updateRow));
-    }
+      getColumnSum = 0;
+    });
 
-    let getColoumnTotal = series.values
-      .filter(function (x: any) {
-        return typeof x === "number";
-      }) // remove any non numbers
-      .reduce(function (s: number, v: number) {
-        return s + Number(v);
-      }, 0);
+    minmax.push([tranposedTableData, tranposedTableDataMin]);
 
-    if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
-      tColomn.push(round(getColoumnTotal, 1) + "%");
-    } else {
-      tColomn.push(round(getColoumnTotal, 1));
-    }
-
-    getColumnSum = 0;
-  });
-
-  minmax.push([tranposedTableData, tranposedTableDataMin]);
-  //console.log("minmax", minmax);
-
-  rows.push(["Total", ...tColomn, ""]);
+    rows.push(["Total", ...tColomn, ""]);
+  }
   const complteTable = { rows, minmax };
 
   return complteTable;
