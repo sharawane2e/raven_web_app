@@ -31,7 +31,7 @@ export interface IChartState {
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
-  meanHideshow: boolean;
+  showMean: boolean;
 }
 
 export const dataLabels = {
@@ -73,7 +73,6 @@ const initialState: IChartState = {
   chartLabelType: ChartLabelType.PERCENTAGE,
   chartTranspose: false,
   chartfullScreen: false,
-  meanHideshow: false,
   chartOptions: {
     title: {
       text: '',
@@ -109,6 +108,7 @@ const initialState: IChartState = {
     ],
   },
   baseCount: 0,
+  showMean:false
 };
 
 const chartReducer = createReducer(initialState, (builder) => {
@@ -165,7 +165,7 @@ const chartReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(transposehideshow, (state, action) => ({
     ...state,
-    meanHideshow: action.payload,
+    showMean: action.payload,
   }));
 
   builder.addCase(resetChart, (state, action) => ({

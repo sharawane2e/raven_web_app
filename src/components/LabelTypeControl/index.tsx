@@ -40,7 +40,7 @@ const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
         changeChartLabelType(ChartLabelType.PERCENTAGE);
       },
       active: chart.chartLabelType === ChartLabelType.PERCENTAGE,
-      disabled: chart.questionData === null || chart?.meanHideshow,
+      disabled: chart.questionData === null || chart?.showMean,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {

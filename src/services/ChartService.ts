@@ -130,10 +130,16 @@ export const fetchChartData = async (
           ),
         };
       }
+
+      if(!response.data.questionData?.isMean){
+        // debugger;
+        chartData.showMean=false;
+      }
     }
   } catch (error) {
     console.log(error);
   }
+  debugger;
   return chartData;
 };
 

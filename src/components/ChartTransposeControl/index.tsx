@@ -13,7 +13,7 @@ interface ChartTransposeControlProps {}
 
 const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
   const {
-    chart: { chartTranspose, questionData, bannerQuestionData, meanHideshow },
+    chart: { chartTranspose, questionData, bannerQuestionData, showMean },
   } = store.getState();
 
   const buttonConfig: ButtonGroupConfig[] = [
@@ -34,7 +34,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
         (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
         (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
         questionData === null ||
-        meanHideshow,
+        showMean,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),
     },
   ];
