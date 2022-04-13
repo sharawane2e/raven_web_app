@@ -7,11 +7,6 @@ import { logOutUser } from '../services/AuthService';
 import store from '../redux/store';
 import { setChartLoading } from '../redux/actions/chartActions';
 import { timeout } from './Utility';
-import q8_grid_groupNet from '../mock/q8_grid.json';
-import q24x1_grid_groupNet from '../mock/q24x1_grid.json';
-import q24x2_grid_groupNet from '../mock/q24x2_grid.json';
-import q24x3_grid_groupNet from '../mock/q24x3_grid.json';
-import q24x4_grid_groupNet from '../mock/24x4_grid.json';
 
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
@@ -32,12 +27,6 @@ const ApiRequest = {
     data?: any,
     params?: AxiosRequestConfig,
   ) {
-    //if (data?.qId === 'q2') return q2_grid_groupNet;
-    if (data?.qId === 'q8') return q8_grid_groupNet;
-    if (data?.qId === 'q24x1') return q24x1_grid_groupNet;
-    if (data?.qId === 'q24x2') return q24x2_grid_groupNet;
-    if (data?.qId === 'q24x3') return q24x3_grid_groupNet;
-    if (data?.qId === 'q24x4') return q24x4_grid_groupNet;
     let response: IApiResponse = {
       success: false,
       message: errorMessages.SERVER_ERROR,
