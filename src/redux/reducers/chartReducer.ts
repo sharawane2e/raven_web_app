@@ -15,6 +15,7 @@ import {
   setChartFullScreen,
   setChartLoading,
   resetChart,
+  transposehideshow,
 } from '../actions/chartActions';
 
 export interface IChartState {
@@ -30,6 +31,7 @@ export interface IChartState {
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
+  meanTransposeHideshow: boolean;
 }
 
 export const dataLabels = {
@@ -71,6 +73,7 @@ const initialState: IChartState = {
   chartLabelType: ChartLabelType.PERCENTAGE,
   chartTranspose: false,
   chartfullScreen: false,
+  meanTransposeHideshow: false,
   chartOptions: {
     title: {
       text: '',
@@ -159,6 +162,12 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     chartLoading: action.payload,
   }));
+
+  builder.addCase(transposehideshow, (state, action) => ({
+    ...state,
+    meanTransposeHideshow: action.payload,
+  }));
+
   builder.addCase(resetChart, (state, action) => ({
     ...state,
     questionData: null,

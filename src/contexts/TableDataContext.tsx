@@ -1,7 +1,7 @@
-import { createContext, useState } from "react";
-import ITableState from "../types/ITableState";
-import { SortOrder } from "../types/UtilityTypes";
-import ApiRequest from "../utils/ApiRequest";
+import { createContext, useState } from 'react';
+import ITableState from '../types/ITableState';
+import { SortOrder } from '../types/UtilityTypes';
+import ApiRequest from '../utils/ApiRequest';
 // import { v1 as uuid } from "uuid";
 
 interface TableDataContextProps {
@@ -11,7 +11,7 @@ interface TableDataContextProps {
     searchText?: string,
     sortBy?: string,
     sortOrder?: SortOrder,
-    stopLoading?: boolean
+    stopLoading?: boolean,
   ) => void;
   tableState: ITableState;
   searchText: string;
@@ -26,13 +26,13 @@ const tableStateDefaultValue: ITableState = {
   currentPage: 1,
   recordsPerPage: 10,
   totalRecords: 0,
-  sortBy: "",
+  sortBy: '',
   sortOrder: undefined,
 };
 
 const defaultValues: TableDataContextProps = {
   fetchData: () => {},
-  searchText: "",
+  searchText: '',
   tableState: tableStateDefaultValue,
   handleSearch: (e: any) => {},
   setRecordsPerPage: (recordsPerPage: number) => {},
@@ -50,9 +50,9 @@ export interface TableDataProviderProps {
 const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
   const { fetchUrl } = props;
   const [tableState, setTableState] = useState<ITableState>(
-    tableStateDefaultValue
+    tableStateDefaultValue,
   );
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const [loadingData, setLoadingData] = useState<boolean>(false);
 
   //   let requestId: string;
@@ -73,7 +73,7 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
     search = searchText,
     sortBy?: string,
     sortOrder?: SortOrder,
-    stopLoading?: boolean
+    stopLoading?: boolean,
   ) => {
     let sortByField;
     let sortByOrder;
@@ -87,9 +87,9 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
         sortByOrder = sortOrder;
       } else {
         if (sortBy === tableState.sortBy) {
-          sortByOrder = tableState.sortOrder === "asc" ? "desc" : "asc";
+          sortByOrder = tableState.sortOrder === 'asc' ? 'desc' : 'asc';
         } else {
-          sortByOrder = "asc";
+          sortByOrder = 'asc';
         }
       }
     } else {
@@ -97,7 +97,7 @@ const TableDataProvider: React.FC<TableDataProviderProps> = (props) => {
       sortByOrder = tableState.sortOrder;
     }
     if (!stopLoading) setLoadingData(true);
-    ApiRequest.request(fetchUrl, "GET", null, {
+    ApiRequest.request(fetchUrl, 'GET', null, {
       params: {
         currentPage,
         recordsPerPage,

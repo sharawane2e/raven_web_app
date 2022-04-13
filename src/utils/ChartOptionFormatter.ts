@@ -204,9 +204,11 @@ const getMultiChartOptions = (
         plotValue = count;
       }
 
-      if (plotValue > 0){
-        const seriesObject = _.find(questionData.options,function(o){return o.labelCode===option.labelCode});
-        if(seriesObject?.labelCode.split("_")[0]=='N'){
+      if (plotValue > 0) {
+        const seriesObject = _.find(questionData.options, function (o) {
+          return o.labelCode === option.labelCode;
+        });
+        if (seriesObject?.labelCode.split('_')[0] == 'N') {
           data.push({
             name: option.labelText,
             // y: round(plotValue, decimalPrecision),
@@ -214,10 +216,9 @@ const getMultiChartOptions = (
             percentageValue,
             numberValue,
             baseCount: baseCount,
-            color:'#F8971C'
+            color: '#F8971C',
           });
-
-        }else{
+        } else {
           data.push({
             name: option.labelText,
             // y: round(plotValue, decimalPrecision),
@@ -226,11 +227,8 @@ const getMultiChartOptions = (
             numberValue,
             baseCount: baseCount,
           });
-
         }
-       
       }
-       
     }
 
     const series: any[] = [];
@@ -252,12 +250,12 @@ const getMultiChartOptions = (
         series.push({ name, color, data, dataLabels });
       });
     } else {
-        series.push({
-          color: primaryBarColor,
-          name: questionData.labelText,
-          data,
-          dataLabels,
-        });
+      series.push({
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      });
     }
 
     return {
@@ -617,7 +615,6 @@ const getGridChartOptions = (
       });
 
       const base = optionData?.baseCount || baseCount;
-      console.log('base count', base, '++', count);
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;
