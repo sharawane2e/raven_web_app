@@ -39,6 +39,7 @@ import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.
 import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
 import Chapter from '../Chapter';
 import _ from 'lodash';
+import IsMeancontrol from '../IsMeanControl';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -303,8 +304,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               handleOpen={handleQSelectionOpen}
             />
           </Grid>
-          <Grid xs={4}>
-            {questions.disableBannerQuestion ? (
+          <Grid
+            xs={4}
+            className={`${questionData?.isMean ? 'mean-switch ' : ''}`}
+          >
+            {questionData?.isMean ? (
+              <IsMeancontrol />
+            ) : questions.disableBannerQuestion ? (
               <Tooltip
                 title={StaticText.BANNER_SELECTION_EXCEPTION}
                 placement="bottom"

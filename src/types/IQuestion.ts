@@ -1,5 +1,5 @@
-import { ChartType } from "../enums/ChartType";
-import { IBaseQuestion } from "./IBaseQuestion";
+import { ChartType } from '../enums/ChartType';
+import { IBaseQuestion } from './IBaseQuestion';
 
 export interface IQuestion extends IBaseQuestion {
   order: number;
@@ -8,6 +8,7 @@ export interface IQuestion extends IBaseQuestion {
   active: boolean;
   netAllowed: boolean;
   labelText: string;
-  isGroupNet:boolean;
-  groupNetData:any[];
+  isGroupNet: boolean;
+  groupNetData: any[];
+  isMean: any;
 }

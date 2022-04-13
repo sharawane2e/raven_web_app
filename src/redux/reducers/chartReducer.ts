@@ -1,11 +1,11 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { ChartOrientation } from "../../enums/ChartOrientation";
-import { ChartType } from "../../enums/ChartType";
-import { QuestionType } from "../../enums/QuestionType";
+import { createReducer } from '@reduxjs/toolkit';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartOrientation } from '../../enums/ChartOrientation';
+import { ChartType } from '../../enums/ChartType';
+import { QuestionType } from '../../enums/QuestionType';
 
-import { IQuestion } from "../../types/IQuestion";
-import { changeChartOptions } from "../../utils/ChartOptionFormatter";
+import { IQuestion } from '../../types/IQuestion';
+import { changeChartOptions } from '../../utils/ChartOptionFormatter';
 import {
   setChartData,
   setChartOrientation,
@@ -15,7 +15,7 @@ import {
   setChartFullScreen,
   setChartLoading,
   resetChart,
-} from "../actions/chartActions";
+} from '../actions/chartActions';
 
 export interface IChartState {
   chartLoading: boolean;
@@ -36,7 +36,7 @@ export const dataLabels = {
   enabled: true,
   // format: "{point.y:.1f}%",
   style: {
-    fontSize: "10px",
+    fontSize: '10px',
     textOutline: false,
     fontWeight: null,
   },
@@ -50,7 +50,7 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      format: "{point.y:.1f}%",
+      format: '{point.y:.1f}%',
       allowOverlap: true,
       rotation: -90,
       x: 0,
@@ -73,10 +73,10 @@ const initialState: IChartState = {
   chartfullScreen: false,
   chartOptions: {
     title: {
-      text: "",
+      text: '',
     },
     chart: {
-      type: "column",
+      type: 'column',
 
       style: {
         fontFamily: `"Avenir", Arial`,
@@ -89,10 +89,10 @@ const initialState: IChartState = {
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
       pointFormat:
-        "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>",
+        '<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
     },
     xAxis: {
-      type: "category",
+      type: 'category',
     },
     yAxis: {
       visible: false,
@@ -165,10 +165,10 @@ const chartReducer = createReducer(initialState, (builder) => {
     chartData: [],
     chartOptions: {
       title: {
-        text: "",
+        text: '',
       },
       chart: {
-        type: "column",
+        type: 'column',
 
         style: {
           fontFamily: `"Avenir", Arial`,
@@ -181,10 +181,10 @@ const chartReducer = createReducer(initialState, (builder) => {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat:
-          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>",
+          '<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>',
       },
       xAxis: {
-        type: "category",
+        type: 'category',
       },
       yAxis: {
         visible: false,
