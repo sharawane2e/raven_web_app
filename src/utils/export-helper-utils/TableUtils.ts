@@ -31,7 +31,7 @@ export function tableChartDataGen() {
     if (chart.questionData?.groupNetData) {
       scaleLength = chart.questionData?.groupNetData.length;
     }
-    if (chartTransposeState) {
+    if (!chartTransposeState) {
       scaleIndex = scale.length;
     } else {
       scaleIndex = scale.length - scaleLength;
@@ -113,7 +113,7 @@ export function tableChartDataGen() {
       }
 
       if (
-        !chart.chartTranspose &&
+        chart.chartTranspose &&
         chart?.questionData?.type === QuestionType.GRID
       ) {
         columnValues.splice(-scaleLength);
