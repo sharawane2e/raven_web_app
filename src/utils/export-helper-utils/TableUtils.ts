@@ -61,7 +61,7 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
 
-              totalrowSub += parseFloat(d.values[k]);
+              // totalrowSub += parseFloat(d.values[k]);
 
               if (rIndex < scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
