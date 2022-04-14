@@ -20,7 +20,7 @@ export function getmatchedFind(
   collectionKey: any,
   compareWith: any,
 ) {
-  console.log('collection', collection);
+  //console.log('collection', collection);
   if (_.isArray(compareWith)) {
     return collection.find(
       (data: any) => +_.isEqual(data[collectionKey], compareWith),
