@@ -26,4 +26,6 @@ export const setChartLoading = createAction<boolean>('SET_CHART_SCREEN');
 
 export const resetChart = createAction<any>('RESET_CHART');
 
-export const transposehideshow = createAction<any>('TRANSPOSE_HIDE_SHOW');
+export const updateChartOptions = createAction<any>('UPDATE_CHART_OPTIONS');
+
+export const showMean = createAction<any>('SHOW_MEAN');

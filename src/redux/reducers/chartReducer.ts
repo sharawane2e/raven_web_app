@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartOrientation } from '../../enums/ChartOrientation';
 import { ChartType } from '../../enums/ChartType';
@@ -15,7 +16,8 @@ import {
   setChartFullScreen,
   setChartLoading,
   resetChart,
-  transposehideshow,
+  showMean,
+  updateChartOptions,
 } from '../actions/chartActions';
 
 export interface IChartState {
@@ -163,7 +165,7 @@ const chartReducer = createReducer(initialState, (builder) => {
     chartLoading: action.payload,
   }));
 
-  builder.addCase(transposehideshow, (state, action) => ({
+  builder.addCase(showMean, (state, action) => ({
     ...state,
     showMean: action.payload,
   }));
@@ -207,6 +209,12 @@ const chartReducer = createReducer(initialState, (builder) => {
       ],
     },
     baseCount: 0,
+  }));
+
+  builder.addCase(updateChartOptions,(state,action)=>({
+    ...state,
+    chartOptions:action.payload
+
   }));
 });
 

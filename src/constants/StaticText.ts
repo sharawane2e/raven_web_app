@@ -23,5 +23,5 @@ export class StaticText {
 
   static MEAN_TOOTLE = 'Mean';
 
-  static DEFAULT_TOOTLE = 'Default';
+  static DEFAULT = 'Default';
 }

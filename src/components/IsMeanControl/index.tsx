@@ -1,54 +1,76 @@
 import { Switch, Tooltip } from '@material-ui/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import {
+  setChartData,
   setChartLabel,
   setChartTranspose,
-  transposehideshow,
+  showMean,
 } from '../../redux/actions/chartActions';
+import store from '../../redux/store';
+import { getChartOptions } from '../../utils/ChartOptionFormatter';
 
 interface IsMeancontrolProps {}
 
-const IsMeancontrol: React.FC<IsMeancontrolProps> = () => {
-  const [ischecked, setischecked] = useState(false);
+const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
+
+  
+  const [isChecked, setIschecked] = useState(false);
   const dispatch = useDispatch();
-  const handleActivateClick = (event: any) => {
-    const ischeckTrue = event.target.checked;
-    setischecked(ischeckTrue);
-    if (ischeckTrue) {
+
+  useEffect(()=>{
+    if (isChecked) {
       dispatch(setChartLabel(ChartLabelType.NUMBER));
-      dispatch(transposehideshow(true));
+      dispatch(showMean(true));
     } else {
       dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
-      dispatch(transposehideshow(false));
+      dispatch(showMean(false));
     }
-  };
+
+    const chartOptions = getChartOptions();
+
+    const{chart} = store.getState();
+
+    console.log(chart.chartOptions)
+    console.log(chartOptions)
+
+    const chartClone = {...chart};
+    chartClone.chartOptions = {...chart.chartOptions,...chartOptions}
+    debugger;
+  
+    dispatch(setChartData(chartClone))
+
+
+
+  },[isChecked])
+
+ 
   return (
     <div className="md-space-4 MuiFormControl-root">
       <span className="cell-value">
         <span className="static-switch-default">
-          {StaticText?.DEFAULT_TOOTLE}
+          {StaticText?.DEFAULT}
         </span>
 
         <Tooltip
           title={`${
-            ischecked ? StaticText?.MEAN_TOOTLE : StaticText?.DEFAULT_TOOTLE
+            isChecked ? StaticText?.MEAN_TOOTLE : StaticText?.DEFAULT
           }`}
           placement="bottom"
           arrow
         >
           <Switch
-            checked={ischecked}
-            onChange={(e) => handleActivateClick(e)}
+            checked={isChecked}
+            onChange={(e) => setIschecked(e.target.checked)}
             disabled={false}
           />
         </Tooltip>
 
         <span
           className={`${
-            ischecked ? 'static-switch-mean bold-text' : 'static-switch-mean'
+            isChecked ? 'static-switch-mean bold-text' : 'static-switch-mean'
           }`}
         >
           {StaticText?.MEAN_TOOTLE}
@@ -58,4 +80,4 @@ const IsMeancontrol: React.FC<IsMeancontrolProps> = () => {
   );
 };
 
-export default IsMeancontrol;
+export default IsMeanControl;

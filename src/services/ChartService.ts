@@ -139,7 +139,7 @@ export const fetchChartData = async (
   } catch (error) {
     console.log(error);
   }
-  debugger;
+  // debugger;
   return chartData;
 };
 
