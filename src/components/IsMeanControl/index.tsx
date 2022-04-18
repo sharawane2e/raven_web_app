@@ -8,6 +8,7 @@ import {
   setChartLabel,
   setChartTranspose,
   showMean,
+  updateChartOptions,
 } from '../../redux/actions/chartActions';
 import store from '../../redux/store';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
@@ -29,21 +30,17 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
       dispatch(showMean(false));
     }
 
-    const chartOptions = getChartOptions();
+    const chartOptionsUpdate = getChartOptions();
 
-    const{chart} = store.getState();
+    const{chart:{
+      chartOptions
+    }} = store.getState();
 
-    console.log(chart.chartOptions)
-    console.log(chartOptions)
-
-    const chartClone = {...chart};
-    chartClone.chartOptions = {...chart.chartOptions,...chartOptions}
-    debugger;
-  
-    dispatch(setChartData(chartClone))
-
-
-
+    const updatedChartOptions = {
+      ...chartOptions,
+      ...chartOptionsUpdate
+    }
+    dispatch(updateChartOptions(updatedChartOptions))
   },[isChecked])
 
  
