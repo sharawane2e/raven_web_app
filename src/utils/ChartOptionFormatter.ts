@@ -597,16 +597,39 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale];
 
+  for (let meanVal = 0; meanVal < chartData.length; meanVal++) {
+      console.log(chartData[0].options.length)
+      let totalOfMean:any=0;
+      for (let opLength = 0; opLength< chartData[0].options.length; opLength ++){
+        let optionLebel =parseInt(chartData[0].options[opLength].option);
+        let optionCount =chartData[0].options[opLength].count;
+        const multiOptionCount = optionLebel * optionCount;
+        
+        totalOfMean += multiOptionCount;
+        console.log(optionLebel +"*"+ optionCount +"="+ multiOptionCount)
+        //console.log(totalOfMean+"---")
+      }
+      console.log(totalOfMean);
+  }
+
+
   for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
     const scale = scales[scaleIndex];
+
+    //console.log(scale)
+    
     const data: any[] = [];
     for (
       let subGroupIndex = 0;
       subGroupIndex < subGroups.length;
       subGroupIndex++
     ) {
+
+      //console.log(scales[subGroupIndex].labelCode)
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
+      
+      
 
       const optionData = getmatchedFind(chartData, "_id", subGroup.qId);
 
@@ -619,10 +642,15 @@ const getGridChartOptions = (
         return o.count;
       });
 
+
+      //console.log(scale)
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;
+      
+      
+
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
       } else {
