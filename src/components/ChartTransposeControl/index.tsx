@@ -1,11 +1,5 @@
 import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
-import { ReactComponent as PortraitIcon } from '../../assets/svg/portrait-icon.svg';
-import { ReactComponent as LandscapeIcon } from '../../assets/svg/landscape-icon.svg';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../redux/store';
 import {
-  changeChartType,
   transposeChart,
   transposeChartMulti,
 } from '../../services/ChartService';
@@ -19,7 +13,7 @@ interface ChartTransposeControlProps {}
 
 const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
   const {
-    chart: { chartTranspose, questionData, bannerQuestionData },
+    chart: { chartTranspose, questionData, bannerQuestionData, showMean },
   } = store.getState();
 
   const buttonConfig: ButtonGroupConfig[] = [
@@ -39,7 +33,8 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
       disabled:
         (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
         (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
-        questionData === null,
+        questionData === null ||
+        showMean,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),
     },
   ];

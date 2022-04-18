@@ -39,7 +39,7 @@ import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.
 import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
 import Chapter from '../Chapter';
 import _ from 'lodash';
-import IsMeancontrol from '../IsMeanControl';
+import IsMeanControl from '../IsMeanControl';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -122,6 +122,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
       .then((chartData) => {
+        debugger;
         dispatch(setChartData(chartData));
         // dispatch(setChartOperations(defaultChartOperations))
         if (
@@ -309,7 +310,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             className={`${questionData?.isMean ? 'mean-switch ' : ''}`}
           >
             {questionData?.isMean ? (
-              <IsMeancontrol />
+              <IsMeanControl />
             ) : questions.disableBannerQuestion ? (
               <Tooltip
                 title={StaticText.BANNER_SELECTION_EXCEPTION}

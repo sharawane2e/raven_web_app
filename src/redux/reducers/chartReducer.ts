@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartOrientation } from '../../enums/ChartOrientation';
 import { ChartType } from '../../enums/ChartType';
@@ -15,6 +16,8 @@ import {
   setChartFullScreen,
   setChartLoading,
   resetChart,
+  showMean,
+  updateChartOptions,
 } from '../actions/chartActions';
 
 export interface IChartState {
@@ -30,6 +33,7 @@ export interface IChartState {
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
+  showMean: boolean;
 }
 
 export const dataLabels = {
@@ -106,6 +110,7 @@ const initialState: IChartState = {
     ],
   },
   baseCount: 0,
+  showMean:false
 };
 
 const chartReducer = createReducer(initialState, (builder) => {
@@ -159,6 +164,12 @@ const chartReducer = createReducer(initialState, (builder) => {
     ...state,
     chartLoading: action.payload,
   }));
+
+  builder.addCase(showMean, (state, action) => ({
+    ...state,
+    showMean: action.payload,
+  }));
+
   builder.addCase(resetChart, (state, action) => ({
     ...state,
     questionData: null,
@@ -198,6 +209,12 @@ const chartReducer = createReducer(initialState, (builder) => {
       ],
     },
     baseCount: 0,
+  }));
+
+  builder.addCase(updateChartOptions,(state,action)=>({
+    ...state,
+    chartOptions:action.payload
+
   }));
 });
 

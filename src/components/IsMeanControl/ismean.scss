@@ -1,0 +1,12 @@
+.static-switch-default,.static-switch-mean{
+    font-size: map-get($map: $text-size, $key: "xsmall");
+}
+.static-switch-default{
+    margin-right: 8px;
+}
+.static-switch-mean{
+    margin-left: 8px;
+}
+.bold-text{
+    font-weight: 800;
+}

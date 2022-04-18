@@ -204,9 +204,11 @@ const getMultiChartOptions = (
         plotValue = count;
       }
 
-      if (plotValue > 0){
-        const seriesObject = _.find(questionData.options,function(o){return o.labelCode===option.labelCode});
-        if(seriesObject?.labelCode.split("_")[0]=='N'){
+      if (plotValue > 0) {
+        const seriesObject = _.find(questionData.options, function (o) {
+          return o.labelCode === option.labelCode;
+        });
+        if (seriesObject?.labelCode.split('_')[0] == 'N') {
           data.push({
             name: option.labelText,
             // y: round(plotValue, decimalPrecision),
@@ -214,10 +216,9 @@ const getMultiChartOptions = (
             percentageValue,
             numberValue,
             baseCount: baseCount,
-            color:'#F8971C'
+            color: '#F8971C',
           });
-
-        }else{
+        } else {
           data.push({
             name: option.labelText,
             // y: round(plotValue, decimalPrecision),
@@ -226,11 +227,8 @@ const getMultiChartOptions = (
             numberValue,
             baseCount: baseCount,
           });
-
         }
-       
       }
-       
     }
 
     const series: any[] = [];
@@ -252,12 +250,12 @@ const getMultiChartOptions = (
         series.push({ name, color, data, dataLabels });
       });
     } else {
-        series.push({
-          color: primaryBarColor,
-          name: questionData.labelText,
-          data,
-          dataLabels,
-        });
+      series.push({
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      });
     }
 
     return {
@@ -579,6 +577,8 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number,
 ): any => {
+  // debugger;
+ 
   const categories = [];
   const series = [];
 
@@ -589,8 +589,14 @@ const getGridChartOptions = (
   });
 
   const {
-    chart: { chartLabelType, chartType },
+    chart: { chartLabelType, chartType,showMean },
   } = store.getState();
+
+  if(showMean){
+
+    return getGridMeanChartOptions( questionData,chartData,baseCount)
+  }
+
 
   const scales = [...questionData.scale];
 
@@ -642,7 +648,6 @@ const getGridChartOptions = (
 
       //console.log(scale)
       const base = optionData?.baseCount || baseCount;
-      //console.log('base count', base, '++', count);
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;
@@ -655,12 +660,10 @@ const getGridChartOptions = (
         plotValue = count;
       }
 
-      if(questionData.isMean){
-        
-        
-
-        
-      }
+      // if(showMean){
+      //   const sum = _.sumBy(optionData.options,function(o:any){return (parseInt(o.option))*(parseInt(o.count))})
+      //   plotValue = sum/baseCount;
+      // }
 
       if (chartType == ChartType.LINE) {
         data.push({
@@ -697,6 +700,79 @@ const getGridChartOptions = (
     series,
   };
 };
+
+const getGridMeanChartOptions = (questionData: IQuestion,
+  chartData: any,
+  baseCount: number):any=>{
+    debugger;
+    const data: any[] = [];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.subGroups.length;
+      optionIndex++
+    ) {
+      const option = questionData.subGroups[optionIndex];
+      const label = chartData.find(
+        (record: { labelCode: string; count: number }) =>
+          record.labelCode === option.labelCode,
+      );
+
+      const optionData = getmatchedFind(chartData, '_id', option.qId);
+      const sum = _.sumBy(optionData.options,function(o:any){return (parseInt(o.option))*(parseInt(o.count))})
+      const plotValue = sum/baseCount;
+      // let count = 0;
+      // if (label) {
+      //   count = label.count;
+      // }
+
+      // let percentageValue = (count / baseCount) * 100;
+      // let numberValue = count;
+      // let  plotValue = count;
+      
+      if (plotValue > 0)
+        data.push({
+          name: option.labelText,
+          // y: round(plotValue, decimalPrecision),
+          y: plotValue,
+          baseCount: baseCount,
+        });
+    }
+
+    const series: any[] = [];
+
+    // if (chartType === ChartType.STACK) {
+    //   data.map((element: any, index: number) => {
+    //     const name = element.name;
+    //     const color = colorArr[index];
+    //     const data = [
+    //       {
+    //         name: questionData.labelText,
+    //         y: element.y,
+    //         numberValue: element.numberValue,
+    //         percentageValue: element.percentageValue,
+    //         baseCount: element.baseCount,
+    //       },
+    //     ];
+    //     series.push({ name, color, data, dataLabels });
+    //   });
+    // } else {
+      //console.log(ChartType.STACK)
+      series.push({
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      });
+    // }
+
+    return {
+      legend: {
+        enabled: false,
+      },
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  }
 
 const getGridMultiChartOptions = (
   questionData: IQuestion,
