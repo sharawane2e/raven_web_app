@@ -13,6 +13,7 @@ import { IQuestion } from "../types/IQuestion";
 import { getMatchedfilter, getmatchedFind, round } from "./Utility";
 import _, { find, omit } from "lodash";
 import { ChartOrientation } from "../enums/ChartOrientation";
+import { showMean } from "../redux/actions/chartActions";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -598,38 +599,34 @@ const getGridChartOptions = (
   const scales = [...questionData.scale];
 
   for (let meanVal = 0; meanVal < chartData.length; meanVal++) {
-      console.log(chartData[0].options.length)
-      let totalOfMean:any=0;
-      for (let opLength = 0; opLength< chartData[0].options.length; opLength ++){
-        let optionLebel =parseInt(chartData[0].options[opLength].option);
-        let optionCount =chartData[0].options[opLength].count;
-        const multiOptionCount = optionLebel * optionCount;
-        
-        totalOfMean += multiOptionCount;
-        console.log(optionLebel +"*"+ optionCount +"="+ multiOptionCount)
-        //console.log(totalOfMean+"---")
-      }
-      console.log(totalOfMean);
-  }
+    console.log(chartData[0].options.length);
+    let totalOfMean: any = 0;
+    for (let opLength = 0; opLength < chartData[0].options.length; opLength++) {
+      let optionLebel = parseInt(chartData[0].options[opLength].option);
+      let optionCount = chartData[0].options[opLength].count;
+      const multiOptionCount = optionLebel * optionCount;
 
+      totalOfMean += multiOptionCount;
+      console.log(optionLebel + "*" + optionCount + "=" + multiOptionCount);
+      //console.log(totalOfMean+"---")
+    }
+    console.log(totalOfMean);
+  }
 
   for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
     const scale = scales[scaleIndex];
 
     //console.log(scale)
-    
+
     const data: any[] = [];
     for (
       let subGroupIndex = 0;
       subGroupIndex < subGroups.length;
       subGroupIndex++
     ) {
-
       //console.log(scales[subGroupIndex].labelCode)
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
-      
-      
 
       const optionData = getmatchedFind(chartData, "_id", subGroup.qId);
 
@@ -642,14 +639,11 @@ const getGridChartOptions = (
         return o.count;
       });
 
-
       //console.log(scale)
       const base = optionData?.baseCount || baseCount;
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;
-      
-      
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         plotValue = (count / base) * 100;
@@ -708,6 +702,7 @@ const getGridMeanChartOptions = (
   } = store.getState();
 
   const data: any[] = [];
+  debugger;
   for (
     let optionIndex = 0;
     optionIndex < questionData.subGroups.length;
@@ -715,20 +710,26 @@ const getGridMeanChartOptions = (
   ) {
     const option = questionData.subGroups[optionIndex];
     const optionData = getmatchedFind(chartData, "_id", option.qId);
-    const totalSelections = _.sumBy(optionData.options, function (o: any) {
+    const filteredOptions = _.remove(
+      [...optionData.options],
+      function (n: any) {
+        return !Array.isArray(n.option);
+      }
+    ); //removing array options which come with subgroups
+    const totalSelections = _.sumBy(filteredOptions, function (o: any) {
       return parseInt(o.option) * parseInt(o.count);
     });
     const plotValue = totalSelections / baseCount;
     if (plotValue > 0)
       data.push({
         name: option.labelText,
-        y: round(plotValue, decimalPrecision),
+        // y: round(plotValue, decimalPrecision),
+        y: plotValue,
         baseCount: baseCount,
       });
   }
 
   const series: any[] = [];
-  debugger;
 
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
@@ -736,7 +737,7 @@ const getGridMeanChartOptions = (
       const color = colorArr[index];
       const data = [
         {
-          name: questionData.labelText,
+          name: questionData?.labelText,
           y: element.y,
           baseCount: element.baseCount,
         },
@@ -746,7 +747,7 @@ const getGridMeanChartOptions = (
   } else {
     series.push({
       color: primaryBarColor,
-      name: questionData.labelText,
+      name: questionData?.labelText,
       data,
       dataLabels,
     });
@@ -866,7 +867,7 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
 
 const getToolTip = () => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, showMean },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
     headerFormat: "",
@@ -875,8 +876,14 @@ const getToolTip = () => {
 
   tooltip["headerFormat"] =
     '<span style="font-size:11px">{series.name}</span><br>';
-  tooltip["pointFormat"] =
-    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+
+  if (showMean) {
+    tooltip["pointFormat"] =
+      "<span>{point.name}</span>: Mean<b> {point.y}</b>,  of total <b>{point.baseCount}</b><br/>";
+  } else {
+    tooltip["pointFormat"] =
+      "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+  }
 
   return tooltip;
 };
@@ -889,26 +896,27 @@ export const getPlotOptions = (
   plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
 
   if (chartType === ChartType.STACK) {
-    //debugger
     plotOptions["column"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
-    }`;
+
+    plotOptions["series"].dataLabels.format = chartDataClone.showMean
+      ? "{point.y:.1f}"
+      : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+      ? "{point.y:.1f}%"
+      : "{point.y:.0f}";
+
     plotOptions["series"].dataLabels.y = undefined;
     plotOptions["series"].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
-    }`;
+    plotOptions["series"].dataLabels.format = chartDataClone.showMean
+      ? "{point.y:.1f}"
+      : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+      ? "{point.y:.1f}%"
+      : "{point.y:.0f}";
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
       plotOptions["series"].dataLabels.y = -20;
       plotOptions["series"].dataLabels.rotation = -90;
@@ -921,13 +929,11 @@ export const getPlotOptions = (
       allowPointSelect: false,
       cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "<b>{point.name}</b>: {point.percentage:.1f}%"
-        : "<b>{point.name}</b>: {point.y:.0f}"
-    }`;
-    // plotOptions["series"].dataLabels.y = undefined;
-    // plotOptions["series"].dataLabels.rotation = undefined;
+    plotOptions["series"].dataLabels.format = chartDataClone.showMean
+      ? "{point.y:.1f}"
+      : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+      ? "<b>{point.name}</b>: {point.percentage:.1f}%"
+      : "<b>{point.name}</b>: {point.y:.0f}";
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
@@ -935,11 +941,12 @@ export const getPlotOptions = (
       // allowPointSelect: false,
       // cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format = `${
-      chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
-    }`;
+
+    plotOptions["series"].dataLabels.format = chartDataClone.showMean
+      ? "{point.y:.1f}"
+      : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+      ? "{point.y:.1f}%"
+      : "{point.y:.0f}";
   } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;

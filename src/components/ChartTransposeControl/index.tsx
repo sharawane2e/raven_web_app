@@ -33,7 +33,6 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
       disabled:
         (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
         (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
-        questionData === null ||
         showMean,
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),
     },

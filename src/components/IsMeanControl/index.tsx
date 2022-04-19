@@ -11,7 +11,8 @@ import {
   updateChartOptions,
 } from '../../redux/actions/chartActions';
 import store from '../../redux/store';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
+import { transposeChart } from '../../services/ChartService';
+import { getChartOptions, getPlotOptions } from '../../utils/ChartOptionFormatter';
 
 interface IsMeancontrolProps {}
 
@@ -21,8 +22,13 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
   const [isChecked, setIschecked] = useState(false);
   const dispatch = useDispatch();
 
+  const {chart} = store.getState();
+
   useEffect(()=>{
     if (isChecked) {
+      if(chart.chartTranspose){
+        transposeChart();
+      }
       dispatch(setChartLabel(ChartLabelType.NUMBER));
       dispatch(showMean(true));
     } else {
@@ -31,6 +37,7 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
     }
 
     const chartOptionsUpdate = getChartOptions();
+    const plotOptionsUpdate = getPlotOptions();
 
     const{chart:{
       chartOptions
