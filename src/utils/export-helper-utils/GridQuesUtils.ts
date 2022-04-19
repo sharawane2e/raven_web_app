@@ -38,9 +38,13 @@ export function gridChartDataGen(
       const totalSelections = _.sumBy(filteredOptions, function (o: any) {
         return parseInt(o.option) * parseInt(o.count);
       });
-      const plotValue: any = totalSelections / baseCount;
-      const floatPlotvalue = parseFloat(plotValue).toFixed(1);
-      values.push(Number(floatPlotvalue));
+      //const plotValue: any = round(totalSelections / baseCount, 2);
+      const plotValue: any = round(
+        totalSelections / baseCount,
+        decimalPrecision,
+      );
+      //const floatPlotvalue = parseFloat(plotValue).toFixed(1);
+      values.push(Number(plotValue));
     }
     return (seriesData = [
       {
