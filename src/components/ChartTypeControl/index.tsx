@@ -22,6 +22,19 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const { chartType } = chart;
   // const { questionData, bannerQuestionData } = chart;
 
+
+  const handlePieDisabled = () =>{
+    let isPieDisabled = true;
+    if(chart.questionData?.type !== QuestionType.SINGLE && !selectedBannerQuestionId){
+      isPieDisabled = false;
+    }
+    else if(chart.showMean){
+      isPieDisabled = false;
+    }
+
+    return isPieDisabled
+  }
+
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: 'Column chart',
@@ -52,9 +65,9 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <PieChartIcon />,
       onClick: () => changeChartType(ChartType.PIE),
       active: chartType === ChartType.PIE,
-      disabled:
-        !(chart.questionData?.type === QuestionType.SINGLE) ||
-        !!selectedBannerQuestionId,
+      disabled: handlePieDisabled(),
+        // (chart.questionData?.type !== QuestionType.SINGLE) ||!(chart.showMean)||
+        // (!!selectedBannerQuestionId),
       disableClick: () => {
         if (!(chart.questionData?.type === QuestionType.SINGLE)) {
           return Toaster.error(StaticText.DISABLED_CHART);

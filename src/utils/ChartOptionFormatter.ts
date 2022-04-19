@@ -702,7 +702,7 @@ const getGridMeanChartOptions = (
   } = store.getState();
 
   const data: any[] = [];
-  debugger;
+  // debugger;
   for (
     let optionIndex = 0;
     optionIndex < questionData.subGroups.length;
@@ -757,6 +757,7 @@ const getGridMeanChartOptions = (
     legend: {
       enabled: false,
     },
+    plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
     series,
   };

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartType } from '../../enums/ChartType';
 import {
   setChartData,
   setChartLabel,
@@ -11,8 +12,8 @@ import {
   updateChartOptions,
 } from '../../redux/actions/chartActions';
 import store from '../../redux/store';
-import { transposeChart } from '../../services/ChartService';
-import { getChartOptions, getPlotOptions } from '../../utils/ChartOptionFormatter';
+import { changeChartType, transposeChart } from '../../services/ChartService';
+import { getChartOptions } from '../../utils/ChartOptionFormatter';
 
 interface IsMeancontrolProps {}
 
@@ -29,16 +30,21 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
       if(chart.chartTranspose){
         transposeChart();
       }
-      dispatch(setChartLabel(ChartLabelType.NUMBER));
+      if(chart.chartLabelType===ChartLabelType.PERCENTAGE){
+        
+        dispatch(setChartLabel(ChartLabelType.NUMBER));
+      }
       dispatch(showMean(true));
     } else {
-      dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
+
+      if(chart.chartType===ChartType.PIE){
+        changeChartType(ChartType.COLUMN);
+      }
+     // dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
       dispatch(showMean(false));
     }
-
+    // debugger;
     const chartOptionsUpdate = getChartOptions();
-    const plotOptionsUpdate = getPlotOptions();
-
     const{chart:{
       chartOptions
     }} = store.getState();
