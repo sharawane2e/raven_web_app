@@ -4,31 +4,41 @@ import {
   primaryBarColor,
   barPptColor,
   primaryBarPPt,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 
-import pptxgen from 'pptxgenjs';
-import store from '../../redux/store';
-import { ISlideConfig } from '../../types/ISlideConfig';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { ChartType } from '../../enums/ChartType';
+import pptxgen from "pptxgenjs";
+import store from "../../redux/store";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { ChartType } from "../../enums/ChartType";
 
-import { chartConfig, tableConfig } from '../../config/PptConfig';
-import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
+import {
+  chartConfig,
+  tableConfig,
+  chartConfigMean,
+} from "../../config/PptConfig";
+import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
 
-import { tableChartDataGen } from '../export-helper-utils/TableUtils';
-import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
-import _, { slice } from 'lodash';
-import { setDefaultSlideProperties } from './DefaultPptProps';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import { tableChartDataGen } from "../export-helper-utils/TableUtils";
+import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
+import _, { slice } from "lodash";
+import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
   graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType },
-  chartSettings: pptxgen.IChartOpts,
+  chartSettings: pptxgen.IChartOpts
 ) {
   const {
-    chart: { chartType, chartOrientation, chartLabelType, questionData },
+    chart: {
+      chartType,
+      chartOrientation,
+      chartLabelType,
+      questionData,
+      showMean,
+    },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -52,15 +62,15 @@ export function pptDataGen(
         const currentMax = maxValue?.[index - 1];
         const currentMin = minValue?.[index - 1];
         const options = {
-          fill: 'ffffff',
+          fill: "ffffff",
           bold: false,
         };
         if (rowData[index] === currentMax) {
-          options['fill'] = 'b8e08c';
-          options['bold'] = true;
+          options["fill"] = "b8e08c";
+          options["bold"] = true;
         } else if (rowData[index] === currentMin) {
-          options['fill'] = 'fbd9d4';
-          options['bold'] = true;
+          options["fill"] = "fbd9d4";
+          options["bold"] = true;
         }
         rowArray.push({ text: rowData[index], options: { ...options } });
       });
@@ -88,8 +98,8 @@ export function pptDataGen(
           const seriesObject = _.find(questionData?.options, function (o) {
             return o.labelText === labelText;
           });
-          if (seriesObject?.labelCode.split('_')[0] == 'N') {
-            colorArray.push('F8971C');
+          if (seriesObject?.labelCode.split("_")[0] == "N") {
+            colorArray.push("F8971C");
           } else {
             colorArray.push(primaryBarPPt);
           }
@@ -120,8 +130,10 @@ export function pptDataGen(
       });
     }
 
+    const config = showMean ? chartConfigMean : chartConfig;
+
     slide.addChart(pptChartType, seriesData, {
-      ...chartConfig,
+      ...config,
       ...graphTypeProps,
       chartColors: chartColors,
       ...chartSettings,
