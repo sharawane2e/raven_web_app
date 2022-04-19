@@ -43,8 +43,9 @@ export const chartConfig: pptxgen.IChartOpts = {
 
   valGridLine: { style: "none" },
   dataLabelColor: dataLabelColor,
-  dataLabelFormatCode: "##.##%;;;",
-  valLabelFormatCode: "##.##%;;;",
+  // dataLabelFormatCode: "#,##0",
+  dataLabelFormatCode: "#,###;;;$",
+  valLabelFormatCode: "#,###;;;$",
 };
 export const chartConfigMean: pptxgen.IChartOpts = {
   x: 0.3,
@@ -69,16 +70,14 @@ export const chartConfigMean: pptxgen.IChartOpts = {
   showLegend: false,
   showTitle: false,
   showPercent: false,
+  legendPos: "b",
   dataBorder: { pt: 0.5, color: "0000ffff" },
   valAxisHidden: true,
   catGridLine: { style: "none" },
   valGridLine: { style: "none" },
   dataLabelColor: dataLabelColor,
-  dataLabelFormatCode: "##.##%",
-  dataLabelPosition: "b",
-  //dataLabelFormatCode: "##.##%;;;",
-  // valLabelFormatCode: "##.##%;;;",
-  //valAxisLabelFormatCode: "#,##0",
+  dataLabelFormatCode: "#,###;;;$",
+  valLabelFormatCode: "#,###;;;$",
 };
 
 export const tableConfig: pptxgen.TableProps = {

@@ -24,6 +24,7 @@ import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
 import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
 import { ChartLabelType } from "../../enums/ChartLabelType";
+import { round } from "../Utility";
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
@@ -80,7 +81,7 @@ export function pptDataGen(
 
     slide.addTable(output, { ...tableConfig });
   } else {
-    let pptChartType;
+    let pptChartType: any;
 
     if (chartType === ChartType.LINE) {
       chartColors = [...colorArr];
@@ -89,6 +90,7 @@ export function pptDataGen(
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
+      debugger;
       if (seriesData.length > 1) {
         chartColors = slice(colorArr, 0, seriesData.length);
       } else {
@@ -107,8 +109,8 @@ export function pptDataGen(
 
         chartColors = colorArray;
       }
-      pptChartType = pptxGenJsObj.ChartType.bar;
 
+      pptChartType = pptxGenJsObj.ChartType.bar;
       if (chartOrientation === ChartOrientation.LANDSCAPE) {
         seriesData.forEach((row: any, index) => {
           row.values = row.values?.reverse();
@@ -128,6 +130,12 @@ export function pptDataGen(
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
+    } else {
+      // if (showMean)
+      // seriesData.forEach((row: any, index) => {
+      //   row.values = row.values.map((value: number) => value / 10);
+      //   seriesData[index] = row;
+      // });
     }
 
     const config = showMean ? chartConfigMean : chartConfig;

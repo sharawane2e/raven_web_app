@@ -1,9 +1,9 @@
-import { Switch, Tooltip } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { StaticText } from '../../constants/StaticText';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
+import { Switch, Tooltip } from "@material-ui/core";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { StaticText } from "../../constants/StaticText";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
 import {
   setChartData,
   setChartLabel,
@@ -11,10 +11,10 @@ import {
   setChartType,
   showMean,
   updateChartOptions,
-} from '../../redux/actions/chartActions';
-import store from '../../redux/store';
-import { changeChartType, transposeChart } from '../../services/ChartService';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
+} from "../../redux/actions/chartActions";
+import store from "../../redux/store";
+import { changeChartType, transposeChart } from "../../services/ChartService";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
 
 interface IsMeancontrolProps {}
 
@@ -29,27 +29,23 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
       if (chart.chartTranspose) {
         transposeChart();
       }
-      if(chart.chartLabelType===ChartLabelType.PERCENTAGE){
-        
+      if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
         dispatch(setChartLabel(ChartLabelType.NUMBER));
       }
       dispatch(showMean(true));
     } else {
-
-      if(chart.chartType===ChartType.PIE){
+      dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
+      if (chart.chartType === ChartType.PIE) {
         changeChartType(ChartType.COLUMN);
       }
-     // dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
+      // dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
       dispatch(showMean(false));
     }
     // debugger;
     const chartOptionsUpdate = getChartOptions();
-    const{chart:{
-      chartOptions
-    }} = store.getState();
 
     const updatedChartOptions = {
-      ...chartOptions,
+      ...chart?.chartOptions,
       ...chartOptionsUpdate,
     };
     dispatch(updateChartOptions(updatedChartOptions));
@@ -74,7 +70,7 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
 
         <span
           className={`${
-            isChecked ? 'static-switch-mean bold-text' : 'static-switch-mean'
+            isChecked ? "static-switch-mean bold-text" : "static-switch-mean"
           }`}
         >
           {StaticText?.MEAN_TOOTLE}
