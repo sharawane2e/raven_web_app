@@ -8,6 +8,7 @@ import {
   setChartData,
   setChartLabel,
   setChartTranspose,
+  setChartType,
   showMean,
   updateChartOptions,
 } from '../../redux/actions/chartActions';
@@ -18,16 +19,14 @@ import { getChartOptions } from '../../utils/ChartOptionFormatter';
 interface IsMeancontrolProps {}
 
 const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
-
-  
   const [isChecked, setIschecked] = useState(false);
   const dispatch = useDispatch();
 
-  const {chart} = store.getState();
+  const { chart } = store.getState();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isChecked) {
-      if(chart.chartTranspose){
+      if (chart.chartTranspose) {
         transposeChart();
       }
       if(chart.chartLabelType===ChartLabelType.PERCENTAGE){
@@ -51,23 +50,18 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
 
     const updatedChartOptions = {
       ...chartOptions,
-      ...chartOptionsUpdate
-    }
-    dispatch(updateChartOptions(updatedChartOptions))
-  },[isChecked])
+      ...chartOptionsUpdate,
+    };
+    dispatch(updateChartOptions(updatedChartOptions));
+  }, [isChecked]);
 
- 
   return (
     <div className="md-space-4 MuiFormControl-root">
       <span className="cell-value">
-        <span className="static-switch-default">
-          {StaticText?.DEFAULT}
-        </span>
+        <span className="static-switch-default">{StaticText?.DEFAULT}</span>
 
         <Tooltip
-          title={`${
-            isChecked ? StaticText?.MEAN_TOOTLE : StaticText?.DEFAULT
-          }`}
+          title={`${isChecked ? StaticText?.MEAN_TOOTLE : StaticText?.DEFAULT}`}
           placement="bottom"
           arrow
         >

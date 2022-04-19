@@ -598,20 +598,20 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale];
 
-  for (let meanVal = 0; meanVal < chartData.length; meanVal++) {
-    console.log(chartData[0].options.length);
-    let totalOfMean: any = 0;
-    for (let opLength = 0; opLength < chartData[0].options.length; opLength++) {
-      let optionLebel = parseInt(chartData[0].options[opLength].option);
-      let optionCount = chartData[0].options[opLength].count;
-      const multiOptionCount = optionLebel * optionCount;
+  // for (let meanVal = 0; meanVal < chartData.length; meanVal++) {
+  //   console.log(chartData[0].options.length);
+  //   let totalOfMean: any = 0;
+  //   for (let opLength = 0; opLength < chartData[0].options.length; opLength++) {
+  //     let optionLebel = parseInt(chartData[0].options[opLength].option);
+  //     let optionCount = chartData[0].options[opLength].count;
+  //     const multiOptionCount = optionLebel * optionCount;
 
-      totalOfMean += multiOptionCount;
-      console.log(optionLebel + "*" + optionCount + "=" + multiOptionCount);
-      //console.log(totalOfMean+"---")
-    }
-    console.log(totalOfMean);
-  }
+  //     totalOfMean += multiOptionCount;
+  //     //console.log(optionLebel + '*' + optionCount + '=' + multiOptionCount);
+  //     //console.log(totalOfMean+"---")
+  //   }
+  //   //console.log(totalOfMean);
+  // }
 
   for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
     const scale = scales[scaleIndex];

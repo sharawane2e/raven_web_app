@@ -131,9 +131,9 @@ export const fetchChartData = async (
         };
       }
 
-      if(!response.data.questionData?.isMean){
+      if (!response.data.questionData?.isMean) {
         // debugger;
-        chartData.showMean=false;
+        chartData.showMean = false;
       }
     }
   } catch (error) {
@@ -240,13 +240,12 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
-  debugger;
 
   if (
-    (chart?.questionData?.type === QuestionType.SINGLE||chart?.questionData?.type === QuestionType.GRID) &&
+    (chart?.questionData?.type === QuestionType.SINGLE ||
+      chart?.questionData?.type === QuestionType.GRID) &&
     newChartType === ChartType.COLUMN //we have put grid due to mean calculation
   ) {
-   
     dispatch(setChartType(ChartType.COLUMN));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,

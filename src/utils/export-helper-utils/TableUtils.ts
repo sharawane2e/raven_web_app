@@ -14,7 +14,7 @@ export function tableChartDataGen() {
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
-
+  console.log('seriesData', seriesData);
   const { chart } = store.getState();
 
   if (seriesData) {
@@ -60,8 +60,10 @@ export function tableChartDataGen() {
           } else {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-
               // totalrowSub += parseFloat(d.values[k]);
+              if (chart?.showMean) {
+                totalrowSub += parseFloat(d.values[k]);
+              }
 
               if (rIndex < scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
@@ -75,6 +77,7 @@ export function tableChartDataGen() {
             }
           }
         });
+
         if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
           totalRow.push(round(totalrowSub, 1) + '%');
         } else {
@@ -131,13 +134,17 @@ export function tableChartDataGen() {
         tranposedTableDataMin.push(Math.min(...updateRow));
       }
 
+      // console.log('series.values', series.values);
+
       let getColoumnTotal = series.values
         .filter(function (x: any) {
           return typeof x === 'number';
         }) // remove any non numbers
         .reduce(function (s: number, v: number) {
+          // console.log('d', s, v);
           return s + Number(v);
         }, 0);
+      //console.log('tColomn', series.values);
 
       if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
         tColomn.push(round(getColoumnTotal, 1) + '%');
