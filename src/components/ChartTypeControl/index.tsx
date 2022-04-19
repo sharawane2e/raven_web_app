@@ -25,7 +25,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
 
   const handlePieDisabled = () =>{
     let isPieDisabled = true;
-    if(chart.questionData?.type !== QuestionType.SINGLE && !selectedBannerQuestionId){
+    if(chart.questionData?.type === QuestionType.SINGLE && !selectedBannerQuestionId){
       isPieDisabled = false;
     }
     else if(chart.showMean){

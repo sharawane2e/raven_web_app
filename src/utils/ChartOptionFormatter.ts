@@ -880,7 +880,7 @@ const getToolTip = () => {
 
   if (showMean) {
     tooltip["pointFormat"] =
-      "<span>{point.name}</span>: Mean<b> {point.y}</b>,  of total <b>{point.baseCount}</b><br/>";
+      "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
   } else {
     tooltip["pointFormat"] =
       "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
