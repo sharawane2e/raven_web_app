@@ -1,16 +1,22 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { bannerChartDataGen } from "./BannerQuesUtils";
-import { gridChartDataGen } from "./GridQuesUtils";
-import { multiGridChartDataGen } from "./MultiGridQuesUtils";
-import { multiChartDataGen } from "./MultiQuesUtils";
-import { rankChartDataGen } from "./RankQuesUtils";
-import { singleChartDataGen } from "./SingleQuesUtils";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { bannerChartDataGen } from './BannerQuesUtils';
+import { gridChartDataGen } from './GridQuesUtils';
+import { multiGridChartDataGen } from './MultiGridQuesUtils';
+import { multiChartDataGen } from './MultiQuesUtils';
+import { rankChartDataGen } from './RankQuesUtils';
+import { singleChartDataGen } from './SingleQuesUtils';
 
 export function chartDataGen() {
   let seriesData = [];
   const {
-    chart: { chartData, questionData, bannerQuestionData, baseCount,chartTranspose },
+    chart: {
+      chartData,
+      questionData,
+      bannerQuestionData,
+      baseCount,
+      chartTranspose,
+    },
     questions: { selectedBannerQuestionId },
   } = store.getState();
   if (
@@ -18,11 +24,10 @@ export function chartDataGen() {
     (questionData?.type === QuestionType.SINGLE ||
       questionData?.type === QuestionType.MULTI)
   ) {
-    
     seriesData = bannerChartDataGen(
       questionData,
       chartData,
-      bannerQuestionData
+      bannerQuestionData,
     );
   } else {
     if (questionData?.type === QuestionType.SINGLE) {
@@ -34,7 +39,12 @@ export function chartDataGen() {
     } else if (questionData?.type === QuestionType.GRID_MULTI) {
       seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.RANK) {
-      seriesData = rankChartDataGen(questionData, chartData, baseCount,chartTranspose);
+      seriesData = rankChartDataGen(
+        questionData,
+        chartData,
+        baseCount,
+        chartTranspose,
+      );
     }
   }
   return seriesData;
