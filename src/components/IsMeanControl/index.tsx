@@ -40,17 +40,12 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
         changeChartType(ChartType.COLUMN);
       }
     
-     
     }
     
     const chartOptionsUpdate = getChartOptions();
-
-    const updatedChartOptions = {
-      ...chart?.chartOptions,
-      ...chartOptionsUpdate,
-    };
-    dispatch(updateChartOptions(updatedChartOptions));
-  }, [isChecked]);
+    dispatch(updateChartOptions(chartOptionsUpdate));
+  }, [isChecked,chart.chartType]);
+  
 
   return (
     <div className="md-space-4 MuiFormControl-root">
