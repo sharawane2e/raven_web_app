@@ -131,7 +131,6 @@ export const fetchChartData = async (
         };
       }
 
-      console.log("vaise yha tak aaya hun");
       chartData.showMean = false;
 
       // if (!response.data.questionData?.isMean) {
