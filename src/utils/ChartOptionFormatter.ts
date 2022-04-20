@@ -444,7 +444,7 @@ const getSingleChartOptions = (
 
     return {
       legend: {
-        enabled: false,
+        enabled: true,
       },
       tooltip: { ...getToolTip() },
       series,
@@ -734,7 +734,7 @@ const getGridMeanChartOptions = (
 
   return {
     legend: {
-      enabled: false,
+      enabled: true,
     },
     plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
@@ -909,7 +909,7 @@ export const getPlotOptions = (
       cursor: "pointer",
     };
     plotOptions["series"].dataLabels.format = chartDataClone.showMean
-      ? "{point.y:.1f}"
+      ? "<b>{point.name}</b>: {point.y:.1f}"
       : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
       ? "<b>{point.name}</b>: {point.percentage:.1f}%"
       : "<b>{point.name}</b>: {point.y:.0f}";

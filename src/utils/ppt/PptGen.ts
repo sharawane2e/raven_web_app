@@ -58,7 +58,7 @@ export const generatePpt = async () => {
     // valAxisLineShow: false,
 
     //show or hide legend
-    // showLegend: true,
+    showLegend: true,
 
     //show or hide title
     // showTitle: false,
