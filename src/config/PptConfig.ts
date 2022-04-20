@@ -8,6 +8,12 @@ import {
   chartAxisColor,
 } from "../constants/Variables";
 import pptxgen from "pptxgenjs";
+import store from "../redux/store";
+import { ChartType } from "../enums/ChartType";
+
+const {
+  chart: { showMean, chartType },
+} = store.getState();
 
 export const chartConfig: pptxgen.IChartOpts = {
   x: 0.3,
@@ -67,7 +73,7 @@ export const chartConfigMean: pptxgen.IChartOpts = {
   valAxisLabelFontFace: chartFontFace,
   legendFontFace: chartFontFace,
   legendFontSize: lengendFontSize,
-  showLegend: false,
+  showLegend: chartType === ChartType.COLUMN ? false : true,
   showTitle: false,
   showPercent: false,
   legendPos: "b",

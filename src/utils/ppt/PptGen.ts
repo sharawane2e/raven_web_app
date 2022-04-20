@@ -58,7 +58,7 @@ export const generatePpt = async () => {
     // valAxisLineShow: false,
 
     //show or hide legend
-    showLegend: true,
+    showLegend: chartType === ChartType.COLUMN ? false : true,
 
     //show or hide title
     // showTitle: false,
