@@ -19,13 +19,15 @@ import { getChartOptions } from '../../utils/ChartOptionFormatter';
 interface IsMeancontrolProps {}
 
 const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
-  const [isChecked, setIschecked] = useState(false);
+  const { chart } = store.getState();
+  const isChecked = chart.showMean;
+  // const [isChecked, setIschecked] = useState(chart.showMean);
   const dispatch = useDispatch();
 
-  const { chart } = store.getState();
 
   useEffect(() => {
     if (isChecked) {
+      // dispatch(showMean(true));
       if (chart.chartTranspose) {
         transposeChart();
       }
@@ -33,14 +35,14 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
         
         dispatch(setChartLabel(ChartLabelType.NUMBER));
       }
-      dispatch(showMean(true));
+      
     } else {
-
+      // dispatch(showMean(false));
       if(chart.chartType===ChartType.PIE){
         changeChartType(ChartType.COLUMN);
       }
      // dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
-      dispatch(showMean(false));
+     
     }
     // debugger;
     const chartOptionsUpdate = getChartOptions();
@@ -67,7 +69,8 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
         >
           <Switch
             checked={isChecked}
-            onChange={(e) => setIschecked(e.target.checked)}
+            // onChange={(e) => setIschecked(e.target.checked)}
+            onChange={(e) => dispatch(showMean(e.target.checked))}
             disabled={false}
           />
         </Tooltip>
