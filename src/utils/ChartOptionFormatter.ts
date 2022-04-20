@@ -876,8 +876,6 @@ export const getPlotOptions = (
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
   let plotOptions = chartDataClone.chartOptions["plotOptions"];
   plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
-
-  debugger;
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
       stacking: "normal",
