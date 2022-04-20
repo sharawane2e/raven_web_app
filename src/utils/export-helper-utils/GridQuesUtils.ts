@@ -56,7 +56,7 @@ export function gridChartDataGen(
     ];
     if (chartType === ChartType.STACK) {
       const stackSeriesData: any = [];
-      const label: string = questionData.questionText;
+      const label: string = questionData.labelText;
       seriesData[0].labels.forEach((ele: any, index: number) => {
         stackSeriesData.push({
           name: seriesData[0].labels[index],

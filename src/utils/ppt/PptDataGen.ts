@@ -90,7 +90,6 @@ export function pptDataGen(
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
-      debugger;
       if (seriesData.length > 1) {
         chartColors = slice(colorArr, 0, seriesData.length);
       } else {
