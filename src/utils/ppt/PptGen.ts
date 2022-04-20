@@ -22,6 +22,7 @@ export const generatePpt = async () => {
       chartOrientation,
       chartType,
       baseCount,
+      showMean,
     },
   } = store.getState();
 
@@ -65,10 +66,19 @@ export const generatePpt = async () => {
     //change data label format
 
     //percentage number format
+
     dataLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
+      chartLabelType === ChartLabelType.PERCENTAGE
+        ? "##.##%;;;"
+        : showMean
+        ? "##.##"
+        : "##",
     valLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE ? "##.##%;;;" : "###",
+      chartLabelType === ChartLabelType.PERCENTAGE
+        ? "##.##%;;;"
+        : showMean
+        ? "##.##"
+        : "##",
 
     //simple number data format
     // dataLabelFormatCode: "###",
