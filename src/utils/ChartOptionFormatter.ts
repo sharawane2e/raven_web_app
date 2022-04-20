@@ -598,21 +598,6 @@ const getGridChartOptions = (
 
   const scales = [...questionData.scale];
 
-  // for (let meanVal = 0; meanVal < chartData.length; meanVal++) {
-  //   console.log(chartData[0].options.length);
-  //   let totalOfMean: any = 0;
-  //   for (let opLength = 0; opLength < chartData[0].options.length; opLength++) {
-  //     let optionLebel = parseInt(chartData[0].options[opLength].option);
-  //     let optionCount = chartData[0].options[opLength].count;
-  //     const multiOptionCount = optionLebel * optionCount;
-
-  //     totalOfMean += multiOptionCount;
-  //     //console.log(optionLebel + '*' + optionCount + '=' + multiOptionCount);
-  //     //console.log(totalOfMean+"---")
-  //   }
-  //   //console.log(totalOfMean);
-  // }
-
   for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
     const scale = scales[scaleIndex];
 
@@ -651,11 +636,6 @@ const getGridChartOptions = (
         plotValue = count;
       }
 
-      // if(showMean){
-      //   const sum = _.sumBy(optionData.options,function(o:any){return (parseInt(o.option))*(parseInt(o.count))})
-      //   plotValue = sum/baseCount;
-      // }
-
       if (chartType == ChartType.LINE) {
         data.push({
           name: subGroup.labelText,
@@ -687,6 +667,7 @@ const getGridChartOptions = (
     legend: {
       enabled: true,
     },
+    plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
     series,
   };
@@ -896,6 +877,7 @@ export const getPlotOptions = (
   let plotOptions = chartDataClone.chartOptions["plotOptions"];
   plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
 
+  debugger;
   if (chartType === ChartType.STACK) {
     plotOptions["column"] = {
       stacking: "normal",

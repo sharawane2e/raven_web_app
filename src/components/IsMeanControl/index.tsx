@@ -21,13 +21,12 @@ interface IsMeancontrolProps {}
 const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
   const { chart } = store.getState();
   const isChecked = chart.showMean;
-  // const [isChecked, setIschecked] = useState(chart.showMean);
   const dispatch = useDispatch();
 
 
   useEffect(() => {
     if (isChecked) {
-      // dispatch(showMean(true));
+     
       if (chart.chartTranspose) {
         transposeChart();
       }
@@ -36,14 +35,14 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
       }
       
     } else {
-      // dispatch(showMean(false));
+    
       if(chart.chartType===ChartType.PIE){
         changeChartType(ChartType.COLUMN);
       }
-     // dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
+    
      
     }
-    // debugger;
+    
     const chartOptionsUpdate = getChartOptions();
 
     const updatedChartOptions = {
