@@ -10,38 +10,110 @@ interface TableProps {}
 const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
-  const { chartData, showMean } = useSelector(
+  const { chartData, showMean, questionData, chartTranspose } = useSelector(
     (state: RootState) => state.chart,
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
+  let scaleLength: any = '';
+  let columnIndex: any;
 
   useEffect(() => {
     setTableData(tableChartDataGen());
   }, [chartData, showMean]);
+  if (questionData?.groupNetData) {
+    scaleLength = questionData?.groupNetData.length;
+  }
+
+  let removeSubGrop: any;
+  let dataValue: any;
+  if (chartTranspose) {
+    removeSubGrop = tableData.rows.length - scaleLength - 1;
+  }
+  /*This code used for single grid data column hide and show highlights  */
+  //  else {
+  //   tableData?.rows?.map((rows: any) => {
+  //     dataValue = rows.length;
+  //   });
+  //   removeSubGrop = dataValue - scaleLength - 1;
+  // }
+
+  const tableColumn = (
+    rowIndex: any,
+    columnIndex: any,
+    col: any,
+    currentMin: any,
+    currentMax: any,
+  ) => {
+    return chartTranspose ? (
+      rowIndex < removeSubGrop && !showMean ? (
+        <div
+          className={clsx({
+            'Table-row-item': true,
+            maxValue: isEqual(col, currentMax),
+            minValue: isEqual(col, currentMin),
+          })}
+        >
+          {col}
+        </div>
+      ) : !removeSubGrop && !showMean ? (
+        <div
+          className={clsx({
+            'Table-row-item': true,
+            maxValue: isEqual(col, currentMax),
+            minValue: isEqual(col, currentMin),
+          })}
+        >
+          {col}
+        </div>
+      ) : (
+        <div className="Table-row-item"> {col}</div>
+      )
+    ) : columnIndex ? (
+      <div
+        className={clsx({
+          'Table-row-item': true,
+          maxValue: isEqual(col, currentMax),
+          minValue: isEqual(col, currentMin),
+        })}
+      >
+        {col}
+      </div>
+    ) : !removeSubGrop ? (
+      <div
+        className={clsx({
+          'Table-row-item': true,
+          maxValue: isEqual(col, currentMax),
+          minValue: isEqual(col, currentMin),
+        })}
+      >
+        {col}
+      </div>
+    ) : (
+      <div className="Table-row-item"> {col}</div>
+    );
+  };
 
   return (
     <Scrollbars>
       <div className="tableView">
         <div className="TableView">
-          {tableData.rows?.map((row: any, index: any) => (
+          {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
                 const [maxVal, minVal] = tableData.minmax[0];
                 const currentMax = maxVal?.[colIndex - 1];
                 const currentMin = minVal?.[colIndex - 1];
-
+                columnIndex = col;
                 return (
                   <>
-                    <div
-                      className={clsx({
-                        'Table-row-item': true,
-                        maxValue: isEqual(col, currentMax),
-                        minValue: isEqual(col, currentMin),
-                      })}
-                    >
-                      {col}
-                    </div>
+                    {tableColumn(
+                      rowIndex,
+                      colIndex,
+                      col,
+                      currentMax,
+                      currentMin,
+                    )}
                   </>
                 );
               })}
