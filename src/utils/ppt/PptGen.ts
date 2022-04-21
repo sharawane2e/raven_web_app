@@ -51,22 +51,8 @@ export const generatePpt = async () => {
   };
 
   let chartSettings: pptxgen.IChartOpts = {
-    // showValue: true,
-
-    //show line on x-axis or y-axis
-    // catAxisLineShow: false,
-    // valAxisLineShow: false,
-
     //show or hide legend
     showLegend: chartType === ChartType.COLUMN ? false : true,
-
-    //show or hide title
-    // showTitle: false,
-
-    //change data label format
-
-    //percentage number format
-
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
         ? '##.##%;;;'
@@ -79,17 +65,6 @@ export const generatePpt = async () => {
         : showMean
         ? '##.##'
         : '##',
-
-    //simple number data format
-    // dataLabelFormatCode: "###",
-
-    //show or hide x-axis or y-axis
-    // catAxisHidden: false,
-    // valAxisHidden: false,
-
-    //grid lines config
-    // catGridLine: { style: "solid" },
-    // valGridLine: { style: "solid" },
   };
 
   let slideConfig: ISlideConfig = {

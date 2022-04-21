@@ -1,8 +1,6 @@
 import {
   colorArr,
   pptTemplateKey,
-  primaryBarColor,
-  barPptColor,
   primaryBarPPt,
 } from '../../constants/Variables';
 
@@ -12,11 +10,7 @@ import { ISlideConfig } from '../../types/ISlideConfig';
 import { ChartOrientation } from '../../enums/ChartOrientation';
 import { ChartType } from '../../enums/ChartType';
 
-import {
-  chartConfig,
-  tableConfig,
-  chartConfigMean,
-} from '../../config/PptConfig';
+import { chartConfig, tableConfig } from '../../config/PptConfig';
 import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
 
 import { tableChartDataGen } from '../export-helper-utils/TableUtils';
@@ -24,7 +18,6 @@ import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
 import _, { slice } from 'lodash';
 import { setDefaultSlideProperties } from './DefaultPptProps';
 import { ChartLabelType } from '../../enums/ChartLabelType';
-import { round } from '../Utility';
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
@@ -38,7 +31,6 @@ export function pptDataGen(
       chartOrientation,
       chartLabelType,
       questionData,
-      showMean,
       chartTranspose,
     },
   } = store.getState();
@@ -47,7 +39,6 @@ export function pptDataGen(
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let seriesData: any[] = [];
   let chartColors: any[] = [];
-  let chartColorsbar: any = {};
 
   seriesData = chartDataGen();
 
@@ -75,14 +66,14 @@ export function pptDataGen(
           bold: false,
         };
         if (rowData[colIndex] === currentMax) {
-          rowIndex <= removeSubGrop - 1
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
             ? (options['fill'] = 'b8e08c')
-            : !removeSubGrop
+            : !removeSubGrop && tableRows.rows.length > 3
             ? (options['fill'] = 'b8e08c')
             : (options['fill'] = 'ffffff');
           options['bold'] = true;
         } else if (rowData[colIndex] === currentMin) {
-          rowIndex <= removeSubGrop - 1
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
             ? (options['fill'] = 'fbd9d4')
             : !removeSubGrop
             ? (options['fill'] = 'fbd9d4')
@@ -147,18 +138,10 @@ export function pptDataGen(
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
-    } else {
-      if (showMean)
-        seriesData.forEach((row: any, index) => {
-          row.values = row.values.map((value: number) => value / 10);
-          seriesData[index] = row;
-        });
     }
 
-    const config = showMean ? chartConfigMean : chartConfig;
-
     slide.addChart(pptChartType, seriesData, {
-      ...config,
+      ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
       ...chartSettings,

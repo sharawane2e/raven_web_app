@@ -26,9 +26,9 @@ const TableView: React.FC<TableProps> = (props) => {
   }
 
   let removeSubGrop: any;
-  let dataValue: any;
+
   if (chartTranspose) {
-    removeSubGrop = tableData.rows.length - scaleLength - 1;
+    removeSubGrop = tableData?.rows?.length - scaleLength - 1;
   }
   /*This code used for single grid data column hide and show highlights  */
   //  else {
@@ -69,7 +69,7 @@ const TableView: React.FC<TableProps> = (props) => {
       ) : (
         <div className="Table-row-item"> {col}</div>
       )
-    ) : columnIndex ? (
+    ) : columnIndex && tableData.rows.length > 3 ? (
       <div
         className={clsx({
           'Table-row-item': true,
@@ -79,7 +79,7 @@ const TableView: React.FC<TableProps> = (props) => {
       >
         {col}
       </div>
-    ) : !removeSubGrop ? (
+    ) : !removeSubGrop && tableData.rows.length > 3 ? (
       <div
         className={clsx({
           'Table-row-item': true,

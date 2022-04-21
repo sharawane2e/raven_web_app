@@ -1,16 +1,16 @@
-import store from "../../redux/store";
-import { ChartType } from "../../enums/ChartType";
+import store from '../../redux/store';
+import { ChartType } from '../../enums/ChartType';
 
-import jsPDF from "jspdf";
-import "svg2pdf.js";
-import autoTable from "jspdf-autotable";
-import { tableChartDataGen } from "../export-helper-utils/TableUtils";
+import jsPDF from 'jspdf';
+import 'svg2pdf.js';
+import autoTable from 'jspdf-autotable';
+import { tableChartDataGen } from '../export-helper-utils/TableUtils';
 
-import { exportPrefix } from "../../constants/Variables";
-import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
+import { exportPrefix } from '../../constants/Variables';
+import { setDefaultPdfPageProperties } from '../pdf/DefaultPdfProps';
 export const generatePdf = async () => {
   const {
-    chart: { questionData, chartType },
+    chart: { questionData, chartType, chartTranspose },
   } = store.getState();
 
   let clientWidth = document.body.clientWidth;
@@ -35,7 +35,7 @@ export const generatePdf = async () => {
   if (chartType === ChartType.TABLE) {
     pdfWidth = 300;
     pdfHeight = 400;
-    doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+    doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
     // doc.addPage([300, 297], "p");
     x = 5;
     y = 30;
@@ -62,34 +62,53 @@ export const generatePdf = async () => {
       copyRightX,
       copyRightY,
       qWordBreak,
-      lWordBreak
+      lWordBreak,
     );
     const tableRows = tableChartDataGen();
-    autoTable(doc, { html: "#my-table" });
+    autoTable(doc, { html: '#my-table' });
 
+    const [maxValue, minValue] = tableRows?.minmax[0];
+    let scaleLength: any = '';
+    if (questionData?.groupNetData) {
+      scaleLength = questionData?.groupNetData.length;
+    }
+    let removeSubGrop: any;
+    if (chartTranspose) {
+      removeSubGrop = tableRows.rows.length - scaleLength - 1;
+    }
+    var output: any = [];
 
-    const [maxValue,minValue] = tableRows?.minmax[0];
-  
-     var output:any = [];
-  
-      tableRows.rows.forEach((rowData)=>{
-        var rowArray:any = [];
-       rowData.forEach(function(item, index) {
-        const currentMax = maxValue?.[index-1];
-        const currentMin = minValue?.[index-1];
+    tableRows.rows.forEach((rowData, rowIndex) => {
+      var rowArray: any = [];
+      rowData.forEach(function (item, index) {
+        const currentMax = maxValue?.[index - 1];
+        const currentMin = minValue?.[index - 1];
         const options = {
-          fillColor : 'ffffff',
-          bold: false
+          fillColor: 'ffffff',
+          bold: false,
+        };
+        if (rowData[index] === currentMax) {
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['fillColor'] = 'b8e08c')
+            : !removeSubGrop && tableRows.rows.length > 3
+            ? (options['fillColor'] = 'b8e08c')
+            : (options['fillColor'] = 'ffffff');
+          options['bold'] = true;
+        } else if (rowData[index] === currentMin) {
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['fillColor'] = 'fbd9d4')
+            : !removeSubGrop && tableRows.rows.length > 3
+            ? (options['fillColor'] = 'fbd9d4')
+            : (options['fillColor'] = 'ffffff');
+
+          options['bold'] = true;
         }
-        if(rowData[index]===currentMax) {options['fillColor']='b8e08c';options['bold']=true;}
-        else if(rowData[index]===currentMin) {options['fillColor']='fbd9d4';options['bold']=true;};
-         rowArray.push({ content:rowData[index], styles:{ ...options} })
-   
+
+        rowArray.push({ content: rowData[index], styles: { ...options } });
       });
-  
+
       output.push(rowArray);
-      })
-  
+    });
 
     autoTable(doc, {
       // head: [row[0]],
@@ -102,7 +121,7 @@ export const generatePdf = async () => {
     if (clientWidth >= 1300) {
       pdfWidth = 300;
       pdfHeight = 220;
-      doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+      doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
       x = 5;
       y = 30;
       w = 290;
@@ -121,7 +140,7 @@ export const generatePdf = async () => {
       pdfWidth = 300;
       pdfWidth = 180;
       pdfHeight = 260;
-      doc = new jsPDF("p", "mm", [pdfWidth, pdfHeight]);
+      doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
       x = 5;
       y = 30;
       w = 170;
@@ -137,12 +156,12 @@ export const generatePdf = async () => {
       lWordBreak = pdfWidth - 20;
       qWordBreak = 160;
     }
-    let source = document.getElementsByClassName("highcharts-root");
+    let source = document.getElementsByClassName('highcharts-root');
     let svgSource = source[0];
     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
     clonedSource
-      .querySelectorAll(".highcharts-text-outline")
+      .querySelectorAll('.highcharts-text-outline')
       .forEach((node: any) => node.parentNode.removeChild(node));
 
     await setDefaultPdfPageProperties(
@@ -156,7 +175,7 @@ export const generatePdf = async () => {
       copyRightX,
       copyRightY,
       qWordBreak,
-      lWordBreak
+      lWordBreak,
     );
     await doc.svg(clonedSource, {
       x: x,
@@ -167,6 +186,5 @@ export const generatePdf = async () => {
     });
   }
 
-  doc.save(exportPrefix + questionData?.labelText + ".pdf");
+  doc.save(exportPrefix + questionData?.labelText + '.pdf');
 };
-

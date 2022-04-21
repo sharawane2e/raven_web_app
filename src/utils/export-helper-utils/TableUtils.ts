@@ -112,8 +112,6 @@ export function tableChartDataGen() {
 
       const updateRow: any[] = [];
 
-      //let getColoumnTotal = columnValues.reduce((partialSum:any, a:any) => partialSum + a, 0);
-
       for (var i = 0; i < columnValues.length; i++) {
         if (typeof columnValues[i] === 'undefined') {
           columnValues[i] = 0;
