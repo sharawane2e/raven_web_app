@@ -148,11 +148,11 @@ export function pptDataGen(
         seriesData[index] = row;
       });
     } else {
-      // if (showMean)
-      // seriesData.forEach((row: any, index) => {
-      //   row.values = row.values.map((value: number) => value / 10);
-      //   seriesData[index] = row;
-      // });
+      if (showMean)
+        seriesData.forEach((row: any, index) => {
+          row.values = row.values.map((value: number) => value / 10);
+          seriesData[index] = row;
+        });
     }
 
     const config = showMean ? chartConfigMean : chartConfig;
