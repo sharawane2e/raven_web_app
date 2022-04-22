@@ -11,11 +11,15 @@ export function tableChartDataGen() {
   let rows = [];
   let minmax = [];
   let scaleLength: any = '';
+  let subRow: any = [];
+  let totalRow: any = [];
+  let scaleIndex: any = 0;
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
-  console.log('seriesData', seriesData);
+
   const { chart } = store.getState();
+  let chartTransposeState = !chart.chartTranspose;
 
   if (seriesData) {
     let scale: any = [];
@@ -23,10 +27,6 @@ export function tableChartDataGen() {
       scale.push(index.name);
     });
     rows.push(['', ...scale, 'Total']);
-    let subRow: any = [];
-    let totalRow: any = [];
-    let scaleIndex: any = 0;
-    let chartTransposeState = !chart.chartTranspose;
 
     if (chart.questionData?.groupNetData) {
       scaleLength = chart.questionData?.groupNetData.length;
@@ -92,9 +92,14 @@ export function tableChartDataGen() {
       }
 
     let tColomn: any = [];
+    const updatedSeries =
+      scaleLength > 0 && !chart.chartTranspose && !chart?.showMean
+        ? seriesData.slice(0, -scaleLength)
+        : seriesData;
 
     seriesData.forEach((series: any) => {
       let getColumnSum = 0;
+
       let columnValues = series.values;
 
       let results: any = chart.questionData?.options.filter(function (option) {
@@ -105,7 +110,7 @@ export function tableChartDataGen() {
       lablecode_length = results.length;
 
       const updateRow: any[] = [];
-      //let getColoumnTotal = columnValues.reduce((partialSum:any, a:any) => partialSum + a, 0);
+
       for (var i = 0; i < columnValues.length; i++) {
         if (typeof columnValues[i] === 'undefined') {
           columnValues[i] = 0;
@@ -126,25 +131,28 @@ export function tableChartDataGen() {
         columnValues.splice(-lablecode_length);
       }
 
-      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
-        tranposedTableData.push(Math.max(...updateRow) + '%');
-        tranposedTableDataMin.push(Math.min(...updateRow) + '%');
-      } else {
-        tranposedTableData.push(Math.max(...updateRow));
-        tranposedTableDataMin.push(Math.min(...updateRow));
-      }
+      const newUpdatedRow =
+        chart.chartTranspose && chart?.questionData?.type === QuestionType.GRID
+          ? updateRow.slice(0, -scaleLength)
+          : QuestionType.MULTI && lablecode_length > 0
+          ? updateRow.slice(0, -lablecode_length)
+          : updateRow;
 
-      // console.log('series.values', series.values);
+      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+        tranposedTableData.push(Math.max(...newUpdatedRow) + '%');
+        tranposedTableDataMin.push(Math.min(...newUpdatedRow) + '%');
+      } else {
+        tranposedTableData.push(Math.max(...newUpdatedRow));
+        tranposedTableDataMin.push(Math.min(...newUpdatedRow));
+      }
 
       let getColoumnTotal = series.values
         .filter(function (x: any) {
           return typeof x === 'number';
         }) // remove any non numbers
         .reduce(function (s: number, v: number) {
-          // console.log('d', s, v);
           return s + Number(v);
         }, 0);
-      //console.log('tColomn', series.values);
 
       if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
         tColomn.push(round(getColoumnTotal, 1) + '%');

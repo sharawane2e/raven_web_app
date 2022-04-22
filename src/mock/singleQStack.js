@@ -1,4 +1,4 @@
-export default singleQStack = {
+export default singleQStack = [{
     name: '1 - Significantly underperform industry',
     color: '#F1AD0F',
     data: [
@@ -87,4 +87,4 @@ export default singleQStack = {
         fontWeight: null
       }
     }
-  }
+  }]

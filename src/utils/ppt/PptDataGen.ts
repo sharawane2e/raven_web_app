@@ -1,36 +1,29 @@
 import {
   colorArr,
   pptTemplateKey,
-  primaryBarColor,
-  barPptColor,
   primaryBarPPt,
-} from "../../constants/Variables";
+} from '../../constants/Variables';
 
-import pptxgen from "pptxgenjs";
-import store from "../../redux/store";
-import { ISlideConfig } from "../../types/ISlideConfig";
-import { ChartOrientation } from "../../enums/ChartOrientation";
-import { ChartType } from "../../enums/ChartType";
+import pptxgen from 'pptxgenjs';
+import store from '../../redux/store';
+import { ISlideConfig } from '../../types/ISlideConfig';
+import { ChartOrientation } from '../../enums/ChartOrientation';
+import { ChartType } from '../../enums/ChartType';
 
-import {
-  chartConfig,
-  tableConfig,
-  chartConfigMean,
-} from "../../config/PptConfig";
-import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
+import { chartConfig, tableConfig } from '../../config/PptConfig';
+import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
 
-import { tableChartDataGen } from "../export-helper-utils/TableUtils";
-import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
-import _, { slice } from "lodash";
-import { setDefaultSlideProperties } from "./DefaultPptProps";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { round } from "../Utility";
+import { tableChartDataGen } from '../export-helper-utils/TableUtils';
+import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
+import _, { slice } from 'lodash';
+import { setDefaultSlideProperties } from './DefaultPptProps';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
   graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType },
-  chartSettings: pptxgen.IChartOpts
+  chartSettings: pptxgen.IChartOpts,
 ) {
   const {
     chart: {
@@ -38,7 +31,7 @@ export function pptDataGen(
       chartOrientation,
       chartLabelType,
       questionData,
-      showMean,
+      chartTranspose,
     },
   } = store.getState();
 
@@ -46,7 +39,6 @@ export function pptDataGen(
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let seriesData: any[] = [];
   let chartColors: any[] = [];
-  let chartColorsbar: any = {};
 
   seriesData = chartDataGen();
 
@@ -54,26 +46,50 @@ export function pptDataGen(
     const tableRows = tableChartDataGen();
 
     const [maxValue, minValue] = tableRows?.minmax[0];
-
+    let scaleLength: any = '';
+    if (questionData?.groupNetData) {
+      scaleLength = questionData?.groupNetData.length;
+    }
+    let removeSubGrop: any;
+    if (chartTranspose) {
+      removeSubGrop = tableRows.rows.length - scaleLength - 1;
+    }
     var output: any = [];
 
-    tableRows.rows.forEach((rowData) => {
+    tableRows.rows.forEach((rowData, rowIndex) => {
       var rowArray: any = [];
-      rowData.forEach(function (item, index) {
-        const currentMax = maxValue?.[index - 1];
-        const currentMin = minValue?.[index - 1];
+      rowData.forEach(function (item, colIndex) {
+        const currentMax = maxValue?.[colIndex - 1];
+        const currentMin = minValue?.[colIndex - 1];
         const options = {
-          fill: "ffffff",
+          fill: 'ffffff',
           bold: false,
         };
-        if (rowData[index] === currentMax) {
-          options["fill"] = "b8e08c";
-          options["bold"] = true;
-        } else if (rowData[index] === currentMin) {
-          options["fill"] = "fbd9d4";
-          options["bold"] = true;
+        if (rowData[colIndex] === currentMax) {
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['fill'] = 'b8e08c')
+            : !removeSubGrop && tableRows.rows.length > 3
+            ? (options['fill'] = 'b8e08c')
+            : (options['fill'] = 'ffffff');
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['bold'] = true)
+            : !removeSubGrop && tableRows.rows.length > 3
+            ? (options['bold'] = true)
+            : (options['bold'] = false);
+        } else if (rowData[colIndex] === currentMin) {
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['fill'] = 'fbd9d4')
+            : !removeSubGrop
+            ? (options['fill'] = 'fbd9d4')
+            : (options['fill'] = 'ffffff');
+          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+            ? (options['bold'] = true)
+            : !removeSubGrop
+            ? (options['bold'] = true)
+            : (options['bold'] = false);
         }
-        rowArray.push({ text: rowData[index], options: { ...options } });
+
+        rowArray.push({ text: rowData[colIndex], options: { ...options } });
       });
 
       output.push(rowArray);
@@ -94,13 +110,12 @@ export function pptDataGen(
         chartColors = slice(colorArr, 0, seriesData.length);
       } else {
         const colorArray: string[] = [];
-        //debugger;
         seriesData[0]?.labels.forEach(function (labelText: any) {
           const seriesObject = _.find(questionData?.options, function (o) {
             return o.labelText === labelText;
           });
-          if (seriesObject?.labelCode.split("_")[0] == "N") {
-            colorArray.push("F8971C");
+          if (seriesObject?.labelCode.split('_')[0] == 'N') {
+            colorArray.push('F8971C');
           } else {
             colorArray.push(primaryBarPPt);
           }
@@ -129,18 +144,10 @@ export function pptDataGen(
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
-    } else {
-      // if (showMean)
-      // seriesData.forEach((row: any, index) => {
-      //   row.values = row.values.map((value: number) => value / 10);
-      //   seriesData[index] = row;
-      // });
     }
 
-    const config = showMean ? chartConfigMean : chartConfig;
-
     slide.addChart(pptChartType, seriesData, {
-      ...config,
+      ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
       ...chartSettings,
