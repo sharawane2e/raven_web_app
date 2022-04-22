@@ -18,6 +18,11 @@ import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
 import _, { slice } from 'lodash';
 import { setDefaultSlideProperties } from './DefaultPptProps';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import chartSingleBar from '../../mock/chartBar.json';
+import chartStack from '../../mock/chartStack.json';
+import tabelview from '../../mock/tableDat.json';
+
+console.log('tabelview', tabelview);
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
@@ -36,7 +41,11 @@ export function pptDataGen(
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
-  let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+
+  let slide: any = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+  let slide2 = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+  let slide3 = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+
   let seriesData: any[] = [];
   let chartColors: any[] = [];
 
@@ -88,7 +97,9 @@ export function pptDataGen(
       output.push(rowArray);
     });
 
-    slide.addTable(output, { ...tableConfig });
+    pptxGenJsObj
+      .addSlide({ masterName: pptTemplateKey })
+      .addTable(output, { ...tableConfig });
   } else {
     let pptChartType: any;
 
@@ -139,13 +150,54 @@ export function pptDataGen(
         seriesData[index] = row;
       });
     }
+    // console.log('pptChartType', pptChartType);
+    // console.log('chartSingleBar', chartSingleBar);
+    // console.log('chartStack', chartStack);
+    // slide.addChart(pptChartType, chartSingleBar, {
+    //   ...chartConfig,
+    //   ...graphTypeProps,
+    //   chartColors: chartColors,
+    //   ...chartSettings,
+    // });
+    //console.log('seriesData', seriesData);
+    // console.log('chartSingleBar', chartSingleBar);
+    // console.log('chartStack', chartStack);
+    //console.log('graphTypeProps', chartColors);
 
-    slide.addChart(pptChartType, seriesData, {
-      ...chartConfig,
-      ...graphTypeProps,
-      chartColors: chartColors,
-      ...chartSettings,
-    });
+    let dataget = { barDir: 'col', barGrouping: 'clustered' };
+    let dataget2 = { barDir: 'col', barGrouping: 'stacked' };
+    const data: any = tabelview;
+    //= pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+    //let slie: any;
+    //for (let i = 0; i < 3; i++) {
+    //slie + i;
+    if ('bar' && chartSingleBar) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addChart(pptChartType, chartSingleBar, {
+          ...chartConfig,
+          ...dataget,
+          chartColors: chartColors,
+          ...chartSettings,
+        });
+    }
+    if ('bar' && chartStack) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addChart(pptChartType, chartStack, {
+          ...chartConfig,
+          ...dataget2,
+          chartColors: chartColors,
+          ...chartSettings,
+        });
+    }
+    if (tabelview) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addTable(data, { ...tableConfig });
+    }
+    // }
+    //console.log('slie', slie);
   }
-  return slide;
+  //return pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
 }

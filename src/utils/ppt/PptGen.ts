@@ -77,6 +77,8 @@ export const generatePpt = async () => {
     copyRightText,
   };
 
+  // for (let i = 0; i < 2; i++) {
   pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
   await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
+  //}
 };

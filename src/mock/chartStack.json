@@ -1,0 +1,80 @@
+[
+  {
+    "name": "In general, I am responsible for managing my own health ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [5.7],
+    "index": 0
+  },
+  {
+    "name": "I consult with family and friends when managing my health ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.1],
+    "index": 1
+  },
+  {
+    "name": "I rely on my doctor for managing my health ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.2],
+    "index": 2
+  },
+  {
+    "name": "I can tell my doctor about concerns I have about my health or treatment ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [5.1],
+    "index": 3
+  },
+  {
+    "name": "I feel I can request the best treatment possible from my healthcare provider ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.8],
+    "index": 4
+  },
+  {
+    "name": "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.5],
+    "index": 5
+  },
+  {
+    "name": "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [3.9],
+    "index": 6
+  },
+  {
+    "name": "I actively seek out information if I have any health concerns ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [5.2],
+    "index": 7
+  },
+  {
+    "name": "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.7],
+    "index": 8
+  },
+  {
+    "name": "I feel my doctor is not making time for me ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [3.2],
+    "index": 9
+  },
+  {
+    "name": "My doctor makes me feel like issues I bring up are my fault ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [3],
+    "index": 10
+  },
+  {
+    "name": "I find exercising on a regular basis (e.g. weekly) difficult ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [3.8],
+    "index": 11
+  },
+  {
+    "name": "I believe maintaining my health is a partnership between my doctor and me ",
+    "labels": ["q8-In general, I am responsible for managing my own health"],
+    "values": [4.9],
+    "index": 12
+  }
+]
