@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TourPlayIcon from '@material-ui/icons/PlayArrow';
@@ -13,12 +13,25 @@ import { ReactComponent as PasswordIcon } from '../../assets/svg/password-icon.s
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { showTourGuide } from '../../redux/actions/tourAction';
+
+import HomeIcon from '@material-ui/icons/Home';
+import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
+// import { SidebarContext } from "../../contexts/SidebarContext";
+
 import {
   toggleSidebar,
   toggleSidebarMobile,
+  toggleSidebarUserCache,
 } from '../../redux/actions/sidebarAction';
-import HomeIcon from '@material-ui/icons/Home';
-import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
+import { Badge } from '@mui/material';
+import ApiRequest from '../../utils/ApiRequest';
+import ApiUrl from '../../enums/ApiUrl';
+import Toaster from '../../utils/Toaster';
+import { resetUserCache } from '../../redux/actions/userCacheActions';
+import { addNewKeysToUserCache } from '../../services/userCacheService';
+// import Toaster from "../../utils/Toaster";
+// import ApiUrl from "../../enums/ApiUrl";
+// import ApiRequest from "../../utils/ApiRequest";
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -26,6 +39,8 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
+  const { userCache } = useSelector((state: RootState) => state);
+  const { sidebar } = useSelector((state: RootState) => state);
 
   const { variant = 'partialWidth' } = props;
   // const {
@@ -45,12 +60,20 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const toggleMobileSidebar = () => {
     dispatch(toggleSidebarMobile());
   };
+  const toggleUserSidebar = () => {
+    dispatch(toggleSidebarUserCache());
+    getUserCache();
+  };
 
   const [anchorEl, setAnchorEl] = useState<
     Element | ((element: Element) => Element) | null | undefined
   >(null);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    getUserCache();
+  }, []);
 
   const closeMenu = () => {
     setAnchorEl(null);
@@ -65,6 +88,19 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   function refreshPage() {
     window.location.reload();
   }
+
+  const getUserCache = () => {
+    ApiRequest.request(ApiUrl.SAVE_CHART, 'GET', undefined, undefined, false)
+      .then((res) => {
+        if (res.success) {
+          const updatedUserCache = addNewKeysToUserCache(res?.data);
+          dispatch(resetUserCache(updatedUserCache));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
     <div
@@ -104,11 +140,32 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-          <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-            <ProfileAvatar text={user?.name || ''} />
-            <ExpandMoreIcon className="down-arrow-icon" />
+        <Badge
+          badgeContent={
+            userCache.savedChart == undefined ? 0 : userCache.savedChart.length
+          }
+          color="primary"
+          className="badge-icon"
+        >
+          <div
+            className={`appbar__tourGuide appbar__cache-btn ${
+              sidebar?.userCache ? 'user-active' : ''
+            }`}
+            onClick={() => {
+              toggleUserSidebar();
+              // toggleMobileSidebar();
+            }}
+          >
+            {/* <Cache className="cache-icon" /> */}
+            <div className="tourText">My Cache</div>
           </div>
+        </Badge>
+        {/* <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+         
+        </div> */}
+        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+          <ProfileAvatar text={user?.name || ''} />
+          <ExpandMoreIcon className="down-arrow-icon" />
         </div>
       </div>
       <Menu

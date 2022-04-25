@@ -57,6 +57,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
         displayEmpty
         value={value}
         input={<Input />}
+        defaultChecked={true}
         renderValue={(selected) => {
           if ((selected as IQuestionOption[]).length === 0) {
             return <em>{props.placeholder || 'Please select'}</em>;

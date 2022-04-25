@@ -164,6 +164,14 @@ export const generatePdf = async () => {
       .querySelectorAll('.highcharts-text-outline')
       .forEach((node: any) => node.parentNode.removeChild(node));
 
+    // const legendsHTML = document.getElementsByClassName(
+    //   "highcharts-legend-item-hidden"
+    // );
+    // const hiddenLegends = Array.from(legendsHTML).map(
+    //   (text: any) => text.textContent
+    // );
+    // console.log("amogh:", hiddenLegends);
+
     await setDefaultPdfPageProperties(
       doc,
       baseX,

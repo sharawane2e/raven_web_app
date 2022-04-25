@@ -51,7 +51,7 @@
             content: ' ';
             width: 0;
             height: 0;
-            border-top: 10px solid #0000ff9c;
+            border-top: 10px solid #0e4566;
             border-left: 10px solid transparent;
             position: absolute;
             left: -10px;
@@ -76,7 +76,7 @@
 b {
   font-size: 20px;
 }
-h2 {
+.h2 {
   padding-left: 30px;
 }
 
@@ -86,8 +86,8 @@ h2 {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-bottom: 20px;
   }
   .MuiGrid-item {
@@ -113,15 +113,19 @@ h2 {
     text-align: center;
     padding: 20px 20px 10px 20px;
     & svg {
-      height: 80px;
+      height: 70px;
     }
   }
   .card-title {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 800;
     width: 100%;
     text-align: center;
     padding: 2px;
+    color: #0e4566;
+  }
+  .card-title-unbold {
+    font-weight: 500 !important;
   }
   .note-header {
     padding: 15px;

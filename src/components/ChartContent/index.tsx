@@ -40,6 +40,7 @@ import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-l
 import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
+import FavouriteControl from '../FavouriteControl';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -202,7 +203,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
-
+          <div className="chart-content__control-item">
+            <FavouriteControl />
+          </div>
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
@@ -262,6 +265,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             className: 'chart-content__control-menu',
           }}
         >
+          <MenuItem className="chart-content__menu-item">
+            <FavouriteControl />
+          </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <ChartTypeControl />
           </MenuItem>

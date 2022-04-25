@@ -36,9 +36,20 @@ const ChartSidebarContent: React.FC = () => {
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
-  const handleFilterSelect = (qId: string, value: IQuestionOption) => {
-    const updatedFilters = [...filters];
+  // const _cacheFilters: any = filters.map((filter: any,index:number) => {
+  //   return {"labelCode":filter?.code,"labelText":filter?.label,"order":0};
+  //   //console.log("userFilter",userFilter)
+  // });
 
+  // const _cacheId: any = filters.map((filters: any,index:number) => {
+  //   return filters?.qId
+  //   //console.log("userFilter",userFilter)
+  // });
+
+  // //dispatch(setFilterQuestionList(_cacheFilters))
+
+  let handleFilterSelect = (qId: string, value: IQuestionOption) => {
+    const updatedFilters = [...filters];
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
     let values: IQuestionOption[] = filterQuestion?.value
       ? JSON.parse(JSON.stringify(filterQuestion?.value))
@@ -86,13 +97,15 @@ const ChartSidebarContent: React.FC = () => {
 
     const updatedfilterQuestionList = filterQuestionList.map(
       (filterQuestion) => {
+        //debugger
         if (filterQuestion.qId === qId) {
           return { ...filterQuestion, value: values };
         }
         return filterQuestion;
       },
     );
-
+    // debugger
+    console.log('updatedfilterQuestionList', updatedfilterQuestionList);
     dispatch(setFilterQuestionList(updatedfilterQuestionList));
     dispatch(setFilters(updatedFilters));
   };
@@ -220,6 +233,21 @@ const ChartSidebarContent: React.FC = () => {
                 }}
               />
             ))}
+            {/* {console.log("filterQuestionList",filterQuestionList)}
+             */}
+            {/* {filterQuestionList.map((filterQuestion, filterIndex) => (
+              <MultiSelect
+              key={filterIndex}
+              label={filterQuestion.labelText}
+              options={filterQuestion.options}
+              value={filterQuestion.value}
+              onChange={(value: IQuestionOption) => {
+                handleFilterSelect(filterQuestion.qId, value);
+             
+              } } 
+                
+              />
+            ))}*/}
           </div>
         </CustomScrollbar>
       </div>
@@ -238,6 +266,7 @@ const ChartSidebarContent: React.FC = () => {
             removeFilter(appliedFilters);
             //dispatch(resetFilters());
           }}
+          disabled={questionData === null}
         >
           Clear
         </Button>

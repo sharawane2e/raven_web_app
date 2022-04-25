@@ -22,18 +22,23 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const { chartType } = chart;
   // const { questionData, bannerQuestionData } = chart;
 
-
-  const handlePieDisabled = () =>{
+  const handlePieDisabled = () => {
     let isPieDisabled = true;
-    if(chart.questionData?.type === QuestionType.SINGLE && !selectedBannerQuestionId){
+    if (
+      chart.questionData?.type === QuestionType.SINGLE &&
+      !selectedBannerQuestionId
+    ) {
       isPieDisabled = false;
-    }
-    else if(chart.showMean && chart.questionData != null && chart.questionData.type===QuestionType.GRID){
+    } else if (
+      chart.showMean &&
+      chart.questionData != null &&
+      chart.questionData.type === QuestionType.GRID
+    ) {
       isPieDisabled = false;
     }
 
-    return isPieDisabled
-  }
+    return isPieDisabled;
+  };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
@@ -66,8 +71,8 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       onClick: () => changeChartType(ChartType.PIE),
       active: chartType === ChartType.PIE,
       disabled: handlePieDisabled(),
-        // (chart.questionData?.type !== QuestionType.SINGLE) ||!(chart.showMean)||
-        // (!!selectedBannerQuestionId),
+      // (chart.questionData?.type !== QuestionType.SINGLE) ||!(chart.showMean)||
+      // (!!selectedBannerQuestionId),
       disableClick: () => {
         if (!(chart.questionData?.type === QuestionType.SINGLE)) {
           return Toaster.error(StaticText.DISABLED_CHART);

@@ -33,6 +33,7 @@ import { ChartType } from "../../enums/ChartType";
 import CloseIcon from "@mui/icons-material/Close";
 import { setChartFullScreen } from "../../redux/actions/chartActions";
 // import {useHotkeys} from 'react-hotkeys-hook';
+import UserCacheSidebar from "../../components/Sidebar/sidebar-content/UserCacheSidebar";
 
 interface ChartScreenProps {
   routes: IRoute[];
@@ -81,6 +82,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
+      <UserCacheSidebar />
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
@@ -92,6 +94,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           <AppRouting routes={routes} />
         </main>
       </SidebarContextProvider>
+
       <Dialog open={openPopup} className="home-modal">
         <div className="home-modal__content">
           <CustomScrollbar>
@@ -122,14 +125,15 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
             chart.chartType === ChartType.TABLE,
         })}
       >
-          <IconButton className="cross--btn" onClick={() => {
-                dispatch(setChartFullScreen(false));
-              }}>
-            <CloseIcon
-              
-            />
-          </IconButton>
-          {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
+        <IconButton
+          className="cross--btn"
+          onClick={() => {
+            dispatch(setChartFullScreen(false));
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
       </Dialog>
       {
         <Tour

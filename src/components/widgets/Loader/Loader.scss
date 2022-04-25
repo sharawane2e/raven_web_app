@@ -11,23 +11,23 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 120px;
   padding: 0px;
+  height: 120px;
   width: 160px;
   margin-top: -50px;
   margin-left: -70px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  border-left: 1px solid $white;
+  border-bottom: 1px solid $white;
   padding: 10px;
   box-sizing: border-box;
 }
 @keyframes loading {
   0% {
-    background-color: #323c4e;
+    background-color: $loading-color;
   }
 
   30% {
-    background-color: #f1ad0f;
+    background-color: map-get($map: $text-color, $key: accent);
   }
   50% {
     height: 100px;
@@ -35,11 +35,11 @@
   }
 
   80% {
-    background-color: #f1ad0f;
+    background-color: map-get($map: $text-color, $key: accent);
   }
 
   100% {
-    background-color: #323c4e;
+    background-color: $loading-color;
   }
 }
 
