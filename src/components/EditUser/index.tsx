@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useContext, useEffect } from "react";
-import { useHistory } from "react-router";
-import ApiUrl from "../../enums/ApiUrl";
-import { UserDetailsContext } from "../../contexts/UserDetailsContext";
-import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
-import ApiRequest from "../../utils/ApiRequest";
-import Toaster from "../../utils/Toaster";
-import Userform from "../Userform";
-import Breadcrum from "../widgets/Breadcrum";
+import { useState } from 'react';
+import { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router';
+import ApiUrl from '../../enums/ApiUrl';
+import { UserDetailsContext } from '../../contexts/UserDetailsContext';
+import withLoader, { WithLoaderProps } from '../../hoc/withLoader';
+import ApiRequest from '../../utils/ApiRequest';
+import Toaster from '../../utils/Toaster';
+import Userform from '../Userform';
+import Breadcrum from '../widgets/Breadcrum';
 
 export interface EditUserProps extends WithLoaderProps {}
 
@@ -20,15 +20,15 @@ const EditUser: React.FC<EditUserProps> = (props) => {
     if (selectedUserId) {
       fetchUserDetails(selectedUserId);
     } else {
-      history.push("/admin");
+      history.push('/admin');
     }
   }, [selectedUserId]);
 
   const fetchUserDetails = (id: string) => {
     const url = `${ApiUrl.USER}/${id}`;
 
-    props.startLoading("Fetching user data", true);
-    ApiRequest.request(url, "GET")
+    props.startLoading('Fetching user data', true);
+    ApiRequest.request(url, 'GET')
       .then((res) => {
         if (res.success) {
           setUser(res.data);
@@ -48,11 +48,11 @@ const EditUser: React.FC<EditUserProps> = (props) => {
 
     // }
 
-    ApiRequest.request(editUrl, "PATCH", data)
+    ApiRequest.request(editUrl, 'PATCH', data)
       .then((res) => {
         if (res.success) {
           Toaster.success(res.message);
-          history.push("/admin/user-details");
+          history.push('/admin/user-details');
         } else {
           Toaster.error(res.message);
         }
@@ -65,7 +65,9 @@ const EditUser: React.FC<EditUserProps> = (props) => {
 
   return (
     <div className="add-user">
-      <Breadcrum pageTitle="Admin" />
+      <div className="contant-shape">
+        <Breadcrum pageTitle="Admin" />
+      </div>
       <div className="admin-panel__page-title">Edit user</div>
       <Userform onSubmit={onSubmit} user={user} submitText="Edit user" />
     </div>

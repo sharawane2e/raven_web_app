@@ -13,11 +13,8 @@ import { ReactComponent as PasswordIcon } from '../../assets/svg/password-icon.s
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { showTourGuide } from '../../redux/actions/tourAction';
-
 import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
-// import { SidebarContext } from "../../contexts/SidebarContext";
-
 import {
   toggleSidebar,
   toggleSidebarMobile,
@@ -29,9 +26,6 @@ import ApiUrl from '../../enums/ApiUrl';
 import Toaster from '../../utils/Toaster';
 import { resetUserCache } from '../../redux/actions/userCacheActions';
 import { addNewKeysToUserCache } from '../../services/userCacheService';
-// import Toaster from "../../utils/Toaster";
-// import ApiUrl from "../../enums/ApiUrl";
-// import ApiRequest from "../../utils/ApiRequest";
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -43,13 +37,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const { sidebar } = useSelector((state: RootState) => state);
 
   const { variant = 'partialWidth' } = props;
-  // const {
-  //   open: sidebarOpen,
-  //   toggleSidebarOpen,
-  //   openMobileDrawer,
-  //   toggleMobileSidebar,
-  // } = useContext(SidebarContext);
-
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
     (state: RootState) => state.sidebar,
   );
@@ -86,6 +73,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     dispatch(showTourGuide());
   };
   function refreshPage() {
+    history.push('/home');
     window.location.reload();
   }
 
@@ -120,6 +108,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
             {/* <Boehringer onClick={() => history.push('/home')} /> */}
             <Boehringer />
           </div>
+
           <HomeIcon className="home-icon" onClick={refreshPage} />
         </div>
         <div
