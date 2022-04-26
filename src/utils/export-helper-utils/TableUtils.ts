@@ -21,6 +21,15 @@ export function tableChartDataGen() {
   const { chart } = store.getState();
   let chartTransposeState = !chart.chartTranspose;
 
+  let results: any = chart.questionData?.options.filter(function (option) {
+    console.log('results.length', option);
+    if (option.labelCode.split('_')[0] == 'N') {
+      return true;
+    }
+  });
+
+  lablecode_length = results.length;
+
   if (seriesData) {
     let scale: any = [];
     seriesData.forEach((index: any) => {
@@ -31,10 +40,11 @@ export function tableChartDataGen() {
     if (chart.questionData?.groupNetData) {
       scaleLength = chart.questionData?.groupNetData.length;
     }
-    if (!chartTransposeState) {
+    if (chartTransposeState) {
       scaleIndex = scale.length;
     } else {
       scaleIndex = scale.length - scaleLength;
+      console.log('d', lablecode_length);
     }
 
     if (seriesData[0])
@@ -47,6 +57,7 @@ export function tableChartDataGen() {
           if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
+
               if (rIndex < scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
@@ -77,6 +88,7 @@ export function tableChartDataGen() {
             }
           }
         });
+        //console.log('totalrowSub', totalrowSub);
 
         if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
           totalRow.push(round(totalrowSub, 1) + '%');
@@ -102,13 +114,6 @@ export function tableChartDataGen() {
 
       let columnValues = series.values;
 
-      let results: any = chart.questionData?.options.filter(function (option) {
-        if (option.labelCode.split('_')[0] == 'N') {
-          return true;
-        }
-      });
-      lablecode_length = results.length;
-
       const updateRow: any[] = [];
 
       for (var i = 0; i < columnValues.length; i++) {
@@ -128,14 +133,15 @@ export function tableChartDataGen() {
       }
 
       if (QuestionType.MULTI && lablecode_length > 0) {
-        columnValues.splice(-lablecode_length);
+        //columnValues.splice(-lablecode_length);
+        columnValues = columnValues.splice(lablecode_length);
       }
 
       const newUpdatedRow =
         chart.chartTranspose && chart?.questionData?.type === QuestionType.GRID
           ? updateRow.slice(0, -scaleLength)
           : QuestionType.MULTI && lablecode_length > 0
-          ? updateRow.slice(0, -lablecode_length)
+          ? updateRow.splice(lablecode_length)
           : updateRow;
 
       if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -146,7 +152,14 @@ export function tableChartDataGen() {
         tranposedTableDataMin.push(Math.min(...newUpdatedRow));
       }
 
-      let getColoumnTotal = series.values
+      const updatedColum =
+        QuestionType.MULTI && lablecode_length > 0
+          ? columnValues
+          : series.values;
+
+      //console.log('updatedColum', columnValues);
+
+      let getColoumnTotal = updatedColum
         .filter(function (x: any) {
           return typeof x === 'number';
         }) // remove any non numbers
@@ -159,6 +172,7 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
+      // console.log('newUpdatedRow', getColoumnTotal);
 
       getColumnSum = 0;
     });

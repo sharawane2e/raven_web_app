@@ -16,7 +16,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
   let scaleLength: any = '';
-  let columnIndex: any;
+  //let columnIndex: any;
 
   useEffect(() => {
     setTableData(tableChartDataGen());
@@ -24,12 +24,24 @@ const TableView: React.FC<TableProps> = (props) => {
   if (questionData?.groupNetData) {
     scaleLength = questionData?.groupNetData.length;
   }
+  let results: any = questionData?.options.filter(function (option) {
+    if (option.labelCode.split('_')[0] == 'N') {
+      return true;
+    }
+  });
+  let laberesult = results.length;
+  //console.log('results', results);
 
   let removeSubGrop: any;
 
   if (chartTranspose) {
     removeSubGrop = tableData?.rows?.length - scaleLength - 1;
   }
+  if (laberesult > 0) {
+    removeSubGrop = tableData?.rows?.length - laberesult;
+  }
+
+  // console.log('removeSubGrop', removeSubGrop);
   /*This code used for single grid data column hide and show highlights  */
   //  else {
   //   tableData?.rows?.map((rows: any) => {
@@ -45,8 +57,64 @@ const TableView: React.FC<TableProps> = (props) => {
     currentMin: any,
     currentMax: any,
   ) => {
-    return chartTranspose ? (
-      rowIndex < removeSubGrop && !showMean ? (
+    const rowcount = removeSubGrop - laberesult;
+    //console.log('removeSubGrop', laberesult);
+
+    if (laberesult > 0) {
+      return !chartTranspose ? (
+        rowIndex > removeSubGrop - rowcount &&
+        rowIndex < removeSubGrop + (laberesult - 1) ? (
+          <div
+            className={clsx({
+              'Table-row-item': true,
+              maxValue: isEqual(col, currentMax),
+              minValue: isEqual(col, currentMin),
+            })}
+          >
+            {col}
+          </div>
+        ) : !removeSubGrop ? (
+          <div
+            className={clsx({
+              'Table-row-item': true,
+              maxValue: isEqual(col, currentMax),
+              minValue: isEqual(col, currentMin),
+            })}
+          >
+            {col}
+          </div>
+        ) : (
+          <div className="Table-row-item">{col}</div>
+        )
+      ) : (
+        <></>
+      );
+    } else {
+      return chartTranspose ? (
+        rowIndex < removeSubGrop && !showMean ? (
+          <div
+            className={clsx({
+              'Table-row-item': true,
+              maxValue: isEqual(col, currentMax),
+              minValue: isEqual(col, currentMin),
+            })}
+          >
+            {col}
+          </div>
+        ) : !removeSubGrop && !showMean ? (
+          <div
+            className={clsx({
+              'Table-row-item': true,
+              maxValue: isEqual(col, currentMax),
+              minValue: isEqual(col, currentMin),
+            })}
+          >
+            {col}
+          </div>
+        ) : (
+          <div className="Table-row-item">{col}</div>
+        )
+      ) : columnIndex && tableData.rows.length > 3 ? (
         <div
           className={clsx({
             'Table-row-item': true,
@@ -56,7 +124,7 @@ const TableView: React.FC<TableProps> = (props) => {
         >
           {col}
         </div>
-      ) : !removeSubGrop && !showMean ? (
+      ) : !removeSubGrop && tableData.rows.length > 3 ? (
         <div
           className={clsx({
             'Table-row-item': true,
@@ -68,30 +136,8 @@ const TableView: React.FC<TableProps> = (props) => {
         </div>
       ) : (
         <div className="Table-row-item"> {col}</div>
-      )
-    ) : columnIndex && tableData.rows.length > 3 ? (
-      <div
-        className={clsx({
-          'Table-row-item': true,
-          maxValue: isEqual(col, currentMax),
-          minValue: isEqual(col, currentMin),
-        })}
-      >
-        {col}
-      </div>
-    ) : !removeSubGrop && tableData.rows.length > 3 ? (
-      <div
-        className={clsx({
-          'Table-row-item': true,
-          maxValue: isEqual(col, currentMax),
-          minValue: isEqual(col, currentMin),
-        })}
-      >
-        {col}
-      </div>
-    ) : (
-      <div className="Table-row-item"> {col}</div>
-    );
+      );
+    }
   };
 
   return (
@@ -104,7 +150,8 @@ const TableView: React.FC<TableProps> = (props) => {
                 const [maxVal, minVal] = tableData.minmax[0];
                 const currentMax = maxVal?.[colIndex - 1];
                 const currentMin = minVal?.[colIndex - 1];
-                columnIndex = col;
+                //columnIndex = col;
+
                 return (
                   <>
                     {tableColumn(
