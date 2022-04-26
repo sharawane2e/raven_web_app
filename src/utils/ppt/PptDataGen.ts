@@ -115,7 +115,7 @@ export function pptDataGen(
             return o.labelText === labelText;
           });
           if (seriesObject?.labelCode.split('_')[0] == 'N') {
-            colorArray.push('F8971C');
+            //colorArray.push('F8971C');
           } else {
             colorArray.push(primaryBarPPt);
           }
