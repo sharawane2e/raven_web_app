@@ -290,11 +290,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <span>Select wave</span>
         <ExpandMoreIcon />
       </Button> */}
+
       <div className="questioSelection">
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
             <SingleSelect
-              options={updateQuestionList}
+              options={[...updateQuestionList]}
+              //options={updateQuestionList}
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}

@@ -4,10 +4,11 @@ import {
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
-} from "../actions/questionAction";
-import { createReducer } from "@reduxjs/toolkit";
-import { IBannerQuestion } from "../../types/IBannerQuestion";
-import { IQuestion } from "../../types/IQuestion";
+  setSelectedQuestionText,
+} from '../actions/questionAction';
+import { createReducer } from '@reduxjs/toolkit';
+import { IBannerQuestion } from '../../types/IBannerQuestion';
+import { IQuestion } from '../../types/IQuestion';
 
 export interface IQuestionState {
   questionList: IQuestion[];
@@ -15,13 +16,15 @@ export interface IQuestionState {
   selectedQuestionId: string;
   selectedBannerQuestionId: string;
   disableBannerQuestion: boolean;
+  selectedQuestionText: string;
 }
 
 const initialState: IQuestionState = {
   questionList: [],
   bannerQuestionList: [],
-  selectedQuestionId: "",
-  selectedBannerQuestionId: "",
+  selectedQuestionId: '',
+  selectedBannerQuestionId: '',
+  selectedQuestionText: '',
   disableBannerQuestion: true,
 };
 
@@ -52,6 +55,10 @@ const questionReducer = createReducer(initialState, (builder) => {
   builder.addCase(setBannerQuestionList, (state, action) => ({
     ...state,
     bannerQuestionList: action.payload,
+  }));
+  builder.addCase(setSelectedQuestionText, (state, action) => ({
+    ...state,
+    selectedQuestionText: action.payload,
   }));
 });
 

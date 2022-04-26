@@ -153,6 +153,7 @@ export function pptDataGen(
     // console.log('pptChartType', pptChartType);
     // console.log('chartSingleBar', chartSingleBar);
     // console.log('chartStack', chartStack);
+    console.log('demo', seriesData);
     pptxGenJsObj
       .addSlide({ masterName: pptTemplateKey })
       .addChart(pptChartType, seriesData, {

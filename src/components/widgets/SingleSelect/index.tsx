@@ -1,7 +1,9 @@
 import { FormControl, MenuItem, Select, SelectProps } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
 import CustomScrollbar from '../../CustomScrollbar';
+import store, { RootState } from '../../../redux/store';
 
 interface SingleSelectProps extends SelectProps {
   options: any[];
@@ -41,6 +43,8 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
     handleClose,
     handleOpen,
   } = props;
+
+  const { questions } = useSelector((state: RootState) => state);
   return (
     <FormControl variant="outlined" className="single-select">
       <Select
@@ -71,11 +75,16 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           if (!selected) {
             return <span>{placeholder ? placeholder : 'Please select'}</span>;
           }
+
           if (valueKey && labelKey) {
-            const label = options.find(
-              (option) => option[valueKey] === selected,
+            const label = options.find((option) =>
+              //console.log('option[valueKey] == selected', option[valueKey]),
+              (option[valueKey] == selected) !== undefined
+                ? option[valueKey] == selected
+                : questions?.selectedQuestionText,
             )[labelKey];
-            return <span>{label !== undefined ? label : ''}</span>;
+
+            return <span>{label ? label : ''}</span>;
           }
           return <span>{selected as any}</span>;
         }}

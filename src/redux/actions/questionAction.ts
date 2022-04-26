@@ -1,31 +1,35 @@
-import { createAction } from "@reduxjs/toolkit";
-import ApiUrl from "../../enums/ApiUrl";
-import { IBannerQuestion } from "../../types/IBannerQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import ApiRequest from "../../utils/ApiRequest";
-import { AppDispatch } from "../store";
+import { createAction } from '@reduxjs/toolkit';
+import ApiUrl from '../../enums/ApiUrl';
+import { IBannerQuestion } from '../../types/IBannerQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import ApiRequest from '../../utils/ApiRequest';
+import { AppDispatch } from '../store';
 
 export const setSelectedQuestionId = createAction<string>(
-  "SET_SELECTED_QUESTION_ID"
+  'SET_SELECTED_QUESTION_ID',
+);
+
+export const setSelectedQuestionText = createAction<string>(
+  'SET_SELECTED_QUESTION_TEXT',
 );
 
 export const setSelectedBannerQuestionId = createAction<string>(
-  "SET_SELECTED_BANNER_QUESTION_ID"
+  'SET_SELECTED_BANNER_QUESTION_ID',
 );
 
-export const setQuestionList = createAction<IQuestion[]>("SET_QUESTION_LIST");
+export const setQuestionList = createAction<IQuestion[]>('SET_QUESTION_LIST');
 
 export const setBannerQuestionList = createAction<IBannerQuestion[]>(
-  "SET_BANNER_QUESTION_LIST"
+  'SET_BANNER_QUESTION_LIST',
 );
 
 export const toggleBannerQuestionDisablity = createAction<boolean | undefined>(
-  "TOGGLE_BANNER_QUESTION_DISABLITY"
+  'TOGGLE_BANNER_QUESTION_DISABLITY',
 );
 
 export const fetchQuestionList = () => async (dispatch: AppDispatch) => {
   try {
-    const res = await ApiRequest.request(ApiUrl.QUESTION, "GET");
+    const res = await ApiRequest.request(ApiUrl.QUESTION, 'GET');
     if (res.success) {
       const questionList: IQuestion[] = res.data;
 
@@ -44,7 +48,7 @@ export const fetchQuestionList = () => async (dispatch: AppDispatch) => {
 
 export const fetchBannerQuestionList = () => async (dispatch: AppDispatch) => {
   try {
-    const res = await ApiRequest.request(ApiUrl.BANNER_QUESTION, "GET");
+    const res = await ApiRequest.request(ApiUrl.BANNER_QUESTION, 'GET');
     if (res.success) {
       const questionList: IBannerQuestion[] = res.data;
 
