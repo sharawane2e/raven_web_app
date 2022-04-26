@@ -22,8 +22,6 @@ import chartSingleBar from '../../mock/chartBar.json';
 import chartStack from '../../mock/chartStack.json';
 import tabelview from '../../mock/tableDat.json';
 
-console.log('tabelview', tabelview);
-
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
@@ -50,9 +48,11 @@ export function pptDataGen(
   let chartColors: any[] = [];
 
   seriesData = chartDataGen();
+  console.log('seriesData', seriesData);
 
   if (chartType === ChartType.TABLE) {
     const tableRows = tableChartDataGen();
+    console.log('tableRows', tableRows);
 
     const [maxValue, minValue] = tableRows?.minmax[0];
     let scaleLength: any = '';
@@ -150,55 +150,56 @@ export function pptDataGen(
         seriesData[index] = row;
       });
     }
+    console.log('ser', seriesData);
     // console.log('pptChartType', pptChartType);
     // console.log('chartSingleBar', chartSingleBar);
     // console.log('chartStack', chartStack);
-    console.log('demo', seriesData);
-    pptxGenJsObj
-      .addSlide({ masterName: pptTemplateKey })
-      .addChart(pptChartType, seriesData, {
-        ...chartConfig,
-        ...graphTypeProps,
-        chartColors: chartColors,
-        ...chartSettings,
-      });
+    // console.log('demo', seriesData);
+    // pptxGenJsObj
+    //   .addSlide({ masterName: pptTemplateKey })
+    //   .addChart(pptChartType, seriesData, {
+    //     ...chartConfig,
+    //     ...graphTypeProps,
+    //     chartColors: chartColors,
+    //     ...chartSettings,
+    //   });
     //console.log('seriesData', seriesData);
     // console.log('chartSingleBar', chartSingleBar);
     // console.log('chartStack', chartStack);
     //console.log('graphTypeProps', chartColors);
 
-    // let dataget = { barDir: 'col', barGrouping: 'clustered' };
-    // let dataget2 = { barDir: 'col', barGrouping: 'stacked' };
-    // const data: any = tabelview;
-    // //= pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
-    // //let slie: any;
-    // //for (let i = 0; i < 3; i++) {
-    // //slie + i;
-    // if ('bar' && chartSingleBar) {
-    //   pptxGenJsObj
-    //     .addSlide({ masterName: pptTemplateKey })
-    //     .addChart(pptChartType, chartSingleBar, {
-    //       ...chartConfig,
-    //       ...dataget,
-    //       chartColors: chartColors,
-    //       ...chartSettings,
-    //     });
-    // }
-    // if ('bar' && chartStack) {
-    //   pptxGenJsObj
-    //     .addSlide({ masterName: pptTemplateKey })
-    //     .addChart(pptChartType, chartStack, {
-    //       ...chartConfig,
-    //       ...dataget2,
-    //       chartColors: chartColors,
-    //       ...chartSettings,
-    //     });
-    // }
-    // if (tabelview) {
-    //   pptxGenJsObj
-    //     .addSlide({ masterName: pptTemplateKey })
-    //     .addTable(data, { ...tableConfig });
-    // }
+    let dataget = { barDir: 'col', barGrouping: 'clustered' };
+    let dataget2 = { barDir: 'col', barGrouping: 'stacked' };
+    const data: any = tabelview;
+    //= pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+    //let slie: any;
+    //for (let i = 0; i < 3; i++) {
+    //slie + i;
+    if ('bar' && chartSingleBar) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addChart(pptChartType, chartSingleBar, {
+          ...chartConfig,
+          ...dataget,
+          chartColors: chartColors,
+          ...chartSettings,
+        });
+    }
+    if ('bar' && chartStack) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addChart(pptChartType, chartStack, {
+          ...chartConfig,
+          ...dataget2,
+          chartColors: chartColors,
+          ...chartSettings,
+        });
+    }
+    if (tabelview) {
+      pptxGenJsObj
+        .addSlide({ masterName: pptTemplateKey })
+        .addTable(data, { ...tableConfig });
+    }
     // }
     //console.log('slie', slie);
   }

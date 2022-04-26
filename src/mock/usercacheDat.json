@@ -1,1 +1,1483 @@
-[]
+[
+  {
+    "graphTypeProps": {
+      "barDir": "col",
+      "barGrouping": "clustered"
+    },
+    "chartType": {
+      "type": 1
+    },
+    "seriesData": [
+      {
+        "name": "1 Strongly disagree",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.032, 0.141, 0.132, 0.057999999999999996, 0.059000000000000004,
+          0.126, 0.14800000000000002, 0.045, 0.073, 0.272, 0.327,
+          0.19699999999999998, 0.07
+        ],
+        "index": 0
+      },
+      {
+        "name": "2",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.019, 0.083, 0.10300000000000001, 0.036000000000000004, 0.047, 0.06,
+          0.114, 0.035, 0.054000000000000006, 0.133, 0.126, 0.113, 0.043
+        ],
+        "index": 1
+      },
+      {
+        "name": "3",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.033, 0.09300000000000001, 0.11199999999999999, 0.055999999999999994,
+          0.069, 0.069, 0.129, 0.055999999999999994, 0.076, 0.125, 0.107, 0.107,
+          0.07200000000000001
+        ],
+        "index": 2
+      },
+      {
+        "name": "4 Neither agree nor disagree",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.111, 0.237, 0.235, 0.185, 0.244, 0.243, 0.225, 0.163, 0.281, 0.257,
+          0.251, 0.19899999999999998, 0.222
+        ],
+        "index": 3
+      },
+      {
+        "name": "5",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.165, 0.182, 0.132, 0.172, 0.184, 0.145, 0.151, 0.193, 0.157, 0.079,
+          0.077, 0.136, 0.185
+        ],
+        "index": 4
+      },
+      {
+        "name": "6",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.26, 0.147, 0.122, 0.20600000000000002, 0.184, 0.151, 0.111, 0.213,
+          0.16, 0.067, 0.061, 0.10800000000000001, 0.17800000000000002
+        ],
+        "index": 5
+      },
+      {
+        "name": "7 Strongly agree",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.381, 0.11599999999999999, 0.165, 0.287, 0.213, 0.207,
+          0.12300000000000001, 0.295, 0.198, 0.066, 0.052000000000000005, 0.14,
+          0.231
+        ],
+        "index": 6
+      },
+      {
+        "name": "Top 2 box",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.051, 0.22399999999999998, 0.235, 0.094, 0.107, 0.18600000000000003,
+          0.262, 0.08, 0.127, 0.405, 0.452, 0.31, 0.11199999999999999
+        ],
+        "index": 7
+      },
+      {
+        "name": "Medium 3 box",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.309, 0.513, 0.478, 0.413, 0.49700000000000005, 0.456, 0.505,
+          0.41200000000000003, 0.514, 0.462, 0.435, 0.442, 0.479
+        ],
+        "index": 8
+      },
+      {
+        "name": "Bottom 2 box",
+        "labels": [
+          "In general, I am responsible for managing my own health ",
+          "I consult with family and friends when managing my health ",
+          "I rely on my doctor for managing my health ",
+          "I can tell my doctor about concerns I have about my health or treatment ",
+          "I feel I can request the best treatment possible from my healthcare provider ",
+          "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+          "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+          "I actively seek out information if I have any health concerns ",
+          "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+          "I feel my doctor is not making time for me ",
+          "My doctor makes me feel like issues I bring up are my fault ",
+          "I find exercising on a regular basis (e.g. weekly) difficult ",
+          "I believe maintaining my health is a partnership between my doctor and me "
+        ],
+        "values": [
+          0.64, 0.263, 0.287, 0.493, 0.396, 0.358, 0.23399999999999999, 0.508,
+          0.358, 0.133, 0.113, 0.248, 0.409
+        ],
+        "index": 9
+      }
+    ]
+  },
+  {
+    "graphTypeProps": {
+      "barDir": "col",
+      "barGrouping": "stacked"
+    },
+    "chartType": {
+      "type": 2
+    },
+    "seriesData": [
+      {
+        "name": "In general, I am responsible for managing my own health ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [5.7],
+        "index": 0
+      },
+      {
+        "name": "I consult with family and friends when managing my health ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.1],
+        "index": 1
+      },
+      {
+        "name": "I rely on my doctor for managing my health ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.2],
+        "index": 2
+      },
+      {
+        "name": "I can tell my doctor about concerns I have about my health or treatment ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [5.1],
+        "index": 3
+      },
+      {
+        "name": "I feel I can request the best treatment possible from my healthcare provider ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.8],
+        "index": 4
+      },
+      {
+        "name": "If I am dissatisfied with my current doctor I will seek an opinion from another one ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.5],
+        "index": 5
+      },
+      {
+        "name": "Maintaining a healthy lifestyle is too hard to do on a daily basis ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [3.9],
+        "index": 6
+      },
+      {
+        "name": "I actively seek out information if I have any health concerns ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [5.2],
+        "index": 7
+      },
+      {
+        "name": "I feel my doctor will always go the extra mile for me (e.g. find me the best treatment) ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.7],
+        "index": 8
+      },
+      {
+        "name": "I feel my doctor is not making time for me ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [3.2],
+        "index": 9
+      },
+      {
+        "name": "My doctor makes me feel like issues I bring up are my fault ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [3],
+        "index": 10
+      },
+      {
+        "name": "I find exercising on a regular basis (e.g. weekly) difficult ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [3.8],
+        "index": 11
+      },
+      {
+        "name": "I believe maintaining my health is a partnership between my doctor and me ",
+        "labels": [
+          "q8-In general, I am responsible for managing my own health"
+        ],
+        "values": [4.9],
+        "index": 12
+      }
+    ]
+  },
+  {
+    "graphTypeProps": {
+      "barDir": "col",
+      "barGrouping": "stacked"
+    },
+    "chartType": {
+      "type": 3
+    },
+    "seriesData": [
+      [
+        {
+          "text": "",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "s1 - Age",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "Total",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "18-25",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "12.9%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "12.9%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "26-30",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "11.7%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "11.7%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "31-40",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "21.8%",
+          "options": {
+            "fill": "b8e08c",
+            "bold": true,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "21.8%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "41-50",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "17.5%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "17.5%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "51-59",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "14.4%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "14.4%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "60-64",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "6.9%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "6.9%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "65-69",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "6.5%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "6.5%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "70-79",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "8.3%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "8.3%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "80+",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "0%",
+          "options": {
+            "fill": "fbd9d4",
+            "bold": true,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "0%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ],
+      [
+        {
+          "text": "Total",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "100%",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        },
+        {
+          "text": "",
+          "options": {
+            "fill": "ffffff",
+            "bold": false,
+            "border": [
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              },
+              {
+                "type": "solid",
+                "color": "E6E6E6",
+                "pt": 0.4
+              }
+            ],
+            "autoPageCharWeight": 10,
+            "color": "000000",
+            "fontSize": 6,
+            "margin": [0.05, 0.1, 0.05, 0.1]
+          }
+        }
+      ]
+    ]
+  }
+]

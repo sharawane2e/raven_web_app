@@ -15,6 +15,7 @@ export const generatePdf = async () => {
 
   let clientWidth = document.body.clientWidth;
   let doc = new jsPDF();
+
   let pdfWidth,
     pdfHeight,
     x,
@@ -157,6 +158,7 @@ export const generatePdf = async () => {
       qWordBreak = 160;
     }
     let source = document.getElementsByClassName('highcharts-root');
+
     let svgSource = source[0];
     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
@@ -165,12 +167,12 @@ export const generatePdf = async () => {
       .forEach((node: any) => node.parentNode.removeChild(node));
 
     // const legendsHTML = document.getElementsByClassName(
-    //   "highcharts-legend-item-hidden"
+    //   'highcharts-legend-item-hidden',
     // );
     // const hiddenLegends = Array.from(legendsHTML).map(
-    //   (text: any) => text.textContent
+    //   (text: any) => text.textContent,
     // );
-    // console.log("amogh:", hiddenLegends);
+    // console.log('hiddenLegends:', hiddenLegends);
 
     await setDefaultPdfPageProperties(
       doc,
