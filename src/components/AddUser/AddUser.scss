@@ -21,7 +21,7 @@
   .MuiCheckbox-root {
     color: map-get($map: $text-color, $key: "partial-light");
   }
-  .MuiSvgIcon-root {
+  .MuiSvgIcon-root,.MuiFormControlLabel-label.Mui-disabled {
     color: map-get($map: $text-color, $key: "partial-light");
   }
 }
