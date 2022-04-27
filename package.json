@@ -1,7 +1,7 @@
 {
-  "name": "cello-210394",
+  "name": "healthcarestudy",
   "version": "0.1.0",
-  "homepage": "/cello/210394",
+  "homepage": "/e2e/healthcarestudy001",
   "private": true,
   "peerDependencies": {
     "sass": "^1.3.0"

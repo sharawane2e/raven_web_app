@@ -96,7 +96,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <div></div>
         </div>
         <div className="appbar__heading">
-          210394 - WWAWK about PwO Dashboard
+            Diet and lifestyle Study
         </div>
       </div>
       <div className="appbar__right-panel">
