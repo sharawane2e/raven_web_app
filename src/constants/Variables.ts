@@ -1,4 +1,4 @@
-export const accessTokenKey = 'cello_dashboard_access_token';
+export const accessTokenKey = 'healthcarestudy001_access_token';
 
 export const colorArr = [
   '#F1AD0F',
