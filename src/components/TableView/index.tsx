@@ -49,6 +49,19 @@ const TableView: React.FC<TableProps> = (props) => {
   //   });
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
+  const highLight = (col: any, currentMax: any, currentMin: any) => {
+    return (
+      <div
+        className={clsx({
+          'Table-row-item': true,
+          maxValue: isEqual(col, currentMax),
+          minValue: isEqual(col, currentMin),
+        })}
+      >
+        {col}
+      </div>
+    );
+  };
 
   const tableColumn = (
     rowIndex: any,
@@ -58,31 +71,14 @@ const TableView: React.FC<TableProps> = (props) => {
     currentMax: any,
   ) => {
     const rowcount = removeSubGrop - laberesult;
-    //console.log('removeSubGrop', laberesult);
 
     if (laberesult > 0) {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
         rowIndex < removeSubGrop + (laberesult - 1) ? (
-          <div
-            className={clsx({
-              'Table-row-item': true,
-              maxValue: isEqual(col, currentMax),
-              minValue: isEqual(col, currentMin),
-            })}
-          >
-            {col}
-          </div>
+          highLight(col, currentMin, currentMax)
         ) : !removeSubGrop ? (
-          <div
-            className={clsx({
-              'Table-row-item': true,
-              maxValue: isEqual(col, currentMax),
-              minValue: isEqual(col, currentMin),
-            })}
-          >
-            {col}
-          </div>
+          highLight(col, currentMin, currentMax)
         ) : (
           <div className="Table-row-item">{col}</div>
         )
@@ -92,48 +88,16 @@ const TableView: React.FC<TableProps> = (props) => {
     } else {
       return chartTranspose ? (
         rowIndex < removeSubGrop && !showMean ? (
-          <div
-            className={clsx({
-              'Table-row-item': true,
-              maxValue: isEqual(col, currentMax),
-              minValue: isEqual(col, currentMin),
-            })}
-          >
-            {col}
-          </div>
+          highLight(col, currentMin, currentMax)
         ) : !removeSubGrop && !showMean ? (
-          <div
-            className={clsx({
-              'Table-row-item': true,
-              maxValue: isEqual(col, currentMax),
-              minValue: isEqual(col, currentMin),
-            })}
-          >
-            {col}
-          </div>
+          highLight(col, currentMin, currentMax)
         ) : (
           <div className="Table-row-item">{col}</div>
         )
       ) : columnIndex && tableData.rows.length > 3 ? (
-        <div
-          className={clsx({
-            'Table-row-item': true,
-            maxValue: isEqual(col, currentMax),
-            minValue: isEqual(col, currentMin),
-          })}
-        >
-          {col}
-        </div>
+        highLight(col, currentMin, currentMax)
       ) : !removeSubGrop && tableData.rows.length > 3 ? (
-        <div
-          className={clsx({
-            'Table-row-item': true,
-            maxValue: isEqual(col, currentMax),
-            minValue: isEqual(col, currentMin),
-          })}
-        >
-          {col}
-        </div>
+        highLight(col, currentMin, currentMax)
       ) : (
         <div className="Table-row-item"> {col}</div>
       );

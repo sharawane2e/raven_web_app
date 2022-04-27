@@ -44,15 +44,26 @@ export function pptDataGen(
 
   if (chartType === ChartType.TABLE) {
     const tableRows = tableChartDataGen();
+    let scaleLength: any = '';
 
     const [maxValue, minValue] = tableRows?.minmax[0];
-    let scaleLength: any = '';
     if (questionData?.groupNetData) {
       scaleLength = questionData?.groupNetData.length;
     }
+
+    let results: any = questionData?.options.filter(function (option) {
+      if (option.labelCode.split('_')[0] == 'N') {
+        return true;
+      }
+    });
+    let laberesult = results.length;
+
     let removeSubGrop: any;
     if (chartTranspose) {
       removeSubGrop = tableRows.rows.length - scaleLength - 1;
+    }
+    if (laberesult > 0) {
+      removeSubGrop = tableRows?.rows?.length - laberesult;
     }
     var output: any = [];
 
@@ -65,29 +76,53 @@ export function pptDataGen(
           fill: 'ffffff',
           bold: false,
         };
+        const rowcount = removeSubGrop - laberesult;
+        // if (laberesult > 0) {
+
+        //}
+        // } else {
         if (rowData[colIndex] === currentMax) {
-          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-            ? (options['fill'] = 'b8e08c')
-            : !removeSubGrop && tableRows.rows.length > 3
-            ? (options['fill'] = 'b8e08c')
-            : (options['fill'] = 'ffffff');
-          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-            ? (options['bold'] = true)
-            : !removeSubGrop && tableRows.rows.length > 3
-            ? (options['bold'] = true)
-            : (options['bold'] = false);
+          if (laberesult > 0) {
+            rowIndex > removeSubGrop - rowcount &&
+            rowIndex < removeSubGrop + (laberesult - 1)
+              ? (options['fill'] = 'b8e08c')
+              : !removeSubGrop && tableRows.rows.length > 3
+              ? (options['fill'] = 'b8e08c')
+              : (options['fill'] = 'ffffff');
+          } else {
+            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+              ? (options['fill'] = 'b8e08c')
+              : !removeSubGrop && tableRows.rows.length > 3
+              ? (options['fill'] = 'b8e08c')
+              : (options['fill'] = 'ffffff');
+            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+              ? (options['bold'] = true)
+              : !removeSubGrop && tableRows.rows.length > 3
+              ? (options['bold'] = true)
+              : (options['bold'] = false);
+          }
         } else if (rowData[colIndex] === currentMin) {
-          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-            ? (options['fill'] = 'fbd9d4')
-            : !removeSubGrop
-            ? (options['fill'] = 'fbd9d4')
-            : (options['fill'] = 'ffffff');
-          rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-            ? (options['bold'] = true)
-            : !removeSubGrop
-            ? (options['bold'] = true)
-            : (options['bold'] = false);
+          if (laberesult > 0) {
+            rowIndex > removeSubGrop - rowcount &&
+            rowIndex < removeSubGrop + (laberesult - 1)
+              ? (options['fill'] = 'fbd9d4')
+              : !removeSubGrop && tableRows.rows.length > 3
+              ? (options['fill'] = 'fbd9d4')
+              : (options['fill'] = 'ffffff');
+          } else {
+            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+              ? (options['fill'] = 'fbd9d4')
+              : !removeSubGrop
+              ? (options['fill'] = 'fbd9d4')
+              : (options['fill'] = 'ffffff');
+            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+              ? (options['bold'] = true)
+              : !removeSubGrop
+              ? (options['bold'] = true)
+              : (options['bold'] = false);
+          }
         }
+        //}
 
         rowArray.push({ text: rowData[colIndex], options: { ...options } });
       });

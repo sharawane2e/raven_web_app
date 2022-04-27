@@ -8,6 +8,7 @@ export function tableChartDataGen() {
   let seriesData = [];
   seriesData = chartDataGen();
   let lablecode_length: any = '';
+  let crosstab_length: any = '';
   let rows = [];
   let minmax = [];
   let scaleLength: any = '';
@@ -22,13 +23,20 @@ export function tableChartDataGen() {
   let chartTransposeState = !chart.chartTranspose;
 
   let results: any = chart.questionData?.options.filter(function (option) {
-    console.log('results.length', option);
     if (option.labelCode.split('_')[0] == 'N') {
       return true;
     }
   });
 
   lablecode_length = results.length;
+  let bannerQuestionresults: any = chart.bannerQuestionData?.options.filter(
+    function (option) {
+      if (option.labelCode.split('_')[0] == 'N') {
+        return true;
+      }
+    },
+  );
+  crosstab_length = bannerQuestionresults?.length;
 
   if (seriesData) {
     let scale: any = [];
@@ -43,9 +51,9 @@ export function tableChartDataGen() {
     if (chartTransposeState) {
       scaleIndex = scale.length;
     } else {
-      scaleIndex = scale.length - scaleLength;
-      console.log('d', lablecode_length);
+      scaleIndex = scale.length - crosstab_length;
     }
+    const curentRow = scaleIndex - crosstab_length + 1;
 
     if (seriesData[0])
       for (let k = 0; k < seriesData[0].labels.length; k++) {
@@ -58,11 +66,14 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
 
-              if (rIndex < scaleIndex) {
+              if (rIndex < scaleIndex && !crosstab_length) {
                 totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
                   totalrowSub += 0;
                 }
+              }
+              if (crosstab_length && rIndex + curentRow > scaleIndex) {
+                totalrowSub += parseFloat(d.values[k]);
               }
             } else {
               subRow.push(0 + '%');
@@ -71,16 +82,19 @@ export function tableChartDataGen() {
           } else {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-              // totalrowSub += parseFloat(d.values[k]);
+
               if (chart?.showMean) {
                 totalrowSub += parseFloat(d.values[k]);
               }
 
-              if (rIndex < scaleIndex) {
+              if (rIndex < scaleIndex && !crosstab_length) {
                 totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
                   totalrowSub += 0;
                 }
+              }
+              if (crosstab_length && rIndex + curentRow > scaleIndex) {
+                totalrowSub += parseFloat(d.values[k]);
               }
             } else {
               subRow.push(0);
@@ -133,7 +147,6 @@ export function tableChartDataGen() {
       }
 
       if (QuestionType.MULTI && lablecode_length > 0) {
-        //columnValues.splice(-lablecode_length);
         columnValues = columnValues.splice(lablecode_length);
       }
 
@@ -157,8 +170,6 @@ export function tableChartDataGen() {
           ? columnValues
           : series.values;
 
-      //console.log('updatedColum', columnValues);
-
       let getColoumnTotal = updatedColum
         .filter(function (x: any) {
           return typeof x === 'number';
@@ -172,7 +183,6 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
-      // console.log('newUpdatedRow', getColoumnTotal);
 
       getColumnSum = 0;
     });
