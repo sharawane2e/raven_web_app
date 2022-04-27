@@ -19,12 +19,12 @@ export interface StaticDashboardProps {
 const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
   return (
     <>
-      {/* <div> */}
-      {/* <img className="wid100" src={backgroundWithMethodology} /> */}
-      {/* <BackgroundMethodology /> */}
-      {/* <Objectives /> */}
-      {/* </div> */}
-      <CarouselProvider
+      <div>
+        {/* <img className="wid100" src={backgroundWithMethodology} /> */}
+        {/* <BackgroundMethodology /> */}
+        <Objectives />
+      </div>
+      {/* <CarouselProvider
         naturalSlideWidth={100}
         naturalSlideHeight={80}
         totalSlides={2}
@@ -33,10 +33,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
         interval={5000}
       >
         <Slider>
-          {/* <Slide className="slide" index={1}>
-            <img src={backgroundWithMethodology} />
-            <Image hasMasterSpinner src={backgroundWithMethodology} />
-          </Slide> */}
+       
           <Slide className="slide" index={0}>
             <Objectives />
           </Slide>
@@ -48,7 +45,7 @@ const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
           <Dot slide={0} />
           <Dot slide={1} />
         </div>
-      </CarouselProvider>
+      </CarouselProvider> */}
     </>
   );
 };
