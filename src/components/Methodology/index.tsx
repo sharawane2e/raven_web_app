@@ -6,7 +6,6 @@ import { ReactComponent as CalendarIcon } from "../../assets/svg/calendar_icon.s
 import { ReactComponent as TotalRBIcon } from "../../assets/svg/total_RB.svg";
 import { ReactComponent as PopulationIcon } from "../../assets/svg/population.svg";
 import { ReactComponent as FolridaMapIcon } from "../../assets/svg/florida_map.svg";
-import CustomScrollbar from "../CustomScrollbar";
 
 interface Props {}
 
@@ -20,7 +19,7 @@ const Methodology = (props: Props) => {
         <Grid container justifyContent="center" spacing={2}>
           {/* {[0, 1, 2,3,4].map((value) => ( */}
           <Grid item>
-            <Paper sx={{ height: 200, width: 20 }}>
+            <Paper sx={{ height: 225, width: 20 }}>
               <div className="card-image">
                 <OnlineSurveyIcon />
               </div>
@@ -28,7 +27,7 @@ const Methodology = (props: Props) => {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper sx={{ height: 200, width: 20 }}>
+            <Paper sx={{ height: 225, width: 20 }}>
               <div className="card-image">
                 <TotalRBIcon />
               </div>
@@ -39,7 +38,7 @@ const Methodology = (props: Props) => {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper sx={{ height: 200, width: 20 }}>
+            <Paper sx={{ height: 225, width: 20 }}>
               <div className="card-image">
                 <PopulationIcon />
               </div>
@@ -47,7 +46,7 @@ const Methodology = (props: Props) => {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper sx={{ height: 200, width: 20 }}>
+            <Paper sx={{ height: 225, width: 20 }}>
               <div className="card-image">
                 <FolridaMapIcon />
               </div>
@@ -57,7 +56,7 @@ const Methodology = (props: Props) => {
             </Paper>
           </Grid>
           <Grid item>
-            <Paper sx={{ height: 200, width: 20 }}>
+            <Paper sx={{ height: 225, width: 20 }}>
               <div className="card-image">
                 <CalendarIcon />
               </div>
