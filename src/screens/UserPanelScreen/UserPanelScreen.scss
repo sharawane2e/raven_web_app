@@ -1,11 +1,12 @@
 .contant-shape {
   background: map-get($map: $bg-color, $key: secondary);
   padding: 9px;
+  
 }
 .user-panel {
   .user-panel__page-title {
     margin: 15px 0;
-    color: map-get($map: $text-color, $key: base-color);
+    color: map-get($map: $text-color, $key: "partial-light");
     font-size: map-get($map: $text-size, $key: large);
     font-weight: 600;
     padding-left: 12px;
@@ -23,5 +24,5 @@
 }
 .MuiSvgIcon-root {
   cursor: pointer;
-  color: map-get($map: $bg-color, $key: 'primary');
+  color: map-get($map: $text-color, $key: 'primary-dark');
 }

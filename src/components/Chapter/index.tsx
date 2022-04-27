@@ -95,7 +95,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   const StyledOption = styled(OptionUnstyled)(
     () => `
     &.${optionUnstyledClasses.selected} {
-      background-color: #3369A0;
+      background-color: #393939;
       color: #fff;
     }
     `,

@@ -1,6 +1,7 @@
 // Input Field
 .input-field__label {
   //color: map-get($map: $text-color, $key: primary);
+  color: map-get($map: $text-color, $key:"partial-light" );
   display: flex;
   align-items: center;
 

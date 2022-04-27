@@ -42,7 +42,7 @@
     height: 32px;
     line-height: 32px;
     font-size: map-get($map: $text-size, $key: small);
-    color: $filter-text-color;
+    color: map-get($map: $text-color, $key: "primary");
     margin-left: 25px;
   }
 }

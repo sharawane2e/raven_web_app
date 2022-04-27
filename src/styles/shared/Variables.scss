@@ -32,33 +32,32 @@ $font-weight: (
 );
 
 $text-color: (
-  'accent': #003366,
-  'light': #fff,
-  'partial-light': #dfdfdf,
-  'primary': #e1e1e1,
-  'primary-dark': #000,
-  'primary-fade': #dfdfdf,
-  'fade': #dfdfdf,
-  'danger': red,
-  'border': #dee2e6,
-  'link': #491d40,
-  'base-color': #878787,
+  "accent": #f1ad0f,
+  "light": #fff,
+  "partial-light": #dfdfdf,
+  "primary": #dfdfdf,
+  "primary-dark": #000,
+  "primary-fade": #dfdfdf,
+  "fade": #dfdfdf,
+  "danger": red,
+  "border": #dee2e6,
+  "link": #491d40,
 );
 
 $bg-color: (
-  'accent': #0066cc,
-  'primary': #001a33,
-  'secondary': #003366,
-  'secondary-shade': #fff,
-  'white': #ffffff,
-  'secondary-dark': #001a33,
-  'secondary-light': #bebebe2e,
-  'grayLight': #f7f7f7,
-  'dark': #848484,
-  'fade': #fff,
-  'success': #78bf63,
-  'info': #f1b202,
-  'silver-chalice': #adadad,
+  "accent": #f1ad0f,
+  "primary": #070707,
+  "secondary": #393939,
+  "secondary-shade": #dfdfdf,
+  "white": #ffffff,
+  "secondary-dark": #1e1e1e,
+  "secondary-light": #bebebe2e,
+  "grayLight": #f7f7f7,
+  "dark": #848484,
+  "fade": #f2f2f2,
+  "success": #78bf63,
+  "info": #f1b202,
+  "silver-chalice": #adadad,
 );
 
 $sidebar-width: 16.875rem; // 270px
@@ -68,10 +67,10 @@ $box-color: #c9c9c9;
 $filter-text-color: #343434;
 $brand-color: #f1ad0f;
 $border-color: #e1e3e7;
-$hedding-color: #1c1c1c;
-$light-blue-color: #3369a0;
-$drop-down-color: rgba(112, 112, 112, 0.2);
-$drop-button-color: rgba(28, 73, 119, 0.8);
+$hedding-color: #dfdfdf;
+$light-blue-color: #1e1e1e;
+$drop-down-color: rgba(30, 30, 30, 0.2);
+$drop-button-color: rgba(30, 30, 30, 0.8);
 
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique

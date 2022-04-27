@@ -49,7 +49,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "secondary-shade");
+    background: map-get($map: $bg-color, $key: "primary");
   }
   .wave-button {
     height: 30px;
@@ -66,6 +66,7 @@
     justify-content: space-between;
     &--inr {
       width: 90%;
+      color: map-get($map: $text-color, $key: "partial-light");
     }
   }
 

@@ -18,7 +18,7 @@ import {
   toggleSidebarMobile,
 } from '../../redux/actions/sidebarAction';
 import HomeIcon from '@material-ui/icons/Home';
-import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
+import { ReactComponent as RavneLogo } from '../../assets/svg/raven-brand-logo.svg';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -82,7 +82,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           /> */}
           <div className="public-form__client-logo client-logo__icons">
             {/* <Boehringer onClick={() => history.push('/home')} /> */}
-            <Boehringer />
+            <RavneLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} />
         </div>
@@ -95,9 +95,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">
-            Diet and lifestyle Study
-        </div>
+        <div className="appbar__heading">Diet and lifestyle Study</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>

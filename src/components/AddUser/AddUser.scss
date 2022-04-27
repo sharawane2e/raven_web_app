@@ -17,11 +17,11 @@
   }
 }
 .is-admin {
-  // color: map-get($map: $text-color, $key: light);
+  color: map-get($map: $text-color, $key: "partial-light");
   .MuiCheckbox-root {
-    // color: map-get($map: $text-color, $key: light);
+    color: map-get($map: $text-color, $key: "partial-light");
   }
   .MuiSvgIcon-root {
-    // color: map-get($map: $text-color, $key: light);
+    color: map-get($map: $text-color, $key: "partial-light");
   }
 }

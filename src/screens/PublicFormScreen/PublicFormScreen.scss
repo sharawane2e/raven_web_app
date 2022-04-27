@@ -39,7 +39,7 @@
       align-items: flex-start;
       width: 90%;
       padding: 30px 40px 80px 40px;
-      background: map-get($map: $bg-color, $key: 'white');
+      background: map-get($map: $bg-color, $key: 'secondary');
       border: 1px solid map-get($map: $bg-color, $key: #000);
       margin-right: 90px;
       .MuiInputBase-root {
@@ -59,7 +59,7 @@
 
     .public-form__heading {
       font-size: map-get($map: $heading-size, $key: small);
-      // font-weight: bold;
+      font-weight: bold;
       margin-top: 1rem;
       margin-bottom: 1.75rem; //40px;
       color: $hedding-color;
@@ -75,7 +75,7 @@
   }
 
   .public-form__link {
-    color: $brand-color;
+    color: map-get($map: $text-color, $key:"partial-light" );
     margin-top: 30px;
     text-decoration: none;
   }
@@ -88,7 +88,7 @@
   font-size: 0.75rem;
   width: 50%;
   text-align: right;
-  color: $brand-color;
+  color: map-get($map: $text-color, $key: "partial-light");
   @media only screen and (max-width: 960px) {
     width: 90%;
     left: 0px;

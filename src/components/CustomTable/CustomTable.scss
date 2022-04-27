@@ -7,8 +7,8 @@
 
       &.selected {
         a {
-          background-color: map-get($map: $bg-color, $key: 'dark');
-          color: map-get($map: $text-color, $key: 'partial-light');
+          background-color: map-get($map: $bg-color, $key: "dark");
+          color: map-get($map: $text-color, $key: "partial-light");
         }
       }
     }
@@ -20,7 +20,6 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      color: map-get($map: $bg-color, $key: dark);
     }
   }
   .previous,
@@ -43,7 +42,7 @@
     }
 
     .label {
-      color: map-get($map: $bg-color, $key: dark);
+      color: map-get($map: $text-color, $key: partial-light);
       @media (max-width: 768px) {
         margin-right: 20px !important;
       }
@@ -53,9 +52,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    > div {
-      color: map-get($map: $bg-color, $key: dark);
-    }
     @media (max-width: 768px) {
       color: #dfdfdf;
     }
@@ -99,7 +95,7 @@
     display: flex;
     align-items: center;
     .label {
-      color: map-get($map: $bg-color, $key: dark);
+      color: map-get($map: $text-color, $key: partial-light);
     }
 
     .MuiFormControl-root {
@@ -146,13 +142,13 @@
   .rc__header {
     display: flex;
     padding: 0 10px;
-    background-color: map-get($map: $bg-color, $key: 'secondary-light');
+    background-color: map-get($map: $bg-color, $key: primary);
     > div {
       padding: 10px 0;
       flex: 1;
       font-size: map-get($map: $text-size, $key: small);
       font-weight: 800;
-      color: map-get($map: $text-color, $key: 'secondary-dark');
+      color: map-get($map: $text-color, $key: "primary-fade");
       display: flex;
       align-items: center;
       // justify-content: space-between;
@@ -188,10 +184,10 @@
       align-items: center;
       min-height: 3.75rem; //60px;
       &:nth-child(odd) {
-        background: map-get($map: $bg-color, $key: 'light');
+        background: map-get($map: $bg-color, $key: "secondary");
       }
       &:nth-child(even) {
-        background: map-get($map: $text-color, $key: 'primary');
+        background: map-get($map: $bg-color, $key: "secondary-dark");
       }
 
       > div {
@@ -213,7 +209,7 @@
       min-width: 0;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: map-get($map: $text-color, $key: 'primary-dark');
+      color: map-get($map: $text-color, $key: primary-fade);
       .cell-label {
         display: none;
       }
@@ -268,7 +264,7 @@
     margin-left: 5px;
   }
   svg {
-    //color: #dfdfdf;
+    color: #dfdfdf;
   }
 
   .asc-icon,
@@ -280,6 +276,3 @@
   font-size: map-get($map: $text-size, $key: small);
   // padding: 10px;
 }
-// .tableView {
-//   margin-top: 55px;
-// }

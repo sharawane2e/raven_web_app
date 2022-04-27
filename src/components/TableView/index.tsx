@@ -54,8 +54,8 @@ const TableView: React.FC<TableProps> = (props) => {
       <div
         className={clsx({
           'Table-row-item': true,
-          maxValue: isEqual(col, currentMax),
-          minValue: isEqual(col, currentMin),
+          maxValue: isEqual(col, currentMin),
+          minValue: isEqual(col, currentMax),
         })}
       >
         {col}

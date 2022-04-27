@@ -61,9 +61,7 @@ const Login: React.FC<LoginProps> = (props) => {
   return (
     <div className="login public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="public-form__client-logo">
-          <ClientsLogo />
-        </div>
+        <div className="public-form__client-logo">{/* <ClientsLogo /> */}</div>
         <div className="public-form__heading">Login</div>
         <InputField
           {...register('email')}
