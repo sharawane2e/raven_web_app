@@ -5,7 +5,7 @@ import "svg2pdf.js";
 
 import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
 //import { clientBrandLogo} from "../../constants/Variables";
-import { clientBrandingLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
+import { clientBrandingLogo, clientSubLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
 import { hexToRgb } from "@material-ui/core";
 
 export const setDefaultPdfPageProperties = async (
@@ -56,4 +56,5 @@ export const setDefaultPdfPageProperties = async (
   doc.rect(5, 0, 3, 12, "F");
 
   doc.addImage(clientBrandingLogo, "JPEG", baseX, baseY+22, 55, 9);
+  doc.addImage(clientSubLogo, "JPEG", baseX+235, 2, 48, 11);
 };

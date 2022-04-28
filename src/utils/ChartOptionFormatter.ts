@@ -217,7 +217,7 @@ const getMultiChartOptions = (
             percentageValue,
             numberValue,
             baseCount: baseCount,
-            // color: "#F8971C",
+            color: "#01274c",
           });
         } else {
           data.push({

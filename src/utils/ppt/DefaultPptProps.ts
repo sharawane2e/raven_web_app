@@ -4,6 +4,7 @@ import {
   primaryBarColor,
   pptBackgroundColor,
   clientBrandingLogo,
+  clientSubLogo,
 } from "../../constants/Variables";
 import { ISlideConfig } from "../../types/ISlideConfig";
 
@@ -107,6 +108,7 @@ export const setDefaultSlideProperties = (
       },
     },
     { image: { x: 0.3, y: 5.23, w: 2.2, h: 0.30, data: clientBrandingLogo } },
+    { image: { x: "85%", y: 0.1, w: 1.4, h: 0.30, data: clientSubLogo } },
   ];
 
   if (bannerQuestionText) {
