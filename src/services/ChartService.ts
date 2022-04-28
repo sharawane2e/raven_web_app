@@ -243,13 +243,26 @@ export const changeChartType = (newChartType: ChartType) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
 
   chartDataClone.chartType = newChartType;
-
+  debugger;
   if (
     (chart?.questionData?.type === QuestionType.SINGLE ||
       chart?.questionData?.type === QuestionType.GRID) &&
     newChartType === ChartType.COLUMN //we have put grid due to mean calculation
   ) {
     dispatch(setChartType(ChartType.COLUMN));
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
+      },
+      ...getChartOptions(),
+    };
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    dispatch(setChartData(chartDataClone));
+  } else if (newChartType === ChartType.COLUMN) {
+    dispatch(setChartType(ChartType.COLUMN));
+
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
