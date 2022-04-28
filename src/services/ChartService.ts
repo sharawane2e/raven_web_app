@@ -1,23 +1,23 @@
-import ApiUrl from "../enums/ApiUrl";
-import { ChartType } from "../enums/ChartType";
+import ApiUrl from '../enums/ApiUrl';
+import { ChartType } from '../enums/ChartType';
 import {
   setChartData,
   setChartOrientation,
   setChartTranspose,
   setChartType,
-} from "../redux/actions/chartActions";
-import { IChartState } from "../redux/reducers/chartReducer";
-import store from "../redux/store";
-import ApiRequest from "../utils/ApiRequest";
-import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
-import { ChartLabelType } from "../enums/ChartLabelType";
-import { IQuestion } from "../types/IQuestion";
-import { QuestionType } from "../enums/QuestionType";
-import { colorArr } from "../constants/Variables";
+} from '../redux/actions/chartActions';
+import { IChartState } from '../redux/reducers/chartReducer';
+import store from '../redux/store';
+import ApiRequest from '../utils/ApiRequest';
+import { getChartOptions, getPlotOptions } from '../utils/ChartOptionFormatter';
+// import { ChartLabelType } from "../enums/ChartLabelType";
+import { IQuestion } from '../types/IQuestion';
+import { QuestionType } from '../enums/QuestionType';
+// import { colorArr } from "../constants/Variables";
 
 export const fetchChartData = async (
   qId?: string,
-  bannerQuestionId?: string
+  bannerQuestionId?: string,
 ) => {
   const {
     filters: { appliedFilters },
@@ -32,7 +32,7 @@ export const fetchChartData = async (
     if (appliedFilters.length) {
       appliedFilters.forEach((filter: any) => {
         const chartFilter = chartFilters.find(
-          (chartFilter) => chartFilter.qId === filter.qId
+          (chartFilter) => chartFilter.qId === filter.qId,
         );
         if (chartFilter) {
           chartFilter.value.push(filter.code);
@@ -51,27 +51,27 @@ export const fetchChartData = async (
       : selectedBannerQuestionId;
     const body = {
       qId: quesId,
-      type: questionList.find((ques: any) => ques.qId === quesId)?.type || "",
+      type: questionList.find((ques: any) => ques.qId === quesId)?.type || '',
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
     };
 
-    const response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
+    const response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
     // debugger;
     if (response.success) {
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
         response.data.questionData,
-        response.data.baseCount
+        response.data.baseCount,
       );
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
-        response.data.questionData
+        response.data.questionData,
       );
       const formatedQData = removeEmptyDataLengends(
         response.data.chartData,
         response.data.questionData,
-        response.data.bannerQuestionData
+        response.data.bannerQuestionData,
       );
 
       chartData.questionData = formatedQData[0];
@@ -83,7 +83,7 @@ export const fetchChartData = async (
           chartData.questionData,
           chartData.chartData,
           chartData.baseCount,
-          response.data.bannerQuestionData
+          response.data.bannerQuestionData,
         ),
       };
     }
@@ -96,14 +96,14 @@ export const fetchChartData = async (
 export const formatChartDataWithBaseCount = (
   chartData: any[],
   question: IQuestion,
-  baseCountData: any[]
+  baseCountData: any[],
 ) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
   if (question.type === QuestionType.GRID) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
         (sum: number, currentObj: any) => sum + currentObj.count,
-        0
+        0,
       );
     });
   } else if (question.type === QuestionType.GRID_MULTI) {
@@ -120,7 +120,7 @@ export const formatChartDataWithBaseCount = (
 export const removeEmptyDataLengends = (
   chartData: any[],
   question: IQuestion,
-  bannerQuestionData: any
+  bannerQuestionData: any,
 ) => {
   const chartDataClone = JSON.parse(JSON.stringify(chartData));
   const uniqueLengends: any = [];
@@ -188,67 +188,68 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions["chart"],
-        type: "column",
+        ...chartDataClone.chartOptions['chart'],
+        type: 'column',
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    dispatch(setChartData(chartDataClone));
+  } else if (newChartType === ChartType.COLUMN) {
+    dispatch(setChartType(ChartType.COLUMN));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions['chart'],
+        type: 'line',
+      },
+      ...getChartOptions(),
+    };
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
   } else if (newChartType === ChartType.LINE) {
-    const lineSetportrait: any = "portrait";
+    const lineSetportrait: any = 'portrait';
     dispatch(setChartType(ChartType.LINE));
 
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions["chart"],
-        type: "line",
+        ...chartDataClone.chartOptions['chart'],
+        type: 'line',
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
     dispatch(setChartOrientation(lineSetportrait));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "line",
-    // };
   } else if (newChartType === ChartType.PIE) {
     dispatch(setChartType(ChartType.PIE));
 
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions["chart"],
-        type: "pie",
+        ...chartDataClone.chartOptions['chart'],
+        type: 'pie',
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "pie",
-    // };
   } else {
+    dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions["chart"],
-        type: "column",
+        ...chartDataClone.chartOptions['chart'],
+        type: 'column',
       },
       ...getChartOptions(),
     };
-    dispatch(setChartType(ChartType.PIE));
-    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
-    // chartDataClone.chartOptions["chart"] = {
-    //   ...chartDataClone.chartOptions["chart"],
-    //   type: "column",
-    // };
   }
 };
 
@@ -272,7 +273,7 @@ export const transposeChart = () => {
           labelCode: scale.qId,
           order: index,
         });
-      }
+      },
     );
 
     chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
@@ -289,7 +290,7 @@ export const transposeChart = () => {
       let baseCount: number = 0;
       chartDataClone.chartData.forEach((data: any, index: number) => {
         const count: number = data.options.find(
-          (subOption: any) => subOption.option === col.qId
+          (subOption: any) => subOption.option === col.qId,
         )?.count;
         options.push({
           option: data._id,
@@ -353,7 +354,7 @@ export const transposeChart = () => {
           labelCode: scale.qId,
           order: index,
         });
-      }
+      },
     );
 
     chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
@@ -371,7 +372,7 @@ export const transposeChart = () => {
       let withoutTransposeBaseCount: any = 0;
       chartDataClone.chartData.forEach((data: any, index: number) => {
         const count: number = data.options.find(
-          (subOption: any) => subOption.option === col.qId
+          (subOption: any) => subOption.option === col.qId,
         )?.count;
         // debugger;
         withoutTransposeBaseCount = data.options.find((subOption: any) => {
@@ -406,7 +407,7 @@ export const transposeChart = () => {
       chartDataClone.questionData,
       chartDataClone.chartData,
       chartDataClone.baseCount,
-      chartDataClone.bannerQuestionData
+      chartDataClone.bannerQuestionData,
     ),
   };
   dispatch(setChartData(chartDataClone));

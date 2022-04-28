@@ -2,17 +2,17 @@ import {
   colorArr,
   decimalPrecision,
   primaryBarColor,
-} from "../constants/Variables";
-import { ChartLabelType } from "../enums/ChartLabelType";
-import { ChartType } from "../enums/ChartType";
-import { QuestionType } from "../enums/QuestionType";
-import { dataLabels } from "../redux/reducers/chartReducer";
-import store from "../redux/store";
-import { IQuestionOption } from "../types/IBaseQuestion";
-import { IQuestion } from "../types/IQuestion";
-import { round } from "./Utility";
-import { omit } from "lodash";
-import { ChartOrientation } from "../enums/ChartOrientation";
+} from '../constants/Variables';
+import { ChartLabelType } from '../enums/ChartLabelType';
+import { ChartType } from '../enums/ChartType';
+import { QuestionType } from '../enums/QuestionType';
+import { dataLabels } from '../redux/reducers/chartReducer';
+import store from '../redux/store';
+import { IQuestionOption } from '../types/IBaseQuestion';
+import { IQuestion } from '../types/IQuestion';
+import { round } from './Utility';
+import { omit } from 'lodash';
+import { ChartOrientation } from '../enums/ChartOrientation';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -20,7 +20,7 @@ export const getChartOptions = (
   baseCount: number = store.getState().chart.baseCount,
   bannerQuestionData: IQuestion | null = store.getState().chart
     .bannerQuestionData,
-  chartOptionsData: any = store.getState().chart.chartOptions
+  chartOptionsData: any = store.getState().chart.chartOptions,
 ): any => {
   if (questionData !== null) {
     switch (questionData.type) {
@@ -30,7 +30,7 @@ export const getChartOptions = (
           chartData,
           baseCount,
           bannerQuestionData,
-          chartOptionsData
+          chartOptionsData,
         );
       case QuestionType.MULTI:
         return getSingleChartOptions(
@@ -38,7 +38,7 @@ export const getChartOptions = (
           chartData,
           baseCount,
           bannerQuestionData,
-          chartOptionsData
+          chartOptionsData,
         );
       case QuestionType.RANK:
         return getGridChartOptions(questionData, chartData, baseCount);
@@ -60,7 +60,7 @@ const getSingleChartOptions = (
   chartData: any[],
   baseCount: number,
   bannerQuestionData: IQuestion | null,
-  chartOptionsData: any
+  chartOptionsData: any,
 ): any => {
   const {
     questions: { selectedBannerQuestionId, questionList },
@@ -112,12 +112,12 @@ const getSingleChartOptions = (
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode
+            (option: any) => option.labelCode === bannerQuesOption.labelCode,
           );
 
           const localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0
+            0,
           );
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
@@ -193,6 +193,7 @@ const getSingleChartOptions = (
       series,
     };
   } else {
+    // debugger;
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -202,7 +203,7 @@ const getSingleChartOptions = (
       const option = questionData.options[optionIndex];
       const label = chartData.find(
         (record: { labelCode: string; count: number }) =>
-          record.labelCode === option.labelCode
+          record.labelCode === option.labelCode,
       );
       let count = 0;
       if (label) {
@@ -231,10 +232,11 @@ const getSingleChartOptions = (
     }
 
     const series: any[] = [];
+    console.log('chartType', chartType);
 
     if (chartType === ChartType.STACK) {
       data.map((element: any, index: number) => {
-        console.log("element", element);
+        console.log('element', element);
         const name = element.name;
         const color = colorArr[index];
         const data = [
@@ -269,14 +271,14 @@ const getSingleChartOptions = (
 const getGridChartOptions = (
   questionData: IQuestion,
   chartData: any,
-  baseCount: number
+  baseCount: number,
 ): any => {
   const categories = [];
   const series = [];
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
     const subGroupData = chartData.find(
-      (data: any) => data._id === subGroup.qId
+      (data: any) => data._id === subGroup.qId,
     );
     if (subGroupData && subGroupData.options.length) return true;
     return false;
@@ -307,7 +309,7 @@ const getGridChartOptions = (
       // debugger;
       if (optionData) {
         label = optionData.options.find(
-          (option: any) => option.option === scale.labelCode
+          (option: any) => option.option === scale.labelCode,
         );
 
         if (label) {
@@ -366,14 +368,14 @@ const getGridChartOptions = (
 const getGridMultiChartOptions = (
   questionData: IQuestion,
   chartData: any,
-  baseCount: number
+  baseCount: number,
 ): any => {
   const categories = [];
   const series = [];
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
     const subGroupData = chartData.find(
-      (data: any) => data._id === subGroup.qId
+      (data: any) => data._id === subGroup.qId,
     );
     if (subGroupData && subGroupData.options.length) return true;
     return false;
@@ -403,7 +405,7 @@ const getGridMultiChartOptions = (
       let label;
       if (optionData) {
         label = optionData.options.find(
-          (option: any) => option.option === scale.labelCode
+          (option: any) => option.option === scale.labelCode,
         );
 
         if (label) {
@@ -465,14 +467,14 @@ const getToolTip = () => {
     chart: { chartLabelType },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
-    headerFormat: "",
-    pointFormat: "",
+    headerFormat: '',
+    pointFormat: '',
   };
 
-  tooltip["headerFormat"] =
+  tooltip['headerFormat'] =
     '<span style="font-size:11px">{series.name}</span><br>';
-  tooltip["pointFormat"] =
-    "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>";
+  tooltip['pointFormat'] =
+    '<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total<br/>';
 
   // if (chartLabelType === ChartLabelType.PERCENTAGE) {
   //   tooltip["headerFormat"] =
@@ -490,67 +492,67 @@ const getToolTip = () => {
 };
 
 export const getPlotOptions = (
-  chartType = store.getState().chart.chartType
+  chartType = store.getState().chart.chartType,
 ) => {
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
-  let plotOptions = chartDataClone.chartOptions["plotOptions"];
-  plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
+  let plotOptions = chartDataClone.chartOptions['plotOptions'];
+  plotOptions = omit(plotOptions, ['column', 'bar', 'pie', 'line']);
 
   if (chartType === ChartType.STACK) {
-    plotOptions["column"] = {
-      stacking: "normal",
+    plotOptions['column'] = {
+      stacking: 'normal',
     };
-    plotOptions["series"].dataLabels.format = `${
+    plotOptions['series'].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
+        ? '{point.y:.1f}%'
+        : '{point.y:.0f}'
     }`;
-    plotOptions["series"].dataLabels.y = undefined;
-    plotOptions["series"].dataLabels.rotation = 0;
+    plotOptions['series'].dataLabels.y = undefined;
+    plotOptions['series'].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
-    plotOptions["bar"] = {
-      stacking: "normal",
+    plotOptions['bar'] = {
+      stacking: 'normal',
     };
-    plotOptions["series"].dataLabels.format = `${
+    plotOptions['series'].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
+        ? '{point.y:.1f}%'
+        : '{point.y:.0f}'
     }`;
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-      plotOptions["series"].dataLabels.y = -20;
-      plotOptions["series"].dataLabels.rotation = -90;
+      plotOptions['series'].dataLabels.y = -20;
+      plotOptions['series'].dataLabels.rotation = -90;
     } else {
-      plotOptions["series"].dataLabels.y = undefined;
-      plotOptions["series"].dataLabels.rotation = 0;
+      plotOptions['series'].dataLabels.y = undefined;
+      plotOptions['series'].dataLabels.rotation = 0;
     }
   } else if (chartType === ChartType.PIE) {
-    plotOptions["pie"] = {
+    plotOptions['pie'] = {
       allowPointSelect: false,
-      cursor: "pointer",
+      cursor: 'pointer',
     };
-    plotOptions["series"].dataLabels.format = `${
+    plotOptions['series'].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "<b>{point.name}</b>: {point.percentage:.1f}%"
-        : "<b>{point.name}</b>: {point.y:.0f}"
+        ? '<b>{point.name}</b>: {point.percentage:.1f}%'
+        : '<b>{point.name}</b>: {point.y:.0f}'
     }`;
     // plotOptions["series"].dataLabels.y = undefined;
     // plotOptions["series"].dataLabels.rotation = undefined;
-    delete plotOptions["series"].dataLabels.y;
-    delete plotOptions["series"].dataLabels.rotation;
+    delete plotOptions['series'].dataLabels.y;
+    delete plotOptions['series'].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    console.log("line chart", plotOptions);
-    plotOptions["line"] = {
+    console.log('line chart', plotOptions);
+    plotOptions['line'] = {
       // allowPointSelect: false,
       // cursor: "pointer",
     };
-    plotOptions["series"].dataLabels.format = `${
+    plotOptions['series'].dataLabels.format = `${
       chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? "{point.y:.1f}%"
-        : "{point.y:.0f}"
+        ? '{point.y:.1f}%'
+        : '{point.y:.0f}'
     }`;
   } else {
-    delete plotOptions["series"].dataLabels.y;
-    delete plotOptions["series"].dataLabels.rotation;
+    delete plotOptions['series'].dataLabels.y;
+    delete plotOptions['series'].dataLabels.rotation;
   }
   return plotOptions;
 };

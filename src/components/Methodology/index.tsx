@@ -1,11 +1,11 @@
-import "./Methodology.scss";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import { ReactComponent as OnlineSurveyIcon } from "../../assets/svg/online_survey.svg";
-import { ReactComponent as CalendarIcon } from "../../assets/svg/calendar_icon.svg";
-import { ReactComponent as PopulationIcon } from "../../assets/svg/population.svg";
-import { ReactComponent as FolridaMapIcon } from "../../assets/svg/florida_map.svg";
-import IndustryTargetIcon from "../../assets/images/industry_target.png";
+import './Methodology.scss';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online_survey.svg';
+import { ReactComponent as CalendarIcon } from '../../assets/svg/calendar_icon.svg';
+import { ReactComponent as PopulationIcon } from '../../assets/svg/population.svg';
+import { ReactComponent as FolridaMapIcon } from '../../assets/svg/globe.svg';
+import IndustryTargetIcon from '../../assets/images/industry_target.png';
 
 interface Props {}
 
@@ -41,7 +41,7 @@ const Methodology = (props: Props) => {
                 <img src={IndustryTargetIcon} alt="Industry Target" />
               </div>
               <div className="card-title">
-                Industry Target: CFO, VP of Finance{" "}
+                Industry Target: CFO, VP of Finance{' '}
               </div>
             </Paper>
           </Grid>
