@@ -1,10 +1,10 @@
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
-import { connect, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { memo, useEffect, Component } from "react";
-import { colorArr } from "../../constants/Variables";
-import { isEqual } from "lodash";
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
+import { connect, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { memo, useEffect, Component } from 'react';
+import { colorArr } from '../../constants/Variables';
+import { isEqual } from 'lodash';
 
 interface ChartProps extends RootState {}
 
@@ -42,18 +42,22 @@ class Chart extends Component<ChartProps, ChartState> {
 
   render() {
     // @ts-ignore
-    const { chartOptions } = this.props.chart;
+    const { chartOptions, questionData } = this.props.chart;
     return (
       <>
-        <HighchartsReact
-          containerProps={{
-            style: { height: "100%", overflow: "unset" },
-          }}
-          highcharts={Highcharts}
-          options={chartOptions}
-          //onClick={reflow}s
-          immutable
-        />
+        {questionData !== null ? (
+          <HighchartsReact
+            containerProps={{
+              style: { height: '100%', overflow: 'unset' },
+            }}
+            highcharts={Highcharts}
+            options={chartOptions}
+            //onClick={reflow}s
+            immutable
+          />
+        ) : (
+          ''
+        )}
       </>
     );
   }

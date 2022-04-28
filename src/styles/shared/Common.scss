@@ -7,6 +7,11 @@ body {
   overflow: hidden;
   // background-color: #fd2828;
   background: rgba($color: #001a33, $alpha: 0.96);
+  @media (max-width: 768px) {
+    overflow: scroll !important;
+     padding-right: 0 !important;
+   }
+ 
 }
 
 code {
