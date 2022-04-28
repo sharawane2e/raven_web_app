@@ -79,8 +79,8 @@
     -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
-    //background: map-get($map: $bg-color, $key: primary);
     background: map-get($map: $bg-color, $key: primary);
+    //background: map-get($map: $bg-color, $key: primary);
 
     @media (max-width: 768px) {
       border: none;
@@ -95,7 +95,7 @@
         padding: 7px 15px 10px 10px;
         width: 80%;
         display: flex;
-       
+       align-items: center;
         #logo-primary-contrast {
           path {
             fill: $white;
@@ -106,8 +106,8 @@
             fill: $white;
           }
         }
-        @media (max-width: 768px) {
-          width: 30%;
+        @media (max-width: 767px) {
+          width: 50%;
         }
       }
     }
@@ -117,9 +117,12 @@
     display: flex;
      width: 7%;
       color: $white !important;
-     }
+      @media (max-width: 767px) {
+        padding-top: 12px;
+       }
+}
 
-
+   
   }
 
   .appbar__left-panel,
@@ -128,8 +131,8 @@
     align-items: center;
   }
   .appbar__right-panel{
-    @media (max-width: 768px) {
-        width: 50%;
+    @media (max-width: 767px) {
+      width: 55%;
     }
   }
 

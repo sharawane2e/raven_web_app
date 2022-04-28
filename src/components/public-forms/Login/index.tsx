@@ -14,7 +14,7 @@ import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { setUserProfile } from '../../../redux/actions/userActions';
 import LocalStorageUtils from '../../../utils/LocalStorageUtils';
-import ClientsLogo from '../../ClientsLogo';
+// import ClientsLogo from '../../ClientsLogo';
 
 export interface LoginProps extends WithLoaderProps {}
 

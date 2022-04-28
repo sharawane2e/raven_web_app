@@ -18,7 +18,7 @@ import {
   toggleSidebarMobile,
 } from '../../redux/actions/sidebarAction';
 import HomeIcon from '@material-ui/icons/Home';
-import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
+import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -82,7 +82,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           /> */}
           <div className="public-form__client-logo client-logo__icons">
             {/* <Boehringer onClick={() => history.push('/home')} /> */}
-            <RavenBrandLogo />
+            <RavneLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} />
         </div>

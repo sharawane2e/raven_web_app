@@ -37,7 +37,7 @@
     padding: 6px 10px;
     font-size: map-get($map: $text-size, $key: xsmall);
     @media (max-width: 768px) {
-     min-height: 25px ;
+     //min-height: 25px ;
      
      }
   }

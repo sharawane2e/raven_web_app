@@ -357,24 +357,28 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           <Chart />
         )}
-        <div className="chart-content-footer">
-          <div className="chart-content-footer--inr">
-            <div className="chart-content__base-count">
-              Sample Size: {baseCount}
+        {chart?.questionData !== null ? (
+          <div className="chart-content-footer">
+            <div className="chart-content-footer--inr">
+              <div className="chart-content__base-count">
+                Sample Size: {baseCount}
+              </div>
+              <div className="chart-content__info">
+                Note: Sample size reflects selections from filter and cross-tab
+                menus, not in-legend selections.
+              </div>
             </div>
-            <div className="chart-content__info">
-              Note: Sample size reflects selections from filter and cross-tab
-              menus, not in-legend selections.
-            </div>
-          </div>
-          <div className="appbar__logo-wrapper">
-            {/* <RavenBrandLogo /> */}
-            {/* <BrandLogo
+            <div className="appbar__logo-wrapper">
+              {/* <RavenBrandLogo /> */}
+              {/* <BrandLogo
               className="appbar__brand-logo"
               // onClick={() => history.push('/home')}
             /> */}
+            </div>
           </div>
-        </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
