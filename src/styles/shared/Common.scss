@@ -9,14 +9,14 @@ body {
   // background-color: #fd2828;
   background: rgba($color: #070707, $alpha: 0.96);
   @media (max-width: 768px) {
-  //  overflow: scroll !important;
+   //overflow: scroll !important;
     padding-right: 0 !important;
   }
 }
 #root{
   @media (max-width: 768px) {
   overflow-y: scroll;
-  height: 100vh;
+  //height: 100vh;
 }
 }
 
