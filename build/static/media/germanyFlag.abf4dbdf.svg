@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="63" height="44" viewBox="0 0 63 44">
+  <defs>
+    <clipPath id="clip-Login_1">
+      <rect width="63" height="44"/>
+    </clipPath>
+  </defs>
+  <g id="Login_1" data-name="Login – 1" clip-path="url(#clip-Login_1)">
+    <rect width="63" height="44" fill="#fff"/>
+    <g id="Flag_of_Germany">
+      <rect id="black_stripe" width="74" height="44"/>
+      <rect id="red_stripe" width="74" height="30" transform="translate(0 14)" fill="#d00"/>
+      <rect id="gold_stripe" width="74" height="14" transform="translate(0 30)" fill="#ffce00"/>
+    </g>
+  </g>
+</svg>
