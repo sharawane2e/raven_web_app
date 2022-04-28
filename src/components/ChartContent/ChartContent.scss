@@ -38,8 +38,8 @@
 
   .chart-content__chart-wrapper {
     //margin: 15px 5px 10px 12px;
-    width: 98.5%;
-    height: calc(100vh - 260px);
+    width: 97.5%;
+    height: calc(100vh - 263px);
     background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: "white");
@@ -77,6 +77,7 @@
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: primary);
     margin-top: 23px;
+    margin-left: -13px;
     // margin-top: 5px;
   }
 
@@ -85,6 +86,7 @@
     font-style: italic;
     color: map-get($map: $text-color, $key: primary);
     margin-top: 1px;
+    margin-left: -13px;
     // margin-top: 5px;
   }
   .title__Block {
