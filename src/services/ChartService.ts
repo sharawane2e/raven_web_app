@@ -180,29 +180,16 @@ export const changeChartType = (newChartType: ChartType) => {
   chartDataClone.chartType = newChartType;
 
   if (
-    chart?.questionData?.type === QuestionType.SINGLE &&
-    newChartType === ChartType.COLUMN
+    (chart?.questionData?.type === QuestionType.SINGLE ||
+      chart?.questionData?.type === QuestionType.GRID) &&
+    newChartType === ChartType.COLUMN //we have put grid due to mean calculation
   ) {
     dispatch(setChartType(ChartType.COLUMN));
-    //dispatch(setChartData(chartDataClone));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions['chart'],
         type: 'column',
-      },
-      ...getChartOptions(),
-    };
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
-    dispatch(setChartData(chartDataClone));
-  } else if (newChartType === ChartType.COLUMN) {
-    dispatch(setChartType(ChartType.COLUMN));
-
-    chartDataClone.chartOptions = {
-      ...chartDataClone.chartOptions,
-      chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'line',
       },
       ...getChartOptions(),
     };
