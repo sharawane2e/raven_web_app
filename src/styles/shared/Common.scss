@@ -8,9 +8,9 @@ body {
   //background: map-get($map: $bg-color, $key: "primary");
   // background-color: #fd2828;
   background: rgba($color: #070707, $alpha: 0.96);
-  @media (max-width: 767px) {
-    overflow: scroll;
-  
+  @media (max-width: 768px) {
+    overflow: scroll !important;
+    padding-right: 0 !important;
   }
 }
 
@@ -38,9 +38,9 @@ h6 {
     // margin-top: -6px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     margin-left: 0 !important;
-    //height: 100%;
+    height: 100%;
   }
 }
 

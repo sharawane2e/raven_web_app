@@ -4,7 +4,10 @@
     padding: 0px 10px;
     width: 100%;
     @media (max-width: 1023px) {
-      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      padding: 0px 10px;
+      //margin-left: -4px;
     }
   }
   .questioSelection {
@@ -39,7 +42,8 @@
     @media (max-width: 767px) {
       margin: 15px 5px 15px 0px;
       width: 100%;
-      height: calc(100vh - 396px);
+      height: 100%;
+      //height: calc(100vh - 396px);
       //height: auto
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -68,6 +72,10 @@
     justify-content: space-between;
     &--inr {
       width: 90%;
+    }
+    @media (max-width: 768px) {
+     margin-top: 0 !important;
+    
     }
   }
 
@@ -118,6 +126,9 @@
       @media (max-width: 786px) {
         display: none;
       }
+    }
+    @media (max-width: 768px) {
+     margin-left: 5px;
     }
   }
 
@@ -221,6 +232,7 @@
 
   @media (max-width: 960px) {
     display: block;
+    color: $white;
   }
 }
 
