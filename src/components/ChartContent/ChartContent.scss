@@ -37,9 +37,8 @@
   // }
 
   .chart-content__chart-wrapper {
-    //margin: 15px 5px 10px 12px;
-    width: 98.5%;
-    height: calc(100vh - 260px);
+    width: 97.5%;
+    height: calc(100vh - 270px);
     background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: "white");
@@ -53,10 +52,7 @@
     @media screen and (min-width: 768px) and (max-width: 1023px) {
       margin: 15px 5px 10px 8px;
     }
-    //.highcharts-container {
-    //overflow: hidden;
-    //border-radius: 3px;
-    //}
+  
     .highcharts-background {
       fill: transparent;
     }
@@ -76,7 +72,8 @@
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
     color: map-get($map: $text-color, $key: primary);
-    margin-top: 23px;
+    margin-top: 25px;
+    margin-left: -13px;
     // margin-top: 5px;
   }
 
@@ -86,6 +83,7 @@
     color: map-get($map: $text-color, $key: primary);
     margin-top: 1px;
     // margin-top: 5px;
+    margin-left: -13px;
   }
   .title__Block {
     display: flex;
@@ -255,7 +253,9 @@
   display: none;
 
   @media (max-width: 960px) {
+    cursor: pointer;
     display: block;
+    color: #fff;
   }
 }
 

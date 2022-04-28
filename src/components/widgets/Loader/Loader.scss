@@ -1,12 +1,11 @@
-// body {
-//   background-color: #333;
-// }
-
 .loader--wrapper {
   height: 100%;
-  height: 100%;
   width: 100%;
-  background: #1e1e1e;
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
 }
 .loading {
   position: absolute;
@@ -43,40 +42,11 @@
     background-color: #323c4e;
   }
 }
-// @keyframes loading {
-//   0% {
-//     background-color: #cd0a00;
-//   }
 
-//   30% {
-//     background-color: #fa8a00;
-//   }
-
-//   50% {
-//     height: 100px;
-//     margin-top: 0px;
-//   }
-//   80% {
-//     background-color: #91d700;
-//   }
-
-//   100% {
-//     background-color: #cd0a00;
-//   }
-// }
-/*@-moz-keyframes loading {
-  50% { height: 100px; margin-top: 0px; }
-}
-@-o-keyframes loading {
-  50% { height: 100px; margin-top: 0px; }
-}
-@keyframes loading {
-  50% { height: 100px; margin-top: 0px; }
-}*/
 @mixin inner() {
   height: 10px;
   width: 30px;
-  background-color: #fff;
+  background-color: map-get($map: $bg-color, $key: 'info');
   display: inline-block;
   margin-top: 90px;
   -webkit-animation: loading 2.5s infinite;

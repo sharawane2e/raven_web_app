@@ -6,6 +6,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   background: #070707;
+  @media (max-width: 768px) {
+    overflow: scroll !important;
+     padding-right: 0 !important;
+   }
+ 
 }
 
 code {
