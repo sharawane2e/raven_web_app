@@ -39,6 +39,8 @@
     @media (max-width: 767px) {
       margin: 15px 5px 15px 0px;
       width: 100%;
+      height: calc(100vh - 396px);
+      //height: auto
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
       margin: 15px 5px 10px 8px;
@@ -49,7 +51,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "primary");
+    background: map-get($map: $bg-color, $key: "secondary-shade");
   }
   .wave-button {
     height: 30px;
@@ -66,7 +68,6 @@
     justify-content: space-between;
     &--inr {
       width: 90%;
-      color: map-get($map: $text-color, $key: "partial-light");
     }
   }
 
