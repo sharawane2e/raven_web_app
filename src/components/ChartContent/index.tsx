@@ -368,7 +368,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             </div>
           </div>
           <div className="appbar__logo-wrapper">
-            <RavenBrandLogo />
+            {/* <RavenBrandLogo /> */}
             {/* <BrandLogo
               className="appbar__brand-logo"
               // onClick={() => history.push('/home')}

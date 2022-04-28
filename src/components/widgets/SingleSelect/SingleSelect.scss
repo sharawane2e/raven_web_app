@@ -36,6 +36,10 @@
   .MuiListItem-root {
     padding: 6px 10px;
     font-size: map-get($map: $text-size, $key: xsmall);
+    @media (max-width: 768px) {
+     min-height: 25px ;
+     
+     }
   }
   .selected-value {
     background-color: #e3e3e3;
