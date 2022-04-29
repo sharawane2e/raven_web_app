@@ -60,7 +60,7 @@
         background: map-get($map: $bg-color, $key: accent);
       }
       @media (max-width: 768px) {
-        margin-left: 10px;
+        margin-left: -12px;
       }
     }
   }
@@ -107,7 +107,7 @@
           }
         }
         @media (max-width: 767px) {
-          //width: 63%;
+          width: auto
         }
       }
     }
@@ -130,12 +130,12 @@
   }
   .appbar__left-panel{
     @media (max-width: 767px) {
-        width: 70%;
+        width: 80%;
      }
   }
   .appbar__right-panel{
     @media (max-width: 767px) {
-      width: 30%;
+      width: 20%;
     }
   }
 
