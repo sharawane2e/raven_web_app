@@ -128,9 +128,14 @@
     align-items: center;
    
   }
+  .appbar__left-panel{
+    @media (max-width: 767px) {
+        width: 60%;
+     }
+  }
   .appbar__right-panel{
     @media (max-width: 767px) {
-      width: 4%;
+      width: 40%;
     }
   }
 
@@ -214,7 +219,7 @@
   }
 
   @media (max-width: 768px) {
-    width: 80% !important;
+    //width: 50% !important;
     margin-left: 0 !important;
     .mobile-sidebar-open {
       .menu-icon {
