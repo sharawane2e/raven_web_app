@@ -60,7 +60,7 @@
         background: map-get($map: $bg-color, $key: accent);
       }
       @media (max-width: 768px) {
-        margin-left: -12px;
+        //margin-left: -12px;
       }
     }
   }
@@ -111,7 +111,7 @@
           padding: 8px 11px 7px 3px;
         }
         svg{
-          width: 88%;
+          width: 200px;
         }
       }
     }
@@ -121,11 +121,12 @@
     display: flex;
      width: 7%;
       color: $white !important;
-     }
-     @media (max-width: 767px) {
-      width: auto;
+    
+     @media (max-width: 768px) {
+      width: 7%;
+      margin-left: -5px;
     }
-
+  }
   }
 
   .appbar__left-panel,
@@ -140,11 +141,7 @@
         justify-content: flex-end;
      }
   }
-  .appbar__right-panel{
-    // @media (max-width: 767px) {
-    //   width: 20%;
-    // }
-  }
+
 
   .appbar__brand-logo {
     height: 2.75rem; //44px;
@@ -185,7 +182,7 @@
       transition: 0.5s;
     }
     @media (max-width: 768px) {
-      margin-right: 0.9375rem;
+      margin-right: 0.5375rem;
       margin-left: 0;
     }
   }
