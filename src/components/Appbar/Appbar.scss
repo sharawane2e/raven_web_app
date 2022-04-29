@@ -107,7 +107,11 @@
           }
         }
         @media (max-width: 767px) {
-          width: auto
+          //width: auto;
+          padding: 8px 11px 7px 3px;
+        }
+        svg{
+          width: 88%;
         }
       }
     }
@@ -118,7 +122,9 @@
      width: 7%;
       color: $white !important;
      }
-
+     @media (max-width: 767px) {
+      width: auto;
+    }
 
   }
 
@@ -130,13 +136,14 @@
   }
   .appbar__left-panel{
     @media (max-width: 767px) {
-        width: 80%;
+        width: 65%;
+        justify-content: flex-end;
      }
   }
   .appbar__right-panel{
-    @media (max-width: 767px) {
-      width: 20%;
-    }
+    // @media (max-width: 767px) {
+    //   width: 20%;
+    // }
   }
 
   .appbar__brand-logo {
@@ -220,7 +227,7 @@
 
   @media (max-width: 768px) {
     //width: 50% !important;
-    margin-left: 0 !important;
+    //margin-left: 0 !important;
     .mobile-sidebar-open {
       .menu-icon {
         div {
