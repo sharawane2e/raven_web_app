@@ -110,6 +110,9 @@
           //width: auto;
           padding: 8px 11px 7px 3px;
         }
+        @media (max-width: 767px) and (orientation: landscape) {
+          width: 50%;
+        }
         svg{
           width: 200px;
         }

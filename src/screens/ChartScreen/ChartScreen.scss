@@ -8,6 +8,7 @@
     }
     @media (max-width: 767px) and (orientation: landscape) {
       height: calc(100vh - -200px);
+      overflow-y: scroll;
     }
 
   }
