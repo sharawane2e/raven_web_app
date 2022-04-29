@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/cello/210394/static/css/main.f1f700bb.chunk.css",
+    "main.css": "/cello/210394/static/css/main.d4c83bbe.chunk.css",
     "main.js": "/cello/210394/static/js/main.d7349021.chunk.js",
     "main.js.map": "/cello/210394/static/js/main.d7349021.chunk.js.map",
     "runtime-main.js": "/cello/210394/static/js/runtime-main.6e53af2c.js",
@@ -18,7 +18,7 @@
     "static/js/6.c779fa3e.chunk.js.map": "/cello/210394/static/js/6.c779fa3e.chunk.js.map",
     "index.html": "/cello/210394/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/cello/210394/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.f1f700bb.chunk.css.map": "/cello/210394/static/css/main.f1f700bb.chunk.css.map",
+    "static/css/main.d4c83bbe.chunk.css.map": "/cello/210394/static/css/main.d4c83bbe.chunk.css.map",
     "static/js/2.c52b6d49.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.c52b6d49.chunk.js.LICENSE.txt",
     "static/js/3.8ac04e1c.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.8ac04e1c.chunk.js.LICENSE.txt",
     "static/js/4.70c86df0.chunk.js.LICENSE.txt": "/cello/210394/static/js/4.70c86df0.chunk.js.LICENSE.txt",
@@ -68,7 +68,7 @@
     "static/js/runtime-main.6e53af2c.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.c52b6d49.chunk.js",
-    "static/css/main.f1f700bb.chunk.css",
+    "static/css/main.d4c83bbe.chunk.css",
     "static/js/main.d7349021.chunk.js"
   ]
 }
