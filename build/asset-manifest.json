@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/e2e/financialresearch/static/css/main.5b978083.chunk.css",
-    "main.js": "/e2e/financialresearch/static/js/main.7d976bde.chunk.js",
-    "main.js.map": "/e2e/financialresearch/static/js/main.7d976bde.chunk.js.map",
+    "main.css": "/e2e/financialresearch/static/css/main.eb2bb00f.chunk.css",
+    "main.js": "/e2e/financialresearch/static/js/main.23e27ac4.chunk.js",
+    "main.js.map": "/e2e/financialresearch/static/js/main.23e27ac4.chunk.js.map",
     "runtime-main.js": "/e2e/financialresearch/static/js/runtime-main.21709e28.js",
     "runtime-main.js.map": "/e2e/financialresearch/static/js/runtime-main.21709e28.js.map",
     "static/css/2.029a9c87.chunk.css": "/e2e/financialresearch/static/css/2.029a9c87.chunk.css",
@@ -18,7 +18,7 @@
     "static/js/6.ff9b18bc.chunk.js.map": "/e2e/financialresearch/static/js/6.ff9b18bc.chunk.js.map",
     "index.html": "/e2e/financialresearch/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/e2e/financialresearch/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.5b978083.chunk.css.map": "/e2e/financialresearch/static/css/main.5b978083.chunk.css.map",
+    "static/css/main.eb2bb00f.chunk.css.map": "/e2e/financialresearch/static/css/main.eb2bb00f.chunk.css.map",
     "static/js/2.3e5c70bd.chunk.js.LICENSE.txt": "/e2e/financialresearch/static/js/2.3e5c70bd.chunk.js.LICENSE.txt",
     "static/js/3.4e790604.chunk.js.LICENSE.txt": "/e2e/financialresearch/static/js/3.4e790604.chunk.js.LICENSE.txt",
     "static/js/4.9072a674.chunk.js.LICENSE.txt": "/e2e/financialresearch/static/js/4.9072a674.chunk.js.LICENSE.txt",
@@ -30,7 +30,7 @@
     "static/media/Percentage.7f712ecb.svg": "/e2e/financialresearch/static/media/Percentage.7f712ecb.svg",
     "static/media/Transpose.17f674ac.svg": "/e2e/financialresearch/static/media/Transpose.17f674ac.svg",
     "static/media/admin-icon.631ad5fd.svg": "/e2e/financialresearch/static/media/admin-icon.631ad5fd.svg",
-    "static/media/brand-logo.e34b0f14.svg": "/e2e/financialresearch/static/media/brand-logo.e34b0f14.svg",
+    "static/media/brand-logo.4edab74b.svg": "/e2e/financialresearch/static/media/brand-logo.4edab74b.svg",
     "static/media/business_objective.7fcf7e37.svg": "/e2e/financialresearch/static/media/business_objective.7fcf7e37.svg",
     "static/media/calendar_icon.2715f8a8.svg": "/e2e/financialresearch/static/media/calendar_icon.2715f8a8.svg",
     "static/media/column-chart-icon.0daa5be2.svg": "/e2e/financialresearch/static/media/column-chart-icon.0daa5be2.svg",
@@ -63,7 +63,7 @@
     "static/js/runtime-main.21709e28.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.3e5c70bd.chunk.js",
-    "static/css/main.5b978083.chunk.css",
-    "static/js/main.7d976bde.chunk.js"
+    "static/css/main.eb2bb00f.chunk.css",
+    "static/js/main.23e27ac4.chunk.js"
   ]
 }

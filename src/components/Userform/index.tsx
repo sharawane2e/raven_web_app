@@ -1,18 +1,18 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, FormControlLabel } from "@material-ui/core";
-import { Controller, useForm } from "react-hook-form";
-import withLoader, { WithLoaderProps } from "../../hoc/withLoader";
-import AddUserSchema from "../../validation-schema/AddUserSchema";
-import InputField from "../widgets/InputFields";
-import Checkbox from "@material-ui/core/Checkbox";
-import { useEffect } from "react";
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Button, FormControlLabel } from '@material-ui/core';
+import { Controller, useForm } from 'react-hook-form';
+import withLoader, { WithLoaderProps } from '../../hoc/withLoader';
+import AddUserSchema from '../../validation-schema/AddUserSchema';
+import InputField from '../widgets/InputFields';
+import Checkbox from '@material-ui/core/Checkbox';
+import { useEffect } from 'react';
 
 export interface UserFormProps extends WithLoaderProps {
   onSubmit: (data: any) => void;
   user?: any | null;
   submitText?: string;
 }
-type FormType = "email" | "firstName" | "lastName" | "isAdmin";
+type FormType = 'email' | 'firstName' | 'lastName' | 'isAdmin';
 const UserForm: React.FC<UserFormProps> = (props) => {
   const { onSubmit, user, submitText } = props;
   const {
@@ -24,23 +24,23 @@ const UserForm: React.FC<UserFormProps> = (props) => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(AddUserSchema),
-    mode: "all",
-    criteriaMode: "all",
-    reValidateMode: "onSubmit",
+    mode: 'all',
+    criteriaMode: 'all',
+    reValidateMode: 'onSubmit',
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
+      firstName: '',
+      lastName: '',
+      email: '',
       isAdmin: false,
     },
   });
 
   useEffect(() => {
     if (user) {
-      setValue("firstName", user.firstName);
-      setValue("lastName", user.lastName);
-      setValue("email", user.email);
-      setValue("isAdmin", user.isAdmin);
+      setValue('firstName', user.firstName);
+      setValue('lastName', user.lastName);
+      setValue('email', user.email);
+      setValue('isAdmin', user.isAdmin);
     }
   }, [user]);
 
@@ -51,32 +51,32 @@ const UserForm: React.FC<UserFormProps> = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="isadmin-svg">
         <InputField
-          {...register("firstName")}
+          {...register('firstName')}
           id="firstName"
           required
           label="First name"
           error={!!errors.firstName}
           helperText={errors?.firstName?.message}
-          onChange={(e) => handleChange(e, "firstName")}
+          onChange={(e) => handleChange(e, 'firstName')}
         />
         <InputField
-          {...register("lastName")}
+          {...register('lastName')}
           id="lastName"
           label="Last name"
           error={!!errors.lastName}
           helperText={errors?.lastName?.message}
-          onChange={(e) => handleChange(e, "lastName")}
+          onChange={(e) => handleChange(e, 'lastName')}
         />
         <InputField
-          {...register("email")}
+          {...register('email')}
           id="email"
           required
           label="Email"
           error={!!errors.email}
           helperText={errors?.email?.message}
-          onChange={(e) => handleChange(e, "email")}
+          onChange={(e) => handleChange(e, 'email')}
           InputProps={{ readOnly: user && !user.pending }}
         />
 
@@ -89,13 +89,14 @@ const UserForm: React.FC<UserFormProps> = (props) => {
               control={<Checkbox {...field} disableRipple />}
               checked={field.value}
               disabled={user && user.isKeyAdmin}
+              className="isAdmin"
             />
           )}
         />
         <div>{errors?.isAdmin?.message} </div>
 
         <Button type="submit" className="button--primary">
-          {submitText ? submitText : "Submit"}
+          {submitText ? submitText : 'Submit'}
         </Button>
       </form>
     </div>
