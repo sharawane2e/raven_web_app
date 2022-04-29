@@ -63,6 +63,10 @@
         margin-left: 10px;
       }
     }
+    @media (max-width: 767px) and (orientation: landscape) {
+     justify-content: end;
+    }
+
   }
   .appbar__menu {
     color: map-get($map: $text-color, $key: fade);
@@ -107,7 +111,7 @@
           }
         }
         @media (max-width: 767px) {
-          width: 50%;
+          width: 70%;
         }
       }
     }

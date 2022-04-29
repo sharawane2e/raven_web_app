@@ -40,8 +40,8 @@
     margin: 8px 12px;
     border: 1px solid $border-color;
     @media (max-width: 767px) {
-      margin: 15px 5px 15px 0px;
-      width: 100%;
+      margin: 15px auto 15px auto;
+      width: 95%;
       //height: 100%;
       height: calc(100vh - 280px);
       //height: auto
@@ -52,6 +52,10 @@
     .highcharts-background {
       fill: transparent;
     }
+    @media (max-width: 767px) and (orientation: landscape) {
+      height: calc(100vh - 10px);
+    }
+
   }
 
   .chart-content__chart-wrapper-table {
@@ -250,6 +254,11 @@
 }
 .cursor-pointer {
   cursor: pointer;
+  @media (max-width: 767px) {
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 .mean-switch {
