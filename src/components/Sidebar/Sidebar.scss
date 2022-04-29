@@ -26,20 +26,17 @@
   }
 }
 .sidebar__brand {
-  // display: flex;
   display: none;
   align-items: center;
   max-height: 70px;
   padding-left: 15px;
   .sidebar__brand-logo {
-    // width: 70px;
     height: 70px;
   }
 
   .sidebar__brand-label {
     color: map-get($map: $text-color, $key: accent);
     font-weight: bold;
-    // font-size: map-get($map: $heading-size, $key: "extra-medium");
   }
 }
 
@@ -60,6 +57,10 @@
   font-weight: 500;
   @media (max-width: 767px) {
     color: #dfdfdf;
+   
+  }
+  @media (max-width: 1023px) {
+    padding: 4px 10px ;
   }
 }
 
@@ -68,9 +69,7 @@
     height: 100vh;
     height: calc(100vh - 68px);
     margin-top: 68px;
-    //-webkit-box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
-    //-moz-box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
-    //box-shadow: 2px 5px 4px 0px rgba(85, 85, 85, 0.2);
+   
     background: map-get($map: $bg-color, $key: primary);
     color: #dfdfdf;
   }

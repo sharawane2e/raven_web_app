@@ -320,11 +320,6 @@ const getSingleChartOptions = (
 
         let optionData = chartData[0][quesOption.labelCode];
 
-        // if(bannerQuestionData?.type===QuestionType.MULTI){
-        //   optionData = chartData[1][quesOption.labelCode];
-        // }
-        // console.log(optionData);
-
         let count = 0;
         // debugger;
         if (optionData) {

@@ -1,21 +1,12 @@
 .appbar {
-  /*box-shadow: 0px 0px 5px #55555526;*/
-  // display: none;
   display: inline-flex;
   justify-content: space-between;
-  //background: map-get($map: $bg-color, $key: secondary-dark);
-  // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
   background: map-get($map: $bg-color, $key: "secondary-dark");
-  //-webkit-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  //-moz-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  //box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-
+  
   .appbar__left-panel {
-    // padding-left: 0.9375rem; //15px
-    // padding-left: calc(#{$sidebar-width} + 0.9375rem);
     position: relative;
     .appbar__heading {
       margin-left: 20px;
@@ -158,7 +149,7 @@
 
     .down-arrow-icon {
       color: map-get($map: $text-color, $key: "accent");
-      // cursor: pointer;
+ 
     }
   }
 
@@ -214,9 +205,6 @@
       display: block;
     }
 
-    // .appbar__left-panel {
-    //   margin-left: $sidebar-width;
-    // }
   }
 
   @media (max-width: 768px) {
@@ -251,13 +239,6 @@
     align-items: center;
     font-size: map-get($map: $text-size, $key: small);
     border-bottom: 1px solid map-get($map: $text-color, $key: border);
-
-    // &:nth-child(2),
-    // &:nth-child(3),
-    // &:nth-child(4) {
-    //   display: none;
-    // }
-
     &:last-child {
       border-bottom: none;
     }
@@ -266,7 +247,6 @@
     }
 
     &.profile {
-      //background-color: map-get($map: $bg-color, $key: "secondary-dark");
       font-size: map-get($map: $text-color, $key: primary);
       font-weight: 700;
       opacity: 1;
