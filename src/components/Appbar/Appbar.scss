@@ -105,6 +105,9 @@
             fill: $white;
           }
         }
+        @media (max-width: 767px) {
+          width: 63%;
+        }
       }
     }
    
@@ -122,6 +125,12 @@
   .appbar__right-panel {
     display: flex;
     align-items: center;
+   
+  }
+  .appbar__right-panel{
+    @media (max-width: 767px) {
+      width: 33%;
+    }
   }
 
   .appbar__brand-logo {

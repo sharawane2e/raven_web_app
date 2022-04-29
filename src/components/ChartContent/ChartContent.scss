@@ -5,9 +5,9 @@
     width: 100%;
     align-items: center;
     @media (max-width: 1023px) {
-      padding: 5px 10px;
-      width: 102%;
-      margin-left: -5px;
+      padding: 2px 10px;
+      // width: 102%;
+      // margin-left: -5px;
     }
   }
   .questioSelection {
@@ -40,8 +40,8 @@
     margin: 8px 12px;
     border: 1px solid $border-color;
     @media (max-width: 767px) {
-      margin: 15px 5px 15px 0px;
-      width: 100%;
+      margin: 15px auto 15px auto;
+      width: 95%;
       height: calc(100vh - 240px);
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
