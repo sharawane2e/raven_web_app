@@ -27,17 +27,9 @@
     justify-content: flex-end;
   }
 
-  // .button-group {
-  //   margin: 0 10px;
-  //   min-width: 5rem;
-
-  //   &:last-child {
-  //     margin-right: 0;
-  //   }
-  // }
 
   .chart-content__chart-wrapper {
-    //margin: 15px 5px 10px 12px;
+
     width: 97.5%;
     height: calc(100vh - 263px);
     background: map-get($map: $bg-color, $key: "white");
@@ -47,16 +39,17 @@
     box-sizing: border-box;
     margin: 8px 12px;
     @media (max-width: 767px) {
-      margin: 15px 5px 15px 0px;
-      width: 100%;
+      margin: 15px auto 15px auto;
+      width: 95%;
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
       margin: 15px 5px 10px 8px;
     }
-    //.highcharts-container {
-    //overflow: hidden;
-    //border-radius: 3px;
-    //}
+    @media (max-width: 767px) and (orientation: landscape) {
+      height: calc(100vh - 10px);
+    }
+
+   
     .highcharts-background {
       fill: transparent;
     }
@@ -125,28 +118,23 @@
         display: none;
       }
     }
+   
   }
 
   .button-group {
-    //display: block;
     flex-direction: unset;
     .MuiGrid-root {
-      //display: inline-block;
       .button.MuiButtonBase-root {
         margin: 0px 5px 0px;
       }
     }
     .button-group__group-title {
-      //display: block;
-      //margin-bottom: 4px;
       min-width: fit-content;
       padding-right: 7px;
       padding-top: 2px;
     }
   }
-  // .chartTyle__option {
-  //   min-width: 200px;
-  // }
+
 
   .menu-icon {
     width: 14px;
@@ -157,7 +145,6 @@
     padding: 0.24rem;
     border: 1px solid map-get($map: $text-color, $key: fade);
     border-radius: 50%;
-    //padding: 0.625rem 0; //10px 0px;
     &::before,
     &::after,
     div {
@@ -172,9 +159,7 @@
   }
 
   &.sidebar-open {
-    // width: calc(100% - #{$sidebar-width});
-    // margin-left: $sidebar-width;
-
+   
     @media (min-width: 769px) {
       .menu-icon {
         div {
@@ -201,24 +186,9 @@
       display: block;
     }
 
-    // .appbar__left-panel {
-    //   margin-left: $sidebar-width;
-    // }
+  
   }
-  // .button-group__button-wrapper {
-  //   div {
-  //     &:first-child {
-  //       .button-group__button {
-  //         margin-left: 0;
-  //       }
-  //     }
-  //     &:last-child {
-  //       .button-group__button {
-  //         margin-left: 0;
-  //       }
-  //     }
-  //   }
-  // }
+ 
   &__control-item:not(:last-child) {
     border-right: 2px solid map-get($map: $bg-color, $key: silver-chalice);
     border-radius: 1px;
@@ -268,4 +238,8 @@
 }
 .cursor-pointer {
   cursor: pointer;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+  }
 }

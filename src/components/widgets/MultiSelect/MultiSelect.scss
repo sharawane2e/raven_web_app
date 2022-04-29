@@ -22,6 +22,10 @@
   .multi-select__paper {
     .MuiButtonBase-root {
       padding: 0;
+      @media screen and (min-width: 320px) and (max-width: 1023px) {
+        min-height: 25px;
+      }
+   
     }
 
     .MuiTypography-root,
@@ -42,6 +46,9 @@
   }
   .custom-scrollbar__wrapper {
     padding: 10px;
+    @media screen and (min-width: 320px) and (max-width: 1023px) {
+      padding-top: 0 10px;
+    }
   }
 
   .MuiSelect-icon {
