@@ -1,6 +1,9 @@
 .user-table {
   .user-table__body {
     height: calc(100vh - 345px);
+    @media (max-width: 767px) and (orientation: landscape) {
+      height: calc(100vh - 105px);
+    }
   }
   .custom-table {
     padding: 12px;

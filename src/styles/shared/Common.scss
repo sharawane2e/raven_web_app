@@ -44,6 +44,9 @@ h6 {
     margin-left: 0 !important;
     //height: 100%;
   }
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: 100%;
+  }
 }
 
 html {
@@ -57,7 +60,7 @@ html {
 
 .MuiMenu-paper {
   @media (max-width: 768px) {
-    background: #393939;
+    background: map-get($map: $bg-color, $key:"secondary" );
     color: #dfdfdf;
   }
   li {
