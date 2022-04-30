@@ -49,21 +49,14 @@ const TableView: React.FC<TableProps> = (props) => {
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
-    const equalValue = currentMax == currentMin;
+    // const equalValue = (currentMax === "100%") == (currentMin === "100%");
     return (
       <div
-        className={
-          !equalValue
-            ? clsx({
-                "Table-row-item": true,
-                maxValue: isEqual(col, currentMax),
-                minValue: isEqual(col, currentMin),
-              })
-            : clsx({
-                "Table-row-item": true,
-                maxValue: isEqual(col, currentMax),
-              })
-        }
+        className={clsx({
+          "Table-row-item": true,
+          maxValue: isEqual(col, currentMax),
+          minValue: isEqual(col, currentMin),
+        })}
       >
         {col}
       </div>

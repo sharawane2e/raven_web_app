@@ -48,10 +48,15 @@ export function tableChartDataGen() {
     if (chart.questionData?.groupNetData) {
       scaleLength = chart.questionData?.groupNetData.length;
     }
-    if (chartTransposeState) {
+
+    if (!chartTransposeState) {
       scaleIndex = scale.length;
     } else {
-      scaleIndex = scale.length - crosstab_length;
+      if (scaleLength > 0) {
+        scaleIndex = scale.length - scaleLength;
+      } else {
+        scaleIndex = scale.length - crosstab_length;
+      }
     }
     const curentRow = scaleIndex - crosstab_length + 1;
 
@@ -62,16 +67,26 @@ export function tableChartDataGen() {
         seriesData.forEach((d: any, rIndex: any) => {
           let netsLabelcode =
             chart.bannerQuestionData?.options[rIndex].labelCode.split("_")[0];
+
+          let netsQuestionLabelcode =
+            chart.questionData?.options[rIndex]?.labelCode?.split("_")[0];
+
           if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + "%");
-
               if (rIndex < scaleIndex && !crosstab_length) {
                 totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === "N") {
                   totalrowSub += 0;
                 }
+              } else {
+                if (netsQuestionLabelcode === "N") {
+                  totalrowSub += parseFloat(d.values[k]);
+                } else {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
               }
+
               if (crosstab_length && rIndex + curentRow > scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
               }
@@ -83,7 +98,13 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
 
-              if (chart?.showMean) {
+              if (rIndex < scaleIndex && chart.showMean) {
+                totalrowSub += parseFloat(d.values[k]);
+                if (netsLabelcode === "N") {
+                  totalrowSub += 0;
+                }
+              }
+              if (chart.showMean === true) {
                 totalrowSub += parseFloat(d.values[k]);
               }
 
@@ -93,6 +114,7 @@ export function tableChartDataGen() {
                   totalrowSub += 0;
                 }
               }
+
               if (crosstab_length && rIndex + curentRow > scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
               }
