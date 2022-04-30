@@ -83,7 +83,12 @@ export function tableChartDataGen() {
                 if (netsQuestionLabelcode === "N") {
                   totalrowSub += parseFloat(d.values[k]);
                 } else {
-                  totalrowSub += parseFloat(d.values[k]);
+                  //totalrowSub += parseFloat(d.values[k]);
+                  if (chart.showMean === false && scaleLength > 0) {
+                    totalrowSub += 0;
+                  } else {
+                    totalrowSub += parseFloat(d.values[k]);
+                  }
                 }
               }
 
