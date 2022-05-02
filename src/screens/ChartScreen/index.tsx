@@ -122,14 +122,15 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
             chart.chartType === ChartType.TABLE,
         })}
       >
-          <IconButton className="cross--btn" onClick={() => {
-                dispatch(setChartFullScreen(false));
-              }}>
-            <CloseIcon
-              
-            />
-          </IconButton>
-          {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
+        <IconButton
+          className="cross--btn"
+          onClick={() => {
+            dispatch(setChartFullScreen(false));
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
       </Dialog>
       {
         <Tour

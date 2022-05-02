@@ -228,19 +228,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             onClick={opneMenu}
           />
         </Tooltip>
-        {/* <Chip
-          label="Chart Options"
-          variant="outlined"
-          className="applied-filters__info-chip chart-content__control-wrapper-mobile"
-          onClick={opneMenu}
-        /> */}
 
-        {/* <span
-          className="chart-content__control-wrapper-mobile"
-          onClick={opneMenu}
-        >
-          open
-        </span> */}
         <Menu
           anchorEl={anchorEl}
           id="menu"
@@ -270,6 +258,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <ChartTransposeControl />
+          </MenuItem>
+          <MenuItem className="chart-content__menu-item">
+            <ChartFullScreen />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
             <LabelTypeControl />

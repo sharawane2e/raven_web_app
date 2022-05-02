@@ -7,6 +7,13 @@ body {
   overflow: hidden;
   // background-color: #fd2828;
   background: rgba($color: #001a33, $alpha: 0.96);
+  @media (max-width: 768px) {
+    overflow-y: scroll !important;
+     padding-right: 0 !important;
+   }
+   @media (max-width: 767px) and (orientation: landscape) {
+    overflow-y: scroll !important;
+  }
 }
 
 code {
@@ -35,6 +42,10 @@ h6 {
 
   @media (max-width: 768px) {
     margin-left: 0 !important;
+    //height: 100%;
+  }
+  @media (max-width: 767px) and (orientation: landscape) {
+    height: 100%;
   }
 }
 
@@ -49,7 +60,7 @@ html {
 
 .MuiMenu-paper {
   @media (max-width: 768px) {
-    background: #393939;
+    background: map-get($map: $bg-color, $key:"secondary" );
     color: #dfdfdf;
   }
   li {

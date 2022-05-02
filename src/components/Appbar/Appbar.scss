@@ -1,20 +1,13 @@
 .appbar {
-  /*box-shadow: 0px 0px 5px #55555526;*/
-  // display: none;
   display: inline-flex;
   justify-content: space-between;
-  //background: map-get($map: $bg-color, $key: secondary-dark);
-  // position: relative;
   min-height: 3.123rem; //50px
   width: 100%;
   margin-left: 0;
-  //-webkit-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  //-moz-box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
-  //box-shadow: 0px 2px 5px 0px rgba(85, 85, 85, 0.2);
+ 
 
   .appbar__left-panel {
-    // padding-left: 0.9375rem; //15px
-    // padding-left: calc(#{$sidebar-width} + 0.9375rem);
+
     position: relative;
     .appbar__heading {
       margin-left: 20px;
@@ -59,7 +52,7 @@
         background: map-get($map: $bg-color, $key: accent);
       }
       @media (max-width: 768px) {
-        margin-left: 10px;
+        //margin-left: -12px;
       }
     }
   }
@@ -105,6 +98,16 @@
             fill: $white;
           }
         }
+        @media (max-width: 767px) {
+          //width: auto;
+          padding: 8px 11px 7px 3px;
+        }
+        @media (max-width: 767px) and (orientation: landscape) {
+          width: 50%;
+        }
+        svg{
+          width: 200px;
+        }
       }
     }
    
@@ -113,16 +116,27 @@
     display: flex;
      width: 7%;
       color: $white !important;
-     }
-
-
+    
+     @media (max-width: 768px) {
+      width: 7%;
+      margin-left: -5px;
+    }
+  }
   }
 
   .appbar__left-panel,
   .appbar__right-panel {
     display: flex;
     align-items: center;
+   
   }
+  .appbar__left-panel{
+    @media (max-width: 767px) {
+        width: 65%;
+        justify-content: flex-end;
+     }
+  }
+
 
   .appbar__brand-logo {
     height: 2.75rem; //44px;
@@ -163,15 +177,12 @@
       transition: 0.5s;
     }
     @media (max-width: 768px) {
-      margin-right: 0.9375rem;
+      margin-right: 0.5375rem;
       margin-left: 0;
     }
   }
 
   &.sidebar-open {
-    // width: calc(100% - #{$sidebar-width});
-    // margin-left: $sidebar-width;
-
     @media (min-width: 769px) {
       .menu-icon {
         div {
@@ -198,14 +209,9 @@
       display: block;
     }
 
-    // .appbar__left-panel {
-    //   margin-left: $sidebar-width;
-    // }
   }
 
   @media (max-width: 768px) {
-    width: 100% !important;
-    margin-left: 0 !important;
     .mobile-sidebar-open {
       .menu-icon {
         div {
@@ -236,12 +242,6 @@
     font-size: map-get($map: $text-size, $key: small);
     border-bottom: 1px solid map-get($map: $text-color, $key: border);
 
-    // &:nth-child(2),
-    // &:nth-child(3),
-    // &:nth-child(4) {
-    //   display: none;
-    // }
-
     &:last-child {
       border-bottom: none;
     }
@@ -250,7 +250,6 @@
     }
 
     &.profile {
-      //background-color: map-get($map: $bg-color, $key: "secondary-dark");
       font-size: map-get($map: $text-color, $key: primary);
       font-weight: 700;
       opacity: 1;

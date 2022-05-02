@@ -144,9 +144,10 @@ export const generatePdf = async () => {
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
     } else {
-      pdfWidth = 300;
-      pdfHeight = 220;
-      doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
+      pdfWidth = 250;
+      pdfWidth = 180;
+      pdfHeight = 260;
+      doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
       x = 5;
       y = 30;
       w = 170;

@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { memo, useEffect, useState } from 'react';
-import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { memo, useEffect, useState } from "react";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
 
 interface TableProps {}
 
@@ -11,11 +11,11 @@ const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
   const { chartData, showMean, questionData, chartTranspose } = useSelector(
-    (state: RootState) => state.chart,
+    (state: RootState) => state.chart
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
-  let scaleLength: any = '';
+  let scaleLength: any = "";
   //let columnIndex: any;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const TableView: React.FC<TableProps> = (props) => {
     scaleLength = questionData?.groupNetData.length;
   }
   let results: any = questionData?.options.filter(function (option) {
-    if (option.labelCode.split('_')[0] == 'N') {
+    if (option.labelCode.split("_")[0] == "N") {
       return true;
     }
   });
@@ -41,7 +41,6 @@ const TableView: React.FC<TableProps> = (props) => {
     removeSubGrop = tableData?.rows?.length - laberesult;
   }
 
-  // console.log('removeSubGrop', removeSubGrop);
   /*This code used for single grid data column hide and show highlights  */
   //  else {
   //   tableData?.rows?.map((rows: any) => {
@@ -50,10 +49,11 @@ const TableView: React.FC<TableProps> = (props) => {
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
+    // const equalValue = (currentMax === "100%") == (currentMin === "100%");
     return (
       <div
         className={clsx({
-          'Table-row-item': true,
+          "Table-row-item": true,
           maxValue: isEqual(col, currentMax),
           minValue: isEqual(col, currentMin),
         })}
@@ -68,7 +68,7 @@ const TableView: React.FC<TableProps> = (props) => {
     columnIndex: any,
     col: any,
     currentMin: any,
-    currentMax: any,
+    currentMax: any
   ) => {
     const rowcount = removeSubGrop - laberesult;
 
@@ -111,10 +111,10 @@ const TableView: React.FC<TableProps> = (props) => {
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
+                //console.log("tableData.minmax[0]", tableData.minmax[0]);
                 const [maxVal, minVal] = tableData.minmax[0];
-                const currentMax = maxVal?.[colIndex - 1];
                 const currentMin = minVal?.[colIndex - 1];
-                //columnIndex = col;
+                const currentMax = maxVal?.[colIndex - 1];
 
                 return (
                   <>
@@ -123,7 +123,7 @@ const TableView: React.FC<TableProps> = (props) => {
                       colIndex,
                       col,
                       currentMax,
-                      currentMin,
+                      currentMin
                     )}
                   </>
                 );
