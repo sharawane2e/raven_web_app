@@ -207,6 +207,13 @@
     align-items: center;
   }
 }
+.content-area.sidebar-open {
+  .chart-content {
+    .mr-button.MuiGrid-container {
+      padding: 0px 10px 0 0;
+    }
+  }
+}
 .orientation-control {
   .active {
     &:not(.Mui-disabled) {

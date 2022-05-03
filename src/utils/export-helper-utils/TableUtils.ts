@@ -44,10 +44,13 @@ export function tableChartDataGen() {
       scale.push(index.name);
     });
     rows.push(["", ...scale, "Total"]);
+    const QuestionData: any = chart.questionData?.groupNetData;
 
-    if (chart.questionData?.groupNetData) {
-      scaleLength = chart.questionData?.groupNetData.length;
-    }
+    var filtered = QuestionData.filter(function (el: any) {
+      return el !== "";
+    });
+
+    scaleLength = filtered.length > 1 ? filtered.length : 0;
 
     if (!chartTransposeState) {
       scaleIndex = scale.length;
@@ -66,7 +69,7 @@ export function tableChartDataGen() {
 
         seriesData.forEach((d: any, rIndex: any) => {
           let netsLabelcode =
-            chart.bannerQuestionData?.options[rIndex].labelCode.split("_")[0];
+            chart.bannerQuestionData?.options[rIndex]?.labelCode.split("_")[0];
 
           let netsQuestionLabelcode =
             chart.questionData?.options[rIndex]?.labelCode?.split("_")[0];
@@ -108,9 +111,23 @@ export function tableChartDataGen() {
                 if (netsLabelcode === "N") {
                   totalrowSub += 0;
                 }
+              } else {
+                if (netsQuestionLabelcode === "N") {
+                  totalrowSub += parseFloat(d.values[k]);
+                } else {
+                  if (scaleLength === 0 && !chartTransposeState) {
+                    totalrowSub += 0;
+                  } else {
+                    if (chart.showMean === false && scaleLength > 0) {
+                      totalrowSub += 0;
+                    } else {
+                      totalrowSub += parseFloat(d.values[k]);
+                    }
+                  }
+                }
               }
               if (chart.showMean === true) {
-                totalrowSub += parseFloat(d.values[k]);
+                totalrowSub += 0;
               }
 
               if (rIndex < scaleIndex && !crosstab_length) {
@@ -145,10 +162,6 @@ export function tableChartDataGen() {
       }
 
     let tColomn: any = [];
-    const updatedSeries =
-      scaleLength > 0 && !chart.chartTranspose && !chart?.showMean
-        ? seriesData.slice(0, -scaleLength)
-        : seriesData;
 
     seriesData.forEach((series: any) => {
       let getColumnSum = 0;
@@ -165,10 +178,10 @@ export function tableChartDataGen() {
           updateRow.push(columnValues[i]);
         }
       }
-
       if (
         chart.chartTranspose &&
-        chart?.questionData?.type === QuestionType.GRID
+        chart?.questionData?.type === QuestionType.GRID &&
+        scaleLength > 0
       ) {
         columnValues.splice(-scaleLength);
       }
@@ -178,7 +191,9 @@ export function tableChartDataGen() {
       }
 
       const newUpdatedRow =
-        chart.chartTranspose && chart?.questionData?.type === QuestionType.GRID
+        chart.chartTranspose &&
+        chart?.questionData?.type === QuestionType.GRID &&
+        scaleLength > 0
           ? updateRow.slice(0, -scaleLength)
           : QuestionType.MULTI && lablecode_length > 0
           ? updateRow.splice(lablecode_length)

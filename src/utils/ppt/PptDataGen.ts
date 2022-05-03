@@ -2,28 +2,28 @@ import {
   colorArr,
   pptTemplateKey,
   primaryBarPPt,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 
-import pptxgen from 'pptxgenjs';
-import store from '../../redux/store';
-import { ISlideConfig } from '../../types/ISlideConfig';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { ChartType } from '../../enums/ChartType';
+import pptxgen from "pptxgenjs";
+import store from "../../redux/store";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { ChartType } from "../../enums/ChartType";
 
-import { chartConfig, tableConfig } from '../../config/PptConfig';
-import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
+import { chartConfig, tableConfig } from "../../config/PptConfig";
+import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
 
-import { tableChartDataGen } from '../export-helper-utils/TableUtils';
-import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
-import _, { slice } from 'lodash';
-import { setDefaultSlideProperties } from './DefaultPptProps';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import { tableChartDataGen } from "../export-helper-utils/TableUtils";
+import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
+import _, { slice } from "lodash";
+import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
   graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType },
-  chartSettings: pptxgen.IChartOpts,
+  chartSettings: pptxgen.IChartOpts
 ) {
   const {
     chart: {
@@ -44,15 +44,23 @@ export function pptDataGen(
 
   if (chartType === ChartType.TABLE) {
     const tableRows = tableChartDataGen();
-    let scaleLength: any = '';
+    let scaleLength: any = "";
 
     const [maxValue, minValue] = tableRows?.minmax[0];
-    if (questionData?.groupNetData) {
-      scaleLength = questionData?.groupNetData.length;
-    }
+
+    // if (questionData?.groupNetData) {
+    //   scaleLength = questionData?.groupNetData.length;
+    // }
+    const QuestionData: any = questionData?.groupNetData;
+
+    var filtered = QuestionData.filter(function (el: any) {
+      return el !== "";
+    });
+
+    scaleLength = filtered.length > 1 ? filtered.length : 0;
 
     let results: any = questionData?.options.filter(function (option) {
-      if (option.labelCode.split('_')[0] == 'N') {
+      if (option.labelCode.split("_")[0] == "N") {
         return true;
       }
     });
@@ -73,53 +81,50 @@ export function pptDataGen(
         const currentMax = maxValue?.[colIndex - 1];
         const currentMin = minValue?.[colIndex - 1];
         const options = {
-          fill: 'ffffff',
+          fill: "ffffff",
           bold: false,
         };
         const rowcount = removeSubGrop - laberesult;
-        // if (laberesult > 0) {
 
-        //}
-        // } else {
         if (rowData[colIndex] === currentMax) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
-              ? (options['fill'] = 'b8e08c')
+              ? (options["fill"] = "b8e08c")
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "b8e08c")
+              : (options["fill"] = "ffffff");
           } else {
             rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
+              ? (options["fill"] = "b8e08c")
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "b8e08c")
+              : (options["fill"] = "ffffff");
             rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['bold'] = true)
+              ? (options["bold"] = true)
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['bold'] = true)
-              : (options['bold'] = false);
+              ? (options["bold"] = true)
+              : (options["bold"] = false);
           }
         } else if (rowData[colIndex] === currentMin) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
-              ? (options['fill'] = 'fbd9d4')
+              ? (options["fill"] = "fbd9d4")
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'fbd9d4')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "fbd9d4")
+              : (options["fill"] = "ffffff");
           } else {
             rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['fill'] = 'fbd9d4')
+              ? (options["fill"] = "fbd9d4")
               : !removeSubGrop
-              ? (options['fill'] = 'fbd9d4')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "fbd9d4")
+              : (options["fill"] = "ffffff");
             rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['bold'] = true)
+              ? (options["bold"] = true)
               : !removeSubGrop
-              ? (options['bold'] = true)
-              : (options['bold'] = false);
+              ? (options["bold"] = true)
+              : (options["bold"] = false);
           }
         }
         //}
@@ -149,8 +154,8 @@ export function pptDataGen(
           const seriesObject = _.find(questionData?.options, function (o) {
             return o.labelText === labelText;
           });
-          if (seriesObject?.labelCode.split('_')[0] == 'N') {
-            colorArray.push('01274c');
+          if (seriesObject?.labelCode.split("_")[0] == "N") {
+            colorArray.push("01274c");
           } else {
             colorArray.push(primaryBarPPt);
           }

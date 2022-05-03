@@ -16,21 +16,25 @@ const TableView: React.FC<TableProps> = (props) => {
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
   let scaleLength: any = "";
-  //let columnIndex: any;
 
   useEffect(() => {
     setTableData(tableChartDataGen());
   }, [chartData, showMean]);
-  if (questionData?.groupNetData) {
-    scaleLength = questionData?.groupNetData.length;
-  }
+
+  const QuestionData: any = questionData?.groupNetData;
+
+  var filtered = QuestionData.filter(function (el: any) {
+    return el !== "";
+  });
+
+  scaleLength = filtered.length > 1 ? filtered.length : 0;
+
   let results: any = questionData?.options.filter(function (option) {
     if (option.labelCode.split("_")[0] == "N") {
       return true;
     }
   });
   let laberesult = results.length;
-  //console.log('results', results);
 
   let removeSubGrop: any;
 
@@ -111,7 +115,6 @@ const TableView: React.FC<TableProps> = (props) => {
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
-                //console.log("tableData.minmax[0]", tableData.minmax[0]);
                 const [maxVal, minVal] = tableData.minmax[0];
                 const currentMin = minVal?.[colIndex - 1];
                 const currentMax = maxVal?.[colIndex - 1];
