@@ -56,5 +56,5 @@ export const setDefaultPdfPageProperties = async (
   doc.rect(5, 0, 3, 12, "F");
 
   doc.addImage(clientBrandingLogo, "JPEG", baseX, baseY+22, 55, 9);
-  doc.addImage(clientSubLogo, "JPEG", baseX+235, 2, 48, 11);
+  doc.addImage(clientSubLogo, "JPEG", baseX+57, baseY+22, 48, 11);
 };
