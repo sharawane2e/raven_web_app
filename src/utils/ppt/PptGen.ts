@@ -92,6 +92,8 @@ export const generatePpt = async () => {
     copyRightText,
   };
 
+  // debugger;
   pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
+  // pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
   await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
 };

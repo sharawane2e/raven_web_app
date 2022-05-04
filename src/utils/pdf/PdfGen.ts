@@ -9,6 +9,7 @@ import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { exportPrefix } from "../../constants/Variables";
 import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
 export const generatePdf = async () => {
+  // debugger;
   const {
     chart: { questionData, chartType },
   } = store.getState();
@@ -114,7 +115,9 @@ export const generatePdf = async () => {
     }
     let source = document.getElementsByClassName("highcharts-root");
     let svgSource = source[0];
+    console.log(svgSource);
     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
+    console.log(clonedSource);
 
     clonedSource
       .querySelectorAll(".highcharts-text-outline")
@@ -127,6 +130,8 @@ export const generatePdf = async () => {
     //   (text: any) => text.textContent
     // );
     // console.log("amogh:", hiddenLegends);
+
+    console.log(clonedSource);
 
     await setDefaultPdfPageProperties(
       doc,
@@ -141,7 +146,7 @@ export const generatePdf = async () => {
       qWordBreak,
       lWordBreak
     );
-    await doc.svg(clonedSource, {
+    await doc.svg(svgSource, {
       x: x,
       y: y,
       width: w,
@@ -150,5 +155,21 @@ export const generatePdf = async () => {
     });
   }
 
+  doc.addPage();
+  // doc.text("Nitin maar rha hain jada maje", 20, 20);
+  let source2 = document.querySelector(".chartContainer .highcharts-root");
+  console.log(source2);
+  // let svgSource2 = source2[0];
+
+  // var s = new XMLSerializer();
+  // var str = s.serializeToString(source2[0]);
+  // @ts-ignore: Unreachable code error
+  await doc.svg(source2, {
+    x: x,
+    y: y,
+    width: w,
+    height: h,
+    loadExternalStyleSheets: true,
+  });
   doc.save(exportPrefix + questionData?.labelText + ".pdf");
 };

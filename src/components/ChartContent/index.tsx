@@ -48,6 +48,7 @@ import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
 import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
+import ExportPdfHighchart from "../ExportPdfHighchart";
 //import UserCache from "../Sidebar/sidebar-content/UserCacheSidebar";
 
 interface ChartContentProps {
@@ -370,6 +371,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           <Chart />
         )}
+
+        <ExportPdfHighchart />
         <div className="chart-content__base-count">
           Sample Size: {baseCount}
           {/* executives across Global 2000 enterprises */}

@@ -26,7 +26,7 @@ export function pptDataGen(
   chartSettings: pptxgen.IChartOpts
 ) {
   const {
-    chart: { chartType, chartOrientation,chartLabelType },
+    chart: { chartType, chartOrientation, chartLabelType },
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
@@ -47,8 +47,7 @@ export function pptDataGen(
     if (chartType === ChartType.LINE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.line;
-    }
-    else if (chartType === ChartType.PIE) {
+    } else if (chartType === ChartType.PIE) {
       chartColors = [...colorArr];
       pptChartType = pptxGenJsObj.ChartType.pie;
     } else {
@@ -72,14 +71,15 @@ export function pptDataGen(
       }
     }
 
-    if(chartLabelType===ChartLabelType.PERCENTAGE){
+    if (chartLabelType === ChartLabelType.PERCENTAGE) {
       seriesData.forEach((row: any, index) => {
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
     }
 
- 
+    // debugger;
+
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
