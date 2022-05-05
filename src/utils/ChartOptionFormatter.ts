@@ -26,6 +26,7 @@ export const getChartOptions = (
 ): any => {
   // debugger;
   if (questionData !== null) {
+    console.log(questionData.type);
     switch (questionData.type) {
       case QuestionType.SINGLE:
         return getSingleChartOptions(
@@ -269,6 +270,7 @@ const getMultiChartOptions = (
     };
   }
 };
+
 const getSingleChartOptions = (
   questionData: IQuestion,
   chartData: any[],

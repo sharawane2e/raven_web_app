@@ -3,5 +3,5 @@ export enum ChartType {
   STACK = 2,
   TABLE = 3,
   PIE = 4,
-  LINE=5
+  LINE = 5,
 }
