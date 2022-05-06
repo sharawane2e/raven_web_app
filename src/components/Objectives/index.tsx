@@ -125,7 +125,10 @@ const Objectives = (props: Props) => {
             <b>5900</b>
           </div>
         </div>
+        <div className="clearAll"></div>
+      <p className='TextEtalic'>**The data included in this dashboard has been weighted to be representative of the national population</p>
       </div>
+      
     </div>
   );
 };
