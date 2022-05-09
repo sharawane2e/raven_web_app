@@ -3,7 +3,7 @@ import { toggleSidebarMobile, toggleSidebar } from "../actions/sidebarAction";
 import { hideTourGuide, showTourGuide } from "../actions/tourAction";
 
 const initialState = {
-  open: true,
+  open: false,
   openMobileDrawer: false,
 };
 

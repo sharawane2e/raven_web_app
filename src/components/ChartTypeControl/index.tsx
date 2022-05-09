@@ -1,16 +1,16 @@
-import { useSelector } from 'react-redux';
-import { ChartType } from '../../enums/ChartType';
-import { RootState } from '../../redux/store';
-import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
-import { ReactComponent as ColumnChartIcon } from '../../assets/svg/column-chart-icon.svg';
-import { ReactComponent as StackChartIcon } from '../../assets/svg/stack-chart-icon.svg';
-import { ReactComponent as TableIcon } from '../../assets/svg/table-icon.svg';
-import { ReactComponent as PieChartIcon } from '../../assets/svg/pie-chart.svg';
-import { ReactComponent as LineChartIcon } from '../../assets/svg/line_chart.svg';
-import { QuestionType } from '../../enums/QuestionType';
-import { changeChartType } from '../../services/ChartService';
-import Toaster from '../../utils/Toaster';
-import { StaticText } from '../../constants/StaticText';
+import { useSelector } from "react-redux";
+import { ChartType } from "../../enums/ChartType";
+import { RootState } from "../../redux/store";
+import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
+import { ReactComponent as ColumnChartIcon } from "../../assets/svg/column-chart-icon.svg";
+import { ReactComponent as StackChartIcon } from "../../assets/svg/stack-chart-icon.svg";
+import { ReactComponent as TableIcon } from "../../assets/svg/table-icon.svg";
+import { ReactComponent as PieChartIcon } from "../../assets/svg/pie-chart.svg";
+import { ReactComponent as LineChartIcon } from "../../assets/svg/line_chart.svg";
+import { QuestionType } from "../../enums/QuestionType";
+import { changeChartType } from "../../services/ChartService";
+import Toaster from "../../utils/Toaster";
+import { StaticText } from "../../constants/StaticText";
 
 interface ChartTypeControlProps {}
 
@@ -22,22 +22,29 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
   const { chartType } = chart;
   // const { questionData, bannerQuestionData } = chart;
 
-
-  const handlePieDisabled = () =>{
+  const handlePieDisabled = () => {
     let isPieDisabled = true;
-    if(chart.questionData?.type === QuestionType.SINGLE && !selectedBannerQuestionId){
+    if (
+      chart.questionData?.type === QuestionType.SINGLE &&
+      !selectedBannerQuestionId
+    ) {
       isPieDisabled = false;
-    }
-    else if(chart.showMean && chart.questionData != null && chart.questionData.type===QuestionType.GRID){
+    } else if (
+      chart.showMean &&
+      chart.questionData != null &&
+      chart.questionData.type === QuestionType.GRID
+    ) {
+      isPieDisabled = false;
+    } else if (chart.questionData?.type === QuestionType?.NUMBER) {
       isPieDisabled = false;
     }
 
-    return isPieDisabled
-  }
+    return isPieDisabled;
+  };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
-      tooltip: 'Column chart',
+      tooltip: "Column chart",
       renderChild: () => <ColumnChartIcon />,
       onClick: () => changeChartType(ChartType.COLUMN),
       active: chartType === ChartType.COLUMN,
@@ -45,7 +52,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
-      tooltip: 'Stack chart',
+      tooltip: "Stack chart",
       renderChild: () => <StackChartIcon />,
       onClick: () => changeChartType(ChartType.STACK),
       active: chartType === ChartType.STACK,
@@ -53,7 +60,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
-      tooltip: 'Line chart',
+      tooltip: "Line chart",
       renderChild: () => <LineChartIcon />,
       onClick: () => changeChartType(ChartType.LINE),
       active: chartType === ChartType.LINE,
@@ -61,13 +68,11 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
-      tooltip: 'Pie Chart',
+      tooltip: "Pie Chart",
       renderChild: () => <PieChartIcon />,
       onClick: () => changeChartType(ChartType.PIE),
       active: chartType === ChartType.PIE,
       disabled: handlePieDisabled(),
-        // (chart.questionData?.type !== QuestionType.SINGLE) ||!(chart.showMean)||
-        // (!!selectedBannerQuestionId),
       disableClick: () => {
         if (!(chart.questionData?.type === QuestionType.SINGLE)) {
           return Toaster.error(StaticText.DISABLED_CHART);
@@ -77,7 +82,7 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       },
     },
     {
-      tooltip: 'Table',
+      tooltip: "Table",
       renderChild: () => <TableIcon />,
       onClick: () => changeChartType(ChartType.TABLE),
       active: chartType === ChartType.TABLE,

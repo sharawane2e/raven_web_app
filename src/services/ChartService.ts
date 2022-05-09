@@ -2,6 +2,7 @@ import ApiUrl from "../enums/ApiUrl";
 import { ChartType } from "../enums/ChartType";
 import {
   setChartData,
+  setChartLabel,
   setChartLoading,
   setChartOrientation,
   setChartTranspose,
@@ -15,6 +16,7 @@ import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import _, { find } from "lodash";
 import { getMatchedfilter } from "../utils/Utility";
+import { ChartLabelType } from "../enums/ChartLabelType";
 
 export const fetchChartData = async (
   qId?: string,
@@ -131,13 +133,7 @@ export const fetchChartData = async (
         };
       }
 
-      chartData.showMean = false;
-
-      // if (!response.data.questionData?.isMean) {
-      //   console.log("ander gya");
-      //   // debugger;
-      //   chartData.showMean = false;
-      // }
+      //chartData.showMean = false;
     }
   } catch (error) {
     console.log(error);
