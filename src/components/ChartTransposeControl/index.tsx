@@ -1,13 +1,13 @@
-import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
+import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
 import {
   transposeChart,
   transposeChartMulti,
-} from "../../services/ChartService";
-import { QuestionType } from "../../enums/QuestionType";
-import { ReactComponent as TransposeIcon } from "../../assets/svg/Transpose.svg";
-import Toaster from "../../utils/Toaster";
-import { StaticText } from "../../constants/StaticText";
-import store from "../../redux/store";
+} from '../../services/ChartService';
+import { QuestionType } from '../../enums/QuestionType';
+import { ReactComponent as TransposeIcon } from '../../assets/svg/Transpose.svg';
+import Toaster from '../../utils/Toaster';
+import { StaticText } from '../../constants/StaticText';
+import store from '../../redux/store';
 
 interface ChartTransposeControlProps {}
 
@@ -22,13 +22,13 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
       (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
       showMean ||
       questionData === null ||
-      questionData?.type === QuestionType?.NUMBER
+      (questionData?.type === QuestionType?.NUMBER && !bannerQuestionData)
     );
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
-      tooltip: "Transpose",
+      tooltip: 'Transpose',
       renderChild: () => <TransposeIcon />,
       onClick: () =>
         (questionData?.type == QuestionType.MULTI &&
