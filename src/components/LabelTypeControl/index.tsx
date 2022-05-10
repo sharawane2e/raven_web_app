@@ -1,7 +1,5 @@
 import React, { ReactElement } from "react";
 import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
-import { ReactComponent as PortraitIcon } from "../../assets/svg/portrait-icon.svg";
-import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon.svg";
 import { ReactComponent as NumberIcon } from "../../assets/svg/Number.svg";
 import { ReactComponent as PercentageIcon } from "../../assets/svg/Percentage.svg";
 import { ChartLabelType } from "../../enums/ChartLabelType";
@@ -20,6 +18,10 @@ interface LabelTypeControlProps {}
 const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
   const { chart } = store.getState();
   const { dispatch } = store;
+  console.log(
+    "chart.chartLabelType === ChartLabelType.NUMBER",
+    chart.chartLabelType === ChartLabelType.NUMBER
+  );
 
   const changeChartLabelType = (labelType: ChartLabelType) => {
     const chartDataClone = JSON.parse(JSON.stringify(chart));
