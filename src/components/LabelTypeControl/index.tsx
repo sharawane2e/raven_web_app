@@ -18,11 +18,6 @@ interface LabelTypeControlProps {}
 const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
   const { chart } = store.getState();
   const { dispatch } = store;
-  console.log(
-    "chart.chartLabelType === ChartLabelType.NUMBER",
-    chart.chartLabelType === ChartLabelType.NUMBER
-  );
-
   const changeChartLabelType = (labelType: ChartLabelType) => {
     const chartDataClone = JSON.parse(JSON.stringify(chart));
     chartDataClone.chartLabelType = labelType;

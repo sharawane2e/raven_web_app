@@ -76,7 +76,7 @@ export function tableChartDataGen() {
 
           if (
             chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
-            chart?.questionData?.type !== "N"
+            chart?.questionData?.type !== QuestionType?.NUMBER
           ) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + "%");
@@ -155,7 +155,7 @@ export function tableChartDataGen() {
 
         if (
           chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
-          chart?.questionData?.type !== "N"
+          chart?.questionData?.type !== QuestionType?.NUMBER
         ) {
           totalRow.push(round(totalrowSub, 1) + "%");
         } else {
@@ -209,7 +209,7 @@ export function tableChartDataGen() {
 
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
-        chart?.questionData?.type !== "N"
+        chart?.questionData?.type !== QuestionType?.NUMBER
       ) {
         tranposedTableData.push(Math.max(...newUpdatedRow) + "%");
         tranposedTableDataMin.push(Math.min(...newUpdatedRow) + "%");
@@ -233,7 +233,7 @@ export function tableChartDataGen() {
 
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
-        chart?.questionData?.type !== "N"
+        chart?.questionData?.type !== QuestionType?.NUMBER
       ) {
         tColomn.push(round(getColoumnTotal, 1) + "%");
       } else {
