@@ -43,6 +43,7 @@ const ApiRequest = {
         timeout(0),
       ]);
       response = apiResponse.data;
+      console.log('response', response);
       dispatch(setChartLoading(false));
     } catch (error: any) {
       dispatch(setChartLoading(false));

@@ -15,7 +15,6 @@ export function tableChartDataGen() {
   let subRow: any = [];
   let totalRow: any = [];
   let scaleIndex: any = 0;
-  console.log('seriesData', seriesData);
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
@@ -116,12 +115,13 @@ export function tableChartDataGen() {
                 if (netsQuestionLabelcode === 'N') {
                   totalrowSub += parseFloat(d.values[k]);
                 } else {
-                  if (scaleLength === 0 && !chartTransposeState) {
+                  if (scaleLength === 0 && chartTransposeState) {
                     totalrowSub += 0;
                   } else {
                     if (chart.showMean === false && scaleLength > 0) {
                       totalrowSub += 0;
                     } else {
+                      //totalrowSub += 0;
                       totalrowSub += parseFloat(d.values[k]);
                     }
                   }
@@ -130,11 +130,13 @@ export function tableChartDataGen() {
               if (chart.showMean === true) {
                 totalrowSub += 0;
               }
-
+              if (chart?.questionData?.type === 'N' && !chart.chartTranspose) {
+                totalrowSub += parseFloat(d.values[k]);
+              }
               if (rIndex < scaleIndex && !crosstab_length) {
                 totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
-                  totalrowSub += 0;
+                  totalrowSub += parseFloat(d.values[k]);
                 }
               }
 

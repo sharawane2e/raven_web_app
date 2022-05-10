@@ -1,21 +1,13 @@
-// import { ChartType } from '../enums/ChartType';
-import _, { find } from 'lodash';
 import store from '../redux/store';
 import { IQuestion } from '../types/IQuestion';
-import { getPlotOptions, getToolTip } from '../utils/ChartOptionFormatter';
-// import { round, getmedian } from '../utils/Utility';
-import {
-  colorArr,
-  decimalPrecision,
-  primaryBarColor,
-} from '../constants/Variables';
+import { getToolTip } from '../utils/ChartOptionFormatter';
+import { colorArr, primaryBarColor } from '../constants/Variables';
 import { dataLabels } from '../redux/reducers/chartReducer';
 import { getNumberPlotOptions } from '../utils/NumberPlotOptions';
 import { ChartType } from '../enums/ChartType';
 import { IQuestionOption } from '../types/IBaseQuestion';
-// import { QuestionType } from '../enums/QuestionType';
-// import { ChartLabelType } from '../enums/ChartLabelType';
 import { mean, median, min, max } from 'simple-statistics';
+import _ from 'lodash';
 
 export const getNumberChartOption = (
   questionData: IQuestion,
@@ -23,10 +15,13 @@ export const getNumberChartOption = (
   baseCount: number,
   bannerQuestionData: any,
   chartOptionsData: any,
+  transposed: any,
 ) => {
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
+
+  //console.log('transposed', transposed);
 
   const {
     chart: { chartType },
@@ -38,16 +33,11 @@ export const getNumberChartOption = (
   const series: any[] = [];
 
   if (selectedBannerQuestionId) {
-    //const categories: string[] = [];
     const series: any[] = [];
-
-    // questionData.options.forEach((option) => {
-    //   categories.push(option.labelText);
-    // });
     const meanMaxArr: any[] = [];
 
     const subGroups = questionData.options.filter((option: IQuestionOption) => {
-      const subGroup = chartData[0][option.labelCode];
+      const subGroup = [option.labelCode];
       if (subGroup && subGroup?.length) return true;
       return false;
     });
@@ -60,14 +50,16 @@ export const getNumberChartOption = (
     });
 
     chartOptionsData.forEach((chart_el: any, chartIndex: Number) => {
-      const meanMediaArr: any = [];
-      const chartelment = chart_el[0];
-      const meanValue = mean(chartelment?.values);
-      const minValue = min(chartelment?.values);
-      const maxValue = max(chartelment?.values);
-      const medainValue = median(chartelment?.values);
-      meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
-      meanMaxArr.push(meanMediaArr);
+      if (chart_el.length) {
+        const meanMediaArr: any = [];
+        const chartelment = chart_el[0];
+        const meanValue = mean(chartelment?.values);
+        const minValue = min(chartelment?.values);
+        const maxValue = max(chartelment?.values);
+        const medainValue = median(chartelment?.values);
+        meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
+        meanMaxArr.push(meanMediaArr);
+      }
     });
 
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
@@ -76,20 +68,49 @@ export const getNumberChartOption = (
 
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
         const quesOption = subGroups[quesIndex];
-        data.push({
-          name: quesOption.labelText,
-          y: meanMaxArr[index][quesIndex],
-          baseCount: baseCount,
-        });
+
+        if (meanMaxArr[index] != undefined) {
+          data.push({
+            name: quesOption.labelText,
+            y: meanMaxArr[index][quesIndex],
+            baseCount: baseCount,
+          });
+        }
       }
 
       if (data.length)
         series.push({
           name: bannerQuesOption?.labelText,
-          color: index > colorArr.length ? colorArr[index] : undefined,
           data,
           dataLabels,
         });
+    }
+
+    if (transposed) {
+      const transposedSeries = [];
+      for (let index = 0; index < questionData.options.length; index++) {
+        // console.log(questionData.options[index]);
+        const seriesName = questionData.options[index].labelText;
+        const data: any[] = [];
+
+        for (let quesIndex = 0; quesIndex < series.length; quesIndex++) {
+          data.push({
+            name: series[quesIndex].name,
+            y: series[quesIndex].data[index].y,
+            baseCount: series[quesIndex].data[index].baseCount,
+          });
+        }
+
+        if (data.length)
+          transposedSeries.push({
+            name: seriesName,
+            data,
+            dataLabels,
+          });
+      }
+
+      series.length = 0;
+      series.push(...transposedSeries);
     }
 
     return {
@@ -113,11 +134,6 @@ export const getNumberChartOption = (
       weightsSum = chart_el?.weightsSum;
     });
 
-    //const valueSum = _.sum(values);
-    // const meanValue = valueSum / weightsSum;
-    // const minValue = _.min(values);
-    // const maxValue = _.max(values);
-    // const medainValue = getmedian(values);
     const meanValue = mean(values);
     const minValue = min(values);
     const maxValue = max(values);

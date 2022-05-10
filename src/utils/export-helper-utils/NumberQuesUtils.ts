@@ -1,36 +1,24 @@
-// import { decimalPrecision } from '../../constants/Variables';
-// import { round, getmedian } from "../../utils/Utility";
-// import store from '../../redux/store';
-// import { ChartLabelType } from '../../enums/ChartLabelType';
-// import { ChartType } from '../../enums/ChartType';
-// import _ from 'lodash';
-import _ from 'lodash';
-import { find, round } from 'lodash';
 import { mean, median, min, max } from 'simple-statistics';
-import { decimalPrecision } from '../../constants/Variables';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
 
 export function numberChartDataGen(
   questionData: any,
   chartData: any,
-  // baseCount: any,
+  chartTranspose: any,
   bannerQuestionData: any,
 ) {
+  console.log(questionData);
+  console.log(chartData);
+  console.log(chartTranspose);
+  console.log(bannerQuestionData);
   const {
     questions: { selectedBannerQuestionId },
   } = store.getState();
-  const labels: Array<string> = questionData.options.map(
-    (label: IQuestionOption) => label.labelText,
-  );
   let seriesData: Array<Object> = [];
-  const chartDataComplete = chartData[0];
 
   if (selectedBannerQuestionId) {
     const meanMaxArr: any[] = [];
-    const series: any[] = [];
     const labels: Array<string> = questionData.options.map(
       (label: IQuestionOption) => label.labelText,
     );
@@ -48,15 +36,18 @@ export function numberChartDataGen(
       chartOptionsData.push(optionData[key]);
     });
 
+    console.log('chart_el.length', chartOptionsData);
     chartOptionsData.forEach((chart_el: any, chartIndex: Number) => {
-      const meanMediaArr: any = [];
-      const chartelment = chart_el[0];
-      const meanValue = mean(chartelment?.values);
-      const minValue = min(chartelment?.values);
-      const maxValue = max(chartelment?.values);
-      const medainValue = median(chartelment?.values);
-      meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
-      meanMaxArr.push(meanMediaArr);
+      if (chart_el.length) {
+        const meanMediaArr: any = [];
+        const chartelment = chart_el[0];
+        const meanValue = mean(chartelment?.values);
+        const minValue = min(chartelment?.values);
+        const maxValue = max(chartelment?.values);
+        const medainValue = median(chartelment?.values);
+        meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
+        meanMaxArr.push(meanMediaArr);
+      }
     });
 
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
@@ -64,8 +55,10 @@ export function numberChartDataGen(
       const data: any[] = [];
 
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
-        const values = meanMaxArr[index][quesIndex];
-        data.push(values);
+        if (meanMaxArr[index] != undefined) {
+          const values: any = meanMaxArr[index][quesIndex];
+          data.push(values);
+        }
       }
 
       if (data.length)
@@ -75,6 +68,33 @@ export function numberChartDataGen(
           labels,
         });
     }
+
+    if (chartTranspose) {
+      const transposedSeries = [];
+      for (let index = 0; index < questionData.options.length; index++) {
+        //console.log(questionData.options[index]);
+        const seriesName = questionData.options[index].labelText;
+        const data: any[] = [];
+        const labels: any[] = [];
+
+        for (let quesIndex = 0; quesIndex < seriesData.length; quesIndex++) {
+          const dataValue: any = seriesData[quesIndex];
+          data.push(dataValue.values[index]);
+          labels.push(dataValue.name);
+        }
+
+        // console.log('transposedSeries', data);
+        if (data.length)
+          transposedSeries.push({
+            name: seriesName,
+            values: data,
+            labels,
+          });
+      }
+
+      seriesData.length = 0;
+      seriesData.push(...transposedSeries);
+    }
   } else {
     const data: any[] = [];
     let values: any;
@@ -82,11 +102,11 @@ export function numberChartDataGen(
     let weightsSum: any;
     const meanMaxArr: any[] = [];
 
-    chartData.forEach((chart_el: any, chartIndex: Number) => {
-      values = chart_el?.values;
-      weightedValueSum = chart_el?.weightedValueSum;
-      weightsSum = chart_el?.weightsSum;
-    });
+    values = chartData[0]?.values;
+    weightedValueSum = chartData[0]?.weightedValueSum;
+    weightsSum = chartData[0]?.weightsSum;
+
+    console.log(values);
 
     const meanValue = mean(values);
     const minValue = min(values);

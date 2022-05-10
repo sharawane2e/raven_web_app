@@ -64,6 +64,7 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
+          transposed,
         );
 
       default:

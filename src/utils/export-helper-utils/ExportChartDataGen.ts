@@ -47,10 +47,14 @@ export function chartDataGen() {
         chartTranspose,
       );
     } else if (questionData?.type === QuestionType.NUMBER) {
+      console.log('questionData', questionData);
+      console.log('chartData', chartData);
+      console.log('chartTranspose', chartTranspose);
+      console.log('bannerQuestionData', bannerQuestionData);
       seriesData = numberChartDataGen(
         questionData,
         chartData,
-        // baseCount,
+        chartTranspose,
         bannerQuestionData,
       );
     }
