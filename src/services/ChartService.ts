@@ -15,10 +15,6 @@ import { IQuestion } from "../types/IQuestion";
 import { QuestionType } from "../enums/QuestionType";
 import _, { find } from "lodash";
 import { getMatchedfilter } from "../utils/Utility";
-import { ChartLabelType } from "../enums/ChartLabelType";
-import { chartDataGen } from "../utils/export-helper-utils/ExportChartDataGen";
-import { IQuestionOption } from "../types/IBaseQuestion";
-import { numberChartTranspose } from "../utils/TransposeUtils";
 
 export const fetchChartData = async (
   qId?: string,
@@ -458,12 +454,6 @@ export const transposeChart = () => {
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
-  } else if (
-    (chartDataClone.bannerQuestionData &&
-      chartDataClone.questionData.type == QuestionType.SINGLE) ||
-    chartDataClone.questionData.type === QuestionType.NUMBER
-  ) {
-    numberChartTranspose();
   } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
     const newSubGroup: any = [];
     const newScale: any = [];

@@ -1,13 +1,12 @@
-import store from '../redux/store';
-import { IQuestion } from '../types/IQuestion';
-import { getToolTip } from '../utils/ChartOptionFormatter';
-import { colorArr, primaryBarColor } from '../constants/Variables';
-import { dataLabels } from '../redux/reducers/chartReducer';
-import { getNumberPlotOptions } from '../utils/NumberPlotOptions';
-import { ChartType } from '../enums/ChartType';
-import { IQuestionOption } from '../types/IBaseQuestion';
-import { mean, median, min, max } from 'simple-statistics';
-import _ from 'lodash';
+import store from "../redux/store";
+import { IQuestion } from "../types/IQuestion";
+import { colorArr, primaryBarColor } from "../constants/Variables";
+import { dataLabels } from "../redux/reducers/chartReducer";
+import { getNumberPlotOptions, getToolTip } from "../utils/NumberPlotOptions";
+import { ChartType } from "../enums/ChartType";
+import { IQuestionOption } from "../types/IBaseQuestion";
+import { mean, median, min, max } from "simple-statistics";
+import _ from "lodash";
 
 export const getNumberChartOption = (
   questionData: IQuestion,
@@ -15,19 +14,14 @@ export const getNumberChartOption = (
   baseCount: number,
   bannerQuestionData: any,
   chartOptionsData: any,
-  transposed: any,
+  transposed: any
 ) => {
   const {
-    questions: { selectedBannerQuestionId, questionList },
+    questions: { selectedBannerQuestionId },
   } = store.getState();
-
-  //console.log('transposed', transposed);
 
   const {
     chart: { chartType },
-  } = store.getState();
-  const {
-    chart: { chartLabelType, chartOptions },
   } = store.getState();
 
   const series: any[] = [];
@@ -177,6 +171,7 @@ export const getNumberChartOption = (
       enabled: true,
     },
     plotOptions: getNumberPlotOptions(),
+    tooltip: { ...getToolTip() },
     series,
   };
 };

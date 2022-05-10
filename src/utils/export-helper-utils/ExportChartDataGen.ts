@@ -20,6 +20,7 @@ export function chartDataGen() {
     },
     questions: { selectedBannerQuestionId },
   } = store.getState();
+
   if (
     selectedBannerQuestionId &&
     (questionData?.type === QuestionType.SINGLE ||
@@ -47,10 +48,6 @@ export function chartDataGen() {
         chartTranspose
       );
     } else if (questionData?.type === QuestionType.NUMBER) {
-      console.log("questionData", questionData);
-      console.log("chartData", chartData);
-      console.log("chartTranspose", chartTranspose);
-      console.log("bannerQuestionData", bannerQuestionData);
       seriesData = numberChartDataGen(
         questionData,
         chartData,
