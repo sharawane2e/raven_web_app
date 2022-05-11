@@ -42,6 +42,7 @@ import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { setSelectedQuestion } from '../../redux/actions/chapterActions';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -92,9 +93,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     });
     const sortedChapterOrder = _.sortBy(allChapters, ['order']);
     sortedChapterOrder.forEach((chapterData: any, index) => {
-      // console.log('chapterData', chapterData);
       if (chapterData['chapterId'] === selectchapterObject?.chapterId) {
-        // console.log('sortedChapterOrder', chapterData?.QuestionsQIds);
         for (let i = 0; i < chapterData?.QuestionsQIds.length; i++) {
           for (let j = 0; j < questions?.questionList.length; j++) {
             if (chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId)
@@ -131,6 +130,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       .then((chartData) => {
         dispatch(setChartData(chartData));
         // dispatch(setChartOperations(defaultChartOperations))
+        dispatch(setSelectedQuestion(chartData?.questionData?.labelText));
+        //setSelectedQuestion
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
           chartType === ChartType.PIE
@@ -147,7 +148,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         } else if (
