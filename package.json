@@ -54,6 +54,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "sass": "^1.49.0",
+    "simple-statistics": "^7.7.5",
     "source-map-support": "^0.5.21",
     "styled-components": "^4.0.0",
     "svg2pdf.js": "^2.2.0",

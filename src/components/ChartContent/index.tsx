@@ -11,6 +11,7 @@ import {
 } from '../../redux/actions/questionAction';
 import {
   setChartData,
+  setChartLabel,
   setChartTranspose,
 } from '../../redux/actions/chartActions';
 import { changeChartType, fetchChartData } from '../../services/ChartService';
@@ -40,6 +41,7 @@ import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-l
 import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -114,6 +116,11 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       dispatch(toggleBannerQuestionDisablity(true));
     } else {
       dispatch(toggleBannerQuestionDisablity(false));
+      if (chart?.questionData?.type === QuestionType?.NUMBER) {
+        dispatch(setChartLabel(ChartLabelType?.NUMBER));
+      } else {
+        dispatch(setChartLabel(ChartLabelType?.PERCENTAGE));
+      }
     }
   }, [questionData?.type]);
 
@@ -195,10 +202,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
         <Grid item className="title__Block chapter--drop-dwon">
-          {/* <Breadcrum pageTitle="Reports" /> */}
-          {/* <div className="chart-content__control-item"> */}
           <Chapter />
-          {/* </div> */}
         </Grid>
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
@@ -271,10 +275,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         </Menu>
       </Grid>
       <AppliedFilterList />
-      {/* <Button className="button--primary wave-button" disabled>
-        <span>Select wave</span>
-        <ExpandMoreIcon />
-      </Button> */}
+
       <div className="questioSelection">
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
@@ -360,10 +361,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </div>
           <div className="appbar__logo-wrapper">
             <RavenBrandLogo />
-            {/* <BrandLogo
-              className="appbar__brand-logo"
-              // onClick={() => history.push('/home')}
-            /> */}
           </div>
         </div>
       </div>

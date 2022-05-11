@@ -1,5 +1,5 @@
-import { Button, Grid, Tooltip } from '@material-ui/core';
-import clsx from 'clsx';
+import { Button, Grid, Tooltip } from "@material-ui/core";
+import clsx from "clsx";
 
 export interface ButtonGroupConfig {
   label?: string;
@@ -23,8 +23,8 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
   return (
     <Grid
       container
-      className={clsx('button-group', {
-        [props?.className || '']: props.className,
+      className={clsx("button-group", {
+        [props?.className || ""]: props.className,
       })}
     >
       {groupTitle && (
@@ -38,12 +38,12 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
             key={index}
             onClick={button.disabled === true ? button.disableClick : undefined}
           >
-            <Tooltip title={button.tooltip || ''} arrow placement="top">
+            <Tooltip title={button.tooltip || ""} arrow placement="top">
               <Button
                 variant="outlined"
                 disabled={button.disabled}
-                className={clsx('button-group__button', {
-                  [button?.className || '']: button.className,
+                className={clsx("button-group__button", {
+                  [button?.className || ""]: button.className,
                   active: button.active,
                 })}
                 onClick={button.onClick}

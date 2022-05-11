@@ -13,7 +13,7 @@ import { IQuestion } from "../types/IQuestion";
 import { getMatchedfilter, getmatchedFind, round } from "./Utility";
 import _, { find, omit } from "lodash";
 import { ChartOrientation } from "../enums/ChartOrientation";
-import { showMean } from "../redux/actions/chartActions";
+import { getNumberChartOption } from "../services/ChartNumberService";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -24,7 +24,6 @@ export const getChartOptions = (
   chartOptionsData: any = store.getState().chart.chartOptions,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
-  // debugger;
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
@@ -54,6 +53,15 @@ export const getChartOptions = (
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(questionData, chartData, baseCount);
+      case QuestionType.NUMBER:
+        return getNumberChartOption(
+          questionData,
+          chartData,
+          baseCount,
+          bannerQuestionData,
+          chartOptionsData,
+          transposed
+        );
 
       default:
         return {};
@@ -269,6 +277,7 @@ const getMultiChartOptions = (
     };
   }
 };
+
 const getSingleChartOptions = (
   questionData: IQuestion,
   chartData: any[],
@@ -698,10 +707,12 @@ const getGridMeanChartOptions = (
         return !Array.isArray(n.option);
       }
     ); //removing array options which come with subgroups
+
     const totalSelections = _.sumBy(filteredOptions, function (o: any) {
       return parseInt(o.option) * parseInt(o.count);
     });
     const plotValue = totalSelections / baseCount;
+
     if (plotValue > 0)
       data.push({
         name: option.labelText,
@@ -848,15 +859,19 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   return newChartOptions;
 };
 
-const getToolTip = () => {
+export const getToolTip = () => {
   const {
-    chart: { chartLabelType, showMean },
+    chart: { questionData, showMean },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
     headerFormat: "",
     pointFormat: "",
   };
 
+  console.log(
+    "questionData?.type === QuestionType?.NUMBER",
+    questionData?.type === QuestionType?.NUMBER
+  );
   tooltip["headerFormat"] =
     '<span style="font-size:11px">{series.name}</span><br>';
 
@@ -864,8 +879,13 @@ const getToolTip = () => {
     tooltip["pointFormat"] =
       "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
   } else {
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+    if (questionData?.type === QuestionType?.NUMBER) {
+      tooltip["pointFormat"] =
+        "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
+    } else {
+      tooltip["pointFormat"] =
+        "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+    }
   }
 
   return tooltip;

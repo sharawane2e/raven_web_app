@@ -14,8 +14,8 @@ export function multiGridChartDataGen(
   let labels: Array<string> = [];
   let seriesData: Array<Object> = [];
   const {
-    chart:{chartLabelType} 
-  }= store.getState();
+    chart: { chartLabelType },
+  } = store.getState();
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   questionData.scale.forEach((scaleOption: IQuestionOption) => {
     seriesData.push({
@@ -33,15 +33,13 @@ export function multiGridChartDataGen(
             optionObj.option === scaleOption.labelCode
         );
         const base: number = subGroupData?.baseCount || dataObj.baseCount;
-        if(chartLabelType===ChartLabelType.PERCENTAGE){
+        if (chartLabelType === ChartLabelType.PERCENTAGE) {
           return dataObj.count !== undefined
-          ? round(+((dataObj.count / base) * 100), decimalPrecision)
-          : 0;
+            ? round(+((dataObj.count / base) * 100), decimalPrecision)
+            : 0;
+        } else {
+          return dataObj.count !== undefined ? dataObj.count : 0;
         }
-        else{
-          return dataObj.count !== undefined? dataObj.count : 0;
-        }
-       
       }),
     });
   });

@@ -74,7 +74,10 @@ export function tableChartDataGen() {
           let netsQuestionLabelcode =
             chart.questionData?.options[rIndex]?.labelCode?.split("_")[0];
 
-          if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+          if (
+            chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
+            chart?.questionData?.type !== QuestionType?.NUMBER
+          ) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + "%");
               if (rIndex < scaleIndex && !crosstab_length) {
@@ -105,40 +108,43 @@ export function tableChartDataGen() {
           } else {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1));
-
-              if (rIndex < scaleIndex && chart.showMean) {
+              if (chart?.questionData?.type === "N") {
                 totalrowSub += parseFloat(d.values[k]);
-                if (netsLabelcode === "N") {
-                  totalrowSub += 0;
-                }
               } else {
-                if (netsQuestionLabelcode === "N") {
+                if (rIndex < scaleIndex && chart.showMean) {
                   totalrowSub += parseFloat(d.values[k]);
-                } else {
-                  if (scaleLength === 0 && !chartTransposeState) {
+                  if (netsLabelcode === "N") {
                     totalrowSub += 0;
+                  }
+                } else {
+                  if (netsQuestionLabelcode === "N") {
+                    totalrowSub += parseFloat(d.values[k]);
                   } else {
-                    if (chart.showMean === false && scaleLength > 0) {
-                      totalrowSub += 0;
-                    } else {
+                    if (scaleLength === 0 && chartTransposeState) {
                       totalrowSub += parseFloat(d.values[k]);
+                    } else {
+                      if (chart.showMean === false && scaleLength > 0) {
+                        totalrowSub += 0;
+                      } else {
+                        totalrowSub += parseFloat(d.values[k]);
+                      }
                     }
                   }
                 }
-              }
-              if (chart.showMean === true) {
-                totalrowSub += 0;
-              }
-
-              if (rIndex < scaleIndex && !crosstab_length) {
-                totalrowSub += parseFloat(d.values[k]);
-                if (netsLabelcode === "N") {
+                if (chart.showMean === true) {
                   totalrowSub += 0;
                 }
-              }
 
-              if (crosstab_length && rIndex + curentRow > scaleIndex) {
-                totalrowSub += parseFloat(d.values[k]);
+                if (rIndex < scaleIndex && !crosstab_length) {
+                  totalrowSub += parseFloat(d.values[k]);
+                  if (netsLabelcode === "N") {
+                    totalrowSub += parseFloat(d.values[k]);
+                  }
+                }
+
+                if (crosstab_length && rIndex + curentRow > scaleIndex) {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
               }
             } else {
               subRow.push(0);
@@ -146,9 +152,11 @@ export function tableChartDataGen() {
             }
           }
         });
-        //console.log('totalrowSub', totalrowSub);
 
-        if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+        if (
+          chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
+          chart?.questionData?.type !== QuestionType?.NUMBER
+        ) {
           totalRow.push(round(totalrowSub, 1) + "%");
         } else {
           totalRow.push(round(totalrowSub, 1));
@@ -199,7 +207,10 @@ export function tableChartDataGen() {
           ? updateRow.splice(lablecode_length)
           : updateRow;
 
-      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+      if (
+        chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
+        chart?.questionData?.type !== QuestionType?.NUMBER
+      ) {
         tranposedTableData.push(Math.max(...newUpdatedRow) + "%");
         tranposedTableDataMin.push(Math.min(...newUpdatedRow) + "%");
       } else {
@@ -220,7 +231,10 @@ export function tableChartDataGen() {
           return s + Number(v);
         }, 0);
 
-      if (chart?.chartLabelType === ChartLabelType.PERCENTAGE) {
+      if (
+        chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
+        chart?.questionData?.type !== QuestionType?.NUMBER
+      ) {
         tColomn.push(round(getColoumnTotal, 1) + "%");
       } else {
         tColomn.push(round(getColoumnTotal, 1));
