@@ -95,7 +95,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Diet and lifestyle Study</div>
+        <div className="appbar__heading">Dewar's 12 Benchmark Test #191127</div>
       </div>
       <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
