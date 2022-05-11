@@ -689,7 +689,7 @@ const getGridMeanChartOptions = (
   chartData: any,
   baseCount: number
 ): any => {
-  // debugger;
+  debugger;
   const {
     chart: { chartType },
   } = store.getState();
@@ -772,6 +772,10 @@ const getGridMeanChartOptions = (
   //     data,
   //     dataLabels,
   //   });
+  // }
+
+  // if(true){
+
   // }
 
   return {

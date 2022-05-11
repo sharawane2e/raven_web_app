@@ -20,7 +20,6 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
     return (
       (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
       (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
-      showMean ||
       questionData === null ||
       (questionData?.type === QuestionType?.NUMBER && !bannerQuestionData)
     );
