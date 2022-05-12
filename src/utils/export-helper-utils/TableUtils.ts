@@ -107,12 +107,12 @@ export function tableChartDataGen() {
             }
           } else {
             if (d.values[k]) {
-              subRow.push(round(d.values[k], 1));
+              subRow.push(round(d.values[k], 2));
               if (chart?.questionData?.type === 'N') {
-                totalrowSub += parseFloat(d.values[k]);
+                // totalrowSub += parseFloat(d.values[k]);
               } else {
                 if (rIndex < scaleIndex && chart.showMean) {
-                  totalrowSub += parseFloat(d.values[k]);
+                  // totalrowSub += parseFloat(d.values[k]);
                   if (netsLabelcode === 'N') {
                     totalrowSub += 0;
                   }
@@ -136,7 +136,7 @@ export function tableChartDataGen() {
                 }
 
                 if (rIndex < scaleIndex && !crosstab_length) {
-                  totalrowSub += parseFloat(d.values[k]);
+                  totalrowSub += d.values[k];
                   if (netsLabelcode === 'N') {
                     totalrowSub += parseFloat(d.values[k]);
                   }

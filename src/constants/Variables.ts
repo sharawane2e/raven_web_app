@@ -42,7 +42,7 @@ export const primaryBarPPt = '003870';
 // export const primaryBarColor = "#070707";
 
 export const decimalPrecision = 1;
-export const decimalPrecision2 = 2;
+export const decimalPrecision2 = 4;
 
 //ppt and pdf configuration
 export const chartFontFace = 'Arial';

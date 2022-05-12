@@ -15,13 +15,14 @@ import { getMatchedfilter, getmatchedFind, round } from './Utility';
 import _, { find, omit } from 'lodash';
 import { ChartOrientation } from '../enums/ChartOrientation';
 import { getNumberChartOption } from '../services/ChartNumberService';
-import { OptionUnstyled } from '@mui/base';
+// import { OptionUnstyled } from '@mui/base';
 import { StaticText } from '../constants/StaticText';
 import {
   getmean,
   getsampleStandardDeviation,
   getStandarderrorFunction,
 } from './simplestatistics';
+
 //import { mean, median, min, max } from 'simple-statistics';
 
 export const getChartOptions = (
@@ -750,8 +751,9 @@ const getGridMeanChartOptions = (
     //console.log('getSampleDeviationWeights', getSampleDeviationWeights);
 
     const getStandarderror = getStandarderrorFunction(
-      getSampleDeviationValues,
-      4,
+      Number(getSampleDeviationValues),
+      baseCount,
+      decimalPrecision2,
     );
 
     const plotValue = totalSelections / baseCount;

@@ -1,10 +1,14 @@
-import { decimalPrecision } from '../../constants/Variables';
+import { decimalPrecision, decimalPrecision2 } from '../../constants/Variables';
 import { getMatchedfilter, getmatchedFind, round } from '../Utility';
 import store from '../../redux/store';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import _ from 'lodash';
 // import { ChartType } from '../../enums/ChartType';
 import { StaticText } from '../../constants/StaticText';
+import {
+  getsampleStandardDeviation,
+  getStandarderrorFunction,
+} from '../simplestatistics';
 
 export function gridChartDataGen(
   questionData: any,
@@ -33,6 +37,7 @@ export function gridChartDataGen(
     ) {
       const option = questionData.subGroups[optionIndex];
       const optionData = getmatchedFind(chartData, '_id', option.qId);
+
       const filteredOptions = _.remove(
         [...optionData.options],
         function (n: any) {
@@ -48,16 +53,24 @@ export function gridChartDataGen(
       filteredOptions.forEach((filteredOption: any) => {
         valuesArr = _.concat(valuesArr, filteredOption?.values);
       });
-      console.log('valuesArr', valuesArr);
 
+      const getSampleDeviationValues = getsampleStandardDeviation(
+        valuesArr,
+        decimalPrecision2,
+      );
+
+      const getStandarderror = getStandarderrorFunction(
+        getSampleDeviationValues,
+        baseCount,
+        decimalPrecision2,
+      );
+      standardDeviation.push(Number(getSampleDeviationValues));
+      standardError.push(Number(getStandarderror));
       const plotValue: any = round(
         totalSelections / baseCount,
         decimalPrecision,
       );
-      //const floatPlotvalue = parseFloat(plotValue).toFixed(1);
       values.push(Number(plotValue));
-      standardDeviation.push(Number(10));
-      standardError.push(Number(10));
     }
 
     const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
@@ -70,21 +83,6 @@ export function gridChartDataGen(
         values: seriesValue[i],
       });
     }
-    // if (chartType === ChartType.STACK) {
-    //   const stackSeriesData: any = [];
-    //   const label: string = questionData.labelText;
-    //   seriesData[0].labels.forEach((ele: any, index: number) => {
-    //     stackSeriesData.push({
-    //       name: seriesData[0].labels[index],
-    //       labels: [label],
-    //       values: [seriesData[0].values[index]],
-    //     });
-    //   });
-    //   return stackSeriesData;
-    // } else {
-    //   return seriesData;
-    // }
-    console.log('seriesData', seriesData);
   } else {
     scales.forEach((scaleOption: any, index: number) => {
       seriesData.push({

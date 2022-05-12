@@ -1,4 +1,5 @@
 import { mean, median, min, max,sampleStandardDeviation,standardDeviation ,errorFunction} from 'simple-statistics';
+import {round} from '../Utility'
 
 export const getmean = (meanArr) => {
         return mean(meanArr);
@@ -17,8 +18,8 @@ export const getsampleStandardDeviation = (standardDeviationArr,precision) => {
   };
   
   
-export const getStandarderrorFunction = (getSampleDeviationValue,precision) => {
-        return (((getSampleDeviationValue * Math.sqrt(2)) / 100).toFixed(precision));
+export const getStandarderrorFunction = (getSampleDeviationValue,basecount,Precision) => {
+        return ((round(getSampleDeviationValue ,Precision)/ Math.sqrt(basecount)));
 };
 
 
