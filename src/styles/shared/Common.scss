@@ -1,20 +1,19 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Avenir', Arial;
+  font-family: "Avenir", Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
   background: rgba($color: #070707, $alpha: 0.96);
   @media (max-width: 768px) {
-   overflow: scroll !important;
+    overflow: scroll !important;
     padding-right: 0 !important;
   }
 }
 
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -71,4 +70,19 @@ html {
 }
 .btn-login-color {
   background-color: $brand-color !important;
+}
+.home-modal__content,
+.home-modal__footer {
+  background-color: #000;
+}
+.home-modal__footer {
+  border-top: 1px solid #000 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0.9375rem !important;
+}
+.combinedScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 240px;
 }
