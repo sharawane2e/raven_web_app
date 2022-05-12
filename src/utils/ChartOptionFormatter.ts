@@ -726,7 +726,7 @@ const getGridMeanChartOptions = (
 
     let valuesArr: any = [];
     // let weightsArr: any = [];
-    let getSampleDeviationValuesArr: any = [];
+    // let getSampleDeviationValuesArr: any = [];
 
     // filteredOptions.forEach((filteredOption: any) => {
     //   weightsArr = _.concat(weightsArr, filteredOption?.weights);
@@ -811,6 +811,10 @@ const getGridMeanChartOptions = (
   //     data,
   //     dataLabels,
   //   });
+  // }
+
+  // if(true){
+
   // }
 
   return {

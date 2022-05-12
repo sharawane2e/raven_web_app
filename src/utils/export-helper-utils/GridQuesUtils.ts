@@ -43,6 +43,13 @@ export function gridChartDataGen(
         return parseInt(o.option) * parseInt(o.count);
       });
       //const plotValue: any = round(totalSelections / baseCount, 2);
+      let valuesArr: any = [];
+
+      filteredOptions.forEach((filteredOption: any) => {
+        valuesArr = _.concat(valuesArr, filteredOption?.values);
+      });
+      console.log('valuesArr', valuesArr);
+
       const plotValue: any = round(
         totalSelections / baseCount,
         decimalPrecision,
