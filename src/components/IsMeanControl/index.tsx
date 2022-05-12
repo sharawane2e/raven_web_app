@@ -25,11 +25,13 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
 
 
   useEffect(() => {
+    if (chart.chartTranspose) {
+      console.log("kar diya chart transpose");
+      transposeChart();
+    }
     if (isChecked) {
      
-      if (chart.chartTranspose) {
-        transposeChart();
-      }
+
       if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
         dispatch(setChartLabel(ChartLabelType.NUMBER));
       }

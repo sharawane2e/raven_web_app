@@ -28,13 +28,16 @@ const ChartTypeControl: React.FC<ChartTypeControlProps> = () => {
       !selectedBannerQuestionId
     ) {
       isPieDisabled = false;
-    } else if (
-      chart.showMean &&
-      chart.questionData != null &&
-      chart.questionData.type === QuestionType.GRID
-    ) {
-      isPieDisabled = false;
-    } else if (
+    } 
+    // else if (
+    //   chart.showMean &&
+    //   chart.questionData != null &&
+    //   chart.questionData.type === QuestionType.GRID
+    // ) {
+    //   isPieDisabled = false;
+    // } 
+    
+    else if (
       chart.questionData?.type === QuestionType?.NUMBER &&
       !selectedBannerQuestionId
     ) {

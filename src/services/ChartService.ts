@@ -380,59 +380,64 @@ export const transposeChart = () => {
     chartDataClone.questionData.scale = newScale;
     chartDataClone.questionData.subGroups = newSubGroup;
   } else if (chartDataClone.questionData.type == QuestionType.GRID) {
-    const newSubGroup: any = [];
-    const newScale: any = [];
-    const newChartData: any = [];
-    chartDataClone.questionData.subGroups.forEach(
-      (scale: any, index: number) => {
-        newScale.push({
+    if (chart.showMean) {
+      dispatch(setChartTranspose(transposed));
+      console.log(getChartOptions());
+    } else {
+      const newSubGroup: any = [];
+      const newScale: any = [];
+      const newChartData: any = [];
+      chartDataClone.questionData.subGroups.forEach(
+        (scale: any, index: number) => {
+          newScale.push({
+            labelText: scale.labelText,
+            labelCode: scale.qId,
+            order: index,
+          });
+        },
+      );
+
+      chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
+        newSubGroup.push({
+          qId: scale.labelCode,
           labelText: scale.labelText,
-          labelCode: scale.qId,
-          order: index,
+          questionText: scale.labelText,
+          type: QuestionType.SINGLE,
         });
-      },
-    );
-
-    chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
-      newSubGroup.push({
-        qId: scale.labelCode,
-        labelText: scale.labelText,
-        questionText: scale.labelText,
-        type: QuestionType.SINGLE,
       });
-    });
 
-    newSubGroup.forEach((col: any, index: number) => {
-      const options: any = [];
-      let baseCount: number = 0;
-      chartDataClone.chartData.forEach((data: any) => {
-        const labels = getMatchedfilter(data.options, 'option', col.qId);
-        const count = _.sumBy(labels, function (o) {
-          return o.count;
-        });
-        options.push({
-          option: data._id,
-          count: count == undefined ? 0 : count,
-        });
+      newSubGroup.forEach((col: any, index: number) => {
+        const options: any = [];
+        let baseCount: number = 0;
+        chartDataClone.chartData.forEach((data: any) => {
+          const labels = getMatchedfilter(data.options, 'option', col.qId);
+          const count = _.sumBy(labels, function (o) {
+            return o.count;
+          });
+          options.push({
+            option: data._id,
+            count: count == undefined ? 0 : count,
+          });
 
-        baseCount += count == undefined || _.isArray(data._id) ? 0 : count;
+          baseCount += count == undefined || _.isArray(data._id) ? 0 : count;
+        });
+        if (
+          chartDataClone.questionData.type == QuestionType.GRID ||
+          chartDataClone.questionData.type == QuestionType.GRID_MULTI
+        ) {
+          newChartData.push({
+            _id: col.qId,
+            options: options,
+            baseCount: baseCount,
+          });
+        } else {
+          newChartData.push({ _id: col.qId, options: options });
+        }
       });
-      if (
-        chartDataClone.questionData.type == QuestionType.GRID ||
-        chartDataClone.questionData.type == QuestionType.GRID_MULTI
-      ) {
-        newChartData.push({
-          _id: col.qId,
-          options: options,
-          baseCount: baseCount,
-        });
-      } else {
-        newChartData.push({ _id: col.qId, options: options });
-      }
-    });
-    chartDataClone.chartData = newChartData;
-    chartDataClone.questionData.scale = newScale;
-    chartDataClone.questionData.subGroups = newSubGroup;
+      chartDataClone.chartData = newChartData;
+      chartDataClone.questionData.scale = newScale;
+      chartDataClone.questionData.subGroups = newSubGroup;
+    }
   } else if (
     chartDataClone.bannerQuestionData &&
     (chartDataClone.questionData.type == QuestionType.SINGLE ||

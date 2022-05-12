@@ -614,83 +614,84 @@ const getGridChartOptions = (
 
   if (showMean) {
     return getGridMeanChartOptions(questionData, chartData, baseCount);
-  }
+  } else {
+    debugger;
+    const scales = [...questionData.scale];
 
-  const scales = [...questionData.scale];
+    for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
+      const scale = scales[scaleIndex];
 
-  for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
-    const scale = scales[scaleIndex];
+      const data: any[] = [];
+      for (
+        let subGroupIndex = 0;
+        subGroupIndex < subGroups.length;
+        subGroupIndex++
+      ) {
+        //console.log(scales[subGroupIndex].labelCode)
+        const subGroup = subGroups[subGroupIndex];
+        categories.push(subGroup.labelText);
 
-    //console.log(scale)
+        const optionData = getmatchedFind(chartData, '_id', subGroup.qId);
 
-    const data: any[] = [];
-    for (
-      let subGroupIndex = 0;
-      subGroupIndex < subGroups.length;
-      subGroupIndex++
-    ) {
-      //console.log(scales[subGroupIndex].labelCode)
-      const subGroup = subGroups[subGroupIndex];
-      categories.push(subGroup.labelText);
+        const labels = getMatchedfilter(
+          optionData.options,
+          'option',
+          scale.labelCode,
+        );
 
-      const optionData = getmatchedFind(chartData, '_id', subGroup.qId);
-
-      const labels = getMatchedfilter(
-        optionData.options,
-        'option',
-        scale.labelCode,
-      );
-      const count = _.sumBy(labels, function (o) {
-        return o.count;
-      });
-
-      //console.log(scale)
-      const base = optionData?.baseCount || baseCount;
-      let plotValue;
-      let percentageValue = (count / base) * 100;
-      let numberValue = count;
-
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / base) * 100;
-      } else {
-        plotValue = count;
-      }
-
-      if (chartType == ChartType.LINE) {
-        data.push({
-          name: subGroup.labelText,
-          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
-          percentageValue,
-          numberValue,
-          baseCount: base,
+        const count = _.sumBy(labels, function (o) {
+          return o.count;
         });
-      } else {
-        data.push({
-          name: subGroup.labelText,
-          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-          percentageValue,
-          numberValue,
-          baseCount: base,
-        });
+
+        //console.log(scale)
+        const base = optionData?.baseCount || baseCount;
+        let plotValue;
+        let percentageValue = (count / base) * 100;
+        let numberValue = count;
+
+        if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          plotValue = (count / base) * 100;
+        } else {
+          plotValue = count;
+        }
+        console.log('plotValue', count);
+
+        if (chartType == ChartType.LINE) {
+          data.push({
+            name: subGroup.labelText,
+            y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+            percentageValue,
+            numberValue,
+            baseCount: base,
+          });
+        } else {
+          data.push({
+            name: subGroup.labelText,
+            y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+            percentageValue,
+            numberValue,
+            baseCount: base,
+          });
+        }
       }
-    }
-    if (data.length)
+      // if (data.length)
       series.push({
         name: scale.labelText,
         color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
         data,
         dataLabels,
       });
-  }
+    }
 
-  return {
-    legend: {
-      enabled: true,
-    },
-    plotOptions: getPlotOptions(),
-    tooltip: { ...getToolTip() },
-    series,
-  };
+    return {
+      legend: {
+        enabled: true,
+      },
+      plotOptions: getPlotOptions(),
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  }
 };
 
 const getGridMeanChartOptions = (
@@ -699,7 +700,7 @@ const getGridMeanChartOptions = (
   baseCount: number,
 ): any => {
   const {
-    chart: { chartType },
+    chart: { chartType, chartTranspose },
   } = store.getState();
 
   const data: any[] = [];
@@ -786,38 +787,54 @@ const getGridMeanChartOptions = (
 
   for (let i = 0; i < 3; i++) {
     series.push({
-      color: colorArr[i],
       name: seriesLabels[i],
+      color: colorArr[i],
       data: seriesData[i],
       dataLabels,
     });
   }
 
-  // if (chartType === ChartType.STACK) {
-  //   data.map((element: any, index: number) => {
-  //     const name = element.name;
-  //     const color = colorArr[index];
-  //     const data = [
-  //       {
-  //         name: questionData?.labelText,
-  //         y: element.y,
-  //         baseCount: element.baseCount,
-  //       },
-  //     ];
-  //     series.push({ name, color, data, dataLabels });
-  //   });
-  // } else {
-  //   series.push({
-  //     color: primaryBarColor,
-  //     name: questionData?.labelText,
-  //     data,
-  //     dataLabels,
-  //   });
-  // }
+  console.log('series', series);
 
-  // if(true){
+  if (chartTranspose) {
+    // debugger;
+    const transposeSeries = [];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.subGroups.length;
+      optionIndex++
+    ) {
+      transposeSeries.push({
+        name: questionData.subGroups[optionIndex].labelText,
+        color: colorArr[optionIndex],
+        data: [
+          {
+            name: seriesLabels[0],
+            y: series[0].data[optionIndex].y,
+            baseCount: series[0].data[optionIndex].baseCount,
+          },
+          {
+            name: seriesLabels[1],
+            y: series[1].data[optionIndex].y,
+            baseCount: series[1].data[optionIndex].baseCount,
+          },
+          {
+            name: seriesLabels[2],
+            y: series[2].data[optionIndex].y,
+            baseCount: series[2].data[optionIndex].baseCount,
+          },
+        ],
+        dataLabels,
+      });
 
-  // }
+      console.log(optionIndex);
+      console.log(transposeSeries);
+    }
+
+    series.length = 0;
+
+    series.push(...transposeSeries);
+  }
 
   return {
     legend: {
