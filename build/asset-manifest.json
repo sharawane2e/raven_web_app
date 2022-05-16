@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/nielseniq/test1911271001/static/css/main.bc631e23.chunk.css",
+    "main.css": "/nielseniq/test1911271001/static/css/main.854c12d4.chunk.css",
     "main.js": "/nielseniq/test1911271001/static/js/main.b3ca8476.chunk.js",
     "main.js.map": "/nielseniq/test1911271001/static/js/main.b3ca8476.chunk.js.map",
     "runtime-main.js": "/nielseniq/test1911271001/static/js/runtime-main.9f5b608f.js",
@@ -18,7 +18,7 @@
     "static/js/6.e6fb5ceb.chunk.js.map": "/nielseniq/test1911271001/static/js/6.e6fb5ceb.chunk.js.map",
     "index.html": "/nielseniq/test1911271001/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/nielseniq/test1911271001/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.bc631e23.chunk.css.map": "/nielseniq/test1911271001/static/css/main.bc631e23.chunk.css.map",
+    "static/css/main.854c12d4.chunk.css.map": "/nielseniq/test1911271001/static/css/main.854c12d4.chunk.css.map",
     "static/js/2.439dfece.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/2.439dfece.chunk.js.LICENSE.txt",
     "static/js/3.7fb5ea33.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/3.7fb5ea33.chunk.js.LICENSE.txt",
     "static/js/4.9a1ae849.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/4.9a1ae849.chunk.js.LICENSE.txt",
@@ -56,7 +56,7 @@
     "static/js/runtime-main.9f5b608f.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.439dfece.chunk.js",
-    "static/css/main.bc631e23.chunk.css",
+    "static/css/main.854c12d4.chunk.css",
     "static/js/main.b3ca8476.chunk.js"
   ]
 }
