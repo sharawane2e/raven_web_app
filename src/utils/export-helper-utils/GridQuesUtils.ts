@@ -18,16 +18,9 @@ export function gridChartDataGen(
 ) {
   let seriesData: any[] = [];
   let labels: any = [];
-  let data: any = '';
-  let values: any = [];
-  const standardDeviation: any[] = [];
-  const standardError: any[] = [];
-
   const {
-    chart: { chartLabelType, showMean, chartType },
+    chart: { showMean },
   } = store.getState();
-
-  const scales = [...questionData.scale];
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   if (showMean) {
@@ -35,38 +28,6 @@ export function gridChartDataGen(
   } else {
     seriesData.length = 0;
     seriesData = getGridChartoptionSeries(questionData, chartData, baseCount);
-    // scales.forEach((scaleOption: any, index: number) => {
-    //   seriesData.push({
-    //     name: scaleOption.labelText,
-    //     labels,
-    //     values: questionData.subGroups.map((subGroup: any, index: number) => {
-    //       const subGroupData = getmatchedFind(chartData, "_id", subGroup.qId);
-
-    //       const base = subGroupData?.baseCount || baseCount;
-    //       if (subGroupData) {
-    //         const labels = getMatchedfilter(
-    //           subGroupData?.options,
-    //           "option",
-    //           scaleOption.labelCode
-    //         );
-
-    //         data = _.sumBy(labels, function (o) {
-    //           return o.count;
-    //         });
-
-    //         if (chartLabelType === ChartLabelType.PERCENTAGE) {
-    //           return data !== undefined
-    //             ? round(+((data / base) * 100), decimalPrecision)
-    //             : 0;
-    //         } else {
-    //           return data !== undefined ? data : 0;
-    //         }
-    //       } else {
-    //         return 0;
-    //       }
-    //     }),
-    //   });
-    // });
   }
 
   return seriesData;
@@ -85,7 +46,7 @@ const getGridMeanChartOptions = (
   const standardError: any[] = [];
 
   const {
-    chart: { chartLabelType, showMean, chartType },
+    chart: { chartTranspose },
   } = store.getState();
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
@@ -107,7 +68,6 @@ const getGridMeanChartOptions = (
     const totalSelections = _.sumBy(filteredOptions, function (o: any) {
       return parseInt(o.option) * parseInt(o.count);
     });
-    //const plotValue: any = round(totalSelections / baseCount, 2);
     let valuesArr: any = [];
 
     filteredOptions.forEach((filteredOption: any) => {
@@ -124,8 +84,10 @@ const getGridMeanChartOptions = (
       baseCount,
       decimalPrecision2,
     );
-    standardDeviation.push(Number(getSampleDeviationValues));
-    standardError.push(Number(getStandarderror));
+    standardDeviation.push(
+      round(Number(getSampleDeviationValues), decimalPrecision2),
+    );
+    standardError.push(round(Number(getStandarderror), 3));
     const plotValue: any = round(totalSelections / baseCount, decimalPrecision);
     values.push(Number(plotValue));
   }
@@ -141,6 +103,27 @@ const getGridMeanChartOptions = (
     });
   }
 
+  if (chartTranspose) {
+    const transposeSeries = [];
+
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.subGroups.length;
+      optionIndex++
+    ) {
+      transposeSeries.push({
+        name: questionData.subGroups[optionIndex].labelText,
+        labels: seriesLabels,
+        values: [
+          seriesData[0].values,
+          seriesData[1].values,
+          seriesData[2].values,
+        ],
+      });
+    }
+
+    seriesData = transposeSeries;
+  }
   return seriesData;
 };
 
@@ -255,7 +238,7 @@ const getGridTransposeChartOptions = (questionData: any, chartData: any) => {
       });
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        values.push((count / baseCount) * 100);
+        values.push(round((count / baseCount) * 100, decimalPrecision));
       } else {
         values.push(count);
       }
@@ -263,5 +246,6 @@ const getGridTransposeChartOptions = (questionData: any, chartData: any) => {
 
     return values;
   }
+
   return seriesData;
 };

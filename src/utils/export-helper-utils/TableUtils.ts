@@ -16,6 +16,8 @@ export function tableChartDataGen() {
   let totalRow: any = [];
   let scaleIndex: any = 0;
 
+  console.log('seriesData', seriesData);
+
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
 
@@ -239,6 +241,7 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
+      //console.log('getColoumnTotal'), getColoumnTotal;
 
       getColumnSum = 0;
     });

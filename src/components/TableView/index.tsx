@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { memo, useEffect, useState } from "react";
-import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
-import { Scrollbars } from "react-custom-scrollbars";
-import clsx from "clsx";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { memo, useEffect, useState } from 'react';
+import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
+import { Scrollbars } from 'react-custom-scrollbars';
+import clsx from 'clsx';
 
 interface TableProps {}
 
@@ -11,11 +11,11 @@ const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
   const { chartData, showMean, questionData, chartTranspose } = useSelector(
-    (state: RootState) => state.chart
+    (state: RootState) => state.chart,
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
-  let scaleLength: any = "";
+  let scaleLength: any = '';
 
   useEffect(() => {
     setTableData(tableChartDataGen());
@@ -24,13 +24,13 @@ const TableView: React.FC<TableProps> = (props) => {
   const QuestionData: any = questionData?.groupNetData;
 
   var filtered = QuestionData.filter(function (el: any) {
-    return el !== "";
+    return el !== '';
   });
 
   scaleLength = filtered.length > 1 ? filtered.length : 0;
 
   let results: any = questionData?.options.filter(function (option) {
-    if (option.labelCode.split("_")[0] == "N") {
+    if (option.labelCode.split('_')[0] == 'N') {
       return true;
     }
   });
@@ -57,7 +57,7 @@ const TableView: React.FC<TableProps> = (props) => {
     return (
       <div
         className={clsx({
-          "Table-row-item": true,
+          'Table-row-item': true,
           maxValue: isEqual(col, currentMax),
           minValue: isEqual(col, currentMin),
         })}
@@ -72,7 +72,7 @@ const TableView: React.FC<TableProps> = (props) => {
     columnIndex: any,
     col: any,
     currentMin: any,
-    currentMax: any
+    currentMax: any,
   ) => {
     const rowcount = removeSubGrop - laberesult;
 
@@ -126,7 +126,7 @@ const TableView: React.FC<TableProps> = (props) => {
                       colIndex,
                       col,
                       currentMax,
-                      currentMin
+                      currentMin,
                     )}
                   </>
                 );
