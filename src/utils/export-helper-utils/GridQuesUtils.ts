@@ -205,12 +205,8 @@ const getGridTransposeChartOptions = (questionData: any, chartData: any) => {
     chart: { chartLabelType },
   } = store.getState();
 
-  console.log('questionData', questionData);
-  console.log('chartData', chartData);
   const seriesData: any = [];
   let labels: any = [];
-  let data: any = '';
-  const scales = [...questionData.subGroups];
 
   labels = questionData.scale.map((subScale: any) => subScale.labelText);
 
@@ -225,63 +221,47 @@ const getGridTransposeChartOptions = (questionData: any, chartData: any) => {
   );
 
   function getTableValues(qId: string) {
-    // debugger;
     const values: number[] = [];
 
-    for (let i = 0; i < chartData.length; i++) {
-      const currentChartDataObject = chartData[i];
-      if (currentChartDataObject._id === qId) {
-        currentChartDataObject.options.map((optionObject: any) => {
-          values.push(optionObject.count);
-        });
+    questionData.scale.forEach((scaleObject: any) => {
+      let count: number = 0;
+      let baseCount: number = 0;
+
+      chartData.forEach((chartDataObject: any) => {
+        chartDataObject.options.forEach(
+          (chartOption: any, chartindex: number) => {
+            if (
+              _.isArray(scaleObject.labelCode) &&
+              scaleObject.labelCode.indexOf(chartOption.option) != -1
+            ) {
+              baseCount += chartOption.count;
+            }
+            if (chartOption.option == scaleObject.labelCode) {
+              baseCount += chartOption.count;
+            }
+          },
+        );
+        if (chartDataObject._id == qId) {
+          const countObject = getMatchedfilter(
+            chartDataObject.options,
+            'option',
+            scaleObject.labelCode,
+          );
+
+          count = _.sumBy(countObject, function (o) {
+            return o.count;
+          });
+        }
+      });
+
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
+        values.push((count / baseCount) * 100);
+      } else {
+        values.push(count);
       }
-    }
-    console.log(values);
+    });
+
     return values;
   }
-
-  //console.log(scales);
-
-  // console.log('questionData', questionData);
-  // console.log('chartData', chartData);
-  // console.log('labels', labels);
-
-  // scales.forEach((scaleOption: any, index: number) => {
-  //   console.log(scaleOption);
-  //   seriesData.push({
-  //     name: scaleOption.labelText,
-  //     labels,
-  //     // values: [5],
-  //     values: questionData.subGroups.map((subGroup: any, index: number) => {
-  //       //debugger;
-  //       const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
-
-  //       const base = subGroupData?.baseCount;
-
-  //       if (subGroupData) {
-  //         const label = getMatchedfilter(
-  //           subGroupData?.options,
-  //           'option',
-  //           labels.labelCode,
-  //         );
-
-  //         data = _.sumBy(label, function (o) {
-  //           return o.count;
-  //         });
-
-  //         if (chartLabelType === ChartLabelType.PERCENTAGE) {
-  //           return data !== undefined
-  //             ? round(+((data / base) * 100), decimalPrecision)
-  //             : 0;
-  //         } else {
-  //           return data !== undefined ? data : 0;
-  //         }
-  //       } else {
-  //         return 0;
-  //       }
-  //     }),
-  //   });
-  // });
-  console.log(seriesData);
   return seriesData;
 };
