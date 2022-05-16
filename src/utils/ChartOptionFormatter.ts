@@ -664,6 +664,9 @@ const getGridChartoptionSeries = (
 
       const optionData = getmatchedFind(chartData, "_id", subGroup.qId);
 
+      // if (_.isArray(scale.labelCode)) {
+      //   debugger;
+      // }
       const labels = getMatchedfilter(
         optionData.options,
         "option",
@@ -1008,12 +1011,18 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
     const data = [];
     const scales = questiondata.scale;
     for (let j = 0; j < scales.length; j++) {
+      // if (j >= scales.length - 3) {
+      //   debugger;
+      // }
       const scale = scales[j];
       let baseCount: number = 0;
       let count: number = 0;
       chartData.forEach((chartDataObject: any, index: number) => {
         chartDataObject.options.forEach(
           (chartOption: any, chartindex: number) => {
+            // if (_.isArray(scale.labelCode)) {
+            //   debugger;
+            // }
             if (chartOption.option == scale.labelCode) {
               baseCount += chartOption.count;
             }
@@ -1021,15 +1030,25 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
         );
 
         if (chartDataObject._id == questiondata.subGroups[i].qId) {
-          const countObject: any = _.filter(
+          // const countObject: any = _.filter(
+          //   chartDataObject.options,
+          //   function (o) {
+          //     return o.option == scale.labelCode;
+          //   }
+          // );
+
+          const countObject = getMatchedfilter(
             chartDataObject.options,
-            function (o) {
-              return o.option == scale.labelCode;
-            }
+            "option",
+            scale.labelCode
           );
-          if (countObject.length) {
-            count = countObject[0].count;
-          }
+
+          // if (countObject.length) {
+          //   count = countObject[0].count;
+          // }
+          count = _.sumBy(countObject, function (o) {
+            return o.count;
+          });
         }
       });
 
