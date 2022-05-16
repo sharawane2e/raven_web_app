@@ -134,7 +134,6 @@ export const fetchChartData = async (
       }
 
       chartData.showMean = false;
-      chartData.chartLabelType = ChartLabelType.NUMBER;
     }
   } catch (error) {
     console.log(error);

@@ -1,9 +1,9 @@
-import { Switch, Tooltip } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { StaticText } from "../../constants/StaticText";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { ChartType } from "../../enums/ChartType";
+import { Switch, Tooltip } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { StaticText } from '../../constants/StaticText';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartType } from '../../enums/ChartType';
 import {
   setChartData,
   setChartLabel,
@@ -11,10 +11,10 @@ import {
   setChartType,
   showMean,
   updateChartOptions,
-} from "../../redux/actions/chartActions";
-import store from "../../redux/store";
-import { changeChartType, transposeChart } from "../../services/ChartService";
-import { getChartOptions } from "../../utils/ChartOptionFormatter";
+} from '../../redux/actions/chartActions';
+import store from '../../redux/store';
+import { changeChartType, transposeChart } from '../../services/ChartService';
+import { getChartOptions } from '../../utils/ChartOptionFormatter';
 
 interface IsMeancontrolProps {}
 
@@ -23,30 +23,20 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
   const isChecked = chart.showMean;
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    if (chart.chartTranspose) {
-      transposeChart();
-    }
     if (isChecked) {
-     
-
       if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
         dispatch(setChartLabel(ChartLabelType.NUMBER));
       }
-      
     } else {
-    
-      if(chart.chartType===ChartType.PIE){
+      if (chart.chartType === ChartType.PIE) {
         changeChartType(ChartType.COLUMN);
       }
-    
     }
-    
+
     const chartOptionsUpdate = getChartOptions();
     dispatch(updateChartOptions(chartOptionsUpdate));
-  }, [isChecked,chart.chartType]);
-  
+  }, [isChecked, chart.chartType]);
 
   return (
     <div className="md-space-4 MuiFormControl-root">
@@ -68,7 +58,7 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
 
         <span
           className={`${
-            isChecked ? "static-switch-mean bold-text" : "static-switch-mean"
+            isChecked ? 'static-switch-mean bold-text' : 'static-switch-mean'
           }`}
         >
           {StaticText?.MEAN_TOOTLE}
