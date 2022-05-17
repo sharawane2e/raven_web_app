@@ -1,19 +1,19 @@
-import store, { RootState } from "../../redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { Chip, Tooltip } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import ClearAllIcon from "@material-ui/icons/ClearAll";
-import ClearIcon from "@material-ui/icons/Clear";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import { IFilter } from "../../types/IFilter";
-import CustomScrollbar from "../CustomScrollbar";
-import { removeAppliedFilter } from "../../redux/actions/filterActions";
-import { fetchChartData, transposeChart } from "../../services/ChartService";
+import store, { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Chip, Tooltip } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+// import ClearAllIcon from "@material-ui/icons/ClearAll";
+// import ClearIcon from "@material-ui/icons/Clear";
+// import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import { IFilter } from '../../types/IFilter';
+import CustomScrollbar from '../CustomScrollbar';
+import { removeAppliedFilter } from '../../redux/actions/filterActions';
+import { fetchChartData, transposeChart } from '../../services/ChartService';
 import {
   setChartData,
   setChartTranspose,
-} from "../../redux/actions/chartActions";
-import { memo } from "react";
+} from '../../redux/actions/chartActions';
+import { memo } from 'react';
 
 const AppliedFilterList: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);

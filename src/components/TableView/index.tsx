@@ -16,21 +16,25 @@ const TableView: React.FC<TableProps> = (props) => {
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
   let scaleLength: any = '';
-  //let columnIndex: any;
 
   useEffect(() => {
     setTableData(tableChartDataGen());
   }, [chartData, showMean]);
-  if (questionData?.groupNetData) {
-    scaleLength = questionData?.groupNetData.length;
-  }
+
+  const QuestionData: any = questionData?.groupNetData;
+
+  var filtered = QuestionData.filter(function (el: any) {
+    return el !== '';
+  });
+
+  scaleLength = filtered.length > 1 ? filtered.length : 0;
+
   let results: any = questionData?.options.filter(function (option) {
     if (option.labelCode.split('_')[0] == 'N') {
       return true;
     }
   });
   let laberesult = results.length;
-  //console.log('results', results);
 
   let removeSubGrop: any;
 
@@ -41,7 +45,6 @@ const TableView: React.FC<TableProps> = (props) => {
     removeSubGrop = tableData?.rows?.length - laberesult;
   }
 
-  // console.log('removeSubGrop', removeSubGrop);
   /*This code used for single grid data column hide and show highlights  */
   //  else {
   //   tableData?.rows?.map((rows: any) => {
@@ -50,6 +53,7 @@ const TableView: React.FC<TableProps> = (props) => {
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
+    // const equalValue = (currentMax === "100%") == (currentMin === "100%");
     return (
       <div
         className={clsx({
@@ -112,9 +116,8 @@ const TableView: React.FC<TableProps> = (props) => {
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
                 const [maxVal, minVal] = tableData.minmax[0];
-                const currentMax = maxVal?.[colIndex - 1];
                 const currentMin = minVal?.[colIndex - 1];
-                //columnIndex = col;
+                const currentMax = maxVal?.[colIndex - 1];
 
                 return (
                   <>

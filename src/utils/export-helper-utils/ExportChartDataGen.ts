@@ -1,14 +1,15 @@
 import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { bannerChartDataGen } from './BannerQuesUtils';
-import { gridChartDataGen } from './GridQuesUtils';
+import { gridChartTableGen } from './GridQuesUtils';
 import { multiGridChartDataGen } from './MultiGridQuesUtils';
 import { multiChartDataGen } from './MultiQuesUtils';
 import { rankChartDataGen } from './RankQuesUtils';
 import { singleChartDataGen } from './SingleQuesUtils';
+import { numberChartDataGen } from './NumberQuesUtils';
 
 export function chartDataGen() {
-  let seriesData = [];
+  let seriesData: any[] = [];
   const {
     chart: {
       chartData,
@@ -19,6 +20,7 @@ export function chartDataGen() {
     },
     questions: { selectedBannerQuestionId },
   } = store.getState();
+
   if (
     selectedBannerQuestionId &&
     (questionData?.type === QuestionType.SINGLE ||
@@ -35,7 +37,7 @@ export function chartDataGen() {
     } else if (questionData?.type === QuestionType.MULTI) {
       seriesData = multiChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.GRID) {
-      seriesData = gridChartDataGen(questionData, chartData, baseCount);
+      seriesData = gridChartTableGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.GRID_MULTI) {
       seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.RANK) {
@@ -44,6 +46,13 @@ export function chartDataGen() {
         chartData,
         baseCount,
         chartTranspose,
+      );
+    } else if (questionData?.type === QuestionType.NUMBER) {
+      seriesData = numberChartDataGen(
+        questionData,
+        chartData,
+        chartTranspose,
+        bannerQuestionData,
       );
     }
   }

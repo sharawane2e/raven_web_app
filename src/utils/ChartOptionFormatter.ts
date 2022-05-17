@@ -1,6 +1,7 @@
 import {
   colorArr,
   decimalPrecision,
+  decimalPrecision2,
   primaryBarColor,
 } from '../constants/Variables';
 import { ChartLabelType } from '../enums/ChartLabelType';
@@ -13,7 +14,16 @@ import { IQuestion } from '../types/IQuestion';
 import { getMatchedfilter, getmatchedFind, round } from './Utility';
 import _, { find, omit } from 'lodash';
 import { ChartOrientation } from '../enums/ChartOrientation';
-import { showMean } from '../redux/actions/chartActions';
+import { getNumberChartOption } from '../services/ChartNumberService';
+// import { OptionUnstyled } from '@mui/base';
+import { StaticText } from '../constants/StaticText';
+import {
+  getmean,
+  getsampleStandardDeviation,
+  getStandarderrorFunction,
+} from './simplestatistics';
+
+//import { mean, median, min, max } from 'simple-statistics';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -53,6 +63,15 @@ export const getChartOptions = (
         return getGridChartOptions(questionData, chartData, baseCount);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(questionData, chartData, baseCount);
+      case QuestionType.NUMBER:
+        return getNumberChartOption(
+          questionData,
+          chartData,
+          baseCount,
+          bannerQuestionData,
+          chartOptionsData,
+          transposed,
+        );
 
       default:
         return {};
@@ -70,13 +89,13 @@ const getMultiChartOptions = (
   chartOptionsData: any,
 ): any => {
   const {
-    questions: { questionList, bannerQuestionList },
+    questions: { bannerQuestionList },
   } = store.getState();
 
   const selectedBannerQuestionId = bannerQuestionData?.qId;
 
   const {
-    chart: { chartLabelType, chartOptions, chartTranspose },
+    chart: { chartLabelType },
   } = store.getState();
 
   const {
@@ -217,7 +236,7 @@ const getMultiChartOptions = (
             percentageValue,
             numberValue,
             baseCount: baseCount,
-            // color: "#F8971C",
+            color: '#01274c',
           });
         } else {
           data.push({
@@ -268,6 +287,7 @@ const getMultiChartOptions = (
     };
   }
 };
+
 const getSingleChartOptions = (
   questionData: IQuestion,
   chartData: any[],
@@ -275,7 +295,8 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
 ): any => {
-  // debugger;
+  //debugger;
+
   const {
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
@@ -321,7 +342,6 @@ const getSingleChartOptions = (
         let optionData = chartData[0][quesOption.labelCode];
 
         let count = 0;
-        // debugger;
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
@@ -344,14 +364,21 @@ const getSingleChartOptions = (
           } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
-
+          //console.log("baseCount", baseCount);
           if (label) {
-            let percentageValue = (label.count / localBase) * 100;
+            let percentageValue =
+              label.count == 0 ? label.count : (label.count / localBase) * 100;
             let numberValue = label.count;
+
             data.push({
               name: quesOption.labelText,
               // y: +count.toFixed(decimalPrecision),
-              y: count !== null ? round(count, decimalPrecision) : 0,
+              y:
+                count !== null
+                  ? label.count == 0
+                    ? label.count
+                    : round(count, decimalPrecision)
+                  : 0,
               percentageValue,
               numberValue,
               baseCount: localBase,
@@ -572,8 +599,47 @@ const getGridChartOptions = (
   chartData: any,
   baseCount: number,
 ): any => {
+  const series = [];
+
+  const {
+    chart: { showMean },
+  } = store.getState();
+
+  if (showMean) {
+    return getGridMeanChartOptions(questionData, chartData, baseCount);
+  } else {
+    series.length = 0;
+    series.push(
+      ...getGridChartoptionSeries(questionData, chartData, baseCount),
+    );
+
+    return {
+      legend: {
+        enabled: true,
+      },
+      plotOptions: getPlotOptions(),
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  }
+};
+
+const getGridChartoptionSeries = (
+  questionData: any,
+  chartData: any,
+  baseCount: any,
+) => {
   const categories = [];
   const series = [];
+  const {
+    chart: { chartLabelType, chartType, showMean, chartTranspose },
+  } = store.getState();
+
+  if (chartTranspose) {
+    series.length = 0;
+    series.push(...getGridTransposeChartOptions(questionData, chartData));
+    return series;
+  }
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
     const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
@@ -581,20 +647,10 @@ const getGridChartOptions = (
     return false;
   });
 
-  const {
-    chart: { chartLabelType, chartType, showMean },
-  } = store.getState();
-
-  if (showMean) {
-    return getGridMeanChartOptions(questionData, chartData, baseCount);
-  }
-
   const scales = [...questionData.scale];
 
   for (let scaleIndex = 0; scaleIndex < scales.length; scaleIndex++) {
     const scale = scales[scaleIndex];
-
-    //console.log(scale)
 
     const data: any[] = [];
     for (
@@ -608,11 +664,15 @@ const getGridChartOptions = (
 
       const optionData = getmatchedFind(chartData, '_id', subGroup.qId);
 
+      // if (_.isArray(scale.labelCode)) {
+      //   debugger;
+      // }
       const labels = getMatchedfilter(
         optionData.options,
         'option',
         scale.labelCode,
       );
+
       const count = _.sumBy(labels, function (o) {
         return o.count;
       });
@@ -647,13 +707,152 @@ const getGridChartOptions = (
         });
       }
     }
-    if (data.length)
-      series.push({
-        name: scale.labelText,
-        color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
-        data,
+    // if (data.length)
+    series.push({
+      name: scale.labelText,
+      color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
+      data,
+      dataLabels,
+    });
+  }
+  return series;
+};
+
+const getGridMeanChartOptions = (
+  questionData: IQuestion,
+  chartData: any,
+  baseCount: number,
+): any => {
+  const {
+    chart: { chartTranspose },
+  } = store.getState();
+
+  const data: any[] = [];
+  const standardDeviation: any[] = [];
+  const standardError: any[] = [];
+
+  for (
+    let optionIndex = 0;
+    optionIndex < questionData.subGroups.length;
+    optionIndex++
+  ) {
+    const option = questionData.subGroups[optionIndex];
+    const optionData = getmatchedFind(chartData, '_id', option.qId);
+
+    const filteredOptions = _.remove(
+      [...optionData.options],
+      function (n: any) {
+        return !Array.isArray(n.option);
+      },
+    ); //removing array options which come with subgroups
+
+    const totalSelections = _.sumBy(filteredOptions, function (o: any) {
+      return parseInt(o.option) * parseInt(o.count);
+    });
+
+    let valuesArr: any = [];
+    // let weightsArr: any = [];
+    // let getSampleDeviationValuesArr: any = [];
+
+    // filteredOptions.forEach((filteredOption: any) => {
+    //   weightsArr = _.concat(weightsArr, filteredOption?.weights);
+    // });
+
+    filteredOptions.forEach((filteredOption: any) => {
+      valuesArr = _.concat(valuesArr, filteredOption?.values);
+    });
+
+    // const getSampleDeviationWeights: any = getsampleStandardDeviation(
+    //   weightsArr,
+    //   decimalPrecision2,
+    // );
+
+    const getSampleDeviationValues = getsampleStandardDeviation(
+      valuesArr,
+      decimalPrecision2,
+    );
+
+    //getSampleDeviationValuesArr.push(getSampleDeviationValues);
+    //console.log('getSampleDeviationWeights', getSampleDeviationWeights);
+
+    const getStandarderror = getStandarderrorFunction(
+      Number(getSampleDeviationValues),
+      baseCount,
+      decimalPrecision2,
+    );
+
+    const plotValue = totalSelections / baseCount;
+
+    if (plotValue > 0) {
+      data.push({
+        name: option.labelText,
+        // y: round(plotValue, decimalPrecision),
+        y: plotValue,
+        baseCount: baseCount,
+      });
+    }
+
+    standardDeviation.push({
+      name: option.labelText,
+      y: Number(getSampleDeviationValues),
+      baseCount: baseCount,
+    });
+
+    standardError.push({
+      name: option.labelText,
+      y: Number(getStandarderror),
+      baseCount: baseCount,
+    });
+  }
+
+  const series: any[] = [];
+  const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
+  const seriesData = [data, standardDeviation, standardError];
+
+  for (let i = 0; i < 3; i++) {
+    series.push({
+      name: seriesLabels[i],
+      color: colorArr[i],
+      data: seriesData[i],
+      dataLabels,
+    });
+  }
+
+  if (chartTranspose) {
+    // debugger;
+    const transposeSeries = [];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.subGroups.length;
+      optionIndex++
+    ) {
+      transposeSeries.push({
+        name: questionData.subGroups[optionIndex].labelText,
+        color: colorArr[optionIndex],
+        data: [
+          {
+            name: seriesLabels[0],
+            y: series[0].data[optionIndex].y,
+            baseCount: series[0].data[optionIndex].baseCount,
+          },
+          {
+            name: seriesLabels[1],
+            y: series[1].data[optionIndex].y,
+            baseCount: series[1].data[optionIndex].baseCount,
+          },
+          {
+            name: seriesLabels[2],
+            y: series[2].data[optionIndex].y,
+            baseCount: series[2].data[optionIndex].baseCount,
+          },
+        ],
         dataLabels,
       });
+    }
+
+    series.length = 0;
+
+    series.push(...transposeSeries);
   }
 
   return {
@@ -666,75 +865,71 @@ const getGridChartOptions = (
   };
 };
 
-const getGridMeanChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-): any => {
+const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
   const {
-    chart: { chartType },
+    chart: { chartLabelType },
   } = store.getState();
+  const series = [];
+  for (let i = 0; i < questiondata.subGroups.length; i++) {
+    const currentSubGroup = questiondata.subGroups[i];
+    const data = [];
+    const scales = questiondata.scale;
+    for (let j = 0; j < scales.length; j++) {
+      const scale = scales[j];
+      let baseCount: number = 0;
+      let count: number = 0;
+      chartData.forEach((chartDataObject: any, index: number) => {
+        chartDataObject.options.forEach(
+          (chartOption: any, chartindex: number) => {
+            if (
+              _.isArray(scale.labelCode) &&
+              scale.labelCode.indexOf(chartOption.option) != -1
+            ) {
+              baseCount += chartOption.count;
+            }
+            if (chartOption.option == scale.labelCode) {
+              baseCount += chartOption.count;
+            }
+          },
+        );
 
-  const data: any[] = [];
-  // debugger;
-  for (
-    let optionIndex = 0;
-    optionIndex < questionData.subGroups.length;
-    optionIndex++
-  ) {
-    const option = questionData.subGroups[optionIndex];
-    const optionData = getmatchedFind(chartData, '_id', option.qId);
-    const filteredOptions = _.remove(
-      [...optionData.options],
-      function (n: any) {
-        return !Array.isArray(n.option);
-      },
-    ); //removing array options which come with subgroups
-    const totalSelections = _.sumBy(filteredOptions, function (o: any) {
-      return parseInt(o.option) * parseInt(o.count);
-    });
-    const plotValue = totalSelections / baseCount;
-    if (plotValue > 0)
-      data.push({
-        name: option.labelText,
-        // y: round(plotValue, decimalPrecision),
-        y: plotValue,
-        baseCount: baseCount,
+        if (chartDataObject._id == questiondata.subGroups[i].qId) {
+          const countObject = getMatchedfilter(
+            chartDataObject.options,
+            'option',
+            scale.labelCode,
+          );
+
+          count = _.sumBy(countObject, function (o) {
+            return o.count;
+          });
+        }
       });
-  }
 
-  const series: any[] = [];
+      let plotValue;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
+        plotValue = (count / baseCount) * 100;
+      } else {
+        plotValue = count;
+      }
 
-  if (chartType === ChartType.STACK) {
-    data.map((element: any, index: number) => {
-      const name = element.name;
-      const color = colorArr[index];
-      const data = [
-        {
-          name: questionData?.labelText,
-          y: element.y,
-          baseCount: element.baseCount,
-        },
-      ];
-      series.push({ name, color, data, dataLabels });
-    });
-  } else {
+      data.push({
+        name: scale.labelText,
+        y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+        percentageValue: (count / baseCount) * 100,
+        numberValue: count,
+        baseCount,
+      });
+    }
+
     series.push({
-      color: primaryBarColor,
-      name: questionData?.labelText,
+      name: currentSubGroup.labelText,
       data,
       dataLabels,
     });
   }
 
-  return {
-    legend: {
-      enabled: true,
-    },
-    plotOptions: getPlotOptions(),
-    tooltip: { ...getToolTip() },
-    series,
-  };
+  return series;
 };
 
 const getGridMultiChartOptions = (
@@ -840,9 +1035,9 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
   return newChartOptions;
 };
 
-const getToolTip = () => {
+export const getToolTip = () => {
   const {
-    chart: { chartLabelType, showMean },
+    chart: { questionData, showMean },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
     headerFormat: '',
@@ -856,8 +1051,13 @@ const getToolTip = () => {
     tooltip['pointFormat'] =
       '<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
   } else {
-    tooltip['pointFormat'] =
-      '<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
+    if (questionData?.type === QuestionType?.NUMBER) {
+      tooltip['pointFormat'] =
+        '<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
+    } else {
+      tooltip['pointFormat'] =
+        '<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
+    }
   }
 
   return tooltip;

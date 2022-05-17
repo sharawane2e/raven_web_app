@@ -3,6 +3,7 @@
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
     width: 100%;
+    align-items: center;
     @media (max-width: 1023px) {
       display: flex;
       align-items: center;
@@ -52,7 +53,6 @@
     @media (max-width: 767px) and (orientation: landscape) {
       height: calc(100vh - 10px);
     }
-
   }
 
   .chart-content__chart-wrapper-table {
@@ -72,16 +72,15 @@
     margin-top: 30px;
     justify-content: space-between;
     &--inr {
-      color:map-get($map: $text-color, $key:"partial-light" ) ;
+      color: map-get($map: $text-color, $key: "partial-light");
       width: 90%;
       @media (max-width: 768px) {
-       padding-left: 20px;
+        padding-left: 20px;
       }
     }
     @media (max-width: 768px) {
       margin-left: -24px;
-     // margin-top: -27px;
-    
+      // margin-top: -27px;
     }
   }
 
@@ -134,7 +133,7 @@
       }
     }
     @media (max-width: 768px) {
-     margin-left: 5px;
+      margin-left: 5px;
     }
   }
 
@@ -220,6 +219,13 @@
     align-items: center;
   }
 }
+.content-area.sidebar-open {
+  .chart-content {
+    .mr-button.MuiGrid-container {
+      padding: 0px 10px 0 0;
+    }
+  }
+}
 .orientation-control {
   .active {
     &:not(.Mui-disabled) {
@@ -255,7 +261,6 @@
     width: 100%;
     height: 100%;
   }
-
 }
 
 .mean-switch {

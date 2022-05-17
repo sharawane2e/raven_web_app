@@ -1,9 +1,13 @@
 .chart-screen {
   .content-area {
-     background: map-get($map: $bg-color, $key: "secondary-dark");
+    background: map-get($map: $bg-color, $key: "secondary-dark");
     @media (max-width: 767px) {
-     // padding: 10px 5px;
+      // padding: 10px 5px;
       //height: calc(100vh - 4px);
+      //overflow-y: scroll;
+    }
+    @media (max-width: 767px) and (orientation: landscape) {
+      height: calc(100vh - -200px);
       //overflow-y: scroll;
     }
   }
@@ -31,10 +35,10 @@
 
 .chart-screen__chart-wrapper-table {
   .MuiDialog-paper {
-    background: map-get($map: $bg-color, $key: 'light');
+    background: map-get($map: $bg-color, $key: "light");
   }
 
   .cross--btn {
-    background: map-get($map: $bg-color, $key: 'white');
+    background: map-get($map: $bg-color, $key: "white");
   }
 }

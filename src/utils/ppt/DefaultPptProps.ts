@@ -4,12 +4,12 @@ import {
   primaryBarColor,
   pptBackgroundColor,
   clientBrandingLogo,
-} from '../../constants/Variables';
-import { ISlideConfig } from '../../types/ISlideConfig';
+} from "../../constants/Variables";
+import { ISlideConfig } from "../../types/ISlideConfig";
 
 export const setDefaultSlideProperties = (
   pptxGenJsObj: any,
-  config: ISlideConfig,
+  config: ISlideConfig
 ) => {
   const {
     mainQuestionText,
@@ -40,8 +40,8 @@ export const setDefaultSlideProperties = (
           w: 8,
           fontFace: chartFontFace,
           fontSize: 12,
-          color: '323c4e',
-          align: 'left',
+          color: "323c4e",
+          align: "left",
           bold: true,
         },
       },
@@ -55,8 +55,8 @@ export const setDefaultSlideProperties = (
           w: 9.5,
           fontFace: chartFontFace,
           fontSize: 8,
-          color: '404040',
-          align: 'left',
+          color: "404040",
+          align: "left",
         },
       },
     },
@@ -69,8 +69,8 @@ export const setDefaultSlideProperties = (
           w: 9.5,
           fontFace: chartFontFace,
           fontSize: 8,
-          color: '404040',
-          align: 'left',
+          color: "404040",
+          align: "left",
           // bold: true,
         },
       },
@@ -84,8 +84,8 @@ export const setDefaultSlideProperties = (
           w: 9.5,
           fontFace: chartFontFace,
           fontSize: 8,
-          color: '404040',
-          align: 'left',
+          color: "404040",
+          align: "left",
           // bold: true,
         },
       },
@@ -100,8 +100,8 @@ export const setDefaultSlideProperties = (
           w: 2.5,
           fontFace: chartFontFace,
           fontSize: 7,
-          color: '7f7f7f',
-          align: 'center',
+          color: "7f7f7f",
+          align: "center",
         },
       },
     },
@@ -111,15 +111,15 @@ export const setDefaultSlideProperties = (
   if (bannerQuestionText) {
     objsArr.push({
       text: {
-        text: 'Cross tabulated:  ' + bannerQuestionText,
+        text: "Cross tabulated:  " + bannerQuestionText,
         options: {
           x: 0.3,
           y: 4.95,
           w: 9.5,
           fontFace: chartFontFace,
           fontSize: 8,
-          color: '404040',
-          align: 'left',
+          color: "404040",
+          align: "left",
           // bold: true,
         },
       },

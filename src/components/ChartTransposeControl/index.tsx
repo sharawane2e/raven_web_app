@@ -16,6 +16,15 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
     chart: { chartTranspose, questionData, bannerQuestionData, showMean },
   } = store.getState();
 
+  const disabledOption = () => {
+    return (
+      (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
+      (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
+      questionData === null ||
+      (questionData?.type === QuestionType?.NUMBER && !bannerQuestionData)
+    );
+  };
+
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: 'Transpose',
@@ -30,10 +39,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
           ? transposeChartMulti()
           : transposeChart(),
       active: chartTranspose,
-      disabled:
-        (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
-        (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
-        showMean,
+      disabled: disabledOption(),
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),
     },
   ];

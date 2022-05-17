@@ -53,7 +53,7 @@ html {
 
 .MuiMenu-paper {
   @media (max-width: 768px) {
-    background: #393939;
+    background: map-get($map: $bg-color, $key: "secondary");
     color: #dfdfdf;
   }
   li {
