@@ -16,8 +16,6 @@ export function tableChartDataGen() {
   let totalRow: any = [];
   let scaleIndex: any = 0;
 
-  console.log('seriesData', seriesData);
-
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
 

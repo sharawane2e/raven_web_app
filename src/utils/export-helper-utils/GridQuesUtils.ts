@@ -11,7 +11,7 @@ import {
 } from '../simplestatistics';
 import { IQuestion } from '../../types/IQuestion';
 
-export function gridChartDataGen(
+export function gridChartTableGen(
   questionData: any,
   chartData: any,
   baseCount: any,
@@ -24,24 +24,25 @@ export function gridChartDataGen(
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   if (showMean) {
-    return getGridMeanChartOptions(questionData, chartData, baseCount);
+    seriesData.length = 0;
+    seriesData = getGridMeanTableOptions(questionData, chartData, baseCount);
   } else {
     seriesData.length = 0;
-    seriesData = getGridChartoptionSeries(questionData, chartData, baseCount);
+    seriesData = getGridTableoptionSeries(questionData, chartData, baseCount);
   }
 
   return seriesData;
 }
 
-const getGridMeanChartOptions = (
+const getGridMeanTableOptions = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
 ): any => {
-  let seriesData: any[] = [];
+  const seriesData: any[] = [];
   let labels: any = [];
   let data: any = '';
-  let values: any = [];
+  let valuesdata: any = [];
   const standardDeviation: any[] = [];
   const standardError: any[] = [];
 
@@ -89,45 +90,51 @@ const getGridMeanChartOptions = (
     );
     standardError.push(round(Number(getStandarderror), 3));
     const plotValue: any = round(totalSelections / baseCount, decimalPrecision);
-    values.push(Number(plotValue));
+    valuesdata.push(Number(plotValue));
   }
 
   const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
-  const seriesValue = [values, standardDeviation, standardError];
+  const seriesValue = [valuesdata, standardDeviation, standardError];
 
-  for (let i = 0; i < 3; i++) {
-    seriesData.push({
-      name: seriesLabels[i],
-      labels,
-      values: seriesValue[i],
-    });
+  for (let i = 0; i < seriesLabels.length; i++) {
+    if (!chartTranspose) {
+      seriesData.push({
+        name: seriesLabels[i],
+        labels,
+        values: seriesValue[i],
+      });
+    }
   }
 
   if (chartTranspose) {
-    const transposeSeries = [];
+    const transposeSeries: any = [];
 
-    for (
-      let optionIndex = 0;
-      optionIndex < questionData.subGroups.length;
-      optionIndex++
-    ) {
-      transposeSeries.push({
-        name: questionData.subGroups[optionIndex].labelText,
+    const transposeSeriesValues: any = (valueIndex: number) => {
+      const dataValue: any[] = [];
+      seriesValue.forEach((seriesName: string, seriesIndex: number) => {
+        dataValue.push(seriesValue[seriesIndex][valueIndex]);
+      });
+      // console.log('dataValue', dataValue);
+      return dataValue;
+    };
+
+    for (let i = 0; i < labels.length; i++) {
+      seriesData.push({
+        name: labels[i],
         labels: seriesLabels,
-        values: [
-          seriesData[0].values,
-          seriesData[1].values,
-          seriesData[2].values,
-        ],
+        values: [...transposeSeriesValues(i)],
+        values1: [...transposeSeriesValues(i)],
       });
     }
+    seriesData.push(...transposeSeries);
 
-    seriesData = transposeSeries;
+    console.log(seriesData);
   }
+
   return seriesData;
 };
 
-const getGridChartoptionSeries = (
+const getGridTableoptionSeries = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
@@ -142,7 +149,7 @@ const getGridChartoptionSeries = (
 
   if (chartTranspose) {
     seriesData.length = 0;
-    seriesData.push(...getGridTransposeChartOptions(questionData, chartData));
+    seriesData.push(...getGridTransposeTableOptions(questionData, chartData));
     return seriesData;
   } else {
     labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
@@ -183,11 +190,10 @@ const getGridChartoptionSeries = (
   return seriesData;
 };
 
-const getGridTransposeChartOptions = (questionData: any, chartData: any) => {
+const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
   const {
     chart: { chartLabelType },
   } = store.getState();
-
   const seriesData: any = [];
   let labels: any = [];
 
