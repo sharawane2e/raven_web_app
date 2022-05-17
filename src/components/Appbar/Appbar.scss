@@ -55,6 +55,21 @@
         //margin-left: -12px;
       }
     }
+    
+  }
+  &__logo-image{
+    width: 150px;
+       // height: 43px;
+        margin-right: 10px;
+    img{
+      width: 100%;
+      max-width: 100%;
+      height: 100%;
+      
+    }
+    @media (max-width: 768px) {
+     display: none;
+    }
   }
   .appbar__menu {
     color: map-get($map: $text-color, $key: fade);

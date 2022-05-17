@@ -77,13 +77,13 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           }
 
           if (valueKey && labelKey) {
-            // let label = options.find((option) =>
-            //   (option[valueKey] == selected) !== undefined
-            //     ? option[valueKey] == selected
-            //     : questions,
-            // )[labelKey];
+            let label = options.find((option) =>
+              (option[valueKey] == selected) !== undefined
+                ? option[valueKey] == selected
+                : questions,
+            )[labelKey];
 
-            return <span>{questions ? questions : ''}</span>;
+            return <span>{label ? label : ''}</span>;
           }
           return <span>{questions as any}</span>;
         }}

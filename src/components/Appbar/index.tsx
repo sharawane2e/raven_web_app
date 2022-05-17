@@ -19,6 +19,7 @@ import {
 } from '../../redux/actions/sidebarAction';
 import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as Boehringer } from '../../assets/svg/Boehringer-Lumanity-brand.svg';
+import clinet_sublogo from '../../assets/images/client_sublogo.png';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -100,6 +101,9 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         </div>
       </div>
       <div className="appbar__right-panel">
+        <div className="appbar__logo-image">
+          <img src={clinet_sublogo} />
+        </div>
         <div className="appbar__tourGuide" onClick={tourStart}>
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
