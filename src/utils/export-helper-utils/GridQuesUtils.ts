@@ -38,7 +38,7 @@ const getGridMeanTableOptions = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
-): any => {
+): any[] => {
   const seriesData: any[] = [];
   let labels: any = [];
   let data: any = '';
@@ -96,8 +96,8 @@ const getGridMeanTableOptions = (
   const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
   const seriesValue = [valuesdata, standardDeviation, standardError];
 
-  for (let i = 0; i < seriesLabels.length; i++) {
-    if (!chartTranspose) {
+  if (!chartTranspose) {
+    for (let i = 0; i < seriesLabels.length; i++) {
       seriesData.push({
         name: seriesLabels[i],
         labels,
@@ -114,21 +114,19 @@ const getGridMeanTableOptions = (
       seriesValue.forEach((seriesName: string, seriesIndex: number) => {
         dataValue.push(seriesValue[seriesIndex][valueIndex]);
       });
-      // console.log('dataValue', dataValue);
+      //console.log('dataValue', dataValue);
       return dataValue;
     };
 
     for (let i = 0; i < labels.length; i++) {
-      seriesData.push({
+      transposeSeries.push({
         name: labels[i],
         labels: seriesLabels,
         values: [...transposeSeriesValues(i)],
-        values1: [...transposeSeriesValues(i)],
       });
     }
+    seriesData.length = 0;
     seriesData.push(...transposeSeries);
-
-    console.log(seriesData);
   }
 
   return seriesData;
