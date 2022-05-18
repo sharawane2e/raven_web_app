@@ -31,7 +31,7 @@
     }
   }
   .appbar__right-panel {
-    padding: 0.625rem 0; //10px 0px;
+    //padding: 0.625rem 0; //10px 0px;
     padding-right: 0.9375rem; //15px
     .appbar__tourGuide {
       display: flex;
@@ -58,9 +58,10 @@
     
   }
   &__logo-image{
-    width: 150px;
-       // height: 43px;
-        margin-right: 10px;
+    //width: 150px;
+    width: 193px;
+    margin-right: 10px;
+    padding-top: 6px;
     img{
       width: 100%;
       max-width: 100%;

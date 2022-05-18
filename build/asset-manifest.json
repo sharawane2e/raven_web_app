@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/cello/210394/static/css/main.ebdd6f52.chunk.css",
-    "main.js": "/cello/210394/static/js/main.2992d13d.chunk.js",
-    "main.js.map": "/cello/210394/static/js/main.2992d13d.chunk.js.map",
+    "main.css": "/cello/210394/static/css/main.2150aece.chunk.css",
+    "main.js": "/cello/210394/static/js/main.150163d9.chunk.js",
+    "main.js.map": "/cello/210394/static/js/main.150163d9.chunk.js.map",
     "runtime-main.js": "/cello/210394/static/js/runtime-main.804396a4.js",
     "runtime-main.js.map": "/cello/210394/static/js/runtime-main.804396a4.js.map",
     "static/css/2.029a9c87.chunk.css": "/cello/210394/static/css/2.029a9c87.chunk.css",
@@ -18,7 +18,7 @@
     "static/js/6.bf7fe567.chunk.js.map": "/cello/210394/static/js/6.bf7fe567.chunk.js.map",
     "index.html": "/cello/210394/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/cello/210394/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.ebdd6f52.chunk.css.map": "/cello/210394/static/css/main.ebdd6f52.chunk.css.map",
+    "static/css/main.2150aece.chunk.css.map": "/cello/210394/static/css/main.2150aece.chunk.css.map",
     "static/js/2.e34626fa.chunk.js.LICENSE.txt": "/cello/210394/static/js/2.e34626fa.chunk.js.LICENSE.txt",
     "static/js/3.4a9e7b60.chunk.js.LICENSE.txt": "/cello/210394/static/js/3.4a9e7b60.chunk.js.LICENSE.txt",
     "static/js/4.ef46f4bb.chunk.js.LICENSE.txt": "/cello/210394/static/js/4.ef46f4bb.chunk.js.LICENSE.txt",
@@ -37,7 +37,7 @@
     "static/media/brazilFlag.b5e43b5b.svg": "/cello/210394/static/media/brazilFlag.b5e43b5b.svg",
     "static/media/business_objective.cb252ac7.svg": "/cello/210394/static/media/business_objective.cb252ac7.svg",
     "static/media/chinaFlag.7ad32857.svg": "/cello/210394/static/media/chinaFlag.7ad32857.svg",
-    "static/media/client_sublogo.5bde509b.png": "/cello/210394/static/media/client_sublogo.5bde509b.png",
+    "static/media/client_sublogo.00c099f1.png": "/cello/210394/static/media/client_sublogo.00c099f1.png",
     "static/media/column-chart-icon.0daa5be2.svg": "/cello/210394/static/media/column-chart-icon.0daa5be2.svg",
     "static/media/edit-profile-icon.2ebd430c.svg": "/cello/210394/static/media/edit-profile-icon.2ebd430c.svg",
     "static/media/edit-user-icon.aada8acc.svg": "/cello/210394/static/media/edit-user-icon.aada8acc.svg",
@@ -69,7 +69,7 @@
     "static/js/runtime-main.804396a4.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.e34626fa.chunk.js",
-    "static/css/main.ebdd6f52.chunk.css",
-    "static/js/main.2992d13d.chunk.js"
+    "static/css/main.2150aece.chunk.css",
+    "static/js/main.150163d9.chunk.js"
   ]
 }

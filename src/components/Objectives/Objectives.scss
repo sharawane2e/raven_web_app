@@ -12,6 +12,7 @@
       flex: 70%;
       padding-left: 10px;
       h2 {
+        margin-left: 0.15rem;
         margin-bottom: 2rem;
       }
     }
@@ -44,21 +45,21 @@
         margin-top: 2px;
         position: relative;
       }
-      ul {
-        li {
-          list-style: none;
-          & ::before {
-            content: ' ';
-            width: 0;
-            height: 0;
-            border-top: 10px solid #0000ff9c;
-            border-left: 10px solid transparent;
-            position: absolute;
-            left: -10px;
-            margin-top: 7px;
-          }
-        }
-      }
+      // ul {
+      //   li {
+      //     list-style: none;
+      //     & ::before {
+      //       content: ' ';
+      //       width: 0;
+      //       height: 0;
+      //       border-top: 10px solid #0000ff9c;
+      //       border-left: 10px solid transparent;
+      //       position: absolute;
+      //       left: -10px;
+      //       margin-top: 7px;
+      //     }
+      //   }
+      // }
 
       &--blue {
         color: #0193d5;
@@ -172,7 +173,7 @@ h2 {
 .nation-container {
   display: flex;
   flex-wrap: wrap;
-  margin: 4rem;
+  margin: 3.5rem 3rem 0.6rem 3rem;
 }
 .nation-container__card {
   border: solid 1px #acacac;
@@ -221,3 +222,57 @@ h2 {
     flex: 0 0 21.33%;
   }
 }
+
+.topic-container{
+  &__headerCont{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 50px;
+    border-bottom: 1px solid #000;
+  }
+  &__heading{
+    padding: 10px 0;
+    h2{
+      padding-left: 0;
+      margin: 0;
+    }
+  }
+  &__headerCont-logo{
+    margin-right: 30px;
+    &img{
+      width: 300px;
+    }
+  }
+  &__topicsCont{
+    display: flex;
+    padding: 30px 50px 0 50px;
+  }
+  &__leftcont{
+    width: 50%;
+  }
+  &__rightcont{
+    width: 50%;
+  }
+  .topicCont h3 {
+    color: #0193d5;
+    font-weight: 600;
+  }
+  .topicCont {
+    ul{
+      padding-left:25px;
+      li{
+        font-size: 14px;
+        line-height: 1;
+        margin-bottom: 5px;
+      }
+    }
+
+  }
+}
+
+
+.topicCont {
+  min-height: 150px;
+}
+
