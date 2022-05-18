@@ -273,6 +273,11 @@ h2 {
 
 
 .topicCont {
-  min-height: 150px;
+  min-height: 162px;
+ 
 }
-
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+  .topicCont {
+    min-height: 230px;
+  }
+}
