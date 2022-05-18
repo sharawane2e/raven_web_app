@@ -134,7 +134,7 @@ export const fetchChartData = async (
       }
 
       chartData.showMean = false;
-      chartData.chartLabelType = ChartLabelType.NUMBER;
+      //chartData.chartLabelType = ChartLabelType.NUMBER;
 
       // console.log('chartData.chartLabelType', chartData.chartLabelType);
       // chartData.chartLabelType = false;
@@ -142,9 +142,6 @@ export const fetchChartData = async (
   } catch (error) {
     console.log(error);
   }
-  // debugger;
-
-  console.log('chartData.chartLabelType', chartData.chartLabelType);
 
   if (chartData.chartLabelType == ChartLabelType.NUMBER) {
     //debugger;
