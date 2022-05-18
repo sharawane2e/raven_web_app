@@ -108,7 +108,7 @@ export const setDefaultSlideProperties = (
       },
     },
     { image: { x: 0.3, y: 5.23, w: 2.2, h: 0.3, data: clientBrandingLogo } },
-    { image: { x: '72%', y: 0.1, w: 2.5, h: 0.6, data: clientSubLogo } },
+    { image: { x: '85%', y: 0.1, w: 1.4, h: 0.3, data: clientSubLogo } },
   ];
 
   if (bannerQuestionText) {
