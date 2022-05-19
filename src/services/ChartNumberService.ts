@@ -1,12 +1,11 @@
-import store from "../redux/store";
-import { IQuestion } from "../types/IQuestion";
-import { colorArr, primaryBarColor } from "../constants/Variables";
-import { dataLabels } from "../redux/reducers/chartReducer";
-import { getNumberPlotOptions, getToolTip } from "../utils/NumberPlotOptions";
-import { ChartType } from "../enums/ChartType";
-import { IQuestionOption } from "../types/IBaseQuestion";
-import { mean, median, min, max } from "simple-statistics";
-import _ from "lodash";
+import store from '../redux/store';
+import { IQuestion } from '../types/IQuestion';
+import { colorArr, primaryBarColor } from '../constants/Variables';
+import { dataLabels } from '../redux/reducers/chartReducer';
+import { getNumberPlotOptions, getToolTip } from '../utils/NumberPlotOptions';
+import { ChartType } from '../enums/ChartType';
+import { IQuestionOption } from '../types/IBaseQuestion';
+import { getmean, getmedian, getmin, getmax } from '../utils/simplestatistics';
 
 export const getNumberChartOption = (
   questionData: IQuestion,
@@ -14,7 +13,7 @@ export const getNumberChartOption = (
   baseCount: number,
   bannerQuestionData: any,
   chartOptionsData: any,
-  transposed: any
+  transposed: any,
 ) => {
   const {
     questions: { selectedBannerQuestionId },
@@ -47,10 +46,10 @@ export const getNumberChartOption = (
       if (chart_el.length) {
         const meanMediaArr: any = [];
         const chartelment = chart_el[0];
-        const meanValue = mean(chartelment?.values);
-        const minValue = min(chartelment?.values);
-        const maxValue = max(chartelment?.values);
-        const medainValue = median(chartelment?.values);
+        const meanValue = getmean(chartelment?.values);
+        const minValue = getmin(chartelment?.values);
+        const maxValue = getmax(chartelment?.values);
+        const medainValue = getmedian(chartelment?.values);
         meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
         meanMaxArr.push(meanMediaArr);
       }
@@ -128,10 +127,10 @@ export const getNumberChartOption = (
       weightsSum = chart_el?.weightsSum;
     });
 
-    const meanValue = mean(values);
-    const minValue = min(values);
-    const maxValue = max(values);
-    const medainValue = median(values);
+    const meanValue = getmean(values);
+    const minValue = getmin(values);
+    const maxValue = getmax(values);
+    const medainValue = getmedian(values);
 
     meanMaxArr.push(meanValue, medainValue, minValue, maxValue);
 

@@ -6,4 +6,18 @@
     &__standard-deviation{
         padding-right: 10px;
     }
+    .show-text{
+        font-size: 16px;
+    }
+    .show-value{
+        font-weight: bold;
+        font-size: 14px;
+    }
+}
+.chart-content__chart-wrapper-table{
+    .standard-deviation{
+        color: $white;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
 }

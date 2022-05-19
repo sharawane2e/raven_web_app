@@ -37,7 +37,6 @@ import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
-import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
 import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
@@ -346,10 +345,23 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         {chartLoading ? (
           <Loader />
         ) : chartType === ChartType.TABLE ? (
-          <TableView />
+          <>
+            {chart?.questionData?.isMean &&
+            chart?.questionData?.type === QuestionType.SINGLE ? (
+              <StandardDeviation />
+            ) : (
+              ''
+            )}
+            <TableView />
+          </>
         ) : (
           <>
-            <StandardDeviation />
+            {chart?.questionData?.isMean &&
+            chart?.questionData?.type === QuestionType.SINGLE ? (
+              <StandardDeviation />
+            ) : (
+              ''
+            )}
             <Chart />
           </>
         )}

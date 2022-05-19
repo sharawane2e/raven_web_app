@@ -15,7 +15,7 @@ import { ChartType } from '../../enums/ChartType';
 
 export const singleChartUtil = (
   questionData: IQuestion,
-  chartData: any[],
+  chartData: any,
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,

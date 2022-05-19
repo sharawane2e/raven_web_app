@@ -12,6 +12,9 @@ export const getmedian = (medianArr) => {
 export const getmin = (minArr) => {
         return min(minArr);
   };
+export const getmax = (maxArr) => {
+        return min(maxArr);
+  };
   
 export const getsampleStandardDeviation = (standardDeviationArr,precision) => {
         return standardDeviation(standardDeviationArr).toFixed(precision);
