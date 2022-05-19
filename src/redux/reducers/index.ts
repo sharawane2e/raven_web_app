@@ -1,27 +1,29 @@
-import { combineReducers } from "redux";
-import chartReducer from "./chartReducer";
-import filterReducer from "./filterReducer";
-import questionReducer from "./questionReducer";
-import userReducer from "./userReducer";
-import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
-import tourReducer from "./tourReducer";
-import sidebarReducer from "./sidebarReducer";
-import chapterReducer from "./chapterReducer";
+import { combineReducers } from 'redux';
+import chartReducer from './chartReducer';
+import filterReducer from './filterReducer';
+import questionReducer from './questionReducer';
+import userReducer from './userReducer';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
+import tourReducer from './tourReducer';
+import sidebarReducer from './sidebarReducer';
+import chapterReducer from './chapterReducer';
+import standardDeviationReduce from './standardDeviationReduce';
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  whitelist: ["profile"],
+  whitelist: ['profile'],
 };
 
 const rootReducer = combineReducers({
   questions: questionReducer,
   filters: filterReducer,
-  chapters:chapterReducer,
+  chapters: chapterReducer,
   chart: chartReducer,
   tour: tourReducer,
   sidebar: sidebarReducer,
+  standard: standardDeviationReduce,
   user: persistReducer(persistConfig, userReducer),
 });
 

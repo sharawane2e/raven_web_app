@@ -1,51 +1,52 @@
-import { useState, MouseEvent, useEffect } from "react";
-import Grid from "@material-ui/core/Grid";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useState, MouseEvent, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 import {
   fetchBannerQuestionList,
   fetchQuestionList,
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
   toggleBannerQuestionDisablity,
-} from "../../redux/actions/questionAction";
+} from '../../redux/actions/questionAction';
 import {
   setChartData,
   setChartLabel,
   setChartTranspose,
-} from "../../redux/actions/chartActions";
-import { changeChartType, fetchChartData } from "../../services/ChartService";
-import AppliedFilterList from "../AppliedFilterList";
-import SingleSelect from "../widgets/SingleSelect";
-import Chart from "../Chart";
-import TableView from "../TableView";
-import OrientationControl from "../OrientationControl";
-import ChartTypeControl from "../ChartTypeControl";
-import ExportChart from "../ExportChart";
-import { QuestionType } from "../../enums/QuestionType";
-import { ChartType } from "../../enums/ChartType";
-import { StaticText } from "../../constants/StaticText";
-import { Tooltip } from "@material-ui/core";
-import Toaster from "../../utils/Toaster";
-import { Menu, MenuItem } from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import store from "../../redux/store";
-import ChartTransposeControl from "../ChartTransposeControl";
-import clsx from "clsx";
-import LabelTypeControl from "../LabelTypeControl";
-import ChartFullScreen from "../ChartFullScreen";
-import Loader from "../widgets/Loader/Index";
-import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
-import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
-import { ReactComponent as RavenBrandLogo } from "../../assets/svg/raven-brand-logo.svg";
-import Chapter from "../Chapter";
-import _ from "lodash";
-import IsMeanControl from "../IsMeanControl";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { setSelectedQuestion } from "../../redux/actions/chapterActions";
+} from '../../redux/actions/chartActions';
+import { changeChartType, fetchChartData } from '../../services/ChartService';
+import AppliedFilterList from '../AppliedFilterList';
+import SingleSelect from '../widgets/SingleSelect';
+import Chart from '../Chart';
+import TableView from '../TableView';
+import OrientationControl from '../OrientationControl';
+import ChartTypeControl from '../ChartTypeControl';
+import ExportChart from '../ExportChart';
+import { QuestionType } from '../../enums/QuestionType';
+import { ChartType } from '../../enums/ChartType';
+import { StaticText } from '../../constants/StaticText';
+import { Tooltip } from '@material-ui/core';
+import Toaster from '../../utils/Toaster';
+import { Menu, MenuItem } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import store from '../../redux/store';
+import ChartTransposeControl from '../ChartTransposeControl';
+import clsx from 'clsx';
+import LabelTypeControl from '../LabelTypeControl';
+import ChartFullScreen from '../ChartFullScreen';
+import Loader from '../widgets/Loader/Index';
+import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
+import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
+import { ReactComponent as RavenBrandLogo } from '../../assets/svg/raven-brand-logo.svg';
+import Chapter from '../Chapter';
+import _ from 'lodash';
+import IsMeanControl from '../IsMeanControl';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { setSelectedQuestion } from '../../redux/actions/chapterActions';
+import StandardDeviation from '../StandardDeviation';
 
 interface ChartContentProps {
-  variant?: "fullWidth" | "partialWidth";
+  variant?: 'fullWidth' | 'partialWidth';
 }
 
 const ChartContent: React.FC<ChartContentProps> = (props) => {
@@ -91,9 +92,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     const selectchapterObject = _.find(allChapters, function (o) {
       return o.chapterId === selectedChapterId;
     });
-    const sortedChapterOrder = _.sortBy(allChapters, ["order"]);
+    const sortedChapterOrder = _.sortBy(allChapters, ['order']);
     sortedChapterOrder.forEach((chapterData: any, index) => {
-      if (chapterData["chapterId"] === selectchapterObject?.chapterId) {
+      if (chapterData['chapterId'] === selectchapterObject?.chapterId) {
         for (let i = 0; i < chapterData?.QuestionsQIds.length; i++) {
           for (let j = 0; j < questions?.questionList.length; j++) {
             if (chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId)
@@ -111,7 +112,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       questionData?.type === QuestionType.RANK ||
       questionData?.type === undefined
     ) {
-      dispatch(setSelectedBannerQuestionId(""));
+      dispatch(setSelectedBannerQuestionId(''));
       dispatch(toggleBannerQuestionDisablity(true));
     } else {
       dispatch(toggleBannerQuestionDisablity(false));
@@ -180,7 +181,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
-      options={[{ qId: "", labelText: "None" }, ...bannerQuestionList]}
+      options={[{ qId: '', labelText: 'None' }, ...bannerQuestionList]}
       value={selectedBannerQuestionId}
       open={questions.disableBannerQuestion ? false : OpenQuestionCross}
       onItemSelect={handelBannerQuestionChange}
@@ -191,7 +192,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       disabled={questions.disableBannerQuestion}
       disabledPredicate={(value) => value === selectedQuestionId}
       MenuProps={{
-        classes: { paper: "testing" },
+        classes: { paper: 'testing' },
       }}
       handleClose={() => setOpenQuestionCross(false)}
       handleOpen={() => setOpenQuestionCross(true)}
@@ -238,12 +239,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           id="menu"
           keepMounted
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
+            vertical: 'bottom',
+            horizontal: 'right',
           }}
           transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
+            vertical: 'top',
+            horizontal: 'right',
           }}
           getContentAnchorEl={null}
           open={Boolean(anchorEl)}
@@ -251,7 +252,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           disableAutoFocusItem
           PaperProps={{
             elevation: 0,
-            className: "chart-content__control-menu",
+            className: 'chart-content__control-menu',
           }}
         >
           <MenuItem className="chart-content__menu-item">
@@ -289,7 +290,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               className="single_select_area Step-1"
               disabledPredicate={(value) => value === selectedBannerQuestionId}
               MenuProps={{
-                classes: { paper: "testing" },
+                classes: { paper: 'testing' },
               }}
               open={openQSelection}
               handleClose={handleQSelectionClose}
@@ -298,9 +299,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           </Grid>
           <Grid
             xs={4}
-            className={`${questionData?.isMean ? "mean-switch " : ""}`}
+            className={`${questionData?.isMean ? 'mean-switch ' : ''}`}
           >
-            {questionData?.isMean ? (
+            {questionData?.isMean && questionData.type === QuestionType.GRID ? (
               <IsMeanControl />
             ) : questions.disableBannerQuestion ? (
               <Tooltip
@@ -318,9 +319,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       </div>
 
       <div
-        className={clsx("chart-content__chart-wrapper", {
-          "chart-content__chart-wrapper-table": chartType === ChartType.TABLE,
-          "chart-wrapper--loading": chartLoading == true,
+        className={clsx('chart-content__chart-wrapper', {
+          'chart-content__chart-wrapper-table': chartType === ChartType.TABLE,
+          'chart-wrapper--loading': chartLoading == true,
         })}
       >
         {/* <ChartTransposeControl /> */}
@@ -332,14 +333,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             />
           </div>
         ) : (
-          ""
+          ''
         )}
         {chart?.chartData == [] ? (
           <div className="noQuestion--selected">
             <No_Data_Found />
           </div>
         ) : (
-          ""
+          ''
         )}
 
         {chartLoading ? (
@@ -347,7 +348,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : chartType === ChartType.TABLE ? (
           <TableView />
         ) : (
-          <Chart />
+          <>
+            <StandardDeviation />
+            <Chart />
+          </>
         )}
         {chart?.questionData !== null ? (
           <div className="chart-content-footer">
@@ -360,16 +364,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
                 menus, not in-legend selections.
               </div>
             </div>
-            <div className="appbar__logo-wrapper">
-              {/* <RavenBrandLogo /> */}
-              {/* <BrandLogo
-              className="appbar__brand-logo"
-              // onClick={() => history.push('/home')}
-            /> */}
-            </div>
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
     </div>

@@ -1,17 +1,17 @@
-import React, { ReactElement } from "react";
-import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
-import { ReactComponent as NumberIcon } from "../../assets/svg/Number.svg";
-import { ReactComponent as PercentageIcon } from "../../assets/svg/Percentage.svg";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import store from "../../redux/store";
-import { setChartData, setChartLabel } from "../../redux/actions/chartActions";
+import React, { ReactElement } from 'react';
+import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
+import { ReactComponent as NumberIcon } from '../../assets/svg/Number.svg';
+import { ReactComponent as PercentageIcon } from '../../assets/svg/Percentage.svg';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import store from '../../redux/store';
+import { setChartData, setChartLabel } from '../../redux/actions/chartActions';
 import {
   getChartOptions,
   getPlotOptions,
-} from "../../utils/ChartOptionFormatter";
-import Toaster from "../../utils/Toaster";
-import { StaticText } from "../../constants/StaticText";
-import { QuestionType } from "../../enums/QuestionType";
+} from '../../utils/ChartOptionFormatter';
+import Toaster from '../../utils/Toaster';
+import { StaticText } from '../../constants/StaticText';
+import { QuestionType } from '../../enums/QuestionType';
 
 interface LabelTypeControlProps {}
 
@@ -32,7 +32,7 @@ const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
-      tooltip: "Percentage",
+      tooltip: 'Percentage',
       renderChild: () => <PercentageIcon />,
       onClick: () => {
         changeChartLabelType(ChartLabelType.PERCENTAGE);
@@ -45,7 +45,7 @@ const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART),
     },
     {
-      tooltip: "Number",
+      tooltip: 'Number',
       renderChild: () => <NumberIcon />,
       onClick: () => {
         changeChartLabelType(ChartLabelType.NUMBER);
