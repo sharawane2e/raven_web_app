@@ -43,9 +43,9 @@ export const chartConfig: pptxgen.IChartOpts = {
 };
 
 export const tableConfig: pptxgen.TableProps = {
-  x: 0.3,
-  y: 0.9,
-  h: 3.8,
+  x: 0.4,
+  y: 1.1,
+  h: 3.3,
   w: 9.4,
   border: { pt: 0.4, type: 'solid', color: 'E6E6E6' },
   fontSize: 6,
@@ -54,5 +54,5 @@ export const tableConfig: pptxgen.TableProps = {
   autoPageLineWeight: 10,
   autoPageCharWeight: 10,
   autoPageRepeatHeader: false,
-  autoPageSlideStartY: 0.9,
+  autoPageSlideStartY: 1.1,
 };

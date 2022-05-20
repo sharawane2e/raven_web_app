@@ -1,9 +1,10 @@
 export interface ISlideConfig {
   mainQuestionText: string;
-  bannerQuestionText:string;
+  bannerQuestionText: string;
   filters: string;
   chartFontFace: string;
   baseText: string;
   sourceText: string;
   copyRightText: string;
+  meanStandardDEviation: any;
 }

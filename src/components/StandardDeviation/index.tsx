@@ -16,6 +16,7 @@ import {
   setStandardError,
 } from '../../redux/actions/standardDeviationAction';
 import { round } from '../../utils/Utility';
+import StandardText from '../../enums/StandardType';
 
 interface StandardDeviation {}
 
@@ -59,15 +60,15 @@ const StandardDeviation: React.FC<StandardDeviation> = () => {
   return (
     <div className="standard-deviation">
       <div className="standard-deviation__mean">
-        <span className="show-text">Mean</span>:
+        <span className="show-text">{StandardText.MEAN}</span>:
         <span className="show-value">{isMean}</span>
       </div>
       <div className="standard-deviation__standard-deviation">
-        <span className="show-text">Standard Deviation</span>:
+        <span className="show-text">{StandardText.SD}</span>:
         <span className="show-value">{standardDeviation}</span>
       </div>
       <div className="standard-deviation__standard-error">
-        <span className="show-text">Standard Error</span>:
+        <span className="show-text">{StandardText.SE}</span>:
         <span className="show-value">{standardError}</span>
       </div>
     </div>

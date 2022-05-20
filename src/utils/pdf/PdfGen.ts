@@ -1,13 +1,12 @@
 import store from '../../redux/store';
 import { ChartType } from '../../enums/ChartType';
-
 import jsPDF from 'jspdf';
 import 'svg2pdf.js';
 import autoTable from 'jspdf-autotable';
 import { tableChartDataGen } from '../export-helper-utils/TableUtils';
-
 import { exportPrefix } from '../../constants/Variables';
 import { setDefaultPdfPageProperties } from '../pdf/DefaultPdfProps';
+
 export const generatePdf = async () => {
   const {
     chart: { questionData, chartType, chartTranspose },

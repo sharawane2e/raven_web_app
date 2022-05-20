@@ -1,16 +1,20 @@
-import store from "../../redux/store";
+import store from '../../redux/store';
 
-import jsPDF from "jspdf";
-import "svg2pdf.js";
+import jsPDF from 'jspdf';
+import 'svg2pdf.js';
 
-import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
+import {
+  appliedFiltersText,
+  meanStandardDeviation,
+} from '../export-helper-utils/GeneralUtils';
 import {
   logoBase64String,
   primaryBarColor,
   copyRightText,
-} from "../../constants/Variables";
+} from '../../constants/Variables';
 //import { clientBrandingLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
-import { hexToRgb } from "@material-ui/core";
+import { hexToRgb } from '@material-ui/core';
+import { QuestionType } from '../../enums/QuestionType';
 
 export const setDefaultPdfPageProperties = async (
   doc: jsPDF,
@@ -23,41 +27,43 @@ export const setDefaultPdfPageProperties = async (
   copyRightX: any,
   copyRightY: any,
   qWordBreak: any,
-  lWordBreak: any
+  lWordBreak: any,
 ) => {
   const {
     chart: { questionData, baseCount, bannerQuestionData },
   } = store.getState();
 
-  // doc.addFont("Avenir", "Arial", "normal");
-
-  // doc.setFont("Avenir");
   doc.setFontSize(10);
-  const lText = doc.splitTextToSize(questionData?.labelText || "", lWordBreak);
+  const lText = doc.splitTextToSize(questionData?.labelText || '', lWordBreak);
 
   doc.text(lText, 10, 5);
   doc.setFontSize(8);
   doc.setTextColor(64, 64, 64);
+
   const filterText = doc.splitTextToSize(
-    appliedFiltersText() || "",
-    qWordBreak
+    appliedFiltersText() || '',
+    qWordBreak,
   );
+
   doc.text(filterText, 10, 20);
-  doc.text("Sample set: " + baseCount || "", baseX, baseY);
+  if (questionData?.type === QuestionType.SINGLE && questionData?.isMean) {
+    doc.text(meanStandardDeviation(), 10, 25);
+  }
+
+  doc.text('Sample set: ' + baseCount || '', baseX, baseY);
   if (bannerQuestionData) {
     doc.text(
-      "Cross tabulated:  " + bannerQuestionData?.labelText || "",
+      'Cross tabulated:  ' + bannerQuestionData?.labelText || '',
       baseX,
-      baseY + 5
+      baseY + 5,
     );
   }
-  // doc.text(sourceText || "", sourceX, sourceY);
-  // doc.setFontSize(6);
+
   doc.setTextColor(127, 127, 127);
-  doc.text(copyRightText || "", copyRightX, copyRightY);
+  doc.text(copyRightText || '', copyRightX, copyRightY);
   doc.setDrawColor(0);
   doc.setFillColor(hexToRgb(primaryBarColor));
-  doc.rect(5, 0, 3, 12, "F");
+  doc.rect(5, 0, 3, 12, 'F');
 
-  doc.addImage(logoBase64String, "JPEG", logoX, logoY, 25, 12);
+  doc.addImage(logoBase64String, 'JPEG', logoX, logoY, 25, 12);
 };
