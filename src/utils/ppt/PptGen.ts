@@ -52,10 +52,10 @@ export const generatePpt = async () => {
 
   let chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
-    showLegend: chartType === ChartType.COLUMN ? false : true,
+    showLegend: chartType === ChartType.COLUMN ? true : true,
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? '##.##%;;;'
+        ? '#,##0.0%;;;'
         : showMean
         ? '##.##'
         : '##',
