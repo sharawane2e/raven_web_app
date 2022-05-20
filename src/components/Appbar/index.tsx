@@ -29,12 +29,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
 
   const { variant = 'partialWidth' } = props;
-  // const {
-  //   open: sidebarOpen,
-  //   toggleSidebarOpen,
-  //   openMobileDrawer,
-  //   toggleMobileSidebar,
-  // } = useContext(SidebarContext);
 
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
     (state: RootState) => state.sidebar,
@@ -77,10 +71,6 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     >
       <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper client-logo">
-          {/* <BrandLogo
-            className="appbar__brand-logo"
-            onClick={() => history.push('/home')}
-          /> */}
           <div className="public-form__client-logo client-logo__icons">
             {/* <Boehringer onClick={() => history.push('/home')} /> */}
             <Boehringer />

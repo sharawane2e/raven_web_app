@@ -36,7 +36,10 @@ export function pptDataGen(
   } = store.getState();
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
+
+  let slide1 = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+
   let seriesData: any[] = [];
   let chartColors: any[] = [];
 
@@ -132,7 +135,7 @@ export function pptDataGen(
       output.push(rowArray);
     });
 
-    slide.addTable(output, { ...tableConfig });
+    slide1.addTable(output, { ...tableConfig });
   } else {
     let pptChartType: any;
 
@@ -183,12 +186,12 @@ export function pptDataGen(
       });
     }
 
-    slide.addChart(pptChartType, seriesData, {
+    slide1.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
       ...chartSettings,
     });
   }
-  return slide;
+  return slide1;
 }
