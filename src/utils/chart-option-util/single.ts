@@ -120,7 +120,7 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    debugger;
+    // debugger;
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -128,6 +128,9 @@ export const getSingleChartOptionsSeries = (
       optionIndex++
     ) {
       const option = questionData.options[optionIndex];
+      if (_.isArray(option.labelCode)) {
+        debugger;
+      }
       const label = chartData.find(
         (record: { labelCode: string; count: number }) =>
           record.labelCode === option.labelCode

@@ -21,7 +21,6 @@ export const getGridChartoptionSeries = (
   chartData: any,
   baseCount: any
 ) => {
-  debugger;
   const categories = [];
   const series = [];
   const {
