@@ -1,24 +1,24 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { round } from '../Utility';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { round } from "../Utility";
 import {
   colorArr,
   decimalPrecision,
   primaryBarColor,
-} from '../../constants/Variables';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import { ChartType } from '../../enums/ChartType';
+} from "../../constants/Variables";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import { ChartType } from "../../enums/ChartType";
 
-export const singleChartUtil = (
+export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
   bannerQuestionData: IQuestion | null,
-  chartOptionsData: any,
+  chartOptionsData: any
 ) => {
   const {
     questions: { selectedBannerQuestionId, questionList },
@@ -68,12 +68,12 @@ export const singleChartUtil = (
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode,
+            (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0,
+            0
           );
 
           if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -120,6 +120,7 @@ export const singleChartUtil = (
     }
     return series;
   } else {
+    debugger;
     const data: any[] = [];
     for (
       let optionIndex = 0;
@@ -129,7 +130,7 @@ export const singleChartUtil = (
       const option = questionData.options[optionIndex];
       const label = chartData.find(
         (record: { labelCode: string; count: number }) =>
-          record.labelCode === option.labelCode,
+          record.labelCode === option.labelCode
       );
       let count = 0;
       if (label) {

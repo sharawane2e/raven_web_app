@@ -14,7 +14,7 @@ import { round } from './Utility';
 import _, { find, omit } from 'lodash';
 import { ChartOrientation } from '../enums/ChartOrientation';
 import { getNumberChartOption } from '../services/ChartNumberService';
-import { singleChartUtil } from './chart-option-util/single';
+import { getSingleChartOptionsSeries } from './chart-option-util/single';
 import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
@@ -290,7 +290,7 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
 ): any => {
-  const series = singleChartUtil(
+  const series = getSingleChartOptionsSeries(
     questionData,
     chartData,
     baseCount,
