@@ -1,44 +1,37 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { round } from "../Utility";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import _, { find } from 'lodash';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { round } from '../Utility';
 import {
   colorArr,
   decimalPrecision,
   primaryBarColor,
-} from "../../constants/Variables";
-import { dataLabels } from "../../redux/reducers/chartReducer";
-import { ChartType } from "../../enums/ChartType";
+} from '../../constants/Variables';
+import { dataLabels } from '../../redux/reducers/chartReducer';
+import { ChartType } from '../../enums/ChartType';
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
   bannerQuestionData: IQuestion | null,
-  chartOptionsData: any
+  chartOptionsData: any,
 ) => {
   const {
+    chart: { chartLabelType, chartOptions, chartType },
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
-  const {
-    chart: { chartLabelType, chartOptions },
-  } = store.getState();
-
-  const {
-    chart: { chartType },
-  } = store.getState();
-
-  const {
-    plotOptions: {
-      series: {
-        dataLabels: { format },
-      },
-    },
-  } = chartOptionsData;
+  // const {
+  //   plotOptions: {
+  //     series: {
+  //       dataLabels: { format },
+  //     },
+  //   },
+  // } = chartOptionsData;
 
   if (selectedBannerQuestionId) {
     const categories: string[] = [];
@@ -68,12 +61,12 @@ export const getSingleChartOptionsSeries = (
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode
+            (option: any) => option.labelCode === bannerQuesOption.labelCode,
           );
 
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0
+            0,
           );
 
           if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -120,17 +113,19 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    debugger;
     const data: any[] = [];
+
     for (
       let optionIndex = 0;
       optionIndex < questionData.options.length;
       optionIndex++
     ) {
       const option = questionData.options[optionIndex];
+      console.log(option);
+
       const label = chartData.find(
         (record: { labelCode: string; count: number }) =>
-          record.labelCode === option.labelCode
+          record.labelCode === option.labelCode,
       );
       let count = 0;
       if (label) {

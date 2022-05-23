@@ -439,7 +439,6 @@ const getGridChartOptions = (
   } = store.getState();
 
   if (showMean) {
-    console.log(getGridMeanChartOptions(questionData, chartData, baseCount));
     series.length = 0;
     series.push(...getGridMeanChartOptions(questionData, chartData, baseCount));
   } else {
