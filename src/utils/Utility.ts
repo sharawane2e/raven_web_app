@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { decimalPrecision } from '../constants/Variables';
+import _ from "lodash";
+import { decimalPrecision } from "../constants/Variables";
 
 export function round(value: number, precision: number) {
   var multiplier = Math.pow(10, precision || 0);
@@ -8,7 +8,7 @@ export function round(value: number, precision: number) {
 
 export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
-  return percentageValue + '%';
+  return percentageValue + "%";
 }
 
 export function timeout(ms: number) {
@@ -18,12 +18,13 @@ export function timeout(ms: number) {
 export function getmatchedFind(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   if (_.isArray(compareWith)) {
-    return collection.find(
-      (data: any) => +_.isEqual(data[collectionKey], compareWith),
-    );
+    return collection.find(function (data: any) {
+      // debugger;
+      return +_.isEqual(data[collectionKey], compareWith);
+    });
   } else {
     return collection.find((data: any) => data[collectionKey] === compareWith);
   }
@@ -32,7 +33,7 @@ export function getmatchedFind(
 export function getMatchedfilter(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   return _.filter(collection, function (o) {
     if (_.isArray(compareWith)) {
@@ -40,5 +41,11 @@ export function getMatchedfilter(
     } else {
       return compareWith === o[collectionKey];
     }
+  });
+}
+
+export function getSum(collection: any, identity: any) {
+  return _.sumBy(collection, function (o: any) {
+    return o[identity];
   });
 }

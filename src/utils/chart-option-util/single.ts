@@ -1,24 +1,24 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { round } from '../Utility';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
 import {
   colorArr,
   decimalPrecision,
   primaryBarColor,
-} from '../../constants/Variables';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import { ChartType } from '../../enums/ChartType';
+} from "../../constants/Variables";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import { ChartType } from "../../enums/ChartType";
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
   bannerQuestionData: IQuestion | null,
-  chartOptionsData: any,
+  chartOptionsData: any
 ) => {
   const {
     chart: { chartLabelType, chartOptions, chartType },
@@ -53,12 +53,12 @@ export const getSingleChartOptionsSeries = (
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode,
+            (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0,
+            0
           );
 
           if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -105,7 +105,6 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    // debugger;
     const data: any[] = [];
 
     for (
@@ -114,18 +113,16 @@ export const getSingleChartOptionsSeries = (
       optionIndex++
     ) {
       const option = questionData.options[optionIndex];
-      if (_.isArray(option.labelCode)) {
-        //debugger;
-      }
-      const label = chartData.find(
-        (record: { labelCode: string; count: number }) =>
-          record.labelCode === option.labelCode,
+
+      const labelCollection = getMatchedfilter(
+        chartData,
+        "labelCode",
+        option.labelCode
       );
-      console.log(label);
 
       let count = 0;
-      if (label) {
-        count = label.count;
+      if (labelCollection) {
+        count = getSum(labelCollection, "count");
       }
       let plotValue;
       let percentageValue = (count / baseCount) * 100;
@@ -171,7 +168,6 @@ export const getSingleChartOptionsSeries = (
         dataLabels,
       });
     }
-
     return series;
   }
 };
