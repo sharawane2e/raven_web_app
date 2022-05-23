@@ -32,50 +32,50 @@ export const setDefaultSlideProperties = (
         fill: { color: primaryBarColor },
       },
     },
-    {
-      text: {
-        text: mainQuestionText,
-        options: {
-          x: 0.5,
-          y: 0.25,
-          w: 8,
-          fontFace: chartFontFace,
-          fontSize: 12,
-          color: '323c4e',
-          align: 'left',
-          bold: true,
-        },
-      },
-    },
-    {
-      text: {
-        text: filters,
-        options: {
-          x: 0.3,
-          y: 0.7,
-          w: 9.5,
-          fontFace: chartFontFace,
-          fontSize: 8,
-          color: '404040',
-          align: 'left',
-        },
-      },
-    },
-    {
-      text: {
-        text: baseText,
-        options: {
-          x: 0.3,
-          y: 4.8,
-          w: 9.5,
-          fontFace: chartFontFace,
-          fontSize: 8,
-          color: '404040',
-          align: 'left',
-          // bold: true,
-        },
-      },
-    },
+    // {
+    //   text: {
+    //     text: mainQuestionText,
+    //     options: {
+    //       x: 0.5,
+    //       y: 0.25,
+    //       w: 8,
+    //       fontFace: chartFontFace,
+    //       fontSize: 12,
+    //       color: '323c4e',
+    //       align: 'left',
+    //       bold: true,
+    //     },
+    //   },
+    // },
+    // {
+    //   text: {
+    //     text: filters,
+    //     options: {
+    //       x: 0.3,
+    //       y: 0.7,
+    //       w: 9.5,
+    //       fontFace: chartFontFace,
+    //       fontSize: 8,
+    //       color: '404040',
+    //       align: 'left',
+    //     },
+    //   },
+    // },
+    // {
+    //   text: {
+    //     text: baseText,
+    //     options: {
+    //       x: 0.3,
+    //       y: 4.8,
+    //       w: 9.5,
+    //       fontFace: chartFontFace,
+    //       fontSize: 8,
+    //       color: '404040',
+    //       align: 'left',
+    //       // bold: true,
+    //     },
+    //   },
+    // },
     {
       text: {
         text: sourceText,
@@ -112,21 +112,21 @@ export const setDefaultSlideProperties = (
   ];
 
   if (bannerQuestionText) {
-    objsArr.push({
-      text: {
-        text: 'Cross tabulated:  ' + bannerQuestionText,
-        options: {
-          x: 0.3,
-          y: 4.95,
-          w: 9.5,
-          fontFace: chartFontFace,
-          fontSize: 8,
-          color: '404040',
-          align: 'left',
-          // bold: true,
-        },
-      },
-    });
+    // objsArr.push({
+    //   text: {
+    //     text: 'Cross tabulated:  ' + bannerQuestionText,
+    //     options: {
+    //       x: 0.3,
+    //       y: 4.95,
+    //       w: 9.5,
+    //       fontFace: chartFontFace,
+    //       fontSize: 8,
+    //       color: '404040',
+    //       align: 'left',
+    //       // bold: true,
+    //     },
+    //   },
+    // });
   }
 
   pptxGenJsObj.defineSlideMaster({
@@ -134,4 +134,53 @@ export const setDefaultSlideProperties = (
     background: { color: pptBackgroundColor },
     objects: objsArr,
   });
+};
+
+export const setSlideText = (slide: any, slideConfig: any) => {
+  slide.addText(slideConfig?.mainQuestionText, {
+    x: 0.5,
+    y: 0.1,
+    w: 8,
+    fontFace: slideConfig?.chartFontFace,
+    h: 0.2,
+    fontSize: 12,
+    color: '323c4e',
+    align: 'left',
+    bold: true,
+  });
+  slide.addText(slideConfig.filters, {
+    x: 0.3,
+    y: 0.5,
+    w: 9.5,
+    h: 0.2,
+    fontFace: slideConfig?.chartFontFace,
+    fontSize: 8,
+    color: '404040',
+    align: 'left',
+  });
+  slide.addText(slideConfig.baseText, {
+    x: 0.3,
+    y: 4.7,
+    w: 9.5,
+    h: 0.2,
+    fontFace: slideConfig?.chartFontFace,
+    fontSize: 8,
+    color: '404040',
+    align: 'left',
+  });
+
+  if (slideConfig?.bannerQuestionText) {
+    slide.addText(slideConfig.bannerQuestionText, {
+      x: 0.3,
+      y: 4.85,
+      w: 9.5,
+      h: 0.2,
+      fontFace: slideConfig?.chartFontFace,
+      fontSize: 8,
+      color: '404040',
+      align: 'left',
+    });
+  }
+
+  return slide;
 };

@@ -16,7 +16,7 @@ import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
 import { tableChartDataGen } from '../export-helper-utils/TableUtils';
 import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
 import _, { slice } from 'lodash';
-import { setDefaultSlideProperties } from './DefaultPptProps';
+import { setDefaultSlideProperties, setSlideText } from './DefaultPptProps';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 
 export function pptDataGen(
@@ -37,8 +37,9 @@ export function pptDataGen(
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
 
-  let slide1 = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+
+  setSlideText(slide, slideConfig);
 
   let seriesData: any[] = [];
   let chartColors: any[] = [];
@@ -135,7 +136,7 @@ export function pptDataGen(
       output.push(rowArray);
     });
 
-    slide1.addTable(output, { ...tableConfig });
+    slide.addTable(output, { ...tableConfig });
   } else {
     let pptChartType: any;
 
@@ -186,12 +187,12 @@ export function pptDataGen(
       });
     }
 
-    slide1.addChart(pptChartType, seriesData, {
+    slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
       ...graphTypeProps,
       chartColors: chartColors,
       ...chartSettings,
     });
   }
-  return slide1;
+  return slide;
 }
