@@ -25,14 +25,6 @@ export const getSingleChartOptionsSeries = (
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
-  // const {
-  //   plotOptions: {
-  //     series: {
-  //       dataLabels: { format },
-  //     },
-  //   },
-  // } = chartOptionsData;
-
   if (selectedBannerQuestionId) {
     const categories: string[] = [];
     const series: any[] = [];
@@ -113,6 +105,7 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
+    // debugger;
     const data: any[] = [];
 
     for (
@@ -121,12 +114,15 @@ export const getSingleChartOptionsSeries = (
       optionIndex++
     ) {
       const option = questionData.options[optionIndex];
-      console.log(option);
-
+      if (_.isArray(option.labelCode)) {
+        //debugger;
+      }
       const label = chartData.find(
         (record: { labelCode: string; count: number }) =>
           record.labelCode === option.labelCode,
       );
+      console.log(label);
+
       let count = 0;
       if (label) {
         count = label.count;
