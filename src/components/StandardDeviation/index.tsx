@@ -23,19 +23,39 @@ interface StandardDeviation {}
 const StandardDeviation: React.FC<StandardDeviation> = () => {
   const dispatch = useDispatch();
   const {
-    chart: { chartData, baseCount },
+    chart: { chartData, baseCount, bannerQuestionData },
     standard: { isMean, standardDeviation, standardError },
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
-    getMeanStandardDeviation(chartData, baseCount);
-  }, []);
+    if (bannerQuestionData) {
+      let optionData = chartData[0];
+      let chartOptionsData: any = [];
+
+      Object.keys(optionData).forEach(function (key) {
+        chartOptionsData.push(optionData[key]);
+      });
+
+      //console.log('chartOptionsData', chartOptionsData);
+      getMeanStandardDeviation(chartOptionsData, baseCount);
+    } else {
+      getMeanStandardDeviation(chartData, baseCount);
+    }
+  }, [bannerQuestionData]);
 
   const getMeanStandardDeviation = (chartData: any, baseCount: number) => {
     let values: any = [];
+
     chartData.forEach((chart_el: any, chartIndex: Number) => {
-      values = values.concat(chart_el.values);
+      if (Array.isArray(chart_el)) {
+        chart_el.forEach((curentVlaues: any) => {
+          values = values.concat(curentVlaues.values);
+        });
+      } else {
+        values = values.concat(chart_el.values);
+      }
     });
+
     const meanValue = getmean(values);
     const getSampleDeviationValues = getsampleStandardDeviation(
       values,

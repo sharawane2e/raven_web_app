@@ -393,6 +393,7 @@ export const transposeChart = () => {
     (chartDataClone.questionData.type == QuestionType.SINGLE ||
       chartDataClone.questionData.type == QuestionType.MULTI)
   ) {
+    // console.log('transpose data for update');
     const { chartData } = chartDataClone;
     const allLabels: Array<string> = [];
     const newChartData: any = {};
