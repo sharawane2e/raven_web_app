@@ -30,8 +30,10 @@ const TableView: React.FC<TableProps> = (props) => {
   scaleLength = filtered.length > 1 ? filtered.length : 0;
 
   let results: any = questionData?.options.filter(function (option) {
-    if (option.labelCode.split('_')[0] == 'N') {
-      return true;
+    if (option?.labelCode === 'N') {
+      if (option.labelCode.split('_')[0] == 'N') {
+        return true;
+      }
     }
   });
   let laberesult = results.length;
