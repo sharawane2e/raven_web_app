@@ -42,42 +42,54 @@ export const getSingleChartOptionsSeries = (
       if (subGroup && subGroup?.length) return true;
       return false;
     });
-    // console.log('quesOption', subGroups);
 
+    let resArr = [];
+
+    // for (let i = 0; i < questionData.options.length; i++) {
+    //   let currObj: any = questionData.options[i];
+    //   if (Array.isArray(currObj.labelCode)) {
+    //     let labelCodeArr = currObj.labelCode;
+    //     let currCountSum = 0;
+    //     for (let j = 0; j < labelCodeArr.length; j++) {
+    //       let currKey = labelCodeArr[j];
+
+    //       let dataArr = chartData[0][currKey];
+    //       for (let k = 0; k < dataArr.length; k++) {
+    //         let currDataObj = dataArr[k];
+    //         if (currDataObj.labelCode == '1') currCountSum += currDataObj.count;
+    //       }
+    //     }
+    //     resArr.push(currCountSum);
+    //   } else {
+    //   }
+    // }
+
+    //console.log(subGroups);
     // @ts-ignore
+
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption = bannerQuestionData?.options[index];
       const data: any[] = [];
-
+      let optionData;
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
         const quesOption = subGroups[quesIndex];
-        // console.log(quesOption);
+        if (Array.isArray(quesOption.labelCode)) {
+          let labelCodeArr = quesOption.labelCode;
 
-        if (_.isArray(quesOption.labelCode)) {
-          // debugger;
-          const labelCollection = getMatchedfilter(
-            chartData[0],
-            'labelCode',
-            quesOption.labelCode,
-          );
+          for (let j = 0; j < labelCodeArr.length; j++) {
+            let currKey = labelCodeArr[j];
+            let currCountSum: any;
+            let dataArr = chartData[0][currKey];
+
+            for (let k = 0; k < dataArr.length; k++) {
+              if (dataArr[k].labelCode === '1') {
+                // dataArr[k];
+              }
+            }
+          }
         } else {
-          console.log(chartData[0]);
+          optionData = chartData[0][quesOption.labelCode];
         }
-
-        let optionData = chartData[0][quesOption.labelCode];
-
-        // let chartOptionsData: any = [];
-        // let optionData1 = chartData[0];
-
-        // Object.keys(optionData1).forEach(function (key) {
-        //   chartOptionsData.push(optionData1[key]);
-        // });
-
-        // const labelCollection = getMatchedfilter(
-        //   chartOptionsData[quesIndex],
-        //   'labelCode',
-        //   quesOption.labelCode,
-        // );
 
         let count = 0;
 
