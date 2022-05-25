@@ -50,6 +50,7 @@ export const getNumberChartOption = (
         const meanValue = mean(chartelment?.values);
         const minValue = min(chartelment?.values);
         const maxValue = max(chartelment?.values);
+        console.log()
         const medainValue = median(chartelment?.values);
         meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
         meanMaxArr.push(meanMediaArr);

@@ -170,10 +170,16 @@ h2 {
   height: 210px;
 }
 
+.normal-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.5rem 3rem 0 3rem;
+}
+
 .nation-container {
   display: flex;
   flex-wrap: wrap;
-  margin: 3.5rem 3rem 0.6rem 3rem;
+  margin: 1.5rem 3rem 0.6rem 3rem;
 }
 .nation-container__card {
   border: solid 1px #acacac;
