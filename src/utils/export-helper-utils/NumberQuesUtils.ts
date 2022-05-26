@@ -1,12 +1,13 @@
-import { mean, median, min, max } from "simple-statistics";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
+import { mean, median, min, max } from 'simple-statistics';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { getMedian } from '../Utility';
 
 export function numberChartDataGen(
   questionData: any,
   chartData: any,
   chartTranspose: any,
-  bannerQuestionData: any
+  bannerQuestionData: any,
 ) {
   let seriesData: Array<Object> = [];
 
@@ -21,7 +22,7 @@ export function numberChartDataGen(
     ) {
       const meanMaxArr: any[] = [];
       const labels: Array<string> = questionData.options.map(
-        (label: IQuestionOption) => label.labelText
+        (label: IQuestionOption) => label.labelText,
       );
 
       const subGroups = questionData.options.filter(
@@ -29,7 +30,7 @@ export function numberChartDataGen(
           const subGroup = chartData[0][option.labelCode];
           if (subGroup && subGroup?.length) return true;
           return false;
-        }
+        },
       );
 
       let optionData = chartData[0];
@@ -46,7 +47,11 @@ export function numberChartDataGen(
           const meanValue = mean(chartelment?.values);
           const minValue = min(chartelment?.values);
           const maxValue = max(chartelment?.values);
-          const medainValue = median(chartelment?.values);
+          const medainValue = getMedian(
+            chartelment?.values,
+            chartelment?.weights,
+          );
+
           meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
           meanMaxArr.push(meanMediaArr);
         }
@@ -101,16 +106,19 @@ export function numberChartDataGen(
       let values: any;
       let weightedValueSum: any;
       let weightsSum: any;
+      let weightArr: any;
       const meanMaxArr: any[] = [];
 
       values = chartData[0]?.values;
+      weightArr = chartData[0]?.weights;
+      console.log(chartData[0]);
       weightedValueSum = chartData[0]?.weightedValueSum;
       weightsSum = chartData[0]?.weightsSum;
       const meanValue = mean(values);
       const minValue = min(values);
       const maxValue = max(values);
-      const medainValue = median(values);
-
+      //const medainValue = median(values);
+      const medainValue = getMedian(values, weightArr);
       meanMaxArr.push(meanValue, medainValue, minValue, maxValue);
 
       questionData.options.forEach((option: any, Index: any) => {
