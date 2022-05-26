@@ -49,17 +49,3 @@ export function getSum(collection: any, identity: any) {
     return o[identity];
   });
 }
-
-export function getMerged(
-  collection: any,
-  collectionKey: any,
-  compareWith: any,
-) {
-  // return _.filter(collection, function (o) {
-  //   if (_.isArray(compareWith)) {
-  //     return compareWith.indexOf(o[collectionKey]) != -1;
-  //   } else {
-  //     return compareWith === o[collectionKey];
-  //   }
-  // });
-}
