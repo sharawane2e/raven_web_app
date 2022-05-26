@@ -29,7 +29,7 @@ export const getNumberChartOption = (
 
   if (selectedBannerQuestionId) {
     const series: any[] = [];
-    const meanMaxArr: any[] = [];
+    const meanMaxArr: any = {};
 
     const subGroups = questionData.options.filter((option: IQuestionOption) => {
       const subGroup = [option.labelCode];
@@ -37,33 +37,35 @@ export const getNumberChartOption = (
       return false;
     });
 
+    console.log(bannerQuestionData.options);
+
     let optionData = chartData[0];
     let chartOptionsData: any = [];
 
-    Object.keys(optionData).forEach(function (key) {
-      chartOptionsData.push(optionData[key]);
-    });
-
-    chartOptionsData.forEach((chart_el: any, chartIndex: Number) => {
-      if (chart_el.length) {
-        const meanMediaArr: any = [];
-        const chartelment = chart_el[0];
-        // const valueSum = _.sum(chartelment?.values);
-
+    for (let key in optionData) {
+      if (optionData[key].length == 0) {
+        const meanMedianArr: any = [];
+        const meanValue = '';
+        const minValue = '';
+        const maxValue = '';
+        const medainValue = '';
+        meanMedianArr.push(meanValue, medainValue, minValue, maxValue);
+        meanMaxArr[key] = meanMedianArr;
+      } else {
+        const meanMedianArr: any = [];
+        const chartelment = optionData[key][0];
         const meanValue =
           chartelment?.weightedValueSum / chartelment?.weightsSum;
-        //const meanValue = valueSum / chartelment?.weightsSum;
-        //const meanValue = mean(chartelment?.values);
         const minValue = min(chartelment?.values);
         const maxValue = max(chartelment?.values);
         const medainValue = getMedian(
           chartelment?.values,
           chartelment?.weights,
         );
-        meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
-        meanMaxArr.push(meanMediaArr);
+        meanMedianArr.push(meanValue, medainValue, minValue, maxValue);
+        meanMaxArr[key] = meanMedianArr;
       }
-    });
+    }
 
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption = bannerQuestionData?.options[index];
@@ -72,10 +74,10 @@ export const getNumberChartOption = (
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
         const quesOption = subGroups[quesIndex];
 
-        if (meanMaxArr[index] != undefined) {
+        if (meanMaxArr[bannerQuesOption.labelCode][quesIndex] != '') {
           data.push({
             name: quesOption.labelText,
-            y: meanMaxArr[index][quesIndex],
+            y: meanMaxArr[bannerQuesOption.labelCode][quesIndex],
             baseCount: baseCount,
           });
         }
@@ -88,6 +90,7 @@ export const getNumberChartOption = (
           dataLabels,
         });
     }
+    // debugger;
 
     if (transposed) {
       const transposedSeries = [];

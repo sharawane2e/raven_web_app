@@ -59,6 +59,7 @@ export function getMedian(values: any, weightArray: any) {
       return o.value;
     },
   ]);
+  // console.log(weightObjectSorted);
   weightObjectSorted.forEach((weightnewArr: any) => {
     sortedValuesArr.push(weightnewArr.value);
     sortedWeights.push(weightnewArr.weight);
@@ -77,11 +78,11 @@ export function getMedian(values: any, weightArray: any) {
   }
   // console.log(weightsSumArr);
   weightsSumArr.forEach((weightsum: number) => {
-    const weightsumFixed = Number(weightsum.toFixed(1));
+    const weightsumFixed = Number(weightsum.toFixed(6));
     //console.log(Math.round(weightsumFixed));
     weightSumRounded.push(round(weightsumFixed, 0));
   });
-  const sortsWeightBy2 = sortedWeights.length / 2;
+  const sortsWeightBy2 = _.sum(weightArray) / 2;
 
   let roundSortSumBy2: number = round(sortsWeightBy2, 0);
 
@@ -92,8 +93,9 @@ export function getMedian(values: any, weightArray: any) {
       roundSortSumBy2--;
       sortedIndex = weightSumRounded.indexOf(roundSortSumBy2);
     }
-    console.log(sortedIndex);
+
     //console.log(roundSortSumBy2);
   }
+  // console.log(sortedIndex);
   return sortedValuesArr[sortedIndex + 1];
 }
