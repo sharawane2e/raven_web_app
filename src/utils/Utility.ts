@@ -42,3 +42,42 @@ export function getMatchedfilter(
     }
   });
 }
+export function getMedian(values: any, weightArray: any) {
+  const weightObject: any = [];
+  const sortedValuesArr: any = [];
+  const sortedWeights: any = [];
+  const weightsSumArr: any = [];
+  const weightSumRounded: any = [];
+  values.forEach((value: any, index: any) => {
+    weightObject.push({
+      value: value,
+      weight: weightArray[index],
+    });
+  });
+  const weightObjectSorted = _.sortBy(weightObject, [
+    function (o) {
+      return o.value;
+    },
+  ]);
+  weightObjectSorted.forEach((weightnewArr: any) => {
+    sortedValuesArr.push(weightnewArr.value);
+    sortedWeights.push(weightnewArr.weight);
+  });
+
+  for (let i = 0; i < sortedWeights.length; i++) {
+    if (i == 0) {
+    } else if (i == 1) {
+      const sortValue = sortedWeights[1] + sortedWeights[0];
+      weightsSumArr.push(sortValue);
+    } else {
+      const sortValue = sortedWeights[i] + weightsSumArr[i - 2];
+      weightsSumArr.push(sortValue);
+    }
+  }
+  weightsSumArr.forEach((x: number) => {
+    weightSumRounded.push(Math.round(x));
+  });
+  const sortsWeightBy2 = sortedWeights.length / 2;
+  const sortedIndex = weightSumRounded.indexOf(sortsWeightBy2);
+  return sortedValuesArr[sortedIndex + 1];
+}

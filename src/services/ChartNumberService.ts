@@ -7,7 +7,7 @@ import { ChartType } from '../enums/ChartType';
 import { IQuestionOption } from '../types/IBaseQuestion';
 import { mean, median, min, max } from 'simple-statistics';
 import _ from 'lodash';
-import { round } from '../utils/Utility';
+import { getMedian, round } from '../utils/Utility';
 
 export const getNumberChartOption = (
   questionData: IQuestion,
@@ -135,45 +135,47 @@ export const getNumberChartOption = (
       weightsSum = chart_el?.weightsSum;
     });
 
-    values.forEach((value: any, index: any) => {
-      weightObject.push({
-        value: value,
-        weight: weightArray[index],
-      });
-    });
+    const medainValue = getMedian(values, weightArray);
 
-    const weightObjectSorted = _.sortBy(weightObject, [
-      function (o) {
-        return o.value;
-      },
-    ]);
-    weightObjectSorted.forEach((weightnewArr: any) => {
-      sortedValuesArr.push(weightnewArr.value);
-      sortedWeights.push(weightnewArr.weight);
-    });
+    // values.forEach((value: any, index: any) => {
+    //   weightObject.push({
+    //     value: value,
+    //     weight: weightArray[index],
+    //   });
+    // });
 
-    for (let i = 0; i < sortedWeights.length; i++) {
-      if (i == 0) {
-      } else if (i == 1) {
-        const sortValue = sortedWeights[1] + sortedWeights[0];
-        weightsSumArr.push(sortValue);
-      } else {
-        const sortValue = sortedWeights[i] + weightsSumArr[i - 2];
-        weightsSumArr.push(sortValue);
-      }
-    }
+    // const weightObjectSorted = _.sortBy(weightObject, [
+    //   function (o) {
+    //     return o.value;
+    //   },
+    // ]);
+    // weightObjectSorted.forEach((weightnewArr: any) => {
+    //   sortedValuesArr.push(weightnewArr.value);
+    //   sortedWeights.push(weightnewArr.weight);
+    // });
 
-    weightsSumArr.forEach((x: number) => {
-      weightSumRounded.push(Math.round(x));
-    });
+    // for (let i = 0; i < sortedWeights.length; i++) {
+    //   if (i == 0) {
+    //   } else if (i == 1) {
+    //     const sortValue = sortedWeights[1] + sortedWeights[0];
+    //     weightsSumArr.push(sortValue);
+    //   } else {
+    //     const sortValue = sortedWeights[i] + weightsSumArr[i - 2];
+    //     weightsSumArr.push(sortValue);
+    //   }
+    // }
 
-    const sortsWeightBy2 = sortedWeights.length / 2;
-    const sortedIndex = weightSumRounded.indexOf(sortsWeightBy2);
+    // weightsSumArr.forEach((x: number) => {
+    //   weightSumRounded.push(Math.round(x));
+    // });
+
+    // const sortsWeightBy2 = sortedWeights.length / 2;
+    // const sortedIndex = weightSumRounded.indexOf(sortsWeightBy2);
 
     const meanValue = mean(values);
     const minValue = min(values);
     const maxValue = max(values);
-    const medainValue = sortedValuesArr[sortedIndex + 1];
+    // const medainValue = sortedValuesArr[sortedIndex + 1];
 
     meanMaxArr.push(meanValue, medainValue, minValue, maxValue);
 
