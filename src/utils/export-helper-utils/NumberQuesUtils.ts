@@ -44,7 +44,9 @@ export function numberChartDataGen(
         if (chart_el.length) {
           const meanMediaArr: any = [];
           const chartelment = chart_el[0];
-          const meanValue = mean(chartelment?.values);
+          const meanValue =
+            chartelment.weightedValueSum / chartelment.weightsSum;
+          // const meanValue = mean(chartelment?.values);
           const minValue = min(chartelment?.values);
           const maxValue = max(chartelment?.values);
           const medainValue = getMedian(
@@ -114,7 +116,10 @@ export function numberChartDataGen(
       console.log(chartData[0]);
       weightedValueSum = chartData[0]?.weightedValueSum;
       weightsSum = chartData[0]?.weightsSum;
-      const meanValue = mean(values);
+      // const meanValue = mean(values);
+      const meanValue =
+        chartData[0]?.weightedValueSum / chartData[0]?.weightsSum;
+
       const minValue = min(values);
       const maxValue = max(values);
       //const medainValue = median(values);
