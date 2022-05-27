@@ -93,7 +93,7 @@ const MultiSelect: React.FC<MultiSelectProps> = (props) => {
               className="multi-select__checkbox"
               control={
                 <Checkbox
-                  checked={options.length == value.length}
+                  checked={options?.length == value?.length}
                   onChange={selectAll}
                 />
               }

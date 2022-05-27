@@ -18,6 +18,7 @@ import {
   resetChart,
   showMean,
   updateChartOptions,
+  basecountMulti,
 } from '../actions/chartActions';
 
 export interface IChartState {
@@ -34,6 +35,7 @@ export interface IChartState {
   baseCount: number;
   bannerQuestionData: IQuestion | null;
   showMean: boolean;
+  multibasecount: any;
 }
 
 export const dataLabels = {
@@ -77,6 +79,7 @@ const initialState: IChartState = {
   chartLabelType: ChartLabelType.PERCENTAGE,
   chartTranspose: false,
   chartfullScreen: false,
+  multibasecount: 0,
   chartOptions: {
     dataSorting: {
       enabled: true,
@@ -224,6 +227,10 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(updateChartOptions, (state, action) => ({
     ...state,
     chartOptions: { ...state.chartOptions, ...action.payload },
+  }));
+  builder.addCase(basecountMulti, (state, action) => ({
+    ...state,
+    multibasecount: action.payload,
   }));
 });
 

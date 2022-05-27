@@ -352,7 +352,10 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <div className="chart-content-footer">
           <div className="chart-content-footer--inr">
             <div className="chart-content__base-count">
-              Sample Size: {baseCount}
+              Sample Size:{' '}
+              {chart?.multibasecount === 0
+                ? baseCount
+                : chart?.multibasecount?.baseCount}
             </div>
             <div className="chart-content__info">
               Note: Sample size reflects selections from filter and cross-tab

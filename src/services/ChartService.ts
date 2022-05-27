@@ -1,6 +1,7 @@
 import ApiUrl from '../enums/ApiUrl';
 import { ChartType } from '../enums/ChartType';
 import {
+  basecountMulti,
   setChartData,
   setChartLabel,
   setChartLoading,
@@ -38,7 +39,7 @@ export const fetchChartData = async (
   let chartData: IChartState = JSON.parse(JSON.stringify(chart));
 
   try {
-    const chartFilters: any[] = [];
+    let chartFilters: any[] = [];
     if (appliedFilters.length) {
       appliedFilters.forEach((filter: any) => {
         const chartFilter = chartFilters.find(
@@ -328,7 +329,7 @@ export const transposeChart = () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
-
+  dispatch(basecountMulti(0));
   if (chartDataClone.questionData.type == QuestionType.RANK) {
     const newSubGroup: any = [];
     const newScale: any = [];
@@ -542,16 +543,64 @@ export const transposeChartMulti = async () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
-
   dispatch(setChartLoading(false));
   if (transposed) {
     const chartData = await fetchChartData(
       questions.selectedBannerQuestionId,
       questions.selectedQuestionId,
     );
-
     dispatch(setChartData(chartData));
     dispatch(setChartTranspose(transposed));
+
+    const {
+      filters: { appliedFilters },
+      questions: {
+        questionList,
+        selectedQuestionId,
+        selectedBannerQuestionId,
+        bannerQuestionList,
+      },
+      chart,
+    } = store.getState();
+
+    //const type =
+    //   questionList.find((ques: any) => ques.qId === quesId)?.type || '';
+    // const bannerQuestion = find(bannerQuestionList, function (o) {
+    //   return o.qId === bannerQuesId;
+    // });
+    //const bannerQuestionType = bannerQuestion?.type;
+    let chartFilters: any[] = [];
+    if (appliedFilters.length) {
+      appliedFilters.forEach((filter: any) => {
+        const chartFilter = chartFilters.find(
+          (chartFilter) => chartFilter.qId === filter.qId,
+        );
+        if (chartFilter) {
+          chartFilter.value.push(filter.code);
+        } else {
+          chartFilters.push({
+            qId: filter.qId,
+            value: [filter.code],
+          });
+        }
+      });
+    }
+
+    const body = {
+      qId: selectedQuestionId,
+      type: chart?.questionData?.type,
+      filters: chartFilters,
+      bannerQuestion: selectedBannerQuestionId,
+    };
+    const newMultiBasecount = await ApiRequestMulti.request(
+      ApiUrl.CHART,
+      'POST',
+      body,
+    );
+    if (newMultiBasecount.success) {
+      dispatch(setChartLoading(false));
+      dispatch(basecountMulti(newMultiBasecount?.data?.baseCount[0]));
+    }
   } else {
     const chartData = await fetchChartData(
       questions.selectedQuestionId,
@@ -559,5 +608,6 @@ export const transposeChartMulti = async () => {
     );
     dispatch(setChartData(chartData));
     dispatch(setChartTranspose(transposed));
+    dispatch(basecountMulti(0));
   }
 };
