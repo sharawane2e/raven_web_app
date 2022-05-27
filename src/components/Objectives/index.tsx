@@ -63,7 +63,7 @@ const Objectives = (props: Props) => {
         
       </div>
       <div className='normal-container'>
-      <p>Q2, Q27, D1, D2 and charts that mention NETs in the title cannot be cross tabulated however you are able to utilize the filter function to analyse this data for different patient samples​</p>
+      <p>Q2, Q27, D1, D2 and charts that contain NETs cannot be cross tabulated however you are able to utilize the filter function to analyse this data for different patient samples​</p>
       </div>
       <div className="nation-container">
       
@@ -139,7 +139,7 @@ const Objectives = (props: Props) => {
       <div className="topic-container">
         <div className="topic-container__headerCont">
           <div className="topic-container__heading">
-            <h2>Topics to be covered in the research</h2>
+            <h2>Topics covered in the research</h2>
           </div>
           <div className="topic-container__headerCont-logo">
             <img
@@ -153,40 +153,41 @@ const Objectives = (props: Props) => {
             <div className="topicCont">
               <h3>SAMPLE CHARACTERISTICS/ COMPOSITION</h3>
               <ul>
-                <li>Sample characteristics e.g BMI</li>
-                <li>Experience of life event</li>
-                <li>Addiction</li>
+                <li>Sample characteristics e.g. BMI (S1, S2, S3, S4, S5, S6, S7, S8)</li>
+                <li>Experience of life event (D11)</li>
+                <li>Addiction (D12)</li>
               </ul>
             </div>
 
             <div className="topicCont">
               <h3>SECTION 1: DAY-TO-DAY ACTIVITIES, HABITS &amp; ATTITUDES</h3>
               <ul>
-                <li>Hobbies and activities</li>
-                <li>Activity levels</li>
-                <li>Evaluation of own health</li>
-                <li>Own health perceptions and relationship with hcps</li>
-                <li>Attitudes to food</li>
+                <li>Hobbies and activities (Q1, Q2)</li>
+                <li>Activity levels (Q3, Q4)</li>
+                <li>Evaluation of own health (Q5, Q6, Q7)</li>
+                <li>Own health perceptions and relationship with HCPs (Q8)</li>
+                <li>Attitudes to food (Q9)</li>
               </ul>
             </div>
 
             <div className="topicCont">
               <h3>SECTION 2: PERSONAL WEIGHT HISTORY</h3>
               <ul>
-                <li>Views of own weight</li>
-                <li>Weight loss attempts and weight history</li>
-                <li>Emotions around their weight</li>
+                <li>Views of own weight (Q12, Q13, Q14)</li>
+                <li>Weight loss attempts and weight history (Q15, Q15a, Q15a_a, Q15b)</li>
+                <li>Emotions around their weight (Q23)</li>
               </ul>
             </div>
 
             <div className="topicCont">
               <h3>SECTION 3: WEIGHT LOSS - THOSE WITH WEIGHT ISSUES</h3>
               <ul>
-                <li>Evaluation of weight loss attempts</li>
-                <li>Weight loss tracking</li>
-                <li>Motivation for weight loss attempts</li>
-                <li>Impact of weight loss attempts</li>
-                <li>Reason for weight gain</li>
+                <li>Weight History (age at first weight loss attempt, heaviest weight) (Q15c, Q16)</li>
+                <li>Evaluation of weight loss attempts (Q17, Q17a, Q17b, Q18, Q18a, Q18b)</li>
+                <li>Weight loss tracking (Q19)</li>
+                <li>Motivation for weight loss attempts (Q20)</li>
+                <li>Impact of weight on activities and hobbies (Q21)</li>
+                <li>Reasons for weight gain (Q22)</li>
               </ul>
             </div>
           </div>
@@ -194,45 +195,44 @@ const Objectives = (props: Props) => {
             <div className="topicCont">
               <h3>SECTION 4: WEIGHT MANAGEMENT &amp; EXPERIENCES</h3>
               <ul>
-                <li>Views of being overweight</li>
-                <li>Weight discussions with hcps</li>
-                <li>Experience with weight management options</li>
-                <li>Reasons for not trying WL medication (if applicable)</li>
-                <li>Conditions and exprience with medication</li>
+                <li>Views of being overweight (Q24)</li>
+                <li>Weight discussions with HCPs (Q25, Q26)</li>
+                <li>Experience with weight management options (Q27)</li>
+                <li>Reasons for not trying WL medication (if applicable) (Q28)</li>
+                <li>Conditions and experience with medication (Q29)</li>
+                <li>Experience with medication (Q30, Q31)</li>
               </ul>
             </div>
 
             <div className="topicCont">
               <h3>SECTION 5: DEVICE PREFERENCES &amp; APP USAGE</h3>
               <ul>
-                <li>Device Access</li>
-                <li>Digital apps - comfort, adoption of digital apps</li>
-                <li>Evaluation of own health</li>
-                <li>
-                  Experience, satisfaction and interest in specific health
-                  monitoring apps
-                </li>
+                <li>Device access (Q32)</li>
+                <li>Digital apps - comfort, adoption of digital apps (Q33, Q34)</li>
+                <li>Experience, satisfaction and interest in specific health monitoring apps (Q35, Q37)</li>
               </ul>
             </div>
 
             <div className="topicCont">
-              <h3>SECTION 6: EATING HABITS &amp; DIET</h3>
+              <h3>SECTION 6: EATING HABITS &amp; DIET </h3>
               <ul>
-                <li>Frequency of foods eaten and ways of eating</li>
-                <li>Specific diet eaten</li>
-                <li>Eating habits</li>
+                <li>Frequency of types of foods eaten and ways of eating (D1, D1a, D2)</li>
+                <li>Specific diet eaten (D3)</li>
+                <li>Eating habits (Q10, Q11)</li>
               </ul>
             </div>
 
             <div className="topicCont">
               <h3>SECTION 7: DEMOGRAPHICS</h3>
               <ul>
-                <li>Household</li>
-                <li>Children and dependents</li>
-                <li>Maritial status</li>
-                <li>Education level</li>
-                <li>Town/ city/ rural location</li>
-                <li>Insaurace coverage</li>
+                <li>Household (D4, D5)</li>
+                <li>Children and dependents (D6)</li>
+                <li>Marital status (D7)</li>
+                <li>Education level (D8)</li>
+                <li>Working hours (D8a)</li>
+                <li>Town/ city/ rural location (D9)</li>
+                <li>Insurance coverage (D10)</li>
+                <li>Environment / sustainability (D10a)</li>
               </ul>
             </div>
           </div>
