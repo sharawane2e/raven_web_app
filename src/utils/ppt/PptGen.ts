@@ -23,6 +23,7 @@ export const generatePpt = async () => {
       chartType,
       baseCount,
       showMean,
+      multibasecount,
     },
   } = store.getState();
 
@@ -36,7 +37,9 @@ export const generatePpt = async () => {
   let mainQuestionText: string = questionData?.labelText || '';
   let bannerQuestionText: string = bannerQuestionData?.labelText || '';
 
-  let baseText: string = `Sample set: ${baseCount}`;
+  let baseText: string = `Sample set: ${
+    multibasecount === 0 ? baseCount : multibasecount?.baseCount
+  }`;
   // let questionText: string = questionData?.questionText || "";
 
   let filters: string = appliedFiltersText();

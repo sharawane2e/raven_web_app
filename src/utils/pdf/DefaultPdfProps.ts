@@ -28,7 +28,7 @@ export const setDefaultPdfPageProperties = async (
   lWordBreak: any,
 ) => {
   const {
-    chart: { questionData, baseCount, bannerQuestionData },
+    chart: { questionData, baseCount, bannerQuestionData, multibasecount },
   } = store.getState();
 
   // doc.addFont("Avenir", "Arial", "normal");
@@ -45,7 +45,12 @@ export const setDefaultPdfPageProperties = async (
     qWordBreak,
   );
   doc.text(filterText, 10, 20);
-  doc.text('Sample set: ' + baseCount || '', baseX, baseY);
+  doc.text(
+    'Sample set: ' +
+      (multibasecount === 0 ? baseCount : multibasecount?.baseCount) || '',
+    baseX,
+    baseY,
+  );
   if (bannerQuestionData) {
     doc.text(
       'Cross tabulated:  ' + bannerQuestionData?.labelText || '',
