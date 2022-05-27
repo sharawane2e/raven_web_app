@@ -49,3 +49,61 @@ export function getSum(collection: any, identity: any) {
     return o[identity];
   });
 }
+
+export function getMedian(values: any, weightArray: any) {
+  const weightObject: any = [];
+  const sortedValuesArr: any = [];
+  const sortedWeights: any = [];
+  const weightsSumArr: any = [];
+  const weightSumRounded: any = [];
+  values.forEach((value: any, index: any) => {
+    weightObject.push({
+      value: value,
+      weight: weightArray[index],
+    });
+  });
+  const weightObjectSorted = _.sortBy(weightObject, [
+    function (o) {
+      return o.value;
+    },
+  ]);
+  // console.log(weightObjectSorted);
+  weightObjectSorted.forEach((weightnewArr: any) => {
+    sortedValuesArr.push(weightnewArr.value);
+    sortedWeights.push(weightnewArr.weight);
+  });
+  // console.log(weightObjectSorted);
+
+  for (let i = 0; i < sortedWeights.length; i++) {
+    if (i == 0) {
+    } else if (i == 1) {
+      const sortValue = sortedWeights[1] + sortedWeights[0];
+      weightsSumArr.push(sortValue);
+    } else {
+      const sortValue = sortedWeights[i] + weightsSumArr[i - 2];
+      weightsSumArr.push(sortValue);
+    }
+  }
+  // console.log(weightsSumArr);
+  weightsSumArr.forEach((weightsum: number) => {
+    const weightsumFixed = Number(weightsum.toFixed(6));
+    //console.log(Math.round(weightsumFixed));
+    weightSumRounded.push(round(weightsumFixed, 0));
+  });
+  const sortsWeightBy2 = _.sum(weightArray) / 2;
+
+  let roundSortSumBy2: number = round(sortsWeightBy2, 0);
+
+  let sortedIndex = weightSumRounded.indexOf(roundSortSumBy2);
+
+  if (sortedIndex == -1) {
+    while (sortedIndex == -1) {
+      roundSortSumBy2--;
+      sortedIndex = weightSumRounded.indexOf(roundSortSumBy2);
+    }
+
+    //console.log(roundSortSumBy2);
+  }
+  // console.log(sortedIndex);
+  return sortedValuesArr[sortedIndex + 1];
+}

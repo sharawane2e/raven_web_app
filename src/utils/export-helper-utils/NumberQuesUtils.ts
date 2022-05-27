@@ -6,6 +6,7 @@ import {
 } from '../../utils/simplestatistics';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
+import { getMedian } from '../Utility';
 
 export function numberChartDataGen(
   questionData: any,
@@ -24,7 +25,7 @@ export function numberChartDataGen(
       questionData != undefined &&
       bannerQuestionData != (null || undefined)
     ) {
-      const meanMaxArr: any[] = [];
+      const meanMaxArr: any = {};
       const labels: Array<string> = questionData.options.map(
         (label: IQuestionOption) => label.labelText,
       );
@@ -38,32 +39,40 @@ export function numberChartDataGen(
       );
 
       let optionData = chartData[0];
-      let chartOptionsData: any = [];
 
-      Object.keys(optionData).forEach(function (key) {
-        chartOptionsData.push(optionData[key]);
-      });
-
-      chartOptionsData.forEach((chart_el: any) => {
-        if (chart_el.length) {
-          const meanMediaArr: any = [];
-          const chartelment = chart_el[0];
-          const meanValue = getmean(chartelment?.values);
+      for (let key in optionData) {
+        if (optionData[key].length == 0) {
+          const meanMedianArr: any = [];
+          const meanValue = '';
+          const minValue = '';
+          const maxValue = '';
+          const medainValue = '';
+          meanMedianArr.push(meanValue, medainValue, minValue, maxValue);
+          meanMaxArr[key] = meanMedianArr;
+        } else {
+          const meanMedianArr: any = [];
+          const chartelment = optionData[key][0];
+          const meanValue =
+            chartelment?.weightedValueSum / chartelment?.weightsSum;
           const minValue = getmin(chartelment?.values);
           const maxValue = getmax(chartelment?.values);
-          const medainValue = getmedian(chartelment?.values);
-          meanMediaArr.push(meanValue, medainValue, minValue, maxValue);
-          meanMaxArr.push(meanMediaArr);
+          const medainValue = getMedian(
+            chartelment?.values,
+            chartelment?.weights,
+          );
+          meanMedianArr.push(meanValue, medainValue, minValue, maxValue);
+          meanMaxArr[key] = meanMedianArr;
         }
-      });
+      }
 
       for (let index = 0; index < bannerQuestionData?.options.length; index++) {
         const bannerQuesOption = bannerQuestionData?.options[index];
         const data: any[] = [];
 
         for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
-          if (meanMaxArr[index] != undefined) {
-            const values: any = meanMaxArr[index][quesIndex];
+          if (meanMaxArr[bannerQuesOption.labelCode][quesIndex] != '') {
+            const values: any =
+              meanMaxArr[bannerQuesOption.labelCode][quesIndex];
             data.push(values);
           }
         }
