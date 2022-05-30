@@ -63,7 +63,7 @@ const Objectives = (props: Props) => {
         
       </div>
       <div className='normal-container'>
-      <p>Q2, Q27, D1, D2 and charts that contain NETs cannot be cross tabulated however you are able to utilize the filter function to analyse this data for different patient samples​</p>
+      <p>Q2, Q27, D1, D2 and scale questions that contain 'Top 2 box' and 'Bottom 2 box' cannot be cross tabulated however you are able to utilize the filter function to analyse this data for different patient samples</p>
       </div>
       <div className="nation-container">
       
