@@ -26,11 +26,9 @@ export const getSingleChartOptionsSeries = (
   } = store.getState();
 
   if (selectedBannerQuestionId) {
-    //debugger;
-    const categories: string[] = [];
     const series: any[] = [];
     let subGroups: any;
-
+    let count = 0;
     subGroups = questionData.options.filter((option: IQuestionOption) => {
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
@@ -43,28 +41,9 @@ export const getSingleChartOptionsSeries = (
       return false;
     });
 
-    let resArr = [];
+    const curentdata: any = [];
+    let localBase;
 
-    // for (let i = 0; i < questionData.options.length; i++) {
-    //   let currObj: any = questionData.options[i];
-    //   if (Array.isArray(currObj.labelCode)) {
-    //     let labelCodeArr = currObj.labelCode;
-    //     let currCountSum = 0;
-    //     for (let j = 0; j < labelCodeArr.length; j++) {
-    //       let currKey = labelCodeArr[j];
-
-    //       let dataArr = chartData[0][currKey];
-    //       for (let k = 0; k < dataArr.length; k++) {
-    //         let currDataObj = dataArr[k];
-    //         if (currDataObj.labelCode == '1') currCountSum += currDataObj.count;
-    //       }
-    //     }
-    //     resArr.push(currCountSum);
-    //   } else {
-    //   }
-    // }
-
-    let count = 0;
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption: any = bannerQuestionData?.options[index];
@@ -73,54 +52,53 @@ export const getSingleChartOptionsSeries = (
       let optionData;
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
         const quesOption = subGroups[quesIndex];
-        const curentdata: any = [];
-        // console.log(quesOption);
-        // console.log(chartData[0]);
+
         if (!Array.isArray(quesOption.labelCode)) {
           optionData = chartData[0][quesOption.labelCode];
         } else {
-          let labelCodeArr = quesOption.labelCode;
+          //  debugger;
+          const labelCodeArr = quesOption.labelCode;
+          //console.log(labelCodeArr);
+          const mainData: any = [];
+          const arryVale: any = [];
           for (let j = 0; j < labelCodeArr.length; j++) {
             let currKey = labelCodeArr[j];
-            let currCountSum: any;
             let dataArr = chartData[0][currKey];
+            // console.log(dataArr);
+            mainData.push(dataArr);
 
-            for (let k = 0; k < dataArr.length; k++) {
-              // console.log(dataArr[k]);
-
+            for (let k: any = 0; k < dataArr.length; k++) {
               if (dataArr[k].labelCode === bannerQuesOption.labelCode) {
-                // dataArr[k];
-                currCountSum += currCountSum;
-                curentdata.push(dataArr[k]);
+                const dataArrValues: any = dataArr[k];
+                curentdata.push(dataArrValues);
               }
             }
           }
-          // curentdata.forEach((el: any) => {
-          //   console.log('quesOption.labelCode', bannerQuesOption.labelCode);
-          //   //console.log('el.labelCode', el.labelCode);
-          //   if (el.labelCode === bannerQuesOption.labelCode) {
-          //     console.log('chala');
-          //   }
-          // });
-          //const optionData1 = curentdata;
-          // optionData = curentdata;
-          //debugger;
-          //optionData = curentdata[bannerQuesOption.labelCode];
-          count = _.sumBy(curentdata, function (o: any) {
-            return o.count;
+          optionData = curentdata;
+
+          mainData.forEach((el: any) => {
+            //console.log(el);
+            const localbaseCount = el?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0,
+            );
+            // console.log(localBaseqq);
+            arryVale.push(localbaseCount);
           });
+          const sumofValue = _.sum(arryVale);
+          // console.log(sumofValue);
+          localBase = sumofValue;
         }
 
-        //if (optionData) {
-        const label = optionData.find(
-          // @ts-ignore
-          (option: any) => option.labelCode === bannerQuesOption.labelCode,
-        );
-
-        let localBase = optionData?.reduce(
-          (sum: number, option: any) => sum + option.count,
-          0,
-        );
+        if (!Array.isArray(quesOption.labelCode)) {
+          localBase = optionData?.reduce(
+            (sum: number, option: any) => sum + option.count,
+            0,
+          );
+        } else {
+          // console.log(optionData);
+          localBase = localBase;
+        }
 
         if (bannerQuestionData?.type == QuestionType.MULTI) {
           localBase = find(chartData[1], {
@@ -128,32 +106,33 @@ export const getSingleChartOptionsSeries = (
           })?.count;
         }
 
-        if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
-          count = (label.count / localBase) * 100;
-        } else if (chartLabelType === ChartLabelType.NUMBER && label) {
-          count = label.count;
-        }
-        //console.log("baseCount", baseCount);
-        if (label) {
-          let percentageValue =
-            label.count == 0 ? label.count : (label.count / localBase) * 100;
-          let numberValue = label.count;
+        const label = getMatchedfilter(
+          optionData,
+          'labelCode',
+          bannerQuesOption.labelCode,
+        );
 
-          data.push({
-            name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
-            y:
-              count !== null
-                ? label.count == 0
-                  ? label.count
-                  : round(count, decimalPrecision)
-                : 0,
-            percentageValue,
-            numberValue,
-            baseCount: localBase,
-          });
+        //console.log(label);
+
+        count = _.sumBy(label, function (o) {
+          return o.count;
+        });
+
+        if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          count = (count / localBase) * 100;
+        } else {
+          count = count;
         }
-        // }
+        let percentageValue = count == 0 ? count : (count / localBase) * 100;
+        let numberValue = count;
+
+        data.push({
+          name: quesOption.labelText,
+          y: count,
+          percentageValue,
+          numberValue,
+          baseCount: localBase,
+        });
       }
 
       if (data.length)

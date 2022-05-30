@@ -15,12 +15,24 @@ export function bannerChartDataGen(
     chart: { chartLabelType, baseCount },
     questions: { bannerQuestionList, selectedBannerQuestionId },
   } = store.getState();
+
   const labels: Array<string> = questionData.options.map(
     (label: IQuestionOption) => label.labelText,
   );
   let seriesData: Array<Object> = [];
   const chartDataComplete = chartData[0];
   //  console.log("chartDataComplete", chartDataComplete);
+  // console.log(questionData);
+  // console.log(questionData);
+
+  // const DataAyy = questionData.options.forEach((el: any) => {
+  //   el.labelCode;
+  // });
+  // console.log(DataAyy);
+  const questionArr: any = questionData.options.map((label: any) => {
+    return label.labelCode;
+  });
+  //console.log('questionArr', questionArr);
 
   if (bannerQuestionData)
     bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
@@ -30,6 +42,7 @@ export function bannerChartDataGen(
         values: questionData.options.map((option: IQuestionOption) => {
           if (option.labelCode in chartDataComplete) {
             const obj = chartDataComplete[option.labelCode] || [];
+
             if (obj && obj.length > 0) {
               let base = obj?.reduce(
                 (sum: number, option: any) => sum + option.count,
@@ -66,14 +79,26 @@ export function bannerChartDataGen(
                 );
               }
 
-              const subOptionData = obj.find(
-                (subObj: any) => subObj.labelCode === scaleOption.labelCode,
-              );
+              console.log(obj);
+
+              let subOptionData;
+              if (Array.isArray(questionArr)) {
+                subOptionData = obj.find(
+                  (subObj: any) => subObj.labelCode === scaleOption.labelCode,
+                );
+              } else {
+                console.log('de');
+                //const labelCodeArr = option.labelCode;
+                //console.log(labelCodeArr);
+              }
+
               if (!subOptionData) {
                 return 0;
               }
 
               if (chartLabelType === ChartLabelType.PERCENTAGE) {
+                // console.log(subOptionData);
+
                 return subOptionData.count !== undefined
                   ? subOptionData.count === 0
                     ? 0
