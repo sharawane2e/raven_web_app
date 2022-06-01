@@ -41,63 +41,65 @@ export const getSingleChartOptionsSeries = (
       return false;
     });
 
-    const curentdata: any = [];
-    let localBase;
+    const newOptionData: any = [];
 
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption: any = bannerQuestionData?.options[index];
       const data: any[] = [];
+      let localBase;
 
       let optionData;
       for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
         const quesOption = subGroups[quesIndex];
 
-        if (!Array.isArray(quesOption.labelCode)) {
-          optionData = chartData[0][quesOption.labelCode];
-        } else {
-          //  debugger;
+        if (Array.isArray(quesOption.labelCode)) {
           const labelCodeArr = quesOption.labelCode;
-          //console.log(labelCodeArr);
-          const mainData: any = [];
-          const arryVale: any = [];
+          const labelCodeSum: any = [];
+          const baseCountSum: any = [];
+          var labeCodeSum = 0;
           for (let j = 0; j < labelCodeArr.length; j++) {
             let currKey = labelCodeArr[j];
             let dataArr = chartData[0][currKey];
-            // console.log(dataArr);
-            mainData.push(dataArr);
-
+            labelCodeSum.push(dataArr);
             for (let k: any = 0; k < dataArr.length; k++) {
               if (dataArr[k].labelCode === bannerQuesOption.labelCode) {
                 const dataArrValues: any = dataArr[k];
-                curentdata.push(dataArrValues);
+                newOptionData.push(dataArrValues);
+                labeCodeSum += dataArrValues.count;
               }
             }
           }
-          optionData = curentdata;
 
-          mainData.forEach((el: any) => {
-            //console.log(el);
+          optionData = newOptionData;
+
+          labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
               0,
             );
-            // console.log(localBaseqq);
-            arryVale.push(localbaseCount);
+            baseCountSum.push(localbaseCount);
           });
-          const sumofValue = _.sum(arryVale);
-          // console.log(sumofValue);
-          localBase = sumofValue;
-        }
 
-        if (!Array.isArray(quesOption.labelCode)) {
+          count = labeCodeSum;
+          const sumofValue = _.sum(baseCountSum);
+          localBase = sumofValue;
+        } else {
+          optionData = chartData[0][quesOption.labelCode];
+
+          const label = getMatchedfilter(
+            optionData,
+            'labelCode',
+            bannerQuesOption.labelCode,
+          );
+
+          count = _.sumBy(label, function (o) {
+            return o.count;
+          });
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0,
           );
-        } else {
-          // console.log(optionData);
-          localBase = localBase;
         }
 
         if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -105,18 +107,6 @@ export const getSingleChartOptionsSeries = (
             labelCode: quesOption.labelCode,
           })?.count;
         }
-
-        const label = getMatchedfilter(
-          optionData,
-          'labelCode',
-          bannerQuesOption.labelCode,
-        );
-
-        //console.log(label);
-
-        count = _.sumBy(label, function (o) {
-          return o.count;
-        });
 
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
           count = (count / localBase) * 100;

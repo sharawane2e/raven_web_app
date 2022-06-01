@@ -271,6 +271,7 @@ export function tableChartDataGen() {
 
     rows.push(['Total', ...tColomn, '']);
   }
+
   const complteTable = { rows, minmax };
 
   return complteTable;

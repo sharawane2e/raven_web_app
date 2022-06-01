@@ -118,8 +118,11 @@ const TableView: React.FC<TableProps> = (props) => {
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
                 const [maxVal, minVal] = tableData.minmax[0];
+                // console.log(minVal?.[colIndex - 1]);
+                // console.log(maxVal?.[colIndex - 1]);
                 const currentMin = minVal?.[colIndex - 1];
                 const currentMax = maxVal?.[colIndex - 1];
+                //console.log(currentMax === undefined);
 
                 return (
                   <>

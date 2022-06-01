@@ -21,7 +21,8 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
       (questionData?.type === QuestionType.SINGLE && !bannerQuestionData) ||
       (questionData?.type === QuestionType.MULTI && !bannerQuestionData) ||
       questionData === null ||
-      (questionData?.type === QuestionType?.NUMBER && !bannerQuestionData)
+      (questionData?.type === QuestionType?.NUMBER && !bannerQuestionData) ||
+      questionData.isGroupNet
     );
   };
 
