@@ -95,7 +95,7 @@ const TableView: React.FC<TableProps> = (props) => {
   ) => {
     const rowcount = removeSubGrop - laberesult;
 
-    if (laberesult >= 0) {
+    if (laberesult >= 0 && questionData?.isGroupNet) {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
         rowIndex < removeSubGrop + (laberesult - 1) ? (
