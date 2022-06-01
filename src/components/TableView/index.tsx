@@ -10,6 +10,8 @@ interface TableProps {}
 const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
+  //console.log(tableData);
+
   const { chartData, showMean, questionData, chartTranspose } = useSelector(
     (state: RootState) => state.chart,
   );
@@ -56,6 +58,8 @@ const TableView: React.FC<TableProps> = (props) => {
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
     // const equalValue = (currentMax === "100%") == (currentMin === "100%");
+    // console.log(currentMax);
+    // console.log(currentMin);
     return (
       <div
         className={clsx({
@@ -76,7 +80,18 @@ const TableView: React.FC<TableProps> = (props) => {
     currentMin: any,
     currentMax: any,
   ) => {
-    const rowcount = removeSubGrop - laberesult;
+    console.log('currentMin', currentMin);
+
+    // const currenMACVALUE = currentMax == undefined ? 0 : currentMax;
+    // const currenACVALUE = currentMax == undefined ? 0 : currentMin;
+    // console.log('currentMax', currenMACVALUE);
+    // console.log('min', currenACVALUE);
+
+    const rowcount =
+      removeSubGrop === undefined ? 0 : removeSubGrop - laberesult;
+    // console.log(removeSubGrop);
+    // console.log(laberesult);
+    console.log(rowcount);
 
     if (laberesult > 0) {
       return !chartTranspose ? (
@@ -116,13 +131,16 @@ const TableView: React.FC<TableProps> = (props) => {
         <div className="TableView">
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
+              {/* {console.log(row)} */}
               {row.map((col: any, colIndex: number) => {
+                // console.log(colIndex);
                 const [maxVal, minVal] = tableData.minmax[0];
                 // console.log(minVal?.[colIndex - 1]);
                 // console.log(maxVal?.[colIndex - 1]);
                 const currentMin = minVal?.[colIndex - 1];
                 const currentMax = maxVal?.[colIndex - 1];
-                //console.log(currentMax === undefined);
+                // console.log(maxVal);
+                // console.log(maxVal[colIndex - 1]);
 
                 return (
                   <>

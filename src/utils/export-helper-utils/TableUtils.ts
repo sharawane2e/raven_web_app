@@ -23,13 +23,13 @@ export function tableChartDataGen() {
   let chartTransposeState = !chart.chartTranspose;
 
   let results: any = chart.questionData?.options.filter(function (option) {
-    console.log();
     if (option?.labelCode === 'N') {
       if (option?.labelCode?.split('_')[0] == 'N') {
         return true;
       }
     }
   });
+  //console.log(chart?.bannerQuestionData?.options);
 
   lablecode_length = results.length;
   let bannerQuestionresults: any = chart.bannerQuestionData?.options.filter(
@@ -221,6 +221,7 @@ export function tableChartDataGen() {
           ? updateRow.splice(lablecode_length)
           : updateRow;
 
+      //  console.log(newUpdatedRow);
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
         chart?.questionData?.type !== QuestionType?.NUMBER

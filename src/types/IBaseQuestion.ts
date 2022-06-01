@@ -1,4 +1,4 @@
-import { QuestionType } from "../enums/QuestionType";
+import { QuestionType } from '../enums/QuestionType';
 
 export interface IBaseQuestion {
   _id: string;
