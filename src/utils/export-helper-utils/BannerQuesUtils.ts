@@ -28,6 +28,7 @@ export function bannerChartDataGen(
   //   return label.labelCode;
   // });
   const newOptionData: any = [];
+  console.log('questionData', bannerQuestionData?.isGroupNet);
 
   if (bannerQuestionData)
     bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
@@ -36,7 +37,8 @@ export function bannerChartDataGen(
       questionData.options.map((option: IQuestionOption) => {
         if (
           bannerQuestionData.type == QuestionType.SINGLE &&
-          questionData.type == QuestionType.SINGLE
+          questionData.type == QuestionType.SINGLE &&
+          bannerQuestionData?.isGroupNet
         ) {
           if (Array.isArray(option.labelCode)) {
             const labelCodeArr = option.labelCode;
@@ -156,6 +158,7 @@ export function bannerChartDataGen(
                           decimalPrecision,
                         )
                     : 0;
+                //console.log(subOptionDataCount);
                 countValues.push(subOptionDataCount);
               } else {
                 const subOptionDataCount =
@@ -167,7 +170,9 @@ export function bannerChartDataGen(
         }
       });
 
-      //console.log(countValues);
+      // console.log(countValues);
+      // console.log(scaleOption.labelText);
+      // console.log(labels);
 
       seriesData.push({
         name: scaleOption.labelText,
