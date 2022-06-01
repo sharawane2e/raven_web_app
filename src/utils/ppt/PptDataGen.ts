@@ -18,6 +18,7 @@ import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
 import _, { slice } from 'lodash';
 import { setDefaultSlideProperties } from './DefaultPptProps';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from '../../enums/QuestionType';
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
@@ -54,23 +55,35 @@ export function pptDataGen(
   if (chartType === ChartType.TABLE) {
     const tableRows = tableChartDataGen();
     let scaleLength: any = '';
+    let filtered: any;
+    let results: any;
+    let QuestionData: any;
+    let singleGroupNet: any;
 
     const [maxValue, minValue] = tableRows?.minmax[0];
 
-    const QuestionData: any = questionData?.groupNetData;
+    if (
+      questionData?.isGroupNet &&
+      questionData?.type === QuestionType.SINGLE
+    ) {
+      QuestionData = 0;
+      singleGroupNet = questionData?.groupNetData.length;
+    } else {
+      QuestionData = questionData?.groupNetData;
+      filtered = QuestionData.filter(function (el: any) {
+        return el !== '';
+      });
 
-    var filtered = QuestionData.filter(function (el: any) {
-      return el !== '';
-    });
+      results = questionData?.options.filter(function (option) {
+        if (option.labelCode.split('_')[0] == 'N') {
+          return true;
+        }
+      });
+    }
 
-    scaleLength = filtered.length > 1 ? filtered.length : 0;
+    scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
-    let results: any = questionData?.options.filter(function (option) {
-      if (option.labelCode.split('_')[0] == 'N') {
-        return true;
-      }
-    });
-    let laberesult = results.length;
+    let laberesult = results?.length;
 
     let removeSubGrop: any;
     if (chartTranspose) {
@@ -78,6 +91,8 @@ export function pptDataGen(
     }
     if (laberesult > 0) {
       removeSubGrop = tableRows?.rows?.length - laberesult;
+    } else {
+      removeSubGrop = tableRows?.rows?.length - singleGroupNet - 1;
     }
     var output: any = [];
 
@@ -93,7 +108,8 @@ export function pptDataGen(
         const rowcount = removeSubGrop - laberesult;
 
         if (rowData[colIndex] === currentMax) {
-          if (laberesult > 0) {
+          if (laberesult >= 0) {
+            console.log('ddd');
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
               ? (options['fill'] = 'b8e08c')
@@ -113,7 +129,7 @@ export function pptDataGen(
               : (options['bold'] = false);
           }
         } else if (rowData[colIndex] === currentMin) {
-          if (laberesult > 0) {
+          if (laberesult >= 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
               ? (options['fill'] = 'fbd9d4')

@@ -4,6 +4,7 @@ import { memo, useEffect, useState } from 'react';
 import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
 import { Scrollbars } from 'react-custom-scrollbars';
 import clsx from 'clsx';
+import { QuestionType } from '../../enums/QuestionType';
 
 interface TableProps {}
 
@@ -15,37 +16,54 @@ const TableView: React.FC<TableProps> = (props) => {
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
+
   let scaleLength: any = '';
+  let filtered: any;
+  let results: any;
+  let QuestionData: any;
+  let removeSubGrop: any;
+  let singleGroupNet: any;
 
   useEffect(() => {
     setTableData(tableChartDataGen());
   }, [chartData, showMean]);
 
-  const QuestionData: any = questionData?.groupNetData;
+  if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {
+    QuestionData = 0;
+    singleGroupNet = questionData?.groupNetData.length;
+  } else {
+    QuestionData = questionData?.groupNetData;
+    //console.log(QuestionData);
 
-  var filtered = QuestionData.filter(function (el: any) {
-    return el !== '';
-  });
+    filtered = QuestionData.filter(function (el: any) {
+      return el !== '';
+    });
 
-  scaleLength = filtered.length > 1 ? filtered.length : 0;
+    scaleLength = filtered.length > 1 ? filtered.length : 0;
 
-  let results: any = questionData?.options.filter(function (option) {
-    if (option?.labelCode === 'N') {
-      if (option.labelCode.split('_')[0] == 'N') {
-        return true;
+    results = questionData?.options.filter(function (option) {
+      if (option?.labelCode === 'N') {
+        if (option.labelCode.split('_')[0] == 'N') {
+          return true;
+        }
       }
-    }
-  });
-  let laberesult = results.length;
+    });
+  }
 
-  let removeSubGrop: any;
+  let laberesult = results?.length === undefined ? 0 : results?.length;
+  // console.log(laberesult);
 
   if (chartTranspose) {
     removeSubGrop = tableData?.rows?.length - scaleLength - 1;
   }
   if (laberesult > 0) {
     removeSubGrop = tableData?.rows?.length - laberesult;
+  } else {
+    removeSubGrop = tableData?.rows?.length - singleGroupNet - 1;
   }
+  //console.log(removeSubGrop);
+  // console.log('removeSubGrop', removeSubGrop);
+  // console.log('removeSubGrop1', tableData?.rows?.length);
 
   /*This code used for single grid data column hide and show highlights  */
   //  else {
@@ -55,7 +73,6 @@ const TableView: React.FC<TableProps> = (props) => {
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
-    // const equalValue = (currentMax === "100%") == (currentMin === "100%");
     return (
       <div
         className={clsx({
@@ -78,7 +95,7 @@ const TableView: React.FC<TableProps> = (props) => {
   ) => {
     const rowcount = removeSubGrop - laberesult;
 
-    if (laberesult > 0) {
+    if (laberesult >= 0) {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
         rowIndex < removeSubGrop + (laberesult - 1) ? (
@@ -92,6 +109,7 @@ const TableView: React.FC<TableProps> = (props) => {
         <></>
       );
     } else {
+      //debugger;
       return chartTranspose ? (
         rowIndex < removeSubGrop && !showMean ? (
           highLight(col, currentMin, currentMax)
@@ -114,15 +132,16 @@ const TableView: React.FC<TableProps> = (props) => {
     <Scrollbars>
       <div className="tableView">
         <div className="TableView">
+          {/* {console.log(tableData.rows)} */}
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
+                //console.log(col);
+
                 const [maxVal, minVal] = tableData.minmax[0];
-                // console.log(minVal?.[colIndex - 1]);
-                // console.log(maxVal?.[colIndex - 1]);
-                const currentMin = minVal?.[colIndex - 1];
-                const currentMax = maxVal?.[colIndex - 1];
-                //console.log(currentMax === undefined);
+                //console.log(maxVal[colIndex - 1]);
+                const currentMin = minVal[colIndex - 1];
+                const currentMax = maxVal[colIndex - 1];
 
                 return (
                   <>

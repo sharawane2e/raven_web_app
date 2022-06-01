@@ -21,9 +21,10 @@ export function tableChartDataGen() {
   const tranposedTableDataMin: any[] = [];
   const { chart } = store.getState();
   let chartTransposeState = !chart.chartTranspose;
+  let singleGroupNet: any = chart?.questionData?.groupNetData.length;
 
   let results: any = chart.questionData?.options.filter(function (option) {
-    console.log();
+    //console.log();
     if (option?.labelCode === 'N') {
       if (option?.labelCode?.split('_')[0] == 'N') {
         return true;
@@ -212,21 +213,31 @@ export function tableChartDataGen() {
         columnValues = columnValues.splice(lablecode_length);
       }
 
-      const newUpdatedRow =
-        chart.chartTranspose &&
-        chart?.questionData?.type === QuestionType.GRID &&
-        scaleLength > 0
-          ? updateRow.slice(0, -scaleLength)
-          : QuestionType.MULTI && lablecode_length > 0
-          ? updateRow.splice(lablecode_length)
-          : updateRow;
+      let newUpdatedRow: any;
+
+      if (
+        chart?.questionData?.isGroupNet &&
+        chart?.questionData?.type === QuestionType.SINGLE
+      ) {
+        const groupNet = chart.questionData.groupNetData.length;
+        newUpdatedRow = updateRow.slice(0, -groupNet);
+      } else {
+        newUpdatedRow =
+          chart.chartTranspose &&
+          chart?.questionData?.type === QuestionType.GRID &&
+          scaleLength > 0
+            ? updateRow.slice(0, -scaleLength)
+            : QuestionType.MULTI && lablecode_length > 0
+            ? updateRow.splice(lablecode_length)
+            : updateRow;
+      }
 
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
         chart?.questionData?.type !== QuestionType?.NUMBER
       ) {
-        tranposedTableData.push(Math.max(...newUpdatedRow) + '%');
-        tranposedTableDataMin.push(Math.min(...newUpdatedRow) + '%');
+        tranposedTableData.push(round(Math.max(...newUpdatedRow), 1) + '%');
+        tranposedTableDataMin.push(round(Math.min(...newUpdatedRow), 1) + '%');
       } else {
         tranposedTableData.push(Math.max(...newUpdatedRow));
         tranposedTableDataMin.push(Math.min(...newUpdatedRow));
@@ -240,9 +251,22 @@ export function tableChartDataGen() {
         if (QuestionType.GRID && scaleLength > 0 && !chart.showMean) {
           return columnValues;
         }
-
         return [...series.values];
       };
+
+      if (
+        chart?.questionData?.type == QuestionType.SINGLE &&
+        chart?.questionData?.isGroupNet
+      ) {
+        columnValues = columnValues.slice(0, -singleGroupNet);
+      } else if (
+        chart?.questionData?.type == QuestionType.SINGLE &&
+        chart?.questionData?.isGroupNet &&
+        chart?.bannerQuestionData?.type === QuestionType.SINGLE
+      ) {
+        columnValues = columnValues.slice(0, -singleGroupNet);
+      }
+      // console.log(columnValues);
 
       let getColoumnTotal = updatedColum()
         .filter(function (x: any) {
@@ -260,11 +284,7 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
-      //console.log('getColoumnTotal'), getColoumnTotal;
-
       getColumnSum = 0;
-
-      //console.log('tColomn', tColomn);
     });
 
     minmax.push([tranposedTableData, tranposedTableDataMin]);
