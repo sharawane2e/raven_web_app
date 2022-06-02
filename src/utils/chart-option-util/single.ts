@@ -113,7 +113,8 @@ export const getSingleChartOptionsSeries = (
         } else {
           count = count;
         }
-        let percentageValue = count == 0 ? count : (count / localBase) * 100;
+        // let percentageValue = count == 0 ? count : (count / localBase) * 100;
+        let percentageValue = count;
         let numberValue = count;
 
         data.push({
