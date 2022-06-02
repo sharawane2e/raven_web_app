@@ -324,6 +324,7 @@ export const changeChartType = (newChartType: ChartType) => {
 };
 
 export const transposeChart = () => {
+  //  debugger;
   const { chart, questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -388,7 +389,10 @@ export const transposeChart = () => {
     } else {
       dispatch(setChartTranspose(transposed));
     }
-  } else if (chartDataClone.questionData.type == QuestionType.SINGLE) {
+  } else if (
+    chartDataClone.bannerQuestionData &&
+    chartDataClone.questionData.type == QuestionType.SINGLE
+  ) {
     dispatch(setChartTranspose(transposed));
   } else if (
     chartDataClone.bannerQuestionData &&

@@ -12,7 +12,7 @@ const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
   const { chartData, showMean, questionData, chartTranspose } = useSelector(
-    (state: RootState) => state.chart,
+    (state: RootState) => state?.chart,
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
@@ -30,20 +30,20 @@ const TableView: React.FC<TableProps> = (props) => {
 
   if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {
     QuestionData = 0;
-    singleGroupNet = questionData?.groupNetData.length;
+    singleGroupNet = questionData?.groupNetData?.length;
   } else {
     QuestionData = questionData?.groupNetData;
     //console.log(QuestionData);
 
-    filtered = QuestionData.filter(function (el: any) {
+    filtered = QuestionData?.filter(function (el: any) {
       return el !== '';
     });
 
-    scaleLength = filtered.length > 1 ? filtered.length : 0;
+    scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
     results = questionData?.options.filter(function (option) {
       if (option?.labelCode === 'N') {
-        if (option.labelCode.split('_')[0] == 'N') {
+        if (option?.labelCode.split('_')[0] == 'N') {
           return true;
         }
       }
@@ -118,9 +118,9 @@ const TableView: React.FC<TableProps> = (props) => {
         ) : (
           <div className="Table-row-item">{col}</div>
         )
-      ) : columnIndex && tableData.rows.length > 3 ? (
+      ) : columnIndex && tableData?.rows?.length > 3 ? (
         highLight(col, currentMin, currentMax)
-      ) : !removeSubGrop && tableData.rows.length > 3 ? (
+      ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
         highLight(col, currentMin, currentMax)
       ) : (
         <div className="Table-row-item"> {col}</div>
@@ -138,7 +138,7 @@ const TableView: React.FC<TableProps> = (props) => {
               {row.map((col: any, colIndex: number) => {
                 //console.log(col);
 
-                const [maxVal, minVal] = tableData.minmax[0];
+                const [maxVal, minVal] = tableData?.minmax[0];
                 //console.log(maxVal[colIndex - 1]);
                 const currentMin = minVal[colIndex - 1];
                 const currentMax = maxVal[colIndex - 1];

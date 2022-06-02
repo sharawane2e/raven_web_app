@@ -7,7 +7,7 @@ import { QuestionType } from '../../enums/QuestionType';
 export function tableChartDataGen() {
   let seriesData = [];
   seriesData = chartDataGen();
-  // console.log(seriesData);
+  //console.log(seriesData);
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -42,7 +42,8 @@ export function tableChartDataGen() {
       }
     },
   );
-  crosstab_length = bannerQuestionresults?.length;
+  crosstab_length =
+    bannerQuestionresults?.length > 0 ? bannerQuestionresults?.length : 0;
 
   if (seriesData) {
     let scale: any = [];
@@ -50,7 +51,7 @@ export function tableChartDataGen() {
       scale.push(index.name);
     });
     rows.push(['', ...scale, 'Total']);
-    const QuestionData: any = chart.questionData?.groupNetData;
+    const QuestionData: any = chart?.questionData?.groupNetData;
 
     var filtered = QuestionData.filter(function (el: any) {
       return el !== '';
