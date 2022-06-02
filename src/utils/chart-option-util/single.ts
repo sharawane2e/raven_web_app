@@ -103,9 +103,9 @@ export const getSingleChartOptionsSeries = (
         }
 
         if (bannerQuestionData?.type == QuestionType.MULTI) {
-          localBase = find(chartData[1], {
-            labelCode: quesOption.labelCode,
-          })?.count;
+          // localBase = find(chartData[0], {
+          //   labelCode: quesOption.labelCode,
+          // })?.count;
         }
 
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -118,7 +118,7 @@ export const getSingleChartOptionsSeries = (
 
         data.push({
           name: quesOption.labelText,
-          y: count,
+          y: count === null ? 0 : count,
           percentageValue,
           numberValue,
           baseCount: localBase,
