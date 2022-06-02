@@ -103,8 +103,7 @@ export const getSingleChartOptionsSeries = (
         }
 
         if (bannerQuestionData?.type == QuestionType.MULTI) {
-          debugger;
-          localBase = find(chartData[1], {
+          localBase = find(chartData[0][1], {
             labelCode: quesOption.labelCode,
           })?.count;
         }
