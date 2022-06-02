@@ -21,7 +21,7 @@ export const getSingleChartOptionsSeries = (
   chartOptionsData: any,
 ) => {
   const {
-    chart: { chartLabelType, chartOptions, chartType },
+    chart: { chartLabelType, chartOptions, chartType, chartTranspose },
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
@@ -41,8 +41,14 @@ export const getSingleChartOptionsSeries = (
       return false;
     });
 
-    const newOptionData: any = [];
+    if (chartTranspose) {
+      series.length = 0;
+      getSingleTransposeChartOptions(questionData, chartData);
+      //series.push(getSingleTransposeChartOptions(questionData, chartData));
+      return series;
+    }
 
+    const newOptionData: any = [];
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
       const bannerQuesOption: any = bannerQuestionData?.options[index];
@@ -201,4 +207,9 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   }
+};
+
+const getSingleTransposeChartOptions = (questiondata: any, chartData: any) => {
+  console.log(questiondata);
+  console.log(chartData);
 };

@@ -388,6 +388,8 @@ export const transposeChart = () => {
     } else {
       dispatch(setChartTranspose(transposed));
     }
+  } else if (chartDataClone.questionData.type == QuestionType.SINGLE) {
+    dispatch(setChartTranspose(transposed));
   } else if (
     chartDataClone.bannerQuestionData &&
     chartDataClone.questionData.type == QuestionType.MULTI
