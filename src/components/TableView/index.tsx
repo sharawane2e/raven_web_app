@@ -61,9 +61,6 @@ const TableView: React.FC<TableProps> = (props) => {
   } else {
     removeSubGrop = tableData?.rows?.length - singleGroupNet - 1;
   }
-  //console.log(removeSubGrop);
-  // console.log('removeSubGrop', removeSubGrop);
-  // console.log('removeSubGrop1', tableData?.rows?.length);
 
   /*This code used for single grid data column hide and show highlights  */
   //  else {
@@ -130,35 +127,56 @@ const TableView: React.FC<TableProps> = (props) => {
 
   return (
     <Scrollbars>
-      <div className="tableView">
-        <div className="TableView">
-          {/* {console.log(tableData.rows)} */}
-          {tableData.rows?.map((row: any, rowIndex: any) => (
-            <div className="Table-row">
-              {row.map((col: any, colIndex: number) => {
-                //console.log(col);
-
-                const [maxVal, minVal] = tableData?.minmax[0];
-                //console.log(maxVal[colIndex - 1]);
-                const currentMin = minVal[colIndex - 1];
-                const currentMax = maxVal[colIndex - 1];
-
-                return (
-                  <>
-                    {tableColumn(
-                      rowIndex,
-                      colIndex,
-                      col,
-                      currentMax,
-                      currentMin,
-                    )}
-                  </>
-                );
-              })}
-            </div>
-          ))}
+      {questionData?.isGroupNet &&
+      questionData?.type === QuestionType.SINGLE &&
+      chartTranspose ? (
+        <div className="tableView">
+          <div className="TableView">
+            {/* {console.log(tableData.rows)} */}
+            {tableData.rows?.map((row: any, rowIndex: any) => (
+              <div className="Table-row">
+                {row.map((col: any, colIndex: number) => {
+                  return (
+                    <>
+                      <div className="Table-row-item"> {col}</div>
+                    </>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="tableView">
+          <div className="TableView">
+            {/* {console.log(tableData.rows)} */}
+            {tableData.rows?.map((row: any, rowIndex: any) => (
+              <div className="Table-row">
+                {row.map((col: any, colIndex: number) => {
+                  //console.log(col);
+
+                  const [maxVal, minVal] = tableData?.minmax[0];
+                  //console.log(maxVal[colIndex - 1]);
+                  const currentMin = minVal[colIndex - 1];
+                  const currentMax = maxVal[colIndex - 1];
+
+                  return (
+                    <>
+                      {tableColumn(
+                        rowIndex,
+                        colIndex,
+                        col,
+                        currentMax,
+                        currentMin,
+                      )}
+                    </>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </Scrollbars>
   );
 };

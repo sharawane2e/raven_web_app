@@ -5,11 +5,7 @@ import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getMatchedfilter, getmatchedFind, getSum, round } from '../Utility';
-import {
-  colorArr,
-  decimalPrecision,
-  primaryBarColor,
-} from '../../constants/Variables';
+import { colorArr, primaryBarColor } from '../../constants/Variables';
 import { dataLabels } from '../../redux/reducers/chartReducer';
 import { ChartType } from '../../enums/ChartType';
 
@@ -20,12 +16,13 @@ export const getSingleChartOptionsSeries = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
 ) => {
+  //debugger;
   const {
     chart: { chartLabelType, chartOptions, chartType, chartTranspose },
     questions: { selectedBannerQuestionId, questionList },
   } = store.getState();
 
-  if (selectedBannerQuestionId) {
+  if (selectedBannerQuestionId && chartType !== ChartType.TABLE) {
     const series: any[] = [];
     let subGroups: any;
     let count = 0;
@@ -55,7 +52,7 @@ export const getSingleChartOptionsSeries = (
       //series.push(getSingleTransposeChartOptions(questionData, chartData));
       return series;
     }
-
+    // debugger;
     const newOptionData: any = [];
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
@@ -150,70 +147,72 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    const data: any[] = [];
+    if (chartType !== ChartType.TABLE) {
+      const data: any[] = [];
 
-    for (
-      let optionIndex = 0;
-      optionIndex < questionData.options.length;
-      optionIndex++
-    ) {
-      const option = questionData.options[optionIndex];
+      for (
+        let optionIndex = 0;
+        optionIndex < questionData.options.length;
+        optionIndex++
+      ) {
+        const option = questionData.options[optionIndex];
 
-      const labelCollection = getMatchedfilter(
-        chartData,
-        'labelCode',
-        option.labelCode,
-      );
+        const labelCollection = getMatchedfilter(
+          chartData,
+          'labelCode',
+          option.labelCode,
+        );
 
-      let count = 0;
-      if (labelCollection) {
-        count = getSum(labelCollection, 'count');
+        let count = 0;
+        if (labelCollection) {
+          count = getSum(labelCollection, 'count');
+        }
+        let plotValue;
+        let percentageValue = (count / baseCount) * 100;
+        let numberValue = count;
+        if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          plotValue = (count / baseCount) * 100;
+        } else {
+          plotValue = count;
+        }
+        if (plotValue > 0)
+          data.push({
+            name: option.labelText,
+            // y: round(plotValue, decimalPrecision),
+            y: plotValue,
+            percentageValue,
+            numberValue,
+            baseCount: baseCount,
+          });
       }
-      let plotValue;
-      let percentageValue = (count / baseCount) * 100;
-      let numberValue = count;
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / baseCount) * 100;
-      } else {
-        plotValue = count;
-      }
-      if (plotValue > 0)
-        data.push({
-          name: option.labelText,
-          // y: round(plotValue, decimalPrecision),
-          y: plotValue,
-          percentageValue,
-          numberValue,
-          baseCount: baseCount,
+
+      const series: any[] = [];
+
+      if (chartType === ChartType.STACK) {
+        data.map((element: any, index: number) => {
+          const name = element.name;
+          const color = colorArr[index];
+          const data = [
+            {
+              name: questionData.labelText,
+              y: element.y,
+              numberValue: element.numberValue,
+              percentageValue: element.percentageValue,
+              baseCount: element.baseCount,
+            },
+          ];
+          series.push({ name, color, data, dataLabels });
         });
+      } else {
+        series.push({
+          color: primaryBarColor,
+          name: questionData.labelText,
+          data,
+          dataLabels,
+        });
+      }
+      return series;
     }
-
-    const series: any[] = [];
-
-    if (chartType === ChartType.STACK) {
-      data.map((element: any, index: number) => {
-        const name = element.name;
-        const color = colorArr[index];
-        const data = [
-          {
-            name: questionData.labelText,
-            y: element.y,
-            numberValue: element.numberValue,
-            percentageValue: element.percentageValue,
-            baseCount: element.baseCount,
-          },
-        ];
-        series.push({ name, color, data, dataLabels });
-      });
-    } else {
-      series.push({
-        color: primaryBarColor,
-        name: questionData.labelText,
-        data,
-        dataLabels,
-      });
-    }
-    return series;
   }
 };
 
@@ -230,20 +229,50 @@ const getSingleTransposeChartOptions = (
   const series: any[] = [];
   let count = 0;
   const newOptionData: any = [];
+  const allLabels: Array<string> = [];
+  const newChartData: any = {};
+  const basecountArr: any = [];
+  //let dataSum = [];
+
+  for (const labelArrays in chartData[0]) {
+    const labelArray = chartData[0][labelArrays];
+    labelArray.forEach((el: any) => {
+      if (allLabels.indexOf(el.labelCode) == -1) {
+        allLabels.push(el.labelCode);
+        newChartData[el.labelCode] = [];
+      }
+      newChartData[el.labelCode].push({
+        count: el.count,
+        labelCode: labelArrays,
+      });
+    });
+  }
+  for (const key in newChartData) {
+    const localBaseCount = _.sumBy(newChartData[key], function (o: any) {
+      return o?.count;
+    });
+    basecountArr.push(localBaseCount);
+  }
 
   for (let index = 0; index < questiondata?.options.length; index++) {
     const quesOption = optionSubGroups[index];
     const data: any[] = [];
     let localBase;
-    let optionData;
+    let optionData: any;
 
-    for (let quesIndex = 0; quesIndex < optionSubGroups.length; quesIndex++) {
+    //console.log(bannerQuestionData?.options);
+
+    for (
+      let quesIndex = 0;
+      quesIndex < bannerQuestionData?.options.length;
+      quesIndex++
+    ) {
       const bannerQuesOption: any = bannerQuestionData?.options[quesIndex];
 
       if (Array.isArray(quesOption.labelCode)) {
         const labelCodeArr = quesOption.labelCode;
         const labelCodeSum: any = [];
-        const baseCountSum: any = [];
+        // const baseCountSum: any = [];
         var labeCodeSum = 0;
         for (let j = 0; j < labelCodeArr.length; j++) {
           let currKey = labelCodeArr[j];
@@ -253,66 +282,40 @@ const getSingleTransposeChartOptions = (
             if (dataArr[k].labelCode === bannerQuesOption?.labelCode) {
               const dataArrValues: any = dataArr[k];
               newOptionData.push(dataArrValues);
-              labeCodeSum += dataArrValues?.count;
+              //labeCodeSum += dataArrValues?.count;
             }
           }
         }
 
-        optionData = newOptionData;
-
-        labelCodeSum.forEach((el: any) => {
-          const localbaseCount = el?.reduce(
-            (sum: number, option: any) => sum + option.count,
-            0,
-          );
-          baseCountSum.push(localbaseCount);
-        });
-
+        //optionData = newOptionData;
         count = labeCodeSum;
-        // const sumofValue = _.sum(baseCountSum);
-        // localBase = sumofValue;
-
-        //console.log('optionData', sumofValue);
       } else {
         optionData = chartData[0][quesOption?.labelCode];
-
-        // console.log('chartData[0]', optionData);
+        // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
           'labelCode',
           bannerQuesOption?.labelCode,
         );
-        const dataFind = _.find(optionData, function (o) {
-          return o.labelCode === bannerQuesOption?.labelCode;
-        });
 
-        console.log(dataFind);
-        // count = _.sumBy(label, function (o) {
-        //   return o?.count;
-        // });
-
-        count = 0;
-        localBase = optionData?.reduce(
-          (sum: number, option: any) => sum + option?.count,
-          0,
-        );
+        count = label?.count;
       }
-      console.log(localBase);
+
       if (bannerQuestionData?.type == QuestionType.MULTI) {
         localBase = find(chartData[0][1], {
           labelCode: quesOption.labelCode,
         })?.count;
       }
+      localBase = basecountArr[quesIndex];
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         count = (count / localBase) * 100;
       } else {
         count = count;
       }
-      // let percentageValue = count == 0 ? count : (count / localBase) * 100;
+
       let percentageValue = count;
       let numberValue = count;
-
       data.push({
         name: bannerQuesOption?.labelText,
         y: count,
@@ -322,7 +325,6 @@ const getSingleTransposeChartOptions = (
       });
     }
 
-    // if (data.length)
     series.push({
       name: quesOption?.labelText,
       color: index < colorArr.length ? colorArr[index] : undefined,
@@ -330,6 +332,5 @@ const getSingleTransposeChartOptions = (
       dataLabels,
     });
   }
-  //console.log(series);
   return series;
 };

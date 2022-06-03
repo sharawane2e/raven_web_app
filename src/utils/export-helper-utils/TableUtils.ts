@@ -7,6 +7,7 @@ import { QuestionType } from '../../enums/QuestionType';
 export function tableChartDataGen() {
   let seriesData = [];
   seriesData = chartDataGen();
+
   //console.log(seriesData);
   let lablecode_length: any = '';
   let crosstab_length: any = '';
@@ -78,9 +79,12 @@ export function tableChartDataGen() {
         seriesData.forEach((d: any, rIndex: any) => {
           let netsLabelcode =
             chart.bannerQuestionData?.options[rIndex]?.labelCode.split('_')[0];
-
-          let netsQuestionLabelcode =
-            chart.questionData?.options[rIndex]?.labelCode?.split('_')[0];
+          let netsQuestionLabelcode;
+          if (chart?.questionData?.isGroupNet) {
+          } else {
+            netsQuestionLabelcode =
+              chart.questionData?.options[rIndex]?.labelCode?.split('_')[0];
+          }
 
           if (
             chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
@@ -267,13 +271,14 @@ export function tableChartDataGen() {
       ) {
         columnValues = columnValues.slice(0, -singleGroupNet);
       }
-      // console.log(columnValues);
 
       let getColoumnTotal = updatedColum()
         .filter(function (x: any) {
           return typeof x === 'number';
         }) // remove any non numbers
         .reduce(function (s: number, v: number) {
+          // console.log(s);
+          // console.log(v);
           return s + Number(v);
         }, 0);
 
@@ -286,6 +291,8 @@ export function tableChartDataGen() {
         tColomn.push(round(getColoumnTotal, 1));
       }
       getColumnSum = 0;
+
+      // console.log(getColoumnTotal);
     });
 
     minmax.push([tranposedTableData, tranposedTableDataMin]);
