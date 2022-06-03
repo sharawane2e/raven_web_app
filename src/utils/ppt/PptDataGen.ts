@@ -109,7 +109,6 @@ export function pptDataGen(
 
         if (rowData[colIndex] === currentMax) {
           if (laberesult >= 0) {
-            console.log('ddd');
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
               ? (options['fill'] = 'b8e08c')

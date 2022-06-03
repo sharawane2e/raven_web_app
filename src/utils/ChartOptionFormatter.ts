@@ -290,21 +290,26 @@ const getSingleChartOptions = (
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
 ): any => {
-  const series = getSingleChartOptionsSeries(
-    questionData,
-    chartData,
-    baseCount,
-    bannerQuestionData,
-    chartOptionsData,
-  );
+  const {
+    chart: { chartType },
+  } = store.getState();
+  if (chartType !== ChartType.TABLE) {
+    const series = getSingleChartOptionsSeries(
+      questionData,
+      chartData,
+      baseCount,
+      bannerQuestionData,
+      chartOptionsData,
+    );
 
-  return {
-    legend: {
-      enabled: true,
-    },
-    tooltip: { ...getToolTip() },
-    series,
-  };
+    return {
+      legend: {
+        enabled: true,
+      },
+      tooltip: { ...getToolTip() },
+      series,
+    };
+  }
 };
 
 const getRankChartOptions = (
@@ -389,7 +394,6 @@ const getRankChartOptions = (
       }
 
       if (chartType == ChartType.LINE) {
-        console.log(plotValue);
         data.push({
           name: subGroup.labelText,
           y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
