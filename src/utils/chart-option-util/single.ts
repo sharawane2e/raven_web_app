@@ -130,7 +130,7 @@ export const getSingleChartOptionsSeries = (
 
         data.push({
           name: quesOption.labelText,
-          y: count === null ? 0 : count,
+          y: count,
           percentageValue,
           numberValue,
           baseCount: localBase,
@@ -282,13 +282,14 @@ const getSingleTransposeChartOptions = (
             if (dataArr[k].labelCode === bannerQuesOption?.labelCode) {
               const dataArrValues: any = dataArr[k];
               newOptionData.push(dataArrValues);
-              //labeCodeSum += dataArrValues?.count;
+              labeCodeSum += dataArrValues?.count;
             }
           }
         }
 
-        //optionData = newOptionData;
+        // optionData = newOptionData;
         count = labeCodeSum;
+        console.log(labeCodeSum);
       } else {
         optionData = chartData[0][quesOption?.labelCode];
         // console.log('optionData', optionData);
