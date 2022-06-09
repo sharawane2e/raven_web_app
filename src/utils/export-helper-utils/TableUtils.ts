@@ -7,8 +7,6 @@ import { QuestionType } from '../../enums/QuestionType';
 export function tableChartDataGen() {
   let seriesData = [];
   seriesData = chartDataGen();
-
-  //console.log(seriesData);
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -17,13 +15,22 @@ export function tableChartDataGen() {
   let subRow: any = [];
   let totalRow: any = [];
   let scaleIndex: any = 0;
+  let singleGroupNet: any;
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
   const { chart } = store.getState();
   let chartTransposeState = !chart.chartTranspose;
-  let singleGroupNet: any = chart?.questionData?.groupNetData.length;
 
+  /*It's condition used for single with net*/
+  if (
+    chart?.questionData?.type == QuestionType?.SINGLE &&
+    chart?.questionData?.isGroupNet
+  ) {
+    singleGroupNet = chart?.questionData?.groupNetData.length;
+  }
+
+  /*this condition used for when multi Question avialbe neeting*/
   let results: any = chart.questionData?.options.filter(function (option) {
     //console.log();
     if (option?.labelCode === 'N') {
@@ -34,6 +41,7 @@ export function tableChartDataGen() {
   });
 
   lablecode_length = results.length;
+
   let bannerQuestionresults: any = chart.bannerQuestionData?.options.filter(
     function (option) {
       if (option?.labelCode === 'N') {
@@ -43,6 +51,7 @@ export function tableChartDataGen() {
       }
     },
   );
+
   crosstab_length =
     bannerQuestionresults?.length > 0 ? bannerQuestionresults?.length : 0;
 
@@ -61,10 +70,10 @@ export function tableChartDataGen() {
     scaleLength = filtered.length > 1 ? filtered.length : 0;
 
     if (!chartTransposeState) {
-      scaleIndex = scale.length;
+      scaleIndex = scale.length - singleGroupNet;
     } else {
       if (scaleLength > 0) {
-        scaleIndex = scaleLength;
+        scaleIndex = scaleLength - singleGroupNet;
       } else {
         scaleIndex = scale.length - crosstab_length;
       }
@@ -93,7 +102,7 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
               if (rIndex < scaleIndex && !crosstab_length) {
-                totalrowSub += parseFloat(d.values[k]);
+                //totalrowSub += parseFloat(d.values[k]);
                 if (netsLabelcode === 'N') {
                   totalrowSub += 0;
                 }
@@ -101,7 +110,7 @@ export function tableChartDataGen() {
                 if (netsQuestionLabelcode === 'N') {
                   totalrowSub += parseFloat(d.values[k]);
                 } else {
-                  //totalrowSub += parseFloat(d.values[k]);
+                  totalrowSub += parseFloat(d.values[k]);
                   if (chart.showMean === false && scaleLength > 0) {
                     totalrowSub += 0;
                   } else {
@@ -113,7 +122,10 @@ export function tableChartDataGen() {
               if (crosstab_length && rIndex + curentRow > scaleIndex) {
                 totalrowSub += parseFloat(d.values[k]);
               }
-              if (scaleLength > 0 && !chartTransposeState) {
+              // if (scaleLength > 0 && !chartTransposeState) {
+              //   totalrowSub += parseFloat(d.values[k]);
+              // }
+              if (rIndex < scaleIndex && !crosstab_length) {
                 totalrowSub += parseFloat(d.values[k]);
               }
             } else {
@@ -124,10 +136,10 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 2));
               if (chart?.questionData?.type === 'N') {
-                // totalrowSub += parseFloat(d.values[k]);
+                totalrowSub += parseFloat(d.values[k]);
               } else {
                 if (rIndex < scaleIndex && chart.showMean) {
-                  // totalrowSub += parseFloat(d.values[k]);
+                  totalrowSub += parseFloat(d.values[k]);
                   if (netsLabelcode === 'N') {
                     totalrowSub += 0;
                   }
@@ -162,7 +174,7 @@ export function tableChartDataGen() {
                 }
               }
               if (scaleLength > 0 && chartTransposeState) {
-                // totalrowSub += parseFloat(d.values[k]);
+                totalrowSub += parseFloat(d.values[k]);
               } else {
                 totalrowSub += 0;
               }
@@ -192,8 +204,6 @@ export function tableChartDataGen() {
     let tColomn: any = [];
 
     seriesData.forEach((series: any) => {
-      let getColumnSum = 0;
-
       let columnValues = [...series.values];
 
       const updateRow: any[] = [];
@@ -223,9 +233,10 @@ export function tableChartDataGen() {
       if (
         chart?.questionData?.isGroupNet &&
         chart?.questionData?.type === QuestionType.SINGLE
+        //&&
+        //chart?.chartLabelType === ChartLabelType.NUMBER
       ) {
-        const groupNet = chart.questionData.groupNetData.length;
-        newUpdatedRow = updateRow.slice(0, -groupNet);
+        newUpdatedRow = updateRow.slice(0, -singleGroupNet);
       } else {
         newUpdatedRow =
           chart.chartTranspose &&
@@ -261,13 +272,8 @@ export function tableChartDataGen() {
 
       if (
         chart?.questionData?.type == QuestionType.SINGLE &&
-        chart?.questionData?.isGroupNet
-      ) {
-        columnValues = columnValues.slice(0, -singleGroupNet);
-      } else if (
-        chart?.questionData?.type == QuestionType.SINGLE &&
         chart?.questionData?.isGroupNet &&
-        chart?.bannerQuestionData?.type === QuestionType.SINGLE
+        chartTransposeState
       ) {
         columnValues = columnValues.slice(0, -singleGroupNet);
       }
@@ -277,8 +283,6 @@ export function tableChartDataGen() {
           return typeof x === 'number';
         }) // remove any non numbers
         .reduce(function (s: number, v: number) {
-          // console.log(s);
-          // console.log(v);
           return s + Number(v);
         }, 0);
 
@@ -290,9 +294,6 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
-      getColumnSum = 0;
-
-      // console.log(getColoumnTotal);
     });
 
     minmax.push([tranposedTableData, tranposedTableDataMin]);

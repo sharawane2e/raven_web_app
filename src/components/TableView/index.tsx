@@ -92,7 +92,11 @@ const TableView: React.FC<TableProps> = (props) => {
   ) => {
     const rowcount = removeSubGrop - laberesult;
 
-    if (laberesult >= 0 && questionData?.isGroupNet) {
+    if (
+      laberesult >= 0 &&
+      questionData?.isGroupNet &&
+      questionData?.type === QuestionType.GRID
+    ) {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
         rowIndex < removeSubGrop + (laberesult - 1) ? (
@@ -106,77 +110,63 @@ const TableView: React.FC<TableProps> = (props) => {
         <></>
       );
     } else {
-      //debugger;
-      return chartTranspose ? (
-        rowIndex < removeSubGrop && !showMean ? (
+      //console.log(currentMin);
+      //console.log(currentMax);
+      if (
+        chartTranspose &&
+        questionData?.isGroupNet &&
+        questionData?.type === QuestionType.SINGLE
+      ) {
+        //return highLight(col, currentMin, currentMax);
+        return highLight(col, currentMin, currentMax);
+      } else {
+        return chartTranspose ? (
+          rowIndex < removeSubGrop && !showMean ? (
+            highLight(col, currentMin, currentMax)
+          ) : !removeSubGrop && !showMean ? (
+            highLight(col, currentMin, currentMax)
+          ) : (
+            <div className="Table-row-item">{col}</div>
+          )
+        ) : columnIndex && tableData?.rows?.length > 3 ? (
           highLight(col, currentMin, currentMax)
-        ) : !removeSubGrop && !showMean ? (
+        ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
           highLight(col, currentMin, currentMax)
         ) : (
-          <div className="Table-row-item">{col}</div>
-        )
-      ) : columnIndex && tableData?.rows?.length > 3 ? (
-        highLight(col, currentMin, currentMax)
-      ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-        highLight(col, currentMin, currentMax)
-      ) : (
-        <div className="Table-row-item"> {col}</div>
-      );
+          <div className="Table-row-item"> {col}</div>
+        );
+      }
     }
   };
 
   return (
     <Scrollbars>
-      {questionData?.isGroupNet &&
-      questionData?.type === QuestionType.SINGLE &&
-      chartTranspose ? (
-        <div className="tableView">
-          <div className="TableView">
-            {/* {console.log(tableData.rows)} */}
-            {tableData.rows?.map((row: any, rowIndex: any) => (
-              <div className="Table-row">
-                {row.map((col: any, colIndex: number) => {
-                  return (
-                    <>
-                      <div className="Table-row-item"> {col}</div>
-                    </>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="tableView">
-          <div className="TableView">
-            {/* {console.log(tableData.rows)} */}
-            {tableData.rows?.map((row: any, rowIndex: any) => (
-              <div className="Table-row">
-                {row.map((col: any, colIndex: number) => {
-                  //console.log(col);
+      <div className="tableView">
+        <div className="TableView">
+          {/* {console.log(tableData.rows)} */}
+          {tableData.rows?.map((row: any, rowIndex: any) => (
+            <div className="Table-row">
+              {row.map((col: any, colIndex: number) => {
+                const [maxVal, minVal] = tableData?.minmax[0];
+                const currentMin = minVal[colIndex - 1];
+                const currentMax = maxVal[colIndex - 1];
 
-                  const [maxVal, minVal] = tableData?.minmax[0];
-                  //console.log(maxVal[colIndex - 1]);
-                  const currentMin = minVal[colIndex - 1];
-                  const currentMax = maxVal[colIndex - 1];
-
-                  return (
-                    <>
-                      {tableColumn(
-                        rowIndex,
-                        colIndex,
-                        col,
-                        currentMax,
-                        currentMin,
-                      )}
-                    </>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+                return (
+                  <>
+                    {tableColumn(
+                      rowIndex,
+                      colIndex,
+                      col,
+                      currentMax,
+                      currentMin,
+                    )}
+                  </>
+                );
+              })}
+            </div>
+          ))}
         </div>
-      )}
+      </div>
     </Scrollbars>
   );
 };

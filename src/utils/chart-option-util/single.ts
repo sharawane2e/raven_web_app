@@ -15,14 +15,15 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
+  transposed: boolean,
 ) => {
-  //debugger;
+  debugger;
   const {
-    chart: { chartLabelType, chartOptions, chartType, chartTranspose },
-    questions: { selectedBannerQuestionId, questionList },
+    chart: { chartLabelType, chartType },
+    questions: { selectedBannerQuestionId },
   } = store.getState();
 
-  if (selectedBannerQuestionId && chartType !== ChartType.TABLE) {
+  if (selectedBannerQuestionId) {
     const series: any[] = [];
     let subGroups: any;
     let count = 0;
@@ -39,7 +40,7 @@ export const getSingleChartOptionsSeries = (
       return false;
     });
 
-    if (chartTranspose) {
+    if (transposed && bannerQuestionData?.type == QuestionType.SINGLE) {
       series.length = 0;
       series.push(
         ...getSingleTransposeChartOptions(
@@ -47,6 +48,7 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
+          transposed,
         ),
       );
       //series.push(getSingleTransposeChartOptions(questionData, chartData));
@@ -107,6 +109,7 @@ export const getSingleChartOptionsSeries = (
           count = _.sumBy(label, function (o) {
             return o.count;
           });
+
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
             0,
@@ -114,18 +117,26 @@ export const getSingleChartOptionsSeries = (
         }
 
         if (bannerQuestionData?.type == QuestionType.MULTI) {
-          localBase = find(chartData[0][1], {
-            labelCode: quesOption.labelCode,
-          })?.count;
+          if (!transposed) {
+            localBase = optionData?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0,
+            );
+          } else {
+            localBase = find(chartData[0][1], {
+              labelCode: quesOption?.labelCode,
+            })?.count;
+          }
         }
 
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          //  debugger;
           count = (count / localBase) * 100;
         } else {
           count = count;
         }
         // let percentageValue = count == 0 ? count : (count / localBase) * 100;
-        let percentageValue = count;
+        let percentageValue = (count / localBase) * 100;
         let numberValue = count;
 
         data.push({
@@ -147,72 +158,71 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    if (chartType !== ChartType.TABLE) {
-      const data: any[] = [];
+    debugger;
+    const data: any[] = [];
 
-      for (
-        let optionIndex = 0;
-        optionIndex < questionData.options.length;
-        optionIndex++
-      ) {
-        const option = questionData.options[optionIndex];
+    for (
+      let optionIndex = 0;
+      optionIndex < questionData.options.length;
+      optionIndex++
+    ) {
+      const option = questionData.options[optionIndex];
 
-        const labelCollection = getMatchedfilter(
-          chartData,
-          'labelCode',
-          option.labelCode,
-        );
+      const labelCollection = getMatchedfilter(
+        chartData,
+        'labelCode',
+        option.labelCode,
+      );
 
-        let count = 0;
-        if (labelCollection) {
-          count = getSum(labelCollection, 'count');
-        }
-        let plotValue;
-        let percentageValue = (count / baseCount) * 100;
-        let numberValue = count;
-        if (chartLabelType === ChartLabelType.PERCENTAGE) {
-          plotValue = (count / baseCount) * 100;
-        } else {
-          plotValue = count;
-        }
-        if (plotValue > 0)
-          data.push({
-            name: option.labelText,
-            // y: round(plotValue, decimalPrecision),
-            y: plotValue,
-            percentageValue,
-            numberValue,
-            baseCount: baseCount,
-          });
+      let count = 0;
+      if (labelCollection) {
+        count = getSum(labelCollection, 'count');
       }
-
-      const series: any[] = [];
-
-      if (chartType === ChartType.STACK) {
-        data.map((element: any, index: number) => {
-          const name = element.name;
-          const color = colorArr[index];
-          const data = [
-            {
-              name: questionData.labelText,
-              y: element.y,
-              numberValue: element.numberValue,
-              percentageValue: element.percentageValue,
-              baseCount: element.baseCount,
-            },
-          ];
-          series.push({ name, color, data, dataLabels });
-        });
+      let plotValue;
+      let percentageValue = (count / baseCount) * 100;
+      let numberValue = count;
+      if (chartLabelType === ChartLabelType.PERCENTAGE) {
+        plotValue = (count / baseCount) * 100;
       } else {
-        series.push({
-          color: primaryBarColor,
-          name: questionData.labelText,
-          data,
-          dataLabels,
-        });
+        plotValue = count;
       }
-      return series;
+      if (plotValue > 0)
+        data.push({
+          name: option.labelText,
+          // y: round(plotValue, decimalPrecision),
+          y: plotValue,
+          percentageValue,
+          numberValue,
+          baseCount: baseCount,
+        });
     }
+
+    const series: any[] = [];
+
+    if (chartType === ChartType.STACK) {
+      data.map((element: any, index: number) => {
+        const name = element.name;
+        const color = colorArr[index];
+        const data = [
+          {
+            name: questionData.labelText,
+            y: element.y,
+            numberValue: element.numberValue,
+            percentageValue: element.percentageValue,
+            baseCount: element.baseCount,
+          },
+        ];
+        series.push({ name, color, data, dataLabels });
+      });
+    } else {
+      series.push({
+        color: primaryBarColor,
+        name: questionData.labelText,
+        data,
+        dataLabels,
+      });
+    }
+    return series;
   }
 };
 
@@ -221,9 +231,10 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
+  transposed: any,
 ) => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, chartTranspose },
   } = store.getState();
 
   const series: any[] = [];
@@ -282,7 +293,7 @@ const getSingleTransposeChartOptions = (
             if (dataArr[k].labelCode === bannerQuesOption?.labelCode) {
               const dataArrValues: any = dataArr[k];
               newOptionData.push(dataArrValues);
-              //labeCodeSum += dataArrValues?.count;
+              labeCodeSum += dataArrValues?.count;
             }
           }
         }
@@ -302,6 +313,8 @@ const getSingleTransposeChartOptions = (
       }
 
       if (bannerQuestionData?.type == QuestionType.MULTI) {
+        //  debugger;
+
         localBase = find(chartData[0][1], {
           labelCode: quesOption.labelCode,
         })?.count;
@@ -314,7 +327,7 @@ const getSingleTransposeChartOptions = (
         count = count;
       }
 
-      let percentageValue = count;
+      let percentageValue = (count / localBase) * 100;
       let numberValue = count;
       data.push({
         name: bannerQuesOption?.labelText,
