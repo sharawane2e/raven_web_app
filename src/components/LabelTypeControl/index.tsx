@@ -20,6 +20,7 @@ const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
   const { dispatch } = store;
   const changeChartLabelType = (labelType: ChartLabelType) => {
     const chartDataClone = JSON.parse(JSON.stringify(chart));
+    // console.log(chartDataClone);
     chartDataClone.chartLabelType = labelType;
     dispatch(setChartLabel(labelType));
     chartDataClone.chartOptions = {

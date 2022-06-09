@@ -38,6 +38,7 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
+          transposed,
         );
       case QuestionType.MULTI:
         return getMultiChartOptions(
@@ -289,27 +290,28 @@ const getSingleChartOptions = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
+  transposed: boolean,
 ): any => {
   const {
     chart: { chartType },
   } = store.getState();
-  if (chartType !== ChartType.TABLE) {
-    const series = getSingleChartOptionsSeries(
-      questionData,
-      chartData,
-      baseCount,
-      bannerQuestionData,
-      chartOptionsData,
-    );
 
-    return {
-      legend: {
-        enabled: true,
-      },
-      tooltip: { ...getToolTip() },
-      series,
-    };
-  }
+  const series = getSingleChartOptionsSeries(
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    transposed,
+  );
+
+  return {
+    legend: {
+      enabled: true,
+    },
+    tooltip: { ...getToolTip() },
+    series,
+  };
 };
 
 const getRankChartOptions = (

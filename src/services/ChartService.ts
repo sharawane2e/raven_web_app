@@ -338,7 +338,7 @@ export const changeChartType = (newChartType: ChartType) => {
 };
 
 export const transposeChart = () => {
-  //  debugger;
+  debugger;
   const { chart, questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -412,13 +412,14 @@ export const transposeChart = () => {
     chartDataClone.bannerQuestionData &&
     chartDataClone.questionData.type == QuestionType.MULTI
   ) {
-    // console.log('transpose data for update');
+    debugger;
+    dispatch(setChartTranspose(transposed));
+    //   console.log('transpose data for update');
     const { chartData } = chartDataClone;
     const allLabels: Array<string> = [];
     const newChartData: any = {};
     const questionData = chartDataClone.questionData;
     const bannerData = chartDataClone.bannerQuestionData;
-
     for (const labelArrays in chartData[0]) {
       const labelArray = chartData[0][labelArrays];
       labelArray.forEach((el: any) => {
@@ -432,7 +433,6 @@ export const transposeChart = () => {
         });
       });
     }
-
     chartDataClone.chartData[0] = newChartData;
     chartDataClone.questionData = bannerData;
     chartDataClone.bannerQuestionData = questionData;
@@ -515,14 +515,12 @@ export const transposeChartMulti = async () => {
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
-
   dispatch(setChartLoading(false));
   if (transposed) {
     const chartData = await fetchChartData(
       questions.selectedBannerQuestionId,
       questions.selectedQuestionId,
     );
-
     dispatch(setChartData(chartData));
     dispatch(setChartTranspose(transposed));
   } else {
