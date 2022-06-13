@@ -17,10 +17,9 @@ export const getSingleChartOptionsSeries = (
   chartOptionsData: any,
   transposed: boolean,
 ) => {
-  debugger;
   const {
     chart: { chartLabelType, chartType },
-    questions: { selectedBannerQuestionId },
+    questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
   if (selectedBannerQuestionId) {
@@ -54,7 +53,7 @@ export const getSingleChartOptionsSeries = (
       //series.push(getSingleTransposeChartOptions(questionData, chartData));
       return series;
     }
-    // debugger;
+
     const newOptionData: any = [];
     // @ts-ignore
     for (let index = 0; index < bannerQuestionData?.options.length; index++) {
@@ -116,21 +115,7 @@ export const getSingleChartOptionsSeries = (
           );
         }
 
-        if (bannerQuestionData?.type == QuestionType.MULTI) {
-          if (!transposed) {
-            localBase = optionData?.reduce(
-              (sum: number, option: any) => sum + option.count,
-              0,
-            );
-          } else {
-            localBase = find(chartData[0][1], {
-              labelCode: quesOption?.labelCode,
-            })?.count;
-          }
-        }
-
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
-          //  debugger;
           count = (count / localBase) * 100;
         } else {
           count = count;
@@ -158,7 +143,6 @@ export const getSingleChartOptionsSeries = (
     }
     return series;
   } else {
-    debugger;
     const data: any[] = [];
 
     for (
@@ -312,13 +296,12 @@ const getSingleTransposeChartOptions = (
         count = label?.count;
       }
 
-      if (bannerQuestionData?.type == QuestionType.MULTI) {
-        //  debugger;
-
-        localBase = find(chartData[0][1], {
-          labelCode: quesOption.labelCode,
-        })?.count;
-      }
+      // if (bannerQuestionData?.type == QuestionType.MULTI) {
+      //   debugger;
+      //   localBase = find(chartData[0][1], {
+      //     labelCode: quesOption.labelCode,
+      //   })?.count;
+      // }
       localBase = basecountArr[quesIndex];
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {

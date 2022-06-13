@@ -107,6 +107,7 @@ const getMultiChartOptions = (
   } = chartOptionsData;
 
   if (selectedBannerQuestionId) {
+    //debugger;
     const categories: string[] = [];
     const series: any[] = [];
 
