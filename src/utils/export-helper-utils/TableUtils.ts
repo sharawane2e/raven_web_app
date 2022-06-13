@@ -5,8 +5,10 @@ import { ChartLabelType } from '../../enums/ChartLabelType';
 import { QuestionType } from '../../enums/QuestionType';
 
 export function tableChartDataGen() {
+  //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
+
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -29,7 +31,6 @@ export function tableChartDataGen() {
   ) {
     singleGroupNet = chart?.questionData?.groupNetData.length;
   }
-
   /*this condition used for when multi Question avialbe neeting*/
   let results: any = chart.questionData?.options.filter(function (option) {
     //console.log();
@@ -101,32 +102,40 @@ export function tableChartDataGen() {
           ) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%');
-              if (rIndex < scaleIndex && !crosstab_length) {
+              if (
+                !chartTransposeState &&
+                chart?.questionData?.isGroupNet &&
+                chart?.questionData?.type === QuestionType.SINGLE
+              ) {
+                //console.log('d.values[k]', d.values[k]);
                 //totalrowSub += parseFloat(d.values[k]);
-                if (netsLabelcode === 'N') {
-                  totalrowSub += 0;
-                }
               } else {
-                if (netsQuestionLabelcode === 'N') {
+                if (rIndex < scaleIndex && !crosstab_length) {
                   totalrowSub += parseFloat(d.values[k]);
-                } else {
-                  totalrowSub += parseFloat(d.values[k]);
-                  if (chart.showMean === false && scaleLength > 0) {
+                  if (netsLabelcode === 'N') {
                     totalrowSub += 0;
-                  } else {
+                  }
+                } else {
+                  if (netsQuestionLabelcode === 'N') {
                     totalrowSub += parseFloat(d.values[k]);
+                  } else {
+                    // totalrowSub += parseFloat(d.values[k]);
+                    if (chart.showMean === false && scaleLength > 0) {
+                      totalrowSub += 0;
+                    } else {
+                      totalrowSub += parseFloat(d.values[k]);
+                    }
                   }
                 }
-              }
-
-              if (crosstab_length && rIndex + curentRow > scaleIndex) {
-                totalrowSub += parseFloat(d.values[k]);
-              }
-              // if (scaleLength > 0 && !chartTransposeState) {
-              //   totalrowSub += parseFloat(d.values[k]);
-              // }
-              if (rIndex < scaleIndex && !crosstab_length) {
-                totalrowSub += parseFloat(d.values[k]);
+                if (crosstab_length && rIndex + curentRow > scaleIndex) {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
+                // if (scaleLength > 0 && !chartTransposeState) {
+                //   totalrowSub += parseFloat(d.values[k]);
+                // }
+                if (rIndex < scaleIndex && !crosstab_length) {
+                  totalrowSub += parseFloat(d.values[k]);
+                }
               }
             } else {
               subRow.push(0 + '%');
@@ -206,6 +215,8 @@ export function tableChartDataGen() {
     seriesData.forEach((series: any) => {
       let columnValues = [...series.values];
 
+      //console.log(columnValues);
+
       const updateRow: any[] = [];
 
       for (var i = 0; i < columnValues.length; i++) {
@@ -216,6 +227,8 @@ export function tableChartDataGen() {
           updateRow.push(columnValues[i]);
         }
       }
+
+      //console.log(updateRow);
       if (
         chart.chartTranspose &&
         chart?.questionData?.type === QuestionType.GRID &&
@@ -236,7 +249,8 @@ export function tableChartDataGen() {
         //&&
         //chart?.chartLabelType === ChartLabelType.NUMBER
       ) {
-        newUpdatedRow = updateRow.slice(0, -singleGroupNet);
+        //newUpdatedRow = updateRow;
+        newUpdatedRow = updateRow;
       } else {
         newUpdatedRow =
           chart.chartTranspose &&
@@ -247,6 +261,8 @@ export function tableChartDataGen() {
             ? updateRow.splice(lablecode_length)
             : updateRow;
       }
+
+      //  console.log(updateRow);
 
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&

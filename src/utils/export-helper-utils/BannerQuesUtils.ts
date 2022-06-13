@@ -25,17 +25,18 @@ export function bannerChartDataGen(
   let localBase = 0;
   const newOptionData: any = [];
 
+  if (chartTranspose && bannerQuestionData?.type == QuestionType.SINGLE) {
+    seriesData.length = 0;
+    seriesData.push(
+      ...getSingleTransposeTableOptions(
+        questionData,
+        chartData,
+        bannerQuestionData,
+      ),
+    );
+  }
+
   if (bannerQuestionData) {
-    if (chartTranspose && bannerQuestionData?.type == QuestionType.SINGLE) {
-      seriesData.length = 0;
-      seriesData.push(
-        ...getSingleTransposeTableOptions(
-          questionData,
-          chartData,
-          bannerQuestionData,
-        ),
-      );
-    }
     //if (chartTranspose) {
     // debugger;
     // seriesData.length = 0;
@@ -47,6 +48,9 @@ export function bannerChartDataGen(
     //   ),
     // );
     //} else {
+
+    // }
+
     bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
       const countValues: any = [];
       let optionData;
@@ -194,7 +198,6 @@ export function bannerChartDataGen(
         values: countValues,
       });
     });
-    // }
   }
 
   //console.log(seriesData);
@@ -281,7 +284,9 @@ const getSingleTransposeTableOptions = (
 
             count = label?.count;
           }
+
           localBase = basecountArr[quesIndex];
+
           //console.log(count);
 
           if (chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -293,18 +298,18 @@ const getSingleTransposeTableOptions = (
           } else {
             count = count;
           }
-
           countValues.push(count);
         }
       },
+      seriesData.push({
+        name: scaleOption.labelText,
+        labels,
+        values: countValues,
+      }),
     );
-
-    seriesData.push({
-      name: scaleOption.labelText,
-      labels,
-      values: countValues,
-    });
   });
+
+  //console.log(seriesData);
 
   return seriesData;
 };

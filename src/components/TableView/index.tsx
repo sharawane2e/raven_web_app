@@ -99,7 +99,7 @@ const TableView: React.FC<TableProps> = (props) => {
     ) {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
-        rowIndex < removeSubGrop + (laberesult - 1) ? (
+        rowIndex < removeSubGrop + (laberesult - singleGroupNet) ? (
           highLight(col, currentMin, currentMax)
         ) : !removeSubGrop ? (
           highLight(col, currentMin, currentMax)
@@ -115,7 +115,8 @@ const TableView: React.FC<TableProps> = (props) => {
       if (
         chartTranspose &&
         questionData?.isGroupNet &&
-        questionData?.type === QuestionType.SINGLE
+        questionData?.type === QuestionType.SINGLE &&
+        rowIndex < removeSubGrop - (laberesult - singleGroupNet)
       ) {
         //return highLight(col, currentMin, currentMax);
         return highLight(col, currentMin, currentMax);

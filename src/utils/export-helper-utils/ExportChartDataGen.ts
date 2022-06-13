@@ -58,5 +58,6 @@ export function chartDataGen() {
       );
     }
   }
+
   return seriesData;
 }
