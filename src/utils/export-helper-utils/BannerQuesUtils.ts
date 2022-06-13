@@ -27,14 +27,14 @@ export function bannerChartDataGen(
 
   if (bannerQuestionData) {
     if (chartTranspose && bannerQuestionData?.type == QuestionType.SINGLE) {
-      // seriesData.length = 0;
-      // seriesData.push(
-      //   ...getSingleTransposeTableOptions(
-      //     questionData,
-      //     chartData,
-      //     bannerQuestionData,
-      //   ),
-      // );
+      seriesData.length = 0;
+      seriesData.push(
+        ...getSingleTransposeTableOptions(
+          questionData,
+          chartData,
+          bannerQuestionData,
+        ),
+      );
     }
     //if (chartTranspose) {
     // debugger;
