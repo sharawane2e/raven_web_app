@@ -33,6 +33,7 @@ export function pptDataGen(
       chartLabelType,
       questionData,
       chartTranspose,
+      bannerQuestionData,
     },
   } = store.getState();
 
@@ -83,7 +84,7 @@ export function pptDataGen(
 
     scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
-    let laberesult = results?.length;
+    let laberesult = results?.length === undefined ? 0 : results?.length;
 
     let removeSubGrop: any;
     if (chartTranspose) {
@@ -108,7 +109,7 @@ export function pptDataGen(
         const rowcount = removeSubGrop - laberesult;
 
         if (rowData[colIndex] === currentMax) {
-          if (laberesult >= 0) {
+          if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
               ? (options['fill'] = 'b8e08c')
@@ -116,19 +117,31 @@ export function pptDataGen(
               ? (options['fill'] = 'b8e08c')
               : (options['fill'] = 'ffffff');
           } else {
-            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
-              : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
-              : (options['fill'] = 'ffffff');
-            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['bold'] = true)
-              : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['bold'] = true)
-              : (options['bold'] = false);
+            if (
+              bannerQuestionData?.type == QuestionType.SINGLE &&
+              questionData?.type == QuestionType.SINGLE
+            ) {
+              console.log(tableRows.rows.length);
+              rowIndex < removeSubGrop + 1 && tableRows.rows.length > 3
+                ? (options['fill'] = 'b8e08c')
+                : !removeSubGrop && tableRows.rows.length > 3
+                ? (options['fill'] = 'b8e08c')
+                : (options['fill'] = 'ffffff');
+            } else {
+              rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+                ? (options['fill'] = 'b8e08c')
+                : !removeSubGrop && tableRows.rows.length > 3
+                ? (options['fill'] = 'b8e08c')
+                : (options['fill'] = 'ffffff');
+              rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+                ? (options['bold'] = true)
+                : !removeSubGrop && tableRows.rows.length > 3
+                ? (options['bold'] = true)
+                : (options['bold'] = false);
+            }
           }
         } else if (rowData[colIndex] === currentMin) {
-          if (laberesult >= 0) {
+          if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
               ? (options['fill'] = 'fbd9d4')
@@ -136,16 +149,27 @@ export function pptDataGen(
               ? (options['fill'] = 'fbd9d4')
               : (options['fill'] = 'ffffff');
           } else {
-            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['fill'] = 'fbd9d4')
-              : !removeSubGrop
-              ? (options['fill'] = 'fbd9d4')
-              : (options['fill'] = 'ffffff');
-            rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-              ? (options['bold'] = true)
-              : !removeSubGrop
-              ? (options['bold'] = true)
-              : (options['bold'] = false);
+            if (
+              bannerQuestionData?.type == QuestionType.SINGLE &&
+              questionData?.type == QuestionType.SINGLE
+            ) {
+              rowIndex <= removeSubGrop + 1 && tableRows.rows.length > 3
+                ? (options['fill'] = 'fbd9d4')
+                : !removeSubGrop
+                ? (options['fill'] = 'fbd9d4')
+                : (options['fill'] = 'ffffff');
+            } else {
+              rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+                ? (options['fill'] = 'fbd9d4')
+                : !removeSubGrop
+                ? (options['fill'] = 'fbd9d4')
+                : (options['fill'] = 'ffffff');
+              rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
+                ? (options['bold'] = true)
+                : !removeSubGrop
+                ? (options['bold'] = true)
+                : (options['bold'] = false);
+            }
           }
         }
         //}

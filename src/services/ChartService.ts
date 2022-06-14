@@ -321,7 +321,7 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
   } else {
-    debugger;
+    //  debugger;
     dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
@@ -338,7 +338,7 @@ export const changeChartType = (newChartType: ChartType) => {
 };
 
 export const transposeChart = () => {
-  debugger;
+  //debugger;
   const { chart, questions } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
