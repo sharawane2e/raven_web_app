@@ -54,13 +54,18 @@ const TableView: React.FC<TableProps> = (props) => {
   // console.log(laberesult);
 
   if (chartTranspose) {
+    // console.log('ssssss');
     removeSubGrop = tableData?.rows?.length - scaleLength - 1;
   }
   if (laberesult > 0) {
+    //console.log('sssdddd');
     removeSubGrop = tableData?.rows?.length - laberesult;
   } else {
-    removeSubGrop = tableData?.rows?.length - singleGroupNet - 1;
+    const singleGroupNetData =
+      singleGroupNet === undefined ? 0 : singleGroupNet;
+    removeSubGrop = tableData?.rows?.length - singleGroupNetData - 1;
   }
+  // console.log(removeSubGrop);
 
   /*This code used for single grid data column hide and show highlights  */
   //  else {
@@ -110,8 +115,6 @@ const TableView: React.FC<TableProps> = (props) => {
         <></>
       );
     } else {
-      //console.log(currentMin);
-      //console.log(currentMax);
       if (
         chartTranspose &&
         questionData?.isGroupNet &&
@@ -121,37 +124,42 @@ const TableView: React.FC<TableProps> = (props) => {
         return highLight(col, currentMin, currentMax);
       } else {
         if (chartTranspose) {
-          return chartTranspose ? (
-            rowIndex < removeSubGrop && !showMean ? (
+          if (showMean) {
+            return highLight(col, currentMin, currentMax);
+          } else {
+            return chartTranspose ? (
+              rowIndex < removeSubGrop && !showMean ? (
+                highLight(col, currentMin, currentMax)
+              ) : !removeSubGrop && !showMean ? (
+                highLight(col, currentMin, currentMax)
+              ) : (
+                <div className="Table-row-item">{col}</div>
+              )
+            ) : columnIndex && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
-            ) : !removeSubGrop && !showMean ? (
+            ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
             ) : (
-              <div className="Table-row-item">{col}</div>
-            )
-          ) : columnIndex && tableData?.rows?.length > 3 ? (
-            highLight(col, currentMin, currentMax)
-          ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-            highLight(col, currentMin, currentMax)
-          ) : (
-            <div className="Table-row-item"> {col}</div>
-          );
+              <div className="Table-row-item"> {col}</div>
+            );
+          }
         } else {
-          return !chartTranspose ? (
-            rowIndex < removeSubGrop && !showMean ? (
-              highLight(col, currentMin, currentMax)
-            ) : !removeSubGrop && !showMean ? (
-              highLight(col, currentMin, currentMax)
-            ) : (
-              <div className="Table-row-item">{col}</div>
-            )
-          ) : columnIndex && tableData?.rows?.length > 3 ? (
-            highLight(col, currentMin, currentMax)
-          ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-            highLight(col, currentMin, currentMax)
-          ) : (
-            <div className="Table-row-item"> {col}</div>
-          );
+          return highLight(col, currentMin, currentMax);
+          // return !chartTranspose ? (
+          //   rowIndex < removeSubGrop && !showMean ? (
+          //     highLight(col, currentMin, currentMax)
+          //   ) : !removeSubGrop && !showMean ? (
+          //     highLight(col, currentMin, currentMax)
+          //   ) : (
+          //     <div className="Table-row-item">{col}</div>
+          //   )
+          // ) : columnIndex && tableData?.rows?.length > 3 ? (
+          //   highLight(col, currentMin, currentMax)
+          // ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
+          //   highLight(col, currentMin, currentMax)
+          // ) : (
+          //   <div className="Table-row-item"> {col}</div>
+          // );
         }
         //return highLight(col, currentMin, currentMax);
       }
@@ -169,7 +177,8 @@ const TableView: React.FC<TableProps> = (props) => {
                 const [maxVal, minVal] = tableData?.minmax[0];
                 const currentMin = minVal[colIndex - 1];
                 const currentMax = maxVal[colIndex - 1];
-
+                // console.log(maxVal);
+                // console.log(minVal);
                 return (
                   <>
                     {tableColumn(
