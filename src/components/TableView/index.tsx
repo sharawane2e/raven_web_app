@@ -93,7 +93,7 @@ const TableView: React.FC<TableProps> = (props) => {
     const rowcount = removeSubGrop - laberesult;
 
     if (
-      laberesult >= 0 &&
+      laberesult > 0 &&
       questionData?.isGroupNet &&
       questionData?.type === QuestionType.GRID
     ) {
@@ -118,24 +118,42 @@ const TableView: React.FC<TableProps> = (props) => {
         questionData?.type === QuestionType.SINGLE &&
         rowIndex < removeSubGrop - (laberesult - singleGroupNet)
       ) {
-        //return highLight(col, currentMin, currentMax);
         return highLight(col, currentMin, currentMax);
       } else {
-        return chartTranspose ? (
-          rowIndex < removeSubGrop && !showMean ? (
+        if (chartTranspose) {
+          return chartTranspose ? (
+            rowIndex < removeSubGrop && !showMean ? (
+              highLight(col, currentMin, currentMax)
+            ) : !removeSubGrop && !showMean ? (
+              highLight(col, currentMin, currentMax)
+            ) : (
+              <div className="Table-row-item">{col}</div>
+            )
+          ) : columnIndex && tableData?.rows?.length > 3 ? (
             highLight(col, currentMin, currentMax)
-          ) : !removeSubGrop && !showMean ? (
+          ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
             highLight(col, currentMin, currentMax)
           ) : (
-            <div className="Table-row-item">{col}</div>
-          )
-        ) : columnIndex && tableData?.rows?.length > 3 ? (
-          highLight(col, currentMin, currentMax)
-        ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-          highLight(col, currentMin, currentMax)
-        ) : (
-          <div className="Table-row-item"> {col}</div>
-        );
+            <div className="Table-row-item"> {col}</div>
+          );
+        } else {
+          return !chartTranspose ? (
+            rowIndex < removeSubGrop && !showMean ? (
+              highLight(col, currentMin, currentMax)
+            ) : !removeSubGrop && !showMean ? (
+              highLight(col, currentMin, currentMax)
+            ) : (
+              <div className="Table-row-item">{col}</div>
+            )
+          ) : columnIndex && tableData?.rows?.length > 3 ? (
+            highLight(col, currentMin, currentMax)
+          ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
+            highLight(col, currentMin, currentMax)
+          ) : (
+            <div className="Table-row-item"> {col}</div>
+          );
+        }
+        //return highLight(col, currentMin, currentMax);
       }
     }
   };
