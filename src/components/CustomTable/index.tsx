@@ -96,6 +96,9 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
               <MenuItem value={30} className="menu-item">
                 30
               </MenuItem>
+              <MenuItem value={100} className="menu-item">
+                100
+              </MenuItem>
             </Select>
           </div>
           <div className="custom-table__mobile-sort">
