@@ -58,7 +58,14 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     dispatch(showTourGuide());
   };
   function refreshPage() {
-    window.location.reload();
+    if(history.location.pathname == "/home"){
+      window.location.reload();
+    }else{
+      history.push('/home');
+    }
+    
+    //console.log(history.location)
+    //window.location.reload();
   }
 
   return (
