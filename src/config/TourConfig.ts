@@ -2,6 +2,10 @@ import { ITourStep } from "../types/ITourStep";
 
 export const chartTourSteps: ITourStep[] = [
   {
+    selector: ".home-icon",
+    content: "Select the sample characteristic/composition",
+  },
+  {
     selector: ".Step-1",
     content: "Select the question to visualize",
   },
