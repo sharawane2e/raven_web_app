@@ -271,9 +271,18 @@ const getMultiChartOptions = (
         color: primaryBarColor,
         name: questionData.labelText,
         data,
-        dataLabels,
+        dataLabels: {
+          formatter: function (this: any) {
+            // if (this.y > 100) {
+            //   return this.y + 'CB';
+            // }
+            return this.y + 'AB' + this.key;
+          },
+        },
       });
     }
+
+    console.log('series', series);
 
     return {
       legend: {

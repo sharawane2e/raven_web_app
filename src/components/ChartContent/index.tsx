@@ -43,6 +43,7 @@ import IsMeanControl from '../IsMeanControl';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { setSelectedQuestion } from '../../redux/actions/chapterActions';
 import StandardDeviation from '../StandardDeviation';
+import SignificantDiff from '../SignificantDiff';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -207,6 +208,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Grid item className="chart-content__control-wrapper">
           {/* <ChartOptionsControl /> */}
 
+          <div className="chart-content__control-item">
+            <SignificantDiff />
+          </div>
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>

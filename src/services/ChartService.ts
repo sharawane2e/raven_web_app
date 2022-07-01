@@ -412,7 +412,6 @@ export const transposeChart = () => {
     chartDataClone.bannerQuestionData &&
     chartDataClone.questionData.type == QuestionType.MULTI
   ) {
-    debugger;
     dispatch(setChartTranspose(transposed));
     //   console.log('transpose data for update');
     const { chartData } = chartDataClone;

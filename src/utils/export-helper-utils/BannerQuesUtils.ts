@@ -118,8 +118,11 @@ const getSingleOptions = (
         } else {
           count = count;
         }
+        // console.log(count);
         //console.log(count);
         countValues.push(count);
+
+        // console.log(count + 'abc');
       } else {
         if (option.labelCode in chartDataComplete) {
           const obj = chartDataComplete[option.labelCode] || [];
@@ -180,11 +183,13 @@ const getSingleOptions = (
                         decimalPrecision,
                       )
                   : 0;
+              console.log(subOptionDataCount);
               countValues.push(subOptionDataCount);
             } else {
               const subOptionDataCount =
                 subOptionData.count !== undefined ? subOptionData.count : 0;
               countValues.push(subOptionDataCount);
+              console.log(subOptionDataCount);
             }
           }
         }
@@ -197,6 +202,8 @@ const getSingleOptions = (
       values: countValues,
     });
   });
+
+  //console.log('seriesData', seriesData);
   return seriesData;
 };
 

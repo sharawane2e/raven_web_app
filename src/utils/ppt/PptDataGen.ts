@@ -98,8 +98,10 @@ export function pptDataGen(
     var output: any = [];
 
     tableRows.rows.forEach((rowData, rowIndex) => {
+      //console.log(rowData);
       var rowArray: any = [];
       rowData.forEach(function (item, colIndex) {
+        // console.log('item', item);
         const currentMax = maxValue?.[colIndex - 1];
         const currentMin = minValue?.[colIndex - 1];
         const options = {
@@ -108,7 +110,9 @@ export function pptDataGen(
         };
         const rowcount = removeSubGrop - laberesult;
 
-        if (rowData[colIndex] === currentMax) {
+        //  console.log(rowData[colIndex].split("-")[0]);
+
+        if (rowData[colIndex].split('-')[0] === currentMax) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)

@@ -8,6 +8,7 @@ export function tableChartDataGen() {
   //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
+
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -107,7 +108,7 @@ export function tableChartDataGen() {
             chart?.questionData?.type !== QuestionType?.NUMBER
           ) {
             if (d.values[k]) {
-              subRow.push(round(d.values[k], 1) + '%');
+              subRow.push(round(d.values[k], 1) + '%' + '-' + 'ABC');
               if (
                 !chartTransposeState &&
                 chart?.questionData?.isGroupNet &&

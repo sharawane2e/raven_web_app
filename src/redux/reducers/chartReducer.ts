@@ -54,7 +54,14 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      format: '{point.y:.1f}%',
+      // format: '{point.y:.1f}%',
+      // formatter: function (this: any) {
+      //   console.log(this);
+      //   // if (this.y > 100) {
+      //   //   return this.y + 'CB';
+      //   // }
+      //   return this.key;
+      // },
       allowOverlap: true,
       rotation: -90,
       x: 0,

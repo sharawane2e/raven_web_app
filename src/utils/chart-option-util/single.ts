@@ -115,14 +115,17 @@ export const getSingleChartOptionsSeries = (
           );
         }
 
+        let percentageValue;
+        let numberValue;
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          numberValue = count;
           count = (count / localBase) * 100;
+          percentageValue = count;
         } else {
+          numberValue = count;
           count = count;
+          percentageValue = (count / localBase) * 100;
         }
-        // let percentageValue = count == 0 ? count : (count / localBase) * 100;
-        let percentageValue = (count / localBase) * 100;
-        let numberValue = count;
 
         data.push({
           name: quesOption.labelText,
@@ -130,6 +133,7 @@ export const getSingleChartOptionsSeries = (
           percentageValue,
           numberValue,
           baseCount: localBase,
+          // sd: ,
         });
       }
 
@@ -138,9 +142,24 @@ export const getSingleChartOptionsSeries = (
           name: bannerQuesOption?.labelText,
           color: index > colorArr.length ? colorArr[index] : undefined,
           data,
-          dataLabels,
+          dataLabels: {
+            enabled: true,
+            // format: '{point.y:.1f}%',
+            formatter: function (this: any) {
+              // if (this.y > 100) {
+              //   return this.y + 'CB';
+              // }
+              return ` ${parseFloat(this.y.toFixed(2))} (${'AB'})`;
+            },
+            style: {
+              fontSize: '10px',
+              textOutline: false,
+              fontWeight: null,
+            },
+          },
         });
     }
+    console.log('series', series);
     return series;
   } else {
     const data: any[] = [];
@@ -206,6 +225,7 @@ export const getSingleChartOptionsSeries = (
         dataLabels,
       });
     }
+
     return series;
   }
 };

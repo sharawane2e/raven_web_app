@@ -26,4 +26,6 @@ export class StaticText {
   static DEFAULT = 'Default';
 
   static GRID_MEAN_SD_SE = 'Mean,Standard Deviation,Standard Error';
+
+  static SIGNIFICANT_DIFFERENCE = 'Significant Difference not allowed';
 }
