@@ -17,6 +17,11 @@ export const getSingleChartOptionsSeries = (
   chartOptionsData: any,
   transposed: boolean,
 ) => {
+  //debugger;
+
+  // console.log('questionData', questionData);
+  // console.log('chartData', chartData);
+  // console.log("questionData",questionData);
   const {
     chart: { chartLabelType, chartType },
     questions: { selectedBannerQuestionId, bannerQuestionList },
@@ -38,6 +43,8 @@ export const getSingleChartOptionsSeries = (
       if (subGroup && subGroup?.length) return true;
       return false;
     });
+
+    //console.log(subGroups);
 
     if (transposed && bannerQuestionData?.type == QuestionType.SINGLE) {
       series.length = 0;
@@ -97,17 +104,24 @@ export const getSingleChartOptionsSeries = (
           const sumofValue = _.sum(baseCountSum);
           localBase = sumofValue;
         } else {
+          // optionData = chartData[0][quesOption.labelCode];
+
+          // if (chartData[0][quesOption.labelCode].length != 0) {
           optionData = chartData[0][quesOption.labelCode];
+          // }
 
           const label = getMatchedfilter(
             optionData,
             'labelCode',
             bannerQuesOption.labelCode,
           );
-
+          // if()
+          //if (label.length != 0) {
           count = _.sumBy(label, function (o) {
             return o.count;
           });
+          //   }
+          //  console.log('filteredOptions', label);
 
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
@@ -124,13 +138,14 @@ export const getSingleChartOptionsSeries = (
         let percentageValue = (count / localBase) * 100;
         let numberValue = count;
 
-        data.push({
-          name: quesOption.labelText,
-          y: count,
-          percentageValue,
-          numberValue,
-          baseCount: localBase,
-        });
+        if (count)
+          data.push({
+            name: quesOption.labelText,
+            y: count,
+            percentageValue,
+            numberValue,
+            baseCount: localBase,
+          });
       }
 
       if (data.length)
@@ -141,6 +156,8 @@ export const getSingleChartOptionsSeries = (
           dataLabels,
         });
     }
+    console.log('series', series);
+
     return series;
   } else {
     const data: any[] = [];
@@ -217,6 +234,7 @@ const getSingleTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any,
 ) => {
+  console.log('demdo');
   const {
     chart: { chartLabelType, chartTranspose },
   } = store.getState();
@@ -284,9 +302,9 @@ const getSingleTransposeChartOptions = (
 
         // optionData = newOptionData;
         count = labeCodeSum;
-        console.log(labeCodeSum);
       } else {
         optionData = chartData[0][quesOption?.labelCode];
+        console.log('optionData', optionData);
         // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
