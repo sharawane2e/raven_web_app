@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { memo, useEffect, useState } from 'react';
-import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
-import { QuestionType } from '../../enums/QuestionType';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { memo, useEffect, useState } from "react";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
+import { QuestionType } from "../../enums/QuestionType";
 
 interface TableProps {}
 
@@ -14,12 +14,12 @@ const TableView: React.FC<TableProps> = (props) => {
   //console.log(tableData);
 
   const { chartData, showMean, questionData, chartTranspose } = useSelector(
-    (state: RootState) => state?.chart,
+    (state: RootState) => state?.chart
   );
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
 
-  let scaleLength: any = '';
+  let scaleLength: any = "";
   let filtered: any;
   let results: any;
   let QuestionData: any;
@@ -38,14 +38,14 @@ const TableView: React.FC<TableProps> = (props) => {
     //console.log(QuestionData);
 
     filtered = QuestionData?.filter(function (el: any) {
-      return el !== '';
+      return el !== "";
     });
 
     scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
     results = questionData?.options.filter(function (option) {
-      if (option?.labelCode === 'N') {
-        if (option?.labelCode.split('_')[0] == 'N') {
+      if (option?.labelCode === "N") {
+        if (option?.labelCode.split("_")[0] == "N") {
           return true;
         }
       }
@@ -80,7 +80,7 @@ const TableView: React.FC<TableProps> = (props) => {
     return (
       <div
         className={clsx({
-          'Table-row-item': true,
+          "Table-row-item": true,
           maxValue: isEqual(col, currentMin),
           minValue: isEqual(col, currentMax),
         })}
@@ -97,7 +97,7 @@ const TableView: React.FC<TableProps> = (props) => {
     col: any,
     currentMin: any,
     currentMax: any,
-    col2: any,
+    col2: any
   ) => {
     // console.log('col2', col2);
     const rowcount =
@@ -195,10 +195,10 @@ const TableView: React.FC<TableProps> = (props) => {
                     {tableColumn(
                       rowIndex,
                       colIndex,
-                      col.split('-')[0],
+                      col.split("-")[0],
                       currentMax,
                       currentMin,
-                      col.split('-')[1],
+                      col.split("-")[1]
                     )}
                   </>
                 );
