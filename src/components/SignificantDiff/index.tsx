@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ChartType } from '../../enums/ChartType';
-import { RootState } from '../../redux/store';
+import store, { RootState } from '../../redux/store';
 import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
 import { ReactComponent as SignificantDiffIcon } from '../../assets/svg/signf-d.svg';
 import { QuestionType } from '../../enums/QuestionType';
 import { changeChartType } from '../../services/ChartService';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
+import { updateSignificant } from '../../redux/actions/chartActions';
 
 interface ChartTypeControlProps {}
 
@@ -15,7 +16,8 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     chart,
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
-  const { chartType } = chart;
+  // const { chartType } = chart;
+  const dispatch = useDispatch();
 
   const handlePieDisabled = () => {
     let isPieDisabled = true;
@@ -40,13 +42,18 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     return isPieDisabled;
   };
 
+  const handleClick = () =>{
+    console.log("clicked");
+    dispatch(updateSignificant(true));
+  }
+
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: 'Significant Difference',
       renderChild: () => <SignificantDiffIcon />,
-      onClick: () => changeChartType(ChartType.COLUMN),
-      active: chartType === ChartType.COLUMN,
-      disabled: handlePieDisabled(),
+      onClick: handleClick,
+      active: chart.significant,
+      disabled: false,
       disableClick: () => Toaster.error(StaticText.SIGNIFICANT_DIFFERENCE),
     },
   ];

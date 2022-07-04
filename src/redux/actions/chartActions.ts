@@ -29,3 +29,5 @@ export const resetChart = createAction<any>("RESET_CHART");
 export const updateChartOptions = createAction<any>("UPDATE_CHART_OPTIONS");
 
 export const showMean = createAction<any>("SHOW_MEAN");
+
+export const updateSignificant = createAction<any>("UPDATE_SIGNIFICANT");
