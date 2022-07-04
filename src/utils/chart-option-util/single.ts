@@ -159,7 +159,6 @@ export const getSingleChartOptionsSeries = (
           },
         });
     }
-
     return series;
   } else {
     const data: any[] = [];

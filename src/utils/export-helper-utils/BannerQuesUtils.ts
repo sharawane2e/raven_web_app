@@ -217,7 +217,6 @@ const getSingleOptions = (
       values: countValues,
     });
   });
-
   return seriesData;
 };
 
