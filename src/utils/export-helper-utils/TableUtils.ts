@@ -8,7 +8,6 @@ export function tableChartDataGen() {
   //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
-
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -40,9 +39,6 @@ export function tableChartDataGen() {
       }
     }
   });
-  //console.log(chart?.bannerQuestionData?.options);
-
-  // console.log(chart?.questionData?.groupNetData);
 
   lablecode_length = results.length;
 
@@ -59,6 +55,7 @@ export function tableChartDataGen() {
   crosstab_length =
     bannerQuestionresults?.length > 0 ? bannerQuestionresults?.length : 0;
 
+  //console.log('chart?.chartLabelType', chart?.chartLabelType);
   if (seriesData) {
     let scale: any = [];
     seriesData.forEach((index: any) => {
@@ -104,8 +101,9 @@ export function tableChartDataGen() {
           }
 
           if (
-            chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
-            chart?.questionData?.type !== QuestionType?.NUMBER
+            (chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
+              chart?.questionData?.type !== QuestionType?.NUMBER) ||
+            chart?.chartLabelType === ChartLabelType.PERCENTAGE
           ) {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 1) + '%' + '-' + 'ABC');
@@ -156,9 +154,9 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 2));
               if (
-                !chartTransposeState &&
-                !chart?.questionData?.isGroupNet &&
-                chart?.questionData?.type === QuestionType.SINGLE
+                chart?.chartTranspose &&
+                chart?.questionData?.type === QuestionType.SINGLE &&
+                chart?.bannerQuestionData?.type === QuestionType.SINGLE
               ) {
                 totalrowSub += parseFloat(d.values[k]);
               } else {
@@ -172,15 +170,15 @@ export function tableChartDataGen() {
                     }
                   } else {
                     if (netsQuestionLabelcode === 'N') {
-                      //totalrowSub += parseFloat(d.values[k]);
+                      totalrowSub += parseFloat(d.values[k]);
                     } else {
                       if (scaleLength === 0 && chartTransposeState) {
-                        totalrowSub += parseFloat(d.values[k]);
+                        // totalrowSub += parseFloat(d.values[k]);
                       } else {
                         if (chart.showMean === false && scaleLength > 0) {
                           totalrowSub += 0;
                         } else {
-                          //  totalrowSub += parseFloat(d.values[k]);
+                          totalrowSub += parseFloat(d.values[k]);
                         }
                       }
                     }
@@ -189,7 +187,12 @@ export function tableChartDataGen() {
                     totalrowSub += 0;
                   }
 
-                  if (rIndex <= scaleIndex + scaleLength && !crosstab_length) {
+                  if (
+                    rIndex <= scaleIndex + scaleLength &&
+                    !crosstab_length &&
+                    chart?.questionData?.type == QuestionType.SINGLE &&
+                    chart?.bannerQuestionData?.type !== QuestionType.MULTI
+                  ) {
                     totalrowSub += parseFloat(d.values[k]);
                   }
 
@@ -202,6 +205,31 @@ export function tableChartDataGen() {
                 } else {
                   totalrowSub += 0;
                 }
+              }
+
+              if (
+                !chart?.chartTranspose &&
+                chart?.questionData?.type === QuestionType.SINGLE &&
+                chart?.bannerQuestionData?.type === QuestionType.MULTI
+              ) {
+                totalrowSub += parseFloat(d.values[k]);
+              }
+              if (
+                rIndex <= scaleIndex + scaleLength &&
+                chart.questionData?.type === QuestionType.GRID &&
+                chart.questionData.groupNetData.length > 0
+              ) {
+                totalrowSub += parseFloat(d.values[k]);
+              }
+              if (chart?.questionData?.type == QuestionType.MULTI) {
+                totalrowSub += parseFloat(d.values[k]);
+              }
+              if (
+                chart?.questionData?.type == QuestionType.SINGLE &&
+                chart?.bannerQuestionData?.type == QuestionType.MULTI &&
+                chart.chartTranspose
+              ) {
+                totalrowSub += parseFloat(d.values[k]);
               }
             } else {
               subRow.push(0);
@@ -231,8 +259,6 @@ export function tableChartDataGen() {
     seriesData.forEach((series: any) => {
       let columnValues = [...series.values];
 
-      //console.log(columnValues);
-
       const updateRow: any[] = [];
 
       for (var i = 0; i < columnValues.length; i++) {
@@ -243,8 +269,6 @@ export function tableChartDataGen() {
           updateRow.push(columnValues[i]);
         }
       }
-
-      //console.log(updateRow);
       if (
         chart.chartTranspose &&
         chart?.questionData?.type === QuestionType.GRID &&
@@ -263,10 +287,7 @@ export function tableChartDataGen() {
         !chart.chartTranspose &&
         chart?.questionData?.isGroupNet &&
         chart?.questionData?.type === QuestionType.SINGLE
-        //&&
-        //chart?.chartLabelType === ChartLabelType.NUMBER
       ) {
-        //newUpdatedRow = updateRow;
         newUpdatedRow = updateRow.slice(0, -singleGroupNet);
       } else {
         newUpdatedRow =
@@ -279,8 +300,6 @@ export function tableChartDataGen() {
             ? updateRow.splice(lablecode_length)
             : updateRow;
       }
-
-      //  console.log(newUpdatedRow);
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
         chart?.questionData?.type !== QuestionType?.NUMBER
@@ -297,7 +316,12 @@ export function tableChartDataGen() {
           );
         }
       } else {
-        if (chart?.showMean) {
+        if (
+          (!chart?.showMean &&
+            chart?.questionData?.type === QuestionType?.MULTI) ||
+          chart?.questionData?.type === QuestionType?.SINGLE ||
+          chart?.questionData?.type === QuestionType?.GRID
+        ) {
           tranposedTableData.push(round(Math.max(...newUpdatedRow), 2));
           tranposedTableDataMin.push(round(Math.min(...newUpdatedRow), 2));
         } else {
@@ -344,9 +368,6 @@ export function tableChartDataGen() {
         tColomn.push(round(getColoumnTotal, 1));
       }
     });
-
-    // console.log(tranposedTableData);
-    // console.log(tranposedTableDataMin);
 
     minmax.push([tranposedTableData, tranposedTableDataMin]);
 

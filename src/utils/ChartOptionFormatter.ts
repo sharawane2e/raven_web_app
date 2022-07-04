@@ -166,14 +166,15 @@ const getMultiChartOptions = (
           if (label) {
             let percentageValue = (label.count / localBase) * 100;
             let numberValue = label.count;
-            data.push({
-              name: quesOption.labelText,
-              // y: +count.toFixed(decimalPrecision),
-              y: count !== null ? round(count, decimalPrecision) : 0,
-              percentageValue,
-              numberValue,
-              baseCount: localBase,
-            });
+            if (count)
+              data.push({
+                name: quesOption.labelText,
+                // y: +count.toFixed(decimalPrecision),
+                y: count !== null ? round(count, decimalPrecision) : 0,
+                percentageValue,
+                numberValue,
+                baseCount: localBase,
+              });
           }
         }
       }

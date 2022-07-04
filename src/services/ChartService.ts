@@ -141,6 +141,8 @@ export const fetchChartData = async (
   if (chartData.chartLabelType == ChartLabelType.NUMBER) {
     //debugger;
     dispatch(setChartLabel(ChartLabelType.NUMBER));
+  } else {
+    dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
   }
 
   return chartData;

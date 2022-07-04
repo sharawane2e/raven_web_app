@@ -50,7 +50,7 @@ export const getSingleChartOptionsSeries = (
           transposed,
         ),
       );
-      //series.push(getSingleTransposeChartOptions(questionData, chartData));
+
       return series;
     }
 
@@ -104,10 +104,10 @@ export const getSingleChartOptionsSeries = (
             'labelCode',
             bannerQuesOption.labelCode,
           );
-
           count = _.sumBy(label, function (o) {
             return o.count;
           });
+          //  console.log('optionData', optionData);
 
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
@@ -159,7 +159,7 @@ export const getSingleChartOptionsSeries = (
           },
         });
     }
-    console.log('series', series);
+
     return series;
   } else {
     const data: any[] = [];
@@ -192,7 +192,6 @@ export const getSingleChartOptionsSeries = (
       if (plotValue > 0)
         data.push({
           name: option.labelText,
-          // y: round(plotValue, decimalPrecision),
           y: plotValue,
           percentageValue,
           numberValue,
@@ -237,6 +236,7 @@ const getSingleTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any,
 ) => {
+  console.log('demdo');
   const {
     chart: { chartLabelType, chartTranspose },
   } = store.getState();
@@ -275,8 +275,6 @@ const getSingleTransposeChartOptions = (
     let localBase;
     let optionData: any;
 
-    //console.log(bannerQuestionData?.options);
-
     for (
       let quesIndex = 0;
       quesIndex < bannerQuestionData?.options.length;
@@ -302,11 +300,10 @@ const getSingleTransposeChartOptions = (
           }
         }
 
-        // optionData = newOptionData;
         count = labeCodeSum;
-        console.log(labeCodeSum);
       } else {
         optionData = chartData[0][quesOption?.labelCode];
+        console.log('optionData', optionData);
         // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
@@ -317,12 +314,6 @@ const getSingleTransposeChartOptions = (
         count = label?.count;
       }
 
-      // if (bannerQuestionData?.type == QuestionType.MULTI) {
-      //   debugger;
-      //   localBase = find(chartData[0][1], {
-      //     labelCode: quesOption.labelCode,
-      //   })?.count;
-      // }
       localBase = basecountArr[quesIndex];
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
