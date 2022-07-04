@@ -184,7 +184,7 @@ const getGridTableoptionSeries = (
       });
     });
   }
-  console.log(seriesData);
+
   return seriesData;
 };
 
