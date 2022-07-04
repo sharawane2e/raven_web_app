@@ -8,6 +8,7 @@ export function tableChartDataGen() {
   //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
+  // console.log('seriesData', seriesData);
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];

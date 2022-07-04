@@ -122,6 +122,7 @@ const getSingleOptions = (
                 0,
               );
             }
+
           if (chartLabelType === ChartLabelType.PERCENTAGE) {
             if (count == 0 && localBase == 0) {
               count = 0;
@@ -172,28 +173,35 @@ const getSingleOptions = (
                 return o.count;
               });
             }
+            // console.log('scaleOption.labelCode', scaleOption.labelCode);
             let subOptionData;
-            subOptionData = obj.find(
-              (subObj: any) => subObj.labelCode === scaleOption.labelCode,
-            );
-            if (!subOptionData) {
-              return 0;
-            }
+            subOptionData = obj.find((subObj: any) => {
+              if (subObj.labelCode === scaleOption.labelCode) {
+                return subObj.labelCode === scaleOption.labelCode;
+              }
+            });
+            // if (!subOptionData) {
+            //   return 0;
+            // }
 
             if (chartLabelType === ChartLabelType.PERCENTAGE) {
-              const subOptionDataCount =
-                subOptionData.count !== undefined
-                  ? subOptionData.count === 0
-                    ? 0
-                    : round(
-                        +((subOptionData.count / base) * 100),
-                        decimalPrecision,
-                      )
-                  : 0;
+              let subOptionDataCount = 0;
+              if (subOptionData !== undefined) {
+                subOptionDataCount = round(
+                  (subOptionData.count / base) * 100,
+                  decimalPrecision,
+                );
+              } else {
+                subOptionDataCount = 0;
+              }
               countValues.push(subOptionDataCount);
             } else {
-              const subOptionDataCount =
-                subOptionData.count !== undefined ? subOptionData.count : 0;
+              let subOptionDataCount = 0;
+              if (subOptionData !== undefined) {
+                subOptionDataCount = subOptionData.count;
+              } else {
+                subOptionDataCount = 0;
+              }
 
               countValues.push(subOptionDataCount);
             }

@@ -107,6 +107,7 @@ export const getSingleChartOptionsSeries = (
           count = _.sumBy(label, function (o) {
             return o.count;
           });
+          //  console.log('optionData', optionData);
 
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
@@ -130,6 +131,7 @@ export const getSingleChartOptionsSeries = (
             numberValue,
             baseCount: localBase,
           });
+        //  console.log('series', data);
       }
 
       if (data.length)
@@ -140,7 +142,6 @@ export const getSingleChartOptionsSeries = (
           dataLabels,
         });
     }
-    //console.log('series', series);
 
     return series;
   } else {
