@@ -17,7 +17,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   } = useSelector((state: RootState) => state);
   const { chartType } = chart;
 
-  const handlePieDisabled = () => {
+  const significantDisabled = () => {
     let isPieDisabled = true;
     if (
       chart.questionData?.type === QuestionType.SINGLE &&
@@ -36,7 +36,6 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     } else if (chart.questionData?.type === QuestionType?.GRID) {
       isPieDisabled = false;
     }
-
     return isPieDisabled;
   };
 
@@ -46,7 +45,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <SignificantDiffIcon />,
       onClick: () => changeChartType(ChartType.COLUMN),
       active: chartType === ChartType.COLUMN,
-      disabled: handlePieDisabled(),
+      disabled: significantDisabled(),
       disableClick: () => Toaster.error(StaticText.SIGNIFICANT_DIFFERENCE),
     },
   ];
