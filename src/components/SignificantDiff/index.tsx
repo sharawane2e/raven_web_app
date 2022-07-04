@@ -19,7 +19,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   // const { chartType } = chart;
   const dispatch = useDispatch();
 
-  const handlePieDisabled = () => {
+  const significantDisabled = () => {
     let isPieDisabled = true;
     if (
       chart.questionData?.type === QuestionType.SINGLE &&
@@ -38,7 +38,6 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     } else if (chart.questionData?.type === QuestionType?.GRID) {
       isPieDisabled = false;
     }
-
     return isPieDisabled;
   };
 
