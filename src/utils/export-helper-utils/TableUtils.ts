@@ -155,9 +155,9 @@ export function tableChartDataGen() {
             if (d.values[k]) {
               subRow.push(round(d.values[k], 2));
               if (
-                !chartTransposeState &&
-                !chart?.questionData?.isGroupNet &&
-                chart?.questionData?.type === QuestionType.SINGLE
+                chart?.chartTranspose &&
+                chart?.questionData?.type === QuestionType.SINGLE &&
+                chart?.bannerQuestionData?.type === QuestionType.SINGLE
               ) {
                 totalrowSub += parseFloat(d.values[k]);
               } else {
@@ -206,6 +206,14 @@ export function tableChartDataGen() {
                 } else {
                   totalrowSub += 0;
                 }
+              }
+
+              if (
+                !chart?.chartTranspose &&
+                chart?.questionData?.type === QuestionType.SINGLE &&
+                chart?.bannerQuestionData?.type === QuestionType.MULTI
+              ) {
+                totalrowSub += parseFloat(d.values[k]);
               }
               if (
                 rIndex <= scaleIndex + scaleLength &&
