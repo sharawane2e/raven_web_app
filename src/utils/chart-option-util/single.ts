@@ -8,6 +8,7 @@ import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
 import { colorArr, primaryBarColor } from "../../constants/Variables";
 import { dataLabels } from "../../redux/reducers/chartReducer";
 import { ChartType } from "../../enums/ChartType";
+import { number } from "yup";
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -347,11 +348,37 @@ const getSingleTransposeChartOptions = (
 };
 
 const getsignificantdifference = (series: any) => {
-  console.log(series);
-  series.forEach((seriesData: any) => {
-    console.log("series", seriesData.data);
+  series.forEach((singleSeries: any) => {
+    const seriesdata: any = singleSeries.data;
+    //bubble sort
+    for (let i = 0; i < seriesdata.length; i++) {
+      for (let j = 0; j < seriesdata.length; j++) {
+        const SignificantObject1: SignificantObject = {
+          value: seriesdata[i]["percentageValue"],
+          baseCount: seriesdata[i]["baseCount"],
+        };
+        const SignificantObject2: SignificantObject = {
+          value: seriesdata[j]["percentageValue"],
+          baseCount: seriesdata[j]["baseCount"],
+        };
+        if (i != j) {
+          significant(SignificantObject1, SignificantObject2);
+        }
+      }
+    }
   });
   return series;
 };
 
-const significant = ([{ value, baseCount }, { value, baseCount }]) => {};
+interface SignificantObject {
+  value: any;
+  baseCount: any;
+}
+
+const significant = (
+  SignificantObject1: SignificantObject,
+  SignificantObject2: SignificantObject
+) => {
+  console.log(SignificantObject1);
+  console.log(SignificantObject2);
+};
