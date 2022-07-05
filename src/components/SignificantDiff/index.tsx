@@ -7,7 +7,12 @@ import { QuestionType } from '../../enums/QuestionType';
 import { changeChartType } from '../../services/ChartService';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
-import { updateSignificant } from '../../redux/actions/chartActions';
+import {
+  updateChartOptions,
+  updateSignificant,
+} from '../../redux/actions/chartActions';
+import { useEffect } from 'react';
+import { getChartOptions } from '../../utils/ChartOptionFormatter';
 
 interface ChartTypeControlProps {}
 
@@ -18,6 +23,21 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
   // const { chartType } = chart;
+
+  useEffect(() => {
+    // if (isChecked) {
+    //   if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
+    //     dispatch(setChartLabel(ChartLabelType.NUMBER));
+    //   }
+    // } else {
+    //   if (chart.chartType === ChartType.PIE) {
+    //     changeChartType(ChartType.COLUMN);
+    //   }
+    // }
+
+    const chartOptionsUpdate = getChartOptions();
+    dispatch(updateChartOptions(chartOptionsUpdate));
+  }, [chart.significant]);
 
   const significantDisabled = () => {
     let isPieDisabled = true;
@@ -42,8 +62,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   };
 
   const handleClick = () => {
-    console.log('clicked');
-    dispatch(updateSignificant(chart.significant));
+    dispatch(updateSignificant(!chart.significant));
   };
 
   const buttonConfig: ButtonGroupConfig[] = [

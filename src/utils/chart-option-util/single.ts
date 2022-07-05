@@ -18,7 +18,7 @@ export const getSingleChartOptionsSeries = (
   transposed: boolean,
 ) => {
   const {
-    chart: { chartLabelType, chartType },
+    chart: { chartLabelType, chartType, significant },
     questions: { selectedBannerQuestionId, bannerQuestionList },
   } = store.getState();
 
@@ -159,7 +159,11 @@ export const getSingleChartOptionsSeries = (
           },
         });
     }
-    return series;
+    if (significant) {
+      return getsignificantdifference(series);
+    } else {
+      return series;
+    }
   } else {
     const data: any[] = [];
 
@@ -340,4 +344,10 @@ const getSingleTransposeChartOptions = (
     });
   }
   return series;
+};
+
+const getsignificantdifference = (series: any) => {
+  series.forEach((seriesData: any) => {
+    console.log('series', seriesData.data);
+  });
 };
