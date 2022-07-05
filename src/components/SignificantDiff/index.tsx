@@ -12,12 +12,12 @@ import { updateSignificant } from '../../redux/actions/chartActions';
 interface ChartTypeControlProps {}
 
 const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
+  const dispatch = useDispatch();
   const {
     chart,
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
   // const { chartType } = chart;
-  const dispatch = useDispatch();
 
   const significantDisabled = () => {
     let isPieDisabled = true;
@@ -41,10 +41,10 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     return isPieDisabled;
   };
 
-  const handleClick = () =>{
-    console.log("clicked");
-    dispatch(updateSignificant(true));
-  }
+  const handleClick = () => {
+    console.log('clicked');
+    dispatch(updateSignificant(chart.significant));
+  };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
@@ -52,7 +52,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <SignificantDiffIcon />,
       onClick: handleClick,
       active: chart.significant,
-      disabled: false,
+      disabled: significantDisabled(),
       disableClick: () => Toaster.error(StaticText.SIGNIFICANT_DIFFERENCE),
     },
   ];
