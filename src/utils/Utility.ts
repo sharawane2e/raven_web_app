@@ -99,3 +99,9 @@ export function getMedian(values: any, weightArray: any) {
   // console.log(sortedIndex);
   return sortedValuesArr[sortedIndex + 1];
 }
+
+export function getSum(collection: any, identity: any) {
+  return _.sumBy(collection, function (o: any) {
+    return o[identity];
+  });
+}

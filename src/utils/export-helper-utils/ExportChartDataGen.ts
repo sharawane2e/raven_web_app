@@ -29,7 +29,8 @@ export function chartDataGen() {
     seriesData = bannerChartDataGen(
       questionData,
       chartData,
-      bannerQuestionData
+      bannerQuestionData,
+      chartTranspose
     );
   } else {
     if (questionData?.type === QuestionType.SINGLE) {
