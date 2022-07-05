@@ -1,14 +1,14 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
-import { colorArr, primaryBarColor } from "../../constants/Variables";
-import { dataLabels } from "../../redux/reducers/chartReducer";
-import { ChartType } from "../../enums/ChartType";
-import { number } from "yup";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import _, { find } from 'lodash';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { getMatchedfilter, getmatchedFind, getSum, round } from '../Utility';
+import { colorArr, primaryBarColor } from '../../constants/Variables';
+import { dataLabels } from '../../redux/reducers/chartReducer';
+import { ChartType } from '../../enums/ChartType';
+import { number } from 'yup';
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -16,7 +16,7 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean
+  transposed: boolean,
 ) => {
   const {
     chart: { chartLabelType, chartType, significant },
@@ -32,8 +32,8 @@ export const getSingleChartOptionsSeries = (
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -48,8 +48,8 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
-          transposed
-        )
+          transposed,
+        ),
       );
 
       return series;
@@ -89,7 +89,7 @@ export const getSingleChartOptionsSeries = (
           labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0
+              0,
             );
             baseCountSum.push(localbaseCount);
           });
@@ -102,17 +102,15 @@ export const getSingleChartOptionsSeries = (
 
           const label = getMatchedfilter(
             optionData,
-            "labelCode",
-            bannerQuesOption.labelCode
+            'labelCode',
+            bannerQuesOption.labelCode,
           );
           count = _.sumBy(label, function (o) {
             return o.count;
           });
-          //  console.log('optionData', optionData);
-
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0
+            0,
           );
         }
 
@@ -150,10 +148,10 @@ export const getSingleChartOptionsSeries = (
               // if (this.y > 100) {
               //   return this.y + 'CB';
               // }
-              return ` ${parseFloat(this.y.toFixed(2))} (${"AB"})`;
+              return ` ${parseFloat(this.y.toFixed(2))} (${'AB'})`;
             },
             style: {
-              fontSize: "10px",
+              fontSize: '10px',
               textOutline: false,
               fontWeight: null,
             },
@@ -177,13 +175,13 @@ export const getSingleChartOptionsSeries = (
 
       const labelCollection = getMatchedfilter(
         chartData,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
 
       let count = 0;
       if (labelCollection) {
-        count = getSum(labelCollection, "count");
+        count = getSum(labelCollection, 'count');
       }
       let plotValue;
       let percentageValue = (count / baseCount) * 100;
@@ -238,9 +236,8 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
-  transposed: any
+  transposed: any,
 ) => {
-  console.log("demdo");
   const {
     chart: { chartLabelType, chartTranspose },
   } = store.getState();
@@ -307,12 +304,12 @@ const getSingleTransposeChartOptions = (
         count = labeCodeSum;
       } else {
         optionData = chartData[0][quesOption?.labelCode];
-        console.log("optionData", optionData);
+        console.log('optionData', optionData);
         // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
-          "labelCode",
-          bannerQuesOption?.labelCode
+          'labelCode',
+          bannerQuesOption?.labelCode,
         );
 
         count = label?.count;
@@ -354,12 +351,12 @@ const getsignificantdifference = (series: any) => {
     for (let i = 0; i < seriesdata.length; i++) {
       for (let j = 0; j < seriesdata.length; j++) {
         const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]["percentageValue"],
-          baseCount: seriesdata[i]["baseCount"],
+          value: seriesdata[i]['percentageValue'],
+          baseCount: seriesdata[i]['baseCount'],
         };
         const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]["percentageValue"],
-          baseCount: seriesdata[j]["baseCount"],
+          value: seriesdata[j]['percentageValue'],
+          baseCount: seriesdata[j]['baseCount'],
         };
         if (i != j) {
           significant(SignificantObject1, SignificantObject2);
@@ -367,6 +364,8 @@ const getsignificantdifference = (series: any) => {
       }
     }
   });
+
+  // console.log('series', series);
   return series;
 };
 
@@ -377,8 +376,24 @@ interface SignificantObject {
 
 const significant = (
   SignificantObject1: SignificantObject,
-  SignificantObject2: SignificantObject
+  SignificantObject2: SignificantObject,
 ) => {
-  console.log(SignificantObject1);
-  console.log(SignificantObject2);
+  const first = (SignificantObject1.value * SignificantObject1.baseCount) / 100;
+  const second =
+    (SignificantObject2.value * SignificantObject2.baseCount) / 100;
+  const adding = first + second;
+  const poledSampleData =
+    adding / (SignificantObject1.baseCount + SignificantObject2.baseCount);
+
+  // const firstDataValue =
+  //   (SignificantObject1.value - SignificantObject2.value) / 100;
+  // const secondDataValue = 1 - poledSampleData;
+  // const trirdDataValue = 1 / SignificantObject1.baseCount;
+  // const fourDataValue = 1 + SignificantObject2.baseCount;
+
+  // const testStatistic =
+  //   firstDataValue /
+  //   (poledSampleData * secondDataValue * (trirdDataValue + fourDataValue));
+
+  // console.log('testStatistic', testStatistic);
 };
