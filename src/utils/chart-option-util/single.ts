@@ -312,7 +312,7 @@ const getSingleTransposeChartOptions = (
         count = labeCodeSum;
       } else {
         optionData = chartData[0][quesOption?.labelCode];
-        console.log("optionData", optionData);
+        // console.log("optionData", optionData);
         // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
@@ -369,10 +369,10 @@ const getsignificantdifference = (series: any) => {
           // if (this.y > 100) {
           //   return this.y + 'CB';
           // }
-          console.log(this);
-          return ` ${parseFloat(this.y.toFixed(2))} (${
+          // console.log(this);
+          return ` ${parseFloat(this.y.toFixed(2))} ${
             this.point.significantDiffernce
-          })`;
+          }`;
         },
       },
     };
@@ -399,12 +399,18 @@ const getsignificantdifference = (series: any) => {
             SignificantObject2
           );
 
+          // console.log(isSignificant);
+
           if (isSignificant) {
-            significantArry.push(j);
+            //console.log(i);
+            //console.log(j);
+            significantArry.push(indexToChar(j));
           }
         }
       }
-      singleSeries.data[i]["significantDiffernce"] = significantArry.join("");
+      // console.log(significantArry);
+      singleSeries.data[i]["significantDiffernce"] =
+        "(" + significantArry.join("") + ")";
     }
   });
   return updatedSeries;
