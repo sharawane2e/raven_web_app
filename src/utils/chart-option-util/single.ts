@@ -17,8 +17,6 @@ import { ChartType } from "../../enums/ChartType";
 import { number } from "yup";
 import { cumulativeStdNormalProbability } from "simple-statistics";
 
-var { jStat } = require("jstat");
-
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
   chartData: any,
@@ -401,7 +399,9 @@ const getsignificantdifference = (series: any) => {
             SignificantObject2
           );
 
-          significantArry.push(j);
+          if (isSignificant) {
+            significantArry.push(j);
+          }
         }
       }
       singleSeries.data[i]["significantDiffernce"] = significantArry.join("");
@@ -419,83 +419,21 @@ const significant = (
   SignificantObject1: SignificantObject,
   SignificantObject2: SignificantObject
 ) => {
-  // const B1 = SignificantObject1.value / 100;
-  // const B2 = SignificantObject1.baseCount;
-  // const B4 = SignificantObject2.value / 100;
-  // const B5 = SignificantObject2.baseCount;
-  const B1 = 51 / 100;
-  const B2 = 1250;
-  const B4 = 62 / 100;
-  const B5 = 800;
-
-  // const first = (SignificantObject1.value * SignificantObject1.baseCount) / 100;
-  // const second =
-  //   (SignificantObject2.value * SignificantObject2.baseCount) / 100;
-  // const adding = first + second;
-  // const poledSampleData =
-  //   adding / (SignificantObject1.baseCount + SignificantObject2.baseCount);
+  const B1 = SignificantObject1.value / 100;
+  const B2 = SignificantObject1.baseCount;
+  const B4 = SignificantObject2.value / 100;
+  const B5 = SignificantObject2.baseCount;
 
   const poledSampleData = (B1 * B2 + B4 * B5) / (B2 + B5);
-  console.log("poledSampleData" + poledSampleData);
   const testStatistic =
     (B1 - B4) /
     Math.sqrt(poledSampleData * (1 - poledSampleData) * (1 / B2 + 1 / B5));
 
-  console.log("testStatistic" + testStatistic);
+  const result = 2 * (1 - cumulativeStdNormalProbability(testStatistic));
 
-  // const result = cumulativeStdNormalProbability(testStatistic);
-  // const result2 = 2 * (1 - cummulativeNormalDist(testStatistic));
-  const result3 = 2 * (1 - NORMSDIST(testStatistic));
-  // const result = cummulativeNormalDist(testStatistic);
+  if (result < 0.05) {
+    return true;
+  }
 
-  console.log(result3);
-
-  // const firstDataValue =
-  //   (SignificantObject1.value - SignificantObject2.value) / 100;
-  // const secondDataValue = 1 - poledSampleData;
-  // const trirdDataValue = 1 / SignificantObject1.baseCount;
-  // const fourDataValue = 1 + SignificantObject2.baseCount;
-
-  // const testStatistic =
-  //   firstDataValue /
-  //   (poledSampleData * secondDataValue * (trirdDataValue + fourDataValue));
-
-  // console.log('testStatistic', testStatistic);
+  return false;
 };
-
-// export const cummulativeNormalDist = (x: number) => {
-//   if (x < 2.2) {
-//     return 0.1 * x * (4.4 - x);
-//   } else if (x < 2.6) {
-//     return 0.49;
-//   } else {
-//     return 0.5;
-//   }
-// };
-
-// export const normalcdf = (mean: number, sigma: number, to: number) => {
-//   var z = (to - mean) / Math.sqrt(2 * sigma * sigma);
-//   var t = 1 / (1 + 0.3275911 * Math.abs(z));
-//   var a1 = 0.254829592;
-//   var a2 = -0.284496736;
-//   var a3 = 1.421413741;
-//   var a4 = -1.453152027;
-//   var a5 = 1.061405429;
-//   var erf =
-//     1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-z * z);
-//   var sign = 1;
-//   if (z < 0) {
-//     sign = -1;
-//   }
-//   return (1 / 2) * (1 + sign * erf);
-// };
-
-// normalcdf(30, 25, 1.4241); //-> 0.12651187738346226
-
-function NORMSDIST(z: number) {
-  // Uses https://cdn.jsdelivr.net/jstat/latest/jstat.min.js
-  if (isNaN(z)) return "#VALUE!";
-  var mean = 0,
-    sd = 1;
-  return jStat.normal.cdf(z, mean, sd);
-}
