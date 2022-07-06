@@ -59,7 +59,11 @@ export const getSingleChartOptionsSeries = (
         )
       );
 
-      return series;
+      if (significant) {
+        return getsignificantdifference(series);
+      } else {
+        return series;
+      }
     }
 
     const newOptionData: any = [];
