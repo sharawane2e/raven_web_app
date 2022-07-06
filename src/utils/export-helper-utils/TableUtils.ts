@@ -93,7 +93,7 @@ export function tableChartDataGen() {
           let netsLabelcode =
             chart.bannerQuestionData?.options[rIndex]?.labelCode.split('_')[0];
           let netsQuestionLabelcode;
-          if (chart?.questionData?.isGroupNet) {
+          if (!chart?.questionData?.isGroupNet) {
           } else {
             netsQuestionLabelcode =
               chart.questionData?.options[rIndex]?.labelCode?.split('_')[0];

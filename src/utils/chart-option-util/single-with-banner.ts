@@ -1,13 +1,13 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
-import { colorArr, primaryBarColor } from "../../constants/Variables";
-import { dataLabels } from "../../redux/reducers/chartReducer";
-import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import _, { find } from 'lodash';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { getMatchedfilter, getmatchedFind, getSum, round } from '../Utility';
+import { colorArr, primaryBarColor } from '../../constants/Variables';
+import { dataLabels } from '../../redux/reducers/chartReducer';
+import { ChartType } from '../../enums/ChartType';
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -15,7 +15,7 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean
+  transposed: boolean,
 ) => {
   const {
     chart: { chartLabelType, chartType },
@@ -31,8 +31,8 @@ export const getSingleChartOptionsSeries = (
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -49,8 +49,8 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
-          transposed
-        )
+          transposed,
+        ),
       );
       //series.push(getSingleTransposeChartOptions(questionData, chartData));
       return series;
@@ -91,7 +91,7 @@ export const getSingleChartOptionsSeries = (
           labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0
+              0,
             );
             baseCountSum.push(localbaseCount);
           });
@@ -108,8 +108,8 @@ export const getSingleChartOptionsSeries = (
 
           const label = getMatchedfilter(
             optionData,
-            "labelCode",
-            bannerQuesOption.labelCode
+            'labelCode',
+            bannerQuesOption.labelCode,
           );
           // if()
           //if (label.length != 0) {
@@ -121,7 +121,7 @@ export const getSingleChartOptionsSeries = (
 
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0
+            0,
           );
         }
 
@@ -167,13 +167,13 @@ export const getSingleChartOptionsSeries = (
 
       const labelCollection = getMatchedfilter(
         chartData,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
 
       let count = 0;
       if (labelCollection) {
-        count = getSum(labelCollection, "count");
+        count = getSum(labelCollection, 'count');
       }
       let plotValue;
       let percentageValue = (count / baseCount) * 100;
@@ -228,7 +228,7 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
-  transposed: any
+  transposed: any,
 ) => {
   const {
     chart: { chartLabelType, chartTranspose },
@@ -277,17 +277,17 @@ const getSingleTransposeChartOptions = (
     ) {
       const bannerQuesOption: any = bannerQuestionData?.options[quesIndex];
 
-      if (Array.isArray(quesOption.labelCode)) {
-        const labelCodeArr = quesOption.labelCode;
+      if (Array.isArray(quesOption?.labelCode)) {
+        const labelCodeArr = quesOption?.labelCode;
         const labelCodeSum: any = [];
         // const baseCountSum: any = [];
         var labeCodeSum = 0;
-        for (let j = 0; j < labelCodeArr.length; j++) {
+        for (let j = 0; j < labelCodeArr?.length; j++) {
           let currKey = labelCodeArr[j];
           let dataArr = chartData[0][currKey];
           labelCodeSum.push(dataArr);
-          for (let k: any = 0; k < dataArr.length; k++) {
-            if (dataArr[k].labelCode === bannerQuesOption?.labelCode) {
+          for (let k: any = 0; k < dataArr?.length; k++) {
+            if (dataArr[k]?.labelCode === bannerQuesOption?.labelCode) {
               const dataArrValues: any = dataArr[k];
               newOptionData.push(dataArrValues);
               labeCodeSum += dataArrValues?.count;
@@ -303,8 +303,8 @@ const getSingleTransposeChartOptions = (
         // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
-          "labelCode",
-          bannerQuesOption?.labelCode
+          'labelCode',
+          bannerQuesOption?.labelCode,
         );
 
         count = label?.count;

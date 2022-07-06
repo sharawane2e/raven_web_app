@@ -271,20 +271,20 @@ const getSingleTransposeTableOptions = (
           bannerQuestionData.type == QuestionType.SINGLE &&
           questiondata.type == QuestionType.SINGLE
         ) {
-          if (Array.isArray(scaleOption.labelCode)) {
-            const labelCodeArr = scaleOption.labelCode;
+          if (Array.isArray(scaleOption?.labelCode)) {
+            const labelCodeArr = scaleOption?.labelCode;
 
             //const labelCodeSum: any = [];
             //const baseCountSum: any = [];
             var labeCodeSum = 0;
-            for (let j = 0; j < labelCodeArr.length; j++) {
+            for (let j = 0; j < labelCodeArr?.length; j++) {
               let currKey = labelCodeArr[j];
               let dataArr = chartData[0][currKey];
-              for (let k: any = 0; k < dataArr.length; k++) {
-                if (dataArr[k].labelCode === option.labelCode) {
+              for (let k: any = 0; k < dataArr?.length; k++) {
+                if (dataArr[k]?.labelCode === option?.labelCode) {
                   const dataArrValues: any = dataArr[k];
                   newOptionData.push(dataArrValues);
-                  labeCodeSum += dataArrValues.count;
+                  labeCodeSum += dataArrValues?.count;
                 }
               }
             }
