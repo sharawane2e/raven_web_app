@@ -82,6 +82,7 @@ export function pptDataGen(
           }
       });
     }
+    //console.log('');
 
     scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
