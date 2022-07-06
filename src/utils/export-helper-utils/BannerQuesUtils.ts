@@ -216,6 +216,8 @@ const getSingleOptions = (
     });
   });
 
+  console.log(seriesData);
+
   return seriesData;
 };
 
