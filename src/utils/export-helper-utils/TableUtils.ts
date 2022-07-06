@@ -95,8 +95,9 @@ export function tableChartDataGen() {
           let netsQuestionLabelcode;
           if (!chart?.questionData?.isGroupNet) {
           } else {
-            netsQuestionLabelcode =
-              chart.questionData?.options[rIndex]?.labelCode?.split('_')[0];
+            if (chart?.questionData?.type === QuestionType.MULTI)
+              netsQuestionLabelcode =
+                chart.questionData?.options[rIndex]?.labelCode?.split('_')[0];
           }
 
           if (
