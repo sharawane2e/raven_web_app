@@ -413,8 +413,10 @@ const getsignificantdifference = (series: any) => {
         }
       }
       // console.log(significantArry);
-      singleSeries.data[i]["significantDiffernce"] =
-        "(" + significantArry.join("") + ")";
+      if (significantArry.length) {
+        singleSeries.data[i]["significantDiffernce"] =
+          "(" + significantArry.join("") + ")";
+      }
     }
   });
   return updatedSeries;
