@@ -76,9 +76,10 @@ export function pptDataGen(
       });
 
       results = questionData?.options.filter(function (option) {
-        if (option.labelCode.split('_')[0] == 'N') {
-          return true;
-        }
+        if (option.labelCode.indexOf('_N') != -1)
+          if (option?.labelCode?.split('_')[0] == 'N') {
+            return true;
+          }
       });
     }
 
