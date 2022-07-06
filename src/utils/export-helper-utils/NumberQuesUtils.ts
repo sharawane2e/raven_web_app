@@ -139,18 +139,18 @@ export function numberChartDataGen(
 
       values = chartData[0]?.values;
       weightArr = chartData[0]?.weights;
-      console.log(chartData[0]);
+
       weightedValueSum = chartData[0]?.weightedValueSum;
       weightsSum = chartData[0]?.weightsSum;
       // const meanValue = mean(values);
       const meanValue =
         chartData[0]?.weightedValueSum / chartData[0]?.weightsSum;
 
-      const minValue = min(values);
-      const maxValue = max(values);
+      // const minValue = min(values);
+      // const maxValue = max(values);
       //const medainValue = median(values);
       const medainValue = getMedian(values, weightArr);
-      meanMaxArr.push(meanValue, medainValue, minValue, maxValue);
+      meanMaxArr.push(meanValue, medainValue);
 
       questionData.options.forEach((option: any, Index: any) => {
         data.push(option.labelText);

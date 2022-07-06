@@ -1,13 +1,13 @@
-import { decimalPrecision } from "../../constants/Variables";
-import { round } from "../Utility";
-import store from "../../redux/store";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { ChartType } from "../../enums/ChartType";
+import { decimalPrecision } from '../../constants/Variables';
+import { formatTableData, getMatchedfilter, getSum, round } from '../Utility';
+import store from '../../redux/store';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartType } from '../../enums/ChartType';
 
 export function singleChartDataGen(
   questionData: any,
   chartData: any,
-  baseCount: any
+  baseCount: any,
 ) {
   let labels: any = [];
   let values: any = [];
@@ -19,17 +19,22 @@ export function singleChartDataGen(
   } = store.getState();
 
   options.forEach((option: any) => {
-    const dataObj = chartData.find(
-      (data: any) => data.labelCode === option.labelCode
+    // const dataObj = chartData.find(
+    //   (data: any) => data.labelCode === option.labelCode,
+    // );
+    const dataObj: any = getMatchedfilter(
+      chartData,
+      'labelCode',
+      option.labelCode,
     );
 
     labels.push(option.labelText);
-    if (dataObj && dataObj.count > 0) {
-      let count;
+
+    if (dataObj) {
+      let count: any = 0;
+      count = getSum(dataObj, 'count');
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        count = round((dataObj.count / baseCount) * 100, decimalPrecision);
-      } else {
-        count = dataObj.count;
+        count = round((count / baseCount) * 100, decimalPrecision);
       }
       values.push(count);
     } else {
