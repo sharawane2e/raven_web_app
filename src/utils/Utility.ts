@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { decimalPrecision } from '../constants/Variables';
+import _ from "lodash";
+import { decimalPrecision } from "../constants/Variables";
 
 export function round(value: number, precision: number) {
   var multiplier = Math.pow(10, precision || 0);
@@ -8,7 +8,7 @@ export function round(value: number, precision: number) {
 
 export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
-  return percentageValue + '%';
+  return percentageValue + "%";
 }
 
 export function timeout(ms: number) {
@@ -18,7 +18,7 @@ export function timeout(ms: number) {
 export function getmatchedFind(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   if (_.isArray(compareWith)) {
     return collection.find(function (data: any) {
@@ -33,7 +33,7 @@ export function getmatchedFind(
 export function getMatchedfilter(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   return _.filter(collection, function (o) {
     if (_.isArray(compareWith)) {
@@ -107,3 +107,16 @@ export function getMedian(values: any, weightArray: any) {
   // console.log(sortedIndex);
   return sortedValuesArr[sortedIndex + 1];
 }
+
+export const indexToChar = (n: number) => {
+  var ordA = "a".charCodeAt(0);
+  var ordZ = "z".charCodeAt(0);
+  var len = ordZ - ordA + 1;
+
+  var s = "";
+  while (n >= 0) {
+    s = String.fromCharCode((n % len) + ordA) + s;
+    n = Math.floor(n / len) - 1;
+  }
+  return s.toUpperCase();
+};

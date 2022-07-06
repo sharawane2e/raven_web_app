@@ -4,7 +4,13 @@ import { IQuestionOption } from "../../types/IBaseQuestion";
 import { IQuestion } from "../../types/IQuestion";
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
-import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
+import {
+  getMatchedfilter,
+  getmatchedFind,
+  getSum,
+  indexToChar,
+  round,
+} from "../Utility";
 import { colorArr, primaryBarColor } from "../../constants/Variables";
 import { dataLabels } from "../../redux/reducers/chartReducer";
 import { ChartType } from "../../enums/ChartType";
@@ -150,7 +156,7 @@ export const getSingleChartOptionsSeries = (
               // if (this.y > 100) {
               //   return this.y + 'CB';
               // }
-              return ` ${parseFloat(this.y.toFixed(2))} (${"AB"})`;
+              return ` ${parseFloat(this.y.toFixed(2))}`;
             },
             style: {
               fontSize: "10px",
@@ -160,6 +166,7 @@ export const getSingleChartOptionsSeries = (
           },
         });
     }
+
     if (significant) {
       return getsignificantdifference(series);
     } else {
@@ -348,10 +355,37 @@ const getSingleTransposeChartOptions = (
 };
 
 const getsignificantdifference = (series: any) => {
-  series.forEach((singleSeries: any) => {
+  const updatedSeries = series.map((singleSeries: any) => {
+    const updatedSeriesData = {
+      ...singleSeries,
+      data: singleSeries.data.map((data: any, index: number) => {
+        return {
+          ...data,
+          significance: indexToChar(index),
+          significantDiffernce: "",
+        };
+      }),
+      dataLabels: {
+        ...singleSeries.dataLabels,
+        formatter: function (this: any, options: any) {
+          // if (this.y > 100) {
+          //   return this.y + 'CB';
+          // }
+          console.log(this);
+          return ` ${parseFloat(this.y.toFixed(2))} (${
+            this.point.significantDiffernce
+          })`;
+        },
+      },
+    };
+    return updatedSeriesData;
+  });
+
+  updatedSeries.forEach((singleSeries: any, seriesIndex: number) => {
     const seriesdata: any = singleSeries.data;
     //bubble sort
     for (let i = 0; i < seriesdata.length; i++) {
+      const significantArry = [];
       for (let j = 0; j < seriesdata.length; j++) {
         const SignificantObject1: SignificantObject = {
           value: seriesdata[i]["percentageValue"],
@@ -362,12 +396,18 @@ const getsignificantdifference = (series: any) => {
           baseCount: seriesdata[j]["baseCount"],
         };
         if (i != j) {
-          significant(SignificantObject1, SignificantObject2);
+          const isSignificant = significant(
+            SignificantObject1,
+            SignificantObject2
+          );
+
+          significantArry.push(j);
         }
       }
+      singleSeries.data[i]["significantDiffernce"] = significantArry.join("");
     }
   });
-  return series;
+  return updatedSeries;
 };
 
 interface SignificantObject {
@@ -379,6 +419,6 @@ const significant = (
   SignificantObject1: SignificantObject,
   SignificantObject2: SignificantObject
 ) => {
-  console.log(SignificantObject1);
-  console.log(SignificantObject2);
+  //console.log(SignificantObject1);
+  //console.log(SignificantObject2);
 };
