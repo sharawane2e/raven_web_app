@@ -13,7 +13,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   //console.log(tableData);
 
-  const { chartData, showMean, questionData, chartTranspose } = useSelector(
+  const { chartData, showMean, questionData, chartTranspose,significant } = useSelector(
     (state: RootState) => state?.chart,
   );
 
@@ -28,7 +28,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   useEffect(() => {
     setTableData(tableChartDataGen());
-  }, [chartData, showMean]);
+  }, [chartData, showMean,significant]);
 
   if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {
     QuestionData = 0;
@@ -76,7 +76,7 @@ const TableView: React.FC<TableProps> = (props) => {
   //   });
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
-  const highLight = (col: any, currentMax: any, currentMin: any, col2: any) => {
+  const highLight = (col: any, currentMax: any, currentMin: any) => {
     return (
       <div
         className={clsx({
@@ -86,7 +86,7 @@ const TableView: React.FC<TableProps> = (props) => {
         })}
       >
         {col}
-        <span>{col2}</span>
+        {/* <span>{col2}</span> */}
       </div>
     );
   };
@@ -97,7 +97,6 @@ const TableView: React.FC<TableProps> = (props) => {
     col: any,
     currentMin: any,
     currentMax: any,
-    col2: any,
   ) => {
     // console.log('col2', col2);
     const rowcount =
@@ -111,13 +110,13 @@ const TableView: React.FC<TableProps> = (props) => {
       return !chartTranspose ? (
         rowIndex > removeSubGrop - rowcount &&
         rowIndex < removeSubGrop + (laberesult - singleGroupNet) ? (
-          highLight(col, currentMin, currentMax, col2)
+          highLight(col, currentMin, currentMax)
         ) : !removeSubGrop ? (
-          highLight(col, currentMin, currentMax, col2)
+          highLight(col, currentMin, currentMax)
         ) : (
           <div className="Table-row-item">
             {col}
-            <span>{col2}</span>
+            {/* <span>{col2}</span> */}
           </div>
         )
       ) : (
@@ -130,31 +129,31 @@ const TableView: React.FC<TableProps> = (props) => {
         questionData?.type === QuestionType.SINGLE &&
         rowIndex < removeSubGrop - (laberesult - singleGroupNet)
       ) {
-        return highLight(col, currentMin, currentMax, col2);
+        return highLight(col, currentMin, currentMax);
       } else {
         if (chartTranspose) {
           if (showMean) {
-            return highLight(col, currentMin, currentMax, col2);
+            return highLight(col, currentMin, currentMax);
           } else {
             return chartTranspose ? (
               rowIndex < removeSubGrop && !showMean ? (
-                highLight(col, currentMin, currentMax, col2)
+                highLight(col, currentMin, currentMax)
               ) : !removeSubGrop && !showMean ? (
-                highLight(col, currentMin, currentMax, col2)
+                highLight(col, currentMin, currentMax)
               ) : (
                 <div className="Table-row-item">{col}</div>
               )
             ) : columnIndex && tableData?.rows?.length > 3 ? (
-              highLight(col, currentMin, currentMax, col2)
+              highLight(col, currentMin, currentMax)
             ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-              highLight(col, currentMin, currentMax, col2)
+              highLight(col, currentMin, currentMax)
             ) : (
               <div className="Table-row-item"> {col}</div>
             );
           }
         } else {
           // console.log('demo ffj', col, currentMin, currentMax);
-          return highLight(col, currentMin, currentMax, col2);
+          return highLight(col, currentMin, currentMax);
           // return !chartTranspose ? (
           //   rowIndex < removeSubGrop && !showMean ? (
           //     highLight(col, currentMin, currentMax)
@@ -195,10 +194,9 @@ const TableView: React.FC<TableProps> = (props) => {
                     {tableColumn(
                       rowIndex,
                       colIndex,
-                      col.split('-')[0],
+                      col,
                       currentMax,
-                      currentMin,
-                      col.split('-')[1],
+                      currentMin
                     )}
                   </>
                 );
