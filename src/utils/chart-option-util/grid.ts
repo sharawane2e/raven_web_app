@@ -2,11 +2,21 @@ import store from '../../redux/store';
 import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
-import { getMatchedfilter, getmatchedFind, round } from '../Utility';
+import {
+  getMatchedfilter,
+  getmatchedFind,
+  round,
+  indexToChar,
+  significant,
+} from '../Utility';
 import {
   colorArr,
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
+  dataUpdatedFormate,
   decimalPrecision,
   decimalPrecision2,
+  showMeanFormate,
 } from '../../constants/Variables';
 import { dataLabels } from '../../redux/reducers/chartReducer';
 import { ChartType } from '../../enums/ChartType';
@@ -24,13 +34,18 @@ export const getGridChartoptionSeries = (
   const categories = [];
   const series = [];
   const {
-    chart: { chartLabelType, chartType, chartTranspose },
+    chart: { chartLabelType, chartType, chartTranspose, significant },
   } = store.getState();
 
   if (chartTranspose) {
     series.length = 0;
     series.push(...getGridTransposeChartOptions(questionData, chartData));
-    return series;
+    if (significant) {
+      return getsignificantdifference(series, chartLabelType);
+    } else {
+      return series;
+    }
+    //return series;
   }
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
@@ -93,19 +108,35 @@ export const getGridChartoptionSeries = (
         });
       }
     }
+    let newDataLabels;
+    if (significant) {
+      newDataLabels = dataUpdatedFormate;
+    } else {
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
+    }
     series.push({
       name: scale.labelText,
       color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
       data,
-      dataLabels,
+      dataLabels: {
+        ...newDataLabels,
+      },
     });
   }
-  return series;
+  if (significant) {
+    return getsignificantdifference(series, chartLabelType);
+  } else {
+    return series;
+  }
 };
 
 const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, significant },
   } = store.getState();
   const series = [];
   for (let i = 0; i < questiondata.subGroups.length; i++) {
@@ -159,11 +190,22 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
         baseCount,
       });
     }
-
+    let newDataLabels;
+    if (significant) {
+      newDataLabels = dataUpdatedFormate;
+    } else {
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
+    }
     series.push({
       name: currentSubGroup.labelText,
       data,
-      dataLabels,
+      dataLabels: {
+        ...newDataLabels,
+      },
     });
   }
 
@@ -176,7 +218,7 @@ export const getGridMeanChartOptions = (
   baseCount: number,
 ): any => {
   const {
-    chart: { chartTranspose },
+    chart: { chartTranspose, significant, chartLabelType },
   } = store.getState();
 
   const data: any[] = [];
@@ -251,7 +293,9 @@ export const getGridMeanChartOptions = (
       name: seriesLabels[i],
       color: colorArr[i],
       data: seriesData[i],
-      dataLabels,
+      dataLabels: {
+        ...showMeanFormate,
+      },
     });
   }
 
@@ -293,3 +337,69 @@ export const getGridMeanChartOptions = (
 
   return series;
 };
+
+const getsignificantdifference = (series: any, chartLabelType: any) => {
+  // debugger;
+  const updatedSeries = series.map((singleSeries: any) => {
+    const updatedSeriesData = {
+      ...singleSeries,
+      data: singleSeries.data.map((data: any, index: number) => {
+        return {
+          ...data,
+          significance: indexToChar(index),
+          significantDiffernce: '',
+        };
+      }),
+      dataLabels: {
+        ...singleSeries.dataLabels,
+        formatter: function (this: any, options: any) {
+          return ` ${parseFloat(this.y.toFixed(2))} ${
+            this.point.significantDiffernce
+          } ${chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''}`;
+        },
+      },
+    };
+    return updatedSeriesData;
+  });
+
+  updatedSeries.forEach((singleSeries: any, seriesIndex: number) => {
+    const seriesdata: any = singleSeries.data;
+
+    //bubble sort
+    for (let i = 0; i < seriesdata.length; i++) {
+      const significantArry = [];
+      for (let j = 0; j < seriesdata.length; j++) {
+        const SignificantObject1: SignificantObject = {
+          value: seriesdata[i]['percentageValue'],
+          baseCount: seriesdata[i]['baseCount'],
+        };
+        const SignificantObject2: SignificantObject = {
+          value: seriesdata[j]['percentageValue'],
+          baseCount: seriesdata[j]['baseCount'],
+        };
+        if (i != j) {
+          const isSignificant = significant(
+            SignificantObject1,
+            SignificantObject2,
+          );
+
+          if (isSignificant) {
+            significantArry.push(indexToChar(j));
+          }
+        }
+      }
+      if (significantArry.length) {
+        singleSeries.data[i]['significantDiffernce'] =
+          '(' + significantArry.join('') + ')';
+      }
+    }
+  });
+
+  //  console.log('updatedSeries', updatedSeries);
+  return updatedSeries;
+};
+
+interface SignificantObject {
+  value: any;
+  baseCount: any;
+}

@@ -26,7 +26,7 @@ const LabelTypeControl: React.FC<LabelTypeControlProps> = () => {
     chartDataClone.chartOptions = {
       ...chart.chartOptions,
       ...getChartOptions(),
-      plotOptions: getPlotOptions(),
+      // plotOptions: getPlotOptions(),
     };
     dispatch(setChartData(chartDataClone));
   };

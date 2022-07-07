@@ -77,7 +77,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
           }
 
           if (valueKey && labelKey) {
-            let label = options.find((option) =>
+            let label = options?.find((option) =>
               (option[valueKey] == selected) !== undefined
                 ? option[valueKey] == selected
                 : option[valueKey] == selected,

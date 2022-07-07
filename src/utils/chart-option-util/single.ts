@@ -1,21 +1,25 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
-import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import _, { find } from 'lodash';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 import {
   getMatchedfilter,
   getmatchedFind,
   getSum,
   indexToChar,
-  round,
-} from "../Utility";
-import { colorArr, primaryBarColor } from "../../constants/Variables";
-import { dataLabels } from "../../redux/reducers/chartReducer";
-import { ChartType } from "../../enums/ChartType";
-import { number } from "yup";
-import { cumulativeStdNormalProbability } from "simple-statistics";
+  significant,
+} from '../Utility';
+import {
+  colorArr,
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
+  dataUpdatedFormate,
+  primaryBarColor,
+} from '../../constants/Variables';
+import { dataLabels } from '../../redux/reducers/chartReducer';
+import { ChartType } from '../../enums/ChartType';
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -23,11 +27,11 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean
+  transposed: boolean,
 ) => {
   const {
     chart: { chartLabelType, chartType, significant },
-    questions: { selectedBannerQuestionId, bannerQuestionList },
+    questions: { selectedBannerQuestionId },
   } = store.getState();
 
   if (selectedBannerQuestionId) {
@@ -39,8 +43,8 @@ export const getSingleChartOptionsSeries = (
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -55,12 +59,12 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
-          transposed
-        )
+          transposed,
+        ),
       );
 
       if (significant) {
-        return getsignificantdifference(series);
+        return getsignificantdifference(series, chartLabelType);
       } else {
         return series;
       }
@@ -100,7 +104,7 @@ export const getSingleChartOptionsSeries = (
           labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0
+              0,
             );
             baseCountSum.push(localbaseCount);
           });
@@ -113,15 +117,15 @@ export const getSingleChartOptionsSeries = (
 
           const label = getMatchedfilter(
             optionData,
-            "labelCode",
-            bannerQuesOption.labelCode
+            'labelCode',
+            bannerQuesOption.labelCode,
           );
           count = _.sumBy(label, function (o) {
             return o.count;
           });
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0
+            0,
           );
         }
 
@@ -143,35 +147,31 @@ export const getSingleChartOptionsSeries = (
           percentageValue,
           numberValue,
           baseCount: localBase,
-          // sd: ,
         });
       }
-
+      let newDataLabels;
+      if (significant) {
+        newDataLabels = dataUpdatedFormate;
+      } else {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
+      }
       if (data.length)
         series.push({
           name: bannerQuesOption?.labelText,
           color: index > colorArr.length ? colorArr[index] : undefined,
           data,
           dataLabels: {
-            enabled: true,
-            // format: '{point.y:.1f}%',
-            formatter: function (this: any) {
-              // if (this.y > 100) {
-              //   return this.y + 'CB';
-              // }
-              return ` ${parseFloat(this.y.toFixed(2))}`;
-            },
-            style: {
-              fontSize: "10px",
-              textOutline: false,
-              fontWeight: null,
-            },
+            ...newDataLabels,
           },
         });
     }
 
     if (significant) {
-      return getsignificantdifference(series);
+      return getsignificantdifference(series, chartLabelType);
     } else {
       return series;
     }
@@ -187,13 +187,13 @@ export const getSingleChartOptionsSeries = (
 
       const labelCollection = getMatchedfilter(
         chartData,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
 
       let count = 0;
       if (labelCollection) {
-        count = getSum(labelCollection, "count");
+        count = getSum(labelCollection, 'count');
       }
       let plotValue;
       let percentageValue = (count / baseCount) * 100;
@@ -231,11 +231,24 @@ export const getSingleChartOptionsSeries = (
         series.push({ name, color, data, dataLabels });
       });
     } else {
+      let newDataLabels;
+      if (significant) {
+        newDataLabels = dataUpdatedFormate;
+      } else {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
+      }
+
       series.push({
         color: primaryBarColor,
         name: questionData.labelText,
         data,
-        dataLabels,
+        dataLabels: {
+          ...newDataLabels,
+        },
       });
     }
 
@@ -248,10 +261,10 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
-  transposed: any
+  transposed: any,
 ) => {
   const {
-    chart: { chartLabelType, chartTranspose },
+    chart: { chartLabelType, significant },
   } = store.getState();
 
   const series: any[] = [];
@@ -260,7 +273,6 @@ const getSingleTransposeChartOptions = (
   const allLabels: Array<string> = [];
   const newChartData: any = {};
   const basecountArr: any = [];
-  //let dataSum = [];
 
   for (const labelArrays in chartData[0]) {
     const labelArray = chartData[0][labelArrays];
@@ -316,12 +328,10 @@ const getSingleTransposeChartOptions = (
         count = labeCodeSum;
       } else {
         optionData = chartData[0][quesOption?.labelCode];
-        // console.log("optionData", optionData);
-        // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
-          "labelCode",
-          bannerQuesOption?.labelCode
+          'labelCode',
+          bannerQuesOption?.labelCode,
         );
 
         count = label?.count;
@@ -346,17 +356,29 @@ const getSingleTransposeChartOptions = (
       });
     }
 
+    let newDataLabels;
+    if (significant) {
+      newDataLabels = dataUpdatedFormate;
+    } else {
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
+    }
     series.push({
       name: quesOption?.labelText,
       color: index < colorArr.length ? colorArr[index] : undefined,
       data,
-      dataLabels,
+      dataLabels: {
+        ...newDataLabels,
+      },
     });
   }
   return series;
 };
 
-const getsignificantdifference = (series: any) => {
+const getsignificantdifference = (series: any, chartLabelType: any) => {
   const updatedSeries = series.map((singleSeries: any) => {
     const updatedSeriesData = {
       ...singleSeries,
@@ -364,19 +386,15 @@ const getsignificantdifference = (series: any) => {
         return {
           ...data,
           significance: indexToChar(index),
-          significantDiffernce: "",
+          significantDiffernce: '',
         };
       }),
       dataLabels: {
         ...singleSeries.dataLabels,
         formatter: function (this: any, options: any) {
-          // if (this.y > 100) {
-          //   return this.y + 'CB';
-          // }
-          // console.log(this);
           return ` ${parseFloat(this.y.toFixed(2))} ${
             this.point.significantDiffernce
-          }`;
+          } ${chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''}`;
         },
       },
     };
@@ -390,32 +408,27 @@ const getsignificantdifference = (series: any) => {
       const significantArry = [];
       for (let j = 0; j < seriesdata.length; j++) {
         const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]["percentageValue"],
-          baseCount: seriesdata[i]["baseCount"],
+          value: seriesdata[i]['percentageValue'],
+          baseCount: seriesdata[i]['baseCount'],
         };
         const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]["percentageValue"],
-          baseCount: seriesdata[j]["baseCount"],
+          value: seriesdata[j]['percentageValue'],
+          baseCount: seriesdata[j]['baseCount'],
         };
         if (i != j) {
           const isSignificant = significant(
             SignificantObject1,
-            SignificantObject2
+            SignificantObject2,
           );
 
-          // console.log(isSignificant);
-
           if (isSignificant) {
-            //console.log(i);
-            //console.log(j);
             significantArry.push(indexToChar(j));
           }
         }
       }
-      // console.log(significantArry);
       if (significantArry.length) {
-        singleSeries.data[i]["significantDiffernce"] =
-          "(" + significantArry.join("") + ")";
+        singleSeries.data[i]['significantDiffernce'] =
+          '(' + significantArry.join('') + ')';
       }
     }
   });
@@ -426,26 +439,3 @@ interface SignificantObject {
   value: any;
   baseCount: any;
 }
-
-const significant = (
-  SignificantObject1: SignificantObject,
-  SignificantObject2: SignificantObject
-) => {
-  const B1 = SignificantObject1.value / 100;
-  const B2 = SignificantObject1.baseCount;
-  const B4 = SignificantObject2.value / 100;
-  const B5 = SignificantObject2.baseCount;
-
-  const poledSampleData = (B1 * B2 + B4 * B5) / (B2 + B5);
-  const testStatistic =
-    (B1 - B4) /
-    Math.sqrt(poledSampleData * (1 - poledSampleData) * (1 / B2 + 1 / B5));
-
-  const result = 2 * (1 - cumulativeStdNormalProbability(testStatistic));
-
-  if (result < 0.05) {
-    return true;
-  }
-
-  return false;
-};

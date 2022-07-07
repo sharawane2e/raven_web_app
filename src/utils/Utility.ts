@@ -1,5 +1,6 @@
-import _ from "lodash";
-import { decimalPrecision } from "../constants/Variables";
+import _ from 'lodash';
+import { cumulativeStdNormalProbability } from 'simple-statistics';
+import { decimalPrecision } from '../constants/Variables';
 
 export function round(value: number, precision: number) {
   var multiplier = Math.pow(10, precision || 0);
@@ -8,7 +9,7 @@ export function round(value: number, precision: number) {
 
 export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
-  return percentageValue + "%";
+  return percentageValue + '%';
 }
 
 export function timeout(ms: number) {
@@ -18,7 +19,7 @@ export function timeout(ms: number) {
 export function getmatchedFind(
   collection: any,
   collectionKey: any,
-  compareWith: any
+  compareWith: any,
 ) {
   if (_.isArray(compareWith)) {
     return collection.find(function (data: any) {
@@ -33,7 +34,7 @@ export function getmatchedFind(
 export function getMatchedfilter(
   collection: any,
   collectionKey: any,
-  compareWith: any
+  compareWith: any,
 ) {
   return _.filter(collection, function (o) {
     if (_.isArray(compareWith)) {
@@ -67,12 +68,11 @@ export function getMedian(values: any, weightArray: any) {
       return o.value;
     },
   ]);
-  // console.log(weightObjectSorted);
+
   weightObjectSorted.forEach((weightnewArr: any) => {
     sortedValuesArr.push(weightnewArr.value);
     sortedWeights.push(weightnewArr.weight);
   });
-  // console.log(weightObjectSorted);
 
   for (let i = 0; i < sortedWeights.length; i++) {
     if (i == 0) {
@@ -84,10 +84,10 @@ export function getMedian(values: any, weightArray: any) {
       weightsSumArr.push(sortValue);
     }
   }
-  // console.log(weightsSumArr);
+
   weightsSumArr.forEach((weightsum: number) => {
     const weightsumFixed = Number(weightsum.toFixed(6));
-    //console.log(Math.round(weightsumFixed));
+
     weightSumRounded.push(round(weightsumFixed, 0));
   });
   const sortsWeightBy2 = _.sum(weightArray) / 2;
@@ -101,22 +101,50 @@ export function getMedian(values: any, weightArray: any) {
       roundSortSumBy2--;
       sortedIndex = weightSumRounded.indexOf(roundSortSumBy2);
     }
-
-    //console.log(roundSortSumBy2);
   }
-  // console.log(sortedIndex);
+
   return sortedValuesArr[sortedIndex + 1];
 }
 
+/*This function retun Alphabates A-Z and after Z Value*/
 export const indexToChar = (n: number) => {
-  var ordA = "a".charCodeAt(0);
-  var ordZ = "z".charCodeAt(0);
+  var ordA = 'a'.charCodeAt(0);
+  var ordZ = 'z'.charCodeAt(0);
   var len = ordZ - ordA + 1;
 
-  var s = "";
+  var s = '';
   while (n >= 0) {
     s = String.fromCharCode((n % len) + ordA) + s;
     n = Math.floor(n / len) - 1;
   }
   return s.toUpperCase();
+};
+
+interface SignificantObject {
+  value: any;
+  baseCount: any;
+}
+
+/*This function retun significant  true or false */
+export const significant = (
+  SignificantObject1: SignificantObject,
+  SignificantObject2: SignificantObject,
+) => {
+  const B1 = SignificantObject1.value / 100;
+  const B2 = SignificantObject1.baseCount;
+  const B4 = SignificantObject2.value / 100;
+  const B5 = SignificantObject2.baseCount;
+
+  const poledSampleData = (B1 * B2 + B4 * B5) / (B2 + B5);
+  const testStatistic =
+    (B1 - B4) /
+    Math.sqrt(poledSampleData * (1 - poledSampleData) * (1 / B2 + 1 / B5));
+
+  const result = 2 * (1 - cumulativeStdNormalProbability(testStatistic));
+
+  if (result < 0.05) {
+    return true;
+  }
+
+  return false;
 };

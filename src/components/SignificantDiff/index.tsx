@@ -22,19 +22,8 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
     chart,
     questions: { selectedBannerQuestionId },
   } = useSelector((state: RootState) => state);
-  // const { chartType } = chart;
 
   useEffect(() => {
-    // if (isChecked) {
-    //   if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
-    //     dispatch(setChartLabel(ChartLabelType.NUMBER));
-    //   }
-    // } else {
-    //   if (chart.chartType === ChartType.PIE) {
-    //     changeChartType(ChartType.COLUMN);
-    //   }
-    // }
-
     const chartOptionsUpdate = getChartOptions();
     dispatch(updateChartOptions(chartOptionsUpdate));
   }, [chart.significant]);
@@ -57,6 +46,9 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       isPieDisabled = true;
     } else if (chart.questionData?.type === QuestionType?.GRID) {
       isPieDisabled = false;
+    } else if (chart.showMean) {
+      console.log('chart.showMean', chart.showMean);
+      isPieDisabled = true;
     }
     return isPieDisabled;
   };
@@ -71,7 +63,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <SignificantDiffIcon />,
       onClick: handleClick,
       active: chart.significant,
-      disabled: significantDisabled(),
+      disabled: chart.showMean ? true : significantDisabled(),
       disableClick: () => Toaster.error(StaticText.SIGNIFICANT_DIFFERENCE),
     },
   ];
