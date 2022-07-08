@@ -69,6 +69,7 @@ export const dataLabelsFormate = {
     textOutline: false,
     fontWeight: null,
   },
+  rotation: -90,
 };
 
 export const dataLabelsNumberFormate = {
@@ -79,6 +80,7 @@ export const dataLabelsNumberFormate = {
     textOutline: false,
     fontWeight: null,
   },
+  rotation: -90,
 };
 
 export const dataUpdatedFormate = {
@@ -88,6 +90,7 @@ export const dataUpdatedFormate = {
     textOutline: false,
     fontWeight: null,
   },
+  rotation: -90,
 };
 
 export const showMeanFormate = {
@@ -98,6 +101,7 @@ export const showMeanFormate = {
     textOutline: false,
     fontWeight: null,
   },
+  rotation: -90,
 };
 
 export const logoBase64String =

@@ -35,6 +35,7 @@ export function bannerChartDataGen(
           chartTranspose,
         ),
       );
+
       return seriesData;
     }
   } else {
@@ -217,6 +218,7 @@ const getSingleOptions = (
       values: countValues,
     });
   });
+
   return seriesData;
 };
 
