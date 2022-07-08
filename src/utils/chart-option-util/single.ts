@@ -133,19 +133,22 @@ export const getSingleChartOptionsSeries = (
 
           let percentageValue;
           let numberValue;
-          if (chartLabelType === ChartLabelType.PERCENTAGE) {
-            numberValue = count;
-            count = (count / localBase) * 100;
-            percentageValue = count;
-          } else {
-            numberValue = count;
-            count = count;
-            percentageValue = (count / localBase) * 100;
-          }
+          // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+          numberValue = count;
+          percentageValue = (count / localBase) * 100;
+          // percentageValue = count;
+          // } else {
+          //   numberValue = count;
+          //   count = count;
+          //   percentageValue = (count / localBase) * 100;
+          // }
 
           data.push({
             name: quesOption.labelText,
-            y: count,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
             percentageValue,
             numberValue,
             baseCount: localBase,
@@ -349,17 +352,20 @@ const getSingleTransposeChartOptions = (
 
       localBase = basecountArr[quesIndex];
 
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        count = (count / localBase) * 100;
-      } else {
-        count = count;
-      }
+      // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+      //   count = (count / localBase) * 100;
+      // } else {
+      //   count = count;
+      // }
 
       let percentageValue = (count / localBase) * 100;
       let numberValue = count;
       data.push({
         name: bannerQuesOption?.labelText,
-        y: count,
+        y:
+          chartLabelType === ChartLabelType.PERCENTAGE
+            ? percentageValue
+            : numberValue,
         percentageValue,
         numberValue,
         baseCount: localBase,
@@ -425,7 +431,12 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
           value: seriesdata[j]["percentageValue"],
           baseCount: seriesdata[j]["baseCount"],
         };
+
         if (i != j) {
+          if (i == 1 && j == 2 && seriesIndex == 0) {
+            console.log(seriesdata[i]);
+            console.log(seriesdata[j]);
+          }
           const isSignificant = significantDifference(
             SignificantObject1,
             SignificantObject2
