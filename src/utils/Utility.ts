@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import { cumulativeStdNormalProbability } from 'simple-statistics';
-import { decimalPrecision } from '../constants/Variables';
+import _ from "lodash";
+import { cumulativeStdNormalProbability } from "simple-statistics";
+import { decimalPrecision } from "../constants/Variables";
 
 export function round(value: number, precision: number) {
   var multiplier = Math.pow(10, precision || 0);
@@ -9,7 +9,7 @@ export function round(value: number, precision: number) {
 
 export function formatTableData(value: number, divisor: number) {
   const percentageValue = round((value / divisor) * 100, decimalPrecision);
-  return percentageValue + '%';
+  return percentageValue + "%";
 }
 
 export function timeout(ms: number) {
@@ -19,7 +19,7 @@ export function timeout(ms: number) {
 export function getmatchedFind(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   if (_.isArray(compareWith)) {
     return collection.find(function (data: any) {
@@ -34,7 +34,7 @@ export function getmatchedFind(
 export function getMatchedfilter(
   collection: any,
   collectionKey: any,
-  compareWith: any,
+  compareWith: any
 ) {
   return _.filter(collection, function (o) {
     if (_.isArray(compareWith)) {
@@ -108,11 +108,11 @@ export function getMedian(values: any, weightArray: any) {
 
 /*This function retun Alphabates A-Z and after Z Value*/
 export const indexToChar = (n: number) => {
-  var ordA = 'a'.charCodeAt(0);
-  var ordZ = 'z'.charCodeAt(0);
+  var ordA = "a".charCodeAt(0);
+  var ordZ = "z".charCodeAt(0);
   var len = ordZ - ordA + 1;
 
-  var s = '';
+  var s = "";
   while (n >= 0) {
     s = String.fromCharCode((n % len) + ordA) + s;
     n = Math.floor(n / len) - 1;
@@ -126,9 +126,9 @@ interface SignificantObject {
 }
 
 /*This function retun significant  true or false */
-export const significant = (
+export const significantDifference = (
   SignificantObject1: SignificantObject,
-  SignificantObject2: SignificantObject,
+  SignificantObject2: SignificantObject
 ) => {
   const B1 = SignificantObject1.value / 100;
   const B2 = SignificantObject1.baseCount;

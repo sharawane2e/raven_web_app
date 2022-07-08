@@ -9,7 +9,7 @@ import {
   getmatchedFind,
   getSum,
   indexToChar,
-  significant,
+  significantDifference,
 } from "../Utility";
 import {
   colorArr,
@@ -426,7 +426,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
           baseCount: seriesdata[j]["baseCount"],
         };
         if (i != j) {
-          const isSignificant = significant(
+          const isSignificant = significantDifference(
             SignificantObject1,
             SignificantObject2
           );
@@ -445,7 +445,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
   return updatedSeries;
 };
 
-interface SignificantObject {
+export interface SignificantObject {
   value: any;
   baseCount: any;
 }

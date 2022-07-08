@@ -1,14 +1,14 @@
-import store from '../../redux/store';
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import store from "../../redux/store";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 import {
   getMatchedfilter,
   getmatchedFind,
   round,
   indexToChar,
-  significant,
-} from '../Utility';
+  significantDifference,
+} from "../Utility";
 import {
   colorArr,
   dataLabelsFormate,
@@ -17,19 +17,19 @@ import {
   decimalPrecision,
   decimalPrecision2,
   showMeanFormate,
-} from '../../constants/Variables';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import { ChartType } from '../../enums/ChartType';
-import { StaticText } from '../../constants/StaticText';
+} from "../../constants/Variables";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import { ChartType } from "../../enums/ChartType";
+import { StaticText } from "../../constants/StaticText";
 import {
   getsampleStandardDeviation,
   getStandarderrorFunction,
-} from '../simplestatistics';
+} from "../simplestatistics";
 
 export const getGridChartoptionSeries = (
   questionData: any,
   chartData: any,
-  baseCount: any,
+  baseCount: any
 ) => {
   const categories = [];
   const series = [];
@@ -49,7 +49,7 @@ export const getGridChartoptionSeries = (
   }
 
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
-    const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
+    const subGroupData = getmatchedFind(chartData, "_id", subGroup.qId);
     if (subGroupData && subGroupData.options.length) return true;
     return false;
   });
@@ -68,11 +68,11 @@ export const getGridChartoptionSeries = (
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
 
-      const optionData = getmatchedFind(chartData, '_id', subGroup.qId);
+      const optionData = getmatchedFind(chartData, "_id", subGroup.qId);
       const labels = getMatchedfilter(
         optionData.options,
-        'option',
-        scale.labelCode,
+        "option",
+        scale.labelCode
       );
 
       const count = _.sumBy(labels, function (o) {
@@ -159,14 +159,14 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
             if (chartOption.option == scale.labelCode) {
               baseCount += chartOption.count;
             }
-          },
+          }
         );
 
         if (chartDataObject._id == questiondata.subGroups[i].qId) {
           const countObject = getMatchedfilter(
             chartDataObject.options,
-            'option',
-            scale.labelCode,
+            "option",
+            scale.labelCode
           );
 
           count = _.sumBy(countObject, function (o) {
@@ -215,7 +215,7 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
 export const getGridMeanChartOptions = (
   questionData: IQuestion,
   chartData: any,
-  baseCount: number,
+  baseCount: number
 ): any => {
   const {
     chart: { chartTranspose, significant, chartLabelType },
@@ -231,13 +231,13 @@ export const getGridMeanChartOptions = (
     optionIndex++
   ) {
     const option = questionData.subGroups[optionIndex];
-    const optionData = getmatchedFind(chartData, '_id', option.qId);
+    const optionData = getmatchedFind(chartData, "_id", option.qId);
 
     const filteredOptions = _.remove(
       [...optionData.options],
       function (n: any) {
         return !Array.isArray(n.option);
-      },
+      }
     ); //removing array options which come with subgroups
 
     const totalSelections = _.sumBy(filteredOptions, function (o: any) {
@@ -252,13 +252,13 @@ export const getGridMeanChartOptions = (
 
     const getSampleDeviationValues = getsampleStandardDeviation(
       valuesArr,
-      decimalPrecision2,
+      decimalPrecision2
     );
 
     const getStandarderror = getStandarderrorFunction(
       Number(getSampleDeviationValues),
       baseCount,
-      decimalPrecision2,
+      decimalPrecision2
     );
 
     const plotValue = totalSelections / baseCount;
@@ -285,7 +285,7 @@ export const getGridMeanChartOptions = (
   }
 
   const series: any[] = [];
-  const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
+  const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(",");
   const seriesData = [data, standardDeviation, standardError];
 
   for (let i = 0; i < 3; i++) {
@@ -347,7 +347,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         return {
           ...data,
           significance: indexToChar(index),
-          significantDiffernce: '',
+          significantDiffernce: "",
         };
       }),
       dataLabels: {
@@ -355,7 +355,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))} ${
             this.point.significantDiffernce
-          } ${chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''}`;
+          } ${chartLabelType == ChartLabelType.PERCENTAGE ? "%" : ""}`;
         },
       },
     };
@@ -370,17 +370,17 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
       const significantArry = [];
       for (let j = 0; j < seriesdata.length; j++) {
         const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]['percentageValue'],
-          baseCount: seriesdata[i]['baseCount'],
+          value: seriesdata[i]["percentageValue"],
+          baseCount: seriesdata[i]["baseCount"],
         };
         const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]['percentageValue'],
-          baseCount: seriesdata[j]['baseCount'],
+          value: seriesdata[j]["percentageValue"],
+          baseCount: seriesdata[j]["baseCount"],
         };
         if (i != j) {
-          const isSignificant = significant(
+          const isSignificant = significantDifference(
             SignificantObject1,
-            SignificantObject2,
+            SignificantObject2
           );
 
           if (isSignificant) {
@@ -389,8 +389,8 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         }
       }
       if (significantArry.length) {
-        singleSeries.data[i]['significantDiffernce'] =
-          '(' + significantArry.join('') + ')';
+        singleSeries.data[i]["significantDiffernce"] =
+          "(" + significantArry.join("") + ")";
       }
     }
   });
