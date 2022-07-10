@@ -111,13 +111,13 @@ export function pptDataGen(
         const rowcount = removeSubGrop - laberesult;
 
         //  console.log(rowData[colIndex].split("-")[0]);
-        const splititem =
-          chartLabelType == ChartLabelType.PERCENTAGE
-            ? item.toString().split("|")[0]
-            : Number(item.toString().split("|")[0]);
-        console.log(splititem);
+        // console.log(item.split("|")[0]);
+        // const split =
+        // chartLabelType == ChartLabelType.PERCENTAGE
+        //   ? item.toString().split("|")[0]
+        //   : Number(item.toString().split("|")[0]);
 
-        if (splititem === currentMax) {
+        if (item.toString().split("|")[0] === currentMax) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
@@ -149,7 +149,7 @@ export function pptDataGen(
                 : (options["bold"] = false);
             }
           }
-        } else if (splititem === currentMin) {
+        } else if (item === currentMin) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
@@ -183,7 +183,7 @@ export function pptDataGen(
         }
         //}
 
-        rowArray.push({ text: splititem, options: { ...options } });
+        rowArray.push({ text: item, options: { ...options } });
       });
 
       output.push(rowArray);

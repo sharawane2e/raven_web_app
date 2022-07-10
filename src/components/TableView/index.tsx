@@ -89,7 +89,7 @@ const TableView: React.FC<TableProps> = (props) => {
     const splitCol =
       chartLabelType == ChartLabelType.PERCENTAGE
         ? col.toString().split("|")[0]
-        : typeof col == "number"
+        : typeof col != "number"
         ? Number(col.toString().split("|")[0])
         : col.toString().split("|")[0];
     const splitCol2 = col.toString().split("|")[1];
