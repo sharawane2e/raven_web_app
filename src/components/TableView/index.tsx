@@ -5,6 +5,7 @@ import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
 import { Scrollbars } from "react-custom-scrollbars";
 import clsx from "clsx";
 import { QuestionType } from "../../enums/QuestionType";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 interface TableProps {}
 
@@ -13,8 +14,14 @@ const TableView: React.FC<TableProps> = (props) => {
 
   //console.log(tableData);
 
-  const { chartData, showMean, questionData, chartTranspose, significant } =
-    useSelector((state: RootState) => state?.chart);
+  const {
+    chartData,
+    showMean,
+    questionData,
+    chartTranspose,
+    significant,
+    chartLabelType,
+  } = useSelector((state: RootState) => state?.chart);
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
 
@@ -75,7 +82,17 @@ const TableView: React.FC<TableProps> = (props) => {
   //   });
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
+
   const highLight = (col: any, currentMax: any, currentMin: any) => {
+    // typeof col.toString().split("|")[0] != "string"
+    //console.log(typeof col);
+    const splitCol =
+      chartLabelType == ChartLabelType.PERCENTAGE
+        ? col.toString().split("|")[0]
+        : typeof col == "number"
+        ? Number(col.toString().split("|")[0])
+        : col.toString().split("|")[0];
+    const splitCol2 = col.toString().split("|")[1];
     return (
       <>
         {significant ? (
@@ -84,13 +101,13 @@ const TableView: React.FC<TableProps> = (props) => {
               <span
                 className={clsx({
                   "Table-col": true,
-                  maxValue: isEqual(col.split("|")[0], currentMin),
-                  minValue: isEqual(col.split("|")[0], currentMax),
+                  maxValue: isEqual(splitCol, currentMin),
+                  minValue: isEqual(splitCol, currentMax),
                 })}
               >
-                {col.split("|")[0]}
+                {splitCol}
               </span>
-              <span className="significante-color"> {col.split("|")[1]}</span>
+              <span className="significante-color">{splitCol2}</span>
             </div>
           </>
         ) : (
@@ -117,6 +134,8 @@ const TableView: React.FC<TableProps> = (props) => {
     currentMax: any
   ) => {
     // console.log('col2', col2);
+    // const splitCol = col.toString().split("|")[0];
+    // const splitCol2 = col.toString().split("|")[1];
     const rowcount =
       removeSubGrop === undefined ? 0 : removeSubGrop - laberesult;
 
@@ -214,6 +233,8 @@ const TableView: React.FC<TableProps> = (props) => {
                 const currentMin = minVal[colIndex - 1];
                 const currentMax = maxVal[colIndex - 1];
                 //const col1 = col?;
+                // console.log(currentMax);
+                // console.log(currentMin);
                 return (
                   <>
                     {tableColumn(

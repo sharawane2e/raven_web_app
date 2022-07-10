@@ -18,8 +18,6 @@ export function tableChartDataGen() {
   let scaleIndex: any = 0;
   let singleGroupNet: any;
 
-  console.log(seriesData);
-
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
   const { chart } = store.getState();
@@ -370,10 +368,11 @@ export function tableChartDataGen() {
     minmax.push([tranposedTableData, tranposedTableDataMin]);
 
     rows.push(["Total", ...tColomn, ""]);
+
+    //console.log("minmax", minmax);
   }
 
   const complteTable = { rows, minmax };
-  console.log(complteTable);
 
   return complteTable;
 }

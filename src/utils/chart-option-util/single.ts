@@ -436,8 +436,8 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
 
         if (i != j) {
           if (i == 1 && j == 2 && seriesIndex == 0) {
-            console.log(seriesdata[i]);
-            console.log(seriesdata[j]);
+            // console.log(seriesdata[i]);
+            // console.log(seriesdata[j]);
           }
           const isSignificant = significantDifference(
             SignificantObject1,
