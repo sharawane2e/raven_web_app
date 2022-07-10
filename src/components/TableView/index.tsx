@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { memo, useEffect, useState } from 'react';
-import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
-import { QuestionType } from '../../enums/QuestionType';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { memo, useEffect, useState } from "react";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
+import { QuestionType } from "../../enums/QuestionType";
 
 interface TableProps {}
 
@@ -13,13 +13,12 @@ const TableView: React.FC<TableProps> = (props) => {
 
   //console.log(tableData);
 
-  const { chartData, showMean, questionData, chartTranspose,significant } = useSelector(
-    (state: RootState) => state?.chart,
-  );
+  const { chartData, showMean, questionData, chartTranspose, significant } =
+    useSelector((state: RootState) => state?.chart);
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
 
-  let scaleLength: any = '';
+  let scaleLength: any = "";
   let filtered: any;
   let results: any;
   let QuestionData: any;
@@ -28,7 +27,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   useEffect(() => {
     setTableData(tableChartDataGen());
-  }, [chartData, showMean,significant]);
+  }, [chartData, showMean, significant]);
 
   if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {
     QuestionData = 0;
@@ -38,14 +37,14 @@ const TableView: React.FC<TableProps> = (props) => {
     //console.log(QuestionData);
 
     filtered = QuestionData?.filter(function (el: any) {
-      return el !== '';
+      return el !== "";
     });
 
     scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
     results = questionData?.options.filter(function (option) {
-      if (option?.labelCode === 'N') {
-        if (option?.labelCode.split('_')[0] == 'N') {
+      if (option?.labelCode === "N") {
+        if (option?.labelCode.split("_")[0] == "N") {
           return true;
         }
       }
@@ -78,16 +77,35 @@ const TableView: React.FC<TableProps> = (props) => {
   // }
   const highLight = (col: any, currentMax: any, currentMin: any) => {
     return (
-      <div
-        className={clsx({
-          'Table-row-item': true,
-          maxValue: isEqual(col, currentMin),
-          minValue: isEqual(col, currentMax),
-        })}
-      >
-        {col}
-        {/* <span>{col2}</span> */}
-      </div>
+      <>
+        {significant ? (
+          <>
+            <div className="Table-row-item">
+              <span
+                className={clsx({
+                  "Table-col": true,
+                  maxValue: isEqual(col.split("|")[0], currentMin),
+                  minValue: isEqual(col.split("|")[0], currentMax),
+                })}
+              >
+                {col.split("|")[0]}
+              </span>
+              <span className="significante-color"> {col.split("|")[1]}</span>
+            </div>
+          </>
+        ) : (
+          //  <div className="Table-row-item">
+          <div
+            className={clsx({
+              "Table-row-item": true,
+              maxValue: isEqual(col, currentMin),
+              minValue: isEqual(col, currentMax),
+            })}
+          >
+            {col}
+          </div>
+        )}
+      </>
     );
   };
 
@@ -96,7 +114,7 @@ const TableView: React.FC<TableProps> = (props) => {
     columnIndex: any,
     col: any,
     currentMin: any,
-    currentMax: any,
+    currentMax: any
   ) => {
     // console.log('col2', col2);
     const rowcount =
@@ -116,7 +134,7 @@ const TableView: React.FC<TableProps> = (props) => {
         ) : (
           <div className="Table-row-item">
             {col}
-            {/* <span>{col2}</span> */}
+            <span className="significante-color"> {col}</span>
           </div>
         )
       ) : (
@@ -141,14 +159,22 @@ const TableView: React.FC<TableProps> = (props) => {
               ) : !removeSubGrop && !showMean ? (
                 highLight(col, currentMin, currentMax)
               ) : (
-                <div className="Table-row-item">{col}</div>
+                <div className="Table-row-item">
+                  {" "}
+                  {col}
+                  <span className="significante-color"> {col}</span>
+                </div>
               )
             ) : columnIndex && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
             ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
             ) : (
-              <div className="Table-row-item"> {col}</div>
+              <div className="Table-row-item">
+                {" "}
+                {col}
+                <span className="significante-color"> {col}</span>
+              </div>
             );
           }
         } else {
@@ -160,14 +186,14 @@ const TableView: React.FC<TableProps> = (props) => {
           //   ) : !removeSubGrop && !showMean ? (
           //     highLight(col, currentMin, currentMax)
           //   ) : (
-          //     <div className="Table-row-item">{col}</div>
+          //     <div className="Table-row-item">  {col}</div>
           //   )
           // ) : columnIndex && tableData?.rows?.length > 3 ? (
           //   highLight(col, currentMin, currentMax)
           // ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
           //   highLight(col, currentMin, currentMax)
           // ) : (
-          //   <div className="Table-row-item"> {col}</div>
+          //   <div className="Table-row-item">   {col}</div>
           // );
         }
         //return highLight(col, currentMin, currentMax);
@@ -183,12 +209,11 @@ const TableView: React.FC<TableProps> = (props) => {
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
-                // console.log('col', col.split('-')[0]);
+                //console.log("col", col);
                 const [maxVal, minVal] = tableData?.minmax[0];
                 const currentMin = minVal[colIndex - 1];
                 const currentMax = maxVal[colIndex - 1];
-                // console.log(currentMin);
-                // console.log(currentMax);
+                //const col1 = col?;
                 return (
                   <>
                     {tableColumn(

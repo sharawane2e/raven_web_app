@@ -108,7 +108,18 @@ export function tableChartDataGen() {
             chart?.chartLabelType === ChartLabelType.PERCENTAGE
           ) {
             if (d.values[k]) {
-              subRow.push(round(d.values[k], 1) + "%" + "-" + "ABC");
+              if (d?.significanceDifference != undefined) {
+                const addSign = "|";
+                const signifnateData =
+                  d?.significanceDifference[k] != undefined
+                    ? addSign + d?.significanceDifference[k]
+                    : "";
+
+                const rowsDatavalue = round(d.values[k], 1);
+                subRow.push(rowsDatavalue + "%" + signifnateData);
+              } else {
+                subRow.push(round(d.values[k], 1) + "%");
+              }
               if (
                 !chartTransposeState &&
                 chart?.questionData?.isGroupNet &&
@@ -128,7 +139,18 @@ export function tableChartDataGen() {
             }
           } else {
             if (d.values[k]) {
-              subRow.push(round(d.values[k], 2));
+              if (d?.significanceDifference != undefined) {
+                const addSign = "|";
+                const signifnateData =
+                  d?.significanceDifference[k] != undefined
+                    ? addSign + d?.significanceDifference[k]
+                    : "";
+
+                const rowsDatavalue = round(d.values[k], 2);
+                subRow.push(rowsDatavalue + signifnateData);
+              } else {
+                subRow.push(round(d.values[k], 2));
+              }
               if (
                 chart?.chartTranspose &&
                 chart?.questionData?.type === QuestionType.SINGLE &&

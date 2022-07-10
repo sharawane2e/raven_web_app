@@ -410,7 +410,9 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))}${
             chartLabelType == ChartLabelType.PERCENTAGE ? "%" : ""
-          } ${this.point.significantDiffernce} `;
+          } <span class="significante-color">${
+            this.point.significantDiffernce
+          } </span>`;
         },
       },
     };
