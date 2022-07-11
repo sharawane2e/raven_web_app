@@ -86,7 +86,18 @@ export const generatePdf = async () => {
           fillColor: 'ffffff',
           bold: false,
         };
-        if (rowData[index] === currentMax) {
+
+        const splitCol = item.toString().split('|')[0];
+        const splitCol2 = item?.toString().split('|')[1];
+        let splitcolNumber: any;
+        if (isNaN(Number(splitCol))) {
+          splitcolNumber = splitCol != undefined ? splitCol : '';
+        } else {
+          splitcolNumber = Number(splitCol);
+        }
+        const dataString2 = splitCol2 != undefined ? splitCol2 : '';
+
+        if (splitcolNumber === currentMax) {
           rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
             ? (options['fillColor'] = 'b8e08c')
             : !removeSubGrop && tableRows.rows.length > 3
@@ -97,7 +108,7 @@ export const generatePdf = async () => {
             : !removeSubGrop && tableRows.rows.length > 3
             ? (options['bold'] = true)
             : (options['bold'] = false);
-        } else if (rowData[index] === currentMin) {
+        } else if (splitcolNumber === currentMin) {
           rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
             ? (options['fillColor'] = 'fbd9d4')
             : !removeSubGrop && tableRows.rows.length > 3
@@ -110,7 +121,10 @@ export const generatePdf = async () => {
             : (options['bold'] = false);
         }
 
-        rowArray.push({ content: rowData[index], styles: { ...options } });
+        rowArray.push({
+          content: splitcolNumber + dataString2,
+          styles: { ...options },
+        });
       });
 
       output.push(rowArray);

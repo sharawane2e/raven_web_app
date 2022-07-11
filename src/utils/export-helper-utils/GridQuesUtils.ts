@@ -1,5 +1,11 @@
 import { decimalPrecision, decimalPrecision2 } from '../../constants/Variables';
-import { getMatchedfilter, getmatchedFind, round } from '../Utility';
+import {
+  getMatchedfilter,
+  getmatchedFind,
+  indexToChar,
+  round,
+  significantDifference,
+} from '../Utility';
 import store from '../../redux/store';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import _ from 'lodash';
@@ -10,6 +16,7 @@ import {
   getStandarderrorFunction,
 } from '../simplestatistics';
 import { IQuestion } from '../../types/IQuestion';
+import { SignificantObject } from '../chart-option-util/single';
 
 export function gridChartTableGen(
   questionData: any,
@@ -140,14 +147,17 @@ const getGridTableoptionSeries = (
   let labels: any = [];
   let seriesData: any[] = [];
   let data: any = '';
+  let percentageValues: any = [];
+  let baseCounts: any = [];
   const scales = [...questionData.scale];
   const {
-    chart: { chartLabelType, showMean, chartType, chartTranspose },
+    chart: { chartLabelType, significant, chartTranspose },
   } = store.getState();
 
   if (chartTranspose) {
     seriesData.length = 0;
     seriesData.push(...getGridTransposeTableOptions(questionData, chartData));
+
     return seriesData;
   } else {
     labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
@@ -155,6 +165,8 @@ const getGridTableoptionSeries = (
       seriesData.push({
         name: scaleOption.labelText,
         labels,
+        percentageValues,
+        baseCounts,
         values: questionData.subGroups.map((subGroup: any, index: number) => {
           const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
 
@@ -169,6 +181,11 @@ const getGridTableoptionSeries = (
             data = _.sumBy(labels, function (o) {
               return o.count;
             });
+
+            baseCounts.push(base);
+            percentageValues.push(
+              round(+((data / base) * 100), decimalPrecision),
+            );
 
             if (chartLabelType === ChartLabelType.PERCENTAGE) {
               return data !== undefined
@@ -185,15 +202,20 @@ const getGridTableoptionSeries = (
     });
   }
 
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
   return seriesData;
 };
 
 const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, significant },
   } = store.getState();
   const seriesData: any = [];
   let labels: any = [];
+  let percentageValues: any = [];
+  let baseCounts: any = [];
 
   labels = questionData.scale.map((subScale: any) => subScale.labelText);
 
@@ -203,6 +225,8 @@ const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
         name: subGroupObject.labelText,
         labels,
         values: getTableValues(subGroupObject.qId),
+        percentageValues,
+        baseCounts,
       });
     },
   );
@@ -240,6 +264,8 @@ const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
           });
         }
       });
+      percentageValues.push(round((count / baseCount) * 100, decimalPrecision));
+      baseCounts.push(baseCount);
 
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         values.push(round((count / baseCount) * 100, decimalPrecision));
@@ -251,5 +277,58 @@ const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
     return values;
   }
 
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
+
+  return seriesData;
+};
+
+const getTablesignificantdifference = (seriesData: any) => {
+  for (let i = 0; i < seriesData.length; i++) {
+    const seriesupdatedLabels = [];
+    seriesData[i]['significance'] = [];
+    seriesData[i]['significanceDifference'] = [];
+
+    for (let j = 0; j < seriesData[i]['labels'].length; j++) {
+      seriesData[i]['significance'].push(indexToChar(j));
+      seriesupdatedLabels.push(
+        seriesData[i]['labels'][j] + `(${indexToChar(j)})`,
+      );
+    }
+    seriesData[i]['labels'] = seriesupdatedLabels;
+  }
+  for (let i = 0; i < seriesData.length; i++) {
+    for (let j = 0; j < seriesData[i].percentageValues.length; j++) {
+      const significantArry = [];
+
+      for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
+        if (j !== k) {
+          const SignificantObject1: SignificantObject = {
+            value: seriesData[i].percentageValues[j],
+            baseCount: seriesData[i].baseCounts[j],
+          };
+          const SignificantObject2: SignificantObject = {
+            value: seriesData[i].percentageValues[k],
+            baseCount: seriesData[i].baseCounts[k],
+          };
+
+          const isSignificant = significantDifference(
+            SignificantObject1,
+            SignificantObject2,
+          );
+
+          if (isSignificant) {
+            significantArry.push(seriesData[i].significance[k]);
+          }
+        }
+      }
+
+      if (significantArry.length) {
+        seriesData[i]['significanceDifference'][j] =
+          '(' + significantArry.join('') + ')';
+      }
+    }
+  }
   return seriesData;
 };

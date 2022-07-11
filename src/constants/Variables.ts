@@ -47,6 +47,8 @@ export const barPptColor = [
   '2A4C65',
 ];
 
+export const significantText = 'significant difference';
+
 export const primaryBarColor = '#F1AD0F';
 export const primaryBarPPt = 'F1AD0F';
 // export const primaryBarColor = "#070707";

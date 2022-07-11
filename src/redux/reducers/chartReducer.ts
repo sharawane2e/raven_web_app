@@ -92,10 +92,10 @@ const initialState: IChartState = {
     },
     chart: {
       type: 'column',
-
       style: {
         fontFamily: `"Avenir", Arial`,
       },
+      margin: [70, 0, 80, 0],
     },
     legend: {
       enabled: false,

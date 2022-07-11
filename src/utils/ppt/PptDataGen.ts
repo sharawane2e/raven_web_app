@@ -40,14 +40,6 @@ export function pptDataGen(
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
 
   let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
-
-  // slide.addText('How To Create PowerPoint Presentations with JavaScript', {
-  //   x: 0.5,
-  //   y: 0.7,
-  //   h: 10,
-  //   fontSize: 18,
-  // });
-
   let seriesData: any[] = [];
   let chartColors: any[] = [];
 
@@ -101,7 +93,6 @@ export function pptDataGen(
       //console.log(rowData);
       var rowArray: any = [];
       rowData.forEach(function (item, colIndex) {
-        // console.log('item', item);
         const currentMax = maxValue?.[colIndex - 1];
         const currentMin = minValue?.[colIndex - 1];
         const options = {
@@ -109,10 +100,19 @@ export function pptDataGen(
           bold: false,
         };
         const rowcount = removeSubGrop - laberesult;
+        const splitCol = item.toString().split('|')[0];
+        const splitCol2 = item?.toString().split('|')[1];
 
-        //  console.log(rowData[colIndex].split("-")[0]);
+        let splitcolNumber: any;
+        if (isNaN(Number(splitCol))) {
+          splitcolNumber = splitCol != undefined ? splitCol : '';
+        } else {
+          splitcolNumber = Number(splitCol);
+        }
 
-        if (rowData[colIndex].split('-')[0] === currentMax) {
+        const dataString2 = splitCol2 != undefined ? splitCol2 : '';
+
+        if (splitcolNumber === currentMax) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
@@ -125,7 +125,6 @@ export function pptDataGen(
               bannerQuestionData?.type == QuestionType.SINGLE &&
               questionData?.type == QuestionType.SINGLE
             ) {
-              console.log(tableRows.rows.length);
               rowIndex < removeSubGrop + 1 && tableRows.rows.length > 3
                 ? (options['fill'] = 'b8e08c')
                 : !removeSubGrop && tableRows.rows.length > 3
@@ -144,7 +143,7 @@ export function pptDataGen(
                 : (options['bold'] = false);
             }
           }
-        } else if (rowData[colIndex] === currentMin) {
+        } else if (splitcolNumber === currentMin) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
@@ -178,7 +177,10 @@ export function pptDataGen(
         }
         //}
 
-        rowArray.push({ text: rowData[colIndex], options: { ...options } });
+        rowArray.push({
+          text: splitcolNumber + dataString2,
+          options: { ...options },
+        });
       });
 
       output.push(rowArray);

@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
-  background: rgba($color: #070707, $alpha: 0.96);
+  background: rgba($color: map-get($map:$bg-color,$key:"primary"), $alpha: 0.96);
   @media (max-width: 768px) {
     overflow: scroll !important;
     padding-right: 0 !important;
@@ -54,14 +54,14 @@ html {
 .MuiMenu-paper {
   @media (max-width: 768px) {
     background: map-get($map: $bg-color, $key: "secondary");
-    color: #dfdfdf;
+    color: map-get($map: $text-color, $key:"partial-light" );;
   }
   li {
     span {
       svg {
         path {
           @media (max-width: 768px) {
-            fill: #dfdfdf;
+            fill: map-get($map: $text-color, $key:"partial-light" );
           }
         }
       }
@@ -73,10 +73,10 @@ html {
 }
 .home-modal__content,
 .home-modal__footer {
-  background-color: #000;
+  background-color: $black;
 }
 .home-modal__footer {
-  border-top: 1px solid #000 !important;
+  border-top: 1px solid $black !important;
   margin-bottom: 0 !important;
   padding-bottom: 0.9375rem !important;
 }
@@ -85,4 +85,8 @@ html {
   align-items: center;
   justify-content: center;
   margin-top: 240px;
+}
+
+.significante-color {
+  fill: $significantChart;
 }

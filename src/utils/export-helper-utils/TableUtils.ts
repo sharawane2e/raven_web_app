@@ -5,10 +5,8 @@ import { ChartLabelType } from '../../enums/ChartLabelType';
 import { QuestionType } from '../../enums/QuestionType';
 
 export function tableChartDataGen() {
-  //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
-
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -18,8 +16,6 @@ export function tableChartDataGen() {
   let totalRow: any = [];
   let scaleIndex: any = 0;
   let singleGroupNet: any;
-
-  //console.log(seriesData);
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
@@ -35,7 +31,6 @@ export function tableChartDataGen() {
   }
   /*this condition used for when multi Question avialbe neeting*/
   let results: any = chart.questionData?.options.filter(function (option) {
-    //console.log();
     if (option?.labelCode === 'N') {
       if (option?.labelCode?.split('_')[0] == 'N') {
         return true;
@@ -57,8 +52,6 @@ export function tableChartDataGen() {
 
   crosstab_length =
     bannerQuestionresults?.length > 0 ? bannerQuestionresults?.length : 0;
-
-  //console.log('chart?.chartLabelType', chart?.chartLabelType);
   if (seriesData) {
     let scale: any = [];
     seriesData.forEach((index: any) => {
@@ -94,7 +87,6 @@ export function tableChartDataGen() {
         let totalrowSub = 0;
 
         seriesData.forEach((d: any, rIndex: any) => {
-          //console.log('d', d.significanceDifference[rIndex]);
           let netsLabelcode =
             chart.bannerQuestionData?.options[rIndex]?.labelCode.split('_')[0];
           let netsQuestionLabelcode;
@@ -110,16 +102,18 @@ export function tableChartDataGen() {
             chart?.chartLabelType === ChartLabelType.PERCENTAGE
           ) {
             if (d.values[k]) {
-              if (d?.significanceDifference[rIndex]) {
-                console.log(d?.significanceDifference[rIndex]);
-              }
-              // const seriesColumnData = d?.significanceDifference[rIndex];
-              // const significaneTable = seriesColumnData
-              //   ? '|' + seriesColumnData
-              //   : '';
+              if (d?.significanceDifference != undefined) {
+                const addSign = '|';
+                const signifnateData =
+                  d?.significanceDifference[k] != undefined
+                    ? addSign + d?.significanceDifference[k]
+                    : '';
 
-              // console.log('significaneTable', significaneTable);
-              subRow.push(round(d.values[k], 1) + '%');
+                const rowsDatavalue = round(d.values[k], 1);
+                subRow.push(rowsDatavalue + '%' + signifnateData);
+              } else {
+                subRow.push(round(d.values[k], 1) + '%');
+              }
               if (
                 !chartTransposeState &&
                 chart?.questionData?.isGroupNet &&
@@ -139,13 +133,18 @@ export function tableChartDataGen() {
             }
           } else {
             if (d.values[k]) {
-              const seriesColumnData = d.significanceDifference[rIndex];
-              // const significaneTable = seriesColumnData
-              //   ? '|' + seriesColumnData
-              //   : '';
-              // console.log(significaneTable);
-              subRow.push(round(d.values[k], 2));
-              // subRow.push(round(d.values[k], 2));
+              if (d?.significanceDifference != undefined) {
+                const addSign = '|';
+                const signifnateData =
+                  d?.significanceDifference[k] != undefined
+                    ? addSign + d?.significanceDifference[k]
+                    : '';
+
+                const rowsDatavalue = round(d.values[k], 2);
+                subRow.push(rowsDatavalue + signifnateData);
+              } else {
+                subRow.push(round(d.values[k], 2));
+              }
               if (
                 chart?.chartTranspose &&
                 chart?.questionData?.type === QuestionType.SINGLE &&
@@ -368,7 +367,6 @@ export function tableChartDataGen() {
   }
 
   const complteTable = { rows, minmax };
-  //console.log(complteTable);
 
   return complteTable;
 }

@@ -72,6 +72,11 @@ $light-blue-color: #1e1e1e;
 $drop-down-color: rgba(30, 30, 30, 0.2);
 $drop-button-color: rgba(30, 30, 30, 0.8);
 
+/*significant color*/
+$significantChart:#000fff;
+$significantTable:#656eff;
+
+
 $breakpoints: (
   //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique
   phone: 640px,

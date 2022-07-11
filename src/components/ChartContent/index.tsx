@@ -44,6 +44,7 @@ import { ChartLabelType } from '../../enums/ChartLabelType';
 import { setSelectedQuestion } from '../../redux/actions/chapterActions';
 import StandardDeviation from '../StandardDeviation';
 import SignificantDiff from '../SignificantDiff';
+import { significantText } from '../../constants/Variables';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -61,7 +62,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: { chartLoading, questionData, baseCount, chartType },
+    chart: { chartLoading, questionData, baseCount, chartType, significant },
     chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
@@ -209,15 +210,16 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           {/* <ChartOptionsControl /> */}
 
           <div className="chart-content__control-item">
-            <SignificantDiff />
-          </div>
-          <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
           <div className="chart-content__control-item">
             <OrientationControl />
           </div>
-          <div className="chart-content__control-item">
+          {/* <div className="chart-content__control-item">
+            <SignificantDiff />
+          </div> */}
+          <div className="chart-content__control-item chart-items">
+            <SignificantDiff />
             <ChartTransposeControl />
           </div>
           <div className="chart-content__control-item">
@@ -265,6 +267,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <OrientationControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
+            <SignificantDiff />
             <ChartTransposeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
@@ -327,6 +330,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           'chart-wrapper--loading': chartLoading == true,
         })}
       >
+        {significant ? (
+          <div className="significant-lagend">{significantText}</div>
+        ) : (
+          ''
+        )}
+
         {/* <ChartTransposeControl /> */}
         {chart?.questionData === null ? (
           <div className="noQuestion--selected">

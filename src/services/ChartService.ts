@@ -133,6 +133,7 @@ export const fetchChartData = async (
       }
 
       chartData.showMean = false;
+      // chartData.significant = false;
     }
   } catch (error) {
     console.log(error);

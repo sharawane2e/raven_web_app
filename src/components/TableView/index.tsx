@@ -5,17 +5,22 @@ import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
 import { Scrollbars } from 'react-custom-scrollbars';
 import clsx from 'clsx';
 import { QuestionType } from '../../enums/QuestionType';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { significantText } from '../../constants/Variables';
 
 interface TableProps {}
 
 const TableView: React.FC<TableProps> = (props) => {
   const [tableData, setTableData] = useState<any>([]);
 
-  //console.log(tableData);
-
-  const { chartData, showMean, questionData, chartTranspose,significant } = useSelector(
-    (state: RootState) => state?.chart,
-  );
+  const {
+    chartData,
+    showMean,
+    questionData,
+    chartTranspose,
+    significant,
+    chartLabelType,
+  } = useSelector((state: RootState) => state?.chart);
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
 
@@ -28,14 +33,13 @@ const TableView: React.FC<TableProps> = (props) => {
 
   useEffect(() => {
     setTableData(tableChartDataGen());
-  }, [chartData, showMean,significant]);
+  }, [chartData, showMean, significant]);
 
   if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {
     QuestionData = 0;
     singleGroupNet = questionData?.groupNetData?.length;
   } else {
     QuestionData = questionData?.groupNetData;
-    //console.log(QuestionData);
 
     filtered = QuestionData?.filter(function (el: any) {
       return el !== '';
@@ -53,21 +57,17 @@ const TableView: React.FC<TableProps> = (props) => {
   }
 
   let laberesult = results?.length === undefined ? 0 : results?.length;
-  // console.log(laberesult);
 
   if (chartTranspose) {
-    // console.log('ssssss');
     removeSubGrop = tableData?.rows?.length - scaleLength - 1;
   }
   if (laberesult > 0) {
-    //console.log('sssdddd');
     removeSubGrop = tableData?.rows?.length - laberesult;
   } else {
     const singleGroupNetData =
       singleGroupNet === undefined ? 0 : singleGroupNet;
     removeSubGrop = tableData?.rows?.length - singleGroupNetData - 1;
   }
-  // console.log(removeSubGrop);
 
   /*This code used for single grid data column hide and show highlights  */
   //  else {
@@ -76,18 +76,33 @@ const TableView: React.FC<TableProps> = (props) => {
   //   });
   //   removeSubGrop = dataValue - scaleLength - 1;
   // }
+
   const highLight = (col: any, currentMax: any, currentMin: any) => {
+    const splitCol = col.toString().split('|')[0];
+    const splitCol2 = col.toString().split('|')[1];
+
+    const splicolNumber =
+      chartLabelType == ChartLabelType.PERCENTAGE ? splitCol : Number(splitCol);
+
     return (
-      <div
-        className={clsx({
-          'Table-row-item': true,
-          maxValue: isEqual(col, currentMin),
-          minValue: isEqual(col, currentMax),
-        })}
-      >
-        {col}
-        {/* <span>{col2}</span> */}
-      </div>
+      <>
+        <div
+          className={clsx({
+            'Table-row-item': true,
+            maxValue: isEqual(splicolNumber, currentMin),
+            minValue: isEqual(splicolNumber, currentMax),
+          })}
+        >
+          {splitCol}
+          {splitCol2 != undefined ? (
+            <span className="significante-color table-significante">
+              {splitCol2}
+            </span>
+          ) : (
+            ''
+          )}
+        </div>
+      </>
     );
   };
 
@@ -98,7 +113,8 @@ const TableView: React.FC<TableProps> = (props) => {
     currentMin: any,
     currentMax: any,
   ) => {
-    // console.log('col2', col2);
+    const splitCol = col.toString().split('|')[0];
+    const splitCol2 = col.toString().split('|')[1];
     const rowcount =
       removeSubGrop === undefined ? 0 : removeSubGrop - laberesult;
 
@@ -115,8 +131,10 @@ const TableView: React.FC<TableProps> = (props) => {
           highLight(col, currentMin, currentMax)
         ) : (
           <div className="Table-row-item">
-            {col}
-            {/* <span>{col2}</span> */}
+            {splitCol}
+            <span className="significante-color table-significante">
+              {splitCol2}
+            </span>
           </div>
         )
       ) : (
@@ -141,36 +159,29 @@ const TableView: React.FC<TableProps> = (props) => {
               ) : !removeSubGrop && !showMean ? (
                 highLight(col, currentMin, currentMax)
               ) : (
-                <div className="Table-row-item">{col}</div>
+                <div className="Table-row-item">
+                  {splitCol}
+                  <span className="significante-color table-significante">
+                    {splitCol2}
+                  </span>
+                </div>
               )
             ) : columnIndex && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
             ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
               highLight(col, currentMin, currentMax)
             ) : (
-              <div className="Table-row-item"> {col}</div>
+              <div className="Table-row-item">
+                {splitCol}
+                <span className="significante-color table-significante">
+                  {splitCol2}
+                </span>
+              </div>
             );
           }
         } else {
-          // console.log('demo ffj', col, currentMin, currentMax);
           return highLight(col, currentMin, currentMax);
-          // return !chartTranspose ? (
-          //   rowIndex < removeSubGrop && !showMean ? (
-          //     highLight(col, currentMin, currentMax)
-          //   ) : !removeSubGrop && !showMean ? (
-          //     highLight(col, currentMin, currentMax)
-          //   ) : (
-          //     <div className="Table-row-item">{col}</div>
-          //   )
-          // ) : columnIndex && tableData?.rows?.length > 3 ? (
-          //   highLight(col, currentMin, currentMax)
-          // ) : !removeSubGrop && tableData?.rows?.length > 3 ? (
-          //   highLight(col, currentMin, currentMax)
-          // ) : (
-          //   <div className="Table-row-item"> {col}</div>
-          // );
         }
-        //return highLight(col, currentMin, currentMax);
       }
     }
   };
@@ -179,16 +190,13 @@ const TableView: React.FC<TableProps> = (props) => {
     <Scrollbars>
       <div className="tableView">
         <div className="TableView">
-          {/* {console.log(tableData.rows)} */}
           {tableData.rows?.map((row: any, rowIndex: any) => (
             <div className="Table-row">
               {row.map((col: any, colIndex: number) => {
-                // console.log('col', col.split('-')[0]);
                 const [maxVal, minVal] = tableData?.minmax[0];
                 const currentMin = minVal[colIndex - 1];
                 const currentMax = maxVal[colIndex - 1];
-                // console.log(currentMin);
-                // console.log(currentMax);
+
                 return (
                   <>
                     {tableColumn(
@@ -196,7 +204,7 @@ const TableView: React.FC<TableProps> = (props) => {
                       colIndex,
                       col,
                       currentMax,
-                      currentMin
+                      currentMin,
                     )}
                   </>
                 );

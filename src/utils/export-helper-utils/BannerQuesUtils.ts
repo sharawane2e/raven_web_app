@@ -193,7 +193,6 @@ const getSingleOptions = (
                 return o.count;
               });
             }
-            // console.log('scaleOption.labelCode', scaleOption.labelCode);
             let subOptionData;
             subOptionData = obj.find((subObj: any) => {
               if (subObj.labelCode === scaleOption.labelCode) {
@@ -204,28 +203,6 @@ const getSingleOptions = (
             //   return 0;
             // }
 
-            // if (chartLabelType === ChartLabelType.PERCENTAGE) {
-            //   let subOptionDataCount = 0;
-            //   if (subOptionData !== undefined) {
-            //     subOptionDataCount = round(
-            //       (subOptionData.count / base) * 100,
-            //       decimalPrecision
-            //     );
-            //   } else {
-            //     subOptionDataCount = 0;
-            //   }
-            //   countValues.push(subOptionDataCount);
-            // } else {
-            //   let subOptionDataCount = 0;
-            //   if (subOptionData !== undefined) {
-            //     subOptionDataCount = subOptionData.count;
-            //   } else {
-            //     subOptionDataCount = 0;
-            //   }
-
-            //   countValues.push(subOptionDataCount);
-            //   console.log(subOptionDataCount);
-            // }
             let subOptionDataCount = 0;
             let subOptionDataPercentage = 0;
             if (subOptionData !== undefined) {
@@ -238,9 +215,7 @@ const getSingleOptions = (
               subOptionDataPercentage = 0;
               subOptionDataCount = 0;
             }
-            // console.log(subOptionDataCount);
-            // console.log(subOptionDataCount);
-            // console.log(base);
+
             countValues.push(subOptionDataCount);
             percentageValues.push(subOptionDataPercentage);
             baseCounts.push(base);
@@ -262,46 +237,7 @@ const getSingleOptions = (
   });
 
   if (significant) {
-    for (let i = 0; i < seriesData.length; i++) {
-      seriesData[i]['significance'] = [];
-      seriesData[i]['significanceDifference'] = [];
-      for (let j = 0; j < seriesData[i]['labels'].length; j++) {
-        //adding significance
-        seriesData[i]['significance'].push(indexToChar(j));
-      }
-    }
-    for (let i = 0; i < seriesData.length; i++) {
-      for (let j = 0; j < seriesData[i].percentageValues.length; j++) {
-        const significantArry = [];
-
-        for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
-          if (j !== k) {
-            const SignificantObject1: SignificantObject = {
-              value: seriesData[i].percentageValues[j],
-              baseCount: seriesData[i].baseCounts[j],
-            };
-            const SignificantObject2: SignificantObject = {
-              value: seriesData[i].percentageValues[k],
-              baseCount: seriesData[i].baseCounts[k],
-            };
-
-            const isSignificant = significantDifference(
-              SignificantObject1,
-              SignificantObject2,
-            );
-
-            if (isSignificant) {
-              significantArry.push(seriesData[i].significance[k]);
-            }
-          }
-        }
-
-        if (significantArry.length) {
-          seriesData[i]['significanceDifference'][j] =
-            '(' + significantArry.join('') + ')';
-        }
-      }
-    }
+    return getTablesignificantdifference(seriesData);
   }
   return seriesData;
 };
@@ -313,10 +249,9 @@ const getSingleTransposeTableOptions = (
   chartTranspose: any,
 ) => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, significant },
   } = store.getState();
   let seriesData: Array<Object> = [];
-  // const chartDataComplete = chartData[0];
   let count = 0;
   let localBase = 0;
   const newOptionData: any = [];
@@ -347,11 +282,12 @@ const getSingleTransposeTableOptions = (
     });
     basecountArr.push(localBaseCount);
   }
-  //debugger;
 
   questiondata?.options?.forEach((scaleOption: IQuestionOption) => {
     const countValues: any = [];
     let optionData;
+    const percentageValues: number[] = [];
+    const baseCounts: number[] = [];
     bannerQuestionData.options.map(
       (option: IQuestionOption, quesIndex: any) => {
         if (
@@ -360,9 +296,6 @@ const getSingleTransposeTableOptions = (
         ) {
           if (Array.isArray(scaleOption.labelCode)) {
             const labelCodeArr = scaleOption.labelCode;
-
-            //const labelCodeSum: any = [];
-            //const baseCountSum: any = [];
             var labeCodeSum = 0;
             for (let j = 0; j < labelCodeArr.length; j++) {
               let currKey = labelCodeArr[j];
@@ -391,27 +324,88 @@ const getSingleTransposeTableOptions = (
 
           localBase = basecountArr[quesIndex];
 
-          //console.log(count);
-
-          if (chartLabelType === ChartLabelType.PERCENTAGE) {
-            if (count === 0 || count === undefined) {
-              count = 0;
-            } else {
-              count = (count / localBase) * 100;
-            }
+          let subOptionDataCount = 0;
+          let subOptionDataPercentage = 0;
+          if (count == 0 && localBase == 0) {
+            subOptionDataPercentage = 0;
+            subOptionDataCount = 0;
           } else {
-            count = count;
+            subOptionDataPercentage = round(
+              (count / localBase) * 100,
+              decimalPrecision,
+            );
+            subOptionDataCount = count;
           }
-          countValues.push(count);
+          countValues.push(subOptionDataCount);
+          percentageValues.push(subOptionDataPercentage);
+          baseCounts.push(localBase);
         }
       },
     );
     seriesData.push({
       name: scaleOption.labelText,
       labels,
-      values: countValues,
+      values:
+        chartLabelType === ChartLabelType.PERCENTAGE
+          ? percentageValues
+          : countValues,
+      percentageValues,
+      baseCounts,
     });
   });
 
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
+
+  return seriesData;
+};
+
+const getTablesignificantdifference = (seriesData: any) => {
+  for (let i = 0; i < seriesData.length; i++) {
+    const seriesupdatedLabels = [];
+    seriesData[i]['significance'] = [];
+    seriesData[i]['significanceDifference'] = [];
+
+    for (let j = 0; j < seriesData[i]['labels'].length; j++) {
+      seriesData[i]['significance'].push(indexToChar(j));
+      seriesupdatedLabels.push(
+        seriesData[i]['labels'][j] + `(${indexToChar(j)})`,
+      );
+    }
+    seriesData[i]['labels'] = seriesupdatedLabels;
+  }
+  for (let i = 0; i < seriesData.length; i++) {
+    for (let j = 0; j < seriesData[i].percentageValues.length; j++) {
+      const significantArry = [];
+
+      for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
+        if (j !== k) {
+          const SignificantObject1: SignificantObject = {
+            value: seriesData[i].percentageValues[j],
+            baseCount: seriesData[i].baseCounts[j],
+          };
+          const SignificantObject2: SignificantObject = {
+            value: seriesData[i].percentageValues[k],
+            baseCount: seriesData[i].baseCounts[k],
+          };
+
+          const isSignificant = significantDifference(
+            SignificantObject1,
+            SignificantObject2,
+          );
+
+          if (isSignificant) {
+            significantArry.push(seriesData[i].significance[k]);
+          }
+        }
+      }
+
+      if (significantArry.length) {
+        seriesData[i]['significanceDifference'][j] =
+          '(' + significantArry.join('') + ')';
+      }
+    }
+  }
   return seriesData;
 };

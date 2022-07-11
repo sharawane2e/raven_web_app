@@ -32,6 +32,7 @@ import TableView from '../../components/TableView';
 import { ChartType } from '../../enums/ChartType';
 import CloseIcon from '@mui/icons-material/Close';
 import { setChartFullScreen } from '../../redux/actions/chartActions';
+import { significantText } from '../../constants/Variables';
 // import {useHotkeys} from 'react-hotkeys-hook';
 
 interface ChartScreenProps {
@@ -46,6 +47,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
     user: { profile },
     tour: { showTourGuide },
     sidebar: { open },
+    chart: { significant },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
@@ -92,6 +94,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           <AppRouting routes={routes} />
         </main>
       </SidebarContextProvider>
+
       <Dialog open={openPopup} className="home-modal">
         <div className="home-modal__content">
           <CustomScrollbar>
@@ -114,6 +117,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
           </Button>
         </Grid>
       </Dialog>
+
       <Dialog
         fullScreen
         open={chart.chartfullScreen}
@@ -122,6 +126,14 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
             chart.chartType === ChartType.TABLE,
         })}
       >
+        {significant ? (
+          <div className="significant-lagend significant-full-screen">
+            {significantText}
+          </div>
+        ) : (
+          ''
+        )}
+
         <IconButton
           className="cross--btn"
           onClick={() => {
@@ -130,6 +142,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
         >
           <CloseIcon />
         </IconButton>
+
         {chart.chartType === ChartType.TABLE ? <TableView /> : <Chart />}
       </Dialog>
       {
