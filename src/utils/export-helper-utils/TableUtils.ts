@@ -363,13 +363,12 @@ export function tableChartDataGen() {
       } else {
         tColomn.push(round(getColoumnTotal, 1));
       }
+      //console.log("minmax", getColoumnTotal);
     });
 
     minmax.push([tranposedTableData, tranposedTableDataMin]);
 
     rows.push(["Total", ...tColomn, ""]);
-
-    //console.log("minmax", minmax);
   }
 
   const complteTable = { rows, minmax };

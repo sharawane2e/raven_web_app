@@ -84,15 +84,16 @@ const TableView: React.FC<TableProps> = (props) => {
   // }
 
   const highLight = (col: any, currentMax: any, currentMin: any) => {
-    // typeof col.toString().split("|")[0] != "string"
-    //console.log(typeof col);
+    // const charColNumber =
+    //   typeof col == "string"
+    //     ? col.split("|")[0]
+    //     : Number(col.toString().split("|")[0]);
     const splitCol =
       chartLabelType == ChartLabelType.PERCENTAGE
         ? col.toString().split("|")[0]
-        : typeof col != "number"
-        ? Number(col.toString().split("|")[0])
-        : col.toString().split("|")[0];
+        : Number(col.toString().split("|")[0]);
     const splitCol2 = col.toString().split("|")[1];
+
     return (
       <>
         {significant ? (
