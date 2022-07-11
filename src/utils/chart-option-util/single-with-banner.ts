@@ -1,13 +1,13 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { getMatchedfilter, getmatchedFind, getSum, round } from '../Utility';
-import { colorArr, primaryBarColor } from '../../constants/Variables';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import { ChartType } from '../../enums/ChartType';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
+import { colorArr, primaryBarColor } from "../../constants/Variables";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import { ChartType } from "../../enums/ChartType";
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -15,7 +15,7 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean,
+  transposed: boolean
 ) => {
   const {
     chart: { chartLabelType, chartType },
@@ -31,8 +31,8 @@ export const getSingleChartOptionsSeries = (
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        'labelCode',
-        option.labelCode,
+        "labelCode",
+        option.labelCode
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -49,8 +49,8 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
-          transposed,
-        ),
+          transposed
+        )
       );
       //series.push(getSingleTransposeChartOptions(questionData, chartData));
       return series;
@@ -91,7 +91,7 @@ export const getSingleChartOptionsSeries = (
           labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0,
+              0
             );
             baseCountSum.push(localbaseCount);
           });
@@ -100,16 +100,14 @@ export const getSingleChartOptionsSeries = (
           const sumofValue = _.sum(baseCountSum);
           localBase = sumofValue;
         } else {
-          // optionData = chartData[0][quesOption.labelCode];
-
           // if (chartData[0][quesOption.labelCode].length != 0) {
           optionData = chartData[0][quesOption.labelCode];
           // }
 
           const label = getMatchedfilter(
             optionData,
-            'labelCode',
-            bannerQuesOption.labelCode,
+            "labelCode",
+            bannerQuesOption.labelCode
           );
           // if()
           //if (label.length != 0) {
@@ -117,27 +115,25 @@ export const getSingleChartOptionsSeries = (
             return o.count;
           });
           //   }
-          //  console.log('filteredOptions', label);
 
           localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0,
+            0
           );
         }
 
-        if (chartLabelType === ChartLabelType.PERCENTAGE) {
-          count = (count / localBase) * 100;
-        } else {
-          count = count;
-        }
-        // let percentageValue = count == 0 ? count : (count / localBase) * 100;
-        let percentageValue = (count / localBase) * 100;
-        let numberValue = count;
+        let percentageValue;
+        let numberValue;
+        numberValue = count;
+        percentageValue = (count / localBase) * 100;
 
         if (count)
           data.push({
             name: quesOption.labelText,
-            y: count,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
             percentageValue,
             numberValue,
             baseCount: localBase,
@@ -167,27 +163,26 @@ export const getSingleChartOptionsSeries = (
 
       const labelCollection = getMatchedfilter(
         chartData,
-        'labelCode',
-        option.labelCode,
+        "labelCode",
+        option.labelCode
       );
 
       let count = 0;
       if (labelCollection) {
-        count = getSum(labelCollection, 'count');
+        count = getSum(labelCollection, "count");
       }
-      let plotValue;
-      let percentageValue = (count / baseCount) * 100;
-      let numberValue = count;
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / baseCount) * 100;
-      } else {
-        plotValue = count;
-      }
-      if (plotValue > 0)
+      let percentageValue;
+      let numberValue;
+      numberValue = count;
+      percentageValue = (count / baseCount) * 100;
+
+      if (numberValue > 0)
         data.push({
           name: option.labelText,
-          // y: round(plotValue, decimalPrecision),
-          y: plotValue,
+          y:
+            chartLabelType === ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue,
           percentageValue,
           numberValue,
           baseCount: baseCount,
@@ -228,10 +223,10 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
-  transposed: any,
+  transposed: any
 ) => {
   const {
-    chart: { chartLabelType, chartTranspose },
+    chart: { chartLabelType },
   } = store.getState();
 
   const series: any[] = [];
@@ -240,7 +235,6 @@ const getSingleTransposeChartOptions = (
   const allLabels: Array<string> = [];
   const newChartData: any = {};
   const basecountArr: any = [];
-  //let dataSum = [];
 
   for (const labelArrays in chartData[0]) {
     const labelArray = chartData[0][labelArrays];
@@ -268,8 +262,6 @@ const getSingleTransposeChartOptions = (
     let localBase;
     let optionData: any;
 
-    //console.log(bannerQuestionData?.options);
-
     for (
       let quesIndex = 0;
       quesIndex < bannerQuestionData?.options.length;
@@ -280,7 +272,6 @@ const getSingleTransposeChartOptions = (
       if (Array.isArray(quesOption?.labelCode)) {
         const labelCodeArr = quesOption?.labelCode;
         const labelCodeSum: any = [];
-        // const baseCountSum: any = [];
         var labeCodeSum = 0;
         for (let j = 0; j < labelCodeArr?.length; j++) {
           let currKey = labelCodeArr[j];
@@ -294,41 +285,30 @@ const getSingleTransposeChartOptions = (
             }
           }
         }
-
-        // optionData = newOptionData;
         count = labeCodeSum;
       } else {
         optionData = chartData[0][quesOption?.labelCode];
-
-        // console.log('optionData', optionData);
         const label = getmatchedFind(
           optionData,
-          'labelCode',
-          bannerQuesOption?.labelCode,
+          "labelCode",
+          bannerQuesOption?.labelCode
         );
 
         count = label?.count;
       }
 
-      // if (bannerQuestionData?.type == QuestionType.MULTI) {
-      //   debugger;
-      //   localBase = find(chartData[0][1], {
-      //     labelCode: quesOption.labelCode,
-      //   })?.count;
-      // }
       localBase = basecountArr[quesIndex];
 
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        count = (count / localBase) * 100;
-      } else {
-        count = count;
-      }
-
-      let percentageValue = (count / localBase) * 100;
-      let numberValue = count;
+      let percentageValue;
+      let numberValue;
+      numberValue = count;
+      percentageValue = (count / localBase) * 100;
       data.push({
         name: bannerQuesOption?.labelText,
-        y: count,
+        y:
+          chartLabelType === ChartLabelType.PERCENTAGE
+            ? percentageValue
+            : numberValue,
         percentageValue,
         numberValue,
         baseCount: localBase,

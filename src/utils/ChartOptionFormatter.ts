@@ -482,20 +482,30 @@ const getGridChartOptions = (
 
       //console.log(scale)
       const base = optionData?.baseCount || baseCount;
-      let plotValue;
-      let percentageValue = (count / base) * 100;
-      let numberValue = count;
 
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / base) * 100;
-      } else {
-        plotValue = count;
-      }
+      // let plotValue;
+      // let percentageValue = (count / base) * 100;
+      // let numberValue = count;
+
+      // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+      //   plotValue = (count / base) * 100;
+      // } else {
+      //   plotValue = count;
+      // }
+
+      let percentageValue;
+      let numberValue;
+      numberValue = count;
+      percentageValue = (count / base) * 100;
 
       if (chartType == ChartType.LINE) {
         data.push({
           name: subGroup.labelText,
-          y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
+          // y: numberValue !== null ? round(numberValue, decimalPrecision) : 0,
+          y:
+            chartLabelType === ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue,
           percentageValue,
           numberValue,
           baseCount: base,
@@ -503,7 +513,11 @@ const getGridChartOptions = (
       } else {
         data.push({
           name: subGroup.labelText,
-          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          // y: numberValue > 0 ? round(numberValue, decimalPrecision) : null,
+          y:
+            chartLabelType === ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue,
           percentageValue,
           numberValue,
           baseCount: base,
