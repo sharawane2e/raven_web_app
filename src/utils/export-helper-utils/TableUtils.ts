@@ -8,6 +8,7 @@ export function tableChartDataGen() {
   //debugger;
   let seriesData = [];
   seriesData = chartDataGen();
+
   let lablecode_length: any = '';
   let crosstab_length: any = '';
   let rows = [];
@@ -93,6 +94,7 @@ export function tableChartDataGen() {
         let totalrowSub = 0;
 
         seriesData.forEach((d: any, rIndex: any) => {
+          //console.log('d', d.significanceDifference[rIndex]);
           let netsLabelcode =
             chart.bannerQuestionData?.options[rIndex]?.labelCode.split('_')[0];
           let netsQuestionLabelcode;
@@ -108,7 +110,16 @@ export function tableChartDataGen() {
             chart?.chartLabelType === ChartLabelType.PERCENTAGE
           ) {
             if (d.values[k]) {
-              subRow.push(round(d.values[k], 1) + '%' + '-' + 'ABC');
+              if (d?.significanceDifference[rIndex]) {
+                console.log(d?.significanceDifference[rIndex]);
+              }
+              // const seriesColumnData = d?.significanceDifference[rIndex];
+              // const significaneTable = seriesColumnData
+              //   ? '|' + seriesColumnData
+              //   : '';
+
+              // console.log('significaneTable', significaneTable);
+              subRow.push(round(d.values[k], 1) + '%');
               if (
                 !chartTransposeState &&
                 chart?.questionData?.isGroupNet &&
@@ -128,7 +139,13 @@ export function tableChartDataGen() {
             }
           } else {
             if (d.values[k]) {
+              const seriesColumnData = d.significanceDifference[rIndex];
+              // const significaneTable = seriesColumnData
+              //   ? '|' + seriesColumnData
+              //   : '';
+              // console.log(significaneTable);
               subRow.push(round(d.values[k], 2));
+              // subRow.push(round(d.values[k], 2));
               if (
                 chart?.chartTranspose &&
                 chart?.questionData?.type === QuestionType.SINGLE &&
