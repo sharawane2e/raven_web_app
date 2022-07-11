@@ -192,7 +192,7 @@ const getGridTableoptionSeries = (
                 ? round(+((data / base) * 100), decimalPrecision)
                 : 0;
             } else {
-              return data !== undefined ? data : 0;
+              return data !== undefined ? round(data, 0) : 0;
             }
           } else {
             return 0;
@@ -205,6 +205,7 @@ const getGridTableoptionSeries = (
   if (significant) {
     return getTablesignificantdifference(seriesData);
   }
+
   return seriesData;
 };
 
@@ -270,7 +271,7 @@ const getGridTransposeTableOptions = (questionData: any, chartData: any) => {
       if (chartLabelType === ChartLabelType.PERCENTAGE) {
         values.push(round((count / baseCount) * 100, decimalPrecision));
       } else {
-        values.push(count);
+        values.push(round(count, 0));
       }
     });
 

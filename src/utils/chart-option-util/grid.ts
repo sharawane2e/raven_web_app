@@ -83,7 +83,7 @@ export const getGridChartoptionSeries = (
 
       let percentageValue;
       let numberValue;
-      numberValue = count;
+      numberValue = round(count, 0);
       percentageValue = (count / base) * 100;
 
       // if (chartType == ChartType.LINE) {
@@ -196,7 +196,7 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
 
       let percentageValue;
       let numberValue;
-      numberValue = count;
+      numberValue = round(count, 0);
       percentageValue = (count / baseCount) * 100;
 
       data.push({
