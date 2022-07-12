@@ -2,29 +2,29 @@ import {
   colorArr,
   pptTemplateKey,
   primaryBarPPt,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 
-import pptxgen from 'pptxgenjs';
-import store from '../../redux/store';
-import { ISlideConfig } from '../../types/ISlideConfig';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { ChartType } from '../../enums/ChartType';
+import pptxgen from "pptxgenjs";
+import store from "../../redux/store";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { ChartType } from "../../enums/ChartType";
 
-import { chartConfig, tableConfig } from '../../config/PptConfig';
-import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
+import { chartConfig, tableConfig } from "../../config/PptConfig";
+import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
 
-import { tableChartDataGen } from '../export-helper-utils/TableUtils';
-import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
-import _, { slice } from 'lodash';
-import { setDefaultSlideProperties } from './DefaultPptProps';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { QuestionType } from '../../enums/QuestionType';
+import { tableChartDataGen } from "../export-helper-utils/TableUtils";
+import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
+import _, { slice } from "lodash";
+import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from "../../enums/QuestionType";
 
 export function pptDataGen(
   pptxGenJsObj: pptxgen,
   slideConfig: ISlideConfig,
   graphTypeProps: { barDir: PptChartOrientation; barGrouping: PptChartType },
-  chartSettings: pptxgen.IChartOpts,
+  chartSettings: pptxgen.IChartOpts
 ) {
   const {
     chart: {
@@ -47,7 +47,7 @@ export function pptDataGen(
 
   if (chartType === ChartType.TABLE) {
     const tableRows = tableChartDataGen();
-    let scaleLength: any = '';
+    let scaleLength: any = "";
     let filtered: any;
     let results: any;
     let QuestionData: any;
@@ -64,11 +64,11 @@ export function pptDataGen(
     } else {
       QuestionData = questionData?.groupNetData;
       filtered = QuestionData.filter(function (el: any) {
-        return el !== '';
+        return el !== "";
       });
 
       results = questionData?.options.filter(function (option) {
-        if (option.labelCode.split('_')[0] == 'N') {
+        if (option.labelCode.split("_")[0] == "N") {
           return true;
         }
       });
@@ -96,82 +96,82 @@ export function pptDataGen(
         const currentMax = maxValue?.[colIndex - 1];
         const currentMin = minValue?.[colIndex - 1];
         const options = {
-          fill: 'ffffff',
+          fill: "ffffff",
           bold: false,
         };
         const rowcount = removeSubGrop - laberesult;
-        const splitCol = item.toString().split('|')[0];
-        const splitCol2 = item?.toString().split('|')[1];
+        const splitCol = item.toString().split("|")[0];
+        const splitCol2 = item?.toString().split("|")[1];
 
         let splitcolNumber: any;
         if (isNaN(Number(splitCol))) {
-          splitcolNumber = splitCol != undefined ? splitCol : '';
+          splitcolNumber = splitCol != undefined ? splitCol : "";
         } else {
           splitcolNumber = Number(splitCol);
         }
 
-        const dataString2 = splitCol2 != undefined ? splitCol2 : '';
+        const dataString2 = splitCol2 != undefined ? splitCol2 : "";
 
         if (splitcolNumber === currentMax) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
-              ? (options['fill'] = 'b8e08c')
+              ? (options["fill"] = "b8e08c")
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'b8e08c')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "b8e08c")
+              : (options["fill"] = "ffffff");
           } else {
             if (
               bannerQuestionData?.type == QuestionType.SINGLE &&
               questionData?.type == QuestionType.SINGLE
             ) {
               rowIndex < removeSubGrop + 1 && tableRows.rows.length > 3
-                ? (options['fill'] = 'b8e08c')
+                ? (options["fill"] = "b8e08c")
                 : !removeSubGrop && tableRows.rows.length > 3
-                ? (options['fill'] = 'b8e08c')
-                : (options['fill'] = 'ffffff');
+                ? (options["fill"] = "b8e08c")
+                : (options["fill"] = "ffffff");
             } else {
               rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                ? (options['fill'] = 'b8e08c')
+                ? (options["fill"] = "b8e08c")
                 : !removeSubGrop && tableRows.rows.length > 3
-                ? (options['fill'] = 'b8e08c')
-                : (options['fill'] = 'ffffff');
+                ? (options["fill"] = "b8e08c")
+                : (options["fill"] = "ffffff");
               rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                ? (options['bold'] = true)
+                ? (options["bold"] = true)
                 : !removeSubGrop && tableRows.rows.length > 3
-                ? (options['bold'] = true)
-                : (options['bold'] = false);
+                ? (options["bold"] = true)
+                : (options["bold"] = false);
             }
           }
         } else if (splitcolNumber === currentMin) {
           if (laberesult > 0) {
             rowIndex > removeSubGrop - rowcount &&
             rowIndex < removeSubGrop + (laberesult - 1)
-              ? (options['fill'] = 'fbd9d4')
+              ? (options["fill"] = "fbd9d4")
               : !removeSubGrop && tableRows.rows.length > 3
-              ? (options['fill'] = 'fbd9d4')
-              : (options['fill'] = 'ffffff');
+              ? (options["fill"] = "fbd9d4")
+              : (options["fill"] = "ffffff");
           } else {
             if (
               bannerQuestionData?.type == QuestionType.SINGLE &&
               questionData?.type == QuestionType.SINGLE
             ) {
               rowIndex <= removeSubGrop + 1 && tableRows.rows.length > 3
-                ? (options['fill'] = 'fbd9d4')
+                ? (options["fill"] = "fbd9d4")
                 : !removeSubGrop
-                ? (options['fill'] = 'fbd9d4')
-                : (options['fill'] = 'ffffff');
+                ? (options["fill"] = "fbd9d4")
+                : (options["fill"] = "ffffff");
             } else {
               rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                ? (options['fill'] = 'fbd9d4')
+                ? (options["fill"] = "fbd9d4")
                 : !removeSubGrop
-                ? (options['fill'] = 'fbd9d4')
-                : (options['fill'] = 'ffffff');
+                ? (options["fill"] = "fbd9d4")
+                : (options["fill"] = "ffffff");
               rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                ? (options['bold'] = true)
+                ? (options["bold"] = true)
                 : !removeSubGrop
-                ? (options['bold'] = true)
-                : (options['bold'] = false);
+                ? (options["bold"] = true)
+                : (options["bold"] = false);
             }
           }
         }
@@ -203,10 +203,11 @@ export function pptDataGen(
         const colorArray: string[] = [];
         seriesData[0]?.labels.forEach(function (labelText: any) {
           const seriesObject = _.find(questionData?.options, function (o) {
+            console.log("o.labelText", o.labelText);
             return o.labelText === labelText;
           });
-          if (seriesObject?.labelCode.split('_')[0] == 'N') {
-            colorArray.push('f1ad0f');
+          if (seriesObject?.labelCode.split("_")[0] == "N") {
+            colorArray.push("f1ad0f");
           } else {
             colorArray.push(primaryBarPPt);
           }

@@ -1,22 +1,22 @@
-import store from '../../redux/store';
-import pptxgen from 'pptxgenjs';
+import store from "../../redux/store";
+import pptxgen from "pptxgenjs";
 import {
   sourceText,
   copyRightText,
   exportPrefix,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 import {
   appliedFiltersText,
   meanStandardDeviation,
-} from '../export-helper-utils/GeneralUtils';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
-import { ChartType } from '../../enums/ChartType';
-import { ISlideConfig } from '../../types/ISlideConfig';
-import { chartFontFace } from '../../constants/Variables';
-import { pptDataGen } from './PptDataGen';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { QuestionType } from '../../enums/QuestionType';
+} from "../export-helper-utils/GeneralUtils";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
+import { ChartType } from "../../enums/ChartType";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { chartFontFace } from "../../constants/Variables";
+import { pptDataGen } from "./PptDataGen";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from "../../enums/QuestionType";
 
 export const generatePpt = async () => {
   const {
@@ -38,8 +38,8 @@ export const generatePpt = async () => {
   let pptxGenJsObj = new pptxgen();
   let fileName: string = exportPrefix + questionData?.labelText;
 
-  let mainQuestionText: string = questionData?.labelText || '';
-  let bannerQuestionText: string = bannerQuestionData?.labelText || '';
+  let mainQuestionText: string = questionData?.labelText || "";
+  let bannerQuestionText: string = bannerQuestionData?.labelText || "";
   let meanStandardDEviation = meanStandardDeviation();
 
   let baseText: string = `Sample set: ${baseCount}`;
@@ -61,16 +61,16 @@ export const generatePpt = async () => {
     showLegend: chartType === ChartType.COLUMN ? true : false,
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? '##.##%;;;'
+        ? "##.##%;;;"
         : showMean && questionData?.type === QuestionType.GRID
-        ? '##.##'
-        : '##',
+        ? "##.##"
+        : "##",
     valLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? '##.##%;;;'
+        ? "##.##%;;;"
         : showMean && questionData?.type === QuestionType.GRID
-        ? '##.##'
-        : '##',
+        ? "##.##"
+        : "##",
   };
 
   let slideConfig: ISlideConfig = {
@@ -84,6 +84,8 @@ export const generatePpt = async () => {
     meanStandardDEviation,
   };
 
+  console.log("graphTypeProps", graphTypeProps);
+
   pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
-  await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
+  await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
 };
