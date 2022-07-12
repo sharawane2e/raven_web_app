@@ -368,6 +368,9 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
       data: singleSeries.data.map((data: any, index: number) => {
         return {
           ...data,
+          name:
+            data?.name +
+            `<div className="significante--icon">(${indexToChar(index)})</div>`,
           significance: indexToChar(index),
           significantDiffernce: '',
         };
