@@ -89,13 +89,13 @@ export const getMultiChartOptionsSeries = (
           }
 
           if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
-            count = (label.count / localBase) * 100;
+            count = (label.count / 5400) * 100;
           } else if (chartLabelType === ChartLabelType.NUMBER && label) {
             count = label.count;
           }
 
           if (label) {
-            let percentageValue = (label.count / localBase) * 100;
+            let percentageValue = (label.count / 5400) * 100;
             let numberValue = label.count;
             if (count)
               data.push({
