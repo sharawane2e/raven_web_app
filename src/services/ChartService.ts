@@ -10,7 +10,7 @@ import {
 } from '../redux/actions/chartActions';
 import { IChartState } from '../redux/reducers/chartReducer';
 import store from '../redux/store';
-import ApiRequest, { ApiRequestMulti } from '../utils/ApiRequest';
+import ApiRequest from '../utils/ApiRequest';
 import { getChartOptions, getPlotOptions } from '../utils/ChartOptionFormatter';
 import { IQuestion } from '../types/IQuestion';
 import { QuestionType } from '../enums/QuestionType';
@@ -77,7 +77,7 @@ export const fetchChartData = async (
 
     if (bannerQuestionType == QuestionType.MULTI && type) {
       dispatch(setChartLoading(true));
-      response = await ApiRequestMulti.request(ApiUrl.CHART, 'POST', body);
+      // response = await ApiRequestMulti.request(ApiUrl.CHART, 'POST', body);
     } else {
       response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
     }
@@ -102,13 +102,13 @@ export const fetchChartData = async (
 
       if (bannerQuestionType == QuestionType.MULTI && type) {
         const updatedBody = { ...body, bannerQuestion: '' };
-        const baseChartresponse = await ApiRequestMulti.request(
-          ApiUrl.CHART,
-          'POST',
-          updatedBody,
-        );
-        // console.log(baseChartresponse.data.chartData)
-        chartData.chartData.push(baseChartresponse.data.chartData);
+        // const baseChartresponse = await ApiRequestMulti.request(
+        //   ApiUrl.CHART,
+        //   'POST',
+        //   updatedBody,
+        // );
+        // // console.log(baseChartresponse.data.chartData)
+        // chartData.chartData.push(baseChartresponse.data.chartData);
 
         chartData.chartOptions = {
           ...chart.chartOptions,
@@ -310,21 +310,7 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
-  } else if (newChartType === ChartType.TABLE) {
-    dispatch(setChartType(ChartType.TABLE));
-    chartDataClone.chartOptions = {
-      ...chartDataClone.chartOptions,
-      chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'column',
-      },
-      ...getChartOptions(),
-    };
-
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
-    dispatch(setChartData(chartDataClone));
   } else {
-    //  debugger;
     dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
@@ -417,27 +403,27 @@ export const transposeChart = () => {
   ) {
     dispatch(setChartTranspose(transposed));
     //   console.log('transpose data for update');
-    const { chartData } = chartDataClone;
-    const allLabels: Array<string> = [];
-    const newChartData: any = {};
-    const questionData = chartDataClone.questionData;
-    const bannerData = chartDataClone.bannerQuestionData;
-    for (const labelArrays in chartData[0]) {
-      const labelArray = chartData[0][labelArrays];
-      labelArray.forEach((el: any) => {
-        if (allLabels.indexOf(el.labelCode) == -1) {
-          allLabels.push(el.labelCode);
-          newChartData[el.labelCode] = [];
-        }
-        newChartData[el.labelCode].push({
-          count: el.count,
-          labelCode: labelArrays,
-        });
-      });
-    }
-    chartDataClone.chartData[0] = newChartData;
-    chartDataClone.questionData = bannerData;
-    chartDataClone.bannerQuestionData = questionData;
+    // const { chartData } = chartDataClone;
+    // const allLabels: Array<string> = [];
+    // const newChartData: any = {};
+    // const questionData = chartDataClone.questionData;
+    // const bannerData = chartDataClone.bannerQuestionData;
+    // for (const labelArrays in chartData[0]) {
+    //   const labelArray = chartData[0][labelArrays];
+    //   labelArray.forEach((el: any) => {
+    //     if (allLabels.indexOf(el.labelCode) == -1) {
+    //       allLabels.push(el.labelCode);
+    //       newChartData[el.labelCode] = [];
+    //     }
+    //     newChartData[el.labelCode].push({
+    //       count: el.count,
+    //       labelCode: labelArrays,
+    //     });
+    //   });
+    // }
+    // chartDataClone.chartData[0] = newChartData;
+    // chartDataClone.questionData = bannerData;
+    // chartDataClone.bannerQuestionData = questionData;
   } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
     const newSubGroup: any = [];
     const newScale: any = [];

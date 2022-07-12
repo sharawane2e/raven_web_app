@@ -5,12 +5,10 @@ import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartType } from '../../enums/ChartType';
 import {
-  setChartData,
   setChartLabel,
-  setChartTranspose,
-  setChartType,
   showMean,
   updateChartOptions,
+  updateSignificant,
 } from '../../redux/actions/chartActions';
 import store from '../../redux/store';
 import { changeChartType, transposeChart } from '../../services/ChartService';
@@ -25,6 +23,7 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
 
   useEffect(() => {
     if (isChecked) {
+      dispatch(updateSignificant(false));
       if (chart.chartLabelType === ChartLabelType.PERCENTAGE) {
         dispatch(setChartLabel(ChartLabelType.NUMBER));
       }

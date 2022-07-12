@@ -160,96 +160,108 @@ export const getSingleChartOptionsSeries = (
           });
       }
     }
-
-    // if (significant) {
-    //   return getsignificantdifference(series, chartLabelType);
-    // } else {
-    //   return series;
-    // }
-
     if (significant) {
       const updatedSeries = getsignificantdifference(series, chartLabelType);
       series.length = 0;
       series.push(...updatedSeries);
     }
   } else {
-    const data: any[] = [];
-
-    for (
-      let optionIndex = 0;
-      optionIndex < questionData.options.length;
-      optionIndex++
-    ) {
-      const option = questionData.options[optionIndex];
-
-      const labelCollection = getMatchedfilter(
+    series.push(
+      ...getSingleSeries(
+        questionData,
         chartData,
-        'labelCode',
-        option.labelCode,
-      );
+        baseCount,
+        chartLabelType,
+        chartType,
+        significant,
+      ),
+    );
+  }
+  return series;
+};
 
-      let count = 0;
-      if (labelCollection) {
-        count = getSum(labelCollection, 'count');
-      }
-      let plotValue;
-      let percentageValue = (count / baseCount) * 100;
-      let numberValue = count;
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / baseCount) * 100;
-      } else {
-        plotValue = count;
-      }
-      if (plotValue > 0)
-        data.push({
-          name: option.labelText,
-          y: plotValue,
-          percentageValue,
-          numberValue,
-          baseCount: baseCount,
-        });
+const getSingleSeries = (
+  questionData: any,
+  chartData: any,
+  baseCount: any,
+  chartLabelType: any,
+  chartType: any,
+  significant: boolean,
+) => {
+  const series: any[] = [];
+  const data: any[] = [];
+
+  for (
+    let optionIndex = 0;
+    optionIndex < questionData.options.length;
+    optionIndex++
+  ) {
+    const option = questionData.options[optionIndex];
+
+    const labelCollection = getMatchedfilter(
+      chartData,
+      'labelCode',
+      option.labelCode,
+    );
+
+    let count = 0;
+    if (labelCollection) {
+      count = getSum(labelCollection, 'count');
     }
-
-    // const series: any[] = [];
-
-    if (chartType === ChartType.STACK) {
-      data.map((element: any, index: number) => {
-        const name = element.name;
-        const color = colorArr[index];
-        const data = [
-          {
-            name: questionData.labelText,
-            y: element.y,
-            numberValue: element.numberValue,
-            percentageValue: element.percentageValue,
-            baseCount: element.baseCount,
-          },
-        ];
-        series.push({ name, color, data, dataLabels });
-      });
+    let plotValue;
+    let percentageValue = (count / baseCount) * 100;
+    let numberValue = count;
+    if (chartLabelType === ChartLabelType.PERCENTAGE) {
+      plotValue = (count / baseCount) * 100;
     } else {
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
-
-      series.push({
-        color: primaryBarColor,
-        name: questionData.labelText,
-        data,
-        dataLabels: {
-          ...newDataLabels,
-        },
-      });
+      plotValue = count;
     }
+    if (plotValue > 0)
+      data.push({
+        name: option.labelText,
+        y: plotValue,
+        percentageValue,
+        numberValue,
+        baseCount: baseCount,
+      });
+  }
 
-    // return series;
+  // const series: any[] = [];
+
+  if (chartType === ChartType.STACK) {
+    data.map((element: any, index: number) => {
+      const name = element.name;
+      const color = colorArr[index];
+      const data = [
+        {
+          name: questionData.labelText,
+          y: element.y,
+          numberValue: element.numberValue,
+          percentageValue: element.percentageValue,
+          baseCount: element.baseCount,
+        },
+      ];
+      series.push({ name, color, data, dataLabels });
+    });
+  } else {
+    let newDataLabels;
+    if (significant) {
+      newDataLabels = dataUpdatedFormate;
+    } else {
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
+    }
+    series.push({
+      color: primaryBarColor,
+      name: questionData.labelText,
+      data,
+      dataLabels: {
+        ...newDataLabels,
+      },
+    });
   }
   return series;
 };

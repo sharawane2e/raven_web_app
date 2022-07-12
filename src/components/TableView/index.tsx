@@ -6,7 +6,6 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import clsx from 'clsx';
 import { QuestionType } from '../../enums/QuestionType';
 import { ChartLabelType } from '../../enums/ChartLabelType';
-import { significantText } from '../../constants/Variables';
 
 interface TableProps {}
 

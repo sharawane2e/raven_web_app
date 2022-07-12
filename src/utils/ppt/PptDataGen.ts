@@ -186,6 +186,8 @@ export function pptDataGen(
       output.push(rowArray);
     });
 
+    console.log('seriesData', output);
+
     slide.addTable(output, { ...tableConfig });
   } else {
     let pptChartType: any;
@@ -203,6 +205,7 @@ export function pptDataGen(
         const colorArray: string[] = [];
         seriesData[0]?.labels.forEach(function (labelText: any) {
           const seriesObject = _.find(questionData?.options, function (o) {
+            console.log('o.labelText', o.labelText);
             return o.labelText === labelText;
           });
           if (seriesObject?.labelCode.split('_')[0] == 'N') {
@@ -232,10 +235,14 @@ export function pptDataGen(
 
     if (chartLabelType === ChartLabelType.PERCENTAGE) {
       seriesData.forEach((row: any, index) => {
+        console.log(seriesData[index]);
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
     }
+
+    console.log('seriesData', seriesData);
+    console.log('chartSettings', chartSettings);
 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,

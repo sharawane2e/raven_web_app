@@ -192,26 +192,30 @@
   background-color: map-get($map: $text-color, $key: "primary-fade");
 }
 
-.table-significante{
+.table-significante {
   padding-left: 5px;
-  color:$significantTable;
+  color: $significantTable;
 }
 .significant-lagend {
-  color:$significantTable;
+  color: $significantTable;
   text-align: right;
   margin: 0 0.5rem;
   width: 13%;
-    margin-left: auto;
+  margin-left: auto;
+  position: relative;
+  font-size: 14px;
+  top: -12px;
+  .significant-hedding {
     position: relative;
-    font-size: 14px;
-  &::before{
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #656eff;
-    position: absolute;
-    left: 0px;
-    top: 6px;
+    &::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: $significantTable;
+      position: absolute;
+      left: -13px;
+      top: 6px;
+    }
   }
 }
 .significant-full-screen {
