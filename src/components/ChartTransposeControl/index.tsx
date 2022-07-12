@@ -36,7 +36,7 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
           bannerQuestionData?.type == QuestionType.MULTI) ||
         (questionData?.type == QuestionType.MULTI &&
           bannerQuestionData?.type == QuestionType.SINGLE)
-          ? transposeChart()
+          ? transposeChartMulti()
           : transposeChart(),
       active: chartTranspose,
       disabled: disabledOption(),

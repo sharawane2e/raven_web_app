@@ -2,6 +2,8 @@ import _ from 'lodash';
 import { find, round } from 'lodash';
 import {
   colorArr,
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
   decimalPrecision,
   primaryBarColor,
 } from '../../constants/Variables';
@@ -35,14 +37,6 @@ export const getMultiChartOptionsSeries = (
     chart: { chartType },
   } = store.getState();
 
-  const {
-    plotOptions: {
-      series: {
-        dataLabels: { format },
-      },
-    },
-  } = chartOptionsData;
-
   if (selectedBannerQuestionId) {
     //debugger;
     const categories: string[] = [];
@@ -66,10 +60,9 @@ export const getMultiChartOptionsSeries = (
         const quesOption = subGroups[quesIndex];
 
         let optionData = chartData[0][quesOption.labelCode];
-        // console.log(optionData);
 
         let count = 0;
-        // debugger;
+
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
@@ -123,14 +116,6 @@ export const getMultiChartOptionsSeries = (
           dataLabels,
         });
     }
-
-    // return {
-    //   legend: {
-    //     enabled: true,
-    //   },
-    //   tooltip: { ...getToolTip() },
-    //   series,
-    // };
   } else {
     series.push(
       ...getMultiSeries(
@@ -195,7 +180,6 @@ const getMultiSeries = (
       } else {
         data.push({
           name: option.labelText,
-
           y: plotValue,
           percentageValue,
           numberValue,
@@ -203,6 +187,13 @@ const getMultiSeries = (
         });
       }
     }
+  }
+
+  let newDataLabels: any;
+  if (chartLabelType == ChartLabelType.PERCENTAGE) {
+    newDataLabels = dataLabelsFormate;
+  } else {
+    newDataLabels = dataLabelsNumberFormate;
   }
 
   if (chartType === ChartType.STACK) {
@@ -218,7 +209,14 @@ const getMultiSeries = (
           baseCount: baseCount,
         },
       ];
-      series.push({ name, color, data, dataLabels });
+      series.push({
+        name,
+        color,
+        data,
+        dataLabels: {
+          ...newDataLabels,
+        },
+      });
     });
   } else {
     series.push({
@@ -226,12 +224,7 @@ const getMultiSeries = (
       name: questionData.labelText,
       data,
       dataLabels: {
-        formatter: function (this: any) {
-          // if (this.y > 100) {
-          //   return this.y + 'CB';
-          // }
-          return this.y + 'AB' + this.key;
-        },
+        ...newDataLabels,
       },
     });
   }

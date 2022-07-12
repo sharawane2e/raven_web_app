@@ -10,7 +10,7 @@ import {
 } from '../redux/actions/chartActions';
 import { IChartState } from '../redux/reducers/chartReducer';
 import store from '../redux/store';
-import ApiRequest from '../utils/ApiRequest';
+import ApiRequest, { ApiRequestMulti } from '../utils/ApiRequest';
 import { getChartOptions, getPlotOptions } from '../utils/ChartOptionFormatter';
 import { IQuestion } from '../types/IQuestion';
 import { QuestionType } from '../enums/QuestionType';
@@ -77,7 +77,7 @@ export const fetchChartData = async (
 
     if (bannerQuestionType == QuestionType.MULTI && type) {
       dispatch(setChartLoading(true));
-      // response = await ApiRequestMulti.request(ApiUrl.CHART, 'POST', body);
+      response = await ApiRequestMulti.request(ApiUrl.CHART, 'POST', body);
     } else {
       response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
     }
@@ -401,29 +401,29 @@ export const transposeChart = () => {
     chartDataClone.bannerQuestionData &&
     chartDataClone.questionData.type == QuestionType.MULTI
   ) {
-    dispatch(setChartTranspose(transposed));
+    //dispatch(setChartTranspose(transposed));
     //   console.log('transpose data for update');
-    // const { chartData } = chartDataClone;
-    // const allLabels: Array<string> = [];
-    // const newChartData: any = {};
-    // const questionData = chartDataClone.questionData;
-    // const bannerData = chartDataClone.bannerQuestionData;
-    // for (const labelArrays in chartData[0]) {
-    //   const labelArray = chartData[0][labelArrays];
-    //   labelArray.forEach((el: any) => {
-    //     if (allLabels.indexOf(el.labelCode) == -1) {
-    //       allLabels.push(el.labelCode);
-    //       newChartData[el.labelCode] = [];
-    //     }
-    //     newChartData[el.labelCode].push({
-    //       count: el.count,
-    //       labelCode: labelArrays,
-    //     });
-    //   });
-    // }
-    // chartDataClone.chartData[0] = newChartData;
-    // chartDataClone.questionData = bannerData;
-    // chartDataClone.bannerQuestionData = questionData;
+    const { chartData } = chartDataClone;
+    const allLabels: Array<string> = [];
+    const newChartData: any = {};
+    const questionData = chartDataClone.questionData;
+    const bannerData = chartDataClone.bannerQuestionData;
+    for (const labelArrays in chartData[0]) {
+      const labelArray = chartData[0][labelArrays];
+      labelArray.forEach((el: any) => {
+        if (allLabels.indexOf(el.labelCode) == -1) {
+          allLabels.push(el.labelCode);
+          newChartData[el.labelCode] = [];
+        }
+        newChartData[el.labelCode].push({
+          count: el.count,
+          labelCode: labelArrays,
+        });
+      });
+    }
+    chartDataClone.chartData[0] = newChartData;
+    chartDataClone.questionData = bannerData;
+    chartDataClone.bannerQuestionData = questionData;
   } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
     const newSubGroup: any = [];
     const newScale: any = [];
