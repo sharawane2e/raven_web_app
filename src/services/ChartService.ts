@@ -102,13 +102,13 @@ export const fetchChartData = async (
 
       if (bannerQuestionType == QuestionType.MULTI && type) {
         const updatedBody = { ...body, bannerQuestion: '' };
-        // const baseChartresponse = await ApiRequestMulti.request(
-        //   ApiUrl.CHART,
-        //   'POST',
-        //   updatedBody,
-        // );
-        // // console.log(baseChartresponse.data.chartData)
-        // chartData.chartData.push(baseChartresponse.data.chartData);
+        const baseChartresponse = await ApiRequestMulti.request(
+          ApiUrl.CHART,
+          'POST',
+          updatedBody,
+        );
+        // console.log(baseChartresponse.data.chartData)
+        chartData.chartData.push(baseChartresponse.data.chartData);
 
         chartData.chartOptions = {
           ...chart.chartOptions,

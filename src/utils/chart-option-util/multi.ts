@@ -38,6 +38,8 @@ export const getMultiChartOptionsSeries = (
   } = store.getState();
 
   if (selectedBannerQuestionId) {
+    debugger;
+    console.log('multi data update with chart');
     //debugger;
     const categories: string[] = [];
 
@@ -81,7 +83,7 @@ export const getMultiChartOptionsSeries = (
 
           if (bannerQuestionType == QuestionType.MULTI) {
             //this is working in multi 2 multi
-            localBase = find(chartData[1], function (o) {
+            localBase = find(chartData[0], function (o) {
               return o.labelCode === quesOption.labelCode;
             })?.count;
           }

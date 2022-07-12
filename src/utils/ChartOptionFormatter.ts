@@ -99,7 +99,6 @@ const getMultiChartOptions = (
     chartOptionsData,
     transposed,
   );
-  console.log('seriesMulti', series);
 
   return {
     legend: {
