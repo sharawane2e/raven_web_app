@@ -579,7 +579,7 @@ export const changeChartOptions = (chartOptions: any, type: ChartType) => {
 
 export const getToolTip = () => {
   const {
-    chart: { questionData, showMean },
+    chart: { questionData, showMean, significant },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
     headerFormat: '',
@@ -588,6 +588,16 @@ export const getToolTip = () => {
 
   tooltip['headerFormat'] =
     '<span style="font-size:11px">{series.name}</span><br>';
+
+  if (significant) {
+    if (questionData?.type === QuestionType?.NUMBER) {
+      tooltip['pointFormat'] =
+        '<span>Sign text - {point.significantDiffernce}</span><br/<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
+    } else {
+      tooltip['pointFormat'] =
+        '<span className="significante-color">Sign text - {point.significantDiffernce}</span><br/><span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
+    }
+  }
 
   if (showMean) {
     tooltip['pointFormat'] =
@@ -612,9 +622,9 @@ export const getPlotOptions = (
   let plotOptions = chartDataClone.chartOptions['plotOptions'];
   plotOptions = omit(plotOptions, ['column', 'bar', 'pie', 'line']);
   if (chartType === ChartType.STACK) {
-    // plotOptions['column'] = {
-    //   stacking: 'normal',
-    // };
+    plotOptions['column'] = {
+      stacking: 'normal',
+    };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
@@ -623,9 +633,9 @@ export const getPlotOptions = (
     // plotOptions['series'].dataLabels.y = undefined;
     // plotOptions['series'].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
-    // plotOptions['bar'] = {
-    //   stacking: 'normal',
-    // };
+    plotOptions['bar'] = {
+      stacking: 'normal',
+    };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
@@ -639,10 +649,10 @@ export const getPlotOptions = (
     //   plotOptions['series'].dataLabels.rotation = 0;
     // }
   } else if (chartType === ChartType.PIE) {
-    // plotOptions['pie'] = {
-    //   allowPointSelect: false,
-    //   cursor: 'pointer',
-    // };
+    plotOptions['pie'] = {
+      allowPointSelect: false,
+      cursor: 'pointer',
+    };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '<b>{point.name}</b>: {point.y:.1f}'
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
@@ -651,10 +661,10 @@ export const getPlotOptions = (
     // delete plotOptions['series'].dataLabels.y;
     // delete plotOptions['series'].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    // plotOptions['line'] = {
-    //   // allowPointSelect: false,
-    //   // cursor: "pointer",
-    // };
+    plotOptions['line'] = {
+      allowPointSelect: false,
+      cursor: 'pointer',
+    };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE

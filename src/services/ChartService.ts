@@ -310,21 +310,7 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
-  } else if (newChartType === ChartType.TABLE) {
-    dispatch(setChartType(ChartType.TABLE));
-    chartDataClone.chartOptions = {
-      ...chartDataClone.chartOptions,
-      chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'column',
-      },
-      ...getChartOptions(),
-    };
-
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
-    dispatch(setChartData(chartDataClone));
   } else {
-    //  debugger;
     dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,

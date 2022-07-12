@@ -213,6 +213,7 @@ export const getSingleChartOptionsSeries = (
     // const series: any[] = [];
 
     if (chartType === ChartType.STACK) {
+      console.log('instack');
       data.map((element: any, index: number) => {
         const name = element.name;
         const color = colorArr[index];
@@ -238,7 +239,6 @@ export const getSingleChartOptionsSeries = (
           newDataLabels = dataLabelsNumberFormate;
         }
       }
-
       series.push({
         color: primaryBarColor,
         name: questionData.labelText,
