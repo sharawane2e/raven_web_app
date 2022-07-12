@@ -95,7 +95,7 @@ const initialState: IChartState = {
       style: {
         fontFamily: `"Avenir", Arial`,
       },
-      margin: [70, 0, 80, 0],
+      // margin: [70, 0, 80, 0],
     },
     legend: {
       enabled: false,

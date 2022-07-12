@@ -19,6 +19,7 @@ import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
 } from './chart-option-util/grid';
+import { getMultiChartOptionsSeries } from './chart-option-util/multi';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -47,6 +48,7 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
+          transposed,
         );
       case QuestionType.RANK:
         return getRankChartOptions(
@@ -83,216 +85,29 @@ const getMultiChartOptions = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
+  transposed: any,
 ): any => {
-  const {
-    questions: { bannerQuestionList },
-  } = store.getState();
+  // const {
+  //   questions: { bannerQuestionList },
+  // } = store.getState();
 
-  const selectedBannerQuestionId = bannerQuestionData?.qId;
+  const series = getMultiChartOptionsSeries(
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    transposed,
+  );
+  console.log('seriesMulti', series);
 
-  const {
-    chart: { chartLabelType },
-  } = store.getState();
-
-  const {
-    chart: { chartType },
-  } = store.getState();
-
-  const {
-    plotOptions: {
-      series: {
-        dataLabels: { format },
-      },
+  return {
+    legend: {
+      enabled: false,
     },
-  } = chartOptionsData;
-
-  if (selectedBannerQuestionId) {
-    //debugger;
-    const categories: string[] = [];
-    const series: any[] = [];
-
-    questionData.options.forEach((option) => {
-      categories.push(option.labelText);
-    });
-
-    const subGroups = questionData.options.filter((option: IQuestionOption) => {
-      const subGroup = chartData[0][option.labelCode];
-      if (subGroup && subGroup?.length) return true;
-      return false;
-    });
-
-    // @ts-ignore
-    for (let index = 0; index < bannerQuestionData?.options.length; index++) {
-      const bannerQuesOption = bannerQuestionData?.options[index];
-      const data: any[] = [];
-
-      for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
-        const quesOption = subGroups[quesIndex];
-
-        let optionData = chartData[0][quesOption.labelCode];
-        // console.log(optionData);
-
-        let count = 0;
-        // debugger;
-        if (optionData) {
-          const label = optionData.find(
-            // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode,
-          );
-
-          let localBase = optionData?.reduce(
-            (sum: number, option: any) => sum + option.count,
-            0,
-          );
-
-          const bannerQuestion: any = find(bannerQuestionList, function (o) {
-            return o.qId === selectedBannerQuestionId;
-          });
-          const bannerQuestionType = bannerQuestion.type;
-
-          if (bannerQuestionType == QuestionType.MULTI) {
-            //this is working in multi 2 multi
-            localBase = find(chartData[1], function (o) {
-              return o.labelCode === quesOption.labelCode;
-            })?.count;
-          }
-
-          if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
-            count = (label.count / localBase) * 100;
-          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
-            count = label.count;
-          }
-
-          if (label) {
-            let percentageValue = (label.count / localBase) * 100;
-            let numberValue = label.count;
-            if (count)
-              data.push({
-                name: quesOption.labelText,
-                // y: +count.toFixed(decimalPrecision),
-                y: count !== null ? round(count, decimalPrecision) : 0,
-                percentageValue,
-                numberValue,
-                baseCount: localBase,
-              });
-          }
-        }
-      }
-
-      if (data.length)
-        series.push({
-          name: bannerQuesOption?.labelText,
-          color: index < colorArr.length ? colorArr[index] : undefined,
-          data,
-          dataLabels,
-        });
-    }
-
-    return {
-      legend: {
-        enabled: true,
-      },
-      tooltip: { ...getToolTip() },
-      series,
-    };
-  } else {
-    const data: any[] = [];
-    for (
-      let optionIndex = 0;
-      optionIndex < questionData.options.length;
-      optionIndex++
-    ) {
-      const option = questionData.options[optionIndex];
-      const label = chartData.find(
-        (record: { labelCode: string; count: number }) =>
-          record.labelCode === option.labelCode,
-      );
-      let count = 0;
-      if (label) {
-        count = label.count;
-      }
-      // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
-      let plotValue;
-      // plotValue = (count / baseCount) * 100;
-      let percentageValue = (count / baseCount) * 100;
-      let numberValue = count;
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        plotValue = (count / baseCount) * 100;
-      } else {
-        plotValue = count;
-      }
-
-      if (plotValue > 0) {
-        const seriesObject = _.find(questionData.options, function (o) {
-          return o.labelCode === option.labelCode;
-        });
-        if (seriesObject?.labelCode.split('_')[0] == 'N') {
-          data.push({
-            name: option.labelText,
-            // y: round(plotValue, decimalPrecision),
-            y: plotValue,
-            percentageValue,
-            numberValue,
-            baseCount: baseCount,
-            color: '#f1ad0f',
-          });
-        } else {
-          data.push({
-            name: option.labelText,
-            // y: round(plotValue, decimalPrecision),
-            y: plotValue,
-            percentageValue,
-            numberValue,
-            baseCount: baseCount,
-          });
-        }
-      }
-    }
-
-    const series: any[] = [];
-
-    if (chartType === ChartType.STACK) {
-      data.map((element: any, index: number) => {
-        //console.log("element", element);
-        const name = element.name;
-        const color = colorArr[index];
-        const data = [
-          {
-            name: questionData.labelText,
-            y: element.y,
-            numberValue: element.numberValue,
-            percentageValue: element.percentageValue,
-            baseCount: baseCount,
-          },
-        ];
-        series.push({ name, color, data, dataLabels });
-      });
-    } else {
-      series.push({
-        color: primaryBarColor,
-        name: questionData.labelText,
-        data,
-        dataLabels: {
-          formatter: function (this: any) {
-            // if (this.y > 100) {
-            //   return this.y + 'CB';
-            // }
-            return this.y + 'AB' + this.key;
-          },
-        },
-      });
-    }
-
-    console.log('series', series);
-
-    return {
-      legend: {
-        enabled: false,
-      },
-      tooltip: { ...getToolTip() },
-      series,
-    };
-  }
+    tooltip: { ...getToolTip() },
+    series,
+  };
 };
 
 const getSingleChartOptions = (

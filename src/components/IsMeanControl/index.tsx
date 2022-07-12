@@ -5,10 +5,7 @@ import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartType } from '../../enums/ChartType';
 import {
-  setChartData,
   setChartLabel,
-  setChartTranspose,
-  setChartType,
   showMean,
   updateChartOptions,
   updateSignificant,
