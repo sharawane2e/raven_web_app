@@ -72,7 +72,10 @@ export const fetchChartData = async (
       type: type,
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
+      bannerType: chartData.bannerQuestionData?.type,
     };
+
+    console.log(body);
 
     let response: any = "";
 
