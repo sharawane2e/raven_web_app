@@ -118,10 +118,16 @@ export const getSingleChartOptionsSeries = (
             count = _.sumBy(label, function (o) {
               return o.count;
             });
-            localBase = optionData?.reduce(
-              (sum: number, option: any) => sum + option.count,
-              0
-            );
+            if (bannerQuestionData?.type == QuestionType.MULTI) {
+              localBase = find(chartData[1], {
+                labelCode: quesOption.labelCode,
+              })?.count;
+            } else {
+              localBase = optionData?.reduce(
+                (sum: number, option: any) => sum + option.count,
+                0
+              );
+            }
           }
 
           let percentageValue;
@@ -226,9 +232,6 @@ const getSingleSeries = (
         baseCount: baseCount,
       });
   }
-
-  // const series: any[] = [];
-
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
       const name = element.name;
