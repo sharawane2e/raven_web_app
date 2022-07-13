@@ -79,12 +79,14 @@ export const getSingleChartOptionsSeries = (
         //   )
         // );
 
-        getMultiTransposeChartOptions(
-          questionData,
-          chartData,
-          bannerQuestionData,
-          subGroups,
-          transposed
+        series.push(
+          ...getMultiTransposeChartOptions(
+            questionData,
+            chartData,
+            bannerQuestionData,
+            subGroups,
+            transposed
+          )
         );
       }
     } else {
@@ -428,11 +430,9 @@ const getMultiTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any
 ) => {
-  console.log(questiondata);
-  console.log(chartData);
-  console.log(bannerQuestionData);
-  console.log(optionSubGroups);
-  console.log(transposed);
+  const {
+    chart: { chartLabelType },
+  } = store.getState();
   const series: any[] = [];
   const labelCodeArr: string[] = [];
   const baseCountArr: number[] = [];
@@ -444,10 +444,6 @@ const getMultiTransposeChartOptions = (
       }
     });
   }
-  // chartData[0].forEach((singleSeriesArr: any, index: number) => {
-
-  // });
-  console.log(labelCodeArr);
 
   labelCodeArr.forEach((labelCode: string, labelCodeIndex: number) => {
     for (const singleSeriesArr in chartData[0]) {
@@ -461,8 +457,6 @@ const getMultiTransposeChartOptions = (
         : 0;
     }
   });
-
-  console.log(baseCountArr);
 
   questiondata.options.forEach(
     (questionOption: any, questionOptionIndex: number) => {
@@ -496,20 +490,26 @@ const getMultiTransposeChartOptions = (
             numberValue,
             baseCount,
           });
-          // const percentageValue =
         }
       );
-
+      let newDataLabels;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
       series.push({
         name,
         color: colorArr[questionOptionIndex],
         data,
-        // dataLabels,
+        dataLabels: {
+          ...newDataLabels,
+        },
       });
     }
   );
 
-  console.log(series);
+  return series;
 };
 
 const getsignificantdifference = (series: any, chartLabelType: any) => {
