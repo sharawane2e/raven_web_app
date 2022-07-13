@@ -26,6 +26,7 @@ export interface IChartState {
   questionData: IQuestion | null;
   // openQSelection:boolean;
   chartData: any[];
+  questionChartData: any[] | null;
   chartOrientation: ChartOrientation;
   chartType: ChartType;
   chartLabelType: ChartLabelType;
@@ -80,6 +81,7 @@ const initialState: IChartState = {
   // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
+  questionChartData: null,
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
   chartLabelType: ChartLabelType.PERCENTAGE,

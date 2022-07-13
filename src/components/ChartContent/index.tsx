@@ -130,6 +130,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
       .then((chartData) => {
+        // debugger;
         dispatch(setChartData(chartData));
         // dispatch(setChartOperations(defaultChartOperations))
         dispatch(setSelectedQuestion(chartData?.questionData?.labelText));

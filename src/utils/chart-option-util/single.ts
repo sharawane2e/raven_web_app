@@ -1,25 +1,25 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 import {
   getMatchedfilter,
   getmatchedFind,
   getSum,
   indexToChar,
   significantDifference,
-} from '../Utility';
+} from "../Utility";
 import {
   colorArr,
   dataLabelsFormate,
   dataLabelsNumberFormate,
   dataUpdatedFormate,
   primaryBarColor,
-} from '../../constants/Variables';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import { ChartType } from '../../enums/ChartType';
+} from "../../constants/Variables";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import { ChartType } from "../../enums/ChartType";
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -27,8 +27,9 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean,
+  transposed: boolean
 ) => {
+  debugger;
   const {
     chart: { chartLabelType, chartType, significant },
     questions: { selectedBannerQuestionId },
@@ -44,8 +45,8 @@ export const getSingleChartOptionsSeries = (
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        'labelCode',
-        option.labelCode,
+        "labelCode",
+        option.labelCode
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -60,8 +61,8 @@ export const getSingleChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           subGroups,
-          transposed,
-        ),
+          transposed
+        )
       );
     } else {
       const newOptionData: any = [];
@@ -98,7 +99,7 @@ export const getSingleChartOptionsSeries = (
             labelCodeSum.forEach((el: any) => {
               const localbaseCount = el?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0,
+                0
               );
               baseCountSum.push(localbaseCount);
             });
@@ -111,15 +112,15 @@ export const getSingleChartOptionsSeries = (
 
             const label = getMatchedfilter(
               optionData,
-              'labelCode',
-              bannerQuesOption.labelCode,
+              "labelCode",
+              bannerQuesOption.labelCode
             );
             count = _.sumBy(label, function (o) {
               return o.count;
             });
             localBase = optionData?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0,
+              0
             );
           }
 
@@ -173,8 +174,8 @@ export const getSingleChartOptionsSeries = (
         baseCount,
         chartLabelType,
         chartType,
-        significant,
-      ),
+        significant
+      )
     );
   }
   return series;
@@ -186,7 +187,7 @@ const getSingleSeries = (
   baseCount: any,
   chartLabelType: any,
   chartType: any,
-  significant: boolean,
+  significant: boolean
 ) => {
   const series: any[] = [];
   const data: any[] = [];
@@ -200,13 +201,13 @@ const getSingleSeries = (
 
     const labelCollection = getMatchedfilter(
       chartData,
-      'labelCode',
-      option.labelCode,
+      "labelCode",
+      option.labelCode
     );
 
     let count = 0;
     if (labelCollection) {
-      count = getSum(labelCollection, 'count');
+      count = getSum(labelCollection, "count");
     }
     let plotValue;
     let percentageValue = (count / baseCount) * 100;
@@ -271,7 +272,7 @@ const getSingleTransposeChartOptions = (
   chartData: any,
   bannerQuestionData: any,
   optionSubGroups: any,
-  transposed: any,
+  transposed: any
 ) => {
   const {
     chart: { chartLabelType, significant },
@@ -340,8 +341,8 @@ const getSingleTransposeChartOptions = (
         optionData = chartData[0][quesOption?.labelCode];
         const label = getmatchedFind(
           optionData,
-          'labelCode',
-          bannerQuesOption?.labelCode,
+          "labelCode",
+          bannerQuesOption?.labelCode
         );
 
         count = label?.count;
@@ -396,14 +397,14 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
             data?.name +
             `<div className="significante--icon">(${indexToChar(index)})</div>`,
           significance: indexToChar(index),
-          significantDiffernce: '',
+          significantDiffernce: "",
         };
       }),
       dataLabels: {
         ...singleSeries.dataLabels,
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))}${
-            chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''
+            chartLabelType == ChartLabelType.PERCENTAGE ? "%" : ""
           } <span class="significante-color">${
             this.point.significantDiffernce
           } </span>`;
@@ -422,12 +423,12 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
       for (let j = 0; j < seriesdata.length; j++) {
         name.push(series.name + indexToChar(j));
         const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]['percentageValue'],
-          baseCount: seriesdata[i]['baseCount'],
+          value: seriesdata[i]["percentageValue"],
+          baseCount: seriesdata[i]["baseCount"],
         };
         const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]['percentageValue'],
-          baseCount: seriesdata[j]['baseCount'],
+          value: seriesdata[j]["percentageValue"],
+          baseCount: seriesdata[j]["baseCount"],
         };
 
         if (i != j) {
@@ -437,7 +438,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
           }
           const isSignificant = significantDifference(
             SignificantObject1,
-            SignificantObject2,
+            SignificantObject2
           );
 
           if (isSignificant) {
@@ -446,8 +447,8 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         }
       }
       if (significantArry.length) {
-        singleSeries.data[i]['significantDiffernce'] =
-          '(' + significantArry.join('') + ')';
+        singleSeries.data[i]["significantDiffernce"] =
+          "(" + significantArry.join("") + ")";
       }
     }
   });

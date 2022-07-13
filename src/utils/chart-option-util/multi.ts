@@ -1,19 +1,19 @@
-import _ from 'lodash';
-import { find, round } from 'lodash';
+import _ from "lodash";
+import { find, round } from "lodash";
 import {
   colorArr,
   dataLabelsFormate,
   dataLabelsNumberFormate,
   decimalPrecision,
   primaryBarColor,
-} from '../../constants/Variables';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
-import { QuestionType } from '../../enums/QuestionType';
-import { dataLabels } from '../../redux/reducers/chartReducer';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
-import { getToolTip } from '../ChartOptionFormatter';
+} from "../../constants/Variables";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from "../../enums/QuestionType";
+import { dataLabels } from "../../redux/reducers/chartReducer";
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { getToolTip } from "../ChartOptionFormatter";
 
 export const getMultiChartOptionsSeries = (
   questionData: any,
@@ -21,8 +21,9 @@ export const getMultiChartOptionsSeries = (
   baseCount: any,
   bannerQuestionData: any,
   chartOptionsData: any,
-  transposed: any,
+  transposed: any
 ) => {
+  console.log("insid multi");
   const {
     questions: { bannerQuestionList },
   } = store.getState();
@@ -39,7 +40,7 @@ export const getMultiChartOptionsSeries = (
 
   if (selectedBannerQuestionId) {
     debugger;
-    console.log('multi data update with chart');
+    console.log("multi data update with chart");
     //debugger;
     const categories: string[] = [];
 
@@ -68,12 +69,12 @@ export const getMultiChartOptionsSeries = (
         if (optionData) {
           const label = optionData.find(
             // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode,
+            (option: any) => option.labelCode === bannerQuesOption.labelCode
           );
 
           let localBase = optionData?.reduce(
             (sum: number, option: any) => sum + option.count,
-            0,
+            0
           );
 
           const bannerQuestion: any = find(bannerQuestionList, function (o) {
@@ -125,8 +126,8 @@ export const getMultiChartOptionsSeries = (
         chartData,
         baseCount,
         chartLabelType,
-        chartType,
-      ),
+        chartType
+      )
     );
   }
   return series;
@@ -137,7 +138,7 @@ const getMultiSeries = (
   chartData: any,
   baseCount: any,
   chartLabelType: any,
-  chartType: any,
+  chartType: any
 ) => {
   const data: any[] = [];
   const series: any[] = [];
@@ -149,7 +150,7 @@ const getMultiSeries = (
     const option = questionData.options[optionIndex];
     const label = chartData.find(
       (record: { labelCode: string; count: number }) =>
-        record.labelCode === option.labelCode,
+        record.labelCode === option.labelCode
     );
     let count = 0;
     if (label) {
@@ -170,14 +171,14 @@ const getMultiSeries = (
       const seriesObject = _.find(questionData.options, function (o) {
         return o.labelCode === option.labelCode;
       });
-      if (seriesObject?.labelCode.split('_')[0] == 'N') {
+      if (seriesObject?.labelCode.split("_")[0] == "N") {
         data.push({
           name: option.labelText,
           y: plotValue,
           percentageValue,
           numberValue,
           baseCount: baseCount,
-          color: '#f1ad0f',
+          color: "#f1ad0f",
         });
       } else {
         data.push({
