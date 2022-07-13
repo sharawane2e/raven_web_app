@@ -10,10 +10,10 @@ import {
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartType } from '../../enums/ChartType';
 import { QuestionType } from '../../enums/QuestionType';
-import { dataLabels } from '../../redux/reducers/chartReducer';
+// import { dataLabels } from '../../redux/reducers/chartReducer';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
-import { getToolTip } from '../ChartOptionFormatter';
+// import { getToolTip } from '../ChartOptionFormatter';
 
 export const getMultiChartOptionsSeries = (
   questionData: any,
@@ -38,9 +38,6 @@ export const getMultiChartOptionsSeries = (
   } = store.getState();
 
   if (selectedBannerQuestionId) {
-    debugger;
-    console.log('multi data update with chart');
-    //debugger;
     const categories: string[] = [];
 
     questionData.options.forEach((option: any) => {
@@ -110,12 +107,21 @@ export const getMultiChartOptionsSeries = (
         }
       }
 
+      let newDataLabels: any;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = dataLabelsFormate;
+      } else {
+        newDataLabels = dataLabelsNumberFormate;
+      }
+
       if (data.length)
         series.push({
           name: bannerQuesOption?.labelText,
           color: index < colorArr.length ? colorArr[index] : undefined,
           data,
-          dataLabels,
+          dataLabels: {
+            ...newDataLabels,
+          },
         });
     }
   } else {

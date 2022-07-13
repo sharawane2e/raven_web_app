@@ -146,9 +146,11 @@ export function tableChartDataGen() {
                 subRow.push(round(d.values[k], 2));
               }
               if (
-                chart?.chartTranspose &&
-                chart?.questionData?.type === QuestionType.SINGLE &&
-                chart?.bannerQuestionData?.type === QuestionType.SINGLE
+                (chart?.chartTranspose &&
+                  chart?.questionData?.type === QuestionType.SINGLE &&
+                  chart?.bannerQuestionData?.type === QuestionType.SINGLE) ||
+                chart?.questionData?.type === QuestionType?.RANK ||
+                chart?.questionData?.type === QuestionType?.GRID_MULTI
               ) {
                 totalrowSub += parseFloat(d.values[k]);
               } else {
@@ -312,7 +314,9 @@ export function tableChartDataGen() {
           (!chart?.showMean &&
             chart?.questionData?.type === QuestionType?.MULTI) ||
           chart?.questionData?.type === QuestionType?.SINGLE ||
-          chart?.questionData?.type === QuestionType?.GRID
+          chart?.questionData?.type === QuestionType?.GRID ||
+          chart?.questionData?.type === QuestionType?.GRID_MULTI ||
+          chart?.questionData?.type === QuestionType?.RANK
         ) {
           tranposedTableData.push(round(Math.max(...newUpdatedRow), 2));
           tranposedTableDataMin.push(round(Math.min(...newUpdatedRow), 2));
