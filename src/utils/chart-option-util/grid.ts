@@ -98,19 +98,6 @@ export const getGridChartoptionSeries = (
         numberValue,
         baseCount: base,
       });
-      // } else {
-      // data.push({
-      //   name: subGroup.labelText,
-      //   //y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-      //   y:
-      //     chartLabelType === ChartLabelType.PERCENTAGE
-      //       ? percentageValue
-      //       : numberValue,
-      //   percentageValue,
-      //   numberValue,
-      //   baseCount: base,
-      // });
-      // }
     }
     let newDataLabels;
     if (significant) {
@@ -178,21 +165,6 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
           });
         }
       });
-
-      // let plotValue;
-      // if (chartLabelType === ChartLabelType.PERCENTAGE) {
-      //   plotValue = (count / baseCount) * 100;
-      // } else {
-      //   plotValue = count;
-      // }
-
-      // data.push({
-      //   name: scale.labelText,
-      //   y: plotValue !== null ? round(plotValue, decimalPrecision) : 0,
-      //   percentageValue: (count / baseCount) * 100,
-      //   numberValue: count,
-      //   baseCount,
-      // });
 
       let percentageValue;
       let numberValue;
@@ -422,7 +394,6 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
     }
   });
 
-  //  console.log('updatedSeries', updatedSeries);
   return updatedSeries;
 };
 

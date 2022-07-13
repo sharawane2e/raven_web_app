@@ -135,16 +135,17 @@ export const getSingleChartOptionsSeries = (
           numberValue = count;
           percentageValue = (count / localBase) * 100;
 
-          data.push({
-            name: quesOption.labelText,
-            y:
-              chartLabelType === ChartLabelType.PERCENTAGE
-                ? percentageValue
-                : numberValue,
-            percentageValue,
-            numberValue,
-            baseCount: localBase,
-          });
+          if (numberValue)
+            data.push({
+              name: quesOption.labelText,
+              y:
+                chartLabelType === ChartLabelType.PERCENTAGE
+                  ? percentageValue
+                  : numberValue,
+              percentageValue,
+              numberValue,
+              baseCount: localBase,
+            });
         }
         let newDataLabels;
         if (significant) {
