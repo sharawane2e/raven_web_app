@@ -4,6 +4,7 @@ import { IQuestionOption } from "../../types/IBaseQuestion";
 import { IQuestion } from "../../types/IQuestion";
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
+//import { useSelector } from 'react-redux';
 import {
   getMatchedfilter,
   getmatchedFind,
@@ -18,7 +19,7 @@ import {
   dataUpdatedFormate,
   primaryBarColor,
 } from "../../constants/Variables";
-import { dataLabels } from "../../redux/reducers/chartReducer";
+//import { dataLabels } from '../../redux/reducers/chartReducer';
 import { ChartType } from "../../enums/ChartType";
 
 export const getSingleChartOptionsSeries = (
@@ -27,11 +28,12 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean
+  transposed: boolean,
+  questionChartData: any
 ) => {
   // debugger;
   const {
-    chart: { chartLabelType, chartType, significant, questionChartData },
+    chart: { chartLabelType, chartType, significant },
     questions: { selectedBannerQuestionId },
   } = store.getState();
 
@@ -157,16 +159,17 @@ export const getSingleChartOptionsSeries = (
           numberValue = count;
           percentageValue = (count / localBase) * 100;
 
-          data.push({
-            name: quesOption.labelText,
-            y:
-              chartLabelType === ChartLabelType.PERCENTAGE
-                ? percentageValue
-                : numberValue,
-            percentageValue,
-            numberValue,
-            baseCount: localBase,
-          });
+          if (numberValue)
+            data.push({
+              name: quesOption.labelText,
+              y:
+                chartLabelType === ChartLabelType.PERCENTAGE
+                  ? percentageValue
+                  : numberValue,
+              percentageValue,
+              numberValue,
+              baseCount: localBase,
+            });
         }
         let newDataLabels;
         if (significant) {
@@ -254,6 +257,16 @@ const getSingleSeries = (
         baseCount: baseCount,
       });
   }
+  let newDataLabels: any;
+  if (significant) {
+    newDataLabels = dataUpdatedFormate;
+  } else {
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = dataLabelsFormate;
+    } else {
+      newDataLabels = dataLabelsNumberFormate;
+    }
+  }
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
       const name = element.name;
@@ -267,19 +280,16 @@ const getSingleSeries = (
           baseCount: element.baseCount,
         },
       ];
-      series.push({ name, color, data, dataLabels });
+      series.push({
+        name,
+        color,
+        data,
+        dataLabels: {
+          ...newDataLabels,
+        },
+      });
     });
   } else {
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
     series.push({
       color: primaryBarColor,
       name: questionData.labelText,
@@ -494,7 +504,7 @@ const getMultiTransposeChartOptions = (
         name,
         color: colorArr[questionOptionIndex],
         data,
-        dataLabels,
+        // dataLabels,
       });
     }
   );

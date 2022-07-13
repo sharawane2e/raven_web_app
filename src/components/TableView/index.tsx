@@ -80,6 +80,8 @@ const TableView: React.FC<TableProps> = (props) => {
     const splitCol = col.toString().split('|')[0];
     const splitCol2 = col.toString().split('|')[1];
 
+    // console.log('splitCol2', splitCol2 == '()');
+
     const splicolNumber =
       chartLabelType == ChartLabelType.PERCENTAGE ? splitCol : Number(splitCol);
 
@@ -93,7 +95,7 @@ const TableView: React.FC<TableProps> = (props) => {
           })}
         >
           {splitCol}
-          {splitCol2 != undefined ? (
+          {splitCol2 != undefined && splitCol2 != '()' ? (
             <span className="significante-color table-significante">
               {splitCol2}
             </span>

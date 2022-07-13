@@ -1,20 +1,23 @@
 import {
   colorArr,
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
   decimalPrecision,
-  primaryBarColor,
 } from "../constants/Variables";
 import { ChartLabelType } from "../enums/ChartLabelType";
 import { ChartType } from "../enums/ChartType";
 import { QuestionType } from "../enums/QuestionType";
-import { dataLabels } from "../redux/reducers/chartReducer";
-import store from "../redux/store";
-import { IQuestionOption } from "../types/IBaseQuestion";
+//import { dataLabels } from '../redux/reducers/chartReducer';
+import store, { RootState } from "../redux/store";
+//import { IQuestionOption } from '../types/IBaseQuestion';
 import { IQuestion } from "../types/IQuestion";
 import { round } from "./Utility";
-import _, { find, omit } from "lodash";
-import { ChartOrientation } from "../enums/ChartOrientation";
+import _, { omit } from "lodash";
+///import { ChartOrientation } from '../enums/ChartOrientation';
 import { getNumberChartOption } from "../services/ChartNumberService";
 import { getSingleChartOptionsSeries } from "./chart-option-util/single";
+//import { useSelector } from 'react-redux';
+
 import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
@@ -40,7 +43,8 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
-          transposed
+          transposed,
+          questionChartData
         );
       case QuestionType.MULTI:
         return getMultiChartOptions(
@@ -71,7 +75,6 @@ export const getChartOptions = (
           chartOptionsData,
           transposed
         );
-
       default:
         return {};
     }
@@ -88,11 +91,6 @@ const getMultiChartOptions = (
   chartOptionsData: any,
   transposed: any
 ): any => {
-  // debugger;
-  // const {
-  //   questions: { bannerQuestionList },
-  // } = store.getState();
-
   const series = getMultiChartOptionsSeries(
     questionData,
     chartData,
@@ -117,19 +115,17 @@ const getSingleChartOptions = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean
+  transposed: boolean,
+  questionChartData: any
 ): any => {
-  const {
-    chart: { chartType },
-  } = store.getState();
-
   const series = getSingleChartOptionsSeries(
     questionData,
     chartData,
     baseCount,
     bannerQuestionData,
     chartOptionsData,
-    transposed
+    transposed,
+    questionChartData
   );
 
   return {
@@ -147,7 +143,6 @@ const getRankChartOptions = (
   baseCount: number,
   transposed: boolean
 ): any => {
-  // debugger;
   const categories = [];
   const series = [];
 
@@ -168,7 +163,6 @@ const getRankChartOptions = (
     scaleIndex < questionData.scale.length;
     scaleIndex++
   ) {
-    // debugger;
     const scale = questionData.scale[scaleIndex];
     const data: any[] = [];
     for (
@@ -176,7 +170,6 @@ const getRankChartOptions = (
       subGroupIndex < subGroups.length;
       subGroupIndex++
     ) {
-      // debugger;
       const subGroup = subGroups[subGroupIndex];
       categories.push(subGroup.labelText);
       const optionData = chartData.find((c: any) => c._id === subGroup.qId);
@@ -203,7 +196,6 @@ const getRankChartOptions = (
         });
       } else {
         chartData.forEach(function (eachRowData: any) {
-          // debugger;
           const chartOptionObject: any = _.filter(eachRowData.options, {
             option: scale.labelCode,
           });
@@ -242,12 +234,20 @@ const getRankChartOptions = (
 
       // }
     }
+    let newDataLabels: any;
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = dataLabelsFormate;
+    } else {
+      newDataLabels = dataLabelsNumberFormate;
+    }
     if (data.length)
       series.push({
         name: scale.labelText,
         color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
         data,
-        dataLabels,
+        dataLabels: {
+          ...newDataLabels,
+        },
       });
   }
 
@@ -366,12 +366,20 @@ const getGridMultiChartOptions = (
         });
       }
     }
+    let newDataLabels: any;
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = dataLabelsFormate;
+    } else {
+      newDataLabels = dataLabelsNumberFormate;
+    }
     if (data.length)
       series.push({
         name: scale.labelText,
         color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
         data,
-        dataLabels,
+        dataLabels: {
+          ...newDataLabels,
+        },
       });
   }
   return {
@@ -408,23 +416,23 @@ export const getToolTip = () => {
   if (significant) {
     if (questionData?.type === QuestionType?.NUMBER) {
       tooltip["pointFormat"] =
-        "<span>Sign text - {point.significantDiffernce}</span><br/<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
+        '<span style="color:#000fff !important;">Sign text - {point.significantDiffernce}</span><br/<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
     } else {
       tooltip["pointFormat"] =
-        '<span className="significante-color">Sign text - {point.significantDiffernce}</span><br/><span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
+        '<span  style="color:#000fff !important;">Sign text - {point.significantDiffernce}</span><br/><span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
     }
-  }
-
-  if (showMean) {
-    tooltip["pointFormat"] =
-      "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
   } else {
-    if (questionData?.type === QuestionType?.NUMBER) {
+    if (showMean) {
       tooltip["pointFormat"] =
         "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
     } else {
-      tooltip["pointFormat"] =
-        "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+      if (questionData?.type === QuestionType?.NUMBER) {
+        tooltip["pointFormat"] =
+          "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
+      } else {
+        tooltip["pointFormat"] =
+          "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
+      }
     }
   }
 
