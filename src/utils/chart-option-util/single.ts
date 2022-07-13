@@ -29,9 +29,8 @@ export const getSingleChartOptionsSeries = (
   chartOptionsData: any,
   transposed: boolean
 ) => {
-  debugger;
   const {
-    chart: { chartLabelType, chartType, significant },
+    chart: { chartLabelType, chartType, significant, questionChartData },
     questions: { selectedBannerQuestionId },
   } = store.getState();
 
@@ -119,7 +118,7 @@ export const getSingleChartOptionsSeries = (
               return o.count;
             });
             if (bannerQuestionData?.type == QuestionType.MULTI) {
-              localBase = find(chartData[1], {
+              localBase = find(questionChartData, {
                 labelCode: quesOption.labelCode,
               })?.count;
             } else {

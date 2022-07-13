@@ -28,6 +28,7 @@ export const getChartOptions = (
   bannerQuestionData: IQuestion | null = store.getState().chart
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions,
+  questionChartData: any = store.getState().chart.questionChartData,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
   if (questionData !== null) {
