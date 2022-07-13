@@ -68,17 +68,7 @@ export const getSingleChartOptionsSeries = (
         );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
-        // series.length = 0;
-        // series.push(
-        //   ...getMultiTransposeChartOptions(
-        //     questionData,
-        //     chartData,
-        //     bannerQuestionData,
-        //     subGroups,
-        //     transposed
-        //   )
-        // );
-
+        series.length = 0;
         series.push(
           ...getMultiTransposeChartOptions(
             questionData,
@@ -430,8 +420,11 @@ const getMultiTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any
 ) => {
+  console.log(questiondata);
+  console.log(chartData);
+  console.log(bannerQuestionData);
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, significant },
   } = store.getState();
   const series: any[] = [];
   const labelCodeArr: string[] = [];
@@ -460,6 +453,7 @@ const getMultiTransposeChartOptions = (
 
   questiondata.options.forEach(
     (questionOption: any, questionOptionIndex: number) => {
+      if (_.isArray(questionOption.labelCode)) return;
       const data: any[] = [];
 
       const name = questionOption.labelText;
@@ -481,11 +475,13 @@ const getMultiTransposeChartOptions = (
 
           const baseCount = baseCountArr[baseCountIndex];
           const percentageValue = (numberValue / baseCount) * 100;
-          const y = percentageValue;
 
           data.push({
             name,
-            y,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
             percentageValue,
             numberValue,
             baseCount,
@@ -493,10 +489,14 @@ const getMultiTransposeChartOptions = (
         }
       );
       let newDataLabels;
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
+      if (significant) {
+        newDataLabels = dataUpdatedFormate;
       } else {
-        newDataLabels = dataLabelsNumberFormate;
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
       }
       series.push({
         name,
