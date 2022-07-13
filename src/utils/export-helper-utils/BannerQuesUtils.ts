@@ -42,7 +42,6 @@ export function bannerChartDataGen(
         )
       );
     } else {
-      console.log("elsee");
       seriesData.length = 0;
       seriesData.push(
         ...getSingleTransposeTableOptions(
@@ -63,13 +62,6 @@ export function bannerChartDataGen(
           bannerQuestionData
         )
       );
-      // console.log(
-      //   getMultiTransposeTableOptions(
-      //     questionData,
-      //     chartData,
-      //     bannerQuestionData
-      //   )
-      // );
     } else {
       seriesData.length = 0;
       seriesData.push(
@@ -173,7 +165,6 @@ const getSingleOptions = (
                 0
               );
             }
-
           let subOptionDataCount = 0;
           let subOptionDataPercentage = 0;
           if (count == 0 && localBase == 0) {
@@ -186,9 +177,7 @@ const getSingleOptions = (
             );
             subOptionDataCount = count;
           }
-
           countValues.push(subOptionDataCount);
-
           percentageValues.push(subOptionDataPercentage);
           baseCounts.push(localBase);
         }
@@ -198,11 +187,6 @@ const getSingleOptions = (
 
           if (obj && obj.length != 0) {
             let base: any;
-            //  base = obj?.reduce(
-            //   (sum: number, option: any) => sum + option.count,
-            //   0
-            // );
-
             if (bannerQuestionData?.type == QuestionType.MULTI) {
               base = find(questionChartData, {
                 labelCode: option.labelCode,
@@ -214,34 +198,6 @@ const getSingleOptions = (
               );
             }
 
-            if (
-              bannerQuestionData.type == QuestionType.MULTI &&
-              questionData.type == QuestionType.MULTI
-            ) {
-              // base = find(chartData[1], function (o) {
-              //   return o.labelCode === option.labelCode;
-              // })?.count;
-            }
-            if (
-              bannerQuestionData.type == QuestionType.MULTI &&
-              questionData.type == QuestionType.SINGLE
-            ) {
-              // const optionData = chartData[0][option?.labelCode];
-              // base = optionData?.reduce(
-              //   (sum: number, option: any) => sum + option.count,
-              //   0
-              // );
-            }
-            //   console.log("base", base);
-
-            if (
-              bannerQuestionData.type == QuestionType.SINGLE &&
-              questionData.type == QuestionType.MULTI
-            ) {
-              // base = _.sumBy(chartData[0][option.labelCode], function (o: any) {
-              //   return o.count;
-              // });
-            }
             let subOptionData;
             subOptionData = obj.find((subObj: any) => {
               if (subObj.labelCode === scaleOption.labelCode) {
@@ -296,7 +252,6 @@ const getMultiTransposeTableOptions = (
   chartData: any,
   bannerQuestionData: any
 ) => {
-  //console.log("questionData", bannerQuestionData);
   const {
     chart: { chartLabelType },
   } = store.getState();

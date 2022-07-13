@@ -420,9 +420,6 @@ const getMultiTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any
 ) => {
-  console.log(questiondata);
-  console.log(chartData);
-  console.log(bannerQuestionData);
   const {
     chart: { chartLabelType, significant },
   } = store.getState();
