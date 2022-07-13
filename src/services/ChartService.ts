@@ -66,13 +66,14 @@ export const fetchChartData = async (
       return o.qId === bannerQuesId;
     });
     const bannerQuestionType = bannerQuestion?.type;
+    console.log("bannerQuestionType", bannerQuestionType);
 
     const body = {
       qId: quesId,
       type: type,
       filters: chartFilters,
       bannerQuestion: bannerQuesId,
-      bannerType: chartData.bannerQuestionData?.type,
+      bannerType: bannerQuestionType ? bannerQuestionType : null,
     };
 
     console.log(body);
