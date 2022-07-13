@@ -100,7 +100,7 @@ const initialState: IChartState = {
       //margin: [70, 0, 80, 0],
     },
     legend: {
-      enabled: false,
+      enabled: true,
       reversed: false,
     },
     tooltip: {

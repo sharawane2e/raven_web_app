@@ -88,7 +88,7 @@ const getMultiChartOptions = (
   chartOptionsData: any,
   transposed: any
 ): any => {
-  debugger;
+  // debugger;
   // const {
   //   questions: { bannerQuestionList },
   // } = store.getState();

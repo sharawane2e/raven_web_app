@@ -29,6 +29,7 @@ export const getSingleChartOptionsSeries = (
   chartOptionsData: any,
   transposed: boolean
 ) => {
+  // debugger;
   const {
     chart: { chartLabelType, chartType, significant, questionChartData },
     questions: { selectedBannerQuestionId },
@@ -36,7 +37,6 @@ export const getSingleChartOptionsSeries = (
 
   const series: any[] = [];
   if (selectedBannerQuestionId) {
-    // const series: any[] = [];
     let subGroups: any;
     let count = 0;
 
@@ -52,18 +52,41 @@ export const getSingleChartOptionsSeries = (
       return false;
     });
 
-    if (transposed && bannerQuestionData?.type == QuestionType.SINGLE) {
-      series.length = 0;
-      series.push(
-        ...getSingleTransposeChartOptions(
+    if (transposed) {
+      if (bannerQuestionData?.type == QuestionType.SINGLE) {
+        series.length = 0;
+        series.push(
+          ...getSingleTransposeChartOptions(
+            questionData,
+            chartData,
+            bannerQuestionData,
+            subGroups,
+            transposed
+          )
+        );
+      }
+      if (bannerQuestionData?.type == QuestionType.MULTI) {
+        // series.length = 0;
+        // series.push(
+        //   ...getMultiTransposeChartOptions(
+        //     questionData,
+        //     chartData,
+        //     bannerQuestionData,
+        //     subGroups,
+        //     transposed
+        //   )
+        // );
+
+        getMultiTransposeChartOptions(
           questionData,
           chartData,
           bannerQuestionData,
           subGroups,
           transposed
-        )
-      );
+        );
+      }
     } else {
+      //when question is single and banner is multi
       const newOptionData: any = [];
       // @ts-ignore
       for (let index = 0; index < bannerQuestionData?.options.length; index++) {
@@ -386,6 +409,97 @@ const getSingleTransposeChartOptions = (
     });
   }
   return series;
+};
+
+const getMultiTransposeChartOptions = (
+  questiondata: any,
+  chartData: any,
+  bannerQuestionData: any,
+  optionSubGroups: any,
+  transposed: any
+) => {
+  console.log(questiondata);
+  console.log(chartData);
+  console.log(bannerQuestionData);
+  console.log(optionSubGroups);
+  console.log(transposed);
+  const series: any[] = [];
+  const labelCodeArr: string[] = [];
+  const baseCountArr: number[] = [];
+  for (const singleSeriesArr in chartData[0]) {
+    chartData[0][singleSeriesArr].forEach((serieObject: any) => {
+      if (labelCodeArr.indexOf(serieObject.labelCode) == -1) {
+        labelCodeArr.push(serieObject.labelCode);
+        baseCountArr.push(0);
+      }
+    });
+  }
+  // chartData[0].forEach((singleSeriesArr: any, index: number) => {
+
+  // });
+  console.log(labelCodeArr);
+
+  labelCodeArr.forEach((labelCode: string, labelCodeIndex: number) => {
+    for (const singleSeriesArr in chartData[0]) {
+      const serieObject: any = getMatchedfilter(
+        chartData[0][singleSeriesArr],
+        "labelCode",
+        labelCode
+      );
+      baseCountArr[labelCodeIndex] += serieObject[0]?.count
+        ? serieObject[0]?.count
+        : 0;
+    }
+  });
+
+  console.log(baseCountArr);
+
+  questiondata.options.forEach(
+    (questionOption: any, questionOptionIndex: number) => {
+      const data: any[] = [];
+
+      const name = questionOption.labelText;
+
+      bannerQuestionData.options.forEach(
+        (bannerOption: any, bannerOptionIndex: number) => {
+          const name = bannerOption.labelText;
+          const chartDataArr = chartData[0][questionOption.labelCode];
+          const chartObjectArr: any = getMatchedfilter(
+            chartDataArr,
+            "labelCode",
+            bannerOption.labelCode
+          );
+          const numberValue = chartObjectArr[0]?.count
+            ? chartObjectArr[0]?.count
+            : 0;
+
+          const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
+
+          const baseCount = baseCountArr[baseCountIndex];
+          const percentageValue = (numberValue / baseCount) * 100;
+          const y = percentageValue;
+
+          data.push({
+            name,
+            y,
+            percentageValue,
+            numberValue,
+            baseCount,
+          });
+          // const percentageValue =
+        }
+      );
+
+      series.push({
+        name,
+        color: colorArr[questionOptionIndex],
+        data,
+        dataLabels,
+      });
+    }
+  );
+
+  console.log(series);
 };
 
 const getsignificantdifference = (series: any, chartLabelType: any) => {
