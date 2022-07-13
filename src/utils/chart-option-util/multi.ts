@@ -38,9 +38,6 @@ export const getMultiChartOptionsSeries = (
   } = store.getState();
 
   if (selectedBannerQuestionId) {
-    debugger;
-    console.log('multi data update with chart');
-    //debugger;
     const categories: string[] = [];
 
     questionData.options.forEach((option: any) => {

@@ -1,18 +1,12 @@
-import {
-  colorArr,
-  decimalPrecision,
-  primaryBarColor,
-} from '../constants/Variables';
+import { colorArr, decimalPrecision } from '../constants/Variables';
 import { ChartLabelType } from '../enums/ChartLabelType';
 import { ChartType } from '../enums/ChartType';
 import { QuestionType } from '../enums/QuestionType';
 import { dataLabels } from '../redux/reducers/chartReducer';
 import store from '../redux/store';
-import { IQuestionOption } from '../types/IBaseQuestion';
 import { IQuestion } from '../types/IQuestion';
 import { round } from './Utility';
 import _, { find, omit } from 'lodash';
-import { ChartOrientation } from '../enums/ChartOrientation';
 import { getNumberChartOption } from '../services/ChartNumberService';
 import { getSingleChartOptionsSeries } from './chart-option-util/single';
 import {
@@ -87,10 +81,6 @@ const getMultiChartOptions = (
   chartOptionsData: any,
   transposed: any,
 ): any => {
-  // const {
-  //   questions: { bannerQuestionList },
-  // } = store.getState();
-
   const series = getMultiChartOptionsSeries(
     questionData,
     chartData,
