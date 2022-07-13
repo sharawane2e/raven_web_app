@@ -31,7 +31,6 @@ export const getSingleChartOptionsSeries = (
   transposed: boolean,
   questionChartData: any
 ) => {
-  // debugger;
   const {
     chart: { chartLabelType, chartType, significant },
     questions: { selectedBannerQuestionId },
@@ -80,6 +79,7 @@ export const getSingleChartOptionsSeries = (
         );
       }
     } else {
+      // debugger;
       //when question is single and banner is multi
       const newOptionData: any = [];
       // @ts-ignore
@@ -420,9 +420,6 @@ const getMultiTransposeChartOptions = (
   optionSubGroups: any,
   transposed: any
 ) => {
-  console.log(questiondata);
-  console.log(chartData);
-  console.log(bannerQuestionData);
   const {
     chart: { chartLabelType, significant },
   } = store.getState();
