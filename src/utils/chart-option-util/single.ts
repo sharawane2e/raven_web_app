@@ -4,7 +4,7 @@ import { IQuestionOption } from '../../types/IBaseQuestion';
 import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
-//import { useSelector } from 'react-redux';
+
 import {
   getMatchedfilter,
   getmatchedFind,
@@ -19,7 +19,7 @@ import {
   dataUpdatedFormate,
   primaryBarColor,
 } from '../../constants/Variables';
-//import { dataLabels } from '../../redux/reducers/chartReducer';
+
 import { ChartType } from '../../enums/ChartType';
 
 export const getSingleChartOptionsSeries = (

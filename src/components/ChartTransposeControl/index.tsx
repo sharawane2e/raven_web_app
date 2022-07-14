@@ -29,16 +29,17 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
     {
       tooltip: 'Transpose',
       renderChild: () => <TransposeIcon />,
-      onClick: () =>
-        (questionData?.type == QuestionType.MULTI &&
-          bannerQuestionData?.type == QuestionType.MULTI) 
-          // ||
-        // (questionData?.type == QuestionType.SINGLE &&
-        //   bannerQuestionData?.type == QuestionType.MULTI) ||
-        // (questionData?.type == QuestionType.MULTI &&
-        //   bannerQuestionData?.type == QuestionType.SINGLE)
-          ? transposeChartMulti()
-          : transposeChart(),
+      // onClick: () =>
+      //   (questionData?.type == QuestionType.MULTI &&
+      //     bannerQuestionData?.type == QuestionType.MULTI) 
+      //     // ||
+      //   // (questionData?.type == QuestionType.SINGLE &&
+      //   //   bannerQuestionData?.type == QuestionType.MULTI) ||
+      //   // (questionData?.type == QuestionType.MULTI &&
+      //   //   bannerQuestionData?.type == QuestionType.SINGLE)
+      //     ? transposeChartMulti()
+      //     : transposeChart(),
+      onClick: transposeChart,
       active: chartTranspose,
       disabled: disabledOption(),
       disableClick: () => Toaster.error(StaticText.DISABLED_CHART_TRANS),

@@ -63,6 +63,16 @@ export const getMultiChartOptionsSeries = (
         );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
+        series.length = 0;
+        series.push(
+          ...getMultiTransposeChartOptions(
+            questionData,
+            chartData,
+            bannerQuestionData,
+            chartOptionsData,
+            bannerChartData,
+          ),
+        );
       }
     } else {
       series.length = 0;
@@ -73,6 +83,7 @@ export const getMultiChartOptionsSeries = (
           bannerQuestionData,
           bannerQuestionList,
           chartLabelType,
+          questionChartData,
         ),
       );
     }
@@ -114,9 +125,8 @@ const getMultiChartSeries = (
     if (label) {
       count = label.count;
     }
-    // const plotValue = +((count / baseCount) * 100).toFixed(decimalPrecision);
+
     let plotValue;
-    // plotValue = (count / baseCount) * 100;
     let percentageValue = (count / baseCount) * 100;
     let numberValue = count;
     if (chartLabelType === ChartLabelType.PERCENTAGE) {
@@ -198,6 +208,7 @@ const multiSingleBannerChart = (
   bannerQuestionData: any,
   bannerQuestionList: any,
   chartLabelType: any,
+  questionChartData: any,
 ) => {
   // debugger;
   const {
@@ -247,7 +258,7 @@ const multiSingleBannerChart = (
 
         if (bannerQuestionType == QuestionType.MULTI) {
           //this is working in multi 2 multi
-          localBase = find(chartData[0], function (o) {
+          localBase = find(questionChartData, function (o) {
             return o.labelCode === quesOption.labelCode;
           })?.count;
         }
@@ -429,6 +440,79 @@ const getSingleTransposeChartOptions = (
   return series;
 };
 
+const getMultiTransposeChartOptions = (
+  questionData: any,
+  chartData: any,
+  bannerQuestionData: any,
+  chartOptionsData: any,
+  bannerChartData: any,
+) => {
+  const {
+    chart: { chartLabelType, significant },
+  } = store.getState();
+  const series: any[] = [];
+
+  questionData.options.forEach(
+    (questionOptionObject: any, questionOptionIndex: number) => {
+      const name = questionOptionObject.labelText;
+      const data: any[] = [];
+      bannerQuestionData.options.forEach(
+        (bannerOptionObject: any, bannerOptionIndex: number) => {
+          // debugger;
+          const name = bannerOptionObject.labelText;
+          const baseCountArr = getMatchedfilter(
+            bannerChartData,
+            'labelCode',
+            bannerOptionObject.labelCode,
+          );
+          const baseCount = baseCountArr[0]?.count;
+          const numberValueArr = getMatchedfilter(
+            chartData[0][questionOptionObject.labelCode],
+            'labelCode',
+            bannerOptionObject.labelCode,
+          );
+          const numberValue = numberValueArr[0]?.count;
+          const percentageValue = (numberValue / baseCount) * 100;
+          const y =
+            chartLabelType == ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue;
+          data.push({
+            name,
+            y,
+            percentageValue,
+            numberValue,
+            baseCount,
+          });
+        },
+      );
+      let newDataLabels;
+      if (significant) {
+        newDataLabels = dataUpdatedFormate;
+      } else {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
+      }
+      series.push({
+        name,
+        data,
+        dataLabels: {
+          ...newDataLabels,
+        },
+      });
+    },
+  );
+  if (significant) {
+    const updatedSeries = getsignificantdifference(series, chartLabelType);
+    series.length = 0;
+    series.push(...updatedSeries);
+  }
+  return series;
+};
+
 const getsignificantdifference = (series: any, chartLabelType: any) => {
   const updatedSeries = series.map((singleSeries: any) => {
     const updatedSeriesData = {
@@ -439,10 +523,6 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
         return {
           ...data,
           name: dataName,
-          //name,
-          // name:
-          //   data?.name +
-          //   `<div className="significante--icon">(${indexToChar(index)})</div>`,
           significance: indexToChar(index),
           significantDiffernce: '',
         };
@@ -468,10 +548,7 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
     for (let i = 0; i < seriesdata.length; i++) {
       const significantArry: any = [];
       const name = [];
-
-      //console.log(seriesdata[i].name);
       for (let j = 0; j < seriesdata.length; j++) {
-        // debugger;
         name.push(seriesdata[i].name + indexToChar(j));
         const SignificantObject1: SignificantObject = {
           value: seriesdata[i]['percentageValue'],
@@ -492,13 +569,11 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
             significantArry.push(indexToChar(j));
           }
         }
-        //return name;
       }
       if (significantArry.length) {
         singleSeries.data[i]['significantDiffernce'] =
           '(' + significantArry.join('') + ')';
       }
-      // console.log('seriesdata', name);
     }
   });
 

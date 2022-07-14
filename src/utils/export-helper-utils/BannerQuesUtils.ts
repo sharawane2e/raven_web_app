@@ -21,10 +21,6 @@ export function bannerChartDataGen(
   chartTranspose: any,
   questionChartData: any,
 ) {
-  const {
-    chart: { chartLabelType },
-  } = store.getState();
-
   const seriesData: any = [];
 
   if (
@@ -254,7 +250,7 @@ const getMultiTransposeTableOptions = (
   bannerQuestionData: any,
 ) => {
   const {
-    chart: { chartLabelType, significant },
+    chart: { chartLabelType, significant, bannerChartData },
   } = store.getState();
   const seriesData: any[] = [];
   const labelCodeArr: string[] = [];
@@ -315,20 +311,30 @@ const getMultiTransposeTableOptions = (
           const numberValue = getSum(chartObjectArr, 'count');
 
           let baseCount: number = 0;
-
-          if (_.isArray(bannerOption.labelCode)) {
-            const baseCountIndexArr: number[] = [];
-            labelCodeArr.map((labelCode) => {
-              if (bannerOption.labelCode.indexOf(labelCode) != -1) {
-                baseCountIndexArr.push(labelCodeArr.indexOf(labelCode));
-              }
-            });
-            baseCountIndexArr.forEach((baseCountIndex: number) => {
-              baseCount += baseCountArr[baseCountIndex];
-            });
+          if (bannerQuestionData?.type == QuestionType.MULTI) {
+            const baseCountArr = getMatchedfilter(
+              bannerChartData,
+              'labelCode',
+              bannerOption.labelCode,
+            );
+            baseCount = baseCountArr[0]?.count;
           } else {
-            const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
-            baseCount = baseCountArr[baseCountIndex];
+            if (_.isArray(bannerOption.labelCode)) {
+              const baseCountIndexArr: number[] = [];
+              labelCodeArr.map((labelCode) => {
+                if (bannerOption.labelCode.indexOf(labelCode) != -1) {
+                  baseCountIndexArr.push(labelCodeArr.indexOf(labelCode));
+                }
+              });
+              baseCountIndexArr.forEach((baseCountIndex: number) => {
+                baseCount += baseCountArr[baseCountIndex];
+              });
+            } else {
+              const baseCountIndex = labelCodeArr.indexOf(
+                bannerOption.labelCode,
+              );
+              baseCount = baseCountArr[baseCountIndex];
+            }
           }
 
           const percentageValue = (numberValue / baseCount) * 100;
