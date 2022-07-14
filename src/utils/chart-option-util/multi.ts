@@ -14,7 +14,7 @@ import { QuestionType } from "../../enums/QuestionType";
 // import { dataLabels } from '../../redux/reducers/chartReducer';
 import store from "../../redux/store";
 import { IQuestionOption } from "../../types/IBaseQuestion";
-import { getMatchedfilter } from "../Utility";
+import { getMatchedfilter, getSum } from "../Utility";
 // import { getToolTip } from '../ChartOptionFormatter';
 
 export const getMultiChartOptionsSeries = (
@@ -45,15 +45,19 @@ export const getMultiChartOptionsSeries = (
   if (selectedBannerQuestionId) {
     if (transposed) {
       if (bannerQuestionData?.type == QuestionType.SINGLE) {
-        getSingleTransposeChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          questionChartData,
-          bannerChartData,
-          transposed
+        series.length = 0;
+
+        series.push(
+          ...getSingleTransposeChartOptions(
+            questionData,
+            chartData,
+            baseCount,
+            bannerQuestionData,
+            chartOptionsData,
+            questionChartData,
+            bannerChartData,
+            transposed
+          )
         );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -311,18 +315,51 @@ const getSingleTransposeChartOptions = (
   const labelCodeArr: string[] = [];
   const baseCountArr: number[] = [];
 
-  bannerChartData.forEach(
-    (bannerChartObject: any, bannerChartIndex: number) => {
-      labelCodeArr.push(bannerChartObject.labelCode);
-      baseCountArr.push(bannerChartObject.count);
-    }
-  );
+  // bannerChartData.forEach(
+  //   (bannerChartObject: any, bannerChartIndex: number) => {
+  //     labelCodeArr.push(bannerChartObject.labelCode);
+  //     baseCountArr.push(bannerChartObject.count);
+  //   }
+  // );
 
+  for (const singleSeriesArr in chartData[0]) {
+    chartData[0][singleSeriesArr].forEach((serieObject: any) => {
+      if (labelCodeArr.indexOf(serieObject.labelCode) == -1) {
+        labelCodeArr.push(serieObject.labelCode);
+        baseCountArr.push(0);
+      }
+    });
+  }
+
+  labelCodeArr.forEach((labelCode: string, labelCodeIndex: number) => {
+    for (const singleSeriesArr in chartData[0]) {
+      const serieObject: any = getMatchedfilter(
+        chartData[0][singleSeriesArr],
+        "labelCode",
+        labelCode
+      );
+      baseCountArr[labelCodeIndex] += serieObject[0]?.count
+        ? serieObject[0]?.count
+        : 0;
+    }
+  });
+
+  console.log(labelCodeArr);
+  console.log(baseCountArr);
+
+  const NettedBannerQuestionData = JSON.parse(
+    JSON.stringify(bannerQuestionData)
+  );
+  if (NettedBannerQuestionData.isGroupNet) {
+    NettedBannerQuestionData.options.push(
+      ...NettedBannerQuestionData.groupNetData
+    );
+  }
   questionData.options.forEach(
     (questionOption: any, questionOptionIndex: number) => {
       const data: any[] = [];
       const name = questionOption.labelText;
-      bannerQuestionData.options.forEach(
+      NettedBannerQuestionData.options.forEach(
         (bannerOption: any, bannerOptionIndex: number) => {
           const name = bannerOption.labelText;
           const chartDataArr = chartData[0][questionOption.labelCode];
@@ -331,13 +368,29 @@ const getSingleTransposeChartOptions = (
             "labelCode",
             bannerOption.labelCode
           );
-          const numberValue = chartObjectArr[0]?.count
-            ? chartObjectArr[0]?.count
-            : 0;
 
-          const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
+          console.log(chartObjectArr);
+          const numberValue = getSum(chartObjectArr, "count");
+          console.log("numberValue", numberValue);
 
-          const baseCount = baseCountArr[baseCountIndex];
+          let baseCount: number = 0;
+
+          if (_.isArray(bannerOption.labelCode)) {
+            const baseCountIndexArr: number[] = [];
+            labelCodeArr.map((labelCode) => {
+              if (bannerOption.labelCode.indexOf(labelCode) != -1) {
+                baseCountIndexArr.push(labelCodeArr.indexOf(labelCode));
+              }
+            });
+
+            baseCountIndexArr.forEach((baseCountIndex: number) => {
+              baseCount += baseCountArr[baseCountIndex];
+            });
+          } else {
+            const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
+            baseCount = baseCountArr[baseCountIndex];
+          }
+
           const percentageValue = (numberValue / baseCount) * 100;
 
           data.push({
@@ -352,6 +405,7 @@ const getSingleTransposeChartOptions = (
           });
         }
       );
+
       let newDataLabels;
       if (significant) {
         newDataLabels = dataUpdatedFormate;
