@@ -1,24 +1,25 @@
-import { decimalPrecision } from "../../constants/Variables";
-import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
+import { decimalPrecision } from '../../constants/Variables';
+import { IBaseQuestion, IQuestionOption } from '../../types/IBaseQuestion';
 import {
   getMatchedfilter,
   getmatchedFind,
+  getSum,
   indexToChar,
   round,
   significantDifference,
-} from "../Utility";
-import store from "../../redux/store";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import _, { find } from "lodash";
-import { QuestionType } from "../../enums/QuestionType";
-import { SignificantObject } from "../chart-option-util/single";
+} from '../Utility';
+import store from '../../redux/store';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import _, { find } from 'lodash';
+import { QuestionType } from '../../enums/QuestionType';
+import { SignificantObject } from '../chart-option-util/single';
 
 export function bannerChartDataGen(
   questionData: IBaseQuestion,
   chartData: any,
   bannerQuestionData: any,
   chartTranspose: any,
-  questionChartData: any
+  questionChartData: any,
 ) {
   const {
     chart: { chartLabelType },
@@ -38,8 +39,8 @@ export function bannerChartDataGen(
           bannerQuestionData,
           questionData,
           chartData,
-          questionChartData
-        )
+          questionChartData,
+        ),
       );
     } else {
       seriesData.length = 0;
@@ -48,8 +49,8 @@ export function bannerChartDataGen(
           questionData,
           chartData,
           bannerQuestionData,
-          chartTranspose
-        )
+          chartTranspose,
+        ),
       );
     }
   } else {
@@ -59,8 +60,8 @@ export function bannerChartDataGen(
         ...getMultiTransposeTableOptions(
           questionData,
           chartData,
-          bannerQuestionData
-        )
+          bannerQuestionData,
+        ),
       );
     } else {
       seriesData.length = 0;
@@ -69,8 +70,8 @@ export function bannerChartDataGen(
           bannerQuestionData,
           questionData,
           chartData,
-          questionChartData
-        )
+          questionChartData,
+        ),
       );
     }
   }
@@ -82,7 +83,7 @@ const getSingleOptions = (
   bannerQuestionData: any,
   questionData: any,
   chartData: any,
-  questionChartData: any
+  questionChartData: any,
 ) => {
   const {
     chart: { chartLabelType, significant },
@@ -141,7 +142,7 @@ const getSingleOptions = (
                 labelCodeSum.forEach((el: any) => {
                   const localbaseCount = el?.reduce(
                     (sum: number, option: any) => sum + option.count,
-                    0
+                    0,
                   );
                   baseCountSum.push(localbaseCount);
                 });
@@ -154,15 +155,15 @@ const getSingleOptions = (
               optionData = chartData[0][option.labelCode];
               const label = getMatchedfilter(
                 optionData,
-                "labelCode",
-                scaleOption.labelCode
+                'labelCode',
+                scaleOption.labelCode,
               );
               count = _.sumBy(label, function (o) {
                 return o.count;
               });
               localBase = optionData?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0
+                0,
               );
             }
           let subOptionDataCount = 0;
@@ -173,7 +174,7 @@ const getSingleOptions = (
           } else {
             subOptionDataPercentage = round(
               (count / localBase) * 100,
-              decimalPrecision
+              decimalPrecision,
             );
             subOptionDataCount = count;
           }
@@ -194,7 +195,7 @@ const getSingleOptions = (
             } else {
               base = obj?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0
+                0,
               );
             }
 
@@ -213,7 +214,7 @@ const getSingleOptions = (
             if (subOptionData !== undefined) {
               subOptionDataPercentage = round(
                 (subOptionData.count / base) * 100,
-                decimalPrecision
+                decimalPrecision,
               );
               subOptionDataCount = subOptionData.count;
             } else {
@@ -250,10 +251,10 @@ const getSingleOptions = (
 const getMultiTransposeTableOptions = (
   questionData: any,
   chartData: any,
-  bannerQuestionData: any
+  bannerQuestionData: any,
 ) => {
   const {
-    chart: { chartLabelType },
+    chart: { chartLabelType, significant },
   } = store.getState();
   const seriesData: any[] = [];
   const labelCodeArr: string[] = [];
@@ -272,8 +273,8 @@ const getMultiTransposeTableOptions = (
     for (const singleSeriesArr in chartData[0]) {
       const serieObject: any = getMatchedfilter(
         chartData[0][singleSeriesArr],
-        "labelCode",
-        labelCode
+        'labelCode',
+        labelCode,
       );
       baseCountArr[labelCodeIndex] += serieObject[0]?.count
         ? serieObject[0]?.count
@@ -281,7 +282,16 @@ const getMultiTransposeTableOptions = (
     }
   });
 
-  bannerQuestionData.options.forEach((bannerData: any) => {
+  const NettedBannerQuestionData = JSON.parse(
+    JSON.stringify(bannerQuestionData),
+  );
+  if (NettedBannerQuestionData.isGroupNet) {
+    NettedBannerQuestionData.options.push(
+      ...NettedBannerQuestionData.groupNetData,
+    );
+  }
+
+  NettedBannerQuestionData.options.forEach((bannerData: any) => {
     labels.push(bannerData.labelText);
   });
 
@@ -291,25 +301,41 @@ const getMultiTransposeTableOptions = (
       const percentageValues: any = [];
       const countValues: any = [];
       const name = questionOption.labelText;
-      bannerQuestionData.options.forEach(
+      NettedBannerQuestionData.options.forEach(
         (bannerOption: any, bannerOptionIndex: number) => {
           const chartDataArr = chartData[0][questionOption.labelCode];
           const chartObjectArr: any = getMatchedfilter(
             chartDataArr,
-            "labelCode",
-            bannerOption.labelCode
+            'labelCode',
+            bannerOption.labelCode,
           );
-          const numberValue = chartObjectArr[0]?.count
-            ? chartObjectArr[0]?.count
-            : 0;
+          // const numberValue = chartObjectArr[0]?.count
+          //   ? chartObjectArr[0]?.count
+          //   : 0;
+          const numberValue = getSum(chartObjectArr, 'count');
 
-          const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
-          const baseCount = baseCountArr[baseCountIndex];
+          let baseCount: number = 0;
+
+          if (_.isArray(bannerOption.labelCode)) {
+            const baseCountIndexArr: number[] = [];
+            labelCodeArr.map((labelCode) => {
+              if (bannerOption.labelCode.indexOf(labelCode) != -1) {
+                baseCountIndexArr.push(labelCodeArr.indexOf(labelCode));
+              }
+            });
+            baseCountIndexArr.forEach((baseCountIndex: number) => {
+              baseCount += baseCountArr[baseCountIndex];
+            });
+          } else {
+            const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
+            baseCount = baseCountArr[baseCountIndex];
+          }
+
           const percentageValue = (numberValue / baseCount) * 100;
           percentageValues.push(percentageValue);
           baseCounts.push(baseCount);
           countValues.push(numberValue);
-        }
+        },
       );
 
       seriesData.push({
@@ -322,8 +348,12 @@ const getMultiTransposeTableOptions = (
         percentageValues,
         baseCounts,
       });
-    }
+    },
   );
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
+
   return seriesData;
 };
 
@@ -331,7 +361,7 @@ const getSingleTransposeTableOptions = (
   questiondata: any,
   chartData: any,
   bannerQuestionData: any,
-  chartTranspose: any
+  chartTranspose: any,
 ) => {
   const {
     chart: { chartLabelType, significant },
@@ -341,7 +371,7 @@ const getSingleTransposeTableOptions = (
   let localBase = 0;
   const newOptionData: any = [];
   const labels: Array<string> = bannerQuestionData.options.map(
-    (label: IQuestionOption) => label.labelText
+    (label: IQuestionOption) => label.labelText,
   );
 
   const allLabels: Array<string> = [];
@@ -400,8 +430,8 @@ const getSingleTransposeTableOptions = (
 
             const label = getmatchedFind(
               optionData,
-              "labelCode",
-              option?.labelCode
+              'labelCode',
+              option?.labelCode,
             );
 
             count = label?.count;
@@ -417,7 +447,7 @@ const getSingleTransposeTableOptions = (
           } else {
             subOptionDataPercentage = round(
               (count / localBase) * 100,
-              decimalPrecision
+              decimalPrecision,
             );
             subOptionDataCount = count;
           }
@@ -425,7 +455,7 @@ const getSingleTransposeTableOptions = (
           percentageValues.push(subOptionDataPercentage);
           baseCounts.push(localBase);
         }
-      }
+      },
     );
     seriesData.push({
       name: scaleOption.labelText,
@@ -449,16 +479,16 @@ const getSingleTransposeTableOptions = (
 const getTablesignificantdifference = (seriesData: any) => {
   for (let i = 0; i < seriesData.length; i++) {
     const seriesupdatedLabels = [];
-    seriesData[i]["significance"] = [];
-    seriesData[i]["significanceDifference"] = [];
+    seriesData[i]['significance'] = [];
+    seriesData[i]['significanceDifference'] = [];
 
-    for (let j = 0; j < seriesData[i]["labels"].length; j++) {
-      seriesData[i]["significance"].push(indexToChar(j));
+    for (let j = 0; j < seriesData[i]['labels'].length; j++) {
+      seriesData[i]['significance'].push(indexToChar(j));
       seriesupdatedLabels.push(
-        seriesData[i]["labels"][j] + `(${indexToChar(j)})`
+        seriesData[i]['labels'][j] + `(${indexToChar(j)})`,
       );
     }
-    seriesData[i]["labels"] = seriesupdatedLabels;
+    seriesData[i]['labels'] = seriesupdatedLabels;
   }
   for (let i = 0; i < seriesData.length; i++) {
     for (let j = 0; j < seriesData[i].percentageValues.length; j++) {
@@ -477,7 +507,7 @@ const getTablesignificantdifference = (seriesData: any) => {
 
           const isSignificant = significantDifference(
             SignificantObject1,
-            SignificantObject2
+            SignificantObject2,
           );
 
           if (isSignificant) {
@@ -487,8 +517,8 @@ const getTablesignificantdifference = (seriesData: any) => {
       }
 
       if (significantArry.length) {
-        seriesData[i]["significanceDifference"][j] =
-          "(" + significantArry.join("") + ")";
+        seriesData[i]['significanceDifference'][j] =
+          '(' + significantArry.join('') + ')';
       }
     }
   }
