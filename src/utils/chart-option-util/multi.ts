@@ -61,6 +61,16 @@ export const getMultiChartOptionsSeries = (
         );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
+        series.length = 0;
+        series.push(
+          ...getMultiTransposeChartOptions(
+            questionData,
+            chartData,
+            bannerQuestionData,
+            chartOptionsData,
+            bannerChartData
+          )
+        );
       }
     } else {
       series.push(
@@ -69,7 +79,8 @@ export const getMultiChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           bannerQuestionList,
-          chartLabelType
+          chartLabelType,
+          questionChartData
         )
       );
     }
@@ -193,7 +204,8 @@ const multiSingleBannerChart = (
   chartData: any,
   bannerQuestionData: any,
   bannerQuestionList: any,
-  chartLabelType: any
+  chartLabelType: any,
+  questionChartData: any
 ) => {
   // debugger;
   const selectedBannerQuestionId = bannerQuestionData?.qId;
@@ -240,7 +252,7 @@ const multiSingleBannerChart = (
 
         if (bannerQuestionType == QuestionType.MULTI) {
           //this is working in multi 2 multi
-          localBase = find(chartData[0], function (o) {
+          localBase = find(questionChartData, function (o) {
             return o.labelCode === quesOption.labelCode;
           })?.count;
         }
@@ -427,5 +439,60 @@ const getSingleTransposeChartOptions = (
     }
   );
   console.log(series);
+  return series;
+};
+
+const getMultiTransposeChartOptions = (
+  questionData: any,
+  chartData: any,
+  bannerQuestionData: any,
+  chartOptionsData: any,
+  bannerChartData: any
+) => {
+  const {
+    chart: { chartLabelType },
+  } = store.getState();
+  const series: any[] = [];
+
+  questionData.options.forEach(
+    (questionOptionObject: any, questionOptionIndex: number) => {
+      const name = questionOptionObject.labelText;
+      const data: any[] = [];
+      bannerQuestionData.options.forEach(
+        (bannerOptionObject: any, bannerOptionIndex: number) => {
+          // debugger;
+          const name = bannerOptionObject.labelText;
+          const baseCountArr = getMatchedfilter(
+            bannerChartData,
+            "labelCode",
+            bannerOptionObject.labelCode
+          );
+          const baseCount = baseCountArr[0]?.count;
+          const numberValueArr = getMatchedfilter(
+            chartData[0][questionOptionObject.labelCode],
+            "labelCode",
+            bannerOptionObject.labelCode
+          );
+          const numberValue = numberValueArr[0]?.count;
+          const percentageValue = (numberValue / baseCount) * 100;
+          const y =
+            chartLabelType == ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue;
+          data.push({
+            name,
+            y,
+            percentageValue,
+            numberValue,
+            baseCount,
+          });
+        }
+      );
+      series.push({
+        name,
+        data,
+      });
+    }
+  );
   return series;
 };
