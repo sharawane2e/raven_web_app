@@ -31,11 +31,12 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
       renderChild: () => <TransposeIcon />,
       onClick: () =>
         (questionData?.type == QuestionType.MULTI &&
-          bannerQuestionData?.type == QuestionType.MULTI) ||
+          bannerQuestionData?.type == QuestionType.MULTI) 
+          // ||
         // (questionData?.type == QuestionType.SINGLE &&
         //   bannerQuestionData?.type == QuestionType.MULTI) ||
-        (questionData?.type == QuestionType.MULTI &&
-          bannerQuestionData?.type == QuestionType.SINGLE)
+        // (questionData?.type == QuestionType.MULTI &&
+        //   bannerQuestionData?.type == QuestionType.SINGLE)
           ? transposeChartMulti()
           : transposeChart(),
       active: chartTranspose,

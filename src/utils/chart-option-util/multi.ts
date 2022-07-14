@@ -21,8 +21,11 @@ export const getMultiChartOptionsSeries = (
   baseCount: any,
   bannerQuestionData: any,
   chartOptionsData: any,
-  transposed: any
+  transposed: any,
+  questionChartData: any,
+  bannerChartData: any
 ) => {
+  debugger;
   const {
     questions: { bannerQuestionList },
   } = store.getState();
@@ -38,91 +41,100 @@ export const getMultiChartOptionsSeries = (
   } = store.getState();
 
   if (selectedBannerQuestionId) {
-    const categories: string[] = [];
+    if (transposed) {
+      if (bannerQuestionData?.type == QuestionType.SINGLE) {
+      }
+      if (bannerQuestionData?.type == QuestionType.MULTI) {
+      }
+    } else {
+      const categories: string[] = [];
 
-    questionData.options.forEach((option: any) => {
-      categories.push(option.labelText);
-    });
+      questionData.options.forEach((option: any) => {
+        categories.push(option.labelText);
+      });
 
-    const subGroups = questionData.options.filter((option: IQuestionOption) => {
-      const subGroup = chartData[0][option.labelCode];
-      if (subGroup && subGroup?.length) return true;
-      return false;
-    });
+      const subGroups = questionData.options.filter(
+        (option: IQuestionOption) => {
+          const subGroup = chartData[0][option.labelCode];
+          if (subGroup && subGroup?.length) return true;
+          return false;
+        }
+      );
 
-    // @ts-ignore
-    for (let index = 0; index < bannerQuestionData?.options.length; index++) {
-      const bannerQuesOption = bannerQuestionData?.options[index];
-      const data: any[] = [];
+      // @ts-ignore
+      for (let index = 0; index < bannerQuestionData?.options.length; index++) {
+        const bannerQuesOption = bannerQuestionData?.options[index];
+        const data: any[] = [];
 
-      for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
-        const quesOption = subGroups[quesIndex];
+        for (let quesIndex = 0; quesIndex < subGroups.length; quesIndex++) {
+          const quesOption = subGroups[quesIndex];
 
-        let optionData = chartData[0][quesOption.labelCode];
+          let optionData = chartData[0][quesOption.labelCode];
 
-        let count = 0;
+          let count = 0;
 
-        if (optionData) {
-          const label = optionData.find(
-            // @ts-ignore
-            (option: any) => option.labelCode === bannerQuesOption.labelCode
-          );
+          if (optionData) {
+            const label = optionData.find(
+              // @ts-ignore
+              (option: any) => option.labelCode === bannerQuesOption.labelCode
+            );
 
-          let localBase = optionData?.reduce(
-            (sum: number, option: any) => sum + option.count,
-            0
-          );
+            let localBase = optionData?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0
+            );
 
-          const bannerQuestion: any = find(bannerQuestionList, function (o) {
-            return o.qId === selectedBannerQuestionId;
-          });
-          const bannerQuestionType = bannerQuestion.type;
+            const bannerQuestion: any = find(bannerQuestionList, function (o) {
+              return o.qId === selectedBannerQuestionId;
+            });
+            const bannerQuestionType = bannerQuestion.type;
 
-          if (bannerQuestionType == QuestionType.MULTI) {
-            //this is working in multi 2 multi
-            localBase = find(chartData[0], function (o) {
-              return o.labelCode === quesOption.labelCode;
-            })?.count;
-          }
+            if (bannerQuestionType == QuestionType.MULTI) {
+              //this is working in multi 2 multi
+              localBase = find(chartData[0], function (o) {
+                return o.labelCode === quesOption.labelCode;
+              })?.count;
+            }
 
-          if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
-            count = (label.count / localBase) * 100;
-          } else if (chartLabelType === ChartLabelType.NUMBER && label) {
-            count = label.count;
-          }
+            if (chartLabelType === ChartLabelType.PERCENTAGE && label) {
+              count = (label.count / localBase) * 100;
+            } else if (chartLabelType === ChartLabelType.NUMBER && label) {
+              count = label.count;
+            }
 
-          if (label) {
-            let percentageValue = (label.count / localBase) * 100;
-            let numberValue = label.count;
-            if (count)
-              data.push({
-                name: quesOption.labelText,
-                // y: +count.toFixed(decimalPrecision),
-                y: count !== null ? round(count, decimalPrecision) : 0,
-                percentageValue,
-                numberValue,
-                baseCount: localBase,
-              });
+            if (label) {
+              let percentageValue = (label.count / localBase) * 100;
+              let numberValue = label.count;
+              if (count)
+                data.push({
+                  name: quesOption.labelText,
+                  // y: +count.toFixed(decimalPrecision),
+                  y: count !== null ? round(count, decimalPrecision) : 0,
+                  percentageValue,
+                  numberValue,
+                  baseCount: localBase,
+                });
+            }
           }
         }
-      }
 
-      let newDataLabels: any;
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
+        let newDataLabels: any;
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
 
-      if (data.length)
-        series.push({
-          name: bannerQuesOption?.labelText,
-          color: index < colorArr.length ? colorArr[index] : undefined,
-          data,
-          dataLabels: {
-            ...newDataLabels,
-          },
-        });
+        if (data.length)
+          series.push({
+            name: bannerQuesOption?.labelText,
+            color: index < colorArr.length ? colorArr[index] : undefined,
+            data,
+            dataLabels: {
+              ...newDataLabels,
+            },
+          });
+      }
     }
   } else {
     series.push(
