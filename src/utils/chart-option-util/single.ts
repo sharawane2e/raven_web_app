@@ -28,8 +28,8 @@ export const getSingleChartOptionsSeries = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean,
-  questionChartData: any
+  questionChartData: any,
+  transposed: boolean
 ) => {
   const {
     chart: { chartLabelType, chartType, significant },

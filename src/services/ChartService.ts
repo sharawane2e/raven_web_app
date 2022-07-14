@@ -500,6 +500,7 @@ export const transposeChart = () => {
       chartDataClone.bannerQuestionData,
       undefined,
       undefined,
+      undefined,
       transposed
     ),
   };

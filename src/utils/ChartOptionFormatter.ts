@@ -28,8 +28,8 @@ export const getChartOptions = (
     .bannerQuestionData,
   chartOptionsData: any = store.getState().chart.chartOptions,
   questionChartData: any = store.getState().chart.questionChartData,
-  transposed: boolean = store.getState().chart.chartTranspose,
-  bannerChartData: any = store.getState().chart.bannerChartData
+  bannerChartData: any = store.getState().chart.bannerChartData,
+  transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
   if (questionData !== null) {
     switch (questionData.type) {
@@ -40,8 +40,8 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
-          transposed,
-          questionChartData
+          questionChartData,
+          transposed
         );
       case QuestionType.MULTI:
         return getMultiChartOptions(
@@ -50,9 +50,9 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
-          transposed,
           questionChartData,
-          bannerChartData
+          bannerChartData,
+          transposed
         );
       case QuestionType.RANK:
         return getRankChartOptions(
@@ -88,9 +88,9 @@ const getMultiChartOptions = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: any,
   questionChartData: any,
-  bannerChartData: any
+  bannerChartData: any,
+  transposed: any
 ): any => {
   const series = getMultiChartOptionsSeries(
     questionData,
@@ -98,9 +98,9 @@ const getMultiChartOptions = (
     baseCount,
     bannerQuestionData,
     chartOptionsData,
-    transposed,
     questionChartData,
-    bannerChartData
+    bannerChartData,
+    transposed
   );
 
   return {
@@ -118,8 +118,8 @@ const getSingleChartOptions = (
   baseCount: number,
   bannerQuestionData: IQuestion | null,
   chartOptionsData: any,
-  transposed: boolean,
-  questionChartData: any
+  questionChartData: any,
+  transposed: boolean
 ): any => {
   const series = getSingleChartOptionsSeries(
     questionData,

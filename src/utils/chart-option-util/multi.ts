@@ -1,18 +1,20 @@
-import _ from 'lodash';
-import { find, round } from 'lodash';
+import _ from "lodash";
+import { find, round } from "lodash";
 import {
   colorArr,
   dataLabelsFormate,
   dataLabelsNumberFormate,
+  dataUpdatedFormate,
   decimalPrecision,
   primaryBarColor,
-} from '../../constants/Variables';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
-import { QuestionType } from '../../enums/QuestionType';
+} from "../../constants/Variables";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
+import { QuestionType } from "../../enums/QuestionType";
 // import { dataLabels } from '../../redux/reducers/chartReducer';
-import store from '../../redux/store';
-import { IQuestionOption } from '../../types/IBaseQuestion';
+import store from "../../redux/store";
+import { IQuestionOption } from "../../types/IBaseQuestion";
+import { getMatchedfilter } from "../Utility";
 // import { getToolTip } from '../ChartOptionFormatter';
 
 export const getMultiChartOptionsSeries = (
@@ -21,11 +23,11 @@ export const getMultiChartOptionsSeries = (
   baseCount: any,
   bannerQuestionData: any,
   chartOptionsData: any,
-  transposed: any,
   questionChartData: any,
   bannerChartData: any,
+  transposed: any
 ) => {
-  debugger;
+  // debugger;
   const {
     questions: { bannerQuestionList },
   } = store.getState();
@@ -43,6 +45,16 @@ export const getMultiChartOptionsSeries = (
   if (selectedBannerQuestionId) {
     if (transposed) {
       if (bannerQuestionData?.type == QuestionType.SINGLE) {
+        getSingleTransposeChartOptions(
+          questionData,
+          chartData,
+          baseCount,
+          bannerQuestionData,
+          chartOptionsData,
+          questionChartData,
+          bannerChartData,
+          transposed
+        );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
       }
@@ -53,8 +65,8 @@ export const getMultiChartOptionsSeries = (
           chartData,
           bannerQuestionData,
           bannerQuestionList,
-          chartLabelType,
-        ),
+          chartLabelType
+        )
       );
     }
   } else {
@@ -64,8 +76,8 @@ export const getMultiChartOptionsSeries = (
         chartData,
         baseCount,
         chartLabelType,
-        chartType,
-      ),
+        chartType
+      )
     );
   }
   return series;
@@ -76,7 +88,7 @@ const getMultiChartSeries = (
   chartData: any,
   baseCount: any,
   chartLabelType: any,
-  chartType: any,
+  chartType: any
 ) => {
   const data: any[] = [];
   const series: any[] = [];
@@ -88,7 +100,7 @@ const getMultiChartSeries = (
     const option = questionData.options[optionIndex];
     const label = chartData.find(
       (record: { labelCode: string; count: number }) =>
-        record.labelCode === option.labelCode,
+        record.labelCode === option.labelCode
     );
     let count = 0;
     if (label) {
@@ -109,14 +121,14 @@ const getMultiChartSeries = (
       const seriesObject = _.find(questionData.options, function (o) {
         return o.labelCode === option.labelCode;
       });
-      if (seriesObject?.labelCode.split('_')[0] == 'N') {
+      if (seriesObject?.labelCode.split("_")[0] == "N") {
         data.push({
           name: option.labelText,
           y: plotValue,
           percentageValue,
           numberValue,
           baseCount: baseCount,
-          color: '#f1ad0f',
+          color: "#f1ad0f",
         });
       } else {
         data.push({
@@ -177,8 +189,9 @@ const multiSingleBannerChart = (
   chartData: any,
   bannerQuestionData: any,
   bannerQuestionList: any,
-  chartLabelType: any,
+  chartLabelType: any
 ) => {
+  // debugger;
   const selectedBannerQuestionId = bannerQuestionData?.qId;
   const categories: string[] = [];
   const series: any = [];
@@ -208,12 +221,12 @@ const multiSingleBannerChart = (
       if (optionData) {
         const label = optionData.find(
           // @ts-ignore
-          (option: any) => option.labelCode === bannerQuesOption.labelCode,
+          (option: any) => option.labelCode === bannerQuesOption.labelCode
         );
 
         let localBase = optionData?.reduce(
           (sum: number, option: any) => sum + option.count,
-          0,
+          0
         );
 
         const bannerQuestion: any = find(bannerQuestionList, function (o) {
@@ -271,4 +284,94 @@ const multiSingleBannerChart = (
   return series;
 };
 
-const TransposemultiSingleBannerChart = () => {};
+const getSingleTransposeChartOptions = (
+  questionData: any,
+  chartData: any,
+  baseCount: any,
+  bannerQuestionData: any,
+  chartOptionsData: any,
+  questionChartData: any,
+  bannerChartData: any,
+  transposed: any
+) => {
+  // debugger;
+  console.log(questionData);
+  console.log(chartData);
+  console.log(baseCount);
+  console.log(bannerQuestionData);
+  console.log(chartOptionsData);
+  console.log(transposed);
+  console.log(questionChartData);
+  console.log(bannerChartData);
+  const {
+    chart: { chartLabelType, significant },
+  } = store.getState();
+
+  const series: any[] = [];
+  const labelCodeArr: string[] = [];
+  const baseCountArr: number[] = [];
+
+  bannerChartData.forEach(
+    (bannerChartObject: any, bannerChartIndex: number) => {
+      labelCodeArr.push(bannerChartObject.labelCode);
+      baseCountArr.push(bannerChartObject.count);
+    }
+  );
+
+  questionData.options.forEach(
+    (questionOption: any, questionOptionIndex: number) => {
+      const data: any[] = [];
+      const name = questionOption.labelText;
+      bannerQuestionData.options.forEach(
+        (bannerOption: any, bannerOptionIndex: number) => {
+          const name = bannerOption.labelText;
+          const chartDataArr = chartData[0][questionOption.labelCode];
+          const chartObjectArr: any = getMatchedfilter(
+            chartDataArr,
+            "labelCode",
+            bannerOption.labelCode
+          );
+          const numberValue = chartObjectArr[0]?.count
+            ? chartObjectArr[0]?.count
+            : 0;
+
+          const baseCountIndex = labelCodeArr.indexOf(bannerOption.labelCode);
+
+          const baseCount = baseCountArr[baseCountIndex];
+          const percentageValue = (numberValue / baseCount) * 100;
+
+          data.push({
+            name,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
+            percentageValue,
+            numberValue,
+            baseCount,
+          });
+        }
+      );
+      let newDataLabels;
+      if (significant) {
+        newDataLabels = dataUpdatedFormate;
+      } else {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = dataLabelsFormate;
+        } else {
+          newDataLabels = dataLabelsNumberFormate;
+        }
+      }
+      series.push({
+        name,
+        color: colorArr[questionOptionIndex],
+        data,
+        dataLabels: {
+          ...newDataLabels,
+        },
+      });
+    }
+  );
+  console.log(series);
+  return series;
+};
