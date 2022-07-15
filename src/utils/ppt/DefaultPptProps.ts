@@ -3,7 +3,6 @@ import {
   pptTemplateKey,
   primaryBarColor,
   pptBackgroundColor,
-  clientBrandingLogo,
 } from '../../constants/Variables';
 import { ISlideConfig } from '../../types/ISlideConfig';
 
