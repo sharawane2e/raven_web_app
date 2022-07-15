@@ -7,4 +7,5 @@ export interface ISlideConfig {
   sourceText: string;
   copyRightText: string;
   meanStandardDEviation: any;
+  significanceText: string;
 }

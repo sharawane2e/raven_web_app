@@ -4,6 +4,7 @@ import {
   sourceText,
   copyRightText,
   exportPrefix,
+  significantText,
 } from '../../constants/Variables';
 import {
   appliedFiltersText,
@@ -27,6 +28,7 @@ export const generatePpt = async () => {
       chartType,
       baseCount,
       showMean,
+      significant,
     },
     // standard: { isMean, standardDeviation, standardError },
   } = store.getState();
@@ -72,6 +74,10 @@ export const generatePpt = async () => {
         ? '##.##'
         : '##',
   };
+  let significanceText: string = '';
+  if (significant && chartType == ChartType.TABLE) {
+    significanceText = significantText;
+  }
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
@@ -82,6 +88,7 @@ export const generatePpt = async () => {
     sourceText,
     copyRightText,
     meanStandardDEviation,
+    significanceText,
   };
 
   pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
