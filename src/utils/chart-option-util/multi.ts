@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { find, round } from 'lodash';
+import _, { find, round } from 'lodash';
 import {
   colorArr,
   dataLabelsFormate,
@@ -13,12 +12,8 @@ import { ChartType } from '../../enums/ChartType';
 import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
-import {
-  getMatchedfilter,
-  getSum,
-  indexToChar,
-  significantDifference,
-} from '../Utility';
+import { getMatchedfilter, getSum } from '../Utility';
+import { getsignificantdifference } from './significanceDiff';
 
 export const getMultiChartOptionsSeries = (
   questionData: any,
@@ -31,19 +26,11 @@ export const getMultiChartOptionsSeries = (
   transposed: any,
 ) => {
   const {
-    chart: { significant },
+    chart: { significant, chartLabelType, chartType },
     questions: { bannerQuestionList },
   } = store.getState();
   const selectedBannerQuestionId = bannerQuestionData?.qId;
   const series: any[] = [];
-
-  const {
-    chart: { chartLabelType },
-  } = store.getState();
-
-  const {
-    chart: { chartType },
-  } = store.getState();
 
   if (selectedBannerQuestionId) {
     if (transposed) {
@@ -90,7 +77,7 @@ export const getMultiChartOptionsSeries = (
   } else {
     series.length = 0;
     series.push(
-      ...getMultiChartSeries(
+      ...getTableMultiChartSeries(
         questionData,
         chartData,
         baseCount,
@@ -99,10 +86,16 @@ export const getMultiChartOptionsSeries = (
       ),
     );
   }
+  if (significant) {
+    const updatedSeries = getsignificantdifference(series, chartLabelType);
+    series.length = 0;
+    series.push(...updatedSeries);
+  }
+
   return series;
 };
 
-const getMultiChartSeries = (
+const getTableMultiChartSeries = (
   questionData: any,
   chartData: any,
   baseCount: any,
@@ -306,12 +299,6 @@ const multiSingleBannerChart = (
       });
   }
 
-  if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
-    series.length = 0;
-    series.push(...updatedSeries);
-  }
-  // console.log('updatedSeries', series);
   return series;
 };
 
@@ -432,11 +419,7 @@ const getSingleTransposeChartOptions = (
       });
     },
   );
-  if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
-    series.length = 0;
-    series.push(...updatedSeries);
-  }
+
   return series;
 };
 
@@ -505,83 +488,6 @@ const getMultiTransposeChartOptions = (
       });
     },
   );
-  if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
-    series.length = 0;
-    series.push(...updatedSeries);
-  }
+
   return series;
 };
-
-const getsignificantdifference = (series: any, chartLabelType: any) => {
-  const updatedSeries = series.map((singleSeries: any) => {
-    const updatedSeriesData = {
-      ...singleSeries,
-      data: singleSeries.data.map((data: any, index: number) => {
-        //    const indearr = index > 12 ? index : 0;
-
-        const dataName: any = data?.name + `(${indexToChar(index)})`;
-        return {
-          ...data,
-          name: dataName,
-          significance: indexToChar(index),
-          significantDiffernce: '',
-        };
-      }),
-      dataLabels: {
-        ...singleSeries.dataLabels,
-        formatter: function (this: any, options: any) {
-          return ` ${parseFloat(this.y.toFixed(2))}${
-            chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''
-          } <span class="significante-color">${
-            this.point.significantDiffernce
-          } </span>`;
-        },
-      },
-    };
-
-    return updatedSeriesData;
-  });
-
-  updatedSeries.forEach((singleSeries: any, seriesIndex: number) => {
-    const seriesdata: any = singleSeries.data;
-    //bubble sort
-    for (let i = 0; i < seriesdata.length; i++) {
-      const significantArry: any = [];
-      const name = [];
-      for (let j = 0; j < seriesdata.length; j++) {
-        name.push(seriesdata[i].name + indexToChar(j));
-        const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]['percentageValue'],
-          baseCount: seriesdata[i]['baseCount'],
-        };
-        const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]['percentageValue'],
-          baseCount: seriesdata[j]['baseCount'],
-        };
-
-        if (i != j) {
-          const isSignificant = significantDifference(
-            SignificantObject1,
-            SignificantObject2,
-          );
-
-          if (isSignificant) {
-            significantArry.push(indexToChar(j));
-          }
-        }
-      }
-      if (significantArry.length) {
-        singleSeries.data[i]['significantDiffernce'] =
-          '(' + significantArry.join('') + ')';
-      }
-    }
-  });
-
-  return updatedSeries;
-};
-
-export interface SignificantObject {
-  value: any;
-  baseCount: any;
-}

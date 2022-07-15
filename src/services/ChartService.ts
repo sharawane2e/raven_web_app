@@ -3,14 +3,13 @@ import { ChartType } from '../enums/ChartType';
 import {
   setChartData,
   setChartLabel,
-  setChartLoading,
   setChartOrientation,
   setChartTranspose,
   setChartType,
 } from '../redux/actions/chartActions';
 import { IChartState } from '../redux/reducers/chartReducer';
 import store from '../redux/store';
-import ApiRequest, { ApiRequestMulti } from '../utils/ApiRequest';
+import ApiRequest from '../utils/ApiRequest';
 import { getChartOptions, getPlotOptions } from '../utils/ChartOptionFormatter';
 import { IQuestion } from '../types/IQuestion';
 import { QuestionType } from '../enums/QuestionType';
@@ -21,7 +20,6 @@ export const fetchChartData = async (
   qId?: string,
   bannerQuestionId?: string,
 ) => {
-  // debugger;
   const {
     filters: { appliedFilters },
     questions: {
@@ -66,7 +64,6 @@ export const fetchChartData = async (
       return o.qId === bannerQuesId;
     });
     const bannerQuestionType = bannerQuestion?.type;
-    //console.log("bannerQuestionType", bannerQuestionType);
 
     const body = {
       qId: quesId,
@@ -78,12 +75,8 @@ export const fetchChartData = async (
 
     let response: any = '';
 
-    if (bannerQuestionType == QuestionType.MULTI && type == 'M') {
-      dispatch(setChartLoading(true));
-      response = await ApiRequestMulti.request(ApiUrl.CHART, 'POST', body);
-    } else {
-      response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
-    }
+    response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
+
     if (response.success) {
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
@@ -105,27 +98,6 @@ export const fetchChartData = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
-      // if (bannerQuestionType == QuestionType.MULTI && type == "M") {
-      //   const updatedBody = { ...body, bannerQuestion: "" };
-      //   const baseChartresponse = await ApiRequestMulti.request(
-      //     ApiUrl.CHART,
-      //     "POST",
-      //     updatedBody
-      //   );
-      //   // console.log(baseChartresponse.data.chartData)
-      //   chartData.chartData.push(baseChartresponse.data.chartData);
-
-      //   chartData.chartOptions = {
-      //     ...chart.chartOptions,
-      //     ...getChartOptions(
-      //       chartData.questionData,
-      //       chartData.chartData,
-      //       chartData.baseCount,
-      //       response.data.bannerQuestionData
-      //     ),
-      //   };
-      //   dispatch(setChartLoading(false));
-      // } else {
       chartData.chartOptions = {
         ...chart.chartOptions,
         ...getChartOptions(
@@ -138,17 +110,14 @@ export const fetchChartData = async (
           response.data.bannerChartData,
         ),
       };
-      // }
 
       chartData.showMean = false;
-      // chartData.significant = false;
     }
   } catch (error) {
     console.log(error);
   }
 
   if (chartData.chartLabelType == ChartLabelType.NUMBER) {
-    //debugger;
     dispatch(setChartLabel(ChartLabelType.NUMBER));
   } else {
     dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
@@ -211,7 +180,6 @@ export const removeEmptyDataLengends = (
     questionCopy.type === QuestionType.GRID_MULTI ||
     questionCopy.type === QuestionType.RANK
   ) {
-    // debugger;
     Object.values(chartDataClone).forEach((obj: any) => {
       obj.options.forEach((subArr: any) => {
         if (!uniqueLengends.includes(subArr.option))
@@ -221,8 +189,6 @@ export const removeEmptyDataLengends = (
     questionCopy.scale.forEach((obj: any) => {
       if (uniqueLengends.includes(obj.labelCode)) filteredOptions.push(obj);
     });
-    // questionCopy.scale = [];
-    // questionCopy.scale.length = 0;
     questionCopy.scale = filteredOptions;
   }
 
@@ -253,7 +219,6 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
 };
 
 export const changeChartType = (newChartType: ChartType) => {
-  //console.log("newChartType", newChartType);
   const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
@@ -409,28 +374,6 @@ export const transposeChart = () => {
     chartDataClone.questionData.type == QuestionType.MULTI
   ) {
     dispatch(setChartTranspose(transposed));
-    //   console.log('transpose data for update');
-    // const { chartData } = chartDataClone;
-    // const allLabels: Array<string> = [];
-    // const newChartData: any = {};
-    // const questionData = chartDataClone.questionData;
-    // const bannerData = chartDataClone.bannerQuestionData;
-    // for (const labelArrays in chartData[0]) {
-    //   const labelArray = chartData[0][labelArrays];
-    //   labelArray.forEach((el: any) => {
-    //     if (allLabels.indexOf(el.labelCode) == -1) {
-    //       allLabels.push(el.labelCode);
-    //       newChartData[el.labelCode] = [];
-    //     }
-    //     newChartData[el.labelCode].push({
-    //       count: el.count,
-    //       labelCode: labelArrays,
-    //     });
-    //   });
-    // }
-    // chartDataClone.chartData[0] = newChartData;
-    // chartDataClone.questionData = bannerData;
-    // chartDataClone.bannerQuestionData = questionData;
   } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
     const newSubGroup: any = [];
     const newScale: any = [];
@@ -505,27 +448,4 @@ export const transposeChart = () => {
 
   dispatch(setChartData(chartDataClone));
   dispatch(setChartTranspose(transposed));
-};
-
-export const transposeChartMulti = async () => {
-  const { chart, questions } = store.getState();
-  const { dispatch } = store;
-  const chartDataClone = JSON.parse(JSON.stringify(chart));
-  const transposed = !chartDataClone.chartTranspose;
-  dispatch(setChartLoading(false));
-  if (transposed) {
-    const chartData = await fetchChartData(
-      questions.selectedBannerQuestionId,
-      questions.selectedQuestionId,
-    );
-    dispatch(setChartData(chartData));
-    dispatch(setChartTranspose(transposed));
-  } else {
-    const chartData = await fetchChartData(
-      questions.selectedQuestionId,
-      questions.selectedBannerQuestionId,
-    );
-    dispatch(setChartData(chartData));
-    dispatch(setChartTranspose(transposed));
-  }
 };

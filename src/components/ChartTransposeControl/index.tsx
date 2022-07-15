@@ -1,8 +1,5 @@
 import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
-import {
-  transposeChart,
-  transposeChartMulti,
-} from '../../services/ChartService';
+import { transposeChart } from '../../services/ChartService';
 import { QuestionType } from '../../enums/QuestionType';
 import { ReactComponent as TransposeIcon } from '../../assets/svg/Transpose.svg';
 import Toaster from '../../utils/Toaster';
@@ -29,16 +26,6 @@ const ChartTransposeControl: React.FC<ChartTransposeControlProps> = () => {
     {
       tooltip: 'Transpose',
       renderChild: () => <TransposeIcon />,
-      // onClick: () =>
-      //   (questionData?.type == QuestionType.MULTI &&
-      //     bannerQuestionData?.type == QuestionType.MULTI) 
-      //     // ||
-      //   // (questionData?.type == QuestionType.SINGLE &&
-      //   //   bannerQuestionData?.type == QuestionType.MULTI) ||
-      //   // (questionData?.type == QuestionType.MULTI &&
-      //   //   bannerQuestionData?.type == QuestionType.SINGLE)
-      //     ? transposeChartMulti()
-      //     : transposeChart(),
       onClick: transposeChart,
       active: chartTranspose,
       disabled: disabledOption(),

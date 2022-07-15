@@ -119,32 +119,3 @@ export const indexToChar = (n: number) => {
   }
   return s.toUpperCase();
 };
-
-interface SignificantObject {
-  value: any;
-  baseCount: any;
-}
-
-/*This function retun significant  true or false */
-export const significantDifference = (
-  SignificantObject1: SignificantObject,
-  SignificantObject2: SignificantObject
-) => {
-  const B1 = SignificantObject1.value / 100;
-  const B2 = SignificantObject1.baseCount;
-  const B4 = SignificantObject2.value / 100;
-  const B5 = SignificantObject2.baseCount;
-
-  const poledSampleData = (B1 * B2 + B4 * B5) / (B2 + B5);
-  const testStatistic =
-    (B1 - B4) /
-    Math.sqrt(poledSampleData * (1 - poledSampleData) * (1 / B2 + 1 / B5));
-
-  const result = 2 * (1 - cumulativeStdNormalProbability(testStatistic));
-
-  if (result < 0.05) {
-    return true;
-  }
-
-  return false;
-};
