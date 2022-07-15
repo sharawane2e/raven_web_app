@@ -116,10 +116,21 @@ export const getSingleChartOptionsSeries = (
           });
           //   }
 
-          localBase = optionData?.reduce(
-            (sum: number, option: any) => sum + option.count,
-            0
-          );
+          if (bannerQuestionData?.type == QuestionType.MULTI) {
+            localBase = find(chartData[1], {
+              labelCode: quesOption.labelCode,
+            })?.count;
+          } else {
+            localBase = optionData?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0
+            );
+          }
+
+          // localBase = optionData?.reduce(
+          //   (sum: number, option: any) => sum + option.count,
+          //   0
+          // );
         }
 
         let percentageValue;
