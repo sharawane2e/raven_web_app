@@ -24,33 +24,41 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
+
+    if(chart.significant){
+      const updatedSignificantStatus = significantDisabled();
+      if(updatedSignificantStatus){
+        dispatch(updateSignificant(false));
+      }
+    }
+    
+  }, [chart.questionData?.type,chart.bannerQuestionData,chart.showMean]);
+
+  useEffect(() => {
     const chartOptionsUpdate = getChartOptions();
     dispatch(updateChartOptions(chartOptionsUpdate));
   }, [chart.significant]);
 
   const significantDisabled = () => {
-    let isPieDisabled = true;
+    let isDisabled = true;
     if (
-      chart.questionData?.type === QuestionType.SINGLE &&
-      selectedBannerQuestionId
+      (chart.questionData?.type === QuestionType.SINGLE||chart.questionData?.type === QuestionType.MULTI) &&
+      chart.bannerQuestionData
     ) {
-      isPieDisabled = false;
-    } else if (
-      chart.questionData?.type === QuestionType?.MULTI &&
-      selectedBannerQuestionId
-    ) {
-      isPieDisabled = false;
-    } else if (chart.questionData?.type === QuestionType?.RANK) {
-      isPieDisabled = true;
-    } else if (chart.questionData === null) {
-      isPieDisabled = true;
-    } else if (chart.questionData?.type === QuestionType?.GRID) {
-      isPieDisabled = false;
-    } else if (chart.showMean) {
-      console.log('chart.showMean', chart.showMean);
-      isPieDisabled = true;
+      isDisabled = false;
+    } else if (chart.questionData?.type === QuestionType?.GRID && !chart.showMean) {
+      isDisabled = false;
     }
-    return isPieDisabled;
+    return isDisabled;
+
+    // let isDisabled = false;
+
+    // if((chart.questionData?.type === QuestionType.SINGLE||chart.questionData?.type === QuestionType.MULTI) &&
+    // chart.bannerQuestionData==null){
+    //   isDisabled = true
+    //   }else if(chart.questionData?.type === QuestionType.RANK||){
+
+    //   }
   };
 
   const handleClick = () => {
@@ -63,7 +71,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       renderChild: () => <SignificantDiffIcon />,
       onClick: handleClick,
       active: chart.significant,
-      disabled: chart.showMean ? true : significantDisabled(),
+      disabled: significantDisabled(),
       disableClick: () => Toaster.error(StaticText.SIGNIFICANT_DIFFERENCE),
     },
   ];
