@@ -67,10 +67,12 @@ export const pptTemplateKey = 'SLIDE_TEMPLATE';
 
 export const dataLabelsFormate = {
   format: '{point.y:.1f}%',
+  rotation: -90,
 };
 
 export const dataLabelsNumberFormate = {
   format: '{point.y:.0f}',
+  rotation: -90,
 };
 
 export const dataUpdatedFormate = {
@@ -80,6 +82,7 @@ export const dataUpdatedFormate = {
 
 export const showMeanFormate = {
   format: '{point.y:.1f}',
+  rotation: -90,
 };
 
 export const logoBase64String =

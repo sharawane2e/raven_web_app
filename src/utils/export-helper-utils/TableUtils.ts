@@ -336,7 +336,7 @@ export function tableChartDataGen() {
         if (QuestionType.GRID && scaleLength > 0 && !chart.showMean) {
           return columnValues;
         }
-        return [...series.values];
+        return [...newUpdatedRow];
       };
 
       if (
