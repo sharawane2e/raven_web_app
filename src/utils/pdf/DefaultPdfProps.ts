@@ -11,10 +11,12 @@ import {
   logoBase64String,
   primaryBarColor,
   copyRightText,
+  significantText,
 } from '../../constants/Variables';
 //import { clientBrandingLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
 import { hexToRgb } from '@material-ui/core';
 import { QuestionType } from '../../enums/QuestionType';
+import { ChartType } from '../../enums/ChartType';
 
 export const setDefaultPdfPageProperties = async (
   doc: jsPDF,
@@ -30,15 +32,20 @@ export const setDefaultPdfPageProperties = async (
   lWordBreak: any,
 ) => {
   const {
-    chart: { questionData, baseCount, bannerQuestionData },
+    chart: {
+      questionData,
+      baseCount,
+      bannerQuestionData,
+      significant,
+      chartType,
+    },
   } = store.getState();
 
   doc.setFontSize(10);
   const lText = doc.splitTextToSize(questionData?.labelText || '', lWordBreak);
-
   doc.text(lText, 10, 5);
   doc.setFontSize(8);
-  doc.setTextColor(64, 64, 64);
+  //doc.setTextColor(64, 64, 64);
 
   const filterText = doc.splitTextToSize(
     appliedFiltersText() || '',
@@ -46,6 +53,7 @@ export const setDefaultPdfPageProperties = async (
   );
 
   doc.text(filterText, 10, 20);
+  // doc.setTextColor(64, 64, 64);
   if (questionData?.type === QuestionType.SINGLE && questionData?.isMean) {
     doc.text(meanStandardDeviation(), 10, 25);
   }
@@ -57,6 +65,18 @@ export const setDefaultPdfPageProperties = async (
       baseX,
       baseY + 5,
     );
+  }
+
+  if (significant) {
+    if (chartType == ChartType.TABLE) {
+      doc.text(significantText, 300, 5);
+      doc.setTextColor(101, 110, 255);
+    } else {
+      doc.text(significantText, 150, 5);
+      doc.setTextColor(101, 110, 255);
+    }
+    doc.setFontSize(8);
+    //doc.setTextColor(101, 110, 255);
   }
 
   doc.setTextColor(127, 127, 127);

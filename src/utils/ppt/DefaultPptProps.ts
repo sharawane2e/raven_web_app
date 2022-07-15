@@ -20,6 +20,7 @@ export const setDefaultSlideProperties = (
     sourceText,
     copyRightText,
     meanStandardDEviation,
+    significanceText,
   } = config;
 
   const objsArr = [
@@ -66,7 +67,7 @@ export const setDefaultSlideProperties = (
         text: baseText,
         options: {
           x: 0.3,
-          y: 4.9,
+          y: 4.8,
           w: 9.5,
           fontFace: chartFontFace,
           fontSize: 8,
@@ -109,6 +110,34 @@ export const setDefaultSlideProperties = (
     { image: { x: 0.38, y: 5.15, w: 1.2, h: 0.4, data: logoBase64String } },
   ];
 
+  if (significanceText) {
+    objsArr.push(
+      {
+        rect: {
+          x: 8.65,
+          y: 0.11,
+          w: 0.1,
+          h: 0.1,
+          fill: { color: '000fff' },
+        },
+      },
+      {
+        text: {
+          text: significanceText,
+          options: {
+            x: 8.75,
+            y: 0.15,
+            w: 8,
+            fontFace: chartFontFace,
+            fontSize: 8,
+            color: '000fff',
+            align: 'left',
+          },
+        },
+      },
+    );
+  }
+
   if (bannerQuestionText) {
     objsArr.push({
       text: {
@@ -121,7 +150,6 @@ export const setDefaultSlideProperties = (
           fontSize: 8,
           color: '404040',
           align: 'left',
-          // bold: true,
         },
       },
     });
@@ -139,7 +167,6 @@ export const setDefaultSlideProperties = (
           fontSize: 8,
           color: '404040',
           align: 'left',
-          // bold: true,
         },
       },
     });

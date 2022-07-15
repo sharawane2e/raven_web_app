@@ -519,7 +519,8 @@ const getsignificantdifference = (series: any, chartLabelType: any) => {
       ...singleSeries,
       data: singleSeries.data.map((data: any, index: number) => {
         //    const indearr = index > 12 ? index : 0;
-        const dataName = data?.name + `(${indexToChar(index)})`;
+
+        const dataName: any = data?.name + `(${indexToChar(index)})`;
         return {
           ...data,
           name: dataName,
