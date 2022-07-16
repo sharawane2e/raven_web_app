@@ -25,6 +25,7 @@ export const getMultiChartOptionsSeries = (
   bannerChartData: any,
   transposed: any
 ) => {
+  debugger;
   const {
     chart: { significant, chartLabelType, chartType },
     questions: { bannerQuestionList },
