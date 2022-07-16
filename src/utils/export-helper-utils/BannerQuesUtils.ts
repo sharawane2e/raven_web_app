@@ -323,10 +323,15 @@ const getMultiTransposeTableOptions = (
                 baseCount += baseCountArr[baseCountIndex];
               });
             } else {
-              const baseCountIndex = labelCodeArr.indexOf(
-                bannerOption.labelCode
-              );
-              baseCount = baseCountArr[baseCountIndex];
+              bannerChartData?.map((bannerChartobject: any) => {
+                if (bannerChartobject.labelCode === bannerOption.labelCode) {
+                  baseCount = bannerChartobject.count;
+                }
+              });
+              // const baseCountIndex = labelCodeArr.indexOf(
+              //   bannerOption.labelCode
+              // );
+              // baseCount = baseCountArr[baseCountIndex];
             }
           }
 
