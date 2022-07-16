@@ -1,17 +1,15 @@
-import { decimalPrecision } from '../../constants/Variables';
-import { round } from '../Utility';
-import store from '../../redux/store';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import _ from 'lodash';
+import { decimalPrecision } from "../../constants/Variables";
+import { round } from "../Utility";
+import store from "../../redux/store";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import _ from "lodash";
 
 export function rankChartDataGen(
   questionData: any,
   chartData: any,
   baseCount: any,
-  chartTranspose: boolean,
+  chartTranspose: boolean
 ) {
-  // debugger;
-
   let labels: any = [];
   let seriesData: any[] = [];
 
@@ -21,15 +19,12 @@ export function rankChartDataGen(
 
   labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
   questionData.scale.forEach((scaleOption: any) => {
-    // debugger;
-
     seriesData.push({
       name: scaleOption.labelText,
       labels,
       values: questionData.subGroups.map((subGroup: any) => {
-        // debugger;
         const subGroupData = chartData.find(
-          (data: any) => data._id === subGroup.qId,
+          (data: any) => data._id === subGroup.qId
         );
         // const base = subGroupData?.baseCount || baseCount; // this base coming from backend and will not work anymore
 
@@ -45,14 +40,14 @@ export function rankChartDataGen(
               option: scaleOption.labelCode,
             });
             if (chartOptionObject.length) {
-              base = base + chartOptionObject[0]['count'];
+              base = base + chartOptionObject[0]["count"];
             }
           });
         }
 
         if (subGroupData) {
           const data = subGroupData?.options?.find(
-            (scaleData: any) => scaleData.option === scaleOption.labelCode,
+            (scaleData: any) => scaleData.option === scaleOption.labelCode
           )?.count;
 
           if (chartLabelType === ChartLabelType.PERCENTAGE) {

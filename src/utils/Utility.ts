@@ -23,7 +23,6 @@ export function getmatchedFind(
 ) {
   if (_.isArray(compareWith)) {
     return collection.find(function (data: any) {
-      // debugger;
       return +_.isEqual(data[collectionKey], compareWith);
     });
   } else {

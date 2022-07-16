@@ -25,7 +25,6 @@ export const getMultiChartOptionsSeries = (
   bannerChartData: any,
   transposed: any
 ) => {
-  debugger;
   const {
     chart: { significant, chartLabelType, chartType },
     questions: { bannerQuestionList },
@@ -205,7 +204,6 @@ const multiSingleBannerChart = (
   chartLabelType: any,
   questionChartData: any
 ) => {
-  // debugger;
   const {
     chart: { significant },
   } = store.getState();
@@ -448,7 +446,6 @@ const getMultiTransposeChartOptions = (
       const data: any[] = [];
       bannerQuestionData.options.forEach(
         (bannerOptionObject: any, bannerOptionIndex: number) => {
-          // debugger;
           const name = bannerOptionObject.labelText;
           const baseCountArr = getMatchedfilter(
             bannerChartData,

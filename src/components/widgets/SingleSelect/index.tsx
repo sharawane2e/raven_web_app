@@ -81,7 +81,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
               (option[valueKey] == selected) !== undefined
                 ? option[valueKey] == selected
                 : option[valueKey] == selected,
-            )[labelKey];
+            )?.labelKey;
 
             // return <span>{questions ? questions : ''}</span>;
             return <span>{label ? label : ''}</span>;
