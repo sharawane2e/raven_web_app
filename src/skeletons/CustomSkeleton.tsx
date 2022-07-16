@@ -13,7 +13,6 @@ const CustomSkeleton: React.FC<CustomSkeletonProps> = (props) => {
     loaderSkeleton: LoaderSekelton,
     skeletonCount = 1,
   } = props;
-  // debugger;
   let Loader: ComponentType[] | null = [];
   if (LoaderSekelton) {
     for (let index = 0; index < skeletonCount; index++) {

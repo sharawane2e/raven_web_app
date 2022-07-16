@@ -74,7 +74,6 @@ export const getSingleChartOptionsSeries = (
         );
       }
     } else {
-      // debugger;
       //when question is single and banner is multi
       const newOptionData: any = [];
       // @ts-ignore
