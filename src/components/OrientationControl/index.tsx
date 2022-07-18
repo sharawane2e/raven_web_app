@@ -25,7 +25,7 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions();
+    //chartDataClone.chartOptions['plotOptions'] = getPlotOptions();
     dispatch(setChartData(chartDataClone));
   };
   const buttonConfig: ButtonGroupConfig[] = [

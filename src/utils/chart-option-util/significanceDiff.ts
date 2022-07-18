@@ -71,7 +71,7 @@ export const getsignificantdifference = (series: any, chartLabelType: any) => {
           );
 
           if (isSignificant) {
-            significantArry.push(indexToChar(j));
+            significantArry.push(seriesdata[j]['significance']);
           }
         }
       }
