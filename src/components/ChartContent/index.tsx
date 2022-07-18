@@ -178,9 +178,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }
   };
 
-  // const handleQSelectionOpen = () => {
-  //   setOpenQSelection(true);
-  // };
+  const handleQSelectionOpen = () => {
+    setOpenQSelection(true);
+  };
 
   const handleQSelectionClose = () => {
     setOpenQSelection(false);
@@ -303,7 +303,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               }}
               open={openQSelection}
               handleClose={handleQSelectionClose}
-              //handleOpen={handleQSelectionOpen}
+              handleOpen={handleQSelectionOpen}
             />
           </Grid>
           <Grid
