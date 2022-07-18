@@ -232,12 +232,10 @@ export function pptDataGen(
 
     if (chartLabelType === ChartLabelType.PERCENTAGE) {
       seriesData.forEach((row: any, index) => {
-        //console.log(seriesData[index]);
         row.values = row.values.map((value: number) => value / 100);
         seriesData[index] = row;
       });
     }
-    //console.log('seriesData', seriesData);
 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,

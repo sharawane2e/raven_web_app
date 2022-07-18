@@ -7,8 +7,8 @@ import {
   standardDeviation,
   errorFunction,
   cumulativeStdNormalProbability,
-} from "simple-statistics";
-import { round } from "../Utility";
+} from 'simple-statistics';
+import { round } from '../Utility';
 
 export const getmean = (meanArr: any) => {
   return mean(meanArr);
@@ -27,7 +27,7 @@ export const getmax = (maxArr: any) => {
 
 export const getsampleStandardDeviation = (
   standardDeviationArr: any,
-  precision: any
+  precision: any,
 ) => {
   return standardDeviation(standardDeviationArr).toFixed(precision);
 };
@@ -35,10 +35,11 @@ export const getsampleStandardDeviation = (
 export const getStandarderrorFunction = (
   getSampleDeviationValue: any,
   basecount: number,
-  precision: number
+  precision: number,
 ) => {
   return round(getSampleDeviationValue, precision) / Math.sqrt(basecount);
 };
 
+/*this function return true or false significant difference */
 export const getCumulativeStdNormalProbability = (testStatistic: any) =>
   cumulativeStdNormalProbability(testStatistic);

@@ -1,5 +1,4 @@
 import store from '../../redux/store';
-
 import jsPDF from 'jspdf';
 import 'svg2pdf.js';
 
@@ -14,7 +13,7 @@ import {
   significantText,
   significancecolor,
 } from '../../constants/Variables';
-//import { clientBrandingLogo, sourceText, copyRightText, primaryBarColor} from "../../constants/Variables";
+
 import { hexToRgb } from '@material-ui/core';
 import { QuestionType } from '../../enums/QuestionType';
 import { ChartType } from '../../enums/ChartType';
