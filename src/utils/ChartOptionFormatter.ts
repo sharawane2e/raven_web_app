@@ -19,6 +19,7 @@ import {
   getGridMeanChartOptions,
 } from './chart-option-util/grid';
 import { getMultiChartOptionsSeries } from './chart-option-util/multi';
+import { ChartOrientation } from '../enums/ChartOrientation';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -468,13 +469,13 @@ export const getPlotOptions = (
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
     //   ? '{point.y:.1f}%'
     //   : '{point.y:.0f}';
-    // if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-    //   plotOptions['series'].dataLabels.y = -20;
-    //   plotOptions['series'].dataLabels.rotation = -90;
-    // } else {
-    //   plotOptions['series'].dataLabels.y = undefined;
-    //   plotOptions['series'].dataLabels.rotation = 0;
-    // }
+    if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
+      plotOptions['series'].dataLabels.y = -20;
+      plotOptions['series'].dataLabels.rotation = -90;
+    } else {
+      plotOptions['series'].dataLabels.y = undefined;
+      plotOptions['series'].dataLabels.rotation = 0;
+    }
   } else if (chartType === ChartType.PIE) {
     plotOptions['pie'] = {
       allowPointSelect: false,

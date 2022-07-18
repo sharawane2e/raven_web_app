@@ -9,7 +9,6 @@ interface SignificantObject {
 
 /* This function get Chart significant Difference*/
 export const getsignificantdifference = (series: any, chartLabelType: any) => {
-  //debugger;
   const seriesName: string[] = [];
 
   series.forEach((seriesObject: any) => {
@@ -43,15 +42,11 @@ export const getsignificantdifference = (series: any, chartLabelType: any) => {
         },
       },
     };
-    //console.log('updatedSeriesData', updatedSeriesData);
     return updatedSeriesData;
   });
 
   updatedSeries.forEach((singleSeries: any, seriesIndex: number) => {
-    // debugger;
     const seriesdata: any = singleSeries.data;
-
-    console.log('seriesdata', seriesdata);
     //bubble sort
     for (let i = 0; i < seriesdata.length; i++) {
       const significantArry = [];
@@ -64,6 +59,7 @@ export const getsignificantdifference = (series: any, chartLabelType: any) => {
           value: seriesdata[j]['percentageValue'],
           baseCount: seriesdata[j]['baseCount'],
         };
+
         if (i != j) {
           const isSignificant = significantDifference(
             SignificantObject1,
@@ -100,12 +96,17 @@ export const getTablesignificantdifference = (seriesData: any) => {
     }
     seriesData[i]['labels'] = seriesupdatedLabels;
   }
+
   for (let i = 0; i < seriesData.length; i++) {
     for (let j = 0; j < seriesData[i].percentageValues.length; j++) {
       const significantArry = [];
 
       for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
-        if (j !== k) {
+        if (
+          j !== k &&
+          seriesData[i].percentageValues[j] != 0 &&
+          seriesData[i].percentageValues[k] != 0
+        ) {
           const SignificantObject1: SignificantObject = {
             value: seriesData[i].percentageValues[j],
             baseCount: seriesData[i].baseCounts[j],
@@ -121,7 +122,7 @@ export const getTablesignificantdifference = (seriesData: any) => {
           );
 
           if (isSignificant) {
-            significantArry.push(seriesData[i].significance[k]);
+            significantArry.push(seriesData[i]['significance'][k]);
           }
         }
       }

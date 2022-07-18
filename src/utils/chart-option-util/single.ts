@@ -33,7 +33,6 @@ export const getSingleChartOptionsSeries = (
 
   const series: any[] = [];
   if (selectedBannerQuestionId) {
-    // debugger;
     let subGroups: any;
     let count = 0;
 
@@ -179,6 +178,11 @@ export const getSingleChartOptionsSeries = (
           });
       }
     }
+    if (significant) {
+      const updatedSeries = getsignificantdifference(series, chartLabelType);
+      series.length = 0;
+      series.push(...updatedSeries);
+    }
   } else {
     series.push(
       ...getSingleSeries(
@@ -190,11 +194,6 @@ export const getSingleChartOptionsSeries = (
         significant,
       ),
     );
-  }
-  if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
-    series.length = 0;
-    series.push(...updatedSeries);
   }
   return series;
 };
