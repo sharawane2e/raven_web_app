@@ -89,9 +89,19 @@ export const getMultiChartOptionsSeries = (
   if (significant) {
     const updatedSeries = getsignificantdifference(series, chartLabelType);
     series.length = 0;
+    const test = {
+      name: "Angel's Envy(A)",
+      y: 0,
+      percentageValue: 0,
+      numberValue: 0,
+      baseCount: 0,
+      significance: 'A',
+      significantDiffernce: '',
+    };
+
+    updatedSeries[0].data.unshift(test);
     series.push(...updatedSeries);
   }
-
   return series;
 };
 
@@ -235,7 +245,9 @@ const multiSingleBannerChart = (
       if (optionData) {
         const label = optionData.find(
           // @ts-ignore
-          (option: any) => option.labelCode === bannerQuesOption.labelCode,
+          (option: any) => {
+            return option.labelCode === bannerQuesOption.labelCode;
+          },
         );
 
         let localBase = optionData?.reduce(
@@ -260,6 +272,8 @@ const multiSingleBannerChart = (
         } else if (chartLabelType === ChartLabelType.NUMBER && label) {
           count = label.count;
         }
+
+        //  console.log(label);
 
         if (label) {
           let percentageValue = (label.count / localBase) * 100;

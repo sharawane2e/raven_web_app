@@ -204,8 +204,15 @@
   width: 13%;
   margin-left: auto;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 1.2;
   top: -12px;
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 20%;
+  }
+  @media screen and (min-width: 1025px) and (max-width: 1366px) {
+    width: 20%;
+  }
   .significant-hedding {
     position: relative;
     &::before {
@@ -215,7 +222,7 @@
       background: $significantTable;
       position: absolute;
       left: -13px;
-      top: 6px;
+      top: 4px;
     }
   }
 }

@@ -69,7 +69,7 @@ export const defaultPlotOptions = {
       rotation: -90,
       align: 'top',
       x: 0,
-      y: -5,
+      y: -2,
       crop: false,
       style: {
         fontSize: '10px',

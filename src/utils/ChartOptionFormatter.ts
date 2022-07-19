@@ -470,7 +470,7 @@ export const getPlotOptions = (
     //   ? '{point.y:.1f}%'
     //   : '{point.y:.0f}';
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-      plotOptions['series'].dataLabels.y = -20;
+      plotOptions['series'].dataLabels.y = 0;
       plotOptions['series'].dataLabels.rotation = -90;
     } else {
       plotOptions['series'].dataLabels.y = undefined;

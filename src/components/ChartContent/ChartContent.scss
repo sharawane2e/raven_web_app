@@ -31,7 +31,7 @@
 
   .chart-content__chart-wrapper {
     width: calc(100% - 24px);
-    height: calc(100vh - 275px);
+    height: calc(100vh - 285px);
     background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: "white");
