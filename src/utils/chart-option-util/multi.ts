@@ -89,17 +89,7 @@ export const getMultiChartOptionsSeries = (
   if (significant) {
     const updatedSeries = getsignificantdifference(series, chartLabelType);
     series.length = 0;
-    const test = {
-      name: "Angel's Envy(A)",
-      y: 0,
-      percentageValue: 0,
-      numberValue: 0,
-      baseCount: 0,
-      significance: 'A',
-      significantDiffernce: '',
-    };
 
-    updatedSeries[0].data.unshift(test);
     series.push(...updatedSeries);
   }
   return series;
@@ -213,6 +203,7 @@ const multiSingleBannerChart = (
   chartLabelType: any,
   questionChartData: any,
 ) => {
+  //debugger;
   const {
     chart: { significant },
   } = store.getState();
@@ -275,19 +266,19 @@ const multiSingleBannerChart = (
 
         //  console.log(label);
 
-        if (label) {
-          let percentageValue = (label.count / localBase) * 100;
-          let numberValue = label.count;
-          if (count)
-            data.push({
-              name: quesOption.labelText,
-              // y: +count.toFixed(decimalPrecision),
-              y: count !== null ? round(count, decimalPrecision) : 0,
-              percentageValue,
-              numberValue,
-              baseCount: localBase,
-            });
-        }
+        //if (label) {
+        let percentageValue = (label?.count / localBase) * 100;
+        let numberValue = label?.count;
+        if (count)
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count !== null ? round(count, decimalPrecision) : 0,
+            percentageValue,
+            numberValue,
+            baseCount: localBase,
+          });
+        // }
       }
     }
     let newDataLabels;

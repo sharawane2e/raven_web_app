@@ -16,9 +16,13 @@ import { showTourGuide } from '../../redux/actions/tourAction';
 import {
   toggleSidebar,
   toggleSidebarMobile,
+  toggleSidebarUserCache,
 } from '../../redux/actions/sidebarAction';
 import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
+import { Badge } from '@mui/material';
+import { resetUserCache } from '../../redux/actions/userCacheActions';
+// import { addNewKeysToUserCache } from '../../services/userCacheService';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -26,7 +30,8 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
-
+  const { userCache } = useSelector((state: RootState) => state);
+  const { sidebar } = useSelector((state: RootState) => state);
   const { variant = 'partialWidth' } = props;
   // const {
   //   open: sidebarOpen,
@@ -69,6 +74,10 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       history.push('/home');
     }
   }
+  const toggleUserSidebar = () => {
+    dispatch(toggleSidebarUserCache());
+    //getUserCache();
+  };
 
   return (
     <div
@@ -106,6 +115,26 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
+        <Badge
+          badgeContent={
+            userCache.savedChart == undefined ? 0 : userCache.savedChart.length
+          }
+          color="primary"
+          className="badge-icon"
+        >
+          <div
+            className={`appbar__tourGuide appbar__cache-btn ${
+              sidebar?.userCache ? 'user-active' : ''
+            }`}
+            onClick={() => {
+              toggleUserSidebar();
+              // toggleMobileSidebar();
+            }}
+          >
+            {/* <Cache className="cache-icon" /> */}
+            <div className="tourText">My Cache</div>
+          </div>
+        </Badge>
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
           <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
             <ProfileAvatar text={user?.name || ''} />

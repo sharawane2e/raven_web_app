@@ -9,6 +9,7 @@ import tourReducer from './tourReducer';
 import sidebarReducer from './sidebarReducer';
 import chapterReducer from './chapterReducer';
 import standardDeviationReduce from './standardDeviationReduce';
+import userCacheReducer from './userCacheReducer';
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   tour: tourReducer,
   sidebar: sidebarReducer,
   standard: standardDeviationReduce,
+  userCache: userCacheReducer,
   user: persistReducer(persistConfig, userReducer),
 });
 

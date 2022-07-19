@@ -24,15 +24,13 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   } = useSelector((state: RootState) => state);
 
   useEffect(() => {
-
-    if(chart.significant){
+    if (chart.significant) {
       const updatedSignificantStatus = significantDisabled();
-      if(updatedSignificantStatus){
+      if (updatedSignificantStatus) {
         dispatch(updateSignificant(false));
       }
     }
-    
-  }, [chart.questionData?.type,chart.bannerQuestionData,chart.showMean]);
+  }, [chart.questionData?.type, chart.bannerQuestionData, chart.showMean]);
 
   useEffect(() => {
     const chartOptionsUpdate = getChartOptions();
@@ -42,11 +40,15 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
   const significantDisabled = () => {
     let isDisabled = true;
     if (
-      (chart.questionData?.type === QuestionType.SINGLE||chart.questionData?.type === QuestionType.MULTI) &&
+      (chart.questionData?.type === QuestionType.SINGLE ||
+        chart.questionData?.type === QuestionType.MULTI) &&
       chart.bannerQuestionData
     ) {
       isDisabled = false;
-    } else if (chart.questionData?.type === QuestionType?.GRID && !chart.showMean) {
+    } else if (
+      chart.questionData?.type === QuestionType?.GRID &&
+      !chart.showMean
+    ) {
       isDisabled = false;
     }
     return isDisabled;
