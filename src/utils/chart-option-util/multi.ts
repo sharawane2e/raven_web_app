@@ -77,7 +77,7 @@ export const getMultiChartOptionsSeries = (
   } else {
     series.length = 0;
     series.push(
-      ...getTableMultiChartSeries(
+      ...getChartMultiChartSeries(
         questionData,
         chartData,
         baseCount,
@@ -95,7 +95,7 @@ export const getMultiChartOptionsSeries = (
   return series;
 };
 
-const getTableMultiChartSeries = (
+const getChartMultiChartSeries = (
   questionData: any,
   chartData: any,
   baseCount: any,

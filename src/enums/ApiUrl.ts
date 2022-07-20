@@ -1,41 +1,45 @@
 enum ApiUrl {
-  LOGIN = "/auth/login",
+  LOGIN = '/auth/login',
 
-  LOGOUT = "/auth/logout",
+  LOGOUT = '/auth/logout',
 
-  FORGOT_PASSWORD = "/auth/forgot-password",
+  FORGOT_PASSWORD = '/auth/forgot-password',
 
-  SET_PASSWORD = "/auth/set-password",
+  SET_PASSWORD = '/auth/set-password',
 
-  RESET_PASSWORD = "/auth/reset-password",
+  RESET_PASSWORD = '/auth/reset-password',
 
-  CHANGE_PASSWORD = "/auth/change-password",
+  CHANGE_PASSWORD = '/auth/change-password',
 
-  USER = "/user",
+  USER = '/user',
 
-  SHOW_CONTENT_PAGE = "/user/show-content-page",
+  SHOW_CONTENT_PAGE = '/user/show-content-page',
 
-  ACTIVATE_USER = "/user/activate",
+  ACTIVATE_USER = '/user/activate',
 
-  DEACTIVATE_USER = "/user/de-activate",
+  DEACTIVATE_USER = '/user/de-activate',
 
-  GRANT_ADMIN_ACCESS = "/user/grant-admin",
+  GRANT_ADMIN_ACCESS = '/user/grant-admin',
 
-  REMOVE_ADMIN_ACCESS = "/user/revoke-admin",
+  REMOVE_ADMIN_ACCESS = '/user/revoke-admin',
 
-  IS_EMAIL_UNIQUE = "/user/is-email-unique",
+  IS_EMAIL_UNIQUE = '/user/is-email-unique',
 
-  RESEND_ACTIVATION_MAIL = "/user/resend-activation-email",
+  RESEND_ACTIVATION_MAIL = '/user/resend-activation-email',
 
-  FILTER = "/filters",
+  FILTER = '/filters',
 
-  QUESTION = "/question",
+  QUESTION = '/question',
 
-  BANNER_QUESTION = "/question/banner",
+  BANNER_QUESTION = '/question/banner',
 
-  CHART = "/chart",
+  CHART = '/chart',
 
-  CHAPTERS = "/chapters",
+  CHAPTERS = '/chapters',
+
+  SAVE_CHART = 'user/save-chart',
+
+  DELETE_CHART = 'user/delete-chart',
 }
 
 export default ApiUrl;

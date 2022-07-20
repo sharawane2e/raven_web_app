@@ -26,15 +26,15 @@ import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
 // import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import { resetUserCache } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
-// import {
-//   handleDeleteChartCache,
-//   isChartInCache,
-// } from '../../../../services/userCacheService';
-// import {
-//   setSelectedBannerQuestionId,
-//   setSelectedQuestionId,
-//   setSelectedQuestionText,
-// } from '../../../../redux/actions/questionAction';
+import {
+  handleDeleteChartCache,
+  isChartInCache,
+} from '../../../../services/userCacheService';
+import {
+  setSelectedBannerQuestionId,
+  setSelectedQuestionId,
+  setSelectedQuestionText,
+} from '../../../../redux/actions/questionAction';
 
 import {
   setChartData,
@@ -98,10 +98,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       }
     });
 
-    // if (isChartInCache().isChartDuplicate) {
-    //   setActiveCacheId(isChartInCache().duplicateCacheId);
-    //   // console.log(isChartInCache().duplicateCacheId)
-    // }
+    if (isChartInCache().isChartDuplicate) {
+      setActiveCacheId(isChartInCache().duplicateCacheId);
+      // console.log(isChartInCache().duplicateCacheId)
+    }
   });
 
   useEffect(() => {
@@ -165,15 +165,15 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     setActiveCacheId(selectValue);
     const questionTextId = qid + '-' + qtext;
 
-    // dispatch(setSelectedQuestionText(questionTextId));
-    // const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
-    //   return userCacheinfo?._id === cacheId;
-    // });
+    dispatch(setSelectedQuestionText(questionTextId));
+    const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
+      return userCacheinfo?._id === cacheId;
+    });
 
-    // dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
-    // dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
-    // dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
-    // dispatch(setFilters(_cacheQuestion[0]['filter']));
+    dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
+    dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
+    dispatch(setFilters(_cacheQuestion[0]['filter']));
 
     // fetchChartData()
     //   .then((chartData) => {
@@ -196,7 +196,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
       (chartElement) => chartElement._id,
     );
-    // handleDeleteChartCache(deleteSavedChartsIds);
+    //handleDeleteChartCache(deleteSavedChartsIds);
   };
 
   return (
@@ -259,6 +259,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               </>
             ) : (
               savedChart.map((savedata: any, index: any) => {
+                // console.log('savedata', savedata);
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString('en-us');
                 // console.log('savedata', savedata);

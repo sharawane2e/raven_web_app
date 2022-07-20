@@ -5,7 +5,7 @@ import {
   ListItemText,
   MenuItem,
 } from '@material-ui/core';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setChartData,
@@ -26,7 +26,7 @@ import { IQuestionOption } from '../../../../types/IBaseQuestion';
 import CustomScrollbar from '../../../CustomScrollbar';
 import MultiSelect from '../../../widgets/MultiSelect';
 import { IFilter } from '../../../../types/IFilter';
-import { values } from 'lodash';
+import { filter, values } from 'lodash';
 
 const ChartSidebarContent: React.FC = () => {
   const { appliedFilters } = useSelector((state: RootState) => state.filters);
@@ -36,7 +36,22 @@ const ChartSidebarContent: React.FC = () => {
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
+  /*user cache set applied Filter*/
+  // useEffect(() => {
+  //   filters.map((filterEl: any) => {
+  //     const filterId = filterEl?.qId;
+  //     const filterValue = {
+  //       labelCode: filterEl?.code,
+  //       labelText: filterEl?.label,
+  //       order: 0,
+  //     };
+  //     //handleFilterSelect()
+  //   });
+
+  // }, []);
+
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
+    //console.log('qid', qId, 'value', value);
     const updatedFilters = [...filters];
 
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
@@ -200,6 +215,7 @@ const ChartSidebarContent: React.FC = () => {
         .catch((error) => console.log(error));
     }
   };
+  //console.log('filterQuestionList', filterQuestionList);
 
   return (
     <div className="chart-sidebar">

@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TourPlayIcon from '@material-ui/icons/PlayArrow';
@@ -22,7 +22,11 @@ import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
 import { Badge } from '@mui/material';
 import { resetUserCache } from '../../redux/actions/userCacheActions';
-// import { addNewKeysToUserCache } from '../../services/userCacheService';
+import { ReactComponent as Cache } from '../../assets/svg/cache.svg';
+import ApiRequest from '../../utils/ApiRequest';
+import ApiUrl from '../../enums/ApiUrl';
+import { addNewKeysToUserCache } from '../../services/userCacheService';
+import Toaster from '../../utils/Toaster';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -39,6 +43,15 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   //   openMobileDrawer,
   //   toggleMobileSidebar,
   // } = useContext(SidebarContext);
+
+  const toggleUserSidebar = () => {
+    dispatch(toggleSidebarUserCache());
+    getUserCache();
+  };
+
+  useEffect(() => {
+    getUserCache();
+  }, []);
 
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
     (state: RootState) => state.sidebar,
@@ -74,9 +87,18 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       history.push('/home');
     }
   }
-  const toggleUserSidebar = () => {
-    dispatch(toggleSidebarUserCache());
-    //getUserCache();
+
+  const getUserCache = () => {
+    ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
+      .then((res) => {
+        if (res.success) {
+          const updatedUserCache = addNewKeysToUserCache(res?.data);
+          dispatch(resetUserCache(updatedUserCache));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -89,12 +111,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     >
       <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper client-logo">
-          {/* <BrandLogo
-            className="appbar__brand-logo"
-            onClick={() => history.push('/home')}
-          /> */}
           <div className="public-form__client-logo client-logo__icons">
-            {/* <Boehringer onClick={() => history.push('/home')} /> */}
             <RavneLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} />
@@ -131,7 +148,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
               // toggleMobileSidebar();
             }}
           >
-            {/* <Cache className="cache-icon" /> */}
+            <Cache className="cache-icon" />
             <div className="tourText">My Cache</div>
           </div>
         </Badge>

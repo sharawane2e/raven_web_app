@@ -28,22 +28,24 @@ const FavouriteControl: React.FC = () => {
       chartLabelType: chart?.chartLabelType,
       chartOrientation: chart?.chartOrientation,
       chartTranspose: chart?.chartTranspose,
+      //significant: chart?.significant,
+      //showMean: chart?.showMean,
       date: new Date(),
     };
 
-    console.log('userCachebody', userCachebody);
-    dispatch(resetUserCache([userCachebody]));
+    //console.log('userCachebody', userCachebody);
+    // dispatch(resetUserCache([userCachebody]));
 
-    // ApiRequest.request(ApiUrl.SAVE_CHART, "POST", userCachebody,undefined,false)
-    //   .then((res) => {
-    //     if (res.success) {
-    //       dispatch(resetUserCache(res.data))
-    //       Toaster.success(res.message);
-    //     } else {
-    //       Toaster.error(res.message); //add more things
-    //     }
-    //   })
-    //   .catch((error) => console.log(error))
+    ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
+      .then((res) => {
+        if (res.success) {
+          dispatch(resetUserCache(res.data));
+          Toaster.success(res.message);
+        } else {
+          Toaster.error(res.message); //add more things
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
