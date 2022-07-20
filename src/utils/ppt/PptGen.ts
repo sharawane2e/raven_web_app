@@ -91,6 +91,9 @@ export const generatePpt = async () => {
     significanceText,
   };
 
+  // for (let i = 0; i == 2; i++) {
   pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
+  //}
+
   await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
 };

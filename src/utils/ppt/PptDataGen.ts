@@ -36,6 +36,7 @@ export function pptDataGen(
       bannerQuestionData,
     },
   } = store.getState();
+  //debugger;
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
 

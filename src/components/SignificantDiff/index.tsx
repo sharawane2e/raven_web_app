@@ -52,15 +52,6 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
       isDisabled = false;
     }
     return isDisabled;
-
-    // let isDisabled = false;
-
-    // if((chart.questionData?.type === QuestionType.SINGLE||chart.questionData?.type === QuestionType.MULTI) &&
-    // chart.bannerQuestionData==null){
-    //   isDisabled = true
-    //   }else if(chart.questionData?.type === QuestionType.RANK||){
-
-    //   }
   };
 
   const handleClick = () => {

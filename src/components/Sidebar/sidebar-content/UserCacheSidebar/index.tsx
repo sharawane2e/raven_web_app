@@ -41,6 +41,8 @@ import {
   setChartLabel,
   setChartOrientation,
   setChartTranspose,
+  showMean,
+  updateSignificant,
 } from '../../../../redux/actions/chartActions';
 
 import {
@@ -174,6 +176,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
     dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
     dispatch(setFilters(_cacheQuestion[0]['filter']));
+    dispatch(updateSignificant(_cacheQuestion[0]['significant']));
+    dispatch(showMean(_cacheQuestion[0]['showMean']));
+
+    //    console.log(_cacheQuestion[0]['significant']);
 
     // fetchChartData()
     //   .then((chartData) => {
@@ -196,7 +202,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
       (chartElement) => chartElement._id,
     );
-    //handleDeleteChartCache(deleteSavedChartsIds);
+    handleDeleteChartCache(deleteSavedChartsIds);
   };
 
   return (

@@ -7,6 +7,10 @@ import ApiRequest from '../../utils/ApiRequest';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
 import { resetUserCache } from '../../redux/actions/userCacheActions';
+import {
+  handleDeleteChartCache,
+  isChartInCache,
+} from '../../services/userCacheService';
 //import { handleDeleteChartCache, isChartInCache } from "../../services/userCacheService";
 
 const FavouriteControl: React.FC = () => {
@@ -28,8 +32,8 @@ const FavouriteControl: React.FC = () => {
       chartLabelType: chart?.chartLabelType,
       chartOrientation: chart?.chartOrientation,
       chartTranspose: chart?.chartTranspose,
-      //significant: chart?.significant,
-      //showMean: chart?.showMean,
+      significant: chart?.significant,
+      showMean: chart?.showMean,
       date: new Date(),
     };
 
@@ -52,9 +56,12 @@ const FavouriteControl: React.FC = () => {
     {
       tooltip: 'User Cache',
       renderChild: () => <FavouriteIcon />,
+      //onClick: handleAddChartCache,
       onClick: handleAddChartCache,
-      //onClick: isChartInCache().isChartDuplicate?()=>handleDeleteChartCache([isChartInCache().duplicateCacheId]):handleAddChartCache,
-      // active: isChartInCache().isChartDuplicate,
+      // onClick: isChartInCache().isChartDuplicate
+      // ? () => handleDeleteChartCache([isChartInCache().duplicateCacheId])
+      // : handleAddChartCache,
+      active: isChartInCache().isChartDuplicate,
       disabled: chart.questionData === null,
       disableClick: () => Toaster.error(StaticText.USER_CACHE_NOT_AVAILABLE),
     },
