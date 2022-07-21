@@ -18,25 +18,15 @@ export const getsignificantdifference = (
   transposed: boolean,
 ) => {
   const seriesName: string[] = [];
-  // const baseCountArr: number[] = [];
 
-  // series.forEach((seriesObject: any) => {
-  //   if (seriesObject.data.length > seriesName.length) {
-  //     seriesName.length = 0;
-  //     seriesObject.data.forEach((seriesData: any) => {
-  //       seriesName.push(seriesData.name);
-  //       //baseCountArr.push(seriesData.baseCount);
-  //     });
-  //   }
-  // });
   if (transposed) {
     bannerQuestionData.options.forEach((optionObject: any) => {
-      seriesName.push(optionObject.labelText);
+      seriesName.push(optionObject?.labelText);
     });
   } else {
     questionData.options.forEach((optionObject: any) => {
-      if (chartData[0][optionObject.labelCode].length) {
-        seriesName.push(optionObject.labelText);
+      if (chartData[0][optionObject?.labelCode]?.length) {
+        seriesName.push(optionObject?.labelText);
       }
     });
   }
