@@ -36,6 +36,7 @@ export function bannerChartDataGen(
         ),
       );
     } else {
+      debugger;
       seriesData.length = 0;
       seriesData.push(
         ...getSingleTransposeTableOptions(
@@ -94,18 +95,25 @@ const getSingleOptions = (
 
   let labels: any = [];
 
-  // questionData.options.map((option: IQuestionOption) => {
-  //   // if (option.labelCode in chartDataComplete) {
-  //   const obj = chartDataComplete[option.labelCode] || [];
-  //   if (obj && obj.length != 0) {
-  //     labels.push(option.labelText);
-  //   }
-  //   //}
-  // });
-
   questionData.options.map((option: IQuestionOption) => {
-    labels.push(option.labelText);
+    if (
+      bannerQuestionData.type == QuestionType.MULTI &&
+      questionData.type == QuestionType.MULTI
+    ) {
+      if (option.labelCode in chartDataComplete) {
+        const obj = chartDataComplete[option.labelCode] || [];
+        if (obj && obj.length != 0) {
+          labels.push(option.labelText);
+        }
+      }
+    } else {
+      labels.push(option.labelText);
+    }
   });
+
+  // questionData.options.map((option: IQuestionOption) => {
+  //   labels.push(option.labelText);
+  // });
 
   bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
     const countValues: number[] = [];
@@ -225,6 +233,11 @@ const getSingleOptions = (
             countValues.push(subOptionDataCount);
             percentageValues.push(subOptionDataPercentage);
             baseCounts.push(base);
+          } else {
+            //console.log('aa gya else main');
+            // countValues.push(0);
+            // percentageValues.push(0);
+            // baseCounts.push(0);
           }
         }
       }
@@ -254,7 +267,6 @@ const getMultiTransposeTableOptions = (
   chartData: any,
   bannerQuestionData: any,
 ) => {
-  console.log('ddede');
   const {
     chart: { chartLabelType, significant, bannerChartData },
   } = store.getState();

@@ -31,7 +31,8 @@ export function tableChartDataGen() {
   }
   /*this condition used for when multi Question avialbe neeting*/
   let results: any = chart.questionData?.options.filter(function (option) {
-    if (option?.labelCode === 'N') {
+    //console.log(option?.labelCode.indexOf('N'));
+    if (option?.labelCode.indexOf('N') != -1) {
       if (option?.labelCode?.split('_')[0] == 'N') {
         return true;
       }
@@ -39,10 +40,11 @@ export function tableChartDataGen() {
   });
 
   lablecode_length = results.length;
+  //console.log('lablecode_length', lablecode_length);
 
   let bannerQuestionresults: any = chart.bannerQuestionData?.options.filter(
     function (option) {
-      if (option?.labelCode === 'N') {
+      if (option?.labelCode.indexOf('N') != -1) {
         if (option.labelCode?.split('_')[0] == 'N') {
           return true;
         }
@@ -52,6 +54,7 @@ export function tableChartDataGen() {
 
   crosstab_length =
     bannerQuestionresults?.length > 0 ? bannerQuestionresults?.length : 0;
+
   if (seriesData) {
     let scale: any = [];
     seriesData.forEach((index: any) => {
@@ -145,6 +148,7 @@ export function tableChartDataGen() {
               } else {
                 subRow.push(round(d.values[k], 2));
               }
+
               if (
                 (chart?.chartTranspose &&
                   chart?.questionData?.type === QuestionType.SINGLE &&
@@ -157,26 +161,34 @@ export function tableChartDataGen() {
                 if (chart?.questionData?.type === 'N') {
                   totalrowSub += parseFloat(d.values[k]);
                 } else {
-                  if (rIndex < scaleIndex && chart.showMean) {
-                    //totalrowSub += parseFloat(d.values[k]);
-                    if (netsLabelcode === 'N') {
-                      totalrowSub += 0;
-                    }
+                  if (
+                    (chart?.questionData?.type === QuestionType.MULTI &&
+                      chart?.bannerQuestionData?.type == QuestionType.MULTI) ||
+                    chart?.bannerQuestionData?.type == QuestionType.SINGLE
+                  ) {
                   } else {
-                    if (netsQuestionLabelcode === 'N') {
-                      totalrowSub += parseFloat(d.values[k]);
+                    if (rIndex < scaleIndex && chart.showMean) {
+                      //totalrowSub += parseFloat(d.values[k]);
+                      if (netsLabelcode === 'N') {
+                        totalrowSub += 0;
+                      }
                     } else {
-                      if (scaleLength === 0 && chartTransposeState) {
-                        // totalrowSub += parseFloat(d.values[k]);
+                      if (netsQuestionLabelcode === 'N') {
+                        totalrowSub += parseFloat(d.values[k]);
                       } else {
-                        if (chart.showMean === false && scaleLength > 0) {
-                          totalrowSub += 0;
+                        if (scaleLength === 0 && chartTransposeState) {
+                          // totalrowSub += parseFloat(d.values[k]);
                         } else {
-                          totalrowSub += parseFloat(d.values[k]);
+                          if (chart.showMean === false && scaleLength > 0) {
+                            totalrowSub += 0;
+                          } else {
+                            totalrowSub += parseFloat(d.values[k]);
+                          }
                         }
                       }
                     }
                   }
+
                   if (chart.showMean === true) {
                     totalrowSub += 0;
                   }

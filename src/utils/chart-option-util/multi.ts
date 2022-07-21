@@ -77,7 +77,7 @@ export const getMultiChartOptionsSeries = (
   } else {
     series.length = 0;
     series.push(
-      ...getTableMultiChartSeries(
+      ...getChartMultiChartSeries(
         questionData,
         chartData,
         baseCount,
@@ -87,15 +87,22 @@ export const getMultiChartOptionsSeries = (
     );
   }
   if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
+    const updatedSeries = getsignificantdifference(
+      questionData,
+      chartData,
+      bannerQuestionData,
+      series,
+      chartLabelType,
+      transposed,
+    );
     series.length = 0;
     series.push(...updatedSeries);
   }
-  console.log('series', series);
+
   return series;
 };
 
-const getTableMultiChartSeries = (
+const getChartMultiChartSeries = (
   questionData: any,
   chartData: any,
   baseCount: any,
