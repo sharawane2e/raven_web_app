@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getCumulativeStdNormalProbability } from '../simplestatistics';
 import { indexToChar } from '../Utility';
@@ -10,13 +11,41 @@ interface SignificantObject {
 /* This function get Chart significant Difference*/
 export const getsignificantdifference = (series: any, chartLabelType: any) => {
   const seriesName: string[] = [];
+  const baseCountArr: number[] = [];
 
   series.forEach((seriesObject: any) => {
     if (seriesObject.data.length > seriesName.length) {
       seriesName.length = 0;
       seriesObject.data.forEach((seriesData: any) => {
         seriesName.push(seriesData.name);
+        baseCountArr.push(seriesData.baseCount);
       });
+    }
+  });
+
+  series.forEach((seriesObject: any, seriesIndex: number) => {
+    // debugger;
+    if (seriesObject.data.length != seriesName.length) {
+      const updatedData: any = [];
+      seriesName.forEach((labelName: string, labelIndex: number) => {
+        const isLabel = _.find(seriesObject.data, function (o) {
+          return o.name == labelName;
+        });
+        if (isLabel) {
+          updatedData.push(isLabel);
+        } else {
+          updatedData.push({
+            name: labelName,
+            y: 0,
+            percentageValue: 0,
+            numberValue: 0,
+            baseCount: baseCountArr[labelIndex],
+            significance: '',
+            significantDiffernce: '',
+          });
+        }
+      });
+      series[seriesIndex].data = updatedData;
     }
   });
 
@@ -73,7 +102,7 @@ export const getsignificantdifference = (series: any, chartLabelType: any) => {
       }
       if (significantArry.length) {
         singleSeries.data[i]['significantDiffernce'] =
-          '(' + significantArry.join('') + ')';
+          '(' + significantArry.join(',') + ')';
       }
     }
   });
@@ -83,6 +112,7 @@ export const getsignificantdifference = (series: any, chartLabelType: any) => {
 
 /* This function get table significant Difference*/
 export const getTablesignificantdifference = (seriesData: any) => {
+  console.log('seriesData', seriesData);
   for (let i = 0; i < seriesData.length; i++) {
     const seriesupdatedLabels = [];
     seriesData[i]['significance'] = [];
@@ -102,11 +132,10 @@ export const getTablesignificantdifference = (seriesData: any) => {
       const significantArry = [];
 
       for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
-        if (
-          j !== k &&
-          seriesData[i].percentageValues[j] != 0 &&
-          seriesData[i].percentageValues[k] != 0
-        ) {
+        /*
+        seriesData[i].percentageValues[j] != 0 &&
+        seriesData[i].percentageValues[k] != 0*/
+        if (j !== k) {
           const SignificantObject1: SignificantObject = {
             value: seriesData[i].percentageValues[j],
             baseCount: seriesData[i].baseCounts[j],

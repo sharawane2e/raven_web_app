@@ -14,6 +14,10 @@ export function bannerChartDataGen(
   chartTranspose: any,
   questionChartData: any,
 ) {
+  const {
+    chart: { significant },
+  } = store.getState();
+
   const seriesData: any = [];
 
   if (
@@ -64,7 +68,11 @@ export function bannerChartDataGen(
       );
     }
   }
+  //console.log('seriesData', seriesData);
 
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
   return seriesData;
 }
 
@@ -234,9 +242,9 @@ const getSingleOptions = (
     });
   });
 
-  if (significant) {
-    return getTablesignificantdifference(seriesData);
-  }
+  // if (significant) {
+  //   return getTablesignificantdifference(seriesData);
+  // }
 
   return seriesData;
 };
@@ -359,9 +367,9 @@ const getMultiTransposeTableOptions = (
       });
     },
   );
-  if (significant) {
-    return getTablesignificantdifference(seriesData);
-  }
+  // if (significant) {
+  //   return getTablesignificantdifference(seriesData);
+  // }
 
   return seriesData;
 };
@@ -478,9 +486,9 @@ const getSingleTransposeTableOptions = (
     });
   });
 
-  if (significant) {
-    return getTablesignificantdifference(seriesData);
-  }
+  // if (significant) {
+  //   return getTablesignificantdifference(seriesData);
+  // }
 
   return seriesData;
 };

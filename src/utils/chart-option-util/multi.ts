@@ -89,19 +89,9 @@ export const getMultiChartOptionsSeries = (
   if (significant) {
     const updatedSeries = getsignificantdifference(series, chartLabelType);
     series.length = 0;
-    const test = {
-      name: "Angel's Envy(A)",
-      y: 0,
-      percentageValue: 0,
-      numberValue: 0,
-      baseCount: 0,
-      significance: 'A',
-      significantDiffernce: '',
-    };
-
-    updatedSeries[0].data.unshift(test);
     series.push(...updatedSeries);
   }
+  console.log('series', series);
   return series;
 };
 

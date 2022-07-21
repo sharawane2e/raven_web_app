@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/nielseniq/test1911271001/static/css/main.fa6274d5.chunk.css",
-    "main.js": "/nielseniq/test1911271001/static/js/main.fdf4c354.chunk.js",
-    "main.js.map": "/nielseniq/test1911271001/static/js/main.fdf4c354.chunk.js.map",
+    "main.css": "/nielseniq/test1911271001/static/css/main.91ae41f0.chunk.css",
+    "main.js": "/nielseniq/test1911271001/static/js/main.b58b9d0f.chunk.js",
+    "main.js.map": "/nielseniq/test1911271001/static/js/main.b58b9d0f.chunk.js.map",
     "runtime-main.js": "/nielseniq/test1911271001/static/js/runtime-main.9e67ace9.js",
     "runtime-main.js.map": "/nielseniq/test1911271001/static/js/runtime-main.9e67ace9.js.map",
     "static/css/2.029a9c87.chunk.css": "/nielseniq/test1911271001/static/css/2.029a9c87.chunk.css",
@@ -18,7 +18,7 @@
     "static/js/6.921607a1.chunk.js.map": "/nielseniq/test1911271001/static/js/6.921607a1.chunk.js.map",
     "index.html": "/nielseniq/test1911271001/index.html",
     "static/css/2.029a9c87.chunk.css.map": "/nielseniq/test1911271001/static/css/2.029a9c87.chunk.css.map",
-    "static/css/main.fa6274d5.chunk.css.map": "/nielseniq/test1911271001/static/css/main.fa6274d5.chunk.css.map",
+    "static/css/main.91ae41f0.chunk.css.map": "/nielseniq/test1911271001/static/css/main.91ae41f0.chunk.css.map",
     "static/js/2.bc2cb2d0.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/2.bc2cb2d0.chunk.js.LICENSE.txt",
     "static/js/3.afb5327a.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/3.afb5327a.chunk.js.LICENSE.txt",
     "static/js/4.0208efbd.chunk.js.LICENSE.txt": "/nielseniq/test1911271001/static/js/4.0208efbd.chunk.js.LICENSE.txt",
@@ -57,7 +57,7 @@
     "static/js/runtime-main.9e67ace9.js",
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.bc2cb2d0.chunk.js",
-    "static/css/main.fa6274d5.chunk.css",
-    "static/js/main.fdf4c354.chunk.js"
+    "static/css/main.91ae41f0.chunk.css",
+    "static/js/main.b58b9d0f.chunk.js"
   ]
 }
