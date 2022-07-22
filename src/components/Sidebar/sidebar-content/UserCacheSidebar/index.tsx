@@ -29,6 +29,7 @@ import _ from 'lodash';
 import {
   handleDeleteChartCache,
   isChartInCache,
+  multiExport
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -207,22 +208,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     handleDeleteChartCache(deleteSavedChartsIds);
   };
 
-  const multiExport = async (savedChart: any) => {
-    const promiseAllArr: any = [];
-    savedChart.forEach((el: any) => {
-      const body = {
-        qId: el.qId,
-        type: el.type,
-        filters: el.filter,
-        bannerQuestion: el.bannerQuestion,
-        bannerType: el.bannertype ? el.bannertype : null,
-      };
-      promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
-    });
 
-    const apiResponse = await Promise.all(promiseAllArr);
-    console.log(apiResponse);
-  };
 
   return (
     <div className="sidebar user-cache">
