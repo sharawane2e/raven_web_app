@@ -1,64 +1,37 @@
-import { decimalPrecision } from '../../constants/Variables';
-import { formatTableData, getMatchedfilter, getSum, round } from '../Utility';
-import store from '../../redux/store';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
-export function singleChartDataGen(
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-) {
+export function singleChartDataGen(series: any, chartLabelType: any) {
   let labels: any = [];
+  let labelName: any = [];
   let values: any = [];
   let seriesData: any[] = [];
-  let options = questionData?.options || [];
 
-  const {
-    chart: { chartLabelType, chartType },
-  } = store.getState();
-
-  options.forEach((option: any) => {
-    const dataObj: any = getMatchedfilter(
-      chartData,
-      'labelCode',
-      option.labelCode,
-    );
-
-    labels.push(option.labelText);
-
-    if (dataObj) {
-      let count: any = 0;
-      count = getSum(dataObj, 'count');
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        count = round((count / baseCount) * 100, decimalPrecision);
-      }
-      values.push(count);
-    } else {
-      values.push(0);
-    }
-  });
+  if (
+    (series.length == 1 && chartLabelType === ChartLabelType.PERCENTAGE) ||
+    (series.length == 1 && chartLabelType === ChartLabelType.NUMBER)
+  ) {
+    labelName.push(series[0].name);
+    series[0].data.forEach((data: any) => {
+      labels.push(data.name);
+      values.push(data.y);
+    });
+  } else {
+    series?.forEach((seriesdata: any) => {
+      labels.push(seriesdata.name);
+      seriesdata.data.forEach((data: any) => {
+        labelName.push(data.name);
+        values.push(data.y);
+      });
+    });
+  }
 
   seriesData = [
     {
-      name: questionData?.labelText,
-      labels: labels,
-      values: values,
+      name: labelName[0],
+      labels,
+      values,
     },
   ];
 
-  if (chartType === ChartType.STACK) {
-    const stackSeriesData: any = [];
-    const label: string = questionData.questionText;
-    seriesData[0].labels.forEach((ele: any, index: number) => {
-      stackSeriesData.push({
-        name: seriesData[0].labels[index],
-        labels: [label],
-        values: [seriesData[0].values[index]],
-      });
-    });
-    return stackSeriesData;
-  } else {
-    return seriesData;
-  }
+  return seriesData;
 }

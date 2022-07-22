@@ -1,16 +1,15 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { bannerChartDataGen } from './BannerQuesUtils';
-import { gridChartTableGen } from './GridQuesUtils';
-import { multiGridChartDataGen } from './MultiGridQuesUtils';
-import { multiChartDataGen } from './MultiQuesUtils';
-import { rankChartDataGen } from './RankQuesUtils';
-import { singleChartDataGen } from './SingleQuesUtils';
-import { numberChartDataGen } from './NumberQuesUtils';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { bannerChartDataGen } from "./BannerQuesUtils";
+import { gridChartTableGen } from "./GridQuesUtils";
+import { multiGridChartDataGen } from "./MultiGridQuesUtils";
+import { multiChartDataGen } from "./MultiQuesUtils";
+import { rankChartDataGen } from "./RankQuesUtils";
+import { singleChartDataGen } from "./SingleQuesUtils";
+import { numberChartDataGen } from "./NumberQuesUtils";
 
 export function chartDataGen() {
   let seriesData: any[] = [];
-
   const {
     chart: {
       chartData,
@@ -19,6 +18,8 @@ export function chartDataGen() {
       baseCount,
       chartTranspose,
       questionChartData,
+      chartOptions,
+      chartLabelType,
     },
     questions: { selectedBannerQuestionId },
   } = store.getState();
@@ -28,37 +29,20 @@ export function chartDataGen() {
     (questionData?.type === QuestionType.SINGLE ||
       questionData?.type === QuestionType.MULTI)
   ) {
-    seriesData = bannerChartDataGen(
-      questionData,
-      chartData,
-      bannerQuestionData,
-      chartTranspose,
-      questionChartData,
-    );
+    seriesData = bannerChartDataGen(chartOptions.series);
   } else {
-    // debugger;
     if (questionData?.type === QuestionType.SINGLE) {
-      seriesData = singleChartDataGen(questionData, chartData, baseCount);
+      seriesData = singleChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.MULTI) {
-      seriesData = multiChartDataGen(questionData, chartData, baseCount);
+      seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.GRID) {
-      seriesData = gridChartTableGen(questionData, chartData, baseCount);
-    } else if (questionData?.type === QuestionType.GRID_MULTI) {
-      seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
+      seriesData = gridChartTableGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.RANK) {
-      seriesData = rankChartDataGen(
-        questionData,
-        chartData,
-        baseCount,
-        chartTranspose,
-      );
+      seriesData = rankChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.NUMBER) {
-      seriesData = numberChartDataGen(
-        questionData,
-        chartData,
-        chartTranspose,
-        bannerQuestionData,
-      );
+      seriesData = numberChartDataGen(chartOptions.series, chartLabelType);
+    } else if (questionData?.type === QuestionType.GRID_MULTI) {
+      seriesData = multiGridChartDataGen(chartOptions.series, chartLabelType);
     }
   }
 
