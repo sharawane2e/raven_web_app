@@ -285,6 +285,8 @@ const getSingleSeries = (
       },
     });
   }
+
+  console.log('series', series);
   return series;
 };
 
