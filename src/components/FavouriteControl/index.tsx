@@ -29,7 +29,7 @@ const FavouriteControl: React.FC = () => {
       qText: chartQuestionData?.questionText,
       qId: chartQuestionData?.qId,
       type: chartQuestionData?.type,
-      //bannerType: chart?.bannerQuestionData?.type,
+      bannerType: chart?.bannerQuestionData?.type,
       date: new Date(),
       filter: filters?.appliedFilters,
       bannerQuestion:

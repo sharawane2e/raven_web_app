@@ -181,8 +181,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(updateSignificant(_cacheQuestion[0]['significant']));
     dispatch(showMean(_cacheQuestion[0]['showMean']));
 
-    //    console.log(_cacheQuestion[0]['significant']);
-
     // fetchChartData()
     //   .then((chartData) => {
     //     dispatch(setChartData(chartData));
@@ -210,12 +208,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const multiExport = async (savedChart: any) => {
     const promiseAllArr: any = [];
     savedChart.forEach((el: any) => {
+      console.log(el);
       const body = {
         qId: el.qId,
         type: el.type,
         filters: el.filter,
         bannerQuestion: el.bannerQuestion,
-        bannerType: el.bannertype ? el.bannertype : null,
+        bannerType: el.bannerType ? el.bannerType : null,
       };
       promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
     });
@@ -284,10 +283,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               </>
             ) : (
               savedChart.map((savedata: any, index: any) => {
-                // console.log('savedata', savedata);
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString('en-us');
-                // console.log('savedata', savedata);
                 return (
                   <div className="user-cache__sidebar" key={index}>
                     <div className="user-cache__cache-data">
