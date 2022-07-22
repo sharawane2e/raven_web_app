@@ -21,10 +21,16 @@ const FavouriteControl: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleAddChartCache = () => {
+    console.log(
+      'chart?.bannerQuestionData?.type',
+      chart?.bannerQuestionData?.type,
+    );
     const userCachebody = {
       qText: chartQuestionData?.questionText,
       qId: chartQuestionData?.qId,
       type: chartQuestionData?.type,
+      //bannerType: chart?.bannerQuestionData?.type,
+      date: new Date(),
       filter: filters?.appliedFilters,
       bannerQuestion:
         chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
@@ -34,7 +40,6 @@ const FavouriteControl: React.FC = () => {
       chartTranspose: chart?.chartTranspose,
       significant: chart?.significant,
       showMean: chart?.showMean,
-      date: new Date(),
     };
 
     //console.log('userCachebody', userCachebody);

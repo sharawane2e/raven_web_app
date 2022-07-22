@@ -1,7 +1,7 @@
 import { Box, Button, Drawer, Typography } from '@material-ui/core';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import React, { ComponentType, useContext, useState, useEffect } from 'react';
+import React, { ComponentType, useState, useEffect } from 'react';
 import store, { RootState } from '../../../../redux/store';
 import CustomScrollbar from '../../../CustomScrollbar';
 import FormControlLabel from '@mui/material/FormControlLabel';
