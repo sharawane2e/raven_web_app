@@ -1,23 +1,27 @@
-import { decimalPrecision } from '../../constants/Variables';
-import { IBaseQuestion, IQuestionOption } from '../../types/IBaseQuestion';
-import { getMatchedfilter, getmatchedFind, getSum, round } from '../Utility';
-import store from '../../redux/store';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import _, { find } from 'lodash';
-import { QuestionType } from '../../enums/QuestionType';
-import { getTablesignificantdifference } from '../chart-option-util/significanceDiff';
+import { decimalPrecision } from "../../constants/Variables";
+import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
+import { getMatchedfilter, getmatchedFind, getSum, round } from "../Utility";
+import store from "../../redux/store";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import _, { find } from "lodash";
+import { QuestionType } from "../../enums/QuestionType";
+import { getTablesignificantdifference } from "../chart-option-util/significanceDiff";
 
 export function bannerChartDataGen(
   questionData: IBaseQuestion,
   chartData: any,
   bannerQuestionData: any,
   chartTranspose: any,
-  questionChartData: any,
+  questionChartData: any
 ) {
   const {
     chart: { significant },
   } = store.getState();
 
+  // console.log("questionData", questionData);
+  // console.log("bannerQuestionData", bannerQuestionData);
+  // console.log("chartData", chartData);
+  // console.log("questionChartData", chartData);
   const seriesData: any = [];
 
   if (
@@ -32,19 +36,18 @@ export function bannerChartDataGen(
           bannerQuestionData,
           questionData,
           chartData,
-          questionChartData,
-        ),
+          questionChartData
+        )
       );
     } else {
-      debugger;
       seriesData.length = 0;
       seriesData.push(
         ...getSingleTransposeTableOptions(
           questionData,
           chartData,
           bannerQuestionData,
-          chartTranspose,
-        ),
+          chartTranspose
+        )
       );
     }
   } else {
@@ -54,8 +57,8 @@ export function bannerChartDataGen(
         ...getMultiTransposeTableOptions(
           questionData,
           chartData,
-          bannerQuestionData,
-        ),
+          bannerQuestionData
+        )
       );
     } else {
       seriesData.length = 0;
@@ -64,8 +67,8 @@ export function bannerChartDataGen(
           bannerQuestionData,
           questionData,
           chartData,
-          questionChartData,
-        ),
+          questionChartData
+        )
       );
     }
   }
@@ -81,10 +84,10 @@ const getSingleOptions = (
   bannerQuestionData: any,
   questionData: any,
   chartData: any,
-  questionChartData: any,
+  questionChartData: any
 ) => {
   const {
-    chart: { chartLabelType, significant },
+    chart: { chartLabelType },
   } = store.getState();
 
   let seriesData: any = [];
@@ -92,34 +95,28 @@ const getSingleOptions = (
   const chartDataComplete = chartData[0];
   let count = 0;
   let localBase = 0;
-
   let labels: any = [];
 
-  questionData.options.map((option: IQuestionOption) => {
-    if (
-      bannerQuestionData.type == QuestionType.MULTI &&
-      questionData.type == QuestionType.MULTI
-    ) {
+  if (!questionData.isGroupNet) {
+    questionData.options.map((option: IQuestionOption) => {
       if (option.labelCode in chartDataComplete) {
         const obj = chartDataComplete[option.labelCode] || [];
-        if (obj && obj.length != 0) {
+        if (obj && obj.length != 0 && obj.length > 0) {
           labels.push(option.labelText);
         }
       }
-    } else {
+    });
+  } else {
+    questionData.options.map((option: IQuestionOption) => {
       labels.push(option.labelText);
-    }
-  });
-
-  // questionData.options.map((option: IQuestionOption) => {
-  //   labels.push(option.labelText);
-  // });
+    });
+  }
 
   bannerQuestionData?.options?.forEach((scaleOption: IQuestionOption) => {
     const countValues: number[] = [];
     const percentageValues: number[] = [];
     const baseCounts: number[] = [];
-    let optionData;
+    let optionData: any;
     questionData.options.map((option: IQuestionOption) => {
       if (
         bannerQuestionData.type == QuestionType.SINGLE &&
@@ -138,41 +135,38 @@ const getSingleOptions = (
               if (dataArr[k].labelCode === scaleOption.labelCode) {
                 const dataArrValues: any = dataArr[k];
                 newOptionData.push(dataArrValues);
-
-                labeCodeSum += dataArrValues?.count;
+                labeCodeSum += dataArrValues.count;
               }
             }
           }
-
           optionData = newOptionData;
-          // if (bannerQuestionData?.type == QuestionType.MULTI) {
-          //} else {
           labelCodeSum.forEach((el: any) => {
             const localbaseCount = el?.reduce(
               (sum: number, option: any) => sum + option.count,
-              0,
+              0
             );
             baseCountSum.push(localbaseCount);
           });
-          //}
 
           count = labeCodeSum;
           const sumofValue = _.sum(baseCountSum);
           localBase = sumofValue;
         } else {
-          optionData = chartData[0][option.labelCode];
-          const label = getMatchedfilter(
-            optionData,
-            'labelCode',
-            scaleOption.labelCode,
-          );
-          count = _.sumBy(label, function (o) {
-            return o.count;
-          });
-          localBase = optionData?.reduce(
-            (sum: number, option: any) => sum + option.count,
-            0,
-          );
+          optionData = chartData[0][option.labelCode] || [];
+          if (option.labelCode in chartDataComplete) {
+            const label = getMatchedfilter(
+              optionData,
+              "labelCode",
+              scaleOption.labelCode
+            );
+            count = _.sumBy(label, function (o) {
+              return o.count;
+            });
+            localBase = optionData?.reduce(
+              (sum: number, option: any) => sum + option.count,
+              0
+            );
+          }
         }
         let subOptionDataCount = 0;
         let subOptionDataPercentage = 0;
@@ -182,19 +176,18 @@ const getSingleOptions = (
         } else {
           subOptionDataPercentage = round(
             (count / localBase) * 100,
-            decimalPrecision,
+            decimalPrecision
           );
           subOptionDataCount = count;
         }
+
         countValues.push(subOptionDataCount);
         percentageValues.push(subOptionDataPercentage);
         baseCounts.push(localBase);
-        // }
       } else {
         if (option.labelCode in chartDataComplete) {
           const obj = chartDataComplete[option.labelCode] || [];
-
-          if (obj && obj.length != 0) {
+          if (obj && obj.length != 0 && obj.length > 0) {
             let base: any;
             if (bannerQuestionData?.type == QuestionType.MULTI) {
               base = find(questionChartData, {
@@ -203,7 +196,7 @@ const getSingleOptions = (
             } else {
               base = obj?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0,
+                0
               );
             }
 
@@ -222,7 +215,7 @@ const getSingleOptions = (
             if (subOptionData !== undefined) {
               subOptionDataPercentage = round(
                 (subOptionData.count / base) * 100,
-                decimalPrecision,
+                decimalPrecision
               );
               subOptionDataCount = subOptionData.count;
             } else {
@@ -234,7 +227,6 @@ const getSingleOptions = (
             percentageValues.push(subOptionDataPercentage);
             baseCounts.push(base);
           } else {
-            //console.log('aa gya else main');
             // countValues.push(0);
             // percentageValues.push(0);
             // baseCounts.push(0);
@@ -255,9 +247,7 @@ const getSingleOptions = (
     });
   });
 
-  // if (significant) {
-  //   return getTablesignificantdifference(seriesData);
-  // }
+  console.log("seriesData", seriesData);
 
   return seriesData;
 };
@@ -265,7 +255,7 @@ const getSingleOptions = (
 const getMultiTransposeTableOptions = (
   questionData: any,
   chartData: any,
-  bannerQuestionData: any,
+  bannerQuestionData: any
 ) => {
   const {
     chart: { chartLabelType, significant, bannerChartData },
@@ -287,8 +277,8 @@ const getMultiTransposeTableOptions = (
     for (const singleSeriesArr in chartData[0]) {
       const serieObject: any = getMatchedfilter(
         chartData[0][singleSeriesArr],
-        'labelCode',
-        labelCode,
+        "labelCode",
+        labelCode
       );
       baseCountArr[labelCodeIndex] += serieObject[0]?.count
         ? serieObject[0]?.count
@@ -297,11 +287,11 @@ const getMultiTransposeTableOptions = (
   });
 
   const NettedBannerQuestionData = JSON.parse(
-    JSON.stringify(bannerQuestionData),
+    JSON.stringify(bannerQuestionData)
   );
   if (NettedBannerQuestionData.isGroupNet) {
     NettedBannerQuestionData.options.push(
-      ...NettedBannerQuestionData.groupNetData,
+      ...NettedBannerQuestionData.groupNetData
     );
   }
 
@@ -320,20 +310,20 @@ const getMultiTransposeTableOptions = (
           const chartDataArr = chartData[0][questionOption.labelCode];
           const chartObjectArr: any = getMatchedfilter(
             chartDataArr,
-            'labelCode',
-            bannerOption.labelCode,
+            "labelCode",
+            bannerOption.labelCode
           );
           // const numberValue = chartObjectArr[0]?.count
           //   ? chartObjectArr[0]?.count
           //   : 0;
-          const numberValue = getSum(chartObjectArr, 'count');
+          const numberValue = getSum(chartObjectArr, "count");
 
           let baseCount: number = 0;
           if (bannerQuestionData?.type == QuestionType.MULTI) {
             const baseCountArr = getMatchedfilter(
               bannerChartData,
-              'labelCode',
-              bannerOption.labelCode,
+              "labelCode",
+              bannerOption.labelCode
             );
             baseCount = baseCountArr[0]?.count;
           } else {
@@ -364,7 +354,7 @@ const getMultiTransposeTableOptions = (
           percentageValues.push(percentageValue);
           baseCounts.push(baseCount);
           countValues.push(numberValue);
-        },
+        }
       );
 
       seriesData.push({
@@ -377,7 +367,7 @@ const getMultiTransposeTableOptions = (
         percentageValues,
         baseCounts,
       });
-    },
+    }
   );
   // if (significant) {
   //   return getTablesignificantdifference(seriesData);
@@ -390,7 +380,7 @@ const getSingleTransposeTableOptions = (
   questiondata: any,
   chartData: any,
   bannerQuestionData: any,
-  chartTranspose: any,
+  chartTranspose: any
 ) => {
   const {
     chart: { chartLabelType, significant },
@@ -400,7 +390,7 @@ const getSingleTransposeTableOptions = (
   let localBase = 0;
   const newOptionData: any = [];
   const labels: Array<string> = bannerQuestionData.options.map(
-    (label: IQuestionOption) => label.labelText,
+    (label: IQuestionOption) => label.labelText
   );
 
   const allLabels: Array<string> = [];
@@ -459,8 +449,8 @@ const getSingleTransposeTableOptions = (
 
             const label = getmatchedFind(
               optionData,
-              'labelCode',
-              option?.labelCode,
+              "labelCode",
+              option?.labelCode
             );
 
             count = label?.count;
@@ -476,7 +466,7 @@ const getSingleTransposeTableOptions = (
           } else {
             subOptionDataPercentage = round(
               (count / localBase) * 100,
-              decimalPrecision,
+              decimalPrecision
             );
             subOptionDataCount = count;
           }
@@ -484,7 +474,7 @@ const getSingleTransposeTableOptions = (
           percentageValues.push(subOptionDataPercentage);
           baseCounts.push(localBase);
         }
-      },
+      }
     );
     seriesData.push({
       name: scaleOption.labelText,
