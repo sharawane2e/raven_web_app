@@ -4,6 +4,7 @@ import ApiRequest from '../utils/ApiRequest';
 import { resetUserCache } from '../redux/actions/userCacheActions';
 import ApiUrl from '../enums/ApiUrl';
 import Toaster from '../utils/Toaster';
+import { setFullScreenLoading } from '../redux/actions/chartActions';
 
 export const isChartInCache = () => {
   let isChartDuplicate = false;
@@ -78,4 +79,24 @@ export const addNewKeysToUserCache = (savedChart: any) => {
   });
 
   return updateUserCache;
+};
+
+export const multiExport = async (savedChart: any) => {
+  const { dispatch } = store;
+  const promiseAllArr: any = [];
+  dispatch(setFullScreenLoading(true));
+  savedChart.forEach((el: any) => {
+    const body = {
+      qId: el.qId,
+      type: el.type,
+      filters: el.filter,
+      bannerQuestion: el.bannerQuestion,
+      bannerType: el.bannerType ? el.bannerType : '',
+    };
+    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
+  });
+
+  const apiResponse = await Promise.all(promiseAllArr);
+  dispatch(setFullScreenLoading(false));
+  //console.log(apiResponse);
 };

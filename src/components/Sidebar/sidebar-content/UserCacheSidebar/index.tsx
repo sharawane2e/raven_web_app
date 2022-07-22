@@ -29,6 +29,7 @@ import _ from 'lodash';
 import {
   handleDeleteChartCache,
   isChartInCache,
+  multiExport,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -57,8 +58,7 @@ import {
 } from '../../../../redux/actions/filterActions';
 import { ChartType } from '../../../../enums/ChartType';
 import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
-import ApiRequest from '../../../../utils/ApiRequest';
-import ApiUrl from '../../../../enums/ApiUrl';
+import Loader from '../../../widgets/Loader/Index';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -66,6 +66,7 @@ export interface UserCacheProps {
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
   const { sidebar } = useSelector((state: RootState) => state);
+  const { chart } = useSelector((state: RootState) => state);
   // const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
@@ -203,24 +204,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       (chartElement) => chartElement._id,
     );
     handleDeleteChartCache(deleteSavedChartsIds);
-  };
-
-  const multiExport = async (savedChart: any) => {
-    const promiseAllArr: any = [];
-    savedChart.forEach((el: any) => {
-      console.log(el);
-      const body = {
-        qId: el.qId,
-        type: el.type,
-        filters: el.filter,
-        bannerQuestion: el.bannerQuestion,
-        bannerType: el.bannerType ? el.bannerType : null,
-      };
-      promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
-    });
-
-    const apiResponse = await Promise.all(promiseAllArr);
-    console.log(apiResponse);
   };
 
   return (
@@ -427,6 +410,14 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           </div>
         </div>
       </Drawer>
+
+      {chart?.fullScreenLoading ? (
+        <div className="multi-export-loadder">
+          <Loader />
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };
