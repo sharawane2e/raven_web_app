@@ -25,11 +25,12 @@ export function bannerChartDataGen(
     });
   } else {
     questionData.options.forEach((optionObject: any) => {
-      if (chartData[0][optionObject?.labelCode]?.length) {
-        seriesName.push(optionObject?.labelText);
-      }
+      //  if (chartData[0][optionObject?.labelCode]?.length) {
+      seriesName.push(optionObject?.labelText);
+      // }
     });
   }
+
   updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
     if (seriesObject.data.length != seriesName.length) {
       const updatedData: any = [];
