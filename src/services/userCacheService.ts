@@ -56,18 +56,18 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
     _ids: [...cacheIdsArr],
   };
-  ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
-    .then((res) => {
-      if (res.success) {
-        const updatedSavedChart = addNewKeysToUserCache(res.data);
-        store.dispatch(resetUserCache(updatedSavedChart));
+  // ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
+  //   .then((res) => {
+  //     if (res.success) {
+  //       const updatedSavedChart = addNewKeysToUserCache(res.data);
+  //       store.dispatch(resetUserCache(updatedSavedChart));
 
-        Toaster.warn(res.message);
-      } else {
-        Toaster.error(res.message);
-      }
-    })
-    .catch((error) => console.log(error));
+  //       Toaster.warn(res.message);
+  //     } else {
+  //       Toaster.error(res.message);
+  //     }
+  //   })
+  //   .catch((error) => console.log(error));
 };
 
 export const addNewKeysToUserCache = (savedChart: any) => {
