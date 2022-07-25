@@ -190,3 +190,13 @@
       color: map-get($map: $bg-color, $key: secondary);
     }
   }
+
+  .multi-export-loadder{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    .loader--wrapper{
+      background: rgba(255 ,255, 255 , .9);
+    }
+  }

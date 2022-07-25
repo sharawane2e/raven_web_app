@@ -18,9 +18,13 @@ export function chartDataGen() {
       baseCount,
       chartTranspose,
       questionChartData,
+      chartOptions,
+      chartLabelType,
     },
     questions: { selectedBannerQuestionId },
   } = store.getState();
+
+  console.log("");
 
   if (
     selectedBannerQuestionId &&
@@ -28,37 +32,23 @@ export function chartDataGen() {
       questionData?.type === QuestionType.MULTI)
   ) {
     seriesData = bannerChartDataGen(
+      chartOptions.series,
       questionData,
-      chartData,
-      bannerQuestionData,
-      chartTranspose,
-      questionChartData
+      chartData
     );
   } else {
-    // debugger;
     if (questionData?.type === QuestionType.SINGLE) {
-      seriesData = singleChartDataGen(questionData, chartData, baseCount);
-      //console.log(seriesData);
+      seriesData = singleChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.MULTI) {
-      seriesData = multiChartDataGen(questionData, chartData, baseCount);
+      seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.GRID) {
-      seriesData = gridChartTableGen(questionData, chartData, baseCount);
-    } else if (questionData?.type === QuestionType.GRID_MULTI) {
-      seriesData = multiGridChartDataGen(questionData, chartData, baseCount);
+      seriesData = gridChartTableGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.RANK) {
-      seriesData = rankChartDataGen(
-        questionData,
-        chartData,
-        baseCount,
-        chartTranspose
-      );
+      seriesData = rankChartDataGen(chartOptions.series, chartLabelType);
     } else if (questionData?.type === QuestionType.NUMBER) {
-      seriesData = numberChartDataGen(
-        questionData,
-        chartData,
-        chartTranspose,
-        bannerQuestionData
-      );
+      seriesData = numberChartDataGen(chartOptions.series, chartLabelType);
+    } else if (questionData?.type === QuestionType.GRID_MULTI) {
+      seriesData = multiGridChartDataGen(chartOptions.series, chartLabelType);
     }
   }
 

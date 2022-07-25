@@ -29,7 +29,7 @@ import _ from 'lodash';
 import {
   handleDeleteChartCache,
   isChartInCache,
-  multiExport
+  multiExport,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -58,8 +58,7 @@ import {
 } from '../../../../redux/actions/filterActions';
 import { ChartType } from '../../../../enums/ChartType';
 import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
-import ApiRequest from '../../../../utils/ApiRequest';
-import ApiUrl from '../../../../enums/ApiUrl';
+import Loader from '../../../widgets/Loader/Index';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -67,6 +66,7 @@ export interface UserCacheProps {
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
   const { sidebar } = useSelector((state: RootState) => state);
+  const { chart } = useSelector((state: RootState) => state);
   // const { savedChart } = useSelector((state: RootState) => state?.userCache);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
@@ -182,8 +182,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(updateSignificant(_cacheQuestion[0]['significant']));
     dispatch(showMean(_cacheQuestion[0]['showMean']));
 
-    //    console.log(_cacheQuestion[0]['significant']);
-
     // fetchChartData()
     //   .then((chartData) => {
     //     dispatch(setChartData(chartData));
@@ -207,8 +205,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     );
     handleDeleteChartCache(deleteSavedChartsIds);
   };
-
-
 
   return (
     <div className="sidebar user-cache">
@@ -270,10 +266,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               </>
             ) : (
               savedChart.map((savedata: any, index: any) => {
-                // console.log('savedata', savedata);
                 let cacheDate = new Date(savedata?.date);
                 const curentDate = cacheDate.toLocaleString('en-us');
-                // console.log('savedata', savedata);
                 return (
                   <div className="user-cache__sidebar" key={index}>
                     <div className="user-cache__cache-data">
@@ -416,6 +410,14 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           </div>
         </div>
       </Drawer>
+
+      {chart?.fullScreenLoading ? (
+        <div className="multi-export-loadder">
+          <Loader />
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

@@ -1,24 +1,24 @@
-import ApiUrl from '../enums/ApiUrl';
-import { ChartType } from '../enums/ChartType';
+import ApiUrl from "../enums/ApiUrl";
+import { ChartType } from "../enums/ChartType";
 import {
   setChartData,
   setChartLabel,
   setChartOrientation,
   setChartTranspose,
   setChartType,
-} from '../redux/actions/chartActions';
-import { IChartState } from '../redux/reducers/chartReducer';
-import store from '../redux/store';
-import ApiRequest from '../utils/ApiRequest';
-import { getChartOptions, getPlotOptions } from '../utils/ChartOptionFormatter';
-import { IQuestion } from '../types/IQuestion';
-import { QuestionType } from '../enums/QuestionType';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../enums/ChartLabelType';
+} from "../redux/actions/chartActions";
+import { IChartState } from "../redux/reducers/chartReducer";
+import store from "../redux/store";
+import ApiRequest from "../utils/ApiRequest";
+import { getChartOptions, getPlotOptions } from "../utils/ChartOptionFormatter";
+import { IQuestion } from "../types/IQuestion";
+import { QuestionType } from "../enums/QuestionType";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../enums/ChartLabelType";
 
 export const fetchChartData = async (
   qId?: string,
-  bannerQuestionId?: string,
+  bannerQuestionId?: string
 ) => {
   const {
     filters: { appliedFilters },
@@ -40,7 +40,7 @@ export const fetchChartData = async (
     if (appliedFilters.length) {
       appliedFilters.forEach((filter: any) => {
         const chartFilter = chartFilters.find(
-          (chartFilter) => chartFilter.qId === filter.qId,
+          (chartFilter) => chartFilter.qId === filter.qId
         );
         if (chartFilter) {
           chartFilter.value.push(filter.code);
@@ -59,7 +59,7 @@ export const fetchChartData = async (
       : selectedBannerQuestionId;
 
     const type =
-      questionList.find((ques: any) => ques.qId === quesId)?.type || '';
+      questionList.find((ques: any) => ques.qId === quesId)?.type || "";
     const bannerQuestion = find(bannerQuestionList, function (o) {
       return o.qId === bannerQuesId;
     });
@@ -73,26 +73,26 @@ export const fetchChartData = async (
       bannerType: bannerQuestionType ? bannerQuestionType : null,
     };
 
-    let response: any = '';
+    let response: any = "";
 
-    response = await ApiRequest.request(ApiUrl.CHART, 'POST', body);
+    response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
 
     if (response.success) {
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
         response.data.questionData,
-        response.data.baseCount,
+        response.data.baseCount
       );
       chartData.questionChartData = response.data.questionChartData;
       chartData.bannerChartData = response.data.bannerChartData;
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
-        response.data.questionData,
+        response.data.questionData
       );
       const formatedQData = removeEmptyDataLengends(
         response.data.chartData,
         response.data.questionData,
-        response.data.bannerQuestionData,
+        response.data.bannerQuestionData
       );
 
       chartData.questionData = formatedQData[0];
@@ -107,7 +107,7 @@ export const fetchChartData = async (
           response.data.bannerQuestionData,
           response.data.chartOptionsData,
           response.data.questionChartData,
-          response.data.bannerChartData,
+          response.data.bannerChartData
         ),
       };
 
@@ -129,14 +129,14 @@ export const fetchChartData = async (
 export const formatChartDataWithBaseCount = (
   chartData: any[],
   question: IQuestion,
-  baseCountData: any[],
+  baseCountData: any[]
 ) => {
   const chartDataWithUpdatedBase = JSON.parse(JSON.stringify(chartData));
   if (question.type === QuestionType.GRID) {
     chartDataWithUpdatedBase.forEach((data: any) => {
       data.baseCount = data?.options?.reduce(
         (sum: number, currentObj: any) => sum + currentObj.count,
-        0,
+        0
       );
     });
   } else if (question.type === QuestionType.GRID_MULTI) {
@@ -153,7 +153,7 @@ export const formatChartDataWithBaseCount = (
 export const removeEmptyDataLengends = (
   chartData: any[],
   question: IQuestion,
-  bannerQuestionData: any,
+  bannerQuestionData: any
 ) => {
   const questionCopy = { ...question };
 
@@ -209,7 +209,7 @@ export const computeBaseCount = (baseCount: any, question: IQuestion) => {
       return baseCount[0]?.baseCount[0]?.baseCount || 0;
     } else if (question.type === QuestionType.RANK) {
       return baseCount.reduce((basevalue, bcount) =>
-        basevalue.count > bcount.count ? basevalue : bcount,
+        basevalue.count > bcount.count ? basevalue : bcount
       ).count;
     } else {
       return baseCount[0]?.baseCount || 0;
@@ -234,26 +234,26 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'column',
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
   } else if (newChartType === ChartType.LINE) {
-    const lineSetportrait: any = 'portrait';
+    const lineSetportrait: any = "portrait";
     dispatch(setChartType(ChartType.LINE));
 
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'line',
+        ...chartDataClone.chartOptions["chart"],
+        type: "line",
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
     dispatch(setChartOrientation(lineSetportrait));
   } else if (newChartType === ChartType.PIE) {
@@ -262,12 +262,12 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'pie',
+        ...chartDataClone.chartOptions["chart"],
+        type: "pie",
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
   } else if (newChartType === ChartType.COLUMN) {
@@ -275,12 +275,12 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'column',
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
       },
       ...getChartOptions(),
     };
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
 
     dispatch(setChartData(chartDataClone));
   } else {
@@ -288,82 +288,25 @@ export const changeChartType = (newChartType: ChartType) => {
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
-        ...chartDataClone.chartOptions['chart'],
-        type: 'column',
+        ...chartDataClone.chartOptions["chart"],
+        type: "column",
       },
       ...getChartOptions(),
     };
 
-    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    chartDataClone.chartOptions["plotOptions"] = getPlotOptions(newChartType);
     dispatch(setChartData(chartDataClone));
   }
 };
 
 export const transposeChart = () => {
-  const { chart, questions } = store.getState();
+  const { chart } = store.getState();
   const { dispatch } = store;
   const chartDataClone = JSON.parse(JSON.stringify(chart));
   const transposed = !chartDataClone.chartTranspose;
 
-  if (chartDataClone.questionData.type == QuestionType.RANK) {
-    const newSubGroup: any = [];
-    const newScale: any = [];
-    const newChartData: any = [];
-    chartDataClone.questionData.subGroups.forEach(
-      (scale: any, index: number) => {
-        newScale.push({
-          labelText: scale.labelText,
-          labelCode: scale.qId,
-          order: index,
-        });
-      },
-    );
-
-    chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
-      newSubGroup.push({
-        qId: scale.labelCode,
-        labelText: scale.labelText,
-        questionText: scale.labelText,
-        type: QuestionType.SINGLE,
-      });
-    });
-
-    newSubGroup.forEach((col: any, index: number) => {
-      const options: any = [];
-      let baseCount: number = 0;
-      chartDataClone.chartData.forEach((data: any, index: number) => {
-        const count: number = data.options.find(
-          (subOption: any) => subOption.option === col.qId,
-        )?.count;
-        options.push({
-          option: data._id,
-          count: count == undefined ? 0 : count,
-        });
-
-        baseCount += count == undefined ? 0 : count;
-      });
-      if (
-        chartDataClone.questionData.type == QuestionType.GRID ||
-        chartDataClone.questionData.type == QuestionType.GRID_MULTI
-      ) {
-        newChartData.push({
-          _id: col.qId,
-          options: options,
-          baseCount: baseCount,
-        });
-      } else {
-        newChartData.push({ _id: col.qId, options: options });
-      }
-    });
-    chartDataClone.chartData = newChartData;
-    chartDataClone.questionData.scale = newScale;
-    chartDataClone.questionData.subGroups = newSubGroup;
-  } else if (chartDataClone.questionData.type == QuestionType.GRID) {
-    if (chart.showMean) {
-      dispatch(setChartTranspose(transposed));
-    } else {
-      dispatch(setChartTranspose(transposed));
-    }
+  if (chartDataClone.questionData.type == QuestionType.GRID) {
+    dispatch(setChartTranspose(transposed));
   } else if (
     chartDataClone.bannerQuestionData &&
     chartDataClone.questionData.type == QuestionType.SINGLE
@@ -374,62 +317,6 @@ export const transposeChart = () => {
     chartDataClone.questionData.type == QuestionType.MULTI
   ) {
     dispatch(setChartTranspose(transposed));
-  } else if (chartDataClone.questionData.type == QuestionType.GRID_MULTI) {
-    const newSubGroup: any = [];
-    const newScale: any = [];
-    const newChartData: any = [];
-    chartDataClone.questionData.subGroups.forEach(
-      (scale: any, index: number) => {
-        newScale.push({
-          labelText: scale.labelText,
-          labelCode: scale.qId,
-          order: index,
-        });
-      },
-    );
-
-    chartDataClone.questionData.scale.forEach((scale: any, index: number) => {
-      newSubGroup.push({
-        qId: scale.labelCode,
-        labelText: scale.labelText,
-        questionText: scale.labelText,
-        type: QuestionType.SINGLE,
-      });
-    });
-
-    newSubGroup.forEach((col: any, index: number) => {
-      const options: any = [];
-      let baseCount: number = 0;
-      let withoutTransposeBaseCount: any = 0;
-      chartDataClone.chartData.forEach((data: any, index: number) => {
-        const count: number = data.options.find(
-          (subOption: any) => subOption.option === col.qId,
-        )?.count;
-        withoutTransposeBaseCount = data.options.find((subOption: any) => {
-          if (subOption.option === col.qId && subOption.baseCount) {
-            return subOption.baseCount;
-          }
-        });
-
-        withoutTransposeBaseCount = withoutTransposeBaseCount?.baseCount;
-        options.push({
-          option: data._id,
-          count: count == undefined ? 0 : count,
-          baseCount: data.baseCount,
-        });
-
-        baseCount += count == undefined ? 0 : count;
-      });
-
-      newChartData.push({
-        _id: col.qId,
-        options: options,
-        baseCount: withoutTransposeBaseCount,
-      });
-    });
-    chartDataClone.chartData = newChartData;
-    chartDataClone.questionData.scale = newScale;
-    chartDataClone.questionData.subGroups = newSubGroup;
   }
 
   chartDataClone.chartOptions = {
@@ -442,7 +329,7 @@ export const transposeChart = () => {
       undefined,
       undefined,
       undefined,
-      transposed,
+      transposed
     ),
   };
 

@@ -12,6 +12,7 @@ import { ChartType } from '../../enums/ChartType';
 import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
+import { bannerChartDataGen } from '../export-helper-utils/BannerQuesUtils';
 import { getMatchedfilter, getSum } from '../Utility';
 import { getsignificantdifference } from './significanceDiff';
 
@@ -85,12 +86,24 @@ export const getMultiChartOptionsSeries = (
         chartType,
       ),
     );
+
+    //console.log(series);
   }
   if (significant) {
-    const updatedSeries = getsignificantdifference(series, chartLabelType);
+    const updatedSeries = getsignificantdifference(
+      questionData,
+      chartData,
+      bannerQuestionData,
+      series,
+      chartLabelType,
+      transposed,
+    );
     series.length = 0;
 
     series.push(...updatedSeries);
+  }
+  if (selectedBannerQuestionId) {
+    bannerChartDataGen(series, questionData, chartData);
   }
   return series;
 };

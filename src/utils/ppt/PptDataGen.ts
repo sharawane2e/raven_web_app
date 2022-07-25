@@ -233,6 +233,7 @@ export function pptDataGen(pptxGenJsObj: pptxgen, slideConfig: ISlideConfig) {
         seriesData[index] = row;
       });
     }
+    // console.log('seriesData', seriesData);
 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,
