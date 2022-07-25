@@ -29,13 +29,17 @@ import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
 import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { getChartOptions } from "../ChartOptionFormatter";
+import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
+  console.log(payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
     exportPrefix + payloadObjectArr[0]["chart"]["questionData"]?.labelText;
 
-  for (let i = 0; i < payloadObjectArr.length; i++) {
+  for (let j = 0; j < 2; j++) {
+    const i = 0;
     const {
       chart: {
         questionData,
@@ -81,7 +85,34 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     let seriesData: any[] = [];
     let chartColors: any[] = [];
 
-    seriesData = chartDataGen(); //gaurav
+    const chartOptionsPayload: any = {
+      questionData: payloadObjectArr[i].chart.questionData,
+      chartData: payloadObjectArr[i].chart.chartData,
+      baseCount: payloadObjectArr[i].chart.baseCount,
+      bannerQuestionData: payloadObjectArr[i].chart.bannerQuestionData,
+      chartOptionsData: payloadObjectArr[i].chart.chartOptions,
+      questionChartData: payloadObjectArr[i].chart.questionChartData,
+      bannerChartData: payloadObjectArr[i].chart.bannerChartData,
+      transposed: payloadObjectArr[i].chart.chartTranspose,
+    };
+
+    const newSeriesData = getChartOptions(
+      chartOptionsPayload.questionData,
+      chartOptionsPayload.chartData,
+      chartOptionsPayload.baseCount,
+      chartOptionsPayload.bannerQuestionData,
+      chartOptionsPayload.chartOptionsData,
+      chartOptionsPayload.questionChartData,
+      chartOptionsPayload.bannerChartData,
+      chartOptionsPayload.transposed
+    );
+    //seriesData = getChartOptions(...chartOptionsPayload);
+    // seriesData.push(...newSeriesData.series);
+    // console.log(seriesData);
+
+    console.log(newSeriesData);
+    seriesData = newChartDataGen(newSeriesData.series); //gaurav
+    console.log(seriesData);
 
     if (chartType === ChartType.TABLE) {
       const tableRows = tableChartDataGen();
