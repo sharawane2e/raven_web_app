@@ -103,7 +103,7 @@ export const getMultiChartOptionsSeries = (
     series.push(...updatedSeries);
   }
   if (selectedBannerQuestionId) {
-    bannerChartDataGen(series, questionData, chartData);
+    bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
   }
   return series;
 };
@@ -475,11 +475,15 @@ const getMultiTransposeChartOptions = (
             bannerOptionObject.labelCode,
           );
           const numberValue = numberValueArr[0]?.count;
-          const percentageValue = (numberValue / baseCount) * 100;
+          let percentageValue: number = (numberValue / baseCount) * 100;
+          if (!percentageValue) {
+            percentageValue = 0;
+          }
           const y =
             chartLabelType == ChartLabelType.PERCENTAGE
               ? percentageValue
               : numberValue;
+
           data.push({
             name,
             y,
