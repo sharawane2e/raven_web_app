@@ -15,7 +15,7 @@ export function bannerChartDataGen(
 
   const seriesData: any = [];
 
-  const updatedSeries = series;
+  const updatedSeries = JSON.parse(JSON.stringify(series));
 
   const seriesName: string[] = [];
 
