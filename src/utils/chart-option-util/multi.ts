@@ -103,7 +103,7 @@ export const getMultiChartOptionsSeries = (
     series.push(...updatedSeries);
   }
   if (selectedBannerQuestionId) {
-    bannerChartDataGen(series, questionData, chartData);
+    bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
   }
   return series;
 };

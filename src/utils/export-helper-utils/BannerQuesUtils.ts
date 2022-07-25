@@ -5,7 +5,8 @@ import { getTablesignificantdifference } from '../chart-option-util/significance
 export function bannerChartDataGen(
   series: any,
   questionData: any,
-  chartData: any,
+  bannerQuestionData: any,
+  chartTranspose: any,
 ) {
   const seriesData: any = [];
   const {
@@ -15,12 +16,17 @@ export function bannerChartDataGen(
   const updatedSeries = series;
 
   const seriesName: string[] = [];
-
-  questionData.options.forEach((optionObject: any) => {
-    if (chartData[0][optionObject?.labelCode]?.length) {
+  if (chartTranspose) {
+    bannerQuestionData.options.forEach((optionObject: any) => {
       seriesName.push(optionObject?.labelText);
-    }
-  });
+    });
+  } else {
+    questionData.options.forEach((optionObject: any) => {
+      //  if (chartData[0][optionObject?.labelCode]?.length) {
+      seriesName.push(optionObject?.labelText);
+      // }
+    });
+  }
   updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
     if (seriesObject.data.length != seriesName.length) {
       const updatedData: any = [];

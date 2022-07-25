@@ -179,7 +179,7 @@ export const getSingleChartOptionsSeries = (
           });
       }
     }
-    bannerChartDataGen(series, questionData, chartData);
+    bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
     if (significant) {
       const updatedSeries = getsignificantdifference(
         questionData,
