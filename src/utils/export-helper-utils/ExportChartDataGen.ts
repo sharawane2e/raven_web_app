@@ -1,12 +1,12 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { bannerChartDataGen } from "./BannerQuesUtils";
-import { gridChartTableGen } from "./GridQuesUtils";
-import { multiGridChartDataGen } from "./MultiGridQuesUtils";
-import { multiChartDataGen } from "./MultiQuesUtils";
-import { rankChartDataGen } from "./RankQuesUtils";
-import { singleChartDataGen } from "./SingleQuesUtils";
-import { numberChartDataGen } from "./NumberQuesUtils";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { bannerChartDataGen } from './BannerQuesUtils';
+import { gridChartTableGen } from './GridQuesUtils';
+import { multiGridChartDataGen } from './MultiGridQuesUtils';
+import { multiChartDataGen } from './MultiQuesUtils';
+import { rankChartDataGen } from './RankQuesUtils';
+import { singleChartDataGen } from './SingleQuesUtils';
+import { numberChartDataGen } from './NumberQuesUtils';
 
 export function chartDataGen() {
   let seriesData: any[] = [];
@@ -29,7 +29,11 @@ export function chartDataGen() {
     (questionData?.type === QuestionType.SINGLE ||
       questionData?.type === QuestionType.MULTI)
   ) {
-    seriesData = bannerChartDataGen(chartOptions.series);
+    seriesData = bannerChartDataGen(
+      chartOptions.series,
+      questionData,
+      chartData,
+    );
   } else {
     if (questionData?.type === QuestionType.SINGLE) {
       seriesData = singleChartDataGen(chartOptions.series, chartLabelType);

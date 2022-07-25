@@ -1,25 +1,64 @@
-import store from "../../redux/store";
-import { getTablesignificantdifference } from "../chart-option-util/significanceDiff";
+import _ from 'lodash';
+import store from '../../redux/store';
+import { getTablesignificantdifference } from '../chart-option-util/significanceDiff';
 
-export function bannerChartDataGen(series: any) {
+export function bannerChartDataGen(
+  series: any,
+  questionData: any,
+  chartData: any,
+) {
   const seriesData: any = [];
   const {
     chart: { significant },
   } = store.getState();
 
-  series.forEach((seriesName: any) => {
+  const updatedSeries = series;
+
+  const seriesName: string[] = [];
+
+  questionData.options.forEach((optionObject: any) => {
+    if (chartData[0][optionObject?.labelCode]?.length) {
+      seriesName.push(optionObject?.labelText);
+    }
+  });
+  updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
+    if (seriesObject.data.length != seriesName.length) {
+      const updatedData: any = [];
+      seriesName.forEach((labelName: string, labelIndex: number) => {
+        const isLabel = _.find(seriesObject.data, function (o) {
+          return o.name == labelName;
+        });
+        if (isLabel) {
+          updatedData.push(isLabel);
+        } else {
+          updatedData.push({
+            name: labelName,
+            y: 0,
+            percentageValue: 0,
+            numberValue: 0,
+            baseCount: 0,
+            significance: '',
+            significantDiffernce: '',
+          });
+        }
+      });
+      updatedSeries[seriesIndex].data = updatedData;
+    }
+  });
+
+  updatedSeries.forEach((seriesNewData: any) => {
     let labels: any = [];
     const values: number[] = [];
     const baseCounts: number[] = [];
     const percentageValues: number[] = [];
-    seriesName.data.forEach((seriesdata: any) => {
+    seriesNewData.data.forEach((seriesdata: any) => {
       labels.push(seriesdata.name);
       values.push(seriesdata.y);
       baseCounts.push(seriesdata.baseCount);
       percentageValues.push(seriesdata.percentageValue);
     });
     seriesData.push({
-      name: seriesName.name,
+      name: seriesNewData.name,
       labels,
       values,
       baseCounts,
