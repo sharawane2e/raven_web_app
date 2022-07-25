@@ -5,8 +5,8 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";
 
 export function tableChartDataGen() {
-  let seriesData = [];
-  seriesData = chartDataGen();
+  let seriesData: any[] = [];
+  // seriesData = chartDataGen();
   let lablecode_length: any = "";
   let crosstab_length: any = "";
   let rows = [];
