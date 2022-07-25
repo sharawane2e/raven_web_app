@@ -14,6 +14,7 @@ export function bannerChartDataGen(
   } = store.getState();
 
   const updatedSeries = JSON.parse(JSON.stringify(series));
+  //const updatedSeries = series;
 
   const seriesName: string[] = [];
   if (chartTranspose) {
@@ -27,32 +28,34 @@ export function bannerChartDataGen(
       // }
     });
   }
-  updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
-    if (seriesObject.data.length != seriesName.length) {
-      const updatedData: any = [];
-      seriesName.forEach((labelName: string, labelIndex: number) => {
-        const isLabel = _.find(seriesObject.data, function (o) {
-          return o.name == labelName;
+  if (!significant) {
+    updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
+      if (seriesObject.data.length != seriesName.length) {
+        const updatedData: any = [];
+        seriesName.forEach((labelName: string, labelIndex: number) => {
+          const isLabel = _.find(seriesObject.data, function (o) {
+            return o.name == labelName;
+          });
+
+          if (isLabel) {
+            updatedData.push(isLabel);
+          } else {
+            updatedData.push({
+              name: labelName,
+              y: 0,
+              percentageValue: 0,
+              numberValue: 0,
+              baseCount: 0,
+              significance: '',
+              significantDiffernce: '',
+            });
+          }
         });
 
-        if (isLabel) {
-          updatedData.push(isLabel);
-        } else {
-          updatedData.push({
-            name: labelName,
-            y: 0,
-            percentageValue: 0,
-            numberValue: 0,
-            baseCount: 0,
-            significance: '',
-            significantDiffernce: '',
-          });
-        }
-      });
-
-      updatedSeries[seriesIndex].data = updatedData;
-    }
-  });
+        updatedSeries[seriesIndex].data = updatedData;
+      }
+    });
+  }
 
   updatedSeries.forEach((seriesNewData: any) => {
     let labels: any = [];
