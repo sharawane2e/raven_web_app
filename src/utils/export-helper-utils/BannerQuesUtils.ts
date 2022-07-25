@@ -13,7 +13,7 @@ export function bannerChartDataGen(
     chart: { significant },
   } = store.getState();
 
-  const updatedSeries = series;
+  const updatedSeries = JSON.parse(JSON.stringify(series));
 
   const seriesName: string[] = [];
   if (chartTranspose) {
@@ -34,6 +34,7 @@ export function bannerChartDataGen(
         const isLabel = _.find(seriesObject.data, function (o) {
           return o.name == labelName;
         });
+
         if (isLabel) {
           updatedData.push(isLabel);
         } else {
@@ -48,6 +49,7 @@ export function bannerChartDataGen(
           });
         }
       });
+
       updatedSeries[seriesIndex].data = updatedData;
     }
   });
