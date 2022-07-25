@@ -38,6 +38,7 @@ export function chartDataGen() {
     // debugger;
     if (questionData?.type === QuestionType.SINGLE) {
       seriesData = singleChartDataGen(questionData, chartData, baseCount);
+      //console.log(seriesData);
     } else if (questionData?.type === QuestionType.MULTI) {
       seriesData = multiChartDataGen(questionData, chartData, baseCount);
     } else if (questionData?.type === QuestionType.GRID) {
