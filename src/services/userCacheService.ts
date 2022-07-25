@@ -1,10 +1,10 @@
-import _ from 'lodash';
-import store from '../redux/store';
-import ApiRequest from '../utils/ApiRequest';
-import { resetUserCache } from '../redux/actions/userCacheActions';
-import ApiUrl from '../enums/ApiUrl';
-import Toaster from '../utils/Toaster';
-import { setFullScreenLoading } from '../redux/actions/chartActions';
+import _ from "lodash";
+import store from "../redux/store";
+import ApiRequest from "../utils/ApiRequest";
+import { resetUserCache } from "../redux/actions/userCacheActions";
+import ApiUrl from "../enums/ApiUrl";
+import Toaster from "../utils/Toaster";
+import { setFullScreenLoading } from "../redux/actions/chartActions";
 
 export const isChartInCache = () => {
   let isChartDuplicate = false;
@@ -23,7 +23,7 @@ export const isChartInCache = () => {
     type: chart.questionData?.type,
     filter: filters.filters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData?.qId,
     chartType: chart.chartType,
     chartLabelType: chart.chartLabelType,
     chartOrientation: chart.chartOrientation,
@@ -56,7 +56,7 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
     _ids: [...cacheIdsArr],
   };
-  ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
+  ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body)
     .then((res) => {
       if (res.success) {
         const updatedSavedChart = addNewKeysToUserCache(res.data);
@@ -91,12 +91,13 @@ export const multiExport = async (savedChart: any) => {
       type: el.type,
       filters: el.filter,
       bannerQuestion: el.bannerQuestion,
-      bannerType: el.bannerType ? el.bannerType : '',
+      bannerType: el.bannerType ? el.bannerType : "",
     };
-    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
+    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, "POST", body));
   });
 
   const apiResponse = await Promise.all(promiseAllArr);
+  console.log(apiResponse);
   dispatch(setFullScreenLoading(false));
   //console.log(apiResponse);
 };

@@ -26,18 +26,27 @@ export const getChartOptions = (
   bannerChartData: any = store.getState().chart.bannerChartData,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
+  const chart = {
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    chartLabelType: store.getState().chart.chartLabelType,
+    charType: store.getState().chart.chartType,
+    significant: store.getState().chart.significant,
+  };
+  const questions = {
+    selectedBannerQuestionId:
+      store.getState().questions.selectedBannerQuestionId,
+  };
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
-        return getSingleChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          questionChartData,
-          transposed
-        );
+        return getSingleChartOptions(chart, questions);
       case QuestionType.MULTI:
         return getMultiChartOptions(
           questionData,
@@ -112,24 +121,8 @@ const getMultiChartOptions = (
   };
 };
 
-const getSingleChartOptions = (
-  questionData: IQuestion,
-  chartData: any[],
-  baseCount: number,
-  bannerQuestionData: IQuestion | null,
-  chartOptionsData: any,
-  questionChartData: any,
-  transposed: boolean
-): any => {
-  const series = getSingleChartOptionsSeries(
-    questionData,
-    chartData,
-    baseCount,
-    bannerQuestionData,
-    chartOptionsData,
-    questionChartData,
-    transposed
-  );
+const getSingleChartOptions = (chart: any, questions: any): any => {
+  const series = getSingleChartOptionsSeries(chart, questions);
 
   return {
     legend: {

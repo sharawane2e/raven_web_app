@@ -24,8 +24,6 @@ export function chartDataGen() {
     questions: { selectedBannerQuestionId },
   } = store.getState();
 
-  console.log("");
-
   if (
     selectedBannerQuestionId &&
     (questionData?.type === QuestionType.SINGLE ||

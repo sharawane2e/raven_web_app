@@ -25,7 +25,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       filters,
     }
 
-    generatePpt(payloadObject)
+    generatePpt([payloadObject])
 
   }
 
@@ -34,21 +34,18 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       tooltip: 'Powerpoint',
       renderChild: () => <PptIcon />,
       onClick: generatePptPayload,
-      // disabled: true,
       disabled: chart.questionData === null,
     },
     {
       tooltip: 'PDF',
       renderChild: () => <PdfIcon />,
       onClick: generatePdf,
-      // disabled: t,
       disabled: chart.questionData === null,
     },
   ];
 
   return (
     <ButtonGroup
-      // groupTitle="Export"
       groupTitle=""
       buttonConfig={buttonConfig}
       className="export-chart-group"
