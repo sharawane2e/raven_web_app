@@ -5,34 +5,35 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
-} from "@material-ui/core";
-import Tour from "reactour";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import AppRouting from "../../AppRouting";
-import Appbar from "../../components/Appbar";
-import CustomScrollbar from "../../components/CustomScrollbar";
-import Sidebar from "../../components/Sidebar";
-import ChartSidebarContent from "../../components/Sidebar/sidebar-content/ChartSidebarContent";
-import StaticDashboard from "../../components/StaticDashboard";
-import { chartTourSteps } from "../../config/TourConfig";
-import SidebarContextProvider from "../../contexts/SidebarContext";
-import ApiUrl from "../../enums/ApiUrl";
-import { setUserProfile } from "../../redux/actions/userActions";
-import store, { RootState } from "../../redux/store";
-import IRoute from "../../types/IRoute";
-import { IUserProfile } from "../../types/IUserProfile";
-import ApiRequest from "../../utils/ApiRequest";
-import { fetchFilterList } from "../../redux/actions/filterActions";
-import { hideTourGuide } from "../../redux/actions/tourAction";
-import { toggleSidebar } from "../../redux/actions/sidebarAction";
-import Chart from "../../components/Chart";
-import TableView from "../../components/TableView";
-import { ChartType } from "../../enums/ChartType";
-import CloseIcon from "@mui/icons-material/Close";
-import { setChartFullScreen } from "../../redux/actions/chartActions";
-import { significantText } from "../../constants/Variables";
+} from '@material-ui/core';
+import Tour from 'reactour';
+import clsx from 'clsx';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import AppRouting from '../../AppRouting';
+import Appbar from '../../components/Appbar';
+import CustomScrollbar from '../../components/CustomScrollbar';
+import Sidebar from '../../components/Sidebar';
+import ChartSidebarContent from '../../components/Sidebar/sidebar-content/ChartSidebarContent';
+import StaticDashboard from '../../components/StaticDashboard';
+import { chartTourSteps } from '../../config/TourConfig';
+import SidebarContextProvider from '../../contexts/SidebarContext';
+import ApiUrl from '../../enums/ApiUrl';
+import { setUserProfile } from '../../redux/actions/userActions';
+import store, { RootState } from '../../redux/store';
+import IRoute from '../../types/IRoute';
+import { IUserProfile } from '../../types/IUserProfile';
+import ApiRequest from '../../utils/ApiRequest';
+import { fetchFilterList } from '../../redux/actions/filterActions';
+import { hideTourGuide } from '../../redux/actions/tourAction';
+import { toggleSidebar } from '../../redux/actions/sidebarAction';
+import Chart from '../../components/Chart';
+import TableView from '../../components/TableView';
+import { ChartType } from '../../enums/ChartType';
+import CloseIcon from '@mui/icons-material/Close';
+import { setChartFullScreen } from '../../redux/actions/chartActions';
+import { significantText } from '../../constants/Variables';
+import UserCacheSidebar from '../../components/Sidebar/sidebar-content/UserCacheSidebar';
 // import {useHotkeys} from 'react-hotkeys-hook';
 
 interface ChartScreenProps {
@@ -62,12 +63,12 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   const handlePopupClose = () => {
     if (!showContent) {
-      const url = ApiUrl.SHOW_CONTENT_PAGE + "/" + profile?._id;
-      ApiRequest.request(url, "PATCH", { showContentPageCheck: false })
+      const url = ApiUrl.SHOW_CONTENT_PAGE + '/' + profile?._id;
+      ApiRequest.request(url, 'PATCH', { showContentPageCheck: false })
         .then((res) => {
           if (res.success) {
             const updatedProfileData: IUserProfile = JSON.parse(
-              JSON.stringify(profile)
+              JSON.stringify(profile),
             );
             updatedProfileData.showContentPage = false;
             dispatch(setUserProfile(updatedProfileData));
@@ -83,12 +84,13 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
 
   return (
     <div className="chart-screen">
+      <UserCacheSidebar />
       <SidebarContextProvider>
         <Appbar />
         <Sidebar title="Filters" content={ChartSidebarContent} />
         <main
-          className={clsx("content-area", {
-            "sidebar-open": open,
+          className={clsx('content-area', {
+            'sidebar-open': open,
           })}
         >
           <AppRouting routes={routes} />
@@ -121,8 +123,8 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
       <Dialog
         fullScreen
         open={chart.chartfullScreen}
-        className={clsx("fullscreen--dialog", {
-          "chart-screen__chart-wrapper-table":
+        className={clsx('fullscreen--dialog', {
+          'chart-screen__chart-wrapper-table':
             chart.chartType === ChartType.TABLE,
         })}
       >
@@ -131,7 +133,7 @@ const ChartScreen: React.FC<ChartScreenProps> = (props) => {
             <span className="significant-hedding"> {significantText}</span>
           </div>
         ) : (
-          ""
+          ''
         )}
 
         <IconButton

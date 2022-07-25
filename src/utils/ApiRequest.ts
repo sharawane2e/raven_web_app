@@ -5,7 +5,10 @@ import Toaster from './Toaster';
 import { errorMessages } from '../constants/messages';
 import { logOutUser } from '../services/AuthService';
 import store from '../redux/store';
-import { setChartLoading } from '../redux/actions/chartActions';
+import {
+  setChartLoading,
+  setFullScreenLoading,
+} from '../redux/actions/chartActions';
 import { timeout } from './Utility';
 
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
@@ -44,8 +47,10 @@ const ApiRequest = {
       ]);
       response = apiResponse.data;
       dispatch(setChartLoading(false));
+      //dispatch(setFullScreenLoading(false));
     } catch (error: any) {
       dispatch(setChartLoading(false));
+      //   dispatch(setFullScreenLoading(false));
       console.log(error);
       if (error.response) {
         if (error.response.status === 401) {

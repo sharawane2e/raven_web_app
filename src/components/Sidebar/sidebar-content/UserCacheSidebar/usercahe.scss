@@ -1,0 +1,202 @@
+.user-cache {
+    position: relative;
+    user-select: none;
+    &__sidebar {
+      position: relative;
+      width: 100%;
+    }
+    .MuiDrawer-paper {
+      width: 24rem;
+      background: $white;
+      color: map-get($map: $bg-color, $key: secondary);
+      box-shadow: -9px 33px 47px 0px $black;
+      &::before {
+        content: '';
+        position: fixed;
+        top: 38px;
+        z-index: -1;
+        transition: transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+        display: block;
+        border-width: 15px 10px;
+        border-style: solid;
+        border-color: $white transparent transparent;
+        margin-left: 230px;
+        transform: rotate(180deg);
+      }
+    }
+    .MuiSvgIcon-root {
+      color: #c3c3c3;
+    }
+    &__no-data {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 70vh;
+    }
+    &__select-all {
+      display: flex;
+      padding-left: 8px;
+      padding-right: 8px;
+      justify-content: end;
+      align-items: center;
+  
+      .css-j204z7-MuiFormControlLabel-root {
+        margin-right: auto;
+      }
+    }
+    &__bottom-line {
+      width: 100%;
+      border-bottom: 1px solid $border-color;
+    }
+    &__cache-data {
+      cursor: pointer;
+      display: flex;
+      padding: 8px;
+      flex-wrap: nowrap;
+      width: 96%;
+      align-items: center;
+      &--cache-section {
+        display: flex;
+        flex-basis: 90.666667%;
+        flex-grow: 0;
+        max-width: 90.666667%;
+        align-items: center;
+        &:hover .user-cache__chart-icon {
+          border-color: map-get($map: $bg-color, $key: secondary);
+        }
+        &:hover .chart-hover-filed path {
+          fill: map-get($map: $bg-color, $key: 'accent');
+        }
+        &:hover .user-cache__chart-headding {
+          color: map-get($map: $bg-color, $key: secondary);
+        }
+      }
+    }
+  
+    &__chart-icon-sec {
+      max-width: 10.666667%;
+      svg {
+        fill: $hedding-color;
+      }
+    }
+    &__chart-icon {
+      border: 1px solid $hedding-color;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      justify-content: center;
+    }
+    &__chart-headding {
+      flex-wrap: wrap;
+      font-size: map-get($map: $text-size, $key: regular);
+      word-wrap: break-word;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 15px;
+    }
+    &__chart-question {
+      flex-basis: 87.666667%;
+      -webkit-box-flex: 0;
+      -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+      flex-grow: 0;
+      max-width: 87.666667%;
+      padding-left: 10px;
+      padding-right: 10px;
+      color: $hedding-color;
+    }
+    &__footer-inr {
+      display: flex;
+      justify-content: end;
+      padding: 15px 8px;
+    }
+    &__delete-btn {
+      margin-right: 15px;
+    }
+    &__collectdata {
+      display: flex;
+    }
+    &__date {
+      margin-right: 10px;
+      font-size: map-get($map: $text-size, $key: small);
+    }
+    &__colection-icon {
+      display: flex;
+      align-items: center;
+      font-size: map-get($map: $text-size, $key: small);
+      > svg {
+        margin-right: 5px;
+      }
+      .transferdata-icon {
+        width: 15px;
+        height: 15px;
+      }
+    }
+    .filter-icons {
+      width: 16px !important;
+      height: 16px !important;
+    }
+    .button--secondary {
+      border: 1px solid $filter-text-color;
+      color: $filter-text-color;
+    }
+    .multi-select-btn {
+      display: flex;
+      flex-basis: 10.666667%;
+      flex-grow: 0;
+      max-width: 10.666667%;
+      justify-content: end;
+    }
+    .checked-color {
+      color: map-get($map: $bg-color, $key: 'accent') !important;
+    }
+  }
+  .border-first-line {
+    border-color: map-get($map: $bg-color, $key: 'dark') !important;
+  }
+  .border-second-line {
+    border-color: map-get($map: $bg-color, $key: secondary-shade) !important;
+  }
+  .default-checkbox-color {
+    svg {
+      color: map-get($map: $bg-color, $key: secondary) !important;
+    }
+  }
+  .btn-line {
+    span {
+      position: relative;
+      &::after {
+        content: '';
+        border-left: 2px solid #3939394a;
+        position: absolute;
+        left: 48px;
+        height: 37px;
+      }
+      svg {
+        margin-left: 5px;
+      }
+    }
+  }
+  
+  .user-cache__cache-data--active-section {
+    .chart-hover-filed path {
+      fill: map-get($map: $bg-color, $key: 'accent');
+    }
+  
+    .user-cache__chart-headding {
+      color: map-get($map: $bg-color, $key: secondary);
+    }
+  }
+
+  .multi-export-loadder{
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    .loader--wrapper{
+      background: rgba(255 ,255, 255 , .9);
+    }
+  }

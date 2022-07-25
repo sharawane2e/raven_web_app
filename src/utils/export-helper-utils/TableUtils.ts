@@ -16,6 +16,7 @@ export function tableChartDataGen() {
   let totalRow: any = [];
   let scaleIndex: any = 0;
   let singleGroupNet: any;
+  //tableMinMaxTotal(seriesData);
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];
@@ -31,8 +32,7 @@ export function tableChartDataGen() {
   }
   /*this condition used for when multi Question avialbe neeting*/
   let results: any = chart.questionData?.options.filter(function (option) {
-    //console.log(option?.labelCode.indexOf('N'));
-    if (option?.labelCode.indexOf('N') != -1) {
+    if (option?.labelCode === 'N') {
       if (option?.labelCode?.split('_')[0] == 'N') {
         return true;
       }
@@ -44,7 +44,7 @@ export function tableChartDataGen() {
 
   let bannerQuestionresults: any = chart.bannerQuestionData?.options.filter(
     function (option) {
-      if (option?.labelCode.indexOf('N') != -1) {
+      if (option?.labelCode === 'N') {
         if (option.labelCode?.split('_')[0] == 'N') {
           return true;
         }
@@ -161,17 +161,14 @@ export function tableChartDataGen() {
                 if (chart?.questionData?.type === 'N') {
                   totalrowSub += parseFloat(d.values[k]);
                 } else {
-                  if (
-                    (chart?.questionData?.type === QuestionType.MULTI &&
-                      chart?.bannerQuestionData?.type == QuestionType.MULTI) ||
-                    chart?.bannerQuestionData?.type == QuestionType.SINGLE
-                  ) {
+                  if (rIndex < scaleIndex && chart.showMean) {
+                    //totalrowSub += parseFloat(d.values[k]);
+                    if (netsLabelcode === 'N') {
+                      totalrowSub += 0;
+                    }
                   } else {
-                    if (rIndex < scaleIndex && chart.showMean) {
-                      //totalrowSub += parseFloat(d.values[k]);
-                      if (netsLabelcode === 'N') {
-                        totalrowSub += 0;
-                      }
+                    if (netsQuestionLabelcode === 'N') {
+                      totalrowSub += parseFloat(d.values[k]);
                     } else {
                       if (netsQuestionLabelcode === 'N') {
                         totalrowSub += parseFloat(d.values[k]);
@@ -256,6 +253,7 @@ export function tableChartDataGen() {
         rows.push([seriesData[0].labels[k], ...subRow, ...totalRow]);
 
         minmax.push([tranposedTableData, tranposedTableDataMin]);
+
         subRow = [];
         totalRow = [];
       }
@@ -268,13 +266,14 @@ export function tableChartDataGen() {
       const updateRow: any[] = [];
 
       for (var i = 0; i < columnValues.length; i++) {
-        if (typeof columnValues[i] === 'undefined') {
+        if (typeof columnValues[i] === 'undefined' || columnValues[i] == NaN) {
           columnValues[i] = 0;
           updateRow.push(columnValues[i]);
         } else {
           updateRow.push(columnValues[i]);
         }
       }
+      //console.log('updateRow', columnValues);
       if (
         chart.chartTranspose &&
         chart?.questionData?.type === QuestionType.GRID &&
@@ -306,6 +305,7 @@ export function tableChartDataGen() {
             ? updateRow.splice(lablecode_length)
             : updateRow;
       }
+      //console.log('newUpdatedRow', newUpdatedRow);
       if (
         chart?.chartLabelType === ChartLabelType.PERCENTAGE &&
         chart?.questionData?.type !== QuestionType?.NUMBER
@@ -328,7 +328,8 @@ export function tableChartDataGen() {
           chart?.questionData?.type === QuestionType?.SINGLE ||
           chart?.questionData?.type === QuestionType?.GRID ||
           chart?.questionData?.type === QuestionType?.GRID_MULTI ||
-          chart?.questionData?.type === QuestionType?.RANK
+          chart?.questionData?.type === QuestionType?.RANK ||
+          chart?.questionData?.type === QuestionType?.NUMBER
         ) {
           tranposedTableData.push(round(Math.max(...newUpdatedRow), 2));
           tranposedTableDataMin.push(round(Math.min(...newUpdatedRow), 2));

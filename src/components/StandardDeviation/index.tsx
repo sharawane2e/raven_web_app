@@ -68,13 +68,19 @@ const StandardDeviation: React.FC<StandardDeviation> = () => {
       decimalPrecision2,
     );
 
-    dispatch(setMean(round(meanValue, decimalPrecision3)));
-    dispatch(
-      setStandardDeviation(
-        round(Number(getSampleDeviationValues), decimalPrecision3),
-      ),
+    //meanStandardDeviation(mean)
+
+    const meanStandarad = setMean(round(meanValue, decimalPrecision3));
+    const standardDeviation = setStandardDeviation(
+      round(Number(getSampleDeviationValues), decimalPrecision3),
     );
-    dispatch(setStandardError(round(getStandarderror, decimalPrecision3)));
+    const standardError = setStandardError(
+      round(getStandarderror, decimalPrecision3),
+    );
+
+    dispatch(meanStandarad);
+    dispatch(standardDeviation);
+    dispatch(standardError);
   };
 
   return (

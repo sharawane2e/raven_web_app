@@ -45,6 +45,7 @@ import { setSelectedQuestion } from '../../redux/actions/chapterActions';
 import StandardDeviation from '../StandardDeviation';
 import SignificantDiff from '../SignificantDiff';
 import { significantText } from '../../constants/Variables';
+import FavouriteControl from '../FavouriteControl';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -231,7 +232,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <div className="chart-content__control-item">
             <LabelTypeControl />
           </div>
-          <div className="chart-content__control-item">
+          <div className="chart-content__control-item chart-items">
+            <FavouriteControl />
             <ExportChart />
           </div>
         </Grid>

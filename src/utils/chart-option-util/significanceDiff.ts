@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from '../../enums/QuestionType';
 import { getCumulativeStdNormalProbability } from '../simplestatistics';
 import { indexToChar } from '../Utility';
 
@@ -19,42 +20,53 @@ export const getsignificantdifference = (
 ) => {
   const seriesName: string[] = [];
 
-  if (transposed) {
-    bannerQuestionData.options.forEach((optionObject: any) => {
-      seriesName.push(optionObject?.labelText);
-    });
-  } else {
-    questionData.options.forEach((optionObject: any) => {
-      if (chartData[0][optionObject?.labelCode]?.length) {
+  if (questionData.type !== QuestionType.GRID) {
+    if (transposed) {
+      bannerQuestionData.options.forEach((optionObject: any) => {
         seriesName.push(optionObject?.labelText);
+      });
+    } else {
+      questionData.options.forEach((optionObject: any) => {
+        if (chartData[0][optionObject?.labelCode]?.length) {
+          seriesName.push(optionObject?.labelText);
+        }
+      });
+    }
+    series.forEach((seriesObject: any, seriesIndex: number) => {
+      if (seriesObject.data.length != seriesName.length) {
+        const updatedData: any = [];
+        seriesName.forEach((labelName: string, labelIndex: number) => {
+          const isLabel = _.find(seriesObject.data, function (o) {
+            return o.name == labelName;
+          });
+          if (isLabel) {
+            updatedData.push(isLabel);
+          } else {
+            updatedData.push({
+              name: labelName,
+              y: null,
+              percentageValue: null,
+              numberValue: null,
+              baseCount: null,
+              significance: '',
+              significantDiffernce: '',
+            });
+          }
+        });
+        series[seriesIndex].data = updatedData;
       }
     });
   }
 
-  series.forEach((seriesObject: any, seriesIndex: number) => {
-    if (seriesObject.data.length != seriesName.length) {
-      const updatedData: any = [];
-      seriesName.forEach((labelName: string, labelIndex: number) => {
-        const isLabel = _.find(seriesObject.data, function (o) {
-          return o.name == labelName;
-        });
-        if (isLabel) {
-          updatedData.push(isLabel);
-        } else {
-          updatedData.push({
-            name: labelName,
-            y: null,
-            percentageValue: null,
-            numberValue: null,
-            baseCount: null,
-            significance: '',
-            significantDiffernce: '',
-          });
-        }
-      });
-      series[seriesIndex].data = updatedData;
-    }
-  });
+  // series.forEach((seriesObject: any) => {
+  //   if (seriesObject.data.length > seriesName.length) {
+  //     seriesName.length = 0;
+  //     seriesObject.data.forEach((seriesData: any) => {
+  //       seriesName.push(seriesData.name);
+  //     });
+  //     series[seriesIndex].data = updatedData;
+  //   }
+  // });
 
   const updatedSeries = series.map((singleSeries: any) => {
     const updatedSeriesData = {
@@ -62,7 +74,7 @@ export const getsignificantdifference = (
       data: singleSeries.data.map((data: any, index: number) => {
         return {
           ...data,
-          name: data?.name + `(${indexToChar(seriesName.indexOf(data?.name))})`,
+          name: data?.name + `${indexToChar(seriesName.indexOf(data?.name))}`,
           significance: indexToChar(seriesName.indexOf(data?.name)),
           significantDiffernce: '',
         };
@@ -109,7 +121,7 @@ export const getsignificantdifference = (
       }
       if (significantArry.length) {
         singleSeries.data[i]['significantDiffernce'] =
-          '' + significantArry.join(',') + '';
+          significantArry.join(',');
       }
     }
   });
@@ -120,17 +132,17 @@ export const getsignificantdifference = (
 /* This function get table significant Difference*/
 export const getTablesignificantdifference = (seriesData: any) => {
   for (let i = 0; i < seriesData.length; i++) {
-    const seriesupdatedLabels = [];
+    // const seriesupdatedLabels = [];
     seriesData[i]['significance'] = [];
     seriesData[i]['significanceDifference'] = [];
 
     for (let j = 0; j < seriesData[i]['labels'].length; j++) {
       seriesData[i]['significance'].push(indexToChar(j));
-      seriesupdatedLabels.push(
-        seriesData[i]['labels'][j] + `(${indexToChar(j)})`,
-      );
+      // seriesupdatedLabels.push(
+      //   seriesData[i]["labels"][j] + `(${indexToChar(j)})`
+      // );
     }
-    seriesData[i]['labels'] = seriesupdatedLabels;
+    // seriesData[i]["labels"] = seriesupdatedLabels;
   }
 
   for (let i = 0; i < seriesData.length; i++) {
@@ -167,8 +179,7 @@ export const getTablesignificantdifference = (seriesData: any) => {
       }
 
       if (significantArry.length) {
-        seriesData[i]['significanceDifference'][j] =
-          '' + significantArry.join(',') + '';
+        seriesData[i]['significanceDifference'][j] = significantArry.join(',');
       }
     }
   }

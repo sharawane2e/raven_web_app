@@ -18,10 +18,12 @@ import {
   showMean,
   updateChartOptions,
   updateSignificant,
+  setFullScreenLoading,
 } from '../actions/chartActions';
 
 export interface IChartState {
   chartLoading: boolean;
+  fullScreenLoading: boolean;
   questionData: IQuestion | null;
   // openQSelection:boolean;
   chartData: any[];
@@ -82,6 +84,7 @@ export const defaultPlotOptions = {
 
 const initialState: IChartState = {
   chartLoading: false,
+  fullScreenLoading: false,
   questionData: null,
   // openQSelection:false,
   bannerQuestionData: null,
@@ -182,6 +185,10 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(setChartLoading, (state, action) => ({
     ...state,
     chartLoading: action.payload,
+  }));
+  builder.addCase(setFullScreenLoading, (state, action) => ({
+    ...state,
+    fullScreenLoading: action.payload,
   }));
 
   builder.addCase(showMean, (state, action) => ({

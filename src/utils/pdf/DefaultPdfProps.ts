@@ -55,7 +55,7 @@ export const setDefaultPdfPageProperties = async (
   doc.text(filterText, 10, 20);
   doc.setTextColor(64, 64, 64);
   if (questionData?.type === QuestionType.SINGLE && questionData?.isMean) {
-    doc.text(meanStandardDeviation(), 10, 25);
+    //doc.text(meanStandardDeviation(), 10, 25);
   }
 
   doc.text('Sample set: ' + baseCount || '', baseX, baseY);

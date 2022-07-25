@@ -12,6 +12,7 @@ import { ChartType } from '../../enums/ChartType';
 import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
+import { bannerChartDataGen } from '../export-helper-utils/BannerQuesUtils';
 import { getMatchedfilter, getSum } from '../Utility';
 import { getsignificantdifference } from './significanceDiff';
 
@@ -85,6 +86,8 @@ export const getMultiChartOptionsSeries = (
         chartType,
       ),
     );
+
+    //console.log(series);
   }
   if (significant) {
     const updatedSeries = getsignificantdifference(
@@ -96,9 +99,18 @@ export const getMultiChartOptionsSeries = (
       transposed,
     );
     series.length = 0;
+
     series.push(...updatedSeries);
   }
-
+  if (selectedBannerQuestionId) {
+    bannerChartDataGen(
+      series,
+      questionData,
+      chartData,
+      bannerQuestionData,
+      transposed,
+    );
+  }
   return series;
 };
 
@@ -210,6 +222,7 @@ const multiSingleBannerChart = (
   chartLabelType: any,
   questionChartData: any,
 ) => {
+  //debugger;
   const {
     chart: { significant },
   } = store.getState();
@@ -272,19 +285,19 @@ const multiSingleBannerChart = (
 
         //  console.log(label);
 
-        if (label) {
-          let percentageValue = (label.count / localBase) * 100;
-          let numberValue = label.count;
-          if (count)
-            data.push({
-              name: quesOption.labelText,
-              // y: +count.toFixed(decimalPrecision),
-              y: count !== null ? round(count, decimalPrecision) : 0,
-              percentageValue,
-              numberValue,
-              baseCount: localBase,
-            });
-        }
+        //if (label) {
+        let percentageValue = (label?.count / localBase) * 100;
+        let numberValue = label?.count;
+        if (count)
+          data.push({
+            name: quesOption.labelText,
+            // y: +count.toFixed(decimalPrecision),
+            y: count !== null ? round(count, decimalPrecision) : 0,
+            percentageValue,
+            numberValue,
+            baseCount: localBase,
+          });
+        // }
       }
     }
     let newDataLabels;

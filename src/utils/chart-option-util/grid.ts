@@ -26,7 +26,7 @@ export const getGridChartoptionSeries = (
   const categories = [];
   const series = [];
   const {
-    chart: { chartLabelType, chartType, chartTranspose, significant },
+    chart: { chartLabelType, chartTranspose, significant },
   } = store.getState();
 
   if (chartTranspose) {
