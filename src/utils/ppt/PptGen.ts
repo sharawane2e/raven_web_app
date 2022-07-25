@@ -19,7 +19,7 @@ import { pptDataGen } from "./PptDataGen";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";
 
-export const generatePpt = async () => {
+export const generatePpt = async (payloadObject: any) => {
   const {
     chart: {
       questionData,
@@ -31,8 +31,9 @@ export const generatePpt = async () => {
       significant,
       chartLabelType,
     },
+    filters: { appliedFilters },
     // standard: { isMean, standardDeviation, standardError },
-  } = store.getState();
+  } = payloadObject;
 
   let pptxGenJsObj = new pptxgen();
   let fileName: string = exportPrefix + questionData?.labelText;
@@ -44,37 +45,10 @@ export const generatePpt = async () => {
   let baseText: string = `Sample set: ${baseCount}`;
   // let questionText: string = questionData?.questionText || "";
 
-  let filters: string = appliedFiltersText();
+  let filters: string = appliedFiltersText(appliedFilters);
 
-  let graphTypeProps = {
-    barDir:
-      chartOrientation === ChartOrientation.LANDSCAPE
-        ? PptChartOrientation.LANDSCAPE
-        : PptChartOrientation.PORTRAIT,
-    barGrouping:
-      chartType === ChartType.COLUMN ? PptChartType.COLUMN : PptChartType.STACK,
-  };
-
-  let chartSettings: pptxgen.IChartOpts = {
-    //show or hide legend
-    showLegend: chartType === ChartType.COLUMN ? true : false,
-    dataLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
-        : showMean && questionData?.type === QuestionType.GRID
-        ? "##.##"
-        : "##",
-    valLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
-        : showMean && questionData?.type === QuestionType.GRID
-        ? "##.##"
-        : "##",
-  };
-  let significanceText: string = "";
-  if (significant && chartType == ChartType.TABLE) {
-    significanceText = significantText;
-  }
+  let significanceText: string =
+    significant && chartType == ChartType.TABLE ? significantText : "";
 
   let slideConfig: ISlideConfig = {
     mainQuestionText,
@@ -89,7 +63,7 @@ export const generatePpt = async () => {
   };
 
   // for (let i = 0; i == 2; i++) {
-  pptDataGen(pptxGenJsObj, slideConfig, graphTypeProps, chartSettings);
+  pptDataGen(pptxGenJsObj, slideConfig);
   //}
 
   await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
