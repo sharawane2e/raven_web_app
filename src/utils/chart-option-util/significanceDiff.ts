@@ -1,7 +1,6 @@
 import _ from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
 import { getCumulativeStdNormalProbability } from "../simplestatistics";
 import { indexToChar } from "../Utility";
 
@@ -21,7 +20,7 @@ export const getsignificantdifference = (
 ) => {
   const seriesName: string[] = [];
 
-  if (questionData.type != QuestionType.GRID) {
+  if (questionData.type !== QuestionType.GRID) {
     if (transposed) {
       bannerQuestionData.options.forEach((optionObject: any) => {
         seriesName.push(optionObject?.labelText);
@@ -33,7 +32,6 @@ export const getsignificantdifference = (
         }
       });
     }
-
     series.forEach((seriesObject: any, seriesIndex: number) => {
       if (seriesObject.data.length != seriesName.length) {
         const updatedData: any = [];
@@ -59,13 +57,25 @@ export const getsignificantdifference = (
       }
     });
   }
+
+  // series.forEach((seriesObject: any) => {
+  //   if (seriesObject.data.length > seriesName.length) {
+  //     seriesName.length = 0;
+  //     seriesObject.data.forEach((seriesData: any) => {
+  //       seriesName.push(seriesData.name);
+  //     });
+  //     series[seriesIndex].data = updatedData;
+  //   }
+  // });
+
   const updatedSeries = series.map((singleSeries: any) => {
     const updatedSeriesData = {
       ...singleSeries,
       data: singleSeries.data.map((data: any, index: number) => {
         return {
           ...data,
-          name: data?.name + `(${indexToChar(seriesName.indexOf(data?.name))})`,
+          name:
+            data?.name + ` - ${indexToChar(seriesName.indexOf(data?.name))}`,
           significance: indexToChar(seriesName.indexOf(data?.name)),
           significantDiffernce: "",
         };
@@ -75,7 +85,7 @@ export const getsignificantdifference = (
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))}${
             chartLabelType == ChartLabelType.PERCENTAGE ? "%" : ""
-          } <span class="significante-color">${
+          } <span class="significante-color"> - ${
             this.point.significantDiffernce
           } </span>`;
         },
@@ -112,7 +122,7 @@ export const getsignificantdifference = (
       }
       if (significantArry.length) {
         singleSeries.data[i]["significantDiffernce"] =
-          "" + significantArry.join(",") + "";
+          significantArry.join(",");
       }
     }
   });
@@ -123,17 +133,17 @@ export const getsignificantdifference = (
 /* This function get table significant Difference*/
 export const getTablesignificantdifference = (seriesData: any) => {
   for (let i = 0; i < seriesData.length; i++) {
-    const seriesupdatedLabels = [];
+    // const seriesupdatedLabels = [];
     seriesData[i]["significance"] = [];
     seriesData[i]["significanceDifference"] = [];
 
     for (let j = 0; j < seriesData[i]["labels"].length; j++) {
-      seriesData[i]["significance"].push(indexToChar(j));
-      seriesupdatedLabels.push(
-        seriesData[i]["labels"][j] + `(${indexToChar(j)})`
-      );
+      seriesData[i]["significance"].push(`${indexToChar(j)}`);
+      // seriesupdatedLabels.push(
+      //   seriesData[i]["labels"][j] + `(${indexToChar(j)})`
+      // );
     }
-    seriesData[i]["labels"] = seriesupdatedLabels;
+    // seriesData[i]["labels"] = seriesupdatedLabels;
   }
 
   for (let i = 0; i < seriesData.length; i++) {
@@ -170,8 +180,7 @@ export const getTablesignificantdifference = (seriesData: any) => {
       }
 
       if (significantArry.length) {
-        seriesData[i]["significanceDifference"][j] =
-          "" + significantArry.join(",") + "";
+        seriesData[i]["significanceDifference"][j] = significantArry.join(",");
       }
     }
   }

@@ -28,4 +28,6 @@ export class StaticText {
   static GRID_MEAN_SD_SE = 'Mean,Standard Deviation,Standard Error';
 
   static SIGNIFICANT_DIFFERENCE = 'Significant Difference not allowed';
+
+  static USER_CACHE_NOT_AVAILABLE = 'No question selected to add in cache';
 }

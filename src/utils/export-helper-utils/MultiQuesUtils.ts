@@ -1,8 +1,4 @@
-import { singleChartDataGen } from './SingleQuesUtils';
-export function multiChartDataGen(
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-) {
-  return singleChartDataGen(questionData, chartData, baseCount);
+import { singleChartDataGen } from "./SingleQuesUtils";
+export function multiChartDataGen(series: any, chartLabelType: any) {
+  return singleChartDataGen(series, chartLabelType);
 }

@@ -99,7 +99,7 @@ const TableView: React.FC<TableProps> = (props) => {
           splitCol2 != ",,,,,,,," &&
           splitCol2 != ",,,,,,,,," ? (
             <span className="significante-color table-significante">
-              {splitCol2}
+              - {splitCol2}
             </span>
           ) : (
             ""

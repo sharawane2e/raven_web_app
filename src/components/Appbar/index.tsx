@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useEffect } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TourPlayIcon from '@material-ui/icons/PlayArrow';
@@ -16,9 +16,17 @@ import { showTourGuide } from '../../redux/actions/tourAction';
 import {
   toggleSidebar,
   toggleSidebarMobile,
+  toggleSidebarUserCache,
 } from '../../redux/actions/sidebarAction';
 import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
+import { Badge } from '@mui/material';
+import { resetUserCache } from '../../redux/actions/userCacheActions';
+import { ReactComponent as Cache } from '../../assets/svg/cache.svg';
+import ApiRequest from '../../utils/ApiRequest';
+import ApiUrl from '../../enums/ApiUrl';
+import { addNewKeysToUserCache } from '../../services/userCacheService';
+import Toaster from '../../utils/Toaster';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -26,7 +34,8 @@ export interface AppbarProps {
 
 const Appbar: React.FC<AppbarProps> = (props) => {
   const { profile: user } = useSelector((state: RootState) => state.user);
-
+  const { userCache } = useSelector((state: RootState) => state);
+  const { sidebar } = useSelector((state: RootState) => state);
   const { variant = 'partialWidth' } = props;
   // const {
   //   open: sidebarOpen,
@@ -34,6 +43,15 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   //   openMobileDrawer,
   //   toggleMobileSidebar,
   // } = useContext(SidebarContext);
+
+  const toggleUserSidebar = () => {
+    dispatch(toggleSidebarUserCache());
+    getUserCache();
+  };
+
+  useEffect(() => {
+    getUserCache();
+  }, []);
 
   const { open: sidebarOpen, openMobileDrawer } = useSelector(
     (state: RootState) => state.sidebar,
@@ -70,6 +88,19 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     }
   }
 
+  const getUserCache = () => {
+    // ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
+    //   .then((res) => {
+    //     if (res.success) {
+    //       const updatedUserCache = addNewKeysToUserCache(res?.data);
+    //       dispatch(resetUserCache(updatedUserCache));
+    //     } else {
+    //       Toaster.error(res.message);
+    //     }
+    //   })
+    //   .catch((error) => console.log(error));
+  };
+
   return (
     <div
       className={clsx('appbar', {
@@ -80,12 +111,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
     >
       <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper client-logo">
-          {/* <BrandLogo
-            className="appbar__brand-logo"
-            onClick={() => history.push('/home')}
-          /> */}
           <div className="public-form__client-logo client-logo__icons">
-            {/* <Boehringer onClick={() => history.push('/home')} /> */}
             <RavneLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} />
@@ -106,6 +132,26 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
+        <Badge
+          badgeContent={
+            userCache.savedChart == undefined ? 0 : userCache.savedChart.length
+          }
+          color="primary"
+          className="badge-icon"
+        >
+          <div
+            className={`appbar__tourGuide appbar__cache-btn ${
+              sidebar?.userCache ? 'user-active' : ''
+            }`}
+            onClick={() => {
+              toggleUserSidebar();
+              // toggleMobileSidebar();
+            }}
+          >
+            <Cache className="cache-icon" />
+            <div className="tourText">My Cache</div>
+          </div>
+        </Badge>
         <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
           <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
             <ProfileAvatar text={user?.name || ''} />

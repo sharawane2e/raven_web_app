@@ -16,6 +16,7 @@ import {
 
 import { ChartType } from "../../enums/ChartType";
 import { getsignificantdifference } from "./significanceDiff";
+import { bannerChartDataGen } from "../export-helper-utils/BannerQuesUtils";
 
 export const getSingleChartOptionsSeries = (
   questionData: IQuestion,
@@ -178,6 +179,13 @@ export const getSingleChartOptionsSeries = (
           });
       }
     }
+    bannerChartDataGen(
+      series,
+      questionData,
+      chartData,
+      bannerQuestionData,
+      transposed
+    );
     if (significant) {
       const updatedSeries = getsignificantdifference(
         questionData,
@@ -202,6 +210,8 @@ export const getSingleChartOptionsSeries = (
       )
     );
   }
+
+  //bannerChartDataGen(series, questionData, chartData);
   return series;
 };
 
@@ -292,6 +302,8 @@ const getSingleSeries = (
       },
     });
   }
+
+  // console.log("series", series);
   return series;
 };
 

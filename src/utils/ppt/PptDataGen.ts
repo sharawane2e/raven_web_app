@@ -36,6 +36,7 @@ export function pptDataGen(
       bannerQuestionData,
     },
   } = store.getState();
+  //debugger;
 
   setDefaultSlideProperties(pptxGenJsObj, slideConfig);
 
@@ -236,6 +237,7 @@ export function pptDataGen(
         seriesData[index] = row;
       });
     }
+    // console.log('seriesData', seriesData);
 
     slide.addChart(pptChartType, seriesData, {
       ...chartConfig,

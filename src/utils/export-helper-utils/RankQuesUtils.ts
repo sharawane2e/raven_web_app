@@ -1,72 +1,24 @@
-import { decimalPrecision } from '../../constants/Variables';
-import { round } from '../Utility';
-import store from '../../redux/store';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import _ from 'lodash';
-
-export function rankChartDataGen(
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-  chartTranspose: boolean,
-) {
-  // debugger;
-
-  let labels: any = [];
+export function rankChartDataGen(series: any, chartLabelType: any) {
   let seriesData: any[] = [];
 
-  const {
-    chart: { chartLabelType },
-  } = store.getState();
-
-  labels = questionData.subGroups.map((subGroup: any) => subGroup.labelText);
-  questionData.scale.forEach((scaleOption: any) => {
-    // debugger;
-
+  series.forEach((seriesName: any) => {
+    let labels: any = [];
+    const values: number[] = [];
+    const baseCounts: number[] = [];
+    const percentageValues: number[] = [];
+    seriesName.data.forEach((seriesdata: any) => {
+      labels.push(seriesdata.name);
+      values.push(seriesdata.y);
+      percentageValues.push(seriesdata.percentageValue);
+    });
     seriesData.push({
-      name: scaleOption.labelText,
+      name: seriesName.name,
       labels,
-      values: questionData.subGroups.map((subGroup: any) => {
-        // debugger;
-        const subGroupData = chartData.find(
-          (data: any) => data._id === subGroup.qId,
-        );
-        // const base = subGroupData?.baseCount || baseCount; // this base coming from backend and will not work anymore
-
-        let base = 0;
-
-        if (chartTranspose) {
-          base = _.sumBy(subGroupData.options, function (o: any) {
-            return o.count;
-          });
-        } else {
-          chartData.forEach(function (eachRowData: any) {
-            const chartOptionObject: any = _.filter(eachRowData.options, {
-              option: scaleOption.labelCode,
-            });
-            if (chartOptionObject.length) {
-              base = base + chartOptionObject[0]['count'];
-            }
-          });
-        }
-
-        if (subGroupData) {
-          const data = subGroupData?.options?.find(
-            (scaleData: any) => scaleData.option === scaleOption.labelCode,
-          )?.count;
-
-          if (chartLabelType === ChartLabelType.PERCENTAGE) {
-            return data !== undefined
-              ? round(+((data / base) * 100), decimalPrecision)
-              : 0;
-          } else {
-            return data !== undefined ? data : 0;
-          }
-        } else {
-          return 0;
-        }
-      }),
+      values,
+      baseCounts,
+      percentageValues,
     });
   });
+
   return seriesData;
 }
