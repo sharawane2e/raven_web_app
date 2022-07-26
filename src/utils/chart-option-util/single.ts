@@ -16,8 +16,12 @@ import {
 
 import { ChartType } from "../../enums/ChartType";
 import { getsignificantdifference } from "./significanceDiff";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
-export const getSingleChartOptionsSeries = (chart: any, questions: any) => {
+export const getSingleChartOptionsSeries = (
+  chart: IchartOptionsDto,
+  questions: any
+) => {
   const {
     questionData,
     chartData,

@@ -14,6 +14,7 @@ import { getMultiChartOptionsSeries } from "./chart-option-util/multi";
 import { ChartOrientation } from "../enums/ChartOrientation";
 import { getRankChartOptionsData } from "./chart-option-util/rank";
 import { getMultiGridChartOptionsData } from "./chart-option-util/multiGrid";
+import { IchartOptionsDto } from "../types/IChartOptionsDto";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -26,7 +27,7 @@ export const getChartOptions = (
   bannerChartData: any = store.getState().chart.bannerChartData,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
-  const chart = {
+  const chart: IchartOptionsDto = {
     questionData,
     chartData,
     baseCount,
@@ -121,7 +122,10 @@ const getMultiChartOptions = (
   };
 };
 
-const getSingleChartOptions = (chart: any, questions: any): any => {
+const getSingleChartOptions = (
+  chart: IchartOptionsDto,
+  questions: any
+): any => {
   const series = getSingleChartOptionsSeries(chart, questions);
 
   return {
