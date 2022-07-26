@@ -233,7 +233,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <LabelTypeControl />
           </div>
           <div className="chart-content__control-item chart-items">
-            <FavouriteControl />
+            {/* <FavouriteControl /> */}
             <ExportChart />
           </div>
         </Grid>

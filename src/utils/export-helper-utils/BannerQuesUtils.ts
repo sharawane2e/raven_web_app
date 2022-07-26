@@ -19,42 +19,44 @@ export function bannerChartDataGen(
 
   const seriesName: string[] = [];
 
-  if (chartTranspose) {
-    bannerQuestionData.options.forEach((optionObject: any) => {
-      seriesName.push(optionObject?.labelText);
-    });
-  } else {
-    questionData.options.forEach((optionObject: any) => {
-      //  if (chartData[0][optionObject?.labelCode]?.length) {
-      seriesName.push(optionObject?.labelText);
-      // }
+  if (!significant) {
+    if (chartTranspose) {
+      bannerQuestionData.options.forEach((optionObject: any) => {
+        seriesName.push(optionObject?.labelText);
+      });
+    } else {
+      questionData.options.forEach((optionObject: any) => {
+        //  if (chartData[0][optionObject?.labelCode]?.length) {
+        seriesName.push(optionObject?.labelText);
+        // }
+      });
+    }
+
+    updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
+      if (seriesObject.data.length != seriesName.length) {
+        const updatedData: any = [];
+        seriesName.forEach((labelName: string, labelIndex: number) => {
+          const isLabel = _.find(seriesObject.data, function (o) {
+            return o.name == labelName;
+          });
+          if (isLabel) {
+            updatedData.push(isLabel);
+          } else {
+            updatedData.push({
+              name: labelName,
+              y: 0,
+              percentageValue: 0,
+              numberValue: 0,
+              baseCount: 0,
+              significance: '',
+              significantDiffernce: '',
+            });
+          }
+        });
+        updatedSeries[seriesIndex].data = updatedData;
+      }
     });
   }
-
-  updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
-    if (seriesObject.data.length != seriesName.length) {
-      const updatedData: any = [];
-      seriesName.forEach((labelName: string, labelIndex: number) => {
-        const isLabel = _.find(seriesObject.data, function (o) {
-          return o.name == labelName;
-        });
-        if (isLabel) {
-          updatedData.push(isLabel);
-        } else {
-          updatedData.push({
-            name: labelName,
-            y: 0,
-            percentageValue: 0,
-            numberValue: 0,
-            baseCount: 0,
-            significance: '',
-            significantDiffernce: '',
-          });
-        }
-      });
-      updatedSeries[seriesIndex].data = updatedData;
-    }
-  });
 
   updatedSeries.forEach((seriesNewData: any) => {
     let labels: any = [];

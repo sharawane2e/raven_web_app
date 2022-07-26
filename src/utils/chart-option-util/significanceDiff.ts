@@ -74,7 +74,8 @@ export const getsignificantdifference = (
       data: singleSeries.data.map((data: any, index: number) => {
         return {
           ...data,
-          name: data?.name + `${indexToChar(seriesName.indexOf(data?.name))}`,
+          name:
+            data?.name + ` - ${indexToChar(seriesName.indexOf(data?.name))}`,
           significance: indexToChar(seriesName.indexOf(data?.name)),
           significantDiffernce: '',
         };
