@@ -186,7 +186,7 @@ const TableView: React.FC<TableProps> = (props) => {
       }
     }
   };
-
+  console.log(tableData);
   return (
     <Scrollbars>
       <div className="tableView">

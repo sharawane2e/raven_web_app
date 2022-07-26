@@ -54,7 +54,5 @@ export function newChartDataGen(series: any) {
   //   }
   // }
 
-  // console.log(seriesData);
-
   return seriesData;
 }
