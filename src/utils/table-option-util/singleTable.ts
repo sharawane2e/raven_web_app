@@ -51,12 +51,10 @@ export const singleTable = (chartSeries: any) => {
       }
     }
   }
-
-  console.log(minMaxArr);
   grandTotalRow.push("Total");
   grandTotalRow.push(...count);
   grandTotalRow.push("");
   chartRows.push(grandTotalRow);
 
-  return chartRows;
+  return { chartRows, minMaxArr };
 };
