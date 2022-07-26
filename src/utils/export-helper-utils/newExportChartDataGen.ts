@@ -40,7 +40,7 @@ export function newChartDataGen(series: any) {
 
   // else {
   //   if (questionData?.type === QuestionType.SINGLE) {
-  seriesData = singleChartDataGen(series, ChartLabelType.PERCENTAGE);
+  seriesData = singleChartDataGen(series);
   //   } else if (questionData?.type === QuestionType.MULTI) {
   //     seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
   //   } else if (questionData?.type === QuestionType.GRID) {

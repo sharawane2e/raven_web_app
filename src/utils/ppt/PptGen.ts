@@ -38,8 +38,8 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
   let fileName: string =
     exportPrefix + payloadObjectArr[0]["chart"]["questionData"]?.labelText;
 
-  for (let j = 0; j < 2; j++) {
-    const i = 0;
+  for (let i = 0; i < payloadObjectArr.length; i++) {
+    // debugger;
     const {
       chart: {
         questionData,

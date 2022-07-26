@@ -31,7 +31,7 @@ const FavouriteControl: React.FC = () => {
       type: chartQuestionData?.type,
       bannerType: chart?.bannerQuestionData?.type
         ? chart?.bannerQuestionData?.type
-        : null,
+        : '',
       date: new Date(),
       filter: filters?.appliedFilters,
       bannerQuestion:

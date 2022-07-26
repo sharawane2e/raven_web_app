@@ -1,6 +1,6 @@
 import { ChartLabelType } from "../../enums/ChartLabelType";
 
-export function singleChartDataGen(series: any, chartLabelType: any) {
+export function singleChartDataGen(series: any) {
   let labels: any = [];
   let labelName: any = [];
   let values: any = [];

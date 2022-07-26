@@ -399,6 +399,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               //disabled
               className="button--primary btn-line"
               onClick={() => {
+                console.log(savedChart)
                 multiExport(savedChart);
                 // removeFilter(appliedFilters);
                 //dispatch(resetFilters());

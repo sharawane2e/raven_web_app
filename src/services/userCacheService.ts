@@ -5,6 +5,7 @@ import { resetUserCache } from "../redux/actions/userCacheActions";
 import ApiUrl from "../enums/ApiUrl";
 import Toaster from "../utils/Toaster";
 import { setFullScreenLoading } from "../redux/actions/chartActions";
+import { generatePpt } from "../utils/ppt/PptGen";
 
 export const isChartInCache = () => {
   let isChartDuplicate = false;
@@ -96,8 +97,37 @@ export const multiExport = async (savedChart: any) => {
     promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, "POST", body));
   });
 
-  const apiResponse = await Promise.all(promiseAllArr);
+  const apiResponse: any[] = await Promise.all(promiseAllArr);
   console.log(apiResponse);
+  const payloadArr: any[] = [];
+  savedChart.forEach((el: any, index: number) => {
+    const chart = {
+      questionData: apiResponse[index].data.questionData,
+      bannerQuestionData: apiResponse[index].data.bannerQuestionData,
+      chartData: apiResponse[index].data.chartData,
+      chartOrientation: el.chartOrientation,
+      chartType: el.chartType,
+      baseCount: apiResponse[index].data.baseCount[0].baseCount,
+      showMean: el.showMean,
+      significant: el.significant,
+      chartLabelType: el.chartLabelType,
+      chartTranspose: el.chartTranspose,
+    };
+
+    const filters = {
+      appliedFilters: [],
+    };
+
+    const payload = {
+      chart,
+      filters,
+    };
+
+    payloadArr.push(payload);
+  });
+
+  console.log(payloadArr);
+
+  generatePpt([...payloadArr]);
   dispatch(setFullScreenLoading(false));
-  //console.log(apiResponse);
 };
