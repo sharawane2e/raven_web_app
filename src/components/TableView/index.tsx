@@ -13,12 +13,13 @@ interface TableProps {}
 
 const TableView: React.FC<TableProps> = (props) => {
   const getChartData = getChartOptions();
-  const tableTransformedData = singleTable(getChartData.series);
-  // console.log(getChartData);
-  // console.log(tableTransformedData);
+  const { chartRows, minMaxArr } = singleTable(getChartData.series);
+  const tableTransformedData = chartRows;
+  console.log(getChartData);
+  console.log(tableTransformedData);
   // const [tableData, setTableData] = useState<any>([]);
 
-  console.log("tableTransformedData", tableTransformedData);
+  console.log("tableTransformedData", minMaxArr);
 
   return (
     <Scrollbars>

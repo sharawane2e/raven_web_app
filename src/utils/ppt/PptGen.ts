@@ -117,7 +117,8 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     // console.log(seriesData);
 
     if (chartType === ChartType.TABLE) {
-      seriesData = singleTable(newSeriesData.series); //gaurav
+      const { chartRows, minMaxArr } = singleTable(newSeriesData.series); //gaurav
+      seriesData = chartRows; //gaurav
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
     } else {

@@ -50,11 +50,10 @@ export const singleTable = (chartSeries: any) => {
       }
     }
   }
-
   grandTotalRow.push("Total");
   grandTotalRow.push(round(count[0], decimalPrecision2));
   grandTotalRow.push("");
   chartRows.push(grandTotalRow);
 
-  return chartRows;
+  return { chartRows, minMaxArr };
 };
