@@ -9,8 +9,8 @@ import { singleChartDataGen } from "./SingleQuesUtils";
 import { numberChartDataGen } from "./NumberQuesUtils";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 
-export function newChartDataGen(series: any) {
-  console.log(series);
+export function newChartDataGen(newSeriesData: any) {
+  console.log(newSeriesData);
   let seriesData: any[] = [];
 
   //   const {
@@ -54,7 +54,15 @@ export function newChartDataGen(series: any) {
   //   }
   // }
 
-  seriesData = singleChartDataGen(series);
+  if (
+    newSeriesData.selectedBannerQuestionId &&
+    (newSeriesData.questionData?.type === QuestionType.SINGLE ||
+      newSeriesData.questionData?.type === QuestionType.MULTI)
+  ) {
+    seriesData = bannerChartDataGen(newSeriesData);
+  } else {
+    seriesData = singleChartDataGen(newSeriesData);
+  }
 
   console.log(seriesData);
 

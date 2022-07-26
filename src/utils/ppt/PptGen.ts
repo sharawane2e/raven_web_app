@@ -111,7 +111,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     // console.log(seriesData);
 
     //console.log(newSeriesData.series);
-    seriesData = newChartDataGen(newSeriesData.series); //gaurav
+    seriesData = newChartDataGen(newSeriesData); //gaurav
     // console.log(seriesData);
 
     if (chartType === ChartType.TABLE) {
