@@ -3,6 +3,7 @@ import store from "../../redux/store";
 import { getTablesignificantdifference } from "../chart-option-util/significanceDiff";
 
 export function bannerChartDataGen(newSeriesData: any) {
+  console.log(newSeriesData);
   const series = newSeriesData.series;
   const seriesData: any = [];
   const {

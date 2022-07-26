@@ -54,6 +54,8 @@ export function newChartDataGen(newSeriesData: any) {
   //   }
   // }
 
+  console.log(newSeriesData);
+
   if (
     newSeriesData.selectedBannerQuestionId &&
     (newSeriesData.questionData?.type === QuestionType.SINGLE ||

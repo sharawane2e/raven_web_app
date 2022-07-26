@@ -115,7 +115,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     // console.log(seriesData);
 
     if (chartType === ChartType.TABLE) {
-      const tableRows = tableChartDataGen();
+      const tableRows = tableChartDataGen(); //gaurav
       let scaleLength: any = "";
       let filtered: any;
       let results: any;
@@ -257,6 +257,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
       slide.addTable(output, { ...tableConfig });
     } else {
+      //  debugger;
       let pptChartType: any;
 
       if (chartType === ChartType.LINE) {
@@ -307,7 +308,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         });
       }
       // console.log('seriesData', seriesData);
-
+      // debugger;
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
         ...getGraphTypeProps(chartOrientation, chartType),
