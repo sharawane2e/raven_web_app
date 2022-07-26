@@ -1,42 +1,42 @@
-import store from "../../redux/store";
-import pptxgen from "pptxgenjs";
+import store from '../../redux/store';
+import pptxgen from 'pptxgenjs';
 import {
   sourceText,
   copyRightText,
   exportPrefix,
   significantText,
-} from "../../constants/Variables";
+} from '../../constants/Variables';
 import {
   appliedFiltersText,
   meanStandardDeviation,
-} from "../export-helper-utils/GeneralUtils";
-import { ChartOrientation } from "../../enums/ChartOrientation";
-import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
-import { ChartType } from "../../enums/ChartType";
-import { ISlideConfig } from "../../types/ISlideConfig";
-import { chartFontFace } from "../../constants/Variables";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { QuestionType } from "../../enums/QuestionType";
+} from '../export-helper-utils/GeneralUtils';
+import { ChartOrientation } from '../../enums/ChartOrientation';
+import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
+import { ChartType } from '../../enums/ChartType';
+import { ISlideConfig } from '../../types/ISlideConfig';
+import { chartFontFace } from '../../constants/Variables';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from '../../enums/QuestionType';
 import {
   colorArr,
   pptTemplateKey,
   primaryBarPPt,
-} from "../../constants/Variables";
+} from '../../constants/Variables';
 
-import { chartConfig, tableConfig } from "../../config/PptConfig";
+import { chartConfig, tableConfig } from '../../config/PptConfig';
 
-import { tableChartDataGen } from "../export-helper-utils/TableUtils";
-import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
-import _, { slice } from "lodash";
-import { setDefaultSlideProperties } from "./DefaultPptProps";
-import { getChartOptions } from "../ChartOptionFormatter";
-import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
+import { tableChartDataGen } from '../export-helper-utils/TableUtils';
+import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
+import _, { slice } from 'lodash';
+import { setDefaultSlideProperties } from './DefaultPptProps';
+import { getChartOptions } from '../ChartOptionFormatter';
+import { newChartDataGen } from '../export-helper-utils/newExportChartDataGen';
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   console.log(payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
-    exportPrefix + payloadObjectArr[0]["chart"]["questionData"]?.labelText;
+    exportPrefix + payloadObjectArr[0]['chart']['questionData']?.labelText;
 
   for (let i = 0; i < payloadObjectArr.length; i++) {
     // debugger;
@@ -56,8 +56,8 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       // standard: { isMean, standardDeviation, standardError },
     } = payloadObjectArr[i];
 
-    let mainQuestionText: string = questionData?.labelText || "";
-    let bannerQuestionText: string = bannerQuestionData?.labelText || "";
+    let mainQuestionText: string = questionData?.labelText || '';
+    let bannerQuestionText: string = bannerQuestionData?.labelText || '';
     let meanStandardDEviation = meanStandardDeviation();
 
     let baseText: string = `Sample set: ${baseCount}`;
@@ -65,7 +65,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     let filters: string = appliedFiltersText(appliedFilters);
 
     let significanceText: string =
-      significant && chartType == ChartType.TABLE ? significantText : "";
+      significant && chartType == ChartType.TABLE ? significantText : '';
 
     let slideConfig: ISlideConfig = {
       mainQuestionText,
@@ -104,7 +104,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartOptionsPayload.chartOptionsData,
       chartOptionsPayload.questionChartData,
       chartOptionsPayload.bannerChartData,
-      chartOptionsPayload.transposed
+      chartOptionsPayload.transposed,
     );
     //seriesData = getChartOptions(...chartOptionsPayload);
     // seriesData.push(...newSeriesData.series);
@@ -116,7 +116,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     if (chartType === ChartType.TABLE) {
       const tableRows = tableChartDataGen();
-      let scaleLength: any = "";
+      let scaleLength: any = '';
       let filtered: any;
       let results: any;
       let QuestionData: any;
@@ -133,11 +133,11 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       } else {
         QuestionData = questionData?.groupNetData;
         filtered = QuestionData.filter(function (el: any) {
-          return el !== "";
+          return el !== '';
         });
 
         results = questionData?.options.filter(function (option: any) {
-          if (option.labelCode.split("_")[0] == "N") {
+          if (option.labelCode.split('_')[0] == 'N') {
             return true;
           }
         });
@@ -165,82 +165,82 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
           const currentMax = maxValue?.[colIndex - 1];
           const currentMin = minValue?.[colIndex - 1];
           const options = {
-            fill: "ffffff",
+            fill: 'ffffff',
             bold: false,
           };
           const rowcount = removeSubGrop - laberesult;
-          const splitCol = item.toString().split("|")[0];
-          const splitCol2 = item?.toString().split("|")[1];
+          const splitCol = item.toString().split('|')[0];
+          const splitCol2 = item?.toString().split('|')[1];
 
           let splitcolNumber: any;
           if (isNaN(Number(splitCol))) {
-            splitcolNumber = splitCol != undefined ? splitCol : "";
+            splitcolNumber = splitCol != undefined ? splitCol : '';
           } else {
             splitcolNumber = Number(splitCol);
           }
 
-          const dataString2 = splitCol2 != undefined ? splitCol2 : "";
+          const dataString2 = splitCol2 != undefined ? splitCol2 : '';
 
           if (splitcolNumber === currentMax) {
             if (laberesult > 0) {
               rowIndex > removeSubGrop - rowcount &&
               rowIndex < removeSubGrop + (laberesult - 1)
-                ? (options["fill"] = "b8e08c")
+                ? (options['fill'] = 'b8e08c')
                 : !removeSubGrop && tableRows.rows.length > 3
-                ? (options["fill"] = "b8e08c")
-                : (options["fill"] = "ffffff");
+                ? (options['fill'] = 'b8e08c')
+                : (options['fill'] = 'ffffff');
             } else {
               if (
                 bannerQuestionData?.type == QuestionType.SINGLE &&
                 questionData?.type == QuestionType.SINGLE
               ) {
                 rowIndex < removeSubGrop + 1 && tableRows.rows.length > 3
-                  ? (options["fill"] = "b8e08c")
+                  ? (options['fill'] = 'b8e08c')
                   : !removeSubGrop && tableRows.rows.length > 3
-                  ? (options["fill"] = "b8e08c")
-                  : (options["fill"] = "ffffff");
+                  ? (options['fill'] = 'b8e08c')
+                  : (options['fill'] = 'ffffff');
               } else {
                 rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                  ? (options["fill"] = "b8e08c")
+                  ? (options['fill'] = 'b8e08c')
                   : !removeSubGrop && tableRows.rows.length > 3
-                  ? (options["fill"] = "b8e08c")
-                  : (options["fill"] = "ffffff");
+                  ? (options['fill'] = 'b8e08c')
+                  : (options['fill'] = 'ffffff');
                 rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                  ? (options["bold"] = true)
+                  ? (options['bold'] = true)
                   : !removeSubGrop && tableRows.rows.length > 3
-                  ? (options["bold"] = true)
-                  : (options["bold"] = false);
+                  ? (options['bold'] = true)
+                  : (options['bold'] = false);
               }
             }
           } else if (splitcolNumber === currentMin) {
             if (laberesult > 0) {
               rowIndex > removeSubGrop - rowcount &&
               rowIndex < removeSubGrop + (laberesult - 1)
-                ? (options["fill"] = "fbd9d4")
+                ? (options['fill'] = 'fbd9d4')
                 : !removeSubGrop && tableRows.rows.length > 3
-                ? (options["fill"] = "fbd9d4")
-                : (options["fill"] = "ffffff");
+                ? (options['fill'] = 'fbd9d4')
+                : (options['fill'] = 'ffffff');
             } else {
               if (
                 bannerQuestionData?.type == QuestionType.SINGLE &&
                 questionData?.type == QuestionType.SINGLE
               ) {
                 rowIndex <= removeSubGrop + 1 && tableRows.rows.length > 3
-                  ? (options["fill"] = "fbd9d4")
+                  ? (options['fill'] = 'fbd9d4')
                   : !removeSubGrop
-                  ? (options["fill"] = "fbd9d4")
-                  : (options["fill"] = "ffffff");
+                  ? (options['fill'] = 'fbd9d4')
+                  : (options['fill'] = 'ffffff');
               } else {
                 rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                  ? (options["fill"] = "fbd9d4")
+                  ? (options['fill'] = 'fbd9d4')
                   : !removeSubGrop
-                  ? (options["fill"] = "fbd9d4")
-                  : (options["fill"] = "ffffff");
+                  ? (options['fill'] = 'fbd9d4')
+                  : (options['fill'] = 'ffffff');
                 rowIndex <= removeSubGrop - 1 && tableRows.rows.length > 3
-                  ? (options["bold"] = true)
+                  ? (options['bold'] = true)
                   : !removeSubGrop
-                  ? (options["bold"] = true)
-                  : (options["bold"] = false);
+                  ? (options['bold'] = true)
+                  : (options['bold'] = false);
               }
             }
           }
@@ -257,6 +257,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
       slide.addTable(output, { ...tableConfig });
     } else {
+      //  debugger;
       let pptChartType: any;
 
       if (chartType === ChartType.LINE) {
@@ -307,7 +308,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         });
       }
       // console.log('seriesData', seriesData);
-
+      // debugger;
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
         ...getGraphTypeProps(chartOrientation, chartType),
@@ -316,18 +317,18 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
           chartType,
           chartLabelType,
           showMean,
-          questionData?.type
+          questionData?.type,
         ),
       });
     }
   }
 
-  await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
+  await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
 };
 
 const getGraphTypeProps = (
   chartOrientation: ChartOrientation,
-  chartType: ChartType
+  chartType: ChartType,
 ) => {
   const graphTypeProps = {
     barDir:
@@ -345,23 +346,23 @@ const getChartSettings = (
   chartType: ChartType,
   chartLabelType: ChartLabelType,
   showMean: boolean,
-  questionType: string | undefined
+  questionType: string | undefined,
 ) => {
   const chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
     showLegend: chartType === ChartType.COLUMN ? true : false,
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
+        ? '##.##%;;;'
         : showMean && questionType === QuestionType.GRID
-        ? "##.##"
-        : "##",
+        ? '##.##'
+        : '##',
     valLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
+        ? '##.##%;;;'
         : showMean && questionType === QuestionType.GRID
-        ? "##.##"
-        : "##",
+        ? '##.##'
+        : '##',
   };
 
   return chartSettings;

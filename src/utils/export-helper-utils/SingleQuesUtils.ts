@@ -1,15 +1,29 @@
+import { ChartType } from '../../enums/ChartType';
+
 export function singleChartDataGen(series: any) {
-  console.log('series', series);
   let labels: any = [];
   let labelName: any = [];
   let values: any = [];
   let seriesData: any[] = [];
 
-  labelName.push(series[0].name);
-  series[0].data.forEach((data: any) => {
-    labels.push(data.name);
-    values.push(data.y);
-  });
+  console.log(series.length);
+
+  if (series.length == 1) {
+    labelName.push(series[0].name);
+    series[0].data.forEach((data: any) => {
+      labels.push(data.name);
+      values.push(data.y);
+    });
+  } else {
+    // console.log('series', series);
+    series?.forEach((seriesdata: any) => {
+      labels.push(seriesdata.name);
+      seriesdata.data.forEach((data: any) => {
+        labelName.push(data.name);
+        values.push(data.y);
+      });
+    });
+  }
 
   seriesData = [
     {
@@ -18,6 +32,5 @@ export function singleChartDataGen(series: any) {
       values,
     },
   ];
-
   return seriesData;
 }
