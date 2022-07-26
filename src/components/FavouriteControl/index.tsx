@@ -21,17 +21,17 @@ const FavouriteControl: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleAddChartCache = () => {
-    console.log(
-      'chart?.bannerQuestionData?.type',
-      chart?.bannerQuestionData?.type,
-    );
+    // console.log(
+    //   'chart?.bannerQuestionData?.type',
+    //   chart?.bannerQuestionData?.type,
+    // );
     const userCachebody = {
       qText: chartQuestionData?.questionText,
       qId: chartQuestionData?.qId,
       type: chartQuestionData?.type,
       bannerType: chart?.bannerQuestionData?.type
         ? chart?.bannerQuestionData?.type
-        : null,
+        : '',
       date: new Date(),
       filter: filters?.appliedFilters,
       bannerQuestion:

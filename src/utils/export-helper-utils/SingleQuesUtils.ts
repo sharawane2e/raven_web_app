@@ -1,6 +1,5 @@
-import { ChartLabelType } from "../../enums/ChartLabelType";
-
-export function singleChartDataGen(series: any, chartLabelType: any) {
+export function singleChartDataGen(series: any) {
+  console.log('series', series);
   let labels: any = [];
   let labelName: any = [];
   let values: any = [];

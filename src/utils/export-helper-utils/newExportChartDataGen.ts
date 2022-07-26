@@ -1,13 +1,13 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { bannerChartDataGen } from "./BannerQuesUtils";
-import { gridChartTableGen } from "./GridQuesUtils";
-import { multiGridChartDataGen } from "./MultiGridQuesUtils";
-import { multiChartDataGen } from "./MultiQuesUtils";
-import { rankChartDataGen } from "./RankQuesUtils";
-import { singleChartDataGen } from "./SingleQuesUtils";
-import { numberChartDataGen } from "./NumberQuesUtils";
-import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { bannerChartDataGen } from './BannerQuesUtils';
+import { gridChartTableGen } from './GridQuesUtils';
+import { multiGridChartDataGen } from './MultiGridQuesUtils';
+import { multiChartDataGen } from './MultiQuesUtils';
+import { rankChartDataGen } from './RankQuesUtils';
+import { singleChartDataGen } from './SingleQuesUtils';
+import { numberChartDataGen } from './NumberQuesUtils';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 export function newChartDataGen(series: any) {
   let seriesData: any[] = [];
@@ -40,7 +40,7 @@ export function newChartDataGen(series: any) {
 
   // else {
   //   if (questionData?.type === QuestionType.SINGLE) {
-  seriesData = singleChartDataGen(series, ChartLabelType.PERCENTAGE);
+  seriesData = singleChartDataGen(series);
   //   } else if (questionData?.type === QuestionType.MULTI) {
   //     seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
   //   } else if (questionData?.type === QuestionType.GRID) {
@@ -53,6 +53,8 @@ export function newChartDataGen(series: any) {
   //     seriesData = multiGridChartDataGen(chartOptions.series, chartLabelType);
   //   }
   // }
+
+  console.log(seriesData);
 
   return seriesData;
 }

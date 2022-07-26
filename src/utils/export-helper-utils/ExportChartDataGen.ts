@@ -52,7 +52,7 @@ export function chartDataGen(chart: any, questions: any = null) {
 
   // else {
   if (questionData?.type === QuestionType.SINGLE) {
-    seriesData = singleChartDataGen(chartOptions.series, chartLabelType);
+    seriesData = singleChartDataGen(chartOptions.series);
   } else if (questionData?.type === QuestionType.MULTI) {
     seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
   } else if (questionData?.type === QuestionType.GRID) {
