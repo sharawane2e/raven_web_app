@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { memo, useEffect, useState } from 'react';
-import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
-import { QuestionType } from '../../enums/QuestionType';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { memo, useEffect, useState } from "react";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
+import { QuestionType } from "../../enums/QuestionType";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 interface TableProps {}
 
@@ -23,7 +23,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   const isEqual = (val1: any, val2: any) => val1 === val2;
 
-  let scaleLength: any = '';
+  let scaleLength: any = "";
   let filtered: any;
   let results: any;
   let QuestionData: any;
@@ -41,14 +41,14 @@ const TableView: React.FC<TableProps> = (props) => {
     QuestionData = questionData?.groupNetData;
 
     filtered = QuestionData?.filter(function (el: any) {
-      return el !== '';
+      return el !== "";
     });
 
     scaleLength = filtered?.length > 1 ? filtered?.length : 0;
 
     results = questionData?.options.filter(function (option) {
-      if (option?.labelCode === 'N') {
-        if (option?.labelCode.split('_')[0] == 'N') {
+      if (option?.labelCode === "N") {
+        if (option?.labelCode.split("_")[0] == "N") {
           return true;
         }
       }
@@ -77,10 +77,8 @@ const TableView: React.FC<TableProps> = (props) => {
   // }
 
   const highLight = (col: any, currentMax: any, currentMin: any) => {
-    const splitCol = col.toString().split('|')[0];
-    const splitCol2 = col.toString().split('|')[1];
-
-    // console.log('splitCol2', splitCol2 == '()');
+    const splitCol = col.toString().split("|")[0];
+    const splitCol2 = col.toString().split("|")[1];
 
     const splicolNumber =
       chartLabelType == ChartLabelType.PERCENTAGE ? splitCol : Number(splitCol);
@@ -89,18 +87,22 @@ const TableView: React.FC<TableProps> = (props) => {
       <>
         <div
           className={clsx({
-            'Table-row-item': true,
+            "Table-row-item": true,
             maxValue: isEqual(splicolNumber, currentMin),
             minValue: isEqual(splicolNumber, currentMax),
           })}
         >
           {splitCol}
-          {splitCol2 != undefined && splitCol2 != '()' ? (
+          {splitCol2 != undefined &&
+          splitCol2 != ",,,,,,,,,,,,,,,," &&
+          splitCol2 != ",,,,,,,,,,,,,,,,,," &&
+          splitCol2 != ",,,,,,,," &&
+          splitCol2 != ",,,,,,,,," ? (
             <span className="significante-color table-significante">
-              {splitCol2}
+              - {splitCol2}
             </span>
           ) : (
-            ''
+            ""
           )}
         </div>
       </>
@@ -112,10 +114,10 @@ const TableView: React.FC<TableProps> = (props) => {
     columnIndex: any,
     col: any,
     currentMin: any,
-    currentMax: any,
+    currentMax: any
   ) => {
-    const splitCol = col.toString().split('|')[0];
-    const splitCol2 = col.toString().split('|')[1];
+    const splitCol = col.toString().split("|")[0];
+    const splitCol2 = col.toString().split("|")[1];
     const rowcount =
       removeSubGrop === undefined ? 0 : removeSubGrop - laberesult;
 
@@ -205,7 +207,7 @@ const TableView: React.FC<TableProps> = (props) => {
                       colIndex,
                       col,
                       currentMax,
-                      currentMin,
+                      currentMin
                     )}
                   </>
                 );
