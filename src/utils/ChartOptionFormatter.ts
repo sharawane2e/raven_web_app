@@ -26,7 +26,6 @@ export const getChartOptions = (
   bannerChartData: any = store.getState().chart.bannerChartData,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
-  // console.log(questionData);
   const chart = {
     questionData,
     chartData,

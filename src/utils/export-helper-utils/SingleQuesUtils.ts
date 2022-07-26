@@ -1,5 +1,5 @@
 export function singleChartDataGen(series: any) {
-  console.log('series', series);
+  // console.log('series', series);
   let labels: any = [];
   let labelName: any = [];
   let values: any = [];

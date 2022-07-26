@@ -16,13 +16,8 @@ import {
 
 import { ChartType } from "../../enums/ChartType";
 import { getsignificantdifference } from "./significanceDiff";
-import { bannerChartDataGen } from "../export-helper-utils/BannerQuesUtils";
 
 export const getSingleChartOptionsSeries = (chart: any, questions: any) => {
-  // const {
-  //   questions: { selectedBannerQuestionId },
-  // } = store.getState();
-
   const {
     questionData,
     chartData,
@@ -61,16 +56,6 @@ export const getSingleChartOptionsSeries = (chart: any, questions: any) => {
         series.push(
           ...getSingleTransposeChartOptions(chart, questions, subGroups)
         );
-
-        // series.push(
-        //   ...getSingleTransposeChartOptions(
-        //     questionData,
-        //     chartData,
-        //     bannerQuestionData,
-        //     subGroups,
-        //     transposed
-        //   )
-        // );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
         series.length = 0;
@@ -181,7 +166,6 @@ export const getSingleChartOptionsSeries = (chart: any, questions: any) => {
           });
       }
     }
-    bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
     if (significant) {
       const updatedSeries = getsignificantdifference(
         questionData,

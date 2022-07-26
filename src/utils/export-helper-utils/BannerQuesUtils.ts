@@ -1,13 +1,8 @@
-import _ from 'lodash';
-import store from '../../redux/store';
-import { getTablesignificantdifference } from '../chart-option-util/significanceDiff';
+import _ from "lodash";
+import store from "../../redux/store";
+import { getTablesignificantdifference } from "../chart-option-util/significanceDiff";
 
-export function bannerChartDataGen(
-  series: any,
-  questionData: any,
-  bannerQuestionData: any,
-  chartTranspose: any,
-) {
+export function bannerChartDataGen(series: any) {
   const seriesData: any = [];
   const {
     chart: { significant },
@@ -17,17 +12,17 @@ export function bannerChartDataGen(
   //const updatedSeries = series;
 
   const seriesName: string[] = [];
-  if (chartTranspose) {
-    bannerQuestionData.options.forEach((optionObject: any) => {
-      seriesName.push(optionObject?.labelText);
-    });
-  } else {
-    questionData.options.forEach((optionObject: any) => {
-      //  if (chartData[0][optionObject?.labelCode]?.length) {
-      seriesName.push(optionObject?.labelText);
-      // }
-    });
-  }
+  // if (chartTranspose) {
+  //   bannerQuestionData.options.forEach((optionObject: any) => {
+  //     seriesName.push(optionObject?.labelText);
+  //   });
+  // } else {
+  //   questionData.options.forEach((optionObject: any) => {
+  //     //  if (chartData[0][optionObject?.labelCode]?.length) {
+  //     seriesName.push(optionObject?.labelText);
+  //     // }
+  //   });
+  // }
   if (!significant) {
     updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
       if (seriesObject.data.length != seriesName.length) {
@@ -46,8 +41,8 @@ export function bannerChartDataGen(
               percentageValue: 0,
               numberValue: 0,
               baseCount: 0,
-              significance: '',
-              significantDiffernce: '',
+              significance: "",
+              significantDiffernce: "",
             });
           }
         });

@@ -32,6 +32,7 @@ const TableView: React.FC<TableProps> = (props) => {
 
   useEffect(() => {
     setTableData(tableChartDataGen());
+    console.log(tableChartDataGen())
   }, [chartData, showMean, significant]);
 
   if (questionData?.isGroupNet && questionData?.type === QuestionType.SINGLE) {

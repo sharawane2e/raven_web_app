@@ -8,11 +8,9 @@ import { newChartDataGen } from "./newExportChartDataGen";
 
 export function tableChartDataGen() {
   let seriesData: any[] = [];
-  const getChartOptionsa: any = getChartOptions();
-  console.log(getChartOptionsa);
-  // seriesData = chartDataGen(getChartOptionsa.series);
-  seriesData = newChartDataGen(getChartOptionsa.series);
-  console.log(seriesData);
+  const getChartOptionsData: any = getChartOptions();
+  console.log(getChartOptionsData);
+  seriesData = newChartDataGen(getChartOptionsData.series);
   let lablecode_length: any = "";
   let crosstab_length: any = "";
   let rows = [];
@@ -22,7 +20,6 @@ export function tableChartDataGen() {
   let totalRow: any = [];
   let scaleIndex: any = 0;
   let singleGroupNet: any;
-  //tableMinMaxTotal(seriesData);
 
   const tranposedTableData: any[] = [];
   const tranposedTableDataMin: any[] = [];

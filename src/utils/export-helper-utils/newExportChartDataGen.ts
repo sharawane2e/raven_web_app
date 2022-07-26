@@ -1,15 +1,16 @@
-import { QuestionType } from '../../enums/QuestionType';
-import store from '../../redux/store';
-import { bannerChartDataGen } from './BannerQuesUtils';
-import { gridChartTableGen } from './GridQuesUtils';
-import { multiGridChartDataGen } from './MultiGridQuesUtils';
-import { multiChartDataGen } from './MultiQuesUtils';
-import { rankChartDataGen } from './RankQuesUtils';
-import { singleChartDataGen } from './SingleQuesUtils';
-import { numberChartDataGen } from './NumberQuesUtils';
-import { ChartLabelType } from '../../enums/ChartLabelType';
+import { QuestionType } from "../../enums/QuestionType";
+import store from "../../redux/store";
+import { bannerChartDataGen } from "./BannerQuesUtils";
+import { gridChartTableGen } from "./GridQuesUtils";
+import { multiGridChartDataGen } from "./MultiGridQuesUtils";
+import { multiChartDataGen } from "./MultiQuesUtils";
+import { rankChartDataGen } from "./RankQuesUtils";
+import { singleChartDataGen } from "./SingleQuesUtils";
+import { numberChartDataGen } from "./NumberQuesUtils";
+import { ChartLabelType } from "../../enums/ChartLabelType";
 
 export function newChartDataGen(series: any) {
+  console.log(series);
   let seriesData: any[] = [];
 
   //   const {
@@ -30,17 +31,16 @@ export function newChartDataGen(series: any) {
   //   (questionData?.type === QuestionType.SINGLE ||
   //     questionData?.type === QuestionType.MULTI)
   // ) {
-  //   seriesData = bannerChartDataGen(
-  //     chartOptions.series,
-  //     questionData,
-  //     bannerQuestionData,
-  //     chartTranspose
-  //   );
-  // }
+  // seriesData = bannerChartDataGen(
+  //   chartOptions.series,
+
+  // );
+  //}
 
   // else {
   //   if (questionData?.type === QuestionType.SINGLE) {
-  seriesData = singleChartDataGen(series);
+  // seriesData = singleChartDataGen(series);
+  //console.log(seriesData);
   //   } else if (questionData?.type === QuestionType.MULTI) {
   //     seriesData = multiChartDataGen(chartOptions.series, chartLabelType);
   //   } else if (questionData?.type === QuestionType.GRID) {
@@ -53,6 +53,8 @@ export function newChartDataGen(series: any) {
   //     seriesData = multiGridChartDataGen(chartOptions.series, chartLabelType);
   //   }
   // }
+
+  seriesData = singleChartDataGen(series);
 
   console.log(seriesData);
 
