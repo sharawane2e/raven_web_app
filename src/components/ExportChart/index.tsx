@@ -28,6 +28,21 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     generatePpt([payloadObject])
 
   }
+  const generatePdfPayload = ()=>{
+
+    const {
+      chart,
+      filters,
+    } = store.getState();
+
+    const payloadObject = {
+      chart,
+      filters,
+    }
+
+    generatePdf([payloadObject])
+
+  }
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
@@ -39,7 +54,7 @@ const ExportChart: React.FC<ExportChartProps> = () => {
     {
       tooltip: 'PDF',
       renderChild: () => <PdfIcon />,
-      onClick: generatePdf,
+      onClick: generatePdfPayload,
       disabled: chart.questionData === null,
     },
   ];

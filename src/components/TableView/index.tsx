@@ -8,25 +8,48 @@ import { QuestionType } from '../../enums/QuestionType';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
 import { singleTable } from '../../utils/table-option-util/singleTable';
+import { IchartOptionsDto } from '../../types/IChartOptionsDto';
 
 interface TableProps {}
 
 const TableView: React.FC<TableProps> = (props) => {
+
+
+  const {
+    chartLabelType,
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    questionChartData,
+    bannerChartData,
+    chartTranspose,
+    chartType,
+    significant
+  } = useSelector((state: RootState) => state?.chart);
+
+  const chart:IchartOptionsDto  = {
+    chartLabelType,
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData:undefined,
+    questionChartData,
+    bannerChartData,
+    transposed:chartTranspose,
+    chartType,
+    significant
+  }
+
   const getChartData = getChartOptions();
-  const {chartRows,minMaxArr} = singleTable(getChartData.series)
+  const chartRows = singleTable(getChartData.series,chart)
   const tableTransformedData = chartRows
   console.log(getChartData)
   console.log(tableTransformedData)
   // const [tableData, setTableData] = useState<any>([]);
 
-  // const {
-  //   chartData,
-  //   showMean,
-  //   questionData,
-  //   chartTranspose,
-  //   significant,
-  //   chartLabelType,
-  // } = useSelector((state: RootState) => state?.chart);
+
 
   // const isEqual = (val1: any, val2: any) => val1 === val2;
 
@@ -195,14 +218,31 @@ const TableView: React.FC<TableProps> = (props) => {
   //   }
   // };
   // console.log(tableData);
+
+  // const displayValue = (value:number|string,rowIndex:number,colIndex:number) =>{
+  //   if(rowIndex!=0 && colIndex!= 0 && value!= ""){
+  //     return value+"%";
+  //   }
+  //   return value;
+  // }
   return (
     <Scrollbars>
 <div className="tableView">	
 	        <div className="TableView">
-	          {tableTransformedData.map((row: any) => (
+	          {chartRows.map((row: any,rowIndex:number) => (
 	            <div className="Table-row">
-	              {row.map((col: any) => (
-	                <div className="Table-row-item">{col}</div>
+	              {row.map((col: any,colIndex:number) => (
+	                // <div className="Table-row-item">{col}</div>
+	                // <div className={clsx({
+                  //             'Table-row-item': true,
+                  //             minValue: minMaxArr[colIndex-1]?.['min']===col?true:false,
+                  //             maxValue: minMaxArr[colIndex-1]?.['max']===col?true:false,
+                  //           })}>{displayValue(col,rowIndex,colIndex)}</div>
+	                <div className={clsx({
+                              'Table-row-item': true,
+                              minValue: col.minMax=='min'?true:false,
+                              maxValue: col.minMax=='max'?true:false,
+                            })}>{col.text}</div>
 	              ))}
 	            </div>
 	          ))}

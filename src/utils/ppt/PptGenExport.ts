@@ -11,10 +11,18 @@ export const PptGenExport = (seriesData: any) => {
   seriesData.forEach((tableRowArr: any) => {
     const rowArr: any[] = [];
 
-    tableRowArr.forEach((cellText: string | number) => {
+    tableRowArr.forEach((cellObject: any) => {
       const cellObj = {
-        text: cellText,
-        options: { ...options },
+        text: cellObject.text,
+        options: {
+          ...options,
+          fill:
+            cellObject.minMax == "min"
+              ? "b8e08c"
+              : cellObject.minMax == "max"
+              ? "fbd9d4"
+              : "ffffff",
+        },
       };
 
       rowArr.push(cellObj);

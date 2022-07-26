@@ -33,6 +33,7 @@ import { getChartOptions } from "../ChartOptionFormatter";
 import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
 import { PptGenExport } from "./PptGenExport";
 import { singleTable } from "../table-option-util/singleTable";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   console.log(payloadObjectArr);
@@ -87,7 +88,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     let seriesData: any[] = [];
     let chartColors: any[] = [];
 
-    const chartOptionsPayload: any = {
+    const chartOptionsPayload: IchartOptionsDto = {
       questionData: payloadObjectArr[i].chart.questionData,
       chartData: payloadObjectArr[i].chart.chartData,
       baseCount: payloadObjectArr[i].chart.baseCount,
@@ -96,7 +97,20 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       questionChartData: payloadObjectArr[i].chart.questionChartData,
       bannerChartData: payloadObjectArr[i].chart.bannerChartData,
       transposed: payloadObjectArr[i].chart.chartTranspose,
+      chartLabelType: payloadObjectArr[i].chart.chartLabelType,
+      chartType: payloadObjectArr[i].chart.chartType,
+      significant: payloadObjectArr[i].chart.significant,
     };
+    debugger;
+
+    if (payloadObjectArr[i].chart.questionData.isGroupNet) {
+      const updatedQuestionOptions: any[] = JSON.parse(
+        JSON.stringify(questionData.options)
+      );
+      updatedQuestionOptions.push(...questionData.groupNetData);
+      questionData.options.length = 0;
+      questionData.options.push(...updatedQuestionOptions);
+    }
 
     const newSeriesData = getChartOptions(
       chartOptionsPayload.questionData,
@@ -108,16 +122,9 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartOptionsPayload.bannerChartData,
       chartOptionsPayload.transposed
     );
-    //seriesData = getChartOptions(...chartOptionsPayload);
-    // seriesData.push(...newSeriesData.series);
-    // console.log(seriesData);
-
-    //console.log(newSeriesData.series);
-
-    // console.log(seriesData);
 
     if (chartType === ChartType.TABLE) {
-      const { chartRows, minMaxArr } = singleTable(newSeriesData.series); //gaurav
+      const chartRows = singleTable(newSeriesData.series, chartOptionsPayload); //gaurav
       seriesData = chartRows; //gaurav
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
