@@ -22,27 +22,21 @@ export function singleChartDataGen(series: any) {
     return seriesData;
   } else {
     const stackSeriesData: any = [];
-    const labelName: any = [];
-    series?.forEach((seriesdata: any) => {
-      labelName.push(seriesdata.name);
-      seriesdata.data((datael: any, index: number) => {
-        console.log('seriesdata', seriesdata.data);
-        //   stackSeriesData.push({
-        //     name: labelName[index],
-        //     labels: [seriesdata.name],
-        //     values: [datael.values],
-        //   });
-      });
+    const name: any = [];
+    const labels: any = [];
+    const values: any = [];
+    series?.forEach((seriesEl: any, index: number) => {
+      name.push(series[0].data[0].name[0]);
+      labels.push(seriesEl.name);
+      values.push(seriesEl.data[0].y);
     });
-    // console.log(series);
-    // // console.log('series', series);
-    // series?.forEach((seriesdata: any) => {
-    //   labels.push(seriesdata.name);
-    //   seriesdata.data.forEach((data: any) => {
-    //     labelName.push(data.name);
-    //     values.push(data.y);
-    //   });
-    // });
+
+    stackSeriesData.push({
+      name,
+      labels,
+      values,
+    });
+    console.log(stackSeriesData);
     return stackSeriesData;
   }
 
