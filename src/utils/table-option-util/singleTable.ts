@@ -1,5 +1,7 @@
+import { decimalPrecision2 } from "../../constants/Variables";
+import { round } from "../Utility";
+
 export const singleTable = (chartSeries: any) => {
-  console.log(chartSeries);
   const chartRows: any[] = [];
 
   chartSeries.forEach((serie: any) => {
@@ -13,8 +15,8 @@ export const singleTable = (chartSeries: any) => {
     serie.data.forEach((dataObject: any) => {
       const row: any[] = [];
       row.push(dataObject.name);
-      row.push(dataObject.y);
-      row.push(dataObject.y);
+      row.push(round(dataObject.y, decimalPrecision2));
+      row.push(round(dataObject.y, decimalPrecision2));
       chartRows.push(row);
     });
   });
@@ -28,33 +30,29 @@ export const singleTable = (chartSeries: any) => {
       for (let j = 0; j < chartRows[i].length - 1; j++) {
         if (j > 0) {
           count[j - 1] = count[j - 1] == undefined ? 0 : count[j - 1];
-          count[j - 1] += Number(chartRows[i][j]);
+          count[j - 1] += Number(round(chartRows[i][j], decimalPrecision2));
 
           //for min max
           if (minMaxArr[j - 1] == undefined) {
             minMaxArr[j - 1] = {
-              min: chartRows[i][j],
-              max: chartRows[i][j],
+              min: round(chartRows[i][j], decimalPrecision2),
+              max: round(chartRows[i][j], decimalPrecision2),
             };
           }
 
           if (minMaxArr[j - 1]["min"] >= chartRows[i][j]) {
             minMaxArr[j - 1]["min"] = chartRows[i][j];
           }
-
           if (minMaxArr[j - 1]["max"] < chartRows[i][j]) {
             minMaxArr[j - 1]["max"] = chartRows[i][j];
           }
-
-          //for min max
         }
       }
     }
   }
 
-  console.log(minMaxArr);
   grandTotalRow.push("Total");
-  grandTotalRow.push(...count);
+  grandTotalRow.push(round(count[0], decimalPrecision2));
   grandTotalRow.push("");
   chartRows.push(grandTotalRow);
 
