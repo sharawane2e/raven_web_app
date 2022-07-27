@@ -86,7 +86,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
     let seriesData: any[] = [];
-    let chartColors: any[] = [];
 
     const chartOptionsPayload: IchartOptionsDto = {
       questionData: payloadObjectArr[i].chart.questionData,
@@ -101,16 +100,16 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartType: payloadObjectArr[i].chart.chartType,
       significant: payloadObjectArr[i].chart.significant,
     };
+    //debugger;
 
-    if (payloadObjectArr[i].chart.questionData.isGroupNet) {
-      const updatedQuestionOptions: any[] = JSON.parse(
-        JSON.stringify(questionData.options)
-      );
-      updatedQuestionOptions.push(...questionData.groupNetData);
-      questionData.options.length = 0;
-      questionData.options.push(...updatedQuestionOptions);
-    }
-
+    // if (payloadObjectArr[i].chart.questionData.isGroupNet) {
+    //   const updatedQuestionOptions: any[] = JSON.parse(
+    //     JSON.stringify(questionData.options)
+    //   );
+    //   updatedQuestionOptions.push(...questionData.groupNetData);
+    //   questionData.options.length = 0;
+    //   questionData.options.push(...updatedQuestionOptions);
+    // }
     const newSeriesData = getChartOptions(
       chartOptionsPayload.questionData,
       chartOptionsPayload.chartData,
@@ -129,11 +128,28 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       slide.addTable(output, { ...tableConfig });
     } else {
       seriesData = newChartDataGen(newSeriesData);
-      const pptChartType = slideChartConfig(
+      const { pptChartType, chartColors } = slideChartConfig(
         chartType,
         pptxGenJsObj,
         seriesData,
         chartOrientation
+      );
+      console.log("pptChartType", pptChartType);
+      console.log("seriesData", seriesData);
+      console.log("chartConfig", chartConfig);
+      console.log(
+        "graphTypeProps",
+        getGraphTypeProps(chartOrientation, chartType)
+      );
+      console.log("chartColors", chartColors);
+      console.log(
+        "chartSettings",
+        getChartSettings(
+          chartType,
+          chartLabelType,
+          showMean,
+          questionData?.type
+        )
       );
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
@@ -251,5 +267,5 @@ const slideChartConfig = (
   //   });
   // }
 
-  return pptChartType;
+  return { pptChartType, chartColors };
 };
