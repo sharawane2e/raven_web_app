@@ -1,18 +1,18 @@
-import { Switch, Tooltip } from '@material-ui/core';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { StaticText } from '../../constants/StaticText';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
+import { Switch, Tooltip } from "@material-ui/core";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { StaticText } from "../../constants/StaticText";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
 import {
   setChartLabel,
-  showMean,
+  setshowMean,
   updateChartOptions,
   updateSignificant,
-} from '../../redux/actions/chartActions';
-import store from '../../redux/store';
-import { changeChartType, transposeChart } from '../../services/ChartService';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
+} from "../../redux/actions/chartActions";
+import store from "../../redux/store";
+import { changeChartType, transposeChart } from "../../services/ChartService";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
 
 interface IsMeancontrolProps {}
 
@@ -50,14 +50,14 @@ const IsMeanControl: React.FC<IsMeancontrolProps> = () => {
           <Switch
             checked={isChecked}
             // onChange={(e) => setIschecked(e.target.checked)}
-            onChange={(e) => dispatch(showMean(e.target.checked))}
+            onChange={(e) => dispatch(setshowMean(e.target.checked))}
             disabled={false}
           />
         </Tooltip>
 
         <span
           className={`${
-            isChecked ? 'static-switch-mean bold-text' : 'static-switch-mean'
+            isChecked ? "static-switch-mean bold-text" : "static-switch-mean"
           }`}
         >
           {StaticText?.MEAN_TOOTLE}

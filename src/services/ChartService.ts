@@ -111,7 +111,7 @@ export const fetchChartData = async (
         ),
       };
 
-      chartData.showMean = false;
+      //  chartData.showMean = false;
     }
   } catch (error) {
     console.log(error);

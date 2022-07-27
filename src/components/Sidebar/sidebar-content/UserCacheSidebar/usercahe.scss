@@ -10,6 +10,7 @@
       background: $white;
       color: map-get($map: $bg-color, $key: secondary);
       box-shadow: -9px 33px 47px 0px $black;
+      z-index: 9999;
       &::before {
         content: '';
         position: fixed;
@@ -22,6 +23,10 @@
         border-color: $white transparent transparent;
         margin-left: 230px;
         transform: rotate(180deg);
+        @media (max-width: 767px) {
+          margin-left: 202px;
+          
+         }
       }
     }
     .MuiSvgIcon-root {

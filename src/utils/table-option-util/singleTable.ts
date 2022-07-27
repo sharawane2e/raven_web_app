@@ -6,14 +6,16 @@ export const singleTable = (
   chartSeries: any,
   chartOptionsPayload: IchartOptionsDto
 ) => {
-  console.log(chartSeries);
+  // if (chartSeries.length == 0) return;
+  // debugger;
+
   // console.log(chartOptionsPayload);
   const { chartLabelType, questionData } = chartOptionsPayload;
   const chartRows: any[] = [];
 
   //add labels in charts
   //debugger;
-  chartSeries[0].data.forEach((dataObject: any, serieIndex: number) => {
+  chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
     const row: string[] = [];
     //serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
     row.push(dataObject.name);
