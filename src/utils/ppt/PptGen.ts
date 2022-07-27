@@ -1,46 +1,46 @@
-import store from '../../redux/store';
-import pptxgen from 'pptxgenjs';
+import store from "../../redux/store";
+import pptxgen from "pptxgenjs";
 import {
   sourceText,
   copyRightText,
   exportPrefix,
   significantText,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 import {
   appliedFiltersText,
   meanStandardDeviation,
-} from '../export-helper-utils/GeneralUtils';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { PptChartOrientation, PptChartType } from '../../enums/PptChart';
-import { ChartType } from '../../enums/ChartType';
-import { ISlideConfig } from '../../types/ISlideConfig';
-import { chartFontFace } from '../../constants/Variables';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { QuestionType } from '../../enums/QuestionType';
+} from "../export-helper-utils/GeneralUtils";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { PptChartOrientation, PptChartType } from "../../enums/PptChart";
+import { ChartType } from "../../enums/ChartType";
+import { ISlideConfig } from "../../types/ISlideConfig";
+import { chartFontFace } from "../../constants/Variables";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from "../../enums/QuestionType";
 import {
   colorArr,
   pptTemplateKey,
   primaryBarPPt,
-} from '../../constants/Variables';
+} from "../../constants/Variables";
 
-import { chartConfig, tableConfig } from '../../config/PptConfig';
+import { chartConfig, tableConfig } from "../../config/PptConfig";
 
-import { tableChartDataGen } from '../export-helper-utils/TableUtils';
-import { chartDataGen } from '../export-helper-utils/ExportChartDataGen';
-import _, { slice } from 'lodash';
-import { setDefaultSlideProperties } from './DefaultPptProps';
-import { getChartOptions } from '../ChartOptionFormatter';
-import { newChartDataGen } from '../export-helper-utils/newExportChartDataGen';
-import { PptGenExport } from './PptGenExport';
-import { singleTable } from '../table-option-util/singleTable';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { fillEmptyDateSeries } from '../chart-option-util/significanceDiff';
+import { tableChartDataGen } from "../export-helper-utils/TableUtils";
+import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
+import _, { slice } from "lodash";
+import { setDefaultSlideProperties } from "./DefaultPptProps";
+import { getChartOptions } from "../ChartOptionFormatter";
+import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
+import { PptGenExport } from "./PptGenExport";
+import { singleTable } from "../table-option-util/singleTable";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   console.log(payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
-    exportPrefix + payloadObjectArr[0]['chart']['questionData']?.labelText;
+    exportPrefix + payloadObjectArr[0]["chart"]["questionData"]?.labelText;
 
   for (let i = 0; i < payloadObjectArr.length; i++) {
     // debugger;
@@ -60,8 +60,8 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       // standard: { isMean, standardDeviation, standardError },
     } = payloadObjectArr[i];
 
-    let mainQuestionText: string = questionData?.labelText || '';
-    let bannerQuestionText: string = bannerQuestionData?.labelText || '';
+    let mainQuestionText: string = questionData?.labelText || "";
+    let bannerQuestionText: string = bannerQuestionData?.labelText || "";
     let meanStandardDEviation = meanStandardDeviation();
 
     let baseText: string = `Sample set: ${baseCount}`;
@@ -69,7 +69,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     let filters: string = appliedFiltersText(appliedFilters);
 
     let significanceText: string =
-      significant && chartType == ChartType.TABLE ? significantText : '';
+      significant && chartType == ChartType.TABLE ? significantText : "";
 
     let slideConfig: ISlideConfig = {
       mainQuestionText,
@@ -119,7 +119,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartOptionsPayload.chartOptionsData,
       chartOptionsPayload.questionChartData,
       chartOptionsPayload.bannerChartData,
-      chartOptionsPayload.transposed,
+      chartOptionsPayload.transposed
     );
 
     if (chartType === ChartType.TABLE) {
@@ -129,7 +129,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.transposed,
         chartOptionsPayload.questionData,
         chartOptionsPayload.bannerQuestionData,
-        chartOptionsPayload.chartData,
+        chartOptionsPayload.chartData
       );
       const chartRows = singleTable(filledSeries, chartOptionsPayload);
       seriesData = chartRows;
@@ -141,24 +141,24 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartType,
         pptxGenJsObj,
         seriesData,
-        chartOrientation,
+        chartOrientation
       );
-      console.log('pptChartType', pptChartType);
-      console.log('seriesData', seriesData);
-      console.log('chartConfig', chartConfig);
+      console.log("pptChartType", pptChartType);
+      console.log("seriesData", seriesData);
+      console.log("chartConfig", chartConfig);
       console.log(
-        'graphTypeProps',
-        getGraphTypeProps(chartOrientation, chartType),
+        "graphTypeProps",
+        getGraphTypeProps(chartOrientation, chartType)
       );
-      console.log('chartColors', chartColors);
+      console.log("chartColors", chartColors);
       console.log(
-        'chartSettings',
+        "chartSettings",
         getChartSettings(
           chartType,
           chartLabelType,
           showMean,
-          questionData?.type,
-        ),
+          questionData?.type
+        )
       );
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
@@ -168,18 +168,18 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
           chartType,
           chartLabelType,
           showMean,
-          questionData?.type,
+          questionData?.type
         ),
       });
     }
   }
 
-  await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
+  await pptxGenJsObj.writeFile({ fileName: fileName + ".pptx" });
 };
 
 const getGraphTypeProps = (
   chartOrientation: ChartOrientation,
-  chartType: ChartType,
+  chartType: ChartType
 ) => {
   const graphTypeProps = {
     barDir:
@@ -197,23 +197,23 @@ const getChartSettings = (
   chartType: ChartType,
   chartLabelType: ChartLabelType,
   showMean: boolean,
-  questionType: string | undefined,
+  questionType: string | undefined
 ) => {
   const chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
     showLegend: chartType === ChartType.COLUMN ? true : false,
-    dataLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? '##.##%;;;'
-        : showMean && questionType === QuestionType.GRID
-        ? '##.##'
-        : '##',
-    valLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? '##.##%;;;'
-        : showMean && questionType === QuestionType.GRID
-        ? '##.##'
-        : '##',
+    // dataLabelFormatCode:
+    //   chartLabelType === ChartLabelType.PERCENTAGE
+    //     ? '.##%;;;'
+    //     : showMean && questionType === QuestionType.GRID
+    //     ? '##.##'
+    //     : '##',
+    // valLabelFormatCode:
+    //   chartLabelType === ChartLabelType.PERCENTAGE
+    //     ? '##.##%;;;'
+    //     : showMean && questionType === QuestionType.GRID
+    //     ? '##.##'
+    //     : '##',
   };
 
   return chartSettings;
@@ -223,7 +223,7 @@ const slideChartConfig = (
   chartType: ChartType,
   pptxGenJsObj: any,
   seriesData: any,
-  chartOrientation: ChartOrientation,
+  chartOrientation: ChartOrientation
 ) => {
   let pptChartType: any;
   let chartColors: any[] = [];
