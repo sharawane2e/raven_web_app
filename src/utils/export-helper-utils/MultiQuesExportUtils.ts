@@ -10,7 +10,7 @@ export function MultiQuesExportUtils(newSeriesData: any) {
 
     seriesObject.data.forEach((dataObject: any) => {
       labels.push(dataObject.name);
-      values.push(dataObject.y);
+      values.push(dataObject.y / 100);
     });
 
     updatedSeries.push({
@@ -19,6 +19,8 @@ export function MultiQuesExportUtils(newSeriesData: any) {
       values,
     });
   });
+
+  console.log("updatedSeries", updatedSeries);
 
   return updatedSeries;
 }

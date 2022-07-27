@@ -66,7 +66,5 @@ export function newChartDataGen(newSeriesData: any) {
   //   seriesData = singleChartDataGen(newSeriesData);
   // }
 
-  console.log(seriesData);
-
   return seriesData;
 }
