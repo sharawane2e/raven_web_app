@@ -230,6 +230,8 @@ export const fillEmptyDateSeries = (
   bannerQuestionData: any,
   chartData: any,
 ) => {
+  console.log(questionData);
+  console.log(chartData);
   const seriesName: string[] = [];
   const updatedSeries: any = series;
 
@@ -242,7 +244,10 @@ export const fillEmptyDateSeries = (
       });
     } else {
       questionData.options.forEach((optionObject: any) => {
-        if (chartData[0][optionObject?.labelCode]?.length) {
+        if (
+          chartData[0][optionObject?.labelCode]?.length ||
+          _.isArray(optionObject?.labelCode)
+        ) {
           seriesName.push(optionObject?.labelText);
         }
       });
