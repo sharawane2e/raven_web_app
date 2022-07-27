@@ -6,10 +6,6 @@ export const singleTable = (
   chartSeries: any,
   chartOptionsPayload: IchartOptionsDto
 ) => {
-  // if (chartSeries.length == 0) return;
-  // debugger;
-
-  // console.log(chartOptionsPayload);
   const { chartLabelType, questionData } = chartOptionsPayload;
   const chartRows: any[] = [];
 
@@ -24,10 +20,7 @@ export const singleTable = (
   });
 
   chartSeries.forEach((serie: any, serieIndex: number) => {
-    //const row:string[] = [];
     serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
-      //row.push(dataObject.name);
-      //chartRows.push(row);
       chartRows[dataObjectIndex].push(round(dataObject.y, 2));
     });
   });
@@ -44,8 +37,6 @@ export const singleTable = (
 
     charRow.push(round(tableDataSum, 1));
   });
-
-  // console.log(JSON.parse(JSON.stringify(chartRows)));
 
   //adding Grand Total
   const grandTotalRow: any[] = [];
@@ -68,8 +59,6 @@ export const singleTable = (
   count.forEach((countValue: number, countIndex: number) => {
     count[countIndex] = round(countValue, 1);
   });
-
-  // console.log(chartRows);
 
   //merging maxMin
   const mergedChartRows: any[] = [];
@@ -107,8 +96,6 @@ export const singleTable = (
     mergedChartRows.push(...updatedMergedChartRows);
   }
 
-  // console.log(mergedChartRows);
-
   //add header
   const headerRow: any[] = [];
   headerRow.push({ text: "", minMax: false });
@@ -133,8 +120,6 @@ export const singleTable = (
 
   grandTotalRow.push({ text: "", minMax: false });
   mergedChartRows.push(grandTotalRow);
-  // console.log(mergedChartRows);
-  // console.log(minMaxArr);
 
   //adding Grand Total
 
@@ -210,8 +195,6 @@ const minMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
 };
 
 const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
-  console.log(JSON.parse(JSON.stringify(chartRows)));
-  console.log(JSON.parse(JSON.stringify(chartSeries)));
   const updatedChartRows = JSON.parse(JSON.stringify(chartRows));
   chartSeries.forEach((chartObject: any, chartObjectIndex: number) => {
     chartObject.data.forEach((dataObject: any, dataObjectIndex: number) => {
@@ -229,6 +212,5 @@ const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
     });
   });
 
-  console.log(updatedChartRows);
   return updatedChartRows;
 };

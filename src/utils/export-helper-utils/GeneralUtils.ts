@@ -12,6 +12,7 @@ const {
 } = store.getState();
 
 export function appliedFiltersText(appliedFilters: IFilter[]) {
+  //console.log("appliedFilters", appliedFilters);
   let filters: string = "Filters: ";
 
   if (appliedFilters.length > 0) {
@@ -21,6 +22,7 @@ export function appliedFiltersText(appliedFilters: IFilter[]) {
   } else {
     filters += StaticText.NO_FILTER_APPLIED;
   }
+  //console.log("filters", filters);
   return filters;
 }
 

@@ -24,9 +24,6 @@ import {
 } from "../../constants/Variables";
 
 import { chartConfig, tableConfig } from "../../config/PptConfig";
-
-import { tableChartDataGen } from "../export-helper-utils/TableUtils";
-import { chartDataGen } from "../export-helper-utils/ExportChartDataGen";
 import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
 import { getChartOptions } from "../ChartOptionFormatter";
