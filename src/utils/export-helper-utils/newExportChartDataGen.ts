@@ -8,6 +8,7 @@ import { rankChartDataGen } from "./RankQuesUtils";
 import { singleChartDataGen } from "./SingleQuesUtils";
 import { numberChartDataGen } from "./NumberQuesUtils";
 import { ChartLabelType } from "../../enums/ChartLabelType";
+import { MultiQuesExportUtils } from "./MultiQuesExportUtils";
 
 export function newChartDataGen(newSeriesData: any) {
   console.log(newSeriesData);
@@ -54,17 +55,16 @@ export function newChartDataGen(newSeriesData: any) {
   //   }
   // }
 
-  console.log(newSeriesData);
-
-  if (
-    newSeriesData.selectedBannerQuestionId &&
-    (newSeriesData.questionData?.type === QuestionType.SINGLE ||
-      newSeriesData.questionData?.type === QuestionType.MULTI)
-  ) {
-    seriesData = bannerChartDataGen(newSeriesData);
-  } else {
-    seriesData = singleChartDataGen(newSeriesData);
-  }
+  seriesData = MultiQuesExportUtils(newSeriesData);
+  // if (
+  //   newSeriesData.selectedBannerQuestionId &&
+  //   (newSeriesData.questionData?.type === QuestionType.SINGLE ||
+  //     newSeriesData.questionData?.type === QuestionType.MULTI)
+  // ) {
+  //   seriesData = bannerChartDataGen(newSeriesData);
+  // } else {
+  //   seriesData = singleChartDataGen(newSeriesData);
+  // }
 
   console.log(seriesData);
 

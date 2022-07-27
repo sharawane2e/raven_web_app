@@ -182,18 +182,18 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(updateSignificant(_cacheQuestion[0]['significant']));
     dispatch(showMean(_cacheQuestion[0]['showMean']));
 
-    // fetchChartData()
-    //   .then((chartData) => {
-    //     dispatch(setChartData(chartData));
-    //     changeChartType(_cacheQuestion[0]['chartType']);
-    //     dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
-    //     dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
-    //     dispatch(setChartTranspose(false));
-    //     if (_cacheQuestion[0]['chartTranspose']) {
-    //       transposeChart();
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+    fetchChartData()
+      .then((chartData) => {
+        dispatch(setChartData(chartData));
+        changeChartType(_cacheQuestion[0]['chartType']);
+        dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
+        dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
+        dispatch(setChartTranspose(false));
+        if (_cacheQuestion[0]['chartTranspose']) {
+          transposeChart();
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const userCacheDelete = () => {
@@ -399,7 +399,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               //disabled
               className="button--primary btn-line"
               onClick={() => {
-                console.log(savedChart)
+                console.log(savedChart);
                 multiExport(savedChart);
                 // removeFilter(appliedFilters);
                 //dispatch(resetFilters());

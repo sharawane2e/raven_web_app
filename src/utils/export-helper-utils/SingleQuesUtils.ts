@@ -7,6 +7,7 @@ export function singleChartDataGen(newSeriesData: any) {
   let seriesData: any[] = [];
 
   if (series.length == 1) {
+    //need to check why this is needed
     labelName.push(series[0].name);
     series[0].data.forEach((data: any) => {
       labels.push(data.name);
