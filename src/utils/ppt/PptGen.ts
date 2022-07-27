@@ -37,7 +37,6 @@ import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
-  console.log(payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
     exportPrefix + payloadObjectArr[0]["chart"]["questionData"]?.labelText;
@@ -142,23 +141,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         pptxGenJsObj,
         seriesData,
         chartOrientation
-      );
-      console.log("pptChartType", pptChartType);
-      console.log("seriesData", seriesData);
-      console.log("chartConfig", chartConfig);
-      console.log(
-        "graphTypeProps",
-        getGraphTypeProps(chartOrientation, chartType)
-      );
-      console.log("chartColors", chartColors);
-      console.log(
-        "chartSettings",
-        getChartSettings(
-          chartType,
-          chartLabelType,
-          showMean,
-          questionData?.type
-        )
       );
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
