@@ -34,6 +34,7 @@ import { newChartDataGen } from '../export-helper-utils/newExportChartDataGen';
 import { PptGenExport } from './PptGenExport';
 import { singleTable } from '../table-option-util/singleTable';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { fillEmptyDateSeries } from '../chart-option-util/significanceDiff';
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   console.log(payloadObjectArr);
@@ -122,7 +123,15 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     );
 
     if (chartType === ChartType.TABLE) {
-      const chartRows = singleTable(newSeriesData.series, chartOptionsPayload);
+      const filledSeries = fillEmptyDateSeries(
+        chartOptionsPayload.questionData.type,
+        JSON.parse(JSON.stringify(newSeriesData.series)),
+        chartOptionsPayload.transposed,
+        chartOptionsPayload.questionData,
+        chartOptionsPayload.bannerQuestionData,
+        chartOptionsPayload.chartData,
+      );
+      const chartRows = singleTable(filledSeries, chartOptionsPayload);
       seriesData = chartRows;
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
