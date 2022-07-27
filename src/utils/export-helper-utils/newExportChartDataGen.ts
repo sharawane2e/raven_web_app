@@ -1,13 +1,13 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { bannerChartDataGen } from "./BannerQuesUtils";
-import { gridChartTableGen } from "./GridQuesUtils";
-import { multiGridChartDataGen } from "./MultiGridQuesUtils";
-import { multiChartDataGen } from "./MultiQuesUtils";
-import { rankChartDataGen } from "./RankQuesUtils";
-import { singleChartDataGen } from "./SingleQuesUtils";
-import { numberChartDataGen } from "./NumberQuesUtils";
-import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { bannerChartDataGen } from './BannerQuesUtils';
+import { gridChartTableGen } from './GridQuesUtils';
+import { multiGridChartDataGen } from './MultiGridQuesUtils';
+import { multiChartDataGen } from './MultiQuesUtils';
+import { rankChartDataGen } from './RankQuesUtils';
+import { singleChartDataGen } from './SingleQuesUtils';
+import { numberChartDataGen } from './NumberQuesUtils';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 export function newChartDataGen(newSeriesData: any) {
   console.log(newSeriesData);
@@ -53,8 +53,6 @@ export function newChartDataGen(newSeriesData: any) {
   //     seriesData = multiGridChartDataGen(chartOptions.series, chartLabelType);
   //   }
   // }
-
-  console.log(newSeriesData);
 
   if (
     newSeriesData.selectedBannerQuestionId &&

@@ -2,7 +2,7 @@ export const PptGenExport = (seriesData: any) => {
   console.log(seriesData);
 
   const options = {
-    fill: "ffffff",
+    fill: 'ffffff',
     bold: false,
   };
 
@@ -17,11 +17,11 @@ export const PptGenExport = (seriesData: any) => {
         options: {
           ...options,
           fill:
-            cellObject.minMax == "min"
-              ? "b8e08c"
-              : cellObject.minMax == "max"
-              ? "fbd9d4"
-              : "ffffff",
+            cellObject.minMax == 'min'
+              ? 'fbd9d4'
+              : cellObject.minMax == 'max'
+              ? 'b8e08c'
+              : 'ffffff',
         },
       };
 
