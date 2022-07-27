@@ -129,6 +129,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
     } else {
+      debugger;
       seriesData = newChartDataGen(newSeriesData); //gaurav
       //  debugger;
       let pptChartType: any;

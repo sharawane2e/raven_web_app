@@ -77,3 +77,11 @@
     border: none;
   }
 }
+.user-cache{
+  .drawer.drawer--desktop{
+    @media (max-width: 767px) {
+     display: block;
+     
+    }
+  }
+}

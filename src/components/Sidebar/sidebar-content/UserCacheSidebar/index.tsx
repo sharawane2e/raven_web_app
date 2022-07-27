@@ -23,13 +23,14 @@ import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import { Tooltip } from '@material-ui/core';
 import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
-// import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
+//import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import { resetUserCache } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
   handleDeleteChartCache,
+  handleExportChartCache,
   isChartInCache,
-  multiExport,
+  // multiExport,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -160,6 +161,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(resetUserCache(_savedChart));
   };
 
+  // console.log(activeCacheId);
+  //console.log(selectAll);
   const cacheShow = (
     cacheId: any,
     event: any,
@@ -203,7 +206,18 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
       (chartElement) => chartElement._id,
     );
+
     handleDeleteChartCache(deleteSavedChartsIds);
+  };
+
+  const userCacheExport = (getsavedChart: any) => {
+    const exportSavedCharts = savedChart.filter(
+      (chartElement: any) => chartElement.isSelected == true,
+    );
+    const exportSavedChartsIds: any = exportSavedCharts.map(
+      (chartElement: any) => chartElement._id,
+    );
+    handleExportChartCache(exportSavedChartsIds, getsavedChart);
   };
 
   return (
@@ -396,13 +410,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               Delete
             </Button>
             <Button
-              //disabled
+              disabled={butttonshow}
               className="button--primary btn-line"
               onClick={() => {
-                console.log(savedChart);
-                multiExport(savedChart);
-                // removeFilter(appliedFilters);
-                //dispatch(resetFilters());
+                userCacheExport(savedChart);
               }}
             >
               Export

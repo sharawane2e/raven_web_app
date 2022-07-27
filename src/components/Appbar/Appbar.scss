@@ -150,6 +150,7 @@
   .appbar__right-panel {
     @media (max-width: 767px) {
       width: 55%;
+      justify-content: end;
     }
   }
 
