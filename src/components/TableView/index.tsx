@@ -9,6 +9,7 @@ import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getChartOptions } from '../../utils/ChartOptionFormatter';
 import { singleTable } from '../../utils/table-option-util/singleTable';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { fillEmptyDateSeries } from '../../utils/chart-option-util/significanceDiff';
 
 interface TableProps {}
 
@@ -43,7 +44,16 @@ const TableView: React.FC<TableProps> = (props) => {
   }
 
   const getChartData = getChartOptions();
-  const chartRows = singleTable(getChartData.series,chart)
+  console.log(getChartData)
+  const filledSeries = fillEmptyDateSeries(
+    chart.questionData.type,
+    JSON.parse(JSON.stringify(getChartData.series)),
+    chart.transposed,
+    chart.questionData,
+    chart.bannerQuestionData,
+    chart.chartData
+  );
+  const chartRows = singleTable(filledSeries,chart)
   const tableTransformedData = chartRows
   console.log(getChartData)
   console.log(tableTransformedData)
@@ -229,7 +239,7 @@ const TableView: React.FC<TableProps> = (props) => {
     <Scrollbars>
 <div className="tableView">	
 	        <div className="TableView">
-	          {chartRows.map((row: any,rowIndex:number) => (
+	          {chartRows?.map((row: any,rowIndex:number) => (
 	            <div className="Table-row">
 	              {row.map((col: any,colIndex:number) => (
 	                // <div className="Table-row-item">{col}</div>

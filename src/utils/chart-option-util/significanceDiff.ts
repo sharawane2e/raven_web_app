@@ -20,43 +20,59 @@ export const getsignificantdifference = (
 ) => {
   const seriesName: string[] = [];
 
-  if (questionData.type !== QuestionType.GRID) {
-    if (transposed) {
-      bannerQuestionData.options.forEach((optionObject: any) => {
-        seriesName.push(optionObject?.labelText);
-      });
-    } else {
-      questionData.options.forEach((optionObject: any) => {
-        if (chartData[0][optionObject?.labelCode]?.length) {
-          seriesName.push(optionObject?.labelText);
-        }
-      });
-    }
-    series.forEach((seriesObject: any, seriesIndex: number) => {
-      if (seriesObject.data.length != seriesName.length) {
-        const updatedData: any = [];
-        seriesName.forEach((labelName: string, labelIndex: number) => {
-          const isLabel = _.find(seriesObject.data, function (o) {
-            return o.name == labelName;
-          });
-          if (isLabel) {
-            updatedData.push(isLabel);
-          } else {
-            updatedData.push({
-              name: labelName,
-              y: null,
-              percentageValue: null,
-              numberValue: null,
-              baseCount: null,
-              significance: "",
-              significantDiffernce: "",
-            });
-          }
-        });
-        series[seriesIndex].data = updatedData;
-      }
-    });
-  }
+  // if (questionData.type !== QuestionType.GRID) {
+  //   if (transposed) {
+  //     bannerQuestionData.options.forEach((optionObject: any) => {
+  //       seriesName.push(optionObject?.labelText);
+  //     });
+  //   } else {
+  //     questionData.options.forEach((optionObject: any) => {
+  //       if (chartData[0][optionObject?.labelCode]?.length) {
+  //         seriesName.push(optionObject?.labelText);
+  //       }
+  //     });
+  //   }
+  //   series.forEach((seriesObject: any, seriesIndex: number) => {
+  //     if (seriesObject.data.length != seriesName.length) {
+  //       const updatedData: any = [];
+  //       seriesName.forEach((labelName: string, labelIndex: number) => {
+  //         const isLabel = _.find(seriesObject.data, function (o) {
+  //           return o.name == labelName;
+  //         });
+  //         if (isLabel) {
+  //           updatedData.push(isLabel);
+  //         } else {
+  //           updatedData.push({
+  //             name: labelName,
+  //             y: null,
+  //             percentageValue: null,
+  //             numberValue: null,
+  //             baseCount: null,
+  //             significance: "",
+  //             significantDiffernce: "",
+  //           });
+  //         }
+  //       });
+  //       series[seriesIndex].data = updatedData;
+  //     }
+  //   });
+  // }
+
+  // console.log(JSON.parse(JSON.stringify(series)));
+
+  const filledSeries = fillEmptyDateSeries(
+    questionData.type,
+    JSON.parse(JSON.stringify(series)),
+    transposed,
+    questionData,
+    bannerQuestionData,
+    chartData
+  );
+
+  series.length = 0;
+  series.push(...filledSeries);
+
+  console.log(JSON.parse(JSON.stringify(series)));
 
   series.forEach((seriesObject: any) => {
     if (seriesObject.data.length > seriesName.length) {
@@ -204,4 +220,58 @@ const significantDifference = (
   }
 
   return false;
+};
+
+export const fillEmptyDateSeries = (
+  questionDataType: QuestionType,
+  series: any,
+  transposed: boolean,
+  questionData: any,
+  bannerQuestionData: any,
+  chartData: any
+) => {
+  const seriesName: string[] = [];
+  const updatedSeries: any = series;
+
+  if (questionDataType !== QuestionType.GRID && bannerQuestionData != null) {
+    if (transposed) {
+      bannerQuestionData.options.forEach((optionObject: any) => {
+        seriesName.push(optionObject?.labelText);
+      });
+    } else {
+      questionData.options.forEach((optionObject: any) => {
+        if (chartData[0][optionObject?.labelCode]?.length) {
+          seriesName.push(optionObject?.labelText);
+        }
+      });
+    }
+    updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
+      if (seriesObject.data.length != seriesName.length) {
+        const updatedData: any = [];
+        seriesName.forEach((labelName: string, labelIndex: number) => {
+          const isLabel = _.find(seriesObject.data, function (o) {
+            return o.name == labelName;
+          });
+          if (isLabel) {
+            updatedData.push(isLabel);
+          } else {
+            updatedData.push({
+              name: labelName,
+              y: null,
+              percentageValue: null,
+              numberValue: null,
+              baseCount: null,
+              significance: "",
+              significantDiffernce: "",
+            });
+          }
+        });
+        updatedSeries[seriesIndex].data = updatedData;
+      }
+    });
+  }
+
+  console.log(updatedSeries);
+
+  return updatedSeries;
 };
