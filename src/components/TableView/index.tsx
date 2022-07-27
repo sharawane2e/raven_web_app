@@ -242,7 +242,7 @@ const TableView: React.FC<TableProps> = (props) => {
                               'Table-row-item': true,
                               minValue: col.minMax=='min'?true:false,
                               maxValue: col.minMax=='max'?true:false,
-                            })}>{col.text}</div>
+                            })}>{col.text} {col.significantDiffernce?<span className="significante-color table-significante">- {col.significantDiffernce}</span>:null}</div>
 	              ))}
 	            </div>
 	          ))}

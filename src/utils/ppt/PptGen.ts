@@ -86,7 +86,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
     let seriesData: any[] = [];
-    let chartColors: any[] = [];
 
     const chartOptionsPayload: IchartOptionsDto = {
       questionData: payloadObjectArr[i].chart.questionData,
@@ -101,17 +100,16 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartType: payloadObjectArr[i].chart.chartType,
       significant: payloadObjectArr[i].chart.significant,
     };
-    // debugger;
+    //debugger;
 
-    if (payloadObjectArr[i].chart.questionData.isGroupNet) {
-      const updatedQuestionOptions: any[] = JSON.parse(
-        JSON.stringify(questionData.options),
-      );
-      updatedQuestionOptions.push(...questionData.groupNetData);
-      questionData.options.length = 0;
-      questionData.options.push(...updatedQuestionOptions);
-    }
-
+    // if (payloadObjectArr[i].chart.questionData.isGroupNet) {
+    //   const updatedQuestionOptions: any[] = JSON.parse(
+    //     JSON.stringify(questionData.options)
+    //   );
+    //   updatedQuestionOptions.push(...questionData.groupNetData);
+    //   questionData.options.length = 0;
+    //   questionData.options.push(...updatedQuestionOptions);
+    // }
     const newSeriesData = getChartOptions(
       chartOptionsPayload.questionData,
       chartOptionsPayload.chartData,
@@ -124,66 +122,35 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     );
 
     if (chartType === ChartType.TABLE) {
-      const chartRows = singleTable(newSeriesData.series, chartOptionsPayload); //gaurav
-      seriesData = chartRows; //gaurav
+      const chartRows = singleTable(newSeriesData.series, chartOptionsPayload);
+      seriesData = chartRows;
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
     } else {
-      debugger;
-      seriesData = newChartDataGen(newSeriesData); //gaurav
-      //  debugger;
-      let pptChartType: any;
-
-      if (chartType === ChartType.LINE) {
-        chartColors = [...colorArr];
-        pptChartType = pptxGenJsObj.ChartType.line;
-      } else if (chartType === ChartType.PIE) {
-        chartColors = [...colorArr];
-        pptChartType = pptxGenJsObj.ChartType.pie;
-      } else {
-        if (seriesData.length > 1) {
-          chartColors = slice(colorArr, 0, seriesData.length);
-        } else {
-          const colorArray: string[] = [];
-          seriesData[0]?.labels.forEach(function (labelText: any) {
-            const seriesObject = _.find(questionData?.options, function (o) {
-              return o.labelText === labelText;
-            });
-            colorArray.push(primaryBarPPt);
-            // if (seriesObject?.labelCode.split('_')[0] == 'N') {
-            //   colorArray.push('f1ad0f');
-            // } else {
-            //   colorArray.push(primaryBarPPt);
-            // }
-          });
-
-          chartColors = colorArray;
-        }
-
-        pptChartType = pptxGenJsObj.ChartType.bar;
-        if (chartOrientation === ChartOrientation.LANDSCAPE) {
-          seriesData.forEach((row: any, index) => {
-            row.values = row.values?.reverse();
-            seriesData[index] = row;
-          });
-          seriesData[0]?.labels.reverse();
-
-          if (chartType !== ChartType.STACK) {
-            seriesData.reverse();
-            chartColors.reverse();
-          }
-        }
-      }
-
-      if (chartLabelType === ChartLabelType.PERCENTAGE) {
-        seriesData.forEach((row: any, index) => {
-          row.values = row.values.map((value: number) => value / 100);
-          seriesData[index] = row;
-        });
-      }
-      // console.log('seriesData', seriesData);
-      // debugger;
-
+      seriesData = newChartDataGen(newSeriesData);
+      const { pptChartType, chartColors } = slideChartConfig(
+        chartType,
+        pptxGenJsObj,
+        seriesData,
+        chartOrientation,
+      );
+      console.log('pptChartType', pptChartType);
+      console.log('seriesData', seriesData);
+      console.log('chartConfig', chartConfig);
+      console.log(
+        'graphTypeProps',
+        getGraphTypeProps(chartOrientation, chartType),
+      );
+      console.log('chartColors', chartColors);
+      console.log(
+        'chartSettings',
+        getChartSettings(
+          chartType,
+          chartLabelType,
+          showMean,
+          questionData?.type,
+        ),
+      );
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,
         ...getGraphTypeProps(chartOrientation, chartType),
@@ -241,4 +208,64 @@ const getChartSettings = (
   };
 
   return chartSettings;
+};
+
+const slideChartConfig = (
+  chartType: ChartType,
+  pptxGenJsObj: any,
+  seriesData: any,
+  chartOrientation: ChartOrientation,
+) => {
+  let pptChartType: any;
+  let chartColors: any[] = [];
+
+  if (chartType === ChartType.LINE) {
+    chartColors = [...colorArr];
+    pptChartType = pptxGenJsObj.ChartType.line;
+  } else if (chartType === ChartType.PIE) {
+    chartColors = [...colorArr];
+    pptChartType = pptxGenJsObj.ChartType.pie;
+  } else {
+    if (seriesData.length > 1) {
+      chartColors = slice(colorArr, 0, seriesData.length);
+    } else {
+      const colorArray: string[] = [];
+      seriesData[0]?.labels.forEach(function (labelText: any) {
+        // const seriesObject = _.find(questionData?.options, function (o) {
+        //   return o.labelText === labelText;
+        // });
+        colorArray.push(primaryBarPPt);
+        // if (seriesObject?.labelCode.split('_')[0] == 'N') {
+        //   colorArray.push('f1ad0f');
+        // } else {
+        //   colorArray.push(primaryBarPPt);
+        // }
+      });
+
+      chartColors = colorArray;
+    }
+
+    pptChartType = pptxGenJsObj.ChartType.bar;
+    if (chartOrientation === ChartOrientation.LANDSCAPE) {
+      seriesData.forEach((row: any, index: number) => {
+        row.values = row.values?.reverse();
+        seriesData[index] = row;
+      });
+      seriesData[0]?.labels.reverse();
+
+      if (chartType !== ChartType.STACK) {
+        seriesData.reverse();
+        chartColors.reverse();
+      }
+    }
+  }
+
+  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
+  //   seriesData.forEach((row: any, index) => {
+  //     row.values = row.values.map((value: number) => value / 100);
+  //     seriesData[index] = row;
+  //   });
+  // }
+
+  return { pptChartType, chartColors };
 };
