@@ -1,20 +1,20 @@
-import { ChartType } from '../enums/ChartType';
-import { QuestionType } from '../enums/QuestionType';
-import store from '../redux/store';
-import { IQuestion } from '../types/IQuestion';
-import _, { omit } from 'lodash';
-import { getNumberChartOption } from '../services/ChartNumberService';
-import { getSingleChartOptionsSeries } from './chart-option-util/single';
+import { ChartType } from "../enums/ChartType";
+import { QuestionType } from "../enums/QuestionType";
+import store from "../redux/store";
+import { IQuestion } from "../types/IQuestion";
+import _, { omit } from "lodash";
+import { getNumberChartOption } from "../services/ChartNumberService";
+import { getSingleChartOptionsSeries } from "./chart-option-util/single";
 
 import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
-} from './chart-option-util/grid';
-import { getMultiChartOptionsSeries } from './chart-option-util/multi';
-import { ChartOrientation } from '../enums/ChartOrientation';
-import { getRankChartOptionsData } from './chart-option-util/rank';
-import { getMultiGridChartOptionsData } from './chart-option-util/multiGrid';
-import { IchartOptionsDto } from '../types/IChartOptionsDto';
+} from "./chart-option-util/grid";
+import { getMultiChartOptionsSeries } from "./chart-option-util/multi";
+import { ChartOrientation } from "../enums/ChartOrientation";
+import { getRankChartOptionsData } from "./chart-option-util/rank";
+import { getMultiGridChartOptionsData } from "./chart-option-util/multiGrid";
+import { IchartOptionsDto } from "../types/IChartOptionsDto";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -25,7 +25,7 @@ export const getChartOptions = (
   chartOptionsData: any = store.getState().chart.chartOptions,
   questionChartData: any = store.getState().chart.questionChartData,
   bannerChartData: any = store.getState().chart.bannerChartData,
-  transposed: boolean = store.getState().chart.chartTranspose,
+  transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
   const chart: IchartOptionsDto = {
     questionData,
@@ -39,6 +39,7 @@ export const getChartOptions = (
     chartLabelType: store.getState().chart.chartLabelType,
     chartType: store.getState().chart.chartType,
     significant: store.getState().chart.significant,
+    showMean: store.getState().chart.showMean,
   };
   const questions = {
     selectedBannerQuestionId:
@@ -57,14 +58,14 @@ export const getChartOptions = (
           chartOptionsData,
           questionChartData,
           bannerChartData,
-          transposed,
+          transposed
         );
       case QuestionType.RANK:
         return getRankChartOptions(
           questionData,
           chartData,
           baseCount,
-          transposed,
+          transposed
         );
       case QuestionType.GRID:
         return getGridChartOptions(questionData, chartData, baseCount);
@@ -73,7 +74,7 @@ export const getChartOptions = (
           questionData,
           chartData,
           baseCount,
-          transposed,
+          transposed
         );
       case QuestionType.NUMBER:
         return getNumberChartOption(
@@ -82,7 +83,7 @@ export const getChartOptions = (
           baseCount,
           bannerQuestionData,
           chartOptionsData,
-          transposed,
+          transposed
         );
       default:
         return {};
@@ -100,7 +101,7 @@ const getMultiChartOptions = (
   chartOptionsData: any,
   questionChartData: any,
   bannerChartData: any,
-  transposed: any,
+  transposed: any
 ): any => {
   const series = getMultiChartOptionsSeries(
     questionData,
@@ -110,7 +111,7 @@ const getMultiChartOptions = (
     chartOptionsData,
     questionChartData,
     bannerChartData,
-    transposed,
+    transposed
   );
 
   return {
@@ -124,7 +125,7 @@ const getMultiChartOptions = (
 
 const getSingleChartOptions = (
   chart: IchartOptionsDto,
-  questions: any,
+  questions: any
 ): any => {
   const series = getSingleChartOptionsSeries(chart, questions);
   //console.log('series', series);
@@ -142,11 +143,11 @@ const getRankChartOptions = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
-  transposed: boolean,
+  transposed: boolean
 ): any => {
   const series = [];
   series.push(
-    ...getRankChartOptionsData(questionData, chartData, baseCount, transposed),
+    ...getRankChartOptionsData(questionData, chartData, baseCount, transposed)
   );
   return {
     legend: {
@@ -160,7 +161,7 @@ const getRankChartOptions = (
 const getGridChartOptions = (
   questionData: IQuestion,
   chartData: any,
-  baseCount: number,
+  baseCount: number
 ): any => {
   const series = [];
 
@@ -174,7 +175,7 @@ const getGridChartOptions = (
   } else {
     series.length = 0;
     series.push(
-      ...getGridChartoptionSeries(questionData, chartData, baseCount),
+      ...getGridChartoptionSeries(questionData, chartData, baseCount)
     );
   }
   return {
@@ -191,7 +192,7 @@ const getGridMultiChartOptions = (
   questionData: IQuestion,
   chartData: any,
   baseCount: number,
-  transposed: any,
+  transposed: any
 ): any => {
   const series: any = [];
   series.push(
@@ -199,8 +200,8 @@ const getGridMultiChartOptions = (
       questionData,
       chartData,
       baseCount,
-      transposed,
-    ),
+      transposed
+    )
   );
   return {
     legend: {
@@ -216,32 +217,32 @@ export const getToolTip = () => {
     chart: { questionData, showMean, significant },
   } = store.getState();
   const tooltip: { headerFormat: String; pointFormat: String } = {
-    headerFormat: '',
-    pointFormat: '',
+    headerFormat: "",
+    pointFormat: "",
   };
 
-  tooltip['headerFormat'] =
+  tooltip["headerFormat"] =
     '<span style="font-size:11px">{series.name}</span><br>';
 
   if (significant) {
     if (questionData?.type === QuestionType?.NUMBER) {
-      tooltip['pointFormat'] =
+      tooltip["pointFormat"] =
         '<span style="color:#000fff !important;">Sign text - {point.significantDiffernce}</span><br/<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
     } else {
-      tooltip['pointFormat'] =
+      tooltip["pointFormat"] =
         '<span  style="color:#000fff !important;">Sign text - {point.significantDiffernce}</span><br/><span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
     }
   } else {
     if (showMean) {
-      tooltip['pointFormat'] =
-        '<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
+      tooltip["pointFormat"] =
+        "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
     } else {
       if (questionData?.type === QuestionType?.NUMBER) {
-        tooltip['pointFormat'] =
-          '<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>';
+        tooltip["pointFormat"] =
+          "<span>{point.name}</span>: Mean<b> {point.y:.2f}</b>,  of total <b>{point.baseCount}</b><br/>";
       } else {
-        tooltip['pointFormat'] =
-          '<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>';
+        tooltip["pointFormat"] =
+          "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>";
       }
     }
   }
@@ -250,14 +251,14 @@ export const getToolTip = () => {
 };
 
 export const getPlotOptions = (
-  chartType = store.getState().chart.chartType,
+  chartType = store.getState().chart.chartType
 ) => {
   const chartDataClone = JSON.parse(JSON.stringify(store.getState().chart));
-  let plotOptions = chartDataClone.chartOptions['plotOptions'];
-  plotOptions = omit(plotOptions, ['column', 'bar', 'pie', 'line']);
+  let plotOptions = chartDataClone.chartOptions["plotOptions"];
+  plotOptions = omit(plotOptions, ["column", "bar", "pie", "line"]);
   if (chartType === ChartType.STACK) {
-    plotOptions['column'] = {
-      stacking: 'normal',
+    plotOptions["column"] = {
+      stacking: "normal",
     };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
@@ -267,8 +268,8 @@ export const getPlotOptions = (
     // plotOptions['series'].dataLabels.y = undefined;
     // plotOptions['series'].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
-    plotOptions['bar'] = {
-      stacking: 'normal',
+    plotOptions["bar"] = {
+      stacking: "normal",
     };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
@@ -276,16 +277,16 @@ export const getPlotOptions = (
     //   ? '{point.y:.1f}%'
     //   : '{point.y:.0f}';
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-      plotOptions['series'].dataLabels.y = 0;
-      plotOptions['series'].dataLabels.rotation = -90;
+      plotOptions["series"].dataLabels.y = 0;
+      plotOptions["series"].dataLabels.rotation = -90;
     } else {
-      plotOptions['series'].dataLabels.y = undefined;
-      plotOptions['series'].dataLabels.rotation = 0;
+      plotOptions["series"].dataLabels.y = undefined;
+      plotOptions["series"].dataLabels.rotation = 0;
     }
   } else if (chartType === ChartType.PIE) {
-    plotOptions['pie'] = {
+    plotOptions["pie"] = {
       allowPointSelect: false,
-      cursor: 'pointer',
+      cursor: "pointer",
     };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '<b>{point.name}</b>: {point.y:.1f}'
@@ -295,9 +296,9 @@ export const getPlotOptions = (
     // delete plotOptions['series'].dataLabels.y;
     // delete plotOptions['series'].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
-    plotOptions['line'] = {
+    plotOptions["line"] = {
       allowPointSelect: false,
-      cursor: 'pointer',
+      cursor: "pointer",
     };
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
@@ -305,8 +306,8 @@ export const getPlotOptions = (
     //   ? '{point.y:.1f}%'
     //   : '{point.y:.0f}';
   } else {
-    delete plotOptions['series'].dataLabels.y;
-    delete plotOptions['series'].dataLabels.rotation;
+    delete plotOptions["series"].dataLabels.y;
+    delete plotOptions["series"].dataLabels.rotation;
   }
   return plotOptions;
 };

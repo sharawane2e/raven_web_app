@@ -12,4 +12,5 @@ export interface IchartOptionsDto {
   chartLabelType: ChartLabelType;
   chartType: number;
   significant: boolean;
+  showMean: boolean;
 }

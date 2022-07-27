@@ -7,9 +7,9 @@ import clsx from "clsx";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { getChartOptions } from "../../utils/ChartOptionFormatter";
-import { singleTable } from "../../utils/table-option-util/singleTable";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { fillEmptyDateSeries } from "../../utils/chart-option-util/significanceDiff";
+import { getChartRows } from "../../utils/table-option-util";
 
 interface TableProps {}
 
@@ -25,6 +25,7 @@ const TableView: React.FC<TableProps> = (props) => {
     chartTranspose,
     chartType,
     significant,
+    showMean
   } = useSelector((state: RootState) => state?.chart);
 
   const chart: IchartOptionsDto = {
@@ -39,6 +40,7 @@ const TableView: React.FC<TableProps> = (props) => {
     transposed: chartTranspose,
     chartType,
     significant,
+    showMean
   };
 
   const getChartData = getChartOptions();
@@ -52,7 +54,9 @@ const TableView: React.FC<TableProps> = (props) => {
     chart.bannerQuestionData,
     chart.chartData
   );
-  const chartRows = singleTable(filledSeries, chart);
+  const chartRows:any[] = getChartRows(filledSeries, chart)[0];
+  console.log(chartRows)
+
   //const tableTransformedData = chartRows;
 
   // console.log(getChartData)

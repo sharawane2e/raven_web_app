@@ -32,9 +32,9 @@ import { setDefaultSlideProperties } from "./DefaultPptProps";
 import { getChartOptions } from "../ChartOptionFormatter";
 import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
 import { PptGenExport } from "./PptGenExport";
-import { singleTable } from "../table-option-util/singleTable";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
+import { getChartRows } from "../table-option-util";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   let pptxGenJsObj = new pptxgen();
@@ -99,6 +99,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartLabelType: payloadObjectArr[i].chart.chartLabelType,
       chartType: payloadObjectArr[i].chart.chartType,
       significant: payloadObjectArr[i].chart.significant,
+      showMean: payloadObjectArr[i].chart.showMean,
     };
     //debugger;
 
@@ -130,7 +131,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.bannerQuestionData,
         chartOptionsPayload.chartData
       );
-      const chartRows = singleTable(filledSeries, chartOptionsPayload);
+      const chartRows = getChartRows(filledSeries, chartOptionsPayload)[0];
       seriesData = chartRows;
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });

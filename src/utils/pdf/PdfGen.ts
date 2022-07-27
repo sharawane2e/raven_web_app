@@ -6,9 +6,9 @@ import autoTable from "jspdf-autotable";
 import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { exportPrefix } from "../../constants/Variables";
 import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
-import { singleTable } from "../table-option-util/singleTable";
 import { getChartOptions } from "../ChartOptionFormatter";
 import { PdfGenExport } from "./PdfGenExport";
+import { getChartRows } from "../table-option-util";
 
 export const generatePdf = async (payloadObjectArr: any[]) => {
   let doc = new jsPDF();
@@ -114,7 +114,10 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.bannerChartData,
         chartOptionsPayload.transposed
       );
-      const chartRows = singleTable(newSeriesData.series, chartOptionsPayload); //gaurav
+      const chartRows = getChartRows(
+        newSeriesData.series,
+        chartOptionsPayload
+      )[0]; //gaurav
       const seriesData = chartRows; //gaurav
       const output = PdfGenExport(seriesData);
 
