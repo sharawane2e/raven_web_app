@@ -283,7 +283,7 @@ const getSingleSeries = (chart: any, questions: any) => {
 };
 
 const getSingleTransposeChartOptions = (
-  chart: any,
+  chart: IchartOptionsDto,
   questions: any,
   subGroups: any
 ) => {
@@ -407,12 +407,14 @@ const getSingleTransposeChartOptions = (
   }
   return series;
 };
-const getMultiTransposeChartOptions = (chart: any, questions: any) => {
+const getMultiTransposeChartOptions = (
+  chart: IchartOptionsDto,
+  questions: any
+) => {
   const {
-    questiondata,
+    questionData,
     chartData,
     bannerQuestionData,
-    optionSubGroups,
     transposed,
     chartLabelType,
     significant,
@@ -428,7 +430,7 @@ const getMultiTransposeChartOptions = (chart: any, questions: any) => {
       }
     });
   }
-
+  // debugger;
   labelCodeArr.forEach((labelCode: string, labelCodeIndex: number) => {
     for (const singleSeriesArr in chartData[0]) {
       const serieObject: any = getMatchedfilter(
@@ -442,7 +444,7 @@ const getMultiTransposeChartOptions = (chart: any, questions: any) => {
     }
   });
 
-  questiondata.options.forEach(
+  questionData.options.forEach(
     (questionOption: any, questionOptionIndex: number) => {
       if (_.isArray(questionOption.labelCode)) return;
       const data: any[] = [];

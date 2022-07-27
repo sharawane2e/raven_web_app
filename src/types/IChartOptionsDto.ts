@@ -1,3 +1,5 @@
+import { ChartLabelType } from "../enums/ChartLabelType";
+
 export interface IchartOptionsDto {
   questionData: any;
   chartData: any;
@@ -7,7 +9,7 @@ export interface IchartOptionsDto {
   questionChartData: any;
   bannerChartData: any;
   transposed: boolean;
-  chartLabelType: string;
+  chartLabelType: ChartLabelType;
   chartType: number;
   significant: boolean;
 }
