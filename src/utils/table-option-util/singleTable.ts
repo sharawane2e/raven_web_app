@@ -345,8 +345,6 @@ const gridMinMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
 };
 
 const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
-  console.log(JSON.parse(JSON.stringify(chartRows)));
-  console.log(JSON.parse(JSON.stringify(chartSeries)));
   const updatedChartRows = JSON.parse(JSON.stringify(chartRows));
   chartSeries.forEach((chartObject: any, chartObjectIndex: number) => {
     chartObject.data.forEach((dataObject: any, dataObjectIndex: number) => {
@@ -364,6 +362,5 @@ const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
     });
   });
 
-  console.log(updatedChartRows);
   return updatedChartRows;
 };

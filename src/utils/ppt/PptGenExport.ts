@@ -1,6 +1,4 @@
 export const PptGenExport = (seriesData: any) => {
-  console.log(seriesData);
-
   const options = {
     fill: "ffffff",
     bold: false,

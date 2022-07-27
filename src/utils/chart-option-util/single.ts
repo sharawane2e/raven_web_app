@@ -279,7 +279,6 @@ const getSingleSeries = (chart: any, questions: any) => {
     });
   }
 
-  console.log(series);
   return series;
 };
 

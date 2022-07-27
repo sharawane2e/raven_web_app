@@ -106,11 +106,21 @@ export const handleExportChartCache = async (
 
   const promiseAllArr: any = [];
   dispatch(setFullScreenLoading(true));
+  const newAppliedFilter: any[] = [];
   filterExportData.forEach((el: any) => {
+    if (el.filter.length > 0) {
+      newAppliedFilter.push({
+        qId: el.qId,
+        value: el.filter.map((el: any) => {
+          return el.code;
+        }),
+      });
+    }
+
     const body = {
       qId: el.qId,
       type: el.type,
-      filters: el.filter,
+      filters: newAppliedFilter,
       bannerQuestion: el.bannerQuestion,
       bannerType: el.bannerType ? el.bannerType : "",
     };
@@ -170,8 +180,9 @@ export const handleExportChartCache = async (
       chartLabelType: el.chartLabelType,
       chartTranspose: el.chartTranspose,
     };
+    // console.log(el.filter);
     const filters = {
-      appliedFilters: [],
+      appliedFilters: el.filter ? el.filter : [],
     };
     const payload = {
       chart,
