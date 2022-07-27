@@ -110,8 +110,6 @@ export const fetchChartData = async (
           response.data.bannerChartData
         ),
       };
-
-      chartData.showMean = false;
     }
   } catch (error) {
     console.log(error);

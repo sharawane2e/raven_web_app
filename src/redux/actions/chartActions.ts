@@ -1,35 +1,35 @@
-import { createAction } from '@reduxjs/toolkit';
+import { createAction } from "@reduxjs/toolkit";
 // import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { ChartType } from '../../enums/ChartType';
-import { IChartState } from '../reducers/chartReducer';
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { ChartType } from "../../enums/ChartType";
+import { IChartState } from "../reducers/chartReducer";
 
-export const setChartData = createAction<IChartState>('SET_CHART_DATA');
+export const setChartData = createAction<IChartState>("SET_CHART_DATA");
 
 export const setChartOrientation = createAction<ChartOrientation>(
-  'SET_CHART_ORIENTATION',
+  "SET_CHART_ORIENTATION"
 );
 
-export const setChartType = createAction<ChartType>('SET_CHART_TYPE');
+export const setChartType = createAction<ChartType>("SET_CHART_TYPE");
 
-export const resetChartData = createAction('RESET_CHART_DATA');
+export const resetChartData = createAction("RESET_CHART_DATA");
 
 // export const setDataLabelFormat = createAction<any>("SET_CHART_DATA_LABEL");
 
-export const setChartLabel = createAction<any>('SET_CHART_LABEL');
+export const setChartLabel = createAction<any>("SET_CHART_LABEL");
 
-export const setChartTranspose = createAction<any>('SET_CHART_TRANSPOSE');
+export const setChartTranspose = createAction<any>("SET_CHART_TRANSPOSE");
 
-export const setChartFullScreen = createAction<boolean>('SET_CHART_FULLSCREEN');
+export const setChartFullScreen = createAction<boolean>("SET_CHART_FULLSCREEN");
 
-export const setChartLoading = createAction<boolean>('SET_CHART_SCREEN');
+export const setChartLoading = createAction<boolean>("SET_CHART_SCREEN");
 
-export const setFullScreenLoading = createAction<boolean>('SET_FULL_SCREEN');
+export const setFullScreenLoading = createAction<boolean>("SET_FULL_SCREEN");
 
-export const resetChart = createAction<any>('RESET_CHART');
+export const resetChart = createAction<any>("RESET_CHART");
 
-export const updateChartOptions = createAction<any>('UPDATE_CHART_OPTIONS');
+export const updateChartOptions = createAction<any>("UPDATE_CHART_OPTIONS");
 
-export const showMean = createAction<any>('SHOW_MEAN');
+export const setshowMean = createAction<any>("SHOW_MEAN");
 
-export const updateSignificant = createAction<any>('UPDATE_SIGNIFICANT');
+export const updateSignificant = createAction<any>("UPDATE_SIGNIFICANT");

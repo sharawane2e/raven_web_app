@@ -1,15 +1,15 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { memo, useEffect, useState } from 'react';
-import { tableChartDataGen } from '../../utils/export-helper-utils/TableUtils';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
-import { QuestionType } from '../../enums/QuestionType';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
-import { singleTable } from '../../utils/table-option-util/singleTable';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { fillEmptyDateSeries } from '../../utils/chart-option-util/significanceDiff';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { memo, useEffect, useState } from "react";
+import { tableChartDataGen } from "../../utils/export-helper-utils/TableUtils";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
+import { QuestionType } from "../../enums/QuestionType";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
+import { singleTable } from "../../utils/table-option-util/singleTable";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { fillEmptyDateSeries } from "../../utils/chart-option-util/significanceDiff";
 
 interface TableProps {}
 
@@ -50,7 +50,7 @@ const TableView: React.FC<TableProps> = (props) => {
     chart.transposed,
     chart.questionData,
     chart.bannerQuestionData,
-    chart.chartData,
+    chart.chartData
   );
   const chartRows = singleTable(filledSeries, chart);
   //const tableTransformedData = chartRows;
@@ -74,12 +74,12 @@ const TableView: React.FC<TableProps> = (props) => {
                 //           })}>{displayValue(col,rowIndex,colIndex)}</div>
                 <div
                   className={clsx({
-                    'Table-row-item': true,
-                    minValue: col.minMax == 'min' ? true : false,
-                    maxValue: col.minMax == 'max' ? true : false,
+                    "Table-row-item": true,
+                    minValue: col.minMax == "min" ? true : false,
+                    maxValue: col.minMax == "max" ? true : false,
                   })}
                 >
-                  {col.text}{' '}
+                  {col.text}{" "}
                   {col.significantDiffernce ? (
                     <span className="significante-color table-significante">
                       - {col.significantDiffernce}
