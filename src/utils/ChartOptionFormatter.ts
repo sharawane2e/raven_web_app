@@ -56,12 +56,7 @@ export const getChartOptions = (
       case QuestionType.GRID:
         return getGridChartOptions(chart);
       case QuestionType.GRID_MULTI:
-        return getGridMultiChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          transposed
-        );
+        return getGridMultiChartOptions(chart);
       case QuestionType.NUMBER:
         return getNumberChartOption(
           questionData,
@@ -156,21 +151,9 @@ const getGridChartOptions = (
   };
 };
 
-const getGridMultiChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-  transposed: any
-): any => {
+const getGridMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series: any = [];
-  series.push(
-    ...getMultiGridChartOptionsData(
-      questionData,
-      chartData,
-      baseCount,
-      transposed
-    )
-  );
+  series.push(...getMultiGridChartOptionsData(chart));
   return {
     legend: {
       enabled: true,
