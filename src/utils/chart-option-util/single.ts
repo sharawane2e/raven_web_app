@@ -1,26 +1,26 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
-import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { IQuestionOption } from '../../types/IBaseQuestion';
+import { IQuestion } from '../../types/IQuestion';
+import _, { find } from 'lodash';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
-import { getMatchedfilter, getmatchedFind, getSum } from "../Utility";
+import { getMatchedfilter, getmatchedFind, getSum } from '../Utility';
 import {
   colorArr,
   dataLabelsFormate,
   dataLabelsNumberFormate,
   dataUpdatedFormate,
   primaryBarColor,
-} from "../../constants/Variables";
+} from '../../constants/Variables';
 
-import { ChartType } from "../../enums/ChartType";
-import { getsignificantdifference } from "./significanceDiff";
-import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { ChartType } from '../../enums/ChartType';
+import { getsignificantdifference } from './significanceDiff';
+import { IchartOptionsDto } from '../../types/IChartOptionsDto';
 
 export const getSingleChartOptionsSeries = (
   chart: IchartOptionsDto,
-  questions: any
+  questions: any,
 ) => {
   const {
     questionData,
@@ -41,13 +41,14 @@ export const getSingleChartOptionsSeries = (
   if (selectedBannerQuestionId) {
     let subGroups: any;
     let count = 0;
+    console.log('s to single');
 
     subGroups = questionData.options.filter((option: IQuestionOption) => {
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(
         questionData.options,
-        "labelCode",
-        option.labelCode
+        'labelCode',
+        option.labelCode,
       );
       subGroup.push(subGroup1);
       if (subGroup && subGroup?.length) return true;
@@ -58,7 +59,7 @@ export const getSingleChartOptionsSeries = (
       if (bannerQuestionData?.type == QuestionType.SINGLE) {
         series.length = 0;
         series.push(
-          ...getSingleTransposeChartOptions(chart, questions, subGroups)
+          ...getSingleTransposeChartOptions(chart, questions, subGroups),
         );
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
@@ -101,7 +102,7 @@ export const getSingleChartOptionsSeries = (
             labelCodeSum.forEach((el: any) => {
               const localbaseCount = el?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0
+                0,
               );
               baseCountSum.push(localbaseCount);
             });
@@ -114,8 +115,8 @@ export const getSingleChartOptionsSeries = (
 
             const label = getMatchedfilter(
               optionData,
-              "labelCode",
-              bannerQuesOption.labelCode
+              'labelCode',
+              bannerQuesOption.labelCode,
             );
             count = _.sumBy(label, function (o) {
               return o.count;
@@ -127,7 +128,7 @@ export const getSingleChartOptionsSeries = (
             } else {
               localBase = optionData?.reduce(
                 (sum: number, option: any) => sum + option.count,
-                0
+                0,
               );
             }
           }
@@ -177,7 +178,7 @@ export const getSingleChartOptionsSeries = (
         bannerQuestionData,
         series,
         chartLabelType,
-        transposed
+        transposed,
       );
       series.length = 0;
       series.push(...updatedSeries);
@@ -210,13 +211,13 @@ const getSingleSeries = (chart: any, questions: any) => {
 
     const labelCollection = getMatchedfilter(
       chartData,
-      "labelCode",
-      option.labelCode
+      'labelCode',
+      option.labelCode,
     );
 
     let count = 0;
     if (labelCollection) {
-      count = getSum(labelCollection, "count");
+      count = getSum(labelCollection, 'count');
     }
     let plotValue;
     let percentageValue = (count / baseCount) * 100;
@@ -285,7 +286,7 @@ const getSingleSeries = (chart: any, questions: any) => {
 const getSingleTransposeChartOptions = (
   chart: IchartOptionsDto,
   questions: any,
-  subGroups: any
+  subGroups: any,
 ) => {
   const {
     questionData,
@@ -363,8 +364,8 @@ const getSingleTransposeChartOptions = (
         optionData = chartData[0][quesOption?.labelCode];
         const label = getmatchedFind(
           optionData,
-          "labelCode",
-          bannerQuesOption?.labelCode
+          'labelCode',
+          bannerQuesOption?.labelCode,
         );
 
         count = label?.count;
@@ -409,7 +410,7 @@ const getSingleTransposeChartOptions = (
 };
 const getMultiTransposeChartOptions = (
   chart: IchartOptionsDto,
-  questions: any
+  questions: any,
 ) => {
   const {
     questionData,
@@ -435,8 +436,8 @@ const getMultiTransposeChartOptions = (
     for (const singleSeriesArr in chartData[0]) {
       const serieObject: any = getMatchedfilter(
         chartData[0][singleSeriesArr],
-        "labelCode",
-        labelCode
+        'labelCode',
+        labelCode,
       );
       baseCountArr[labelCodeIndex] += serieObject[0]?.count
         ? serieObject[0]?.count
@@ -457,8 +458,8 @@ const getMultiTransposeChartOptions = (
           const chartDataArr = chartData[0][questionOption.labelCode];
           const chartObjectArr: any = getMatchedfilter(
             chartDataArr,
-            "labelCode",
-            bannerOption.labelCode
+            'labelCode',
+            bannerOption.labelCode,
           );
           const numberValue = chartObjectArr[0]?.count
             ? chartObjectArr[0]?.count
@@ -479,7 +480,7 @@ const getMultiTransposeChartOptions = (
             numberValue,
             baseCount,
           });
-        }
+        },
       );
       let newDataLabels;
       if (significant) {
@@ -499,7 +500,7 @@ const getMultiTransposeChartOptions = (
           ...newDataLabels,
         },
       });
-    }
+    },
   );
 
   return series;

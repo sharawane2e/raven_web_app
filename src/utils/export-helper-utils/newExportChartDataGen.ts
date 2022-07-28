@@ -1,14 +1,14 @@
-import { QuestionType } from "../../enums/QuestionType";
-import store from "../../redux/store";
-import { bannerChartDataGen } from "./BannerQuesUtils";
-import { gridChartTableGen } from "./GridQuesUtils";
-import { multiGridChartDataGen } from "./MultiGridQuesUtils";
-import { multiChartDataGen } from "./MultiQuesUtils";
-import { rankChartDataGen } from "./RankQuesUtils";
-import { singleChartDataGen } from "./SingleQuesUtils";
-import { numberChartDataGen } from "./NumberQuesUtils";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-import { MultiQuesExportUtils } from "./MultiQuesExportUtils";
+import { QuestionType } from '../../enums/QuestionType';
+import store from '../../redux/store';
+import { bannerChartDataGen } from './BannerQuesUtils';
+import { gridChartTableGen } from './GridQuesUtils';
+import { multiGridChartDataGen } from './MultiGridQuesUtils';
+import { multiChartDataGen } from './MultiQuesUtils';
+import { rankChartDataGen } from './RankQuesUtils';
+import { singleChartDataGen } from './SingleQuesUtils';
+import { numberChartDataGen } from './NumberQuesUtils';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { MultiQuesExportUtils } from './MultiQuesExportUtils';
 
 export function newChartDataGen(newSeriesData: any) {
   let seriesData: any[] = [];
@@ -64,6 +64,8 @@ export function newChartDataGen(newSeriesData: any) {
   // } else {
   //   seriesData = singleChartDataGen(newSeriesData);
   // }
+
+  //console.log('seriesData', seriesData);
 
   return seriesData;
 }
