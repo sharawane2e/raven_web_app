@@ -34,6 +34,7 @@ import { fillEmptyDateSeries } from '../chart-option-util/significanceDiff';
 import { getChartRows } from '../table-option-util';
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
+  console.log('payloadObjectArr', payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
     exportPrefix + payloadObjectArr[0]['chart']['questionData']?.labelText;

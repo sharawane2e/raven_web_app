@@ -1,18 +1,18 @@
-import _ from "lodash";
-import store from "../redux/store";
-import ApiRequest from "../utils/ApiRequest";
-import { resetUserCache } from "../redux/actions/userCacheActions";
-import ApiUrl from "../enums/ApiUrl";
-import Toaster from "../utils/Toaster";
-import { setFullScreenLoading } from "../redux/actions/chartActions";
-import { generatePpt } from "../utils/ppt/PptGen";
-import { IChartState } from "../redux/reducers/chartReducer";
+import _ from 'lodash';
+import store from '../redux/store';
+import ApiRequest from '../utils/ApiRequest';
+import { resetUserCache } from '../redux/actions/userCacheActions';
+import ApiUrl from '../enums/ApiUrl';
+import Toaster from '../utils/Toaster';
+import { setFullScreenLoading } from '../redux/actions/chartActions';
+import { generatePpt } from '../utils/ppt/PptGen';
+import { IChartState } from '../redux/reducers/chartReducer';
 import {
   computeBaseCount,
   formatChartDataWithBaseCount,
   removeEmptyDataLengends,
-} from "./ChartService";
-import { getChartOptions } from "../utils/ChartOptionFormatter";
+} from './ChartService';
+import { getChartOptions } from '../utils/ChartOptionFormatter';
 
 export const isChartInCache = () => {
   let isChartDuplicate = false;
@@ -31,7 +31,7 @@ export const isChartInCache = () => {
     type: chart.questionData?.type,
     filter: filters.filters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData?.qId,
+      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
     chartType: chart.chartType,
     chartLabelType: chart.chartLabelType,
     chartOrientation: chart.chartOrientation,
@@ -64,7 +64,7 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
     _ids: [...cacheIdsArr],
   };
-  ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body)
+  ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
     .then((res) => {
       if (res.success) {
         const updatedSavedChart = addNewKeysToUserCache(res.data);
@@ -91,7 +91,7 @@ export const addNewKeysToUserCache = (savedChart: any) => {
 
 export const handleExportChartCache = async (
   cacheIdsArr: any,
-  getsavedChart: any
+  getsavedChart: any,
 ) => {
   //export selected id's
   const filterExportData: any[] = [];
@@ -122,9 +122,9 @@ export const handleExportChartCache = async (
       type: el.type,
       filters: newAppliedFilter,
       bannerQuestion: el.bannerQuestion,
-      bannerType: el.bannerType ? el.bannerType : "",
+      bannerType: el.bannerType ? el.bannerType : '',
     };
-    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, "POST", body));
+    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
   });
   const apiResponse: any[] = await Promise.all(promiseAllArr);
 
@@ -134,18 +134,18 @@ export const handleExportChartCache = async (
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
         response.data.questionData,
-        response.data.baseCount
+        response.data.baseCount,
       );
       chartData.questionChartData = response.data.questionChartData;
       chartData.bannerChartData = response.data.bannerChartData;
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
-        response.data.questionData
+        response.data.questionData,
       );
       const formatedQData = removeEmptyDataLengends(
         response.data.chartData,
         response.data.questionData,
-        response.data.bannerQuestionData
+        response.data.bannerQuestionData,
       );
 
       chartData.questionData = formatedQData[0];
@@ -160,36 +160,38 @@ export const handleExportChartCache = async (
           response.data.bannerQuestionData,
           response.data.chartOptionsData,
           response.data.questionChartData,
-          response.data.bannerChartData
+          response.data.bannerChartData,
         ),
       };
     }
+
+    const payloadArr: any[] = [];
+    filterExportData.forEach((el: any, index: number) => {
+      const chart = {
+        questionData: apiResponse[index].data.questionData,
+        bannerQuestionData: apiResponse[index].data.bannerQuestionData,
+        chartData: apiResponse[index].data.chartData,
+        chartOrientation: el.chartOrientation,
+        chartType: el.chartType,
+        baseCount: apiResponse[index].data.baseCount[0].baseCount,
+        showMean: el.showMean,
+        significant: el.significant,
+        chartLabelType: el.chartLabelType,
+        chartTranspose: el.chartTranspose,
+      };
+      // console.log(el.filter);
+      const filters = {
+        appliedFilters: el.filter ? el.filter : [],
+      };
+      const payload = {
+        chart,
+        filters,
+      };
+      payloadArr.push(payload);
+    });
+    generatePpt([...payloadArr]);
+    //return chartData;
   });
 
-  const payloadArr: any[] = [];
-  filterExportData.forEach((el: any, index: number) => {
-    const chart = {
-      questionData: apiResponse[index].data.questionData,
-      bannerQuestionData: apiResponse[index].data.bannerQuestionData,
-      chartData: apiResponse[index].data.chartData,
-      chartOrientation: el.chartOrientation,
-      chartType: el.chartType,
-      baseCount: apiResponse[index].data.baseCount[0].baseCount,
-      showMean: el.showMean,
-      significant: el.significant,
-      chartLabelType: el.chartLabelType,
-      chartTranspose: el.chartTranspose,
-    };
-    // console.log(el.filter);
-    const filters = {
-      appliedFilters: el.filter ? el.filter : [],
-    };
-    const payload = {
-      chart,
-      filters,
-    };
-    payloadArr.push(payload);
-  });
-  generatePpt([...payloadArr]);
   dispatch(setFullScreenLoading(false));
 };
