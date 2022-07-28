@@ -3,8 +3,9 @@ import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { gridTable } from "./gridTable";
 import { multiGridTable } from "./multiGridTable";
 import { multiTable } from "./multiTable";
-import { numberTable } from "./number";
+import { numberTable } from "./numberTabel";
 import { singleTable } from "./singleTable";
+import { rankTable } from "./rankTable";
 
 export const getChartRows = (
   chartSeries: any,
@@ -15,6 +16,8 @@ export const getChartRows = (
     chartRows.push(gridTable(chartSeries, chartOptionsPayload));
   } else if (chartOptionsPayload.questionData.type == QuestionType.MULTI) {
     chartRows.push(multiTable(chartSeries, chartOptionsPayload));
+  } else if (chartOptionsPayload.questionData.type == QuestionType.RANK) {
+    chartRows.push(rankTable(chartSeries, chartOptionsPayload));
   } else if (chartOptionsPayload.questionData.type == QuestionType.GRID_MULTI) {
     chartRows.push(multiGridTable(chartSeries, chartOptionsPayload));
   } else if (chartOptionsPayload.questionData.type == QuestionType.NUMBER) {

@@ -1,35 +1,22 @@
 import { ChartLabelType } from "../../enums/ChartLabelType";
-import { QuestionType } from "../../enums/QuestionType";
+
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { round } from "../Utility";
 
-export const multiGridTable = (
+export const rankTable = (
   chartSeries: any,
   chartOptionsPayload: IchartOptionsDto
 ) => {
-  const { chartLabelType, questionData, transposed, bannerQuestionData } =
-    chartOptionsPayload;
+  const { chartLabelType, questionData, transposed } = chartOptionsPayload;
   const chartRows: any[] = [];
-
   chartRows.push(...createChartRows(chartSeries));
-
   const count: number[] = [];
   const minMaxArr: any[] = [];
 
   if (transposed) {
-    if (bannerQuestionData?.isGroupNet) {
-      //need to find situation in a question and then fix it
-      // const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-      //   chartRows,
-      //   questionData.groupNetData
-      // );
-      // count.push(...updatedCount);
-      // minMaxArr.push(...updatedMinMaxArr);
-    } else {
-      const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
-      count.push(...updatedCount);
-      minMaxArr.push(...updatedMinMaxArr);
-    }
+    const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
+    count.push(...updatedCount);
+    minMaxArr.push(...updatedMinMaxArr);
   } else {
     if (questionData.isGroupNet) {
       const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
@@ -55,6 +42,16 @@ export const multiGridTable = (
     ...maxMinChartRows(chartRows, chartLabelType, minMaxArr),
   ];
 
+  //adding significant
+  if (chartOptionsPayload.significant) {
+    const updatedMergedChartRows = tableDataSignificance(
+      mergedChartRows,
+      chartSeries
+    );
+    mergedChartRows.length = 0;
+    mergedChartRows.push(...updatedMergedChartRows);
+  }
+
   //add header
   const headerMergedChartRows: any[] = [
     ...addHeaders(chartSeries, mergedChartRows),
@@ -70,6 +67,7 @@ export const multiGridTable = (
   mergedChartRows.push([...addGrandTotal(count, chartLabelType)]);
 
   //adding Grand Total
+
   return mergedChartRows;
 };
 
@@ -131,7 +129,7 @@ const maxMinChartRows = (
           row[j]["text"] = row[j]["text"] + "%";
         }
       }
-      if (j > 0 && j < chartRows[i].length - 1) {
+      if (j > 0 && j < chartRows[i]?.length - 1) {
         if (chartRows[i][j] == minMaxArr[j - 1]["min"]) {
           row[j]["minMax"] = "min";
         }
@@ -242,4 +240,25 @@ const minMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
   }
 
   return { updatedMinMaxArr, updatedCount };
+};
+
+const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
+  const updatedChartRows = JSON.parse(JSON.stringify(chartRows));
+  chartSeries.forEach((chartObject: any, chartObjectIndex: number) => {
+    chartObject.data.forEach((dataObject: any, dataObjectIndex: number) => {
+      if (dataObject.significantDiffernce != "") {
+        updatedChartRows[dataObjectIndex][chartObjectIndex + 1] = {
+          ...updatedChartRows[dataObjectIndex][chartObjectIndex + 1],
+          significantDiffernce: dataObject.significantDiffernce,
+          // text:
+          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].text +
+          //   `<span class="significante-color table-significante">- + ${dataObject.significantDiffernce}</span>`,
+          // minMax:
+          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].minMax,
+        };
+      }
+    });
+  });
+
+  return updatedChartRows;
 };
