@@ -13,6 +13,7 @@ import {
   removeEmptyDataLengends,
 } from './ChartService';
 import { getChartOptions } from '../utils/ChartOptionFormatter';
+import { QuestionType } from '../enums/QuestionType';
 
 export const isChartInCache = () => {
   let isChartDuplicate = false;
@@ -169,13 +170,17 @@ export const handleExportChartCache = async (
 
     updatedApiResponse.push(chartData);
   });
-
+  //console.log('chartData', updatedApiResponse);
+  // debugger;
   const payloadArr: any[] = [];
   filterExportData.forEach((el: any, index: number) => {
+    //console.log(el);
     const chart = {
-      questionData: updatedApiResponse[index].data.questionData,
+      questionData: updatedApiResponse[index].questionData,
       bannerQuestionData: updatedApiResponse[index].data.bannerQuestionData,
-      chartData: updatedApiResponse[index].chartData,
+      chartData: updatedApiResponse[index].data.chartData,
+      questionChartData: updatedApiResponse[index].data.questionChartData,
+      bannerChartData: updatedApiResponse[index].data.bannerChartData,
       chartOrientation: el.chartOrientation,
       chartType: el.chartType,
       baseCount: updatedApiResponse[index].data.baseCount[0].baseCount,

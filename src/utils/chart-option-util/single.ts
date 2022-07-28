@@ -183,6 +183,7 @@ export const getSingleChartOptionsSeries = (
   } else {
     series.push(...getSingleSeries(chart, questions));
   }
+  console.log('series', series);
 
   return series;
 };
