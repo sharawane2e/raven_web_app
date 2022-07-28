@@ -78,7 +78,8 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightX,
         copyRightY,
         qWordBreak,
-        lWordBreak
+        lWordBreak,
+        payloadObjectArr[i].chart
       );
       // const tableRows = tableChartDataGen();
       // autoTable(doc, { html: "#my-table" });
@@ -186,7 +187,8 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightX,
         copyRightY,
         qWordBreak,
-        lWordBreak
+        lWordBreak,
+        payloadObjectArr[i].chart
       );
       await doc.svg(clonedSource, {
         x: x,

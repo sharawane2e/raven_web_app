@@ -16,11 +16,7 @@ import { ISlideConfig } from "../../types/ISlideConfig";
 import { chartFontFace } from "../../constants/Variables";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";
-import {
-  colorArr,
-  pptTemplateKey,
-  primaryBarPPt,
-} from "../../constants/Variables";
+import { colorArr, primaryBarPPt } from "../../constants/Variables";
 
 import { chartConfig, tableConfig } from "../../config/PptConfig";
 import _, { slice } from "lodash";
@@ -57,9 +53,12 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     let mainQuestionText: string = questionData?.labelText || "";
     let bannerQuestionText: string = bannerQuestionData?.labelText || "";
-    let meanStandardDEviation = meanStandardDeviation();
+    let meanStandardDEviation = meanStandardDeviation(
+      payloadObjectArr[i].chart
+    );
 
     let baseText: string = `Sample set: ${baseCount}`;
+    console.log(appliedFilters);
 
     let filters: string = appliedFiltersText(appliedFilters);
 
@@ -78,9 +77,9 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       significanceText,
     };
 
-    setDefaultSlideProperties(pptxGenJsObj, slideConfig);
+    setDefaultSlideProperties(pptxGenJsObj, slideConfig, `slide_${i}`);
 
-    let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
+    let slide = pptxGenJsObj.addSlide({ masterName: `slide_${i}` });
     let seriesData: any[] = [];
     // debugger;
     const chartOptionsPayload: IchartOptionsDto = {

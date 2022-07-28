@@ -60,8 +60,6 @@ export const decimalPrecision2 = 2;
 //ppt and pdf configuration
 export const chartFontFace = "Arial";
 
-export const pptTemplateKey = "SLIDE_TEMPLATE";
-
 export const dataLabelsFormate = {
   format: "{point.y:.1f}%",
   rotation: -90,
