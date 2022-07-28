@@ -11,7 +11,6 @@ import { ChartLabelType } from "../../enums/ChartLabelType";
 import { MultiQuesExportUtils } from "./MultiQuesExportUtils";
 
 export function newChartDataGen(newSeriesData: any) {
-  console.log(newSeriesData);
   let seriesData: any[] = [];
 
   //   const {

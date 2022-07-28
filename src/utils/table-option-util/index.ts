@@ -8,12 +8,12 @@ export const getChartRows = (
   chartOptionsPayload: IchartOptionsDto
 ) => {
   const chartRows: any[] = [];
-  //   debugger;
   if (chartOptionsPayload.questionData.type == QuestionType.GRID) {
     chartRows.push(gridTable(chartSeries, chartOptionsPayload));
   } else {
     chartRows.push(singleTable(chartSeries, chartOptionsPayload));
   }
 
+  console.log(chartRows);
   return chartRows;
 };

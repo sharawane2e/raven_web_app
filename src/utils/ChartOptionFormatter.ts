@@ -68,7 +68,8 @@ export const getChartOptions = (
           transposed
         );
       case QuestionType.GRID:
-        return getGridChartOptions(questionData, chartData, baseCount);
+        // return getGridChartOptions(questionData, chartData, baseCount);
+        return getGridChartOptions(chart);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(
           questionData,
@@ -159,9 +160,10 @@ const getRankChartOptions = (
 };
 
 const getGridChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number
+  // questionData: IQuestion,
+  // chartData: any,
+  // baseCount: number
+  chart: IchartOptionsDto
 ): any => {
   const series = [];
 
@@ -171,12 +173,10 @@ const getGridChartOptions = (
 
   if (showMean) {
     series.length = 0;
-    series.push(...getGridMeanChartOptions(questionData, chartData, baseCount));
+    series.push(...getGridMeanChartOptions(chart));
   } else {
     series.length = 0;
-    series.push(
-      ...getGridChartoptionSeries(questionData, chartData, baseCount)
-    );
+    series.push(...getGridChartoptionSeries(chart));
   }
   return {
     legend: {
