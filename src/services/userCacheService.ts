@@ -47,6 +47,7 @@ export const isChartInCache = () => {
 
   _savedChart.forEach(function (element: any, index: number) {
     const checkEquality = _.isEqual(element, _chart);
+
     if (checkEquality == true) {
       isChartDuplicate = true;
       duplicateCacheIndex = index;

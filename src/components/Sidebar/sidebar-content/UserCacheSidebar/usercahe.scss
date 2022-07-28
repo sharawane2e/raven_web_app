@@ -10,7 +10,7 @@
       background: $white;
       color: map-get($map: $bg-color, $key: secondary);
       box-shadow: -9px 33px 47px 0px $black;
-      z-index: 9999;
+     // z-index: 9999;
       &::before {
         content: '';
         position: fixed;
@@ -170,12 +170,16 @@
       color: map-get($map: $bg-color, $key: secondary) !important;
     }
   }
+  .butttondisable{
+    background-color: map-get($map: $bg-color, $key: "dark") !important;
+    border: 1px solid map-get($map: $bg-color, $key: "dark") ;
+  }
   .btn-line {
     span {
       position: relative;
       &::after {
         content: '';
-        border-left: 2px solid #3939394a;
+        //border-left: 2px solid #3939394a;
         position: absolute;
         left: 48px;
         height: 37px;
