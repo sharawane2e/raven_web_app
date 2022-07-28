@@ -230,7 +230,11 @@ export const fillEmptyDateSeries = (
   const seriesName: string[] = [];
   const updatedSeries: any = series;
 
-  if (questionDataType !== QuestionType.GRID && bannerQuestionData != null) {
+  if (
+    questionDataType !== QuestionType.GRID &&
+    questionDataType !== QuestionType.GRID_MULTI &&
+    bannerQuestionData != null
+  ) {
     if (transposed) {
       bannerQuestionData.options.forEach((optionObject: any) => {
         seriesName.push(optionObject?.labelText);

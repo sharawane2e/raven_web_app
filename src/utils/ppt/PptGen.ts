@@ -106,6 +106,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     //   questionData.options.length = 0;
     //   questionData.options.push(...updatedQuestionOptions);
     // }
+
     const newSeriesData = {
       ...getChartOptions(
         chartOptionsPayload.questionData,
@@ -118,6 +119,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.transposed,
       ),
     };
+    // debugger;
 
     if (chartType === ChartType.TABLE) {
       const filledSeries = fillEmptyDateSeries(
