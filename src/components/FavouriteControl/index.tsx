@@ -11,6 +11,7 @@ import {
   handleDeleteChartCache,
   isChartInCache,
 } from '../../services/userCacheService';
+import { QuestionType } from '../../enums/QuestionType';
 //import { handleDeleteChartCache, isChartInCache } from "../../services/userCacheService";
 
 const FavouriteControl: React.FC = () => {
@@ -26,7 +27,10 @@ const FavouriteControl: React.FC = () => {
     //   chart?.bannerQuestionData?.type,
     // );
     const userCachebody = {
-      qText: chartQuestionData?.questionText,
+      qText:
+        chartQuestionData?.type === QuestionType.RANK
+          ? chartQuestionData?.labelText
+          : chartQuestionData?.questionText,
       qId: chartQuestionData?.qId,
       type: chartQuestionData?.type,
       bannerType: chart?.bannerQuestionData?.type

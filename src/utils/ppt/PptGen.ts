@@ -82,7 +82,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     let slide = pptxGenJsObj.addSlide({ masterName: pptTemplateKey });
     let seriesData: any[] = [];
-
+    // debugger;
     const chartOptionsPayload: IchartOptionsDto = {
       questionData: payloadObjectArr[i].chart.questionData,
       chartData: payloadObjectArr[i].chart.chartData,
@@ -97,7 +97,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       significant: payloadObjectArr[i].chart.significant,
       showMean: payloadObjectArr[i].chart.showMean,
     };
-    //debugger;
 
     // if (payloadObjectArr[i].chart.questionData.isGroupNet) {
     //   const updatedQuestionOptions: any[] = JSON.parse(
