@@ -69,6 +69,7 @@ export const getChartOptions = (
         );
       case QuestionType.GRID:
         // return getGridChartOptions(questionData, chartData, baseCount);
+
         return getGridChartOptions(chart);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(

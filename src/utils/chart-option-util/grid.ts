@@ -1,5 +1,3 @@
-import store from '../../redux/store';
-import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getMatchedfilter, getmatchedFind, round } from '../Utility';
@@ -37,7 +35,6 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
   // const {
   //   chart: { chartLabelType, chartTranspose, significant },
   // } = store.getState();
-  //debugger;
 
   if (transposed) {
     series.push(...getGridTransposeChartOptions(chart));
@@ -80,7 +77,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
         let numberValue;
         numberValue = round(count, 0);
         percentageValue = (count / base) * 100;
-
+        // debugger;
         data.push({
           name: subGroup.labelText,
           y:
@@ -125,7 +122,6 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
     series.length = 0;
     series.push(...updatedSeries);
   }
-
   return series;
 };
 

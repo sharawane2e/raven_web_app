@@ -1,4 +1,3 @@
-import store from '../../redux/store';
 import pptxgen from 'pptxgenjs';
 import {
   sourceText,
@@ -34,7 +33,6 @@ import { fillEmptyDateSeries } from '../chart-option-util/significanceDiff';
 import { getChartRows } from '../table-option-util';
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
-  console.log('payloadObjectArr', payloadObjectArr);
   let pptxGenJsObj = new pptxgen();
   let fileName: string =
     exportPrefix + payloadObjectArr[0]['chart']['questionData']?.labelText;
@@ -109,16 +107,18 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     //   questionData.options.length = 0;
     //   questionData.options.push(...updatedQuestionOptions);
     // }
-    const newSeriesData = getChartOptions(
-      chartOptionsPayload.questionData,
-      chartOptionsPayload.chartData,
-      chartOptionsPayload.baseCount,
-      chartOptionsPayload.bannerQuestionData,
-      chartOptionsPayload.chartOptionsData,
-      chartOptionsPayload.questionChartData,
-      chartOptionsPayload.bannerChartData,
-      chartOptionsPayload.transposed,
-    );
+    const newSeriesData = {
+      ...getChartOptions(
+        chartOptionsPayload.questionData,
+        chartOptionsPayload.chartData,
+        chartOptionsPayload.baseCount,
+        chartOptionsPayload.bannerQuestionData,
+        chartOptionsPayload.chartOptionsData,
+        chartOptionsPayload.questionChartData,
+        chartOptionsPayload.bannerChartData,
+        chartOptionsPayload.transposed,
+      ),
+    };
 
     if (chartType === ChartType.TABLE) {
       const filledSeries = fillEmptyDateSeries(
