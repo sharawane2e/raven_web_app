@@ -97,7 +97,6 @@ const multiGridChartOptionData = (
         }
       }
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
-
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;

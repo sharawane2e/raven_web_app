@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { QuestionType } from '../../enums/QuestionType';
-import { getCumulativeStdNormalProbability } from '../simplestatistics';
-import { indexToChar } from '../Utility';
+import _ from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { QuestionType } from "../../enums/QuestionType";
+import { getCumulativeStdNormalProbability } from "../simplestatistics";
+import { indexToChar } from "../Utility";
 
 interface SignificantObject {
   value: any;
@@ -16,7 +16,7 @@ export const getsignificantdifference = (
   bannerQuestionData: any,
   series: any,
   chartLabelType: any,
-  transposed: boolean,
+  transposed: boolean
 ) => {
   const seriesName: string[] = [];
 
@@ -64,7 +64,7 @@ export const getsignificantdifference = (
     transposed,
     questionData,
     bannerQuestionData,
-    chartData,
+    chartData
   );
 
   series.length = 0;
@@ -88,14 +88,14 @@ export const getsignificantdifference = (
           name:
             data?.name + ` - ${indexToChar(seriesName.indexOf(data?.name))}`,
           significance: indexToChar(seriesName.indexOf(data?.name)),
-          significantDiffernce: '',
+          significantDiffernce: "",
         };
       }),
       dataLabels: {
         ...singleSeries.dataLabels,
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))}${
-            chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''
+            chartLabelType == ChartLabelType.PERCENTAGE ? "%" : ""
           } <span class="significante-color">${
             this.point.significantDiffernce
           } </span>`;
@@ -112,28 +112,28 @@ export const getsignificantdifference = (
       const significantArry = [];
       for (let j = 0; j < seriesdata.length; j++) {
         const SignificantObject1: SignificantObject = {
-          value: seriesdata[i]['percentageValue'],
-          baseCount: seriesdata[i]['baseCount'],
+          value: seriesdata[i]["percentageValue"],
+          baseCount: seriesdata[i]["baseCount"],
         };
         const SignificantObject2: SignificantObject = {
-          value: seriesdata[j]['percentageValue'],
-          baseCount: seriesdata[j]['baseCount'],
+          value: seriesdata[j]["percentageValue"],
+          baseCount: seriesdata[j]["baseCount"],
         };
 
         if (i != j) {
           const isSignificant = significantDifference(
             SignificantObject1,
-            SignificantObject2,
+            SignificantObject2
           );
 
           if (isSignificant) {
-            significantArry.push(seriesdata[j]['significance']);
+            significantArry.push(seriesdata[j]["significance"]);
           }
         }
       }
       if (significantArry.length) {
-        singleSeries.data[i]['significantDiffernce'] =
-          significantArry.join(',');
+        singleSeries.data[i]["significantDiffernce"] =
+          significantArry.join(",");
       }
     }
   });
@@ -145,11 +145,11 @@ export const getsignificantdifference = (
 export const getTablesignificantdifference = (seriesData: any) => {
   for (let i = 0; i < seriesData.length; i++) {
     // const seriesupdatedLabels = [];
-    seriesData[i]['significance'] = [];
-    seriesData[i]['significanceDifference'] = [];
+    seriesData[i]["significance"] = [];
+    seriesData[i]["significanceDifference"] = [];
 
-    for (let j = 0; j < seriesData[i]['labels'].length; j++) {
-      seriesData[i]['significance'].push(indexToChar(j));
+    for (let j = 0; j < seriesData[i]["labels"].length; j++) {
+      seriesData[i]["significance"].push(indexToChar(j));
       // seriesupdatedLabels.push(
       //   seriesData[i]["labels"][j] + `(${indexToChar(j)})`
       // );
@@ -178,17 +178,17 @@ export const getTablesignificantdifference = (seriesData: any) => {
 
           const isSignificant = significantDifference(
             SignificantObject1,
-            SignificantObject2,
+            SignificantObject2
           );
 
           if (isSignificant) {
-            significantArry.push(seriesData[i]['significance'][k]);
+            significantArry.push(seriesData[i]["significance"][k]);
           }
         }
       }
 
       if (significantArry.length) {
-        seriesData[i]['significanceDifference'][j] = significantArry.join(',');
+        seriesData[i]["significanceDifference"][j] = significantArry.join(",");
       }
     }
   }
@@ -198,7 +198,7 @@ export const getTablesignificantdifference = (seriesData: any) => {
 /* This function retun significant  true or false */
 const significantDifference = (
   SignificantObject1: SignificantObject,
-  SignificantObject2: SignificantObject,
+  SignificantObject2: SignificantObject
 ) => {
   const B1 = SignificantObject1.value / 100;
   const B2 = SignificantObject1.baseCount;
@@ -225,12 +225,16 @@ export const fillEmptyDateSeries = (
   transposed: boolean,
   questionData: any,
   bannerQuestionData: any,
-  chartData: any,
+  chartData: any
 ) => {
   const seriesName: string[] = [];
   const updatedSeries: any = series;
 
-  if (questionDataType !== QuestionType.GRID && bannerQuestionData != null) {
+  if (
+    questionDataType !== QuestionType.GRID &&
+    questionDataType !== QuestionType.GRID_MULTI &&
+    bannerQuestionData != null
+  ) {
     if (transposed) {
       bannerQuestionData.options.forEach((optionObject: any) => {
         seriesName.push(optionObject?.labelText);
@@ -261,8 +265,8 @@ export const fillEmptyDateSeries = (
               percentageValue: null,
               numberValue: null,
               baseCount: null,
-              significance: '',
-              significantDiffernce: '',
+              significance: "",
+              significantDiffernce: "",
             });
           }
         });
