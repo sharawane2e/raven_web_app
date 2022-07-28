@@ -1,5 +1,4 @@
 export function MultiQuesExportUtils(newSeriesData: any) {
-  // debugger;
   const series = newSeriesData.series;
   const updatedSeries: any[] = [];
 
@@ -19,8 +18,6 @@ export function MultiQuesExportUtils(newSeriesData: any) {
       values,
     });
   });
-
-  console.log("updatedSeries", updatedSeries);
 
   return updatedSeries;
 }
