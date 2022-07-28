@@ -57,7 +57,9 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
 
     let mainQuestionText: string = questionData?.labelText || "";
     let bannerQuestionText: string = bannerQuestionData?.labelText || "";
-    let meanStandardDEviation = meanStandardDeviation();
+    let meanStandardDEviation = meanStandardDeviation(
+      payloadObjectArr[i].chart
+    );
 
     let baseText: string = `Sample set: ${baseCount}`;
 

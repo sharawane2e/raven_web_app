@@ -17,6 +17,7 @@ import {
 import { hexToRgb } from "@material-ui/core";
 import { QuestionType } from "../../enums/QuestionType";
 import { ChartType } from "../../enums/ChartType";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
 export const setDefaultPdfPageProperties = async (
   doc: jsPDF,
@@ -29,7 +30,8 @@ export const setDefaultPdfPageProperties = async (
   copyRightX: any,
   copyRightY: any,
   qWordBreak: any,
-  lWordBreak: any
+  lWordBreak: any,
+  chart: IchartOptionsDto
 ) => {
   const {
     chart: {
@@ -56,7 +58,7 @@ export const setDefaultPdfPageProperties = async (
   doc.text(filterText, 10, 20);
   doc.setTextColor(64, 64, 64);
   if (questionData?.type === QuestionType.SINGLE && questionData?.isMean) {
-    //doc.text(meanStandardDeviation(), 10, 25);
+    doc.text(meanStandardDeviation(chart), 10, 25);
   }
 
   doc.text("Sample set: " + baseCount || "", baseX, baseY);

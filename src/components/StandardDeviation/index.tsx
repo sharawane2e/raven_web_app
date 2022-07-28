@@ -15,7 +15,7 @@ import {
   setStandardDeviation,
   setStandardError,
 } from '../../redux/actions/standardDeviationAction';
-import { round } from '../../utils/Utility';
+import { getMeanStandardDeviation, round } from '../../utils/Utility';
 import StandardText from '../../enums/StandardType';
 
 interface StandardDeviation {}
@@ -35,53 +35,21 @@ const StandardDeviation: React.FC<StandardDeviation> = () => {
       Object.keys(optionData).forEach(function (key) {
         chartOptionsData.push(optionData[key]);
       });
-
-      //console.log('chartOptionsData', chartOptionsData);
-      getMeanStandardDeviation(chartOptionsData, baseCount);
+     const{meanStandarad,standardDeviation,standardError}= getMeanStandardDeviation(chartOptionsData, baseCount);
+     dispatch(setMean(meanStandarad));
+     dispatch(setStandardDeviation(standardDeviation));
+     dispatch(setStandardError(standardError));
     } else {
-      getMeanStandardDeviation(chartData, baseCount);
+      const{meanStandarad,standardDeviation,standardError}=getMeanStandardDeviation(chartData, baseCount);
+      dispatch(setMean(meanStandarad));
+      dispatch(setStandardDeviation(standardDeviation));
+      dispatch(setStandardError(standardError));
     }
+
+
   }, [bannerQuestionData]);
 
-  const getMeanStandardDeviation = (chartData: any, baseCount: number) => {
-    let values: any = [];
-
-    chartData.forEach((chart_el: any, chartIndex: Number) => {
-      if (Array.isArray(chart_el)) {
-        chart_el.forEach((curentVlaues: any) => {
-          values = values.concat(curentVlaues.values);
-        });
-      } else {
-        values = values.concat(chart_el.values);
-      }
-    });
-
-    const meanValue = getmean(values);
-    const getSampleDeviationValues = getsampleStandardDeviation(
-      values,
-      decimalPrecision2,
-    );
-
-    const getStandarderror = getStandarderrorFunction(
-      Number(getSampleDeviationValues),
-      baseCount,
-      decimalPrecision2,
-    );
-
-    //meanStandardDeviation(mean)
-
-    const meanStandarad = setMean(round(meanValue, decimalPrecision3));
-    const standardDeviation = setStandardDeviation(
-      round(Number(getSampleDeviationValues), decimalPrecision3),
-    );
-    const standardError = setStandardError(
-      round(getStandarderror, decimalPrecision3),
-    );
-
-    dispatch(meanStandarad);
-    dispatch(standardDeviation);
-    dispatch(standardError);
-  };
+ 
 
   return (
     <div className="standard-deviation">
