@@ -108,16 +108,22 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     //   questionData.options.length = 0;
     //   questionData.options.push(...updatedQuestionOptions);
     // }
-    const newSeriesData = getChartOptions(
-      chartOptionsPayload.questionData,
-      chartOptionsPayload.chartData,
-      chartOptionsPayload.baseCount,
-      chartOptionsPayload.bannerQuestionData,
-      chartOptionsPayload.chartOptionsData,
-      chartOptionsPayload.questionChartData,
-      chartOptionsPayload.bannerChartData,
-      chartOptionsPayload.transposed
-    );
+    const newSeriesData = {
+      ...getChartOptions(
+        chartOptionsPayload.questionData,
+        chartOptionsPayload.chartData,
+        chartOptionsPayload.baseCount,
+        chartOptionsPayload.bannerQuestionData,
+        chartOptionsPayload.chartOptionsData,
+        chartOptionsPayload.questionChartData,
+        chartOptionsPayload.bannerChartData,
+        chartOptionsPayload.transposed
+      ),
+    };
+
+    console.log(chartOptionsPayload);
+
+    console.log(JSON.parse(JSON.stringify(newSeriesData)));
 
     if (chartType === ChartType.TABLE) {
       const filledSeries = fillEmptyDateSeries(

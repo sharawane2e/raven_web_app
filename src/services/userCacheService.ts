@@ -127,6 +127,7 @@ export const handleExportChartCache = async (
     promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, "POST", body));
   });
   const apiResponse: any[] = await Promise.all(promiseAllArr);
+  const updatedApiResponse: any[] = [];
 
   apiResponse.forEach((response: any) => {
     let chartData: IChartState = JSON.parse(JSON.stringify(response));
@@ -164,17 +165,20 @@ export const handleExportChartCache = async (
         ),
       };
     }
+
+    updatedApiResponse.push(chartData);
   });
 
+  console.log(updatedApiResponse);
   const payloadArr: any[] = [];
   filterExportData.forEach((el: any, index: number) => {
     const chart = {
-      questionData: apiResponse[index].data.questionData,
-      bannerQuestionData: apiResponse[index].data.bannerQuestionData,
-      chartData: apiResponse[index].data.chartData,
+      questionData: updatedApiResponse[index].data.questionData,
+      bannerQuestionData: updatedApiResponse[index].data.bannerQuestionData,
+      chartData: updatedApiResponse[index].data.chartData,
       chartOrientation: el.chartOrientation,
       chartType: el.chartType,
-      baseCount: apiResponse[index].data.baseCount[0].baseCount,
+      baseCount: updatedApiResponse[index].data.baseCount[0].baseCount,
       showMean: el.showMean,
       significant: el.significant,
       chartLabelType: el.chartLabelType,
@@ -190,6 +194,7 @@ export const handleExportChartCache = async (
     };
     payloadArr.push(payload);
   });
+  // debugger;
   generatePpt([...payloadArr]);
   dispatch(setFullScreenLoading(false));
 };

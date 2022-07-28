@@ -13,7 +13,5 @@ export const getChartRows = (
   } else {
     chartRows.push(singleTable(chartSeries, chartOptionsPayload));
   }
-
-  console.log(chartRows);
   return chartRows;
 };

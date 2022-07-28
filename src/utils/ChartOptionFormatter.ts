@@ -69,6 +69,8 @@ export const getChartOptions = (
         );
       case QuestionType.GRID:
         // return getGridChartOptions(questionData, chartData, baseCount);
+        console.log(chart);
+        console.log(getGridChartOptions(chart));
         return getGridChartOptions(chart);
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(
@@ -167,9 +169,7 @@ const getGridChartOptions = (
 ): any => {
   const series = [];
 
-  const {
-    chart: { showMean },
-  } = store.getState();
+  const { showMean } = chart;
 
   if (showMean) {
     series.length = 0;

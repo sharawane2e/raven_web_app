@@ -38,6 +38,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
   //   chart: { chartLabelType, chartTranspose, significant },
   // } = store.getState();
 
+  // debugger;
   if (transposed) {
     series.push(...getGridTransposeChartOptions(chart));
   } else {
@@ -78,7 +79,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
         let numberValue;
         numberValue = round(count, 0);
         percentageValue = (count / base) * 100;
-
+        // debugger;
         data.push({
           name: subGroup.labelText,
           y:
@@ -123,8 +124,6 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
     series.length = 0;
     series.push(...updatedSeries);
   }
-  // else {
-  // }
   return series;
 };
 
