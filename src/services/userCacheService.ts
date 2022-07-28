@@ -170,11 +170,9 @@ export const handleExportChartCache = async (
 
     updatedApiResponse.push(chartData);
   });
-  //console.log('chartData', updatedApiResponse);
-  debugger;
+
   const payloadArr: any[] = [];
   filterExportData.forEach((el: any, index: number) => {
-    //console.log(el);
     const chart = {
       questionData: updatedApiResponse[index].questionData,
       bannerQuestionData: updatedApiResponse[index].data.bannerQuestionData,

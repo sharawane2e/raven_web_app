@@ -41,15 +41,15 @@ export const getChartOptions = (
     significant: store.getState().chart.significant,
     showMean: store.getState().chart.showMean,
   };
-  const questions = {
-    selectedBannerQuestionId:
-      store.getState().questions.selectedBannerQuestionId,
-  };
+  // const questions = {
+  //   selectedBannerQuestionId:
+  //     store.getState().questions.selectedBannerQuestionId,
+  // };
 
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
-        return getSingleChartOptions(chart, questions);
+        return getSingleChartOptions(chart);
       case QuestionType.MULTI:
         return getMultiChartOptions(chart);
       case QuestionType.RANK:
@@ -59,7 +59,7 @@ export const getChartOptions = (
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(chart);
       case QuestionType.NUMBER:
-        return getNumberChartOption(chart, questions);
+        return getNumberChartOption(chart);
       default:
         return {};
     }
@@ -90,11 +90,8 @@ const getMultiChartOptions = (
   };
 };
 
-const getSingleChartOptions = (
-  chart: IchartOptionsDto,
-  questions: any,
-): any => {
-  const series = getSingleChartOptionsSeries(chart, questions);
+const getSingleChartOptions = (chart: IchartOptionsDto): any => {
+  const series = getSingleChartOptionsSeries(chart);
   //console.log('series', series);
 
   return {
