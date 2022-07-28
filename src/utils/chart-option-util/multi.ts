@@ -12,24 +12,39 @@ import { ChartType } from "../../enums/ChartType";
 import { QuestionType } from "../../enums/QuestionType";
 import store from "../../redux/store";
 import { IQuestionOption } from "../../types/IBaseQuestion";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { bannerChartDataGen } from "../export-helper-utils/BannerQuesUtils";
 import { getMatchedfilter, getSum } from "../Utility";
 import { getsignificantdifference } from "./significanceDiff";
 
 export const getMultiChartOptionsSeries = (
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-  bannerQuestionData: any,
-  chartOptionsData: any,
-  questionChartData: any,
-  bannerChartData: any,
-  transposed: any
+  chart: IchartOptionsDto
+  // questionData: any,
+  // chartData: any,
+  // baseCount: any,
+  // bannerQuestionData: any,
+  // chartOptionsData: any,
+  // questionChartData: any,
+  // bannerChartData: any,
+  // transposed: any
 ) => {
   const {
-    chart: { significant, chartLabelType, chartType },
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    significant,
+    chartLabelType,
+    chartType,
+  } = chart;
+  const {
     questions: { bannerQuestionList },
   } = store.getState();
+
   const selectedBannerQuestionId = bannerQuestionData?.qId;
   const series: any[] = [];
 
