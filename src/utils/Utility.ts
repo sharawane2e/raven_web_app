@@ -60,7 +60,7 @@ export function getMedian(values: any, weightArray: any) {
   values.forEach((value: any, index: any) => {
     weightObject.push({
       value: value,
-      weight: weightArray[index],
+      weight: weightArray ? weightArray[index] : 0,
     });
   });
   const weightObjectSorted = _.sortBy(weightObject, [

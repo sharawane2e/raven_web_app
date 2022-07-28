@@ -3,7 +3,7 @@ import { QuestionType } from "../../enums/QuestionType";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { round } from "../Utility";
 
-export const singleTable = (
+export const numberTable = (
   chartSeries: any,
   chartOptionsPayload: IchartOptionsDto
 ) => {
