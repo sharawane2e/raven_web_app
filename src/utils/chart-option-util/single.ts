@@ -41,8 +41,6 @@ export const getSingleChartOptionsSeries = (
   if (selectedBannerQuestionId) {
     let subGroups: any;
     let count = 0;
-    console.log('s to single');
-
     subGroups = questionData.options.filter((option: IQuestionOption) => {
       const subGroup: any = [];
       const subGroup1 = getmatchedFind(

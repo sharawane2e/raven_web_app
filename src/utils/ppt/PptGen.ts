@@ -190,14 +190,14 @@ const getChartSettings = (
         : false,
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? '.0%;;;'
-        : showMean && questionType === QuestionType.GRID
+        ? '##.##%;;;'
+        : showMean
         ? '##.##'
         : '##',
     valLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
-        ? '.0%;;;'
-        : showMean && questionType === QuestionType.GRID
+        ? '##.##%;;;'
+        : showMean
         ? '##.##'
         : '##',
   };
