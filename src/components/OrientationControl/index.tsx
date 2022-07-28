@@ -19,8 +19,6 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     (state: RootState) => state.chart
   );
   const { chart } = store.getState();
-  console.log(chart?.chartType);
-
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {

@@ -7,7 +7,7 @@ import {
   setSelectedChapterId,
 } from "../../redux/actions/chapterActions";
 import { setSelectedQuestionId } from "../../redux/actions/questionAction";
-import store, { RootState } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import ApiRequest from "../../utils/ApiRequest";
 import SelectUnstyled, {
   SelectUnstyledProps,
@@ -17,7 +17,6 @@ import OptionUnstyled, {
   optionUnstyledClasses,
 } from "@mui/base/OptionUnstyled";
 import { styled } from "@mui/system";
-import PopperUnstyled from "@mui/base/PopperUnstyled";
 import {
   resetChart,
   setChartLabel,
@@ -75,10 +74,6 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     Toaster.success(`${StaticText?.CHART_APPLIED} ${findIds?.labelText}`);
   };
 
-  const StyledPopper = styled(PopperUnstyled)`
-    z-index: 100;
-  `;
-
   const StyledButton = styled("button")(
     () => `
   &.${selectUnstyledClasses.expanded} {
@@ -106,7 +101,6 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   function CustomSelect(props: SelectUnstyledProps<number>) {
     const components: SelectUnstyledProps<number>["components"] = {
       Root: StyledButton,
-      Popper: StyledPopper,
       ...props.components,
     };
 

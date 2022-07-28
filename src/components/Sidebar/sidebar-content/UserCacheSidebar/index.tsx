@@ -179,14 +179,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return userCacheinfo?._id === cacheId;
     });
 
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"]));
+    dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
+    dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
+    dispatch(setSelectedQuestionText(_cacheQuestion[0]["qId"]));
     fetchChartData()
       .then((chartData) => {
         userChapterShow(chartData);
-        dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
-        dispatch(
-          setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"])
-        );
-        dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
         dispatch(setFilters(_cacheQuestion[0]["filter"]));
         dispatch(updateSignificant(_cacheQuestion[0]["significant"]));
         dispatch(setshowMean(_cacheQuestion[0]["showMean"]));
