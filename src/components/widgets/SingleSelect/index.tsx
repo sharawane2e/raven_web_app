@@ -86,7 +86,7 @@ const SingleSelect: React.FC<SingleSelectProps> = (props) => {
             // return <span>{questions ? questions : ''}</span>;
             return <span>{label ? label : ""}</span>;
           }
-          // return <span>{chapterQuestion as any}</span>;
+          return <span>{chapterQuestion as any}</span>;
         }}
         onClose={handleClose}
         onOpen={handleOpen}
