@@ -68,18 +68,9 @@ export const getChartOptions = (
   }
 };
 
-const getMultiChartOptions = (
-  chart: IchartOptionsDto
-  // questionData: IQuestion,
-  // chartData: any[],
-  // baseCount: number,
-  // bannerQuestionData: IQuestion | null,
-  // chartOptionsData: any,
-  // questionChartData: any,
-  // bannerChartData: any,
-  // transposed: any,
-): any => {
+const getMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series = getMultiChartOptionsSeries(chart);
+  console.log(series);
 
   return {
     legend: {

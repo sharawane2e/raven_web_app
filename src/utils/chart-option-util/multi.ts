@@ -16,17 +16,7 @@ import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { getMatchedfilter, getSum } from "../Utility";
 import { getsignificantdifference } from "./significanceDiff";
 
-export const getMultiChartOptionsSeries = (
-  chart: IchartOptionsDto
-  // questionData: any,
-  // chartData: any,
-  // baseCount: any,
-  // bannerQuestionData: any,
-  // chartOptionsData: any,
-  // questionChartData: any,
-  // bannerChartData: any,
-  // transposed: any
-) => {
+export const getMultiChartOptionsSeries = (chart: IchartOptionsDto) => {
   const {
     questionData,
     chartData,

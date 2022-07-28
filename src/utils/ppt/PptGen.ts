@@ -138,7 +138,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       slide.addTable(output, { ...tableConfig });
     } else {
       seriesData = newChartDataGen(newSeriesData);
-
+      console.log(seriesData);
       const { pptChartType, chartColors } = slideChartConfig(
         chartType,
         pptxGenJsObj,

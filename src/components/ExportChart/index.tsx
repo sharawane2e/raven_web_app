@@ -20,7 +20,6 @@ const ExportChart: React.FC<ExportChartProps> = () => {
       chart,
       filters,
     };
-
     generatePpt([payloadObject]);
   };
   const generatePdfPayload = () => {
