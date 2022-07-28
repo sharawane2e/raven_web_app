@@ -1,5 +1,4 @@
 import { round } from "../Utility";
-import { chartDataGen } from "./ExportChartDataGen";
 import store from "../../redux/store";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";

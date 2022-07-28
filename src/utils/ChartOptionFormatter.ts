@@ -58,14 +58,7 @@ export const getChartOptions = (
       case QuestionType.GRID_MULTI:
         return getGridMultiChartOptions(chart);
       case QuestionType.NUMBER:
-        return getNumberChartOption(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          transposed
-        );
+        return getNumberChartOption(chart, questions);
       default:
         return {};
     }

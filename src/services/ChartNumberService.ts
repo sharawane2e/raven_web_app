@@ -10,19 +10,26 @@ import { ChartType } from "../enums/ChartType";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { getmean, getmedian, getmin, getmax } from "../utils/simplestatistics";
 import { getMedian } from "../utils/Utility";
+import { IchartOptionsDto } from "../types/IChartOptionsDto";
 
 export const getNumberChartOption = (
-  questionData: IQuestion,
-  chartData: any[],
-  baseCount: number,
-  bannerQuestionData: any,
-  chartOptionsData: any,
-  transposed: any
+  chart: IchartOptionsDto,
+  questions: any
 ) => {
   const {
-    chart: { chartType },
-    questions: { selectedBannerQuestionId },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    significant,
+    chartLabelType,
+    chartType,
+  } = chart;
+  const { selectedBannerQuestionId } = questions;
 
   const series: any[] = [];
 

@@ -1,4 +1,3 @@
-import store from "../../redux/store";
 import { IQuestion } from "../../types/IQuestion";
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
