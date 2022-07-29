@@ -7,11 +7,8 @@ import ApiRequest from '../../utils/ApiRequest';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
 import { resetUserCache } from '../../redux/actions/userCacheActions';
-import {
-  handleDeleteChartCache,
-  isChartInCache,
-} from '../../services/userCacheService';
-//import { handleDeleteChartCache, isChartInCache } from "../../services/userCacheService";
+import { isChartInCache } from '../../services/userCacheService';
+import { QuestionType } from '../../enums/QuestionType';
 
 const FavouriteControl: React.FC = () => {
   const { chart } = useSelector((state: RootState) => state);
@@ -21,17 +18,16 @@ const FavouriteControl: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleAddChartCache = () => {
-    console.log(
-      'chart?.bannerQuestionData?.type',
-      chart?.bannerQuestionData?.type,
-    );
     const userCachebody = {
-      qText: chartQuestionData?.questionText,
+      qText:
+        chartQuestionData?.type === QuestionType.RANK
+          ? chartQuestionData?.labelText
+          : chartQuestionData?.questionText,
       qId: chartQuestionData?.qId,
       type: chartQuestionData?.type,
       bannerType: chart?.bannerQuestionData?.type
         ? chart?.bannerQuestionData?.type
-        : null,
+        : '',
       date: new Date(),
       filter: filters?.appliedFilters,
       bannerQuestion:
@@ -44,19 +40,16 @@ const FavouriteControl: React.FC = () => {
       showMean: chart?.showMean,
     };
 
-    //console.log('userCachebody', userCachebody);
-    // dispatch(resetUserCache([userCachebody]));
-
-    // ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
-    //   .then((res) => {
-    //     if (res.success) {
-    //       dispatch(resetUserCache(res.data));
-    //       Toaster.success(res.message);
-    //     } else {
-    //       Toaster.error(res.message); //add more things
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+    ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
+      .then((res) => {
+        if (res.success) {
+          dispatch(resetUserCache(res.data));
+          Toaster.success(res.message);
+        } else {
+          Toaster.error(res.message); //add more things
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const buttonConfig: ButtonGroupConfig[] = [

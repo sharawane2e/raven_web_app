@@ -21,7 +21,10 @@ import {
 import HomeIcon from '@material-ui/icons/Home';
 import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
 import { Badge } from '@mui/material';
-import { resetUserCache } from '../../redux/actions/userCacheActions';
+import {
+  resetUserCache,
+  setCacheLoading,
+} from '../../redux/actions/userCacheActions';
 import { ReactComponent as Cache } from '../../assets/svg/cache.svg';
 import ApiRequest from '../../utils/ApiRequest';
 import ApiUrl from '../../enums/ApiUrl';
@@ -89,16 +92,18 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   }
 
   const getUserCache = () => {
-    // ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
-    //   .then((res) => {
-    //     if (res.success) {
-    //       const updatedUserCache = addNewKeysToUserCache(res?.data);
-    //       dispatch(resetUserCache(updatedUserCache));
-    //     } else {
-    //       Toaster.error(res.message);
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+    dispatch(setCacheLoading(true));
+    ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
+      .then((res) => {
+        if (res.success) {
+          const updatedUserCache = addNewKeysToUserCache(res?.data);
+          dispatch(resetUserCache(updatedUserCache));
+          dispatch(setCacheLoading(false));
+        } else {
+          Toaster.error(res.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

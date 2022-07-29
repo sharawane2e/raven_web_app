@@ -166,7 +166,7 @@
 }
 
 .maxValue {
-  background: #ffb3a7;
+  background: #b8e08c;
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;
@@ -174,7 +174,7 @@
   padding: 0.5em;
 }
 .minValue {
-  background-color: #b8e08c;
+  background-color: #ffb3a7;
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;

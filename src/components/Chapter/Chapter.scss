@@ -1,4 +1,8 @@
 .chapter--drop-dwon {
+  > div {
+    z-index: 999;
+  }
+
   .custom-dropdown {
     box-sizing: border-box;
     min-width: 300px;
@@ -23,7 +27,7 @@
     margin: 0px 0;
     min-width: 300px;
     width: 300px;
-    background: map-get($map: $bg-color, $key:"secondary-shade" );
+    background: map-get($map: $bg-color, $key: "secondary-shade");
     color: map-get($map: $bg-color, $key: "primary");
     overflow: auto;
     outline: 0px;

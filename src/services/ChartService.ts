@@ -3,6 +3,7 @@ import { ChartType } from "../enums/ChartType";
 import {
   setChartData,
   setChartLabel,
+  setChartLoading,
   setChartOrientation,
   setChartTranspose,
   setChartType,
@@ -74,10 +75,13 @@ export const fetchChartData = async (
     };
 
     let response: any = "";
+    dispatch(setChartLoading(true));
 
     response = await ApiRequest.request(ApiUrl.CHART, "POST", body);
 
     if (response.success) {
+      dispatch(setChartLoading(false));
+
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
         response.data.questionData,
@@ -110,8 +114,6 @@ export const fetchChartData = async (
           response.data.bannerChartData
         ),
       };
-
-      chartData.showMean = false;
     }
   } catch (error) {
     console.log(error);

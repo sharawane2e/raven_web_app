@@ -1,5 +1,15 @@
 import _ from 'lodash';
-import { decimalPrecision } from '../constants/Variables';
+import { cumulativeStdNormalProbability } from 'simple-statistics';
+import {
+  decimalPrecision,
+  decimalPrecision2,
+  decimalPrecision3,
+} from '../constants/Variables';
+import {
+  getmean,
+  getsampleStandardDeviation,
+  getStandarderrorFunction,
+} from './simplestatistics';
 
 export function round(value: number, precision: number) {
   var multiplier = Math.pow(10, precision || 0);
@@ -59,7 +69,7 @@ export function getMedian(values: any, weightArray: any) {
   values.forEach((value: any, index: any) => {
     weightObject.push({
       value: value,
-      weight: weightArray[index],
+      weight: weightArray ? weightArray[index] : 0,
     });
   });
   const weightObjectSorted = _.sortBy(weightObject, [
@@ -117,4 +127,40 @@ export const indexToChar = (n: number) => {
     n = Math.floor(n / len) - 1;
   }
   return s.toUpperCase();
+};
+
+export const getMeanStandardDeviation = (chartData: any, baseCount: number) => {
+  let values: any = [];
+
+  chartData.forEach((chart_el: any, chartIndex: Number) => {
+    if (Array.isArray(chart_el)) {
+      chart_el.forEach((curentVlaues: any) => {
+        values = values.concat(curentVlaues.values);
+      });
+    } else {
+      values = values.concat(chart_el.values);
+    }
+  });
+
+  const meanValue = getmean(values);
+  const getSampleDeviationValues = getsampleStandardDeviation(
+    values,
+    decimalPrecision2,
+  );
+
+  const getStandarderror = getStandarderrorFunction(
+    Number(getSampleDeviationValues),
+    baseCount,
+    decimalPrecision2,
+  );
+
+  const meanStandarad = round(meanValue, decimalPrecision3);
+  const standardDeviation = round(
+    Number(getSampleDeviationValues),
+    decimalPrecision3,
+  );
+
+  const standardError = round(getStandarderror, decimalPrecision3);
+
+  return { meanStandarad, standardDeviation, standardError };
 };

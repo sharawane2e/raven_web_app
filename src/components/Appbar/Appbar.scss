@@ -14,7 +14,7 @@
       font-weight: bold;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       flex-direction: row-reverse;
       padding-left: 0.9375rem;
       .appbar__heading {
@@ -102,7 +102,7 @@
     background: map-get($map: $bg-color, $key: primary);
     //background: map-get($map: $bg-color, $key: primary);
 
-    @media (max-width: 768px) {
+    @media (max-width: 1025px) {
       border: none;
       width: 100%;
       box-shadow: none;
@@ -140,6 +140,9 @@
       @media (max-width: 767px) {
         padding-top: 12px;
       }
+      @media (max-width: 1025px) {
+        width: 10%;
+      }
     }
   }
 
@@ -151,6 +154,7 @@
   .appbar__right-panel {
     @media (max-width: 767px) {
       width: 55%;
+      justify-content: end;
     }
   }
 
@@ -247,9 +251,8 @@
     }
   }
   .badge-icon {
-    display: none !important;
     margin-right: 15px;
-}
+  }
 }
 .appbar__menu {
   border-radius: 0;

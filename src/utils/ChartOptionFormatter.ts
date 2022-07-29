@@ -14,6 +14,7 @@ import { getMultiChartOptionsSeries } from "./chart-option-util/multi";
 import { ChartOrientation } from "../enums/ChartOrientation";
 import { getRankChartOptionsData } from "./chart-option-util/rank";
 import { getMultiGridChartOptionsData } from "./chart-option-util/multiGrid";
+import { IchartOptionsDto } from "../types/IChartOptionsDto";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -26,54 +27,39 @@ export const getChartOptions = (
   bannerChartData: any = store.getState().chart.bannerChartData,
   transposed: boolean = store.getState().chart.chartTranspose
 ): any => {
+  const chart: IchartOptionsDto = {
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    chartLabelType: store.getState().chart.chartLabelType,
+    chartType: store.getState().chart.chartType,
+    significant: store.getState().chart.significant,
+    showMean: store.getState().chart.showMean,
+  };
+  // const questions = {
+  //   selectedBannerQuestionId:
+  //     store.getState().questions.selectedBannerQuestionId,
+  // };
+
   if (questionData !== null) {
     switch (questionData.type) {
       case QuestionType.SINGLE:
-        return getSingleChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          questionChartData,
-          transposed
-        );
+        return getSingleChartOptions(chart);
       case QuestionType.MULTI:
-        return getMultiChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          questionChartData,
-          bannerChartData,
-          transposed
-        );
+        return getMultiChartOptions(chart);
       case QuestionType.RANK:
-        return getRankChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          transposed
-        );
+        return getRankChartOptions(chart);
       case QuestionType.GRID:
-        return getGridChartOptions(questionData, chartData, baseCount);
+        return getGridChartOptions(chart);
       case QuestionType.GRID_MULTI:
-        return getGridMultiChartOptions(
-          questionData,
-          chartData,
-          baseCount,
-          transposed
-        );
+        return getGridMultiChartOptions(chart);
       case QuestionType.NUMBER:
-        return getNumberChartOption(
-          questionData,
-          chartData,
-          baseCount,
-          bannerQuestionData,
-          chartOptionsData,
-          transposed
-        );
+        return getNumberChartOption(chart);
       default:
         return {};
     }
@@ -82,26 +68,9 @@ export const getChartOptions = (
   }
 };
 
-const getMultiChartOptions = (
-  questionData: IQuestion,
-  chartData: any[],
-  baseCount: number,
-  bannerQuestionData: IQuestion | null,
-  chartOptionsData: any,
-  questionChartData: any,
-  bannerChartData: any,
-  transposed: any
-): any => {
-  const series = getMultiChartOptionsSeries(
-    questionData,
-    chartData,
-    baseCount,
-    bannerQuestionData,
-    chartOptionsData,
-    questionChartData,
-    bannerChartData,
-    transposed
-  );
+const getMultiChartOptions = (chart: IchartOptionsDto): any => {
+  const series = getMultiChartOptionsSeries(chart);
+  console.log(series);
 
   return {
     legend: {
@@ -112,24 +81,9 @@ const getMultiChartOptions = (
   };
 };
 
-const getSingleChartOptions = (
-  questionData: IQuestion,
-  chartData: any[],
-  baseCount: number,
-  bannerQuestionData: IQuestion | null,
-  chartOptionsData: any,
-  questionChartData: any,
-  transposed: boolean
-): any => {
-  const series = getSingleChartOptionsSeries(
-    questionData,
-    chartData,
-    baseCount,
-    bannerQuestionData,
-    chartOptionsData,
-    questionChartData,
-    transposed
-  );
+const getSingleChartOptions = (chart: IchartOptionsDto): any => {
+  const series = getSingleChartOptionsSeries(chart);
+  //console.log('series', series);
 
   return {
     legend: {
@@ -140,16 +94,9 @@ const getSingleChartOptions = (
   };
 };
 
-const getRankChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-  transposed: boolean
-): any => {
+const getRankChartOptions = (chart: IchartOptionsDto): any => {
   const series = [];
-  series.push(
-    ...getRankChartOptionsData(questionData, chartData, baseCount, transposed)
-  );
+  series.push(...getRankChartOptionsData(chart));
   return {
     legend: {
       enabled: true,
@@ -160,24 +107,21 @@ const getRankChartOptions = (
 };
 
 const getGridChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number
+  // questionData: IQuestion,
+  // chartData: any,
+  // baseCount: number
+  chart: IchartOptionsDto
 ): any => {
   const series = [];
 
-  const {
-    chart: { showMean },
-  } = store.getState();
+  const { showMean } = chart;
 
   if (showMean) {
     series.length = 0;
-    series.push(...getGridMeanChartOptions(questionData, chartData, baseCount));
+    series.push(...getGridMeanChartOptions(chart));
   } else {
     series.length = 0;
-    series.push(
-      ...getGridChartoptionSeries(questionData, chartData, baseCount)
-    );
+    series.push(...getGridChartoptionSeries(chart));
   }
   return {
     legend: {
@@ -189,21 +133,9 @@ const getGridChartOptions = (
   };
 };
 
-const getGridMultiChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-  transposed: any
-): any => {
+const getGridMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series: any = [];
-  series.push(
-    ...getMultiGridChartOptionsData(
-      questionData,
-      chartData,
-      baseCount,
-      transposed
-    )
-  );
+  series.push(...getMultiGridChartOptionsData(chart));
   return {
     legend: {
       enabled: true,
@@ -278,11 +210,11 @@ export const getPlotOptions = (
     //   ? '{point.y:.1f}%'
     //   : '{point.y:.0f}';
     if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-      plotOptions["series"].dataLabels.y = 0;
-      plotOptions["series"].dataLabels.rotation = -90;
+      // plotOptions['series'].dataLabels.y = 0;
+      // plotOptions['series'].dataLabels.rotation = -90;
     } else {
-      plotOptions["series"].dataLabels.y = undefined;
-      plotOptions["series"].dataLabels.rotation = 0;
+      // plotOptions['series'].dataLabels.y = undefined;
+      // plotOptions['series'].dataLabels.rotation = 0;
     }
   } else if (chartType === ChartType.PIE) {
     plotOptions["pie"] = {

@@ -8,7 +8,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import CloseIcon from '@mui/icons-material/Close';
 import { toggleSidebarUserCache } from '../../../../redux/actions/sidebarAction';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { ReactComponent as ColumnChartIcon } from '../../../../assets/svg/column-chart-icon.svg';
 import { ReactComponent as StackChartIcon } from '../../../../assets/svg/stack-chart-icon.svg';
 import { ReactComponent as TableIcon } from '../../../../assets/svg/table-icon.svg';
@@ -23,13 +22,12 @@ import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import { Tooltip } from '@material-ui/core';
 import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
-// import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import { resetUserCache } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
   handleDeleteChartCache,
+  handleExportChartCache,
   isChartInCache,
-  multiExport,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -42,7 +40,7 @@ import {
   setChartLabel,
   setChartOrientation,
   setChartTranspose,
-  showMean,
+  setshowMean,
   updateSignificant,
 } from '../../../../redux/actions/chartActions';
 
@@ -53,12 +51,13 @@ import {
 } from '../../../../services/ChartService';
 import {
   setAppliedFilters,
-  setFilterQuestionList,
   setFilters,
 } from '../../../../redux/actions/filterActions';
 import { ChartType } from '../../../../enums/ChartType';
 import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import Loader from '../../../widgets/Loader/Index';
+import clsx from 'clsx';
+import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -66,8 +65,7 @@ export interface UserCacheProps {
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
   const { sidebar } = useSelector((state: RootState) => state);
-  const { chart } = useSelector((state: RootState) => state);
-  // const { savedChart } = useSelector((state: RootState) => state?.userCache);
+  const { chart, chapters } = useSelector((state: RootState) => state);
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [butttonshow, setButtonShow] = useState(true);
@@ -175,25 +173,26 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       return userCacheinfo?._id === cacheId;
     });
 
-    dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
     dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
     dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
-    dispatch(setFilters(_cacheQuestion[0]['filter']));
-    dispatch(updateSignificant(_cacheQuestion[0]['significant']));
-    dispatch(showMean(_cacheQuestion[0]['showMean']));
-
-    // fetchChartData()
-    //   .then((chartData) => {
-    //     dispatch(setChartData(chartData));
-    //     changeChartType(_cacheQuestion[0]['chartType']);
-    //     dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
-    //     dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
-    //     dispatch(setChartTranspose(false));
-    //     if (_cacheQuestion[0]['chartTranspose']) {
-    //       transposeChart();
-    //     }
-    //   })
-    //   .catch((error) => console.log(error));
+    dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
+    dispatch(setSelectedQuestionText(_cacheQuestion[0]['qId']));
+    fetchChartData()
+      .then((chartData) => {
+        userChapterShow(chartData);
+        dispatch(setFilters(_cacheQuestion[0]['filter']));
+        dispatch(updateSignificant(_cacheQuestion[0]['significant']));
+        dispatch(setshowMean(_cacheQuestion[0]['showMean']));
+        dispatch(setChartData(chartData));
+        changeChartType(_cacheQuestion[0]['chartType']);
+        dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
+        dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
+        dispatch(setChartTranspose(false));
+        if (_cacheQuestion[0]['chartTranspose']) {
+          transposeChart();
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const userCacheDelete = () => {
@@ -203,9 +202,33 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     const deleteSavedChartsIds = deleteSavedCharts.map(
       (chartElement) => chartElement._id,
     );
+
     handleDeleteChartCache(deleteSavedChartsIds);
   };
 
+  const userCacheExport = (getsavedChart: any) => {
+    const exportSavedCharts = savedChart.filter(
+      (chartElement: any) => chartElement.isSelected == true,
+    );
+    const exportSavedChartsIds: any = exportSavedCharts.map(
+      (chartElement: any) => chartElement._id,
+    );
+    handleExportChartCache(exportSavedChartsIds, getsavedChart);
+  };
+
+  const userChapterShow = (chartData: any) => {
+    const chapterQuestionid: any = chartData?.questionData?.qId;
+    chapters.allChapters?.forEach((getchapter: any) => {
+      const getSelectedQuestionID: boolean = getchapter.QuestionsQIds.some(
+        (el: any) => {
+          return el === chapterQuestionid;
+        },
+      );
+      if (getSelectedQuestionID) {
+        dispatch(setSelectedChapterId(getchapter?.chapterId));
+      }
+    });
+  };
   return (
     <div className="sidebar user-cache">
       <Drawer
@@ -295,13 +318,25 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                         </div>
 
                         <div className="user-cache__chart-question">
-                          <div className="user-cache__chart-headding">
-                            {savedata?.qText}
-                          </div>
-                          <div className="user-cache__collectdata">
-                            <div className="user-cache__date">
-                              {curentDate.split(',')[0]}
+                          <Tooltip
+                            title={savedata?.qText}
+                            arrow
+                            placement="top"
+                          >
+                            <div className="user-cache__chart-headding">
+                              {savedata?.qText}
                             </div>
+                          </Tooltip>
+                          <div className="user-cache__collectdata">
+                            <Tooltip
+                              title={curentDate.split(',')[0]}
+                              arrow
+                              placement="top"
+                            >
+                              <div className="user-cache__date">
+                                {curentDate.split(',')[0]}
+                              </div>
+                            </Tooltip>
                             <div className="user-cache__colection-icon">
                               {savedChart[index]?.filter.length > 0 ? (
                                 <Tooltip
@@ -342,10 +377,11 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               ) : (
                                 ''
                               )}
+
                               {savedChart[index]?.qId !== '' &&
                               savedChart[index]?.bannerQuestion !== '' ? (
                                 <Tooltip
-                                  title={'Transfer data'}
+                                  title={savedChart[index]?.bannerQuestion}
                                   arrow
                                   placement="top"
                                 >
@@ -396,16 +432,18 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
               Delete
             </Button>
             <Button
-              //disabled
-              className="button--primary btn-line"
+              disabled={butttonshow}
+              className={clsx({
+                'button--primary btn-line': true,
+                butttondisable: butttonshow ? true : false,
+              })}
+              //  className=`${butttonshow} ""button--primary btn-line""`
               onClick={() => {
-                multiExport(savedChart);
-                // removeFilter(appliedFilters);
-                //dispatch(resetFilters());
+                userCacheExport(savedChart);
               }}
             >
               Export
-              <KeyboardArrowDownIcon sx={{ fill: '#fff' }} />
+              {/* <KeyboardArrowDownIcon sx={{ fill: '#fff' }} /> */}
             </Button>
           </div>
         </div>

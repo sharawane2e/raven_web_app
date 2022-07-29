@@ -15,7 +15,7 @@ import {
   setChartFullScreen,
   setChartLoading,
   resetChart,
-  showMean,
+  setshowMean,
   updateChartOptions,
   updateSignificant,
   setFullScreenLoading,
@@ -198,7 +198,7 @@ const chartReducer = createReducer(initialState, (builder) => {
     fullScreenLoading: action.payload,
   }));
 
-  builder.addCase(showMean, (state, action) => ({
+  builder.addCase(setshowMean, (state, action) => ({
     ...state,
     showMean: action.payload,
   }));

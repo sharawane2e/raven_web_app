@@ -12,24 +12,25 @@ import { ChartType } from '../../enums/ChartType';
 import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
-import { bannerChartDataGen } from '../export-helper-utils/BannerQuesUtils';
+import { IchartOptionsDto } from '../../types/IChartOptionsDto';
 import { getMatchedfilter, getSum } from '../Utility';
 import { getsignificantdifference } from './significanceDiff';
 
-export const getMultiChartOptionsSeries = (
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-  bannerQuestionData: any,
-  chartOptionsData: any,
-  questionChartData: any,
-  bannerChartData: any,
-  transposed: any,
-) => {
+export const getMultiChartOptionsSeries = (chart: IchartOptionsDto) => {
   const {
-    chart: { significant, chartLabelType, chartType },
-    questions: { bannerQuestionList },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    significant,
+    chartLabelType,
+    chartType,
+  } = chart;
+
   const selectedBannerQuestionId = bannerQuestionData?.qId;
   const series: any[] = [];
 
@@ -37,43 +38,15 @@ export const getMultiChartOptionsSeries = (
     if (transposed) {
       if (bannerQuestionData?.type == QuestionType.SINGLE) {
         series.length = 0;
-        series.push(
-          ...getSingleTransposeChartOptions(
-            questionData,
-            chartData,
-            baseCount,
-            bannerQuestionData,
-            chartOptionsData,
-            questionChartData,
-            bannerChartData,
-            transposed,
-          ),
-        );
+        series.push(...getSingleTransposeChartOptions(chart));
       }
       if (bannerQuestionData?.type == QuestionType.MULTI) {
         series.length = 0;
-        series.push(
-          ...getMultiTransposeChartOptions(
-            questionData,
-            chartData,
-            bannerQuestionData,
-            chartOptionsData,
-            bannerChartData,
-          ),
-        );
+        series.push(...getMultiTransposeChartOptions(chart));
       }
     } else {
       series.length = 0;
-      series.push(
-        ...multiSingleBannerChart(
-          questionData,
-          chartData,
-          bannerQuestionData,
-          bannerQuestionList,
-          chartLabelType,
-          questionChartData,
-        ),
-      );
+      series.push(...multiSingleBannerChart(chart));
     }
   } else {
     series.length = 0;
@@ -102,15 +75,9 @@ export const getMultiChartOptionsSeries = (
 
     series.push(...updatedSeries);
   }
-  if (selectedBannerQuestionId) {
-    bannerChartDataGen(
-      series,
-      questionData,
-      chartData,
-      bannerQuestionData,
-      transposed,
-    );
-  }
+  // if (selectedBannerQuestionId) {
+  //   bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
+  // }
   return series;
 };
 
@@ -214,17 +181,17 @@ const getChartMultiChartSeries = (
   return series;
 };
 
-const multiSingleBannerChart = (
-  questionData: any,
-  chartData: any,
-  bannerQuestionData: any,
-  bannerQuestionList: any,
-  chartLabelType: any,
-  questionChartData: any,
-) => {
-  //debugger;
+const multiSingleBannerChart = (chart: IchartOptionsDto) => {
   const {
-    chart: { significant },
+    questionData,
+    chartData,
+    bannerQuestionData,
+    chartLabelType,
+    questionChartData,
+    significant,
+  } = chart;
+  const {
+    questions: { bannerQuestionList },
   } = store.getState();
   const selectedBannerQuestionId = bannerQuestionData?.qId;
   const categories: string[] = [];
@@ -325,19 +292,19 @@ const multiSingleBannerChart = (
   return series;
 };
 
-const getSingleTransposeChartOptions = (
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-  bannerQuestionData: any,
-  chartOptionsData: any,
-  questionChartData: any,
-  bannerChartData: any,
-  transposed: any,
-) => {
+const getSingleTransposeChartOptions = (chart: IchartOptionsDto) => {
   const {
-    chart: { chartLabelType, significant },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    chartLabelType,
+    significant,
+  } = chart;
 
   const series: any[] = [];
   const labelCodeArr: string[] = [];
@@ -449,16 +416,17 @@ const getSingleTransposeChartOptions = (
   return series;
 };
 
-const getMultiTransposeChartOptions = (
-  questionData: any,
-  chartData: any,
-  bannerQuestionData: any,
-  chartOptionsData: any,
-  bannerChartData: any,
-) => {
+const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
   const {
-    chart: { chartLabelType, significant },
-  } = store.getState();
+    questionData,
+    chartData,
+    bannerQuestionData,
+    chartOptionsData,
+    bannerChartData,
+    chartLabelType,
+    significant,
+  } = chart;
+
   const series: any[] = [];
 
   questionData.options.forEach(
@@ -481,7 +449,7 @@ const getMultiTransposeChartOptions = (
             bannerOptionObject.labelCode,
           );
           const numberValue = numberValueArr[0]?.count;
-          let percentageValue = (numberValue / baseCount) * 100;
+          let percentageValue: number = (numberValue / baseCount) * 100;
           if (!percentageValue) {
             percentageValue = 0;
           }

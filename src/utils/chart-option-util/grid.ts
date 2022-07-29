@@ -1,5 +1,3 @@
-import store from '../../redux/store';
-import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { getMatchedfilter, getmatchedFind, round } from '../Utility';
@@ -17,20 +15,26 @@ import {
   getStandarderrorFunction,
 } from '../simplestatistics';
 import { getsignificantdifference } from './significanceDiff';
+import { IchartOptionsDto } from '../../types/IChartOptionsDto';
 
-export const getGridChartoptionSeries = (
-  questionData: any,
-  chartData: any,
-  baseCount: any,
-) => {
+export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
+  const {
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    transposed,
+    chartLabelType,
+    chartType,
+    significant,
+  } = chart;
   const categories = [];
   const series = [];
-  const {
-    chart: { chartLabelType, chartTranspose, significant },
-  } = store.getState();
 
-  if (chartTranspose) {
-    series.push(...getGridTransposeChartOptions(questionData, chartData));
+  if (transposed) {
+    series.push(...getGridTransposeChartOptions(chart));
   } else {
     const subGroups = questionData.subGroups.filter((subGroup: any) => {
       const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
@@ -63,13 +67,14 @@ export const getGridChartoptionSeries = (
           return o.count;
         });
 
+        //const base = optionData?.baseCount || baseCount;
         const base = optionData?.baseCount || baseCount;
 
         let percentageValue;
         let numberValue;
         numberValue = round(count, 0);
         percentageValue = (count / base) * 100;
-
+        // debugger;
         data.push({
           name: subGroup.labelText,
           y:
@@ -103,28 +108,38 @@ export const getGridChartoptionSeries = (
   }
 
   if (significant) {
-    return getsignificantdifference(
+    const updatedSeries = getsignificantdifference(
       questionData,
       chartData,
       undefined,
       series,
       chartLabelType,
-      chartTranspose,
+      transposed,
     );
-  } else {
-    return series;
+    series.length = 0;
+    series.push(...updatedSeries);
   }
+  return series;
 };
 
-const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
+const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
   const {
-    chart: { chartLabelType, significant },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    transposed,
+    chartLabelType,
+    chartType,
+    significant,
+  } = chart;
   const series = [];
-  for (let i = 0; i < questiondata.subGroups.length; i++) {
-    const currentSubGroup = questiondata.subGroups[i];
+  for (let i = 0; i < questionData.subGroups.length; i++) {
+    const currentSubGroup = questionData.subGroups[i];
     const data = [];
-    const scales = questiondata.scale;
+    const scales = questionData.scale;
     for (let j = 0; j < scales.length; j++) {
       const scale = scales[j];
       let baseCount: number = 0;
@@ -144,7 +159,7 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
           },
         );
 
-        if (chartDataObject._id == questiondata.subGroups[i].qId) {
+        if (chartDataObject._id == questionData.subGroups[i].qId) {
           const countObject = getMatchedfilter(
             chartDataObject.options,
             'option',
@@ -195,14 +210,19 @@ const getGridTransposeChartOptions = (questiondata: any, chartData: any) => {
   return series;
 };
 
-export const getGridMeanChartOptions = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-): any => {
+export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
   const {
-    chart: { chartTranspose, significant, chartLabelType },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    transposed,
+    chartLabelType,
+    chartType,
+    significant,
+  } = chart;
 
   const data: any[] = [];
   const standardDeviation: any[] = [];
@@ -282,7 +302,7 @@ export const getGridMeanChartOptions = (
     });
   }
 
-  if (chartTranspose) {
+  if (transposed) {
     const transposeSeries = [];
     for (
       let optionIndex = 0;

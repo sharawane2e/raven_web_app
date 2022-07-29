@@ -1,4 +1,3 @@
-import store from "../../redux/store";
 import { IQuestion } from "../../types/IQuestion";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartType } from "../../enums/ChartType";
@@ -9,16 +8,22 @@ import {
   dataLabelsNumberFormate,
   decimalPrecision,
 } from "../../constants/Variables";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
-export const getMultiGridChartOptionsData = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-  transposed: boolean
-) => {
+export const getMultiGridChartOptionsData = (chart: IchartOptionsDto) => {
   const {
-    chart: { chartLabelType, chartType },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    significant,
+    chartLabelType,
+    chartType,
+  } = chart;
 
   const series: any[] = [];
 
@@ -92,7 +97,6 @@ const multiGridChartOptionData = (
         }
       }
       const base = label.baseCount ? label.baseCount : optionData?.baseCount;
-
       let plotValue;
       let percentageValue = (count / base) * 100;
       let numberValue = count;

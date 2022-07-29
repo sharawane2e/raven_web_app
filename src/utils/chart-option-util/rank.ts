@@ -1,4 +1,3 @@
-import store from "../../redux/store";
 import { IQuestion } from "../../types/IQuestion";
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
@@ -10,16 +9,22 @@ import {
   dataLabelsNumberFormate,
   decimalPrecision,
 } from "../../constants/Variables";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
-export const getRankChartOptionsData = (
-  questionData: IQuestion,
-  chartData: any,
-  baseCount: number,
-  transposed: boolean
-) => {
+export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
   const {
-    chart: { chartLabelType, chartType },
-  } = store.getState();
+    questionData,
+    chartData,
+    baseCount,
+    bannerQuestionData,
+    chartOptionsData,
+    questionChartData,
+    bannerChartData,
+    transposed,
+    significant,
+    chartLabelType,
+    chartType,
+  } = chart;
 
   const series: any[] = [];
 
