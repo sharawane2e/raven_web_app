@@ -1,5 +1,10 @@
-export function MultiQuesExportUtils(newSeriesData: any) {
-  console.log(JSON.parse(JSON.stringify(newSeriesData)));
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+
+export function MultiQuesExportUtils(
+  newSeriesData: any,
+  chartOptionsPayload: IchartOptionsDto
+) {
   const series = [...newSeriesData.series];
   const updatedSeries: any[] = [];
   const allLabelsArr: string[] = [];
@@ -27,14 +32,13 @@ export function MultiQuesExportUtils(newSeriesData: any) {
         values.push(0);
       } else {
         labels.push(seriesObject.data[labelIndex].name);
-        values.push(seriesObject.data[labelIndex].y / 100);
+        if (chartOptionsPayload.chartLabelType == ChartLabelType.PERCENTAGE) {
+          values.push(seriesObject.data[labelIndex].y / 100);
+        } else {
+          values.push(seriesObject.data[labelIndex].y);
+        }
       }
     });
-
-    // seriesObject.data.forEach((dataObject: any) => {
-    //   labels.push(dataObject.name);
-    //   values.push(dataObject.y / 100);
-    // });
 
     updatedSeries.push({
       name,

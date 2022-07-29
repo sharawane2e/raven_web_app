@@ -38,18 +38,21 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     questions,
     chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
-  // const { chart } = store.getState();
   const dispatch = useDispatch();
 
   const sortedChapterOrder = _.sortBy(allChapters, ["order"]);
 
   useEffect(() => {
     fetchChaptersList();
-    // handleChapterChange(selectedChapterId)
   }, []);
 
   useEffect(() => {
     handleChapterChange(selectedChapterId);
+    const findIds: any = _.find(allChapters, {
+      chapterId: selectedChapterId.toString(),
+    });
+    if (findIds)
+      Toaster.success(`${StaticText?.CHART_APPLIED} ${findIds?.labelText}`);
   }, [selectedChapterId]);
 
   const fetchChaptersList = async () => {
@@ -68,10 +71,6 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     dispatch(setChartType(ChartType.COLUMN));
     dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
     dispatch(resetChart([""]));
-    const findIds: any = _.find(allChapters, {
-      chapterId: chapterId.toString(),
-    });
-    Toaster.success(`${StaticText?.CHART_APPLIED} ${findIds?.labelText}`);
   };
 
   const StyledButton = styled("button")(

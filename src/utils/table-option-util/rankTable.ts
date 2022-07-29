@@ -18,18 +18,9 @@ export const rankTable = (
     count.push(...updatedCount);
     minMaxArr.push(...updatedMinMaxArr);
   } else {
-    if (questionData.isGroupNet) {
-      const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-        chartRows,
-        questionData.groupNetData
-      );
-      count.push(...updatedCount);
-      minMaxArr.push(...updatedMinMaxArr);
-    } else {
-      const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
-      count.push(...updatedCount);
-      minMaxArr.push(...updatedMinMaxArr);
-    }
+    const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
+    count.push(...updatedCount);
+    minMaxArr.push(...updatedMinMaxArr);
   }
 
   const roundedOffCount = roundOffCount(count);
@@ -41,16 +32,6 @@ export const rankTable = (
   const mergedChartRows: any[] = [
     ...maxMinChartRows(chartRows, chartLabelType, minMaxArr),
   ];
-
-  //adding significant
-  if (chartOptionsPayload.significant) {
-    const updatedMergedChartRows = tableDataSignificance(
-      mergedChartRows,
-      chartSeries
-    );
-    mergedChartRows.length = 0;
-    mergedChartRows.push(...updatedMergedChartRows);
-  }
 
   //add header
   const headerMergedChartRows: any[] = [

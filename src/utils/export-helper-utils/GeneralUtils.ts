@@ -46,10 +46,6 @@ export function meanStandardDeviation(chart: IchartOptionsDto) {
     chartLabelType,
     chartData,
   } = chart;
-  // const {
-  //   standard: { isMean, standardDeviation, standardError },
-  //   chart: { questionData },
-  // } = store.getState();
   let standardDeviationMean: any;
   let updatedMeanStandarad: number = 0;
   let updatedStandardDeviation: number = 0;

@@ -3,7 +3,6 @@ import { ChartType } from "../../enums/ChartType";
 import jsPDF from "jspdf";
 import "svg2pdf.js";
 import autoTable from "jspdf-autotable";
-import { tableChartDataGen } from "../export-helper-utils/TableUtils";
 import { exportPrefix } from "../../constants/Variables";
 import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
 import { getChartOptions } from "../ChartOptionFormatter";
