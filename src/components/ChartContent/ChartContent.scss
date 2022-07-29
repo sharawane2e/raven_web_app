@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     padding: 0.4rem 0px;
-    @media (max-width: 960px) {
+    @media (max-width: 1200px) {
       display: none;
     }
   }
@@ -45,7 +45,7 @@
       height: calc(100vh - 280px);
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
-     // margin: 15px 5px 10px 8px;
+      // margin: 15px 5px 10px 8px;
     }
     .highcharts-background {
       fill: transparent;
@@ -217,7 +217,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    svg{
+    svg {
       @media (max-width: 767px) {
         width: 100%;
         height: 350px;
@@ -248,7 +248,7 @@
 .chart-option-tooltip {
   display: none;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     display: block;
     color: $white;
   }
@@ -274,9 +274,21 @@
   align-items: center;
 }
 
-.chart-items{
+.chart-items {
   display: flex;
 }
-#Group_4227{
+#Group_4227 {
   cursor: pointer;
+}
+.icon-width {
+  .favourite-icon {
+    @media (max-width: 1023px) {
+      width: 20%;
+    }
+  }
+  .signDiff {
+    @media (max-width: 1023px) {
+      width: 20%;
+    }
+  }
 }

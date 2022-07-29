@@ -217,8 +217,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <Chapter />
         </Grid>
         <Grid item className="chart-content__control-wrapper">
-          {/* <ChartOptionsControl /> */}
-
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
@@ -274,7 +272,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <MenuItem className="chart-content__menu-item">
             <OrientationControl />
           </MenuItem>
-          <MenuItem className="chart-content__menu-item">
+          <MenuItem className="chart-content__menu-item icon-width">
             <SignificantDiff />
             <ChartTransposeControl />
           </MenuItem>
@@ -284,7 +282,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <MenuItem className="chart-content__menu-item">
             <LabelTypeControl />
           </MenuItem>
-          <MenuItem className="chart-content__menu-item">
+          <MenuItem className="chart-content__menu-item icon-width">
+            <FavouriteControl />
             <ExportChart />
           </MenuItem>
         </Menu>
