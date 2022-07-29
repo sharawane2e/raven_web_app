@@ -17,7 +17,6 @@ import { chartFontFace } from "../../constants/Variables";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { QuestionType } from "../../enums/QuestionType";
 import { colorArr, primaryBarPPt } from "../../constants/Variables";
-
 import { chartConfig, tableConfig } from "../../config/PptConfig";
 import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
@@ -58,8 +57,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     );
 
     let baseText: string = `Sample set: ${baseCount}`;
-    console.log(appliedFilters);
-
     let filters: string = appliedFiltersText(appliedFilters);
 
     let significanceText: string =
@@ -97,15 +94,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       showMean: payloadObjectArr[i].chart.showMean,
     };
 
-    // if (payloadObjectArr[i].chart.questionData.isGroupNet) {
-    //   const updatedQuestionOptions: any[] = JSON.parse(
-    //     JSON.stringify(questionData.options)
-    //   );
-    //   updatedQuestionOptions.push(...questionData.groupNetData);
-    //   questionData.options.length = 0;
-    //   questionData.options.push(...updatedQuestionOptions);
-    // }
-
     const newSeriesData = {
       ...getChartOptions(
         chartOptionsPayload.questionData,
@@ -118,9 +106,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.transposed
       ),
     };
-    // debugger;
-
-    console.log(JSON.parse(JSON.stringify(newSeriesData)));
 
     if (chartType === ChartType.TABLE) {
       const filledSeries = fillEmptyDateSeries(
@@ -131,14 +116,12 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.bannerQuestionData,
         chartOptionsPayload.chartData
       );
-      console.log(filledSeries);
       const chartRows = getChartRows(filledSeries, chartOptionsPayload)[0];
       seriesData = chartRows;
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
     } else {
-      seriesData = newChartDataGen(newSeriesData);
-      console.log(seriesData);
+      seriesData = newChartDataGen(newSeriesData, chartOptionsPayload);
       const { pptChartType, chartColors } = slideChartConfig(
         chartType,
         pptxGenJsObj,
@@ -185,24 +168,31 @@ const getChartSettings = (
   showMean: boolean,
   questionType: string | undefined
 ) => {
+  let legednshow = false;
+  if (
+    (chartType === ChartType.COLUMN && questionType == QuestionType.SINGLE) ||
+    (chartType === ChartType.COLUMN && questionType == QuestionType.MULTI)
+  ) {
+    legednshow = false;
+  } else {
+    legednshow = true;
+  }
   const chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
-    showLegend:
-      chartType === ChartType.COLUMN || questionType == QuestionType.SINGLE
-        ? true
-        : false,
+
+    showLegend: legednshow,
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
         ? "##.##%;;;"
         : showMean
         ? "##.##"
-        : "##",
+        : "####",
     valLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
         ? "##.##%;;;"
         : showMean
         ? "##.##"
-        : "##",
+        : "####",
   };
 
   return chartSettings;

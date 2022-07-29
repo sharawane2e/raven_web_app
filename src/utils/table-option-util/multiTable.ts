@@ -25,32 +25,13 @@ export const multiTable = (
   const minMaxArr: any[] = [];
 
   if (transposed) {
-    if (bannerQuestionData.isGroupNet) {
-      //need to find situation in a question and then fix it
-      // const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-      //   chartRows,
-      //   questionData.groupNetData
-      // );
-      // count.push(...updatedCount);
-      // minMaxArr.push(...updatedMinMaxArr);
-    } else {
-      const { updatedMinMaxArr, updatedCount } = minMaxObject(
-        chartRows,
-        groupNetIndexArr
-      );
-      count.push(...updatedCount);
-      minMaxArr.push(...updatedMinMaxArr);
-    }
+    const { updatedMinMaxArr, updatedCount } = minMaxObject(
+      chartRows,
+      groupNetIndexArr
+    );
+    count.push(...updatedCount);
+    minMaxArr.push(...updatedMinMaxArr);
   } else {
-    // if (questionData.isGroupNet) {
-    //   const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-    //     chartRows,
-    //     questionData.groupNetData
-    //   );
-    //   count.push(...updatedCount);
-    //   minMaxArr.push(...updatedMinMaxArr);
-    // } else {
-
     const { updatedMinMaxArr, updatedCount } = minMaxObject(
       chartRows,
       questionData.options
