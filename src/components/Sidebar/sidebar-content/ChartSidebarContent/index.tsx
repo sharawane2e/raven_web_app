@@ -29,29 +29,37 @@ import { IFilter } from '../../../../types/IFilter';
 import { filter, values } from 'lodash';
 
 const ChartSidebarContent: React.FC = () => {
-  const { appliedFilters } = useSelector((state: RootState) => state.filters);
   const dispatch = useDispatch();
   const {
-    filters: { filterQuestionList, filters },
+    filters: { filterQuestionList, filters, appliedFilters },
     chart: { questionData },
   } = useSelector((state: RootState) => state);
 
   /*user cache set applied Filter*/
-  // useEffect(() => {
-  //   filters.map((filterEl: any) => {
-  //     const filterId = filterEl?.qId;
-  //     const filterValue = {
-  //       labelCode: filterEl?.code,
-  //       labelText: filterEl?.label,
-  //       order: 0,
-  //     };
-  //     //handleFilterSelect()
-  //   });
-
-  // }, []);
+  useEffect(() => {
+    // filters.map((filterEl: any) => {
+    //   const filterId = filterEl?.qId;
+    //   const filterValue = {
+    //     labelCode: filterEl?.code,
+    //     labelText: filterEl?.label,
+    //     order: 0,
+    //   };
+    //   //handleFilterSelect()
+    // });
+    // appliedFilters.forEach((applyFilter: any) => {
+    //   const values: any = {
+    //     labelCode: applyFilter.code,
+    //     labelText: applyFilter.label,
+    //     order: 0,
+    //   };
+    //   console.log(values, applyFilter.qId);
+    //   handleFilterSelect(applyFilter.qId, values);
+    //   handleFilterSelectAll(applyFilter.qId, values);
+    // });
+  }, []);
 
   const handleFilterSelect = (qId: string, value: IQuestionOption) => {
-    //console.log('qid', qId, 'value', value);
+    console.log('qid', qId, 'value', value);
     const updatedFilters = [...filters];
 
     const filterQuestion = filterQuestionList.find((q) => q.qId === qId);
@@ -133,7 +141,6 @@ const ChartSidebarContent: React.FC = () => {
   };
   const handleFilterSelectAll = (
     qId: string,
-
     selectedValues: IQuestionOption[],
   ) => {
     const updatedFilters = [...filters];
@@ -215,7 +222,6 @@ const ChartSidebarContent: React.FC = () => {
         .catch((error) => console.log(error));
     }
   };
-  //console.log('filterQuestionList', filterQuestionList);
 
   return (
     <div className="chart-sidebar">

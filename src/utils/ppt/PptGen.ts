@@ -4,6 +4,7 @@ import {
   copyRightText,
   exportPrefix,
   significantText,
+  projectName as projectFileName,
 } from '../../constants/Variables';
 import {
   appliedFiltersText,
@@ -143,7 +144,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     }
   }
 
-  await pptxGenJsObj.writeFile({ fileName: fileName + '.pptx' });
+  await pptxGenJsObj.writeFile({ fileName: projectFileName + '.pptx' });
 };
 
 const getGraphTypeProps = (

@@ -282,10 +282,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           >
             {savedChart.length === 0 ? (
               <>
-                <div className="user-cache__no-data">
-                  No questions exists <br />
-                  Click icon to add in cache
-                </div>
+                <div className="user-cache__no-data">Cache list is empty</div>
               </>
             ) : (
               savedChart.map((savedata: any, index: any) => {
