@@ -70,15 +70,14 @@ export const getsignificantdifference = (
   series.length = 0;
   series.push(...filledSeries);
 
-  // series.forEach((seriesObject: any) => {
-  //   if (seriesObject.data.length > seriesName.length) {
-  //     seriesName.length = 0;
-  //     seriesObject.data.forEach((seriesData: any) => {
-  //       seriesName.push(seriesData.name);
-  //     });
-  //     series[seriesIndex].data = updatedData;
-  //   }
-  // });
+  series.forEach((seriesObject: any) => {
+    if (seriesObject.data.length > seriesName.length) {
+      seriesName.length = 0;
+      seriesObject.data.forEach((seriesData: any) => {
+        seriesName.push(seriesData.name);
+      });
+    }
+  });
 
   const updatedSeries = series.map((singleSeries: any) => {
     const updatedSeriesData = {
@@ -97,7 +96,7 @@ export const getsignificantdifference = (
         formatter: function (this: any, options: any) {
           return ` ${parseFloat(this.y.toFixed(2))}${
             chartLabelType == ChartLabelType.PERCENTAGE ? '%' : ''
-          } <span class="significante-color">  ${
+          } <span class="significante-color">${
             this.point.significantDiffernce
           } </span>`;
         },
@@ -150,7 +149,7 @@ export const getTablesignificantdifference = (seriesData: any) => {
     seriesData[i]['significanceDifference'] = [];
 
     for (let j = 0; j < seriesData[i]['labels'].length; j++) {
-      seriesData[i]['significance'].push(`${indexToChar(j)}`);
+      seriesData[i]['significance'].push(indexToChar(j));
       // seriesupdatedLabels.push(
       //   seriesData[i]["labels"][j] + `(${indexToChar(j)})`
       // );
@@ -163,9 +162,6 @@ export const getTablesignificantdifference = (seriesData: any) => {
       const significantArry = [];
 
       for (let k = 0; k < seriesData[i].percentageValues.length; k++) {
-        /*
-        seriesData[i].percentageValues[j] != 0 &&
-        seriesData[i].percentageValues[k] != 0*/
         if (
           j !== k &&
           seriesData[i].percentageValues[j] != 0 &&
