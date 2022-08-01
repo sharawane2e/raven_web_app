@@ -10,6 +10,7 @@ import store from '../redux/store';
 //   setFullScreenLoading,
 // } from '../redux/actions/chartActions';
 import { timeout } from './Utility';
+import { accesskey } from '../constants/Variables';
 
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
@@ -17,7 +18,7 @@ const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_BASE_URL,
 });
 
-const token = LocalStorageUtils.getToken();
+const token = LocalStorageUtils.getToken() || accesskey;
 if (token) {
   axiosInstance.defaults.headers.common['Authorization'] = 'bearer ' + token;
 }

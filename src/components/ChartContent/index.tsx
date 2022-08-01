@@ -45,7 +45,7 @@ import { ChartLabelType } from '../../enums/ChartLabelType';
 import { setSelectedQuestion } from '../../redux/actions/chapterActions';
 import StandardDeviation from '../StandardDeviation';
 import SignificantDiff from '../SignificantDiff';
-import { significantText } from '../../constants/Variables';
+import { showhidefeature, significantText } from '../../constants/Variables';
 import FavouriteControl from '../FavouriteControl';
 
 interface ChartContentProps {
@@ -224,7 +224,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <OrientationControl />
           </div>
           <div className="chart-content__control-item chart-items">
-            <SignificantDiff />
+            {showhidefeature.significant ? <SignificantDiff /> : ''}
+
             <ChartTransposeControl />
           </div>
           <div className="chart-content__control-item">
@@ -234,7 +235,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <LabelTypeControl />
           </div>
           <div className="chart-content__control-item chart-items">
-            <FavouriteControl />
+            {showhidefeature.userCacheIcon ? <FavouriteControl /> : ''}
+
             <ExportChart />
           </div>
         </Grid>

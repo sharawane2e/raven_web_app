@@ -1,17 +1,17 @@
 .appbar {
   display: inline-flex;
   justify-content: space-between;
-  min-height: 3.123rem; //50px
+  min-height: 5rem; //50px
   width: 100%;
   margin-left: 0;
-  background: map-get($map: $bg-color, $key: "secondary-dark");
+  background: map-get($map: $bg-color, $key: "secondary-shade");
 
   .appbar__left-panel {
     position: relative;
     .appbar__heading {
-      margin-left: 20px;
+      margin-left: 0px;
       color: map-get($map: $text-color, $key: primary);
-      font-weight: bold;
+      font-weight: 500;
     }
 
     @media (max-width: 1024px) {
@@ -66,7 +66,7 @@
       background: map-get($map: $bg-color, $key: secondary);
       text-align: center;
       margin-top: 2px;
-      color: map-get($map: $bg-color, $key: "secondary-shade");
+      //color: map-get($map: $bg-color, $key: "secondary-shade");
       border-radius: 4px;
       padding: 0.3rem 0.5rem 0.3rem 0.1rem;
       .tourText {
@@ -96,11 +96,12 @@
     height: 3rem;
     //border-right: 1px solid map-get($map: $text-color, $key: border);
     padding: 0.625rem 0; //10px 0px;
-    -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
-    -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
-    box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
-    background: map-get($map: $bg-color, $key: primary);
+    // -webkit-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    // -moz-box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
+    // box-shadow: 1px 0px 3px 0px rgba(85, 85, 85, 0.25);
     //background: map-get($map: $bg-color, $key: primary);
+    //background: map-get($map: $bg-color, $key: primary);
+    transition: .5s;
 
     @media (max-width: 1025px) {
       border: none;
@@ -180,20 +181,25 @@
   }
 
   .menu-icon {
-    width: 20px;
-    cursor: pointer;
     margin-left: 0.9375rem;
-    padding: 0.625rem 0; //10px 0px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-right: 0.5375rem;
+    float: left;
+    padding: 0.24rem;
+    border: 1px solid map-get($map: $text-color, $key: "fade");
+    border-radius: 50%;
     &::before,
     &::after,
     div {
-      background: map-get($map: $text-color, $key: primary);
+      background: map-get($map: $text-color, $key: fade);
       content: "";
       display: block;
-      height: 2px;
+      height: 1px;
       border-radius: 3px;
-      margin: 4px 0;
-      transition: 0.5s;
+      margin: 3px 2px;
+      transition: .5s;
     }
     @media (max-width: 768px) {
       margin-right: 0.9375rem;
@@ -202,22 +208,26 @@
   }
 
   &.sidebar-open {
+    .appbar__logo-wrapper{
+      width: 0;
+      transition: .5s;
+    }
     // width: calc(100% - #{$sidebar-width});
     // margin-left: $sidebar-width;
 
     @media (min-width: 769px) {
-      .menu-icon {
-        div {
-          transform: scale(0);
-        }
+      // .menu-icon {
+      //   div {
+      //     transform: scale(0);
+      //   }
 
-        &::before {
-          transform: translateY(6px) rotate(135deg);
-        }
-        &::after {
-          transform: translateY(-6px) rotate(-135deg);
-        }
-      }
+      //   &::before {
+      //     transform: translateY(6px) rotate(135deg);
+      //   }
+      //   &::after {
+      //     transform: translateY(-6px) rotate(-135deg);
+      //   }
+      // }
     }
   }
 
@@ -242,10 +252,10 @@
         }
 
         &::before {
-          transform: translateY(6px) rotate(135deg);
+       //   transform: translateY(6px) rotate(135deg);
         }
         &::after {
-          transform: translateY(-6px) rotate(-135deg);
+         // transform: translateY(-6px) rotate(-135deg);
         }
       }
     }
@@ -291,3 +301,5 @@
   flex-shrink: 0;
   user-select: none;
 }
+
+

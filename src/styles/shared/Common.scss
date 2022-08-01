@@ -74,12 +74,12 @@ html {
 .btn-login-color {
   background-color: $brand-color !important;
 }
-.home-modal__content,
+// .home-modal__content,
+// .home-modal__footer {
+//   background-color: $black;
+// }
 .home-modal__footer {
-  background-color: $black;
-}
-.home-modal__footer {
-  border-top: 1px solid $black !important;
+ // border-top: 1px solid $black !important;
   margin-bottom: 0 !important;
   padding-bottom: 0.9375rem !important;
 }

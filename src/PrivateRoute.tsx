@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router";
-import WebUrl from "./enums/WebUrl";
-import { RootState } from "./redux/store";
-import IRoute from "./types/IRoute";
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
+import WebUrl from './enums/WebUrl';
+import { RootState } from './redux/store';
+import IRoute from './types/IRoute';
 
 export interface PrivateRouteProps {
   component: React.ComponentType;
@@ -18,14 +18,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
   // @ts-ignore
   // return <Component {...props} />;
 
-  return profile &&  profile.accessToken ? (
+  return profile && profile.accessToken ? (
     props.route.isAdmin && !isUserAdmin ? (
       <Redirect to={WebUrl.NOT_FOUND} />
     ) : (
       <Component {...props} />
     )
   ) : (
-    <Redirect to={WebUrl.LOGIN} />
+    <Component {...props} />
+    // <Redirect to={WebUrl.LOGIN} />
   );
 };
 

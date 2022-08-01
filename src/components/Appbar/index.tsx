@@ -18,8 +18,6 @@ import {
   toggleSidebarMobile,
   toggleSidebarUserCache,
 } from '../../redux/actions/sidebarAction';
-import HomeIcon from '@material-ui/icons/Home';
-import { ReactComponent as RavneLogo } from '../../assets/svg/raven_brand_logo.svg';
 import { Badge } from '@mui/material';
 import {
   resetUserCache,
@@ -30,6 +28,7 @@ import ApiRequest from '../../utils/ApiRequest';
 import ApiUrl from '../../enums/ApiUrl';
 import { addNewKeysToUserCache } from '../../services/userCacheService';
 import Toaster from '../../utils/Toaster';
+import { showhidefeature } from '../../constants/Variables';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -92,7 +91,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   }
 
   const getUserCache = () => {
-    dispatch(setCacheLoading(true));
+    if (showhidefeature.userIcon) dispatch(setCacheLoading(true));
     ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
       .then((res) => {
         if (res.success) {
@@ -115,11 +114,17 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       })}
     >
       <div className="appbar__left-panel">
-        <div className="appbar__logo-wrapper client-logo">
-          <div className="public-form__client-logo client-logo__icons">
+        <div
+          className={clsx('appbar__logo-wrapper client-logo', {
+            // 'full-width': variant === 'fullWidth',
+            'sidebar-open': !sidebarOpen,
+            'mobile-sidebar-open': openMobileDrawer,
+          })}
+        >
+          {/* <div className="public-form__client-logo client-logo__icons">
             <RavneLogo />
           </div>
-          <HomeIcon className="home-icon" onClick={refreshPage} />
+          <HomeIcon className="home-icon" onClick={refreshPage} /> */}
         </div>
         <div
           className="menu-icon"
@@ -137,33 +142,45 @@ const Appbar: React.FC<AppbarProps> = (props) => {
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
         </div>
-        <Badge
-          badgeContent={
-            userCache.savedChart == undefined ? 0 : userCache.savedChart.length
-          }
-          color="primary"
-          className="badge-icon"
-        >
-          <div
-            className={`appbar__tourGuide appbar__cache-btn ${
-              sidebar?.userCache ? 'user-active' : ''
-            }`}
-            onClick={() => {
-              toggleUserSidebar();
-              // toggleMobileSidebar();
-            }}
+        {showhidefeature.mycacheIcon ? (
+          <Badge
+            badgeContent={
+              userCache.savedChart == undefined
+                ? 0
+                : userCache.savedChart.length
+            }
+            color="primary"
+            className="badge-icon"
           >
-            <Cache className="cache-icon" />
-            <div className="tourText">My Cache</div>
-          </div>
-        </Badge>
-        <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+            <div
+              className={`appbar__tourGuide appbar__cache-btn ${
+                sidebar?.userCache ? 'user-active' : ''
+              }`}
+              onClick={() => {
+                toggleUserSidebar();
+                // toggleMobileSidebar();
+              }}
+            >
+              <Cache className="cache-icon" />
+              <div className="tourText">My Cache</div>
+            </div>
+          </Badge>
+        ) : (
+          ''
+        )}
+
+        {showhidefeature.mycacheIcon ? (
           <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
-            <ProfileAvatar text={user?.name || ''} />
-            <ExpandMoreIcon className="down-arrow-icon" />
+            <div className="appbar__profile-menu-wrapper" onClick={opneMenu}>
+              <ProfileAvatar text={user?.name || ''} />
+              <ExpandMoreIcon className="down-arrow-icon" />
+            </div>
           </div>
-        </div>
+        ) : (
+          ''
+        )}
       </div>
+
       <Menu
         anchorEl={anchorEl}
         id="menu"

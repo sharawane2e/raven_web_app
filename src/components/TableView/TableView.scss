@@ -43,10 +43,11 @@
   width: 100%;
   border: 1px solid #e5e5e5;
   border-top: none;
-  color: $white;
+  //color: $white;
   // color: map-get($map: $text-color, $key: 'primary-dark');
   &:nth-child(odd):not(:first-child) {
-    background-color: map-get($map: $bg-color, $key: secondary-light);
+    background-color: rgb(190 190 190 / 18%);
+    //background-color: map-get($map: $bg-color, $key: secondary-light);
   }
 }
 @media (min-width: 500px) {

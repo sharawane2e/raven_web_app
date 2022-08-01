@@ -15,7 +15,8 @@
       padding: 0px;
       // margin: 0 5px;
       margin: 0 3px;
-      border: 1px solid map-get($map: $text-color, $key: primary);
+     // border: 1px solid map-get($map: $text-color, $key: primary);
+     
     }
     &.active {
       &:not(.Mui-disabled) {

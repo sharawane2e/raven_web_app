@@ -9,6 +9,7 @@ import { StaticText } from '../../constants/StaticText';
 import { resetUserCache } from '../../redux/actions/userCacheActions';
 import { isChartInCache } from '../../services/userCacheService';
 import { QuestionType } from '../../enums/QuestionType';
+import { showhidefeature } from '../../constants/Variables';
 
 const FavouriteControl: React.FC = () => {
   const { chart } = useSelector((state: RootState) => state);
@@ -39,17 +40,18 @@ const FavouriteControl: React.FC = () => {
       significant: chart?.significant,
       showMean: chart?.showMean,
     };
-
-    ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
-      .then((res) => {
-        if (res.success) {
-          dispatch(resetUserCache(res.data));
-          Toaster.success(res.message);
-        } else {
-          Toaster.error(res.message); //add more things
-        }
-      })
-      .catch((error) => console.log(error));
+    if (showhidefeature.userIcon) {
+      ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
+        .then((res) => {
+          if (res.success) {
+            dispatch(resetUserCache(res.data));
+            Toaster.success(res.message);
+          } else {
+            Toaster.error(res.message); //add more things
+          }
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   const buttonConfig: ButtonGroupConfig[] = [

@@ -52,11 +52,11 @@
 }
 
 .sidebar__label {
-  background-color: map-get($map: $bg-color, $key: 'secondary');
+  background-color:$drop-filter-color;
   padding: 8px 10px;
   font-weight: 500;
   @media (max-width: 767px) {
-    color: #dfdfdf;
+    color:$text-hedding-color;
    
   }
   @media (max-width: 1023px) {
@@ -67,11 +67,13 @@
 .sidebar {
   .MuiDrawer-paper {
     height: 100vh;
-    height: calc(100vh - 68px);
-    margin-top: 68px;
+    height: calc(100vh - 0px);
+    // margin-top: 68px;
    
+    box-shadow: 2px 5px 4px 0 rgb(85 85 85 / 20%);
+
     background: map-get($map: $bg-color, $key: primary);
-    color: #dfdfdf;
+    color: $text-hedding-color;
   }
   .MuiDrawer-paperAnchorDockedLeft {
     border: none;

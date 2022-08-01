@@ -1,6 +1,6 @@
 .chart-content {
   .mr-button.MuiGrid-container {
-    background: map-get($map: $bg-color, $key: secondary);
+    //background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
     width: 100%;
     align-items: center;
@@ -39,6 +39,7 @@
     box-sizing: border-box;
     margin: 8px 12px;
     border: 1px solid $border-color;
+    background: $white;
     @media (max-width: 767px) {
       margin: 15px auto 15px auto;
       width: 95%;
@@ -56,7 +57,8 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "secondary-dark");
+    background: transparent;
+   // background: map-get($map: $bg-color, $key: "secondary-dark");
   }
   .wave-button {
     height: 30px;
@@ -72,7 +74,7 @@
     margin-top: 30px;
     justify-content: space-between;
     &--inr {
-      color: map-get($map: $text-color, $key: "partial-light");
+      color: $filter-text-color;
       width: 90%;
       @media (max-width: 768px) {
         padding-left: 20px;
@@ -201,7 +203,7 @@
     }
   }
   &__control-item:not(:last-child) {
-    border-right: 2px solid map-get($map: $bg-color, $key: silver-chalice);
+    border-right: 1px solid map-get($map: $bg-color, $key: silver-chalice);
     border-radius: 1px;
     padding-right: 10px;
     margin-right: 10px;

@@ -22,7 +22,7 @@
       border: none;
     }
     .MuiInputBase-root {
-      border: none;
+      //border: none;
     }
   }
   .chart-sidebar__filter-questions {
@@ -38,11 +38,12 @@
     @media (max-width: 767px) {
     }
     .MuiButton-label {
-      color: map-get($map: $text-color, $key: primary);
-      color: #fff;
+    //  color: map-get($map: $text-color, $key: primary);
+      //color: #fff;
     }
     .button--primary {
-      color: map-get($map: $text-color, $key: light);
+      color: $white;
+     // color: map-get($map: $text-color, $key: light);
     }
 
     .clear-button {

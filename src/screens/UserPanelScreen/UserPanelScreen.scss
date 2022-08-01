@@ -20,7 +20,7 @@
   color: map-get($map: $text-color, $key: primary-dark);
 }
 .MuiInputBase-root {
-  background: map-get($map: $bg-color, $key: secondary-shade);
+  //background: map-get($map: $bg-color, $key: secondary-shade);
 }
 .MuiSvgIcon-root {
   cursor: pointer;
