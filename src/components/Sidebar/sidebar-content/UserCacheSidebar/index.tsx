@@ -1,4 +1,12 @@
-import { Box, Button, Drawer, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Drawer,
+  Typography,
+} from '@material-ui/core';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { ComponentType, useState, useEffect } from 'react';
@@ -58,6 +66,7 @@ import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import Loader from '../../../widgets/Loader/Index';
 import clsx from 'clsx';
 import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
+import { StaticText } from '../../../../constants/StaticText';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -72,6 +81,15 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const [activeCacheId, setActiveCacheId] = useState<any>('');
   const { userCache } = store.getState();
   const { savedChart } = userCache;
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const dispatch = useDispatch();
 
@@ -282,7 +300,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           >
             {savedChart.length === 0 ? (
               <>
-                <div className="user-cache__no-data">Cache list is empty</div>
+                <div className="user-cache__no-data">
+                  {StaticText.USER_CACHE_EMPTY}
+                </div>
               </>
             ) : (
               savedChart.map((savedata: any, index: any) => {
@@ -290,7 +310,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                 const curentDate = cacheDate.toLocaleString('en-us');
                 return (
                   <div className="user-cache__sidebar" key={index}>
-                    <div className="user-cache__cache-data">
+                    <div
+                      className={`user-cache__cache-data ${
+                        activeCacheId == savedata?._id || savedata?.isSelected
+                          ? 'user-cache__cache-data--active-section'
+                          : ''
+                      }`}
+                    >
                       <div
                         id={savedata?._id}
                         className={`user-cache__cache-data--cache-section ${
@@ -424,7 +450,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
             <Button
               disabled={butttonshow}
               className="button--secondary user-cache__delete-btn"
-              onClick={userCacheDelete}
+              //onClick={userCacheDelete}
+              onClick={handleClickOpen}
             >
               Delete
             </Button>
@@ -453,6 +480,23 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       ) : (
         ''
       )}
+      <Dialog
+        //  onClose={handleClose}
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {StaticText.DELETE_MESSAGE}
+        </DialogTitle>
+
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={userCacheDelete} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

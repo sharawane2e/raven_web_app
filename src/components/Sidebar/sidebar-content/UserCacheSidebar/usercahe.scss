@@ -191,6 +191,7 @@
   }
   
   .user-cache__cache-data--active-section {
+    //background-color: #fffed6 !important;
     .chart-hover-filed path {
       fill: map-get($map: $bg-color, $key: 'accent');
     }

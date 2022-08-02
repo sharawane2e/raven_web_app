@@ -30,4 +30,8 @@ export class StaticText {
   static SIGNIFICANT_DIFFERENCE = 'Significant Difference not allowed';
 
   static USER_CACHE_NOT_AVAILABLE = 'No question selected to add in cache';
+
+  static USER_CACHE_EMPTY = 'Cache list is empty';
+
+  static DELETE_MESSAGE = 'Are you sure do want to delete cache';
 }
