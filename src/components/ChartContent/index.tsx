@@ -201,7 +201,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       labelKey="labelText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
-      disabledPredicate={(value) => value === selectedBannerQuestionId}
+      disabledPredicate={(value) => value === selectedQuestionId}
       MenuProps={{
         classes: { paper: 'testing' },
       }}
@@ -303,7 +303,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               valueKey="qId"
               labelKey="labelText"
               className="single_select_area Step-1"
-              disabledPredicate={(value) => value === selectedQuestionId}
+              disabledPredicate={(value) => value === selectedBannerQuestionId}
               MenuProps={{
                 classes: { paper: 'testing' },
               }}
