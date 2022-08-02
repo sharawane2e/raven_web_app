@@ -118,18 +118,13 @@ const createChartRows = (
     let tableDataSum: number = 0;
 
     charRow.forEach((tableDate: any, tableDateIndex: number) => {
-      if (transposed) {
+      if (transposed && questionData.isGroupNet) {
         if (
           tableDateIndex != 0 &&
-          tableDateIndex < charRow.length - questionData.groupNetData.length &&
-          questionData.isGroupNet
+          tableDateIndex < charRow.length - questionData.groupNetData.length
         ) {
           //because the first column is text
           tableDataSum += tableDate;
-        } else {
-          if (tableDateIndex != 0) {
-            tableDataSum += tableDate;
-          }
         }
       } else {
         if (tableDateIndex != 0) {
