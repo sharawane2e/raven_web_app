@@ -180,7 +180,6 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
   } else {
     series.push(...getSingleSeries(chart));
   }
-  console.log('series', series);
 
   return series;
 };
