@@ -16,7 +16,7 @@ export const singleTable = (
       ...gridCreateChartRowsNets(chartSeries, questionData.groupNetData),
     );
   } else {
-    chartRows.push(...createChartRows(chartSeries));
+    chartRows.push(...createChartRows(chartSeries, questionData, transposed));
   }
 
   const count: number[] = [];
@@ -25,12 +25,12 @@ export const singleTable = (
   if (transposed) {
     if (bannerQuestionData?.isGroupNet) {
       //need to find situation in a question and then fix it
-      const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-        chartRows,
-        questionData.groupNetData,
-      );
-      count.push(...updatedCount);
-      minMaxArr.push(...updatedMinMaxArr);
+      // const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
+      //   chartRows,
+      //   questionData.groupNetData
+      // );
+      // count.push(...updatedCount);
+      // minMaxArr.push(...updatedMinMaxArr);
     } else {
       const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
       count.push(...updatedCount);
@@ -90,7 +90,11 @@ export const singleTable = (
   return mergedChartRows;
 };
 
-const createChartRows = (chartSeries: any) => {
+const createChartRows = (
+  chartSeries: any,
+  questionData: any,
+  transposed: any,
+) => {
   const chartRows: any[] = [];
   //add labels in charts
   chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
@@ -100,10 +104,13 @@ const createChartRows = (chartSeries: any) => {
     chartRows.push(row);
     //});
   });
-
   chartSeries.forEach((serie: any, serieIndex: number) => {
     serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
-      chartRows[dataObjectIndex].push(round(dataObject.y, 2));
+      if (dataObject.y != undefined) {
+        chartRows[dataObjectIndex].push(round(dataObject.y, 2));
+      } else {
+        chartRows[dataObjectIndex].push(0);
+      }
     });
   });
 
@@ -111,9 +118,18 @@ const createChartRows = (chartSeries: any) => {
     let tableDataSum: number = 0;
 
     charRow.forEach((tableDate: any, tableDateIndex: number) => {
-      if (tableDateIndex != 0) {
-        //because the first column is text
-        tableDataSum += tableDate;
+      if (transposed && questionData.isGroupNet) {
+        if (
+          tableDateIndex != 0 &&
+          tableDateIndex < charRow.length - questionData.groupNetData.length
+        ) {
+          //because the first column is text
+          tableDataSum += tableDate;
+        }
+      } else {
+        if (tableDateIndex != 0) {
+          tableDataSum += tableDate;
+        }
       }
     });
 
@@ -265,6 +281,40 @@ const minMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
   const updatedMinMaxArr: any[] = [];
   const updatedCount: number[] = [];
   for (let i = 0; i < chartRows.length - groupNetDataLabels.length; i++) {
+    for (let j = 0; j < chartRows[i].length - 1; j++) {
+      // if (j > 0 && groupNetDataLabels.indexOf(chartRows[i][0]) == -1) {
+      if (j > 0) {
+        updatedCount[j - 1] =
+          updatedCount[j - 1] == undefined ? 0 : updatedCount[j - 1];
+        updatedCount[j - 1] += chartRows[i][j];
+
+        //for min max
+        if (updatedMinMaxArr[j - 1] == undefined) {
+          updatedMinMaxArr[j - 1] = {
+            min: chartRows[i][j],
+            max: chartRows[i][j],
+          };
+        }
+
+        if (updatedMinMaxArr[j - 1]['min'] >= chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]['min'] = chartRows[i][j];
+        }
+
+        if (updatedMinMaxArr[j - 1]['max'] < chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]['max'] = chartRows[i][j];
+        }
+
+        //for min max
+      }
+    }
+  }
+
+  return { updatedMinMaxArr, updatedCount };
+};
+const gridMinMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
+  const updatedMinMaxArr: any[] = [];
+  const updatedCount: number[] = [];
+  for (let i = 0; i < chartRows.length; i++) {
     for (let j = 0; j < chartRows[i].length - 1; j++) {
       // if (j > 0 && groupNetDataLabels.indexOf(chartRows[i][0]) == -1) {
       if (j > 0) {
