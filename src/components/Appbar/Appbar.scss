@@ -190,6 +190,7 @@
     padding: 0.24rem;
     border: 1px solid map-get($map: $text-color, $key: "fade");
     border-radius: 50%;
+   
     &::before,
     &::after,
     div {
