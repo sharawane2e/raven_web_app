@@ -1,7 +1,11 @@
 import _ from 'lodash';
 import store from '../redux/store';
 import ApiRequest from '../utils/ApiRequest';
-import { resetUserCache } from '../redux/actions/userCacheActions';
+import {
+  resetUserCache,
+  setDialog,
+  setuserCacheActive,
+} from '../redux/actions/userCacheActions';
 import ApiUrl from '../enums/ApiUrl';
 import Toaster from '../utils/Toaster';
 import { setFullScreenLoading } from '../redux/actions/chartActions';
@@ -13,61 +17,65 @@ import {
   removeEmptyDataLengends,
 } from './ChartService';
 import { getChartOptions } from '../utils/ChartOptionFormatter';
+import { QuestionType } from '../enums/QuestionType';
+import { useDispatch } from 'react-redux';
 
-export const isChartInCache = () => {
-  let isChartDuplicate = false;
-  let duplicateCacheIndex = -1;
+// export const isChartInCache = () => {
+//   let isChartDuplicate = false;
+//   let duplicateCacheIndex = -1;
 
-  const {
-    userCache: { savedChart },
-    chart,
-    filters,
-  } = store.getState();
+//   const {
+//     userCache: { savedChart },
+//     chart,
+//     filters,
+//   } = store.getState();
 
-  const _savedChart = JSON.parse(JSON.stringify(savedChart));
-  const _chart = {
-    qText: chart.questionData?.questionText,
-    qId: chart.questionData?.qId,
-    type: chart.questionData?.type,
-    filter: filters.filters,
-    bannerQuestion:
-      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
-    chartType: chart.chartType,
-    chartLabelType: chart.chartLabelType,
-    chartOrientation: chart.chartOrientation,
-    chartTranspose: chart.chartTranspose,
-  };
+//   const _savedChart = JSON.parse(JSON.stringify(savedChart));
+//   const _chart = {
+//     qText: chart.questionData?.questionText,
+//     qId: chart.questionData?.qId,
+//     type: chart.questionData?.type,
+//     filter: filters.filters,
+//     bannerQuestion:
+//       chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+//     chartType: chart.chartType,
+//     chartLabelType: chart.chartLabelType,
+//     chartOrientation: chart.chartOrientation,
+//     chartTranspose: chart.chartTranspose,
+//   };
 
-  _savedChart.forEach(function (element: any) {
-    delete element.date;
-    delete element._id;
-    delete element.isSelected; // if question is checked
-    delete element.isActive; // if question and other filters are visible on screen
-  });
+//   _savedChart.forEach(function (element: any) {
+//     delete element.date;
+//     delete element._id;
+//     delete element.isSelected; // if question is checked
+//     delete element.isActive; // if question and other filters are visible on screen
+//   });
 
-  _savedChart.forEach(function (element: any, index: number) {
-    const checkEquality = _.isEqual(element, _chart);
+//   _savedChart.forEach(function (element: any, index: number) {
+//     const checkEquality = _.isEqual(element, _chart);
 
-    if (checkEquality == true) {
-      isChartDuplicate = true;
-      duplicateCacheIndex = index;
-    }
-  });
-  return {
-    isChartDuplicate,
-    duplicateCacheId: isChartDuplicate
-      ? savedChart[duplicateCacheIndex]._id
-      : null,
-  };
-};
+//     if (checkEquality == true) {
+//       isChartDuplicate = true;
+//       duplicateCacheIndex = index;
+//     }
+//   });
+//   return {
+//     isChartDuplicate,
+//     duplicateCacheId: isChartDuplicate
+//       ? savedChart[duplicateCacheIndex]._id
+//       : null,
+//   };
+// };
 
 export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
     _ids: [...cacheIdsArr],
   };
+  const { dispatch } = store;
   ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
     .then((res) => {
       if (res.success) {
+        dispatch(setDialog(false));
         const updatedSavedChart = addNewKeysToUserCache(res.data);
         store.dispatch(resetUserCache(updatedSavedChart));
 
@@ -200,4 +208,44 @@ export const handleExportChartCache = async (
 
   generatePpt([...payloadArr]);
   dispatch(setFullScreenLoading(false));
+};
+
+export const handelAddInUserCache = (
+  chart: any,
+  chartQuestionData: any,
+  filters: any,
+) => {
+  const { dispatch } = store;
+  const userCachebody = {
+    qText:
+      chartQuestionData?.type === QuestionType.RANK
+        ? chartQuestionData?.labelText
+        : chartQuestionData?.questionText,
+    qId: chartQuestionData?.qId,
+    type: chartQuestionData?.type,
+    bannerType: chart?.bannerQuestionData?.type
+      ? chart?.bannerQuestionData?.type
+      : '',
+    date: new Date(),
+    filter: filters?.appliedFilters,
+    bannerQuestion:
+      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+    chartType: chart?.chartType,
+    chartLabelType: chart?.chartLabelType,
+    chartOrientation: chart?.chartOrientation,
+    chartTranspose: chart?.chartTranspose,
+    significant: chart?.significant,
+    showMean: chart?.showMean,
+  };
+  ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
+    .then((res) => {
+      if (res.success) {
+        dispatch(resetUserCache(res.data));
+        Toaster.success(res.message);
+      } else {
+        dispatch(setuserCacheActive(false));
+        Toaster.error(res.message); //add more things
+      }
+    })
+    .catch((error) => console.log(error));
 };

@@ -33,5 +33,7 @@ export class StaticText {
 
   static USER_CACHE_EMPTY = 'Cache list is empty';
 
-  static DELETE_MESSAGE = 'Are you sure do want to delete cache';
+  static DELETE_MESSAGE = 'Do you want delete cache';
+
+  static REPLACE_MESSAGE = 'Do you want replace cache';
 }

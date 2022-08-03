@@ -30,12 +30,17 @@ import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import { Tooltip } from '@material-ui/core';
 import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
-import { resetUserCache } from '../../../../redux/actions/userCacheActions';
+import {
+  resetUserCache,
+  setDialog,
+  setInCache,
+  setUserCacheId,
+} from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
   handleDeleteChartCache,
   handleExportChartCache,
-  isChartInCache,
+  // isChartInCache,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -67,29 +72,21 @@ import Loader from '../../../widgets/Loader/Index';
 import clsx from 'clsx';
 import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
 import { StaticText } from '../../../../constants/StaticText';
+import CustomPopup from '../../../widgets/CutsomPopup';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { sidebar } = useSelector((state: RootState) => state);
-  const { chart, chapters } = useSelector((state: RootState) => state);
+  const { sidebar, chart, chapters, userCache } = useSelector(
+    (state: RootState) => state,
+  );
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeCacheId, setActiveCacheId] = useState<any>('');
-  const { userCache } = store.getState();
   const { savedChart } = userCache;
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const dispatch = useDispatch();
 
@@ -119,10 +116,10 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
       }
     });
 
-    if (isChartInCache().isChartDuplicate) {
-      setActiveCacheId(isChartInCache().duplicateCacheId);
-      // console.log(isChartInCache().duplicateCacheId)
-    }
+    // if (isChartInCache().isChartDuplicate) {
+    //   setActiveCacheId(isChartInCache().duplicateCacheId);
+    //   // console.log(isChartInCache().duplicateCacheId)
+    // }
   });
 
   useEffect(() => {
@@ -185,7 +182,8 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   ) => {
     setActiveCacheId(selectValue);
     const questionTextId = qid + '-' + qtext;
-
+    dispatch(setUserCacheId(qid));
+    dispatch(setInCache(true));
     dispatch(setSelectedQuestionText(questionTextId));
     const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
@@ -214,6 +212,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   };
 
   const userCacheDelete = () => {
+    dispatch(toggleSidebarUserCache(true));
     const deleteSavedCharts = savedChart.filter(
       (chartElement) => chartElement.isSelected == true,
     );
@@ -246,6 +245,22 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         dispatch(setSelectedChapterId(getchapter?.chapterId));
       }
     });
+  };
+
+  const handleClickOpen = () => {
+    dispatch(toggleSidebarUserCache(false));
+    dispatch(setInCache(false));
+    dispatch(setDialog(true));
+  };
+
+  const handleClose = () => {
+    dispatch(setDialog(false));
+    dispatch(toggleSidebarUserCache(true));
+  };
+
+  const userCacheReplace = () => {
+    dispatch(toggleSidebarUserCache(true));
+    console.log('replace data value');
   };
   return (
     <div className="sidebar user-cache">
@@ -477,26 +492,25 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         <div className="multi-export-loadder">
           <Loader />
         </div>
-      ) : (
-        ''
-      )}
-      <Dialog
-        //  onClose={handleClose}
-        open={open}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {StaticText.DELETE_MESSAGE}
-        </DialogTitle>
+      ) : null}
 
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={userCacheDelete} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {userCache?.inCache ? (
+        <CustomPopup
+          open={userCache.open}
+          StaticText={StaticText.REPLACE_MESSAGE}
+          handleClose={handleClose}
+          questionText={savedChart}
+          userCache={userCacheReplace}
+        />
+      ) : (
+        <CustomPopup
+          open={userCache.open}
+          StaticText={StaticText.DELETE_MESSAGE}
+          handleClose={handleClose}
+          questionText={savedChart}
+          userCache={userCacheDelete}
+        />
+      )}
     </div>
   );
 };

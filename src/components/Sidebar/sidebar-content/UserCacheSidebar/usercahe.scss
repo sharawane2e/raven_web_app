@@ -201,6 +201,11 @@
     }
   }
 
+  .pl {
+    >h2{
+      padding-left: 0 !important;
+    }
+  }
   .multi-export-loadder{
     height: 100%;
     width: 100%;

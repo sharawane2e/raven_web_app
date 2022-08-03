@@ -47,6 +47,11 @@ import StandardDeviation from '../StandardDeviation';
 import SignificantDiff from '../SignificantDiff';
 import { significantText } from '../../constants/Variables';
 import FavouriteControl from '../FavouriteControl';
+import {
+  setInCache,
+  setuserCacheActive,
+  setUserCacheId,
+} from '../../redux/actions/userCacheActions';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -90,7 +95,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   }, []);
 
   let updateQuestionList: any[] = [];
-  let updateBannerList: any[] = [];
   if (selectedChapterId && allChapters) {
     const selectchapterObject = _.find(allChapters, function (o) {
       return o.chapterId === selectedChapterId;
@@ -136,6 +140,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   }, [questionData?.type]);
 
   const handleQuestionChange = (value: string) => {
+    dispatch(setuserCacheActive(false));
+    dispatch(setUserCacheId(''));
+    dispatch(setInCache(false));
     dispatch(setshowMean(false));
     dispatch(setChartTranspose(false));
     dispatch(setSelectedQuestionId(value));
@@ -154,6 +161,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
+    dispatch(setuserCacheActive(false));
+    dispatch(setUserCacheId(''));
+    dispatch(setInCache(false));
     dispatch(setshowMean(false));
     dispatch(setChartTranspose(false));
     dispatch(setSelectedBannerQuestionId(value));
