@@ -257,9 +257,13 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
     dispatch(setDialog(false));
     dispatch(toggleSidebarUserCache(true));
   };
+  const handleCloseReplace = () => {
+    dispatch(setDialog(false));
+    dispatch(toggleSidebarUserCache(true));
+  };
 
   const userCacheReplace = () => {
-    dispatch(toggleSidebarUserCache(true));
+    dispatch(toggleSidebarUserCache(false));
     console.log('replace data value');
   };
   return (
@@ -498,7 +502,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         <CustomPopup
           open={userCache.open}
           StaticText={StaticText.REPLACE_MESSAGE}
-          handleClose={handleClose}
+          handleClose={handleCloseReplace}
           questionText={savedChart}
           userCache={userCacheReplace}
         />

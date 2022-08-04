@@ -237,6 +237,7 @@ export const handelAddInUserCache = (
     significant: chart?.significant,
     showMean: chart?.showMean,
   };
+  console.log('userCachebody', userCachebody);
   ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
     .then((res) => {
       if (res.success) {

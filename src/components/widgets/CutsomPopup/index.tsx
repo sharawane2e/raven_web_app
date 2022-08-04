@@ -10,20 +10,22 @@ export interface CustomPopup {
 
 const CustomPopup: React.FC<CustomPopup> = (props) => {
   const { handleClose, open, StaticText, questionText, userCache } = props;
-  //console.log('questionText', questionText);
 
   return (
     <Dialog
       onClose={handleClose}
       open={open}
-      // aria-labelledby="alert-dialog-title"
-      // aria-describedby="alert-dialog-description"
       className="user-cache user-cache-custom-popup"
       sx={{ backgroundColor: 'rgba(255 ,255, 255, .1 )' }}
     >
       <div className="user-cache-hedding">
         {StaticText}
-        {/* <div className="user-cache-questiontext">{questionText}</div> */}
+
+        {/* {questionText.map((quesText: any) => {
+          return (
+            <div className="user-cache-questiontext">{quesText?.qText}</div>
+          );
+        })} */}
       </div>
 
       <DialogActions className="btn-group">
