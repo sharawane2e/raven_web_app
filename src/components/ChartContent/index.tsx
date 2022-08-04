@@ -389,21 +389,20 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <Chart />
           </>
         )}
-        {chart?.questionData !== null ? (
-          <div className="chart-content-footer">
-            <div className="chart-content-footer--inr">
-              <div className="chart-content__base-count">
-                Sample Size: {baseCount}
-              </div>
-              <div className="chart-content__info">
-                Note: Sample size reflects selections from filter and cross-tab
-                menus, not in-legend selections.
-              </div>
+        {/* {chart?.questionData !== null ? ( */}
+        <div className="chart-content-footer">
+          <div className="chart-content-footer--inr">
+            <div className="chart-content__base-count">
+              Sample Size: {baseCount} executives across Global 2000 enterprises
+            </div>
+            <div className="chart-content__info">
+              Source: HFS Pulse, H3 2022
             </div>
           </div>
-        ) : (
+        </div>
+        {/* ) : (
           ''
-        )}
+        )} */}
       </div>
     </div>
   );
