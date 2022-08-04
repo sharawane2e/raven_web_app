@@ -20,6 +20,9 @@
     text-overflow: ellipsis;
     position: relative;
     margin-left: 12px;
+    @media (max-width: 768px) {
+      margin-left: 8px;
+    } 
   }
   ul {
     box-sizing: border-box;
