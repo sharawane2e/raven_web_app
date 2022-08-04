@@ -142,6 +142,12 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         <div className="appbar__heading mobile-hide">
           E2E072211 HFS Pulse – Wave 3
         </div>
+        <div className="appbar__right-panel">
+          <div className="appbar__tourGuide" onClick={tourStart}>
+            <TourPlayIcon />
+            <div className="tourText">Start tour</div>
+          </div>
+        </div>
       </div>
       {/* <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
