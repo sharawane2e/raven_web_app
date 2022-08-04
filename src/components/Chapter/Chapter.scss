@@ -51,9 +51,17 @@
     &:last-of-type {
       border-bottom: none;
     }
-    .css-1oq6cg.Mui-selected {
+    .Mui-selected {
       background-color: $light-blue-color;
       color: $white;
     }
   }
+}
+.sidebar-open ~ .content-area{
+  
+    .custom-dropdown {
+      margin-left: 5px;
+    
+  }
+ 
 }
