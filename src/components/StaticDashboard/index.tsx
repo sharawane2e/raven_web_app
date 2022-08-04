@@ -7,7 +7,7 @@ export interface StaticDashboardProps {
 const StaticDashboard: React.FC<StaticDashboardProps> = (props) => {
   return (
     <div className="info-area">
-      <h2 className="info-area__heading">HFS Pulse Dashboard, H2 2021</h2>
+      <h2 className="info-area__heading">HFS Pulse Dashboard, H3 2022</h2>
       <h2 className="info-area__head">Don’t react, anticipate demand</h2>
       <ul>
         {/* <li>

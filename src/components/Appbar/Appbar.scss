@@ -348,6 +348,12 @@
     font-size: .7rem !important;
   }
 }
+.mobile-show{
+  display: none;
+  @media (max-width: 768px) {
+    display: block ;
+  } 
+}
 .mobile-hide{
   @media (max-width: 768px) {
     display: none ;
