@@ -275,7 +275,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <OrientationControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item icon-width">
-            <SignificantDiff />
+            {/* <SignificantDiff /> */}
             <ChartTransposeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
@@ -285,7 +285,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <LabelTypeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item icon-width">
-            <FavouriteControl />
+            {/* <FavouriteControl /> */}
             <ExportChart />
           </MenuItem>
         </Menu>

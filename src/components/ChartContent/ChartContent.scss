@@ -252,7 +252,7 @@
 
   @media (max-width: 1200px) {
     display: block;
-    color: $white;
+   // color: $white;
   }
 }
 
@@ -261,7 +261,7 @@
   box-sizing: border-box;
 }
 .chart-content__control-menu {
-  background: map-get($map: $bg-color, $key: "secondary");
+  background: $white;
 }
 .cursor-pointer {
   cursor: pointer;

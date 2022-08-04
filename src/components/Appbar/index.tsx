@@ -114,17 +114,21 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       })}
     >
       <div className="appbar__left-panel">
-        <div
-          className={clsx('appbar__logo-wrapper client-logo', {
-            // 'full-width': variant === 'fullWidth',
-            'sidebar-open': !sidebarOpen,
-            'mobile-sidebar-open': openMobileDrawer,
-          })}
-        >
-          {/* <div className="public-form__client-logo client-logo__icons">
+        {/* <div
+          className="appbar__logo-wrapper client-logo"
+          // className={clsx('appbar__logo-wrapper client-logo', {
+          //   'full-width': variant === 'fullWidth',
+          //   'sidebar-open': !sidebarOpen,
+          //   'mobile-sidebar-open': openMobileDrawer,
+          // })}
+        > */}
+        {/* <div className="public-form__client-logo client-logo__icons">
             <RavneLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} /> */}
+        {/* </div> */}
+        <div className="appbar__heading mobile-show">
+          E2E072211 HFS Pulse – Wave 3
         </div>
         <div
           className="menu-icon"
@@ -135,9 +139,17 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         >
           <div></div>
         </div>
-        <div className="appbar__heading">Dewar's 12 Benchmark Test #191127</div>
+        <div className="appbar__heading mobile-hide">
+          E2E072211 HFS Pulse – Wave 3
+        </div>
+        <div className="appbar__right-panel">
+          <div className="appbar__tourGuide" onClick={tourStart}>
+            <TourPlayIcon />
+            <div className="tourText">Start tour</div>
+          </div>
+        </div>
       </div>
-      <div className="appbar__right-panel">
+      {/* <div className="appbar__right-panel">
         <div className="appbar__tourGuide" onClick={tourStart}>
           <TourPlayIcon />
           <div className="tourText">Start tour</div>
@@ -179,7 +191,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
         ) : (
           ''
         )}
-      </div>
+      </div> */}
 
       <Menu
         anchorEl={anchorEl}
