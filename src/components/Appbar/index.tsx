@@ -91,18 +91,21 @@ const Appbar: React.FC<AppbarProps> = (props) => {
   }
 
   const getUserCache = () => {
-    if (showhidefeature.userIcon) dispatch(setCacheLoading(true));
-    ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
-      .then((res) => {
-        if (res.success) {
-          const updatedUserCache = addNewKeysToUserCache(res?.data);
-          dispatch(resetUserCache(updatedUserCache));
-          dispatch(setCacheLoading(false));
-        } else {
-          Toaster.error(res.message);
-        }
-      })
-      .catch((error) => console.log(error));
+    if (showhidefeature.userIcon){
+      dispatch(setCacheLoading(true));
+      ApiRequest.request(ApiUrl.SAVE_CHART, 'GET')
+        .then((res) => {
+          if (res.success) {
+            const updatedUserCache = addNewKeysToUserCache(res?.data);
+            dispatch(resetUserCache(updatedUserCache));
+            dispatch(setCacheLoading(false));
+          } else {
+            Toaster.error(res.message);
+          }
+        })
+        .catch((error) => console.log(error)); 
+    } 
+
   };
 
   return (
