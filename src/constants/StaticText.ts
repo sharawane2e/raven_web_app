@@ -17,7 +17,7 @@ export class StaticText {
 
   static PIE_NOT_AVAILABLE = 'Pie chart is not available for this selection';
 
-  static DISABLED_CHART_LAND = 'Chart landsacpe not allowed';
+  static DISABLED_CHART_LAND = 'Chart landscape not allowed';
 
   static CHART_APPLIED = 'Chapter changed to';
 
