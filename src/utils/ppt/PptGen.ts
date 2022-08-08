@@ -27,6 +27,8 @@ import { PptGenExport } from "./PptGenExport";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 import { getChartRows } from "../table-option-util";
+import { BASE_TABLE_OPTS, BASE_TEXT_OPTS_L, BASE_TEXT_OPTS_R } from "./enum";
+import { COLORS_RYGU } from "./enum_chart";
 
 export const generatePpt = async (payloadObjectArr: any[]) => {
   let pptxGenJsObj = new pptxgen();
@@ -137,26 +139,27 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       const output = PptGenExport(seriesData);
       slide.addTable(output, { ...tableConfig });
     } else {
-      seriesData = newChartDataGen(newSeriesData);
-      console.log(seriesData);
-      const { pptChartType, chartColors } = slideChartConfig(
-        chartType,
-        pptxGenJsObj,
-        seriesData,
-        chartOrientation
-      );
+      // seriesData = newChartDataGen(newSeriesData);
+      // console.log(seriesData);
+      // const { pptChartType, chartColors } = slideChartConfig(
+      //   chartType,
+      //   pptxGenJsObj,
+      //   seriesData,
+      //   chartOrientation
+      // );
 
-      slide.addChart(pptChartType, seriesData, {
-        ...chartConfig,
-        ...getGraphTypeProps(chartOrientation, chartType),
-        chartColors: chartColors,
-        ...getChartSettings(
-          chartType,
-          chartLabelType,
-          showMean,
-          questionData?.type
-        ),
-      });
+      // slide.addChart(pptChartType, seriesData, {
+      //   ...chartConfig,
+      //   ...getGraphTypeProps(chartOrientation, chartType),
+      //   chartColors: chartColors,
+      //   ...getChartSettings(
+      //     chartType,
+      //     chartLabelType,
+      //     showMean,
+      //     questionData?.type
+      //   ),
+      // });
+      genSlide14(pptxGenJsObj);
     }
   }
 
@@ -267,3 +270,70 @@ const slideChartConfig = (
 
   return { pptChartType, chartColors };
 };
+
+function genSlide14(pptx: any) {
+  let slide = pptx.addSlide({ sectionTitle: "Charts" });
+  slide.addNotes(
+    "API Docs: https://gitbrent.github.io/PptxGenJS/docs/api-charts.html"
+  );
+  slide.addTable(
+    [
+      [
+        { text: "Chart Examples: XY Scatter Chart", options: BASE_TEXT_OPTS_L },
+        BASE_TEXT_OPTS_R,
+      ],
+    ],
+    BASE_TABLE_OPTS
+  );
+
+  let arrDataScatter1 = [
+    { name: "X-Axis", values: [-2, -1, 0, 1, 2] },
+    {
+      name: "Y-Value 1",
+      values: [-2],
+      labels: ["Jan1"],
+    },
+    {
+      name: "Y-Value 2",
+      values: [2],
+      labels: ["Jan2"],
+    },
+    {
+      name: "Y-Value 3",
+      values: [null, null, null, -2],
+      labels: ["Jan1", "Jan2", "Jan3", "Jan4"],
+    },
+    {
+      name: "Y-Value 4",
+      values: [null, null, null, 2],
+      labels: ["Jan1", "Jan2", "Jan3", "Jan4"],
+    },
+  ];
+
+  // TOP-LEFT
+  let optsChartScat1 = {
+    x: 0.5,
+    y: 0.6,
+    w: "45%",
+    h: 3,
+    valAxisTitle: "Renters",
+    valAxisTitleColor: "428442",
+    valAxisTitleFontSize: 14,
+    showValAxisTitle: true,
+    lineSize: 0,
+    catAxisTitle: "Last 6 Months",
+    catAxisTitleColor: "428442",
+    catAxisTitleFontSize: 14,
+    showCatAxisTitle: true,
+    showLabel: false, // Must be set to true or labels will not be shown
+    dataLabelPosition: "b", // Options: 't'|'b'|'l'|'r'|'ctr',
+    dataLabelColor: "0088CC",
+    color: "ff0000",
+    chartColors: ["5F8D68", "FFCC00"],
+    catAxisLabelColor: "0088CC",
+    valAxisLabelColor: "0088CC",
+    // catAxisHidden: true,
+    valAxisLineShow: false,
+  };
+  slide.addChart(pptx.charts.SCATTER, arrDataScatter1, optsChartScat1);
+}
