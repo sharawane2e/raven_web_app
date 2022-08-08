@@ -30,6 +30,7 @@ import ApiRequest from '../../utils/ApiRequest';
 import ApiUrl from '../../enums/ApiUrl';
 import { addNewKeysToUserCache } from '../../services/userCacheService';
 import Toaster from '../../utils/Toaster';
+import { ReactComponent as CleintLogo } from '../../assets/svg/NielsenIQ-Logo.svg';
 
 export interface AppbarProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -117,7 +118,7 @@ const Appbar: React.FC<AppbarProps> = (props) => {
       <div className="appbar__left-panel">
         <div className="appbar__logo-wrapper client-logo">
           <div className="public-form__client-logo client-logo__icons">
-            <RavneLogo />
+            <CleintLogo />
           </div>
           <HomeIcon className="home-icon" onClick={refreshPage} />
         </div>
