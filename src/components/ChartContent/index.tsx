@@ -37,7 +37,7 @@ import LabelTypeControl from '../LabelTypeControl';
 import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
-import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
+// import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
 import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
@@ -66,6 +66,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     questions,
     chart: { chartLoading, questionData, baseCount, chartType, significant },
     chapters: { allChapters, selectedChapterId },
+    sidebar,
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -354,13 +355,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             // className="cursor-pointer"
             // onClick={handleQSelectionOpen}
             />
-          </div>
-        ) : (
-          ''
-        )}
-        {chart?.chartData == [] ? (
-          <div className="noQuestion--selected">
-            <No_Data_Found />
           </div>
         ) : (
           ''

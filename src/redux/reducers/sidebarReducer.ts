@@ -3,12 +3,14 @@ import {
   toggleSidebarMobile,
   toggleSidebar,
   toggleSidebarUserCache,
+  noDataFound,
 } from '../actions/sidebarAction';
 
 const initialState = {
   open: true,
   openMobileDrawer: false,
   userCache: false,
+  nodata: false,
 };
 
 const sidebarReducer = createReducer(initialState, (builder) => {
@@ -32,6 +34,12 @@ const sidebarReducer = createReducer(initialState, (builder) => {
       ...state,
       userCache:
         action.payload === undefined ? !state.userCache : !!action.payload,
+    };
+  });
+  builder.addCase(noDataFound, (state, action) => {
+    return {
+      ...state,
+      nodata: action.payload,
     };
   });
 });

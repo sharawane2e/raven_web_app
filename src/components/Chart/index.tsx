@@ -1,11 +1,12 @@
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import { connect, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import store, { RootState } from '../../redux/store';
 import { memo, useEffect, Component } from 'react';
 import { colorArr } from '../../constants/Variables';
 import { isEqual } from 'lodash';
-import { QuestionType } from '../../enums/QuestionType';
+
+import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
 
 interface ChartProps extends RootState {}
 
@@ -44,10 +45,14 @@ class Chart extends Component<ChartProps, ChartState> {
   render() {
     // @ts-ignore
     const { chartOptions, questionData } = this.props.chart;
-
+    const { sidebar } = store.getState();
     return (
       <>
-        {questionData !== null ? (
+        {sidebar?.nodata ? (
+          <div className="noQuestion--selected">
+            <No_Data_Found />
+          </div>
+        ) : questionData !== null ? (
           <HighchartsReact
             containerProps={{
               style: { height: '100%', overflow: 'unset' },
