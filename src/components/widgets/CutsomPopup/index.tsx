@@ -30,10 +30,10 @@ const CustomPopup: React.FC<CustomPopup> = (props) => {
 
       <DialogActions className="btn-group">
         <Button onClick={handleClose} className="button--secondary">
-          Disagree
+          Cancel
         </Button>
         <Button onClick={userCache} autoFocus className="button--primary">
-          Agree
+          Yes, delete
         </Button>
       </DialogActions>
     </Dialog>
