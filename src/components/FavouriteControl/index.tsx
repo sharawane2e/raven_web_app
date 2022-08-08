@@ -27,13 +27,13 @@ const FavouriteControl: React.FC = () => {
 
   const handleAddChartCache = () => {
     dispatch(setuserCacheActive(true));
-    // if (userCache.inCache) {
-    //   dispatch(setDialog(true));
-    //   dispatch(setuserCacheActive(false));
-    // } else {
-    //   handelAddInUserCache(chart, chartQuestionData, filters);
-    // }
-    handelAddInUserCache(chart, chartQuestionData, filters);
+    if (userCache.inCache) {
+      dispatch(setDialog(true));
+      dispatch(setuserCacheActive(false));
+    } else {
+      handelAddInUserCache(chart, chartQuestionData, filters);
+    }
+    //. handelAddInUserCache(chart, chartQuestionData, filters);
   };
 
   const buttonConfig: ButtonGroupConfig[] = [

@@ -38,6 +38,7 @@ import {
 } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
+  handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,
   // isChartInCache,
@@ -79,7 +80,7 @@ export interface UserCacheProps {
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { sidebar, chart, chapters, userCache } = useSelector(
+  const { sidebar, chart, chapters, userCache, filters } = useSelector(
     (state: RootState) => state,
   );
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -87,6 +88,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   const [butttonshow, setButtonShow] = useState(true);
   const [activeCacheId, setActiveCacheId] = useState<any>('');
   const { savedChart } = userCache;
+  const chartQuestionData = chart?.questionData;
 
   const dispatch = useDispatch();
 
@@ -264,7 +266,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
 
   const userCacheReplace = () => {
     dispatch(toggleSidebarUserCache(false));
-    console.log('replace data value');
+    handelUpdatedUserCache(chart, chartQuestionData, filters);
   };
   return (
     <div className="sidebar user-cache">
