@@ -1,6 +1,6 @@
 .public-form-screen {
   position: relative;
-  background: url('../../assets/images/login_bg.png');
+  background: url('../../assets/svg/Login_bg.svg');
   background-size: 100% 100%;
 
   @media only screen and (max-width: 960px) {
@@ -16,8 +16,8 @@
   }
   .public-form-screen__brand-logo {
     position: absolute;
-    top: 2rem;
-    left: 2rem;
+    right: 2rem;
+    bottom: 2rem;
     width: 150px;
     @media only screen and (max-width: 960px) {
       top: 10px;
@@ -38,10 +38,10 @@
       flex-direction: column;
       align-items: flex-start;
       width: 90%;
-      padding: 30px 40px 80px 40px;
-      background: map-get($map: $bg-color, $key: 'secondary');
-      border: 1px solid map-get($map: $bg-color, $key: #000);
-      margin-right: 90px;
+      padding: 30px 5px 80px 150px;
+      /*background: map-get($map: $bg-color, $key: 'secondary');
+      border: 1px solid map-get($map: $bg-color, $key: #000);*/
+      margin-right: 0px;
       .MuiInputBase-root {
         background: map-get($map: $bg-color, $key: secondary-shade);
       }
@@ -68,9 +68,9 @@
       font-size: 1.75rem;
     }
     .public-form__client-logo {
-      text-align: center;
+      text-align: left;
       padding-bottom: 2rem;
-      margin: 0 auto;
+      /*margin: 0 auto;*/
     }
   }
 

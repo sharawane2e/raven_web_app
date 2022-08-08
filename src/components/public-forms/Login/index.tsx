@@ -14,7 +14,8 @@ import { AppDispatch } from '../../../redux/store';
 import { useDispatch } from 'react-redux';
 import { setUserProfile } from '../../../redux/actions/userActions';
 import LocalStorageUtils from '../../../utils/LocalStorageUtils';
-// import ClientsLogo from '../../ClientsLogo';
+import nielsenBase from '../../../assets/svg/nielsenBase.svg';
+import ClientsLogo from '../../ClientsLogo';
 
 export interface LoginProps extends WithLoaderProps {}
 
@@ -61,7 +62,7 @@ const Login: React.FC<LoginProps> = (props) => {
   return (
     <div className="login public-form">
       <form className="public-form__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="public-form__client-logo">{/* <ClientsLogo /> */}</div>
+        <div className="public-form__client-logo">{ <ClientsLogo /> }</div>
         <div className="public-form__heading">Login</div>
         <InputField
           {...register('email')}

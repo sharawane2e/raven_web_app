@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="462" height="354.5" viewBox="0 0 462 354.5">
+  <defs>
+    <filter id="Rectangle_2344" x="324.5" y="88" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2345" x="234" y="149.5" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2346" x="164" y="236.5" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-3"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2347" x="86" y="147.5" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-4"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-4"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Rectangle_2348" x="0" y="83.5" width="118" height="118" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-5"/>
+      <feFlood flood-color="#f47c3c" flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-5"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="popup_icon" transform="translate(765.5 -273) rotate(90)">
+    <g id="Group_3964" data-name="Group 3964">
+      <g id="Ellipse_27" data-name="Ellipse 27" transform="translate(273 475)" fill="none" stroke="#e1e3e7" stroke-width="4">
+        <circle cx="67" cy="67" r="67" stroke="none"/>
+        <circle cx="67" cy="67" r="65" fill="none"/>
+      </g>
+      <circle id="Ellipse_26" data-name="Ellipse 26" cx="59" cy="59" r="59" transform="translate(281.5 482.5)" fill="#fff"/>
+      <text id="NielsenIQ_BASES" data-name="NielsenIQBASES" transform="translate(333.5 541.5) rotate(-90)" font-size="16" font-family="Montserrat-SemiBold, Montserrat" font-weight="600"><tspan x="-39.944" y="0">NielsenIQ</tspan><tspan x="-27.504" y="24">BASES</tspan></text>
+    </g>
+    <g id="Group_3959" data-name="Group 3959">
+      <path id="Path_13100" data-name="Path 13100" d="M7888.831,476l15.438-41.822,23.09-19.885" transform="translate(-7550)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <circle id="Ellipse_28" data-name="Ellipse 28" cx="4" cy="4" r="4" transform="translate(374 410)" fill="#01f001"/>
+      <g transform="matrix(0, -1, 1, 0, 273, 765.5)" filter="url(#Rectangle_2344)">
+        <g id="Rectangle_2344-2" data-name="Rectangle 2344" transform="translate(433.5 94) rotate(90)" fill="#fff" stroke="#01f001" stroke-width="1">
+          <rect width="100" height="100" rx="50" stroke="none"/>
+          <rect x="0.5" y="0.5" width="99" height="99" rx="49.5" fill="none"/>
+        </g>
+      </g>
+      <text id="_5._Digital_strategy_and_emerging_tech._adoption" data-name="5.Digitalstrategyand emergingtech.adoption" transform="translate(373.5 456.5) rotate(-90)" fill="#343434" font-size="11" font-family="Montserrat-Medium, Montserrat" font-weight="500"><tspan x="72.095" y="11">5.</tspan><tspan x="57.993" y="24">Digital</tspan><tspan x="53.554" y="37">strategy</tspan><tspan x="36.581" y="50">and emerging</tspan><tspan x="62.86" y="63">tech.</tspan><tspan x="51.15" y="76">adoption</tspan></text>
+    </g>
+    <g id="Group_3960" data-name="Group 3960">
+      <path id="Path_13101" data-name="Path 13101" d="M7944.646,505.907l15.914-20.9,17.145-7.023" transform="translate(-7550)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <circle id="Ellipse_31" data-name="Ellipse 31" cx="4" cy="4" r="4" transform="translate(424 474)" fill="#01f001"/>
+      <g id="Group_4171" data-name="Group 4171">
+        <g transform="matrix(0, -1, 1, 0, 273, 765.5)" filter="url(#Rectangle_2345)">
+          <g id="Rectangle_2345-2" data-name="Rectangle 2345" transform="translate(343 155.5) rotate(90)" fill="#fff" stroke="#01f001" stroke-width="1">
+            <rect width="100" height="100" rx="50" stroke="none"/>
+            <rect x="0.5" y="0.5" width="99" height="99" rx="49.5" fill="none"/>
+          </g>
+        </g>
+        <text id="_4._Shared_service_and_outsourcing" data-name="4.Shared serviceandoutsourcing" transform="translate(449.5 549.5) rotate(-90)" fill="#343434" font-size="11" font-family="Montserrat-Medium, Montserrat" font-weight="500"><tspan x="71.462" y="11">4.</tspan><tspan x="35.734" y="24">Shared service</tspan><tspan x="65.698" y="37">and</tspan><tspan x="42.615" y="50">outsourcing</tspan></text>
+      </g>
+    </g>
+    <g id="Group_3961" data-name="Group 3961">
+      <path id="Path_13103" data-name="Path 13103" d="M7955.811,542.722H8065" transform="translate(-7550 -0.222)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <circle id="Ellipse_32" data-name="Ellipse 32" cx="4" cy="4" r="4" transform="translate(511 538)" fill="#01f001"/>
+      <g id="Group_4170" data-name="Group 4170">
+        <g transform="matrix(0, -1, 1, 0, 273, 765.5)" filter="url(#Rectangle_2346)">
+          <g id="Rectangle_2346-2" data-name="Rectangle 2346" transform="translate(273 242.5) rotate(90)" fill="#fff" stroke="#01f001" stroke-width="1">
+            <rect width="100" height="100" rx="50" stroke="none"/>
+            <rect x="0.5" y="0.5" width="99" height="99" rx="49.5" fill="none"/>
+          </g>
+        </g>
+        <text id="_3._Deep-dive_on_cloud_" data-name="3.Deep-diveon cloud​" transform="translate(556.5 542.5) rotate(-90)" fill="#343434" font-size="11" font-family="Montserrat-Medium, Montserrat" font-weight="500"><tspan x="-4.394" y="0">3.</tspan><tspan x="-28.886" y="13">Deep-dive</tspan><tspan x="-24.321" y="26">on cloud​</tspan></text>
+      </g>
+    </g>
+    <g id="Group_3962" data-name="Group 3962">
+      <path id="Path_13102" data-name="Path 13102" d="M7944.646,479.306l15.914,20.9,16.539,7.067" transform="translate(-7550 99)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <circle id="Ellipse_30" data-name="Ellipse 30" cx="4" cy="4" r="4" transform="translate(424 603)" fill="#01f001"/>
+      <g id="Group_4169" data-name="Group 4169">
+        <g transform="matrix(0, -1, 1, 0, 273, 765.5)" filter="url(#Rectangle_2347)">
+          <g id="Rectangle_2347-2" data-name="Rectangle 2347" transform="translate(195 153.5) rotate(90)" fill="#fff" stroke="#01f001" stroke-width="1">
+            <rect width="100" height="100" rx="50" stroke="none"/>
+            <rect x="0.5" y="0.5" width="99" height="99" rx="49.5" fill="none"/>
+          </g>
+        </g>
+        <text id="_2._Industry_value_chain" data-name="2.Industryvalue chain" transform="translate(467.5 620.5) rotate(-90)" fill="#343434" font-size="11" font-family="Montserrat-Medium, Montserrat" font-weight="500"><tspan x="-4.46" y="0">2.</tspan><tspan x="-23.386" y="13">Industry</tspan><tspan x="-31.79" y="26">value chain</tspan></text>
+      </g>
+    </g>
+    <g id="Group_3963" data-name="Group 3963">
+      <path id="Path_13099" data-name="Path 13099" d="M7888.831,415.652l15.438,41.822,22.484,20.491" transform="translate(-7550 192)" fill="none" stroke="#e1e3e7" stroke-width="4"/>
+      <circle id="Ellipse_29" data-name="Ellipse 29" cx="4" cy="4" r="4" transform="translate(374 667)" fill="#01f001"/>
+      <g id="Group_4168" data-name="Group 4168">
+        <g transform="matrix(0, -1, 1, 0, 273, 765.5)" filter="url(#Rectangle_2348)">
+          <g id="Rectangle_2348-2" data-name="Rectangle 2348" transform="translate(109 89.5) rotate(90)" fill="#fff" stroke="#01f001" stroke-width="1">
+            <rect width="100" height="100" rx="50" stroke="none"/>
+            <rect x="0.5" y="0.5" width="99" height="99" rx="49.5" fill="none"/>
+          </g>
+        </g>
+        <text id="_1._Voice_of_the_customer" data-name="1.Voice of the customer" transform="translate(403.5 706.5) rotate(-90)" fill="#343434" font-size="11" font-family="Montserrat-Medium, Montserrat" font-weight="500"><tspan x="-3.284" y="0">1.</tspan><tspan x="-34.381" y="13">Voice of the </tspan><tspan x="-26.741" y="26">customer</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

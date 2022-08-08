@@ -1,4 +1,4 @@
-import { ReactComponent as ClientsLogoIcon } from '../../assets/svg/Boehringer-Lumanity.svg';
+import { ReactComponent as ClientsLogoIcon } from '../../assets/svg/NielsenIQ-Logo.svg';
 
 export interface ClientsLogoProps extends React.SVGAttributes<any> {}
 

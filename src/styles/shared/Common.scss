@@ -7,7 +7,7 @@ body {
   overflow: hidden;
   background: rgba(
     $color: map-get($map: $bg-color, $key: "primary"),
-    $alpha: 0.96
+    $alpha: 1
   );
   @media (max-width: 768px) {
     overflow: auto !important;
