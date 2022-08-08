@@ -76,10 +76,10 @@ html {
 }
 .home-modal__content,
 .home-modal__footer {
-  background-color: $black;
+  background-color: $white;
 }
 .home-modal__footer {
-  border-top: 1px solid $black !important;
+  /*border-top: 1px solid $black !important;*/
   margin-bottom: 0 !important;
   padding-bottom: 0.9375rem !important;
 }
