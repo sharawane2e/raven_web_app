@@ -49,7 +49,9 @@ const Appbar: React.FC<AppbarProps> = (props) => {
 
   const toggleUserSidebar = () => {
     dispatch(toggleSidebarUserCache());
-    getUserCache();
+    if (!sidebar.userCache) {
+      getUserCache();
+    }
   };
 
   useEffect(() => {
