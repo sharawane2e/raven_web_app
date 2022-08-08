@@ -255,7 +255,9 @@ export const handelUpdatedUserCache = (
   chart: any,
   chartQuestionData: any,
   filters: any,
+  cacheId: any,
 ) => {
+  console.log('chart', chart);
   const { dispatch } = store;
   const userCacheUpdatedbody = {
     qText:
@@ -277,19 +279,21 @@ export const handelUpdatedUserCache = (
     chartTranspose: chart?.chartTranspose,
     significant: chart?.significant,
     showMean: chart?.showMean,
+    id: cacheId,
   };
 
   console.log('userCacheUpdatedbody', userCacheUpdatedbody);
 
-  // ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCacheUpdatedbody)
-  //   .then((res) => {
-  //     if (res.success) {
-  //       dispatch(resetUserCache(res.data));
-  //       Toaster.success(res.message);
-  //     } else {
-  //       dispatch(setuserCacheActive(false));
-  //       Toaster.error(res.message); //add more things
-  //     }
-  //   })
-  //   .catch((error) => console.log(error));
+  ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCacheUpdatedbody)
+    .then((res) => {
+      if (res.success) {
+        dispatch(setDialog(false));
+        // dispatch(resetUserCache(res.data));
+        Toaster.success(res.message);
+      } else {
+        //dispatch(setuserCacheActive(false));
+        Toaster.error(res.message); //add more things
+      }
+    })
+    .catch((error) => console.log(error));
 };

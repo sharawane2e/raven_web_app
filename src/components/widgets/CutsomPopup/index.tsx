@@ -6,10 +6,12 @@ export interface CustomPopup {
   StaticText: string;
   questionText: any;
   userCache?: (value: any) => void;
+  buttonText: string;
 }
 
 const CustomPopup: React.FC<CustomPopup> = (props) => {
-  const { handleClose, open, StaticText, questionText, userCache } = props;
+  const { handleClose, open, StaticText, questionText, userCache, buttonText } =
+    props;
 
   return (
     <Dialog
@@ -33,7 +35,7 @@ const CustomPopup: React.FC<CustomPopup> = (props) => {
           Cancel
         </Button>
         <Button onClick={userCache} autoFocus className="button--primary">
-          Yes, delete
+          {buttonText}
         </Button>
       </DialogActions>
     </Dialog>
