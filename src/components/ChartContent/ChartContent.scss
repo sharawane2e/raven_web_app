@@ -4,6 +4,7 @@
     padding: 0px 10px;
     width: 100%;
     align-items: center;
+    margin-top: -7px;
     @media (max-width: 1023px) {
       display: flex;
       align-items: center;
@@ -229,6 +230,7 @@
   .chart-content {
     .mr-button.MuiGrid-container {
       padding: 0px 10px 0 0;
+      min-height: 40px;
     }
   }
 }
