@@ -38,6 +38,8 @@ import {
 } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
+  handelAddInUserCache,
+  handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,
   // isChartInCache,
@@ -79,14 +81,15 @@ export interface UserCacheProps {
 }
 
 const UserCache: React.FC<UserCacheProps> = (props) => {
-  const { sidebar, chart, chapters, userCache } = useSelector(
+  const { sidebar, chart, chapters, userCache, filters } = useSelector(
     (state: RootState) => state,
   );
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeCacheId, setActiveCacheId] = useState<any>('');
-  const { savedChart } = userCache;
+  const { savedChart, cacheId } = userCache;
+  const chartQuestionData = chart?.questionData;
 
   const dispatch = useDispatch();
 
@@ -182,7 +185,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   ) => {
     setActiveCacheId(selectValue);
     const questionTextId = qid + '-' + qtext;
-    dispatch(setUserCacheId(qid));
+    dispatch(setUserCacheId(cacheId));
     dispatch(setInCache(true));
     dispatch(setSelectedQuestionText(questionTextId));
     const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
@@ -264,7 +267,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
 
   const userCacheReplace = () => {
     dispatch(toggleSidebarUserCache(false));
-    console.log('replace data value');
+    handelUpdatedUserCache(chart, chartQuestionData, filters, cacheId);
   };
   return (
     <div className="sidebar user-cache">
@@ -505,6 +508,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           handleClose={handleCloseReplace}
           questionText={savedChart}
           userCache={userCacheReplace}
+          buttonText="Yes, Replace"
         />
       ) : (
         <CustomPopup
@@ -513,6 +517,7 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
           handleClose={handleClose}
           questionText={savedChart}
           userCache={userCacheDelete}
+          buttonText="Yes, delete"
         />
       )}
     </div>

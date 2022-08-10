@@ -6,10 +6,12 @@ export interface CustomPopup {
   StaticText: string;
   questionText: any;
   userCache?: (value: any) => void;
+  buttonText: string;
 }
 
 const CustomPopup: React.FC<CustomPopup> = (props) => {
-  const { handleClose, open, StaticText, questionText, userCache } = props;
+  const { handleClose, open, StaticText, questionText, userCache, buttonText } =
+    props;
 
   return (
     <Dialog
@@ -18,22 +20,14 @@ const CustomPopup: React.FC<CustomPopup> = (props) => {
       className="user-cache user-cache-custom-popup"
       sx={{ backgroundColor: 'rgba(255 ,255, 255, .1 )' }}
     >
-      <div className="user-cache-hedding">
-        {StaticText}
-
-        {/* {questionText.map((quesText: any) => {
-          return (
-            <div className="user-cache-questiontext">{quesText?.qText}</div>
-          );
-        })} */}
-      </div>
+      <div className="user-cache-hedding">{StaticText}</div>
 
       <DialogActions className="btn-group">
         <Button onClick={handleClose} className="button--secondary">
-          Disagree
+          Cancel
         </Button>
         <Button onClick={userCache} autoFocus className="button--primary">
-          Agree
+          {buttonText}
         </Button>
       </DialogActions>
     </Dialog>

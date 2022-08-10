@@ -237,7 +237,7 @@ export const handelAddInUserCache = (
     significant: chart?.significant,
     showMean: chart?.showMean,
   };
-  console.log('userCachebody', userCachebody);
+
   ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
     .then((res) => {
       if (res.success) {
@@ -245,6 +245,50 @@ export const handelAddInUserCache = (
         Toaster.success(res.message);
       } else {
         dispatch(setuserCacheActive(false));
+        Toaster.error(res.message); //add more things
+      }
+    })
+    .catch((error) => console.log(error));
+};
+
+export const handelUpdatedUserCache = (
+  chart: any,
+  chartQuestionData: any,
+  filters: any,
+  cacheId: any,
+) => {
+  const { dispatch } = store;
+  const userCacheUpdatedbody = {
+    qText:
+      chartQuestionData?.type === QuestionType.RANK
+        ? chartQuestionData?.labelText
+        : chartQuestionData?.questionText,
+    qId: chartQuestionData?.qId,
+    type: chartQuestionData?.type,
+    bannerType: chart?.bannerQuestionData?.type
+      ? chart?.bannerQuestionData?.type
+      : '',
+    date: new Date(),
+    filter: filters?.appliedFilters,
+    bannerQuestion:
+      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+    chartType: chart?.chartType,
+    chartLabelType: chart?.chartLabelType,
+    chartOrientation: chart?.chartOrientation,
+    chartTranspose: chart?.chartTranspose,
+    significant: chart?.significant,
+    showMean: chart?.showMean,
+    id: cacheId,
+  };
+
+  ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCacheUpdatedbody)
+    .then((res) => {
+      if (res.success) {
+        dispatch(setDialog(false));
+        // dispatch(resetUserCache(res.data));
+        Toaster.success(res.message);
+      } else {
+        //dispatch(setuserCacheActive(false));
         Toaster.error(res.message); //add more things
       }
     })
