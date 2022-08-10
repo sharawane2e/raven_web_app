@@ -1,6 +1,6 @@
 export const PdfGenExport = (seriesData: any) => {
   const options = {
-    fillColor: "ffffff",
+    fillColor: 'ffffff',
     bold: false,
   };
 
@@ -15,15 +15,15 @@ export const PdfGenExport = (seriesData: any) => {
         styles: {
           ...options,
           fillColor:
-            cellObject.minMax == "min"
-              ? "b8e08c"
-              : cellObject.minMax == "max"
-              ? "fbd9d4"
-              : "ffffff",
+            cellObject.minMax == 'min'
+              ? 'b8e08c'
+              : cellObject.minMax == 'max'
+              ? 'fbd9d4'
+              : 'ffffff',
           bold:
-            cellObject.minMax == "min"
+            cellObject.minMax == 'min'
               ? true
-              : cellObject.minMax == "max"
+              : cellObject.minMax == 'max'
               ? true
               : false,
         },

@@ -144,17 +144,12 @@ export const getsignificantdifference = (
 /* This function get table significant Difference*/
 export const getTablesignificantdifference = (seriesData: any) => {
   for (let i = 0; i < seriesData.length; i++) {
-    // const seriesupdatedLabels = [];
     seriesData[i]['significance'] = [];
     seriesData[i]['significanceDifference'] = [];
 
     for (let j = 0; j < seriesData[i]['labels'].length; j++) {
       seriesData[i]['significance'].push(indexToChar(j));
-      // seriesupdatedLabels.push(
-      //   seriesData[i]["labels"][j] + `(${indexToChar(j)})`
-      // );
     }
-    // seriesData[i]["labels"] = seriesupdatedLabels;
   }
 
   for (let i = 0; i < seriesData.length; i++) {

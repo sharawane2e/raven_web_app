@@ -217,15 +217,7 @@ const slideChartConfig = (
     } else {
       const colorArray: string[] = [];
       seriesData[0]?.labels.forEach(function (labelText: any) {
-        // const seriesObject = _.find(questionData?.options, function (o) {
-        //   return o.labelText === labelText;
-        // });
         colorArray.push(primaryBarPPt);
-        // if (seriesObject?.labelCode.split('_')[0] == 'N') {
-        //   colorArray.push('f1ad0f');
-        // } else {
-        //   colorArray.push(primaryBarPPt);
-        // }
       });
 
       chartColors = colorArray;
@@ -245,13 +237,6 @@ const slideChartConfig = (
       }
     }
   }
-
-  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
-  //   seriesData.forEach((row: any, index) => {
-  //     row.values = row.values.map((value: number) => value / 100);
-  //     seriesData[index] = row;
-  //   });
-  // }
 
   return { pptChartType, chartColors };
 };

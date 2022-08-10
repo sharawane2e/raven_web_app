@@ -1,7 +1,3 @@
-import React from 'react';
-
-type Props = {};
-
 const Loader = () => {
   return (
     <div className="loader--wrapper">

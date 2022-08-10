@@ -13,10 +13,6 @@ export function bannerChartDataGen(
     chart: { significant },
   } = store.getState();
 
-  // console.log("questionData", questionData);
-  // console.log("bannerQuestionData", bannerQuestionData);
-  // console.log("chartData", chartData);
-  // console.log("questionChartData", chartData);
   const seriesData: any = [];
 
   const updatedSeries = JSON.parse(JSON.stringify(series));
@@ -30,9 +26,7 @@ export function bannerChartDataGen(
       });
     } else {
       questionData.options.forEach((optionObject: any) => {
-        //  if (chartData[0][optionObject?.labelCode]?.length) {
         seriesName.push(optionObject?.labelText);
-        // }
       });
     }
 

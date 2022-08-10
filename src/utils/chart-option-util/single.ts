@@ -1,6 +1,5 @@
 import { QuestionType } from '../../enums/QuestionType';
 import { IQuestionOption } from '../../types/IBaseQuestion';
-import { IQuestion } from '../../types/IQuestion';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 
@@ -32,8 +31,6 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
   } = chart;
 
   const selectedBannerQuestionId = bannerQuestionData?.qId;
-
-  // const { selectedBannerQuestionId } = questions;
 
   const series: any[] = [];
   if (selectedBannerQuestionId) {

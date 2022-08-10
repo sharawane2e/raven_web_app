@@ -16,8 +16,6 @@
   width: 160px;
   margin-top: -50px;
   margin-left: -70px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
   padding: 10px;
   box-sizing: border-box;
 }
@@ -27,7 +25,7 @@
   }
 
   30% {
-    background-color: #f1ad0f;
+    background-color: #1fc833;
   }
   50% {
     height: 100px;
@@ -35,7 +33,7 @@
   }
 
   80% {
-    background-color: #f1ad0f;
+    background-color: #1fc833;
   }
 
   100% {
@@ -46,7 +44,7 @@
 @mixin inner() {
   height: 10px;
   width: 30px;
-  background-color: map-get($map: $bg-color, $key: 'info');
+  background-color: map-get($map: $bg-color, $key: 'accent');
   display: inline-block;
   margin-top: 90px;
   -webkit-animation: loading 2.5s infinite;

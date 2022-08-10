@@ -1,16 +1,8 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Drawer,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Drawer, Typography } from '@material-ui/core';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { ComponentType, useState, useEffect } from 'react';
-import store, { RootState } from '../../../../redux/store';
+import { RootState } from '../../../../redux/store';
 import CustomScrollbar from '../../../CustomScrollbar';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -38,7 +30,6 @@ import {
 } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
-  handelAddInUserCache,
   handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,

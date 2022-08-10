@@ -2,8 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
 import { ReactComponent as FavouriteIcon } from '../../assets/svg/wishlist.svg';
-// import ApiUrl from '../../enums/ApiUrl';
-// import ApiRequest from '../../utils/ApiRequest';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
 import {
@@ -11,11 +9,7 @@ import {
   setDialog,
   setuserCacheActive,
 } from '../../redux/actions/userCacheActions';
-import {
-  handelAddInUserCache,
-  // isChartInCache,
-} from '../../services/userCacheService';
-// import { QuestionType } from '../../enums/QuestionType';
+import { handelAddInUserCache } from '../../services/userCacheService';
 
 const FavouriteControl: React.FC = () => {
   const { filters, chart, userCache } = useSelector(
@@ -25,22 +19,33 @@ const FavouriteControl: React.FC = () => {
 
   const dispatch = useDispatch();
 
+  const userCacheId = userCache.cacheId;
+
+  const filterCache: any = userCache.savedChart.find((el: any) => {
+    return el._id == userCacheId;
+  });
+
   const handleAddChartCache = () => {
     dispatch(setuserCacheActive(true));
-    if (userCache.inCache) {
-      dispatch(setDialog(true));
-      dispatch(setuserCacheActive(false));
-    } else {
-      handelAddInUserCache(chart, chartQuestionData, filters);
-    }
-    //. handelAddInUserCache(chart, chartQuestionData, filters);
+    // if (
+    //   userCache.inCache ||
+    //   filterCache.chartType != chart.chartType ||
+    //   filterCache.chartOrientation != chart.chartOrientation ||
+    //   filterCache.chartTranspose != chart.chartTranspose ||
+    //   filterCache.chartLabelType != chart.chartLabelType
+    // ) {
+    //   dispatch(setDialog(true));
+    //   dispatch(setuserCacheActive(false));
+    // } else {
+    //   handelAddInUserCache(chart, chartQuestionData, filters);
+    // }
+    handelAddInUserCache(chart, chartQuestionData, filters);
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: 'User Cache',
       renderChild: () => <FavouriteIcon />,
-      //onClick: handleAddChartCache,
       onClick: handleAddChartCache,
       // onClick: isChartInCache().isChartDuplicate
       // ? () => handleDeleteChartCache([isChartInCache().duplicateCacheId])
