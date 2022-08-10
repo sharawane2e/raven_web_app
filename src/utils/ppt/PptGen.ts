@@ -126,6 +126,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartType,
         pptxGenJsObj,
         seriesData,
+
         chartOrientation,
       );
 
