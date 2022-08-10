@@ -18,7 +18,7 @@ export const gridTable = (
   const minMaxArr: any[] = [];
 
   if (showMean) {
-    chartRows.push(...createChartRows(chartSeries));
+    chartRows.push(...createChartRows(chartSeries, questionData));
     const { updatedMinMaxArr, updatedCount } = MeanMinMaxObject(
       chartRows,
       questionData.groupNetData,
@@ -27,17 +27,16 @@ export const gridTable = (
     minMaxArr.push(...updatedMinMaxArr);
   } else {
     if (transposed) {
-      chartRows.push(...createChartRows(chartSeries));
+      chartRows.push(...createChartRows(chartSeries, questionData));
       const { updatedMinMaxArr, updatedCount } = minMaxObject(
         chartRows,
-        questionData.groupNetData,
+        questionData,
       );
+
       count.push(...updatedCount);
       minMaxArr.push(...updatedMinMaxArr);
     } else {
-      chartRows.push(
-        ...gridCreateChartRowsNets(chartSeries, questionData.groupNetData),
-      );
+      chartRows.push(...gridCreateChartRowsNets(chartSeries, questionData));
 
       const { updatedMinMaxArr, updatedCount } = gridMinMaxObjectNets(
         chartRows,
@@ -87,7 +86,7 @@ export const gridTable = (
   return mergedChartRows;
 };
 
-const createChartRows = (chartSeries: any) => {
+const createChartRows = (chartSeries: any, questionData: any) => {
   const chartRows: any[] = [];
   //add labels in charts
   chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
@@ -108,7 +107,7 @@ const createChartRows = (chartSeries: any) => {
     let tableDataSum: number = 0;
 
     charRow.forEach((tableDate: any, tableDateIndex: number) => {
-      if (tableDateIndex != 0) {
+      if (tableDateIndex != 0 && !questionData?.isGroupNet) {
         //because the first column is text
         tableDataSum += tableDate;
       }
@@ -118,7 +117,7 @@ const createChartRows = (chartSeries: any) => {
   });
   return chartRows;
 };
-const gridCreateChartRowsNets = (chartSeries: any, groupNetData: any[]) => {
+const gridCreateChartRowsNets = (chartSeries: any, questionData: any) => {
   const chartRows: any[] = [];
   //add labels in charts
   chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
@@ -139,12 +138,16 @@ const gridCreateChartRowsNets = (chartSeries: any, groupNetData: any[]) => {
     let tableDataSum: number = 0;
 
     charRow.forEach((tableDate: any, tableDateIndex: number) => {
-      if (
-        tableDateIndex != 0 &&
-        tableDateIndex < charRow.length - groupNetData.length
-      ) {
-        //because the first column is text
-        tableDataSum += tableDate;
+      if (questionData?.isGroupNet) {
+        if (
+          tableDateIndex != 0 &&
+          tableDateIndex < charRow.length - questionData?.groupNetData.length
+        ) {
+          //because the first column is text
+          tableDataSum += tableDate;
+        }
+      } else {
+        if (tableDateIndex != 0) tableDataSum += tableDate;
       }
     });
 
@@ -222,12 +225,16 @@ const addGrandTotal = (count: any[], chartLabelType: ChartLabelType) => {
 
   return grandTotalRow;
 };
-const minMaxObject = (chartRows: any[], groupNetData: any[]) => {
+const minMaxObject = (chartRows: any[], questionData: any) => {
   const updatedMinMaxArr: any[] = [];
   const updatedCount: number[] = [];
   for (let i = 0; i < chartRows.length; i++) {
     for (let j = 0; j < chartRows[i].length - 1; j++) {
-      if (j > 0 && i < chartRows.length - groupNetData.length) {
+      const groupNetLength = questionData.isGroupNet
+        ? questionData?.groupNetData.length
+        : questionData?.groupNetData.length - 1;
+
+      if (j > 0 && i < chartRows.length - groupNetLength) {
         updatedCount[j - 1] =
           updatedCount[j - 1] == undefined ? 0 : updatedCount[j - 1];
         updatedCount[j - 1] += chartRows[i][j];
@@ -330,6 +337,11 @@ const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
         updatedChartRows[dataObjectIndex][chartObjectIndex + 1] = {
           ...updatedChartRows[dataObjectIndex][chartObjectIndex + 1],
           significantDiffernce: dataObject.significantDiffernce,
+          // text:
+          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].text +
+          //   `<span class="significante-color table-significante">- + ${dataObject.significantDiffernce}</span>`,
+          // minMax:
+          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].minMax,
         };
       }
     });
