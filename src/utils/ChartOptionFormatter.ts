@@ -90,7 +90,7 @@ const getSingleChartOptions = (chart: IchartOptionsDto): any => {
     legend: {
       enabled: true,
     },
-    plotOptions: getPlotOptions(),
+    // plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
     series,
   };
@@ -192,37 +192,31 @@ export const getPlotOptions = (
   let plotOptions = chartDataClone.chartOptions['plotOptions'];
   plotOptions = omit(plotOptions, ['column', 'bar', 'pie', 'line']);
   if (chartType === ChartType.STACK) {
-    if (chartDataClone.significant) {
-    } else {
-      plotOptions['column'] = {
-        stacking: 'normal',
-      };
-      plotOptions['series'].dataLabels.format = chartDataClone.showMean
-        ? '{point.y:.1f}'
-        : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? '{point.y:.1f}%'
-        : '{point.y:.0f}';
-      plotOptions['series'].dataLabels.y = undefined;
-      plotOptions['series'].dataLabels.rotation = 0;
-    }
+    plotOptions['column'] = {
+      stacking: 'normal',
+    };
+    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
+    //   ? '{point.y:.1f}'
+    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    //   ? '{point.y:.1f}%'
+    //   : '{point.y:.0f}';
+    // plotOptions['series'].dataLabels.y = undefined;
+    // plotOptions['series'].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions['bar'] = {
       stacking: 'normal',
     };
-    if (chartDataClone.significant) {
+    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
+    //   ? '{point.y:.1f}'
+    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
+    //   ? '{point.y:.1f}%'
+    //   : '{point.y:.0f}';
+    if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
+      // plotOptions['series'].dataLabels.y = 0;
+      // plotOptions['series'].dataLabels.rotation = -90;
     } else {
-      plotOptions['series'].dataLabels.format = chartDataClone.showMean
-        ? '{point.y:.1f}'
-        : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-        ? '{point.y:.1f}%'
-        : '{point.y:.0f}';
-      if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-        plotOptions['series'].dataLabels.y = 0;
-        plotOptions['series'].dataLabels.rotation = -90;
-      } else {
-        plotOptions['series'].dataLabels.y = undefined;
-        plotOptions['series'].dataLabels.rotation = 0;
-      }
+      // plotOptions['series'].dataLabels.y = undefined;
+      // plotOptions['series'].dataLabels.rotation = 0;
     }
   } else if (chartType === ChartType.PIE) {
     plotOptions['pie'] = {

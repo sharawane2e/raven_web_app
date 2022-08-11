@@ -233,7 +233,7 @@ const getSingleSeries = (chart: any) => {
   }
   let newDataLabels: any;
   if (significant) {
-    //newDataLabels = dataUpdatedFormate;
+    newDataLabels = dataUpdatedFormate;
   } else {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
       newDataLabels = dataLabelsFormate;
@@ -259,7 +259,9 @@ const getSingleSeries = (chart: any) => {
         name,
         color,
         data,
-        dataLabels,
+        dataLabels: {
+          ...newDataLabels,
+        },
       });
     });
   } else {
