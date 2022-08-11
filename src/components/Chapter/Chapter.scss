@@ -54,3 +54,11 @@
     }
   }
 }
+
+.css-jweb7o::after {
+  content: "▾";
+  position: absolute;
+  right: 2px;
+  //font-size: 25px;
+  //top: 3px;
+}

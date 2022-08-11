@@ -84,6 +84,8 @@ const Chapter: React.FC<ChapterProps> = (props) => {
       content: '▾';
       position: absolute;
       right: 2px;
+      font-size: 25px;
+      top: 3px;
     }
     `
   );
