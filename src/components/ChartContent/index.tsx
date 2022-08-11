@@ -425,7 +425,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               menus, not in-legend selections.
             </div>
             <div className="chart-content__info mrTop">
-              © Copyright - 2022, NielsenIQ BASES Design and Developed by
+              Copyright © 2022, NielsenIQ BASES Design and Developed by
               E2E Research Services Pvt. Ltd.
             </div>
           </div>

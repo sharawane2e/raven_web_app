@@ -128,6 +128,6 @@ export const dataLabelColor = '000000';
 export const pptBackgroundColor = 'FFFFFF';
 
 export const sourceText = '';
-export const copyRightText = 'Copyright © 2021 E2E Research Services Pvt. Ltd.';
+export const copyRightText = 'Copyright © 2022 E2E Research Services Pvt. Ltd.';
 
 export const exportPrefix = 'nielseniq Dashboard - ';
