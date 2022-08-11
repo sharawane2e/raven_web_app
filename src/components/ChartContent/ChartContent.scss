@@ -57,7 +57,7 @@
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "secondary-dark");
+   // background: map-get($map: $bg-color, $key: "secondary-dark");
   }
   .wave-button {
     height: 30px;
