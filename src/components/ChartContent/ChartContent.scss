@@ -32,7 +32,7 @@
 
   .chart-content__chart-wrapper {
     width: calc(100% - 24px);
-    height: calc(100vh - 365px);
+    height: calc(100vh - 300px);
     background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: "white");
@@ -96,6 +96,9 @@
     font-style: italic;
     color: map-get($map: $text-color, $key: "base-color");
     margin-top: 1px;
+  }
+  .chart-content__info.mrTop {
+    margin-top: 10px;
   }
   .title__Block {
     display: flex;

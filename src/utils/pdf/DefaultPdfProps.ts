@@ -89,5 +89,5 @@ export const setDefaultPdfPageProperties = async (
   doc.setFillColor(hexToRgb(primaryBarColor));
   doc.rect(5, 0, 3, 12, "F");
 
-  doc.addImage(logoBase64String, "JPEG", logoX, logoY, 25, 12);
+  doc.addImage(logoBase64String, "JPEG", logoX, logoY, 27, 10);
 };
