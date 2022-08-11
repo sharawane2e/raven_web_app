@@ -402,20 +402,20 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <div className="chart-content-footer">
           <div className="chart-content-footer--inr">
             <div className="chart-content__base-count">
-              Sample Size: {baseCount}
-              {/* <div>
-                Prodicts tested at the 95% confidence level-ABCDE (between
-                sub-groups 95% - green)/90% confidence level_abcde
+              Base: All respondents = {baseCount}
+              <div>
+                Products tested at the 95% confidence level –ABCDE (between
+                sub-groups 95% - green)/ 90% confidence level _abcde
               </div>
               <div>
-                How well do you like product overall taking into consideation
-                everything about it including Apperance. Texture & flavor of the
-                sample?
+                How well do you like this product overall taking into
+                consideration everything about it including Appearance, Texture
+                & flavor of the sample?
               </div>
               <div>
-                *I dislike extremely .. 2 ..3 ..4 ..5 ..6 ..77 ..88 ..I like it
-                extremely
-              </div> */}
+                *I dislike it extremely .. 2 .. 3 .. 4 .. 5 .. 6 .. 7 .. 8 .. I
+                like it extremely
+              </div>
             </div>
 
             <div className="chart-content__info">
@@ -423,8 +423,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               menus, not in-legend selections.
             </div>
             <div className="chart-content__info">
-              Copyright * 2009-2022, NielsenIQ BASES Design and Developed by E2E
-              Research Services Pvt. Ltd.
+              © Copyright * 2009-2022, NielsenIQ BASES Design and Developed by
+              E2E Research Services Pvt. Ltd.
             </div>
           </div>
           <div className="appbar__logo-wrapper">
