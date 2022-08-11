@@ -282,7 +282,7 @@
   }
 }
 .cache-icon {
-  fill: #000000;
+  fill: map-get($map: $text-color, $key: primary);
   width: 1em;
   height: 1em;
   display: inline-block;
