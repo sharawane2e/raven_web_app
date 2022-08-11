@@ -16,6 +16,7 @@ import {
 import { ChartType } from '../../enums/ChartType';
 import { getsignificantdifference } from './significanceDiff';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { dataLabels } from '../../redux/reducers/chartReducer';
 
 export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
   const {
@@ -232,7 +233,7 @@ const getSingleSeries = (chart: any) => {
   }
   let newDataLabels: any;
   if (significant) {
-    newDataLabels = dataUpdatedFormate;
+    //newDataLabels = dataUpdatedFormate;
   } else {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
       newDataLabels = dataLabelsFormate;
@@ -258,9 +259,7 @@ const getSingleSeries = (chart: any) => {
         name,
         color,
         data,
-        dataLabels: {
-          ...newDataLabels,
-        },
+        dataLabels,
       });
     });
   } else {
