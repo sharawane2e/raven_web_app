@@ -38,6 +38,7 @@ import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
+import { ReactComponent as Raven_logo } from '../../assets/svg/raven_logo.svg';
 import Chapter from '../Chapter';
 import _ from 'lodash';
 import IsMeanControl from '../IsMeanControl';
@@ -397,21 +398,42 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <Chart />
           </>
         )}
-        {chart?.questionData !== null ? (
-          <div className="chart-content-footer">
-            <div className="chart-content-footer--inr">
-              <div className="chart-content__base-count">
-                Sample Size: {baseCount}
+        {/* {chart?.questionData !== null ? ( */}
+        <div className="chart-content-footer">
+          <div className="chart-content-footer--inr">
+            <div className="chart-content__base-count">
+              Sample Size: {baseCount}
+              {/* <div>
+                Prodicts tested at the 95% confidence level-ABCDE (between
+                sub-groups 95% - green)/90% confidence level_abcde
               </div>
-              <div className="chart-content__info">
-                Note: Sample size reflects selections from filter and cross-tab
-                menus, not in-legend selections.
+              <div>
+                How well do you like product overall taking into consideation
+                everything about it including Apperance. Texture & flavor of the
+                sample?
               </div>
+              <div>
+                *I dislike extremely .. 2 ..3 ..4 ..5 ..6 ..77 ..88 ..I like it
+                extremely
+              </div> */}
+            </div>
+
+            <div className="chart-content__info">
+              Note: Sample size reflects selections from filter and cross-tab
+              menus, not in-legend selections.
+            </div>
+            <div className="chart-content__info">
+              Copyright * 2009-2022, NielsenIQ BASES Design and Developed by E2E
+              Research Services Pvt. Ltd.
             </div>
           </div>
-        ) : (
+          <div className="appbar__logo-wrapper">
+            <Raven_logo />
+          </div>
+        </div>
+        {/* ) : (
           ''
-        )}
+        )} */}
       </div>
     </div>
   );
