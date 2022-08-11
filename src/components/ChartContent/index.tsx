@@ -422,7 +422,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               Note: Sample size reflects selections from filter and cross-tab
               menus, not in-legend selections.
             </div>
-            <div className="chart-content__info">
+            <div className="chart-content__info mt">
               © Copyright * 2009-2022, NielsenIQ BASES Design and Developed by
               E2E Research Services Pvt. Ltd.
             </div>
