@@ -8,8 +8,11 @@ import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
 import { getChartOptions } from "../ChartOptionFormatter";
 import { PdfGenExport } from "./PdfGenExport";
 import { getChartRows } from "../table-option-util";
+// import ExportPdfCharts from "../../components/ExportPdfCharts";
 
 export const generatePdf = async (payloadObjectArr: any[]) => {
+  let selectedCharts: Array<any> = [];
+
   let doc = new jsPDF();
   for (let i = 0; i < payloadObjectArr.length; i++) {
     const {
@@ -129,6 +132,33 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         styles: { fontSize: 6 },
       });
     } else {
+      // debugger
+      //<ExportPdfCharts />
+      const chartOptionsPayload: any = {
+        questionData: payloadObjectArr[i].chart.questionData,
+        chartData: payloadObjectArr[i].chart.chartData,
+        baseCount: payloadObjectArr[i].chart.baseCount,
+        bannerQuestionData: payloadObjectArr[i].chart.bannerQuestionData,
+        chartOptionsData: payloadObjectArr[i].chart.chartOptions,
+        questionChartData: payloadObjectArr[i].chart.questionChartData,
+        bannerChartData: payloadObjectArr[i].chart.bannerChartData,
+        transposed: payloadObjectArr[i].chart.chartTranspose,
+      };
+
+      const newSeriesData = getChartOptions(
+        chartOptionsPayload.questionData,
+        chartOptionsPayload.chartData,
+        chartOptionsPayload.baseCount,
+        chartOptionsPayload.bannerQuestionData,
+        chartOptionsPayload.chartOptionsData,
+        chartOptionsPayload.questionChartData,
+        chartOptionsPayload.bannerChartData,
+        chartOptionsPayload.transposed
+      );
+
+      // console.log("newSeriesData.series", newSeriesData.series);
+      selectedCharts.push(newSeriesData.series);
+
       if (clientWidth >= 1300) {
         pdfWidth = 300;
         pdfHeight = 220;
@@ -167,41 +197,44 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         lWordBreak = pdfWidth - 20;
         qWordBreak = 160;
       }
-      let source = document.getElementsByClassName("highcharts-root");
-      let svgSource = source[0];
-      let clonedSource = svgSource.cloneNode(true) as HTMLElement;
+      //     let source = document.getElementsByClassName("highcharts-root");
+      //     let svgSource = source[1];
+      //     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
-      clonedSource
-        .querySelectorAll(".highcharts-text-outline")
-        .forEach((node: any) => node.parentNode.removeChild(node));
+      //     // clonedSource
+      //     //   .querySelectorAll(".highcharts-text-outline")
+      //     //   .forEach((node: any) => node.parentNode.removeChild(node));
 
-      await setDefaultPdfPageProperties(
-        doc,
-        baseX,
-        baseY,
-        sourceX,
-        sourceY,
-        logoX,
-        logoY,
-        copyRightX,
-        copyRightY,
-        qWordBreak,
-        lWordBreak,
-        payloadObjectArr[i].chart
-      );
-      await doc.svg(clonedSource, {
-        x: x,
-        y: y,
-        width: w,
-        height: h,
-        loadExternalStyleSheets: true,
-      });
+      //     await setDefaultPdfPageProperties(
+      //       doc,
+      //       baseX,
+      //       baseY,
+      //       sourceX,
+      //       sourceY,
+      //       logoX,
+      //       logoY,
+      //       copyRightX,
+      //       copyRightY,
+      //       qWordBreak,
+      //       lWordBreak,
+      //       payloadObjectArr[i].chart
+      //     );
+      //     await doc.svg(clonedSource, {
+      //       x: x,
+      //       y: y,
+      //       width: w,
+      //       height: h,
+      //       loadExternalStyleSheets: true,
+      //     });
+      //   }
+      // }
+
+      // doc.save(
+      //   exportPrefix +
+      //     payloadObjectArr[0]["chart"]["questionData"]?.labelText +
+      //     ".pdf"
+      // );
     }
   }
-
-  doc.save(
-    exportPrefix +
-      payloadObjectArr[0]["chart"]["questionData"]?.labelText +
-      ".pdf"
-  );
+  // ExportPdfCharts(selectedCharts);
 };

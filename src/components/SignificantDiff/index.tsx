@@ -1,18 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { ChartType } from '../../enums/ChartType';
-import store, { RootState } from '../../redux/store';
-import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
-import { ReactComponent as SignificantDiffIcon } from '../../assets/svg/signf-d.svg';
-import { QuestionType } from '../../enums/QuestionType';
-import { changeChartType } from '../../services/ChartService';
-import Toaster from '../../utils/Toaster';
-import { StaticText } from '../../constants/StaticText';
+import { useDispatch, useSelector } from "react-redux";
+import { ChartType } from "../../enums/ChartType";
+import store, { RootState } from "../../redux/store";
+import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
+import { ReactComponent as SignificantDiffIcon } from "../../assets/svg/signf-d.svg";
+import { QuestionType } from "../../enums/QuestionType";
+import { changeChartType } from "../../services/ChartService";
+import Toaster from "../../utils/Toaster";
+import { StaticText } from "../../constants/StaticText";
 import {
   updateChartOptions,
   updateSignificant,
-} from '../../redux/actions/chartActions';
-import { useEffect } from 'react';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
+} from "../../redux/actions/chartActions";
+import { useEffect } from "react";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
 
 interface ChartTypeControlProps {}
 
@@ -60,7 +60,7 @@ const SignificantDiff: React.FC<ChartTypeControlProps> = () => {
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
-      tooltip: 'Significant Difference',
+      tooltip: "Significant Difference",
       renderChild: () => <SignificantDiffIcon />,
       onClick: handleClick,
       active: chart.significant,
