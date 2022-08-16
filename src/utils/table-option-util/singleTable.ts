@@ -106,8 +106,8 @@ const createChartRows = (
   });
   chartSeries.forEach((serie: any, serieIndex: number) => {
     serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
-      if (dataObject.y != undefined) {
-        chartRows[dataObjectIndex].push(round(dataObject.y, 2));
+      if (dataObject?.y != undefined) {
+        chartRows[dataObjectIndex].push(round(dataObject?.y, 2));
       } else {
         chartRows[dataObjectIndex].push(0);
       }

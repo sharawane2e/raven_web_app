@@ -1,18 +1,15 @@
-import store from "../../redux/store";
-import { ChartType } from "../../enums/ChartType";
-import jsPDF from "jspdf";
-import "svg2pdf.js";
-import autoTable from "jspdf-autotable";
-import { exportPrefix } from "../../constants/Variables";
-import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
-import { getChartOptions } from "../ChartOptionFormatter";
-import { PdfGenExport } from "./PdfGenExport";
-import { getChartRows } from "../table-option-util";
-// import ExportPdfCharts from "../../components/ExportPdfCharts";
+import store from '../../redux/store';
+import { ChartType } from '../../enums/ChartType';
+import jsPDF from 'jspdf';
+import 'svg2pdf.js';
+import autoTable from 'jspdf-autotable';
+import { exportPrefix } from '../../constants/Variables';
+import { setDefaultPdfPageProperties } from '../pdf/DefaultPdfProps';
+import { getChartOptions } from '../ChartOptionFormatter';
+import { PdfGenExport } from './PdfGenExport';
+import { getChartRows } from '../table-option-util';
 
 export const generatePdf = async (payloadObjectArr: any[]) => {
-  let selectedCharts: Array<any> = [];
-
   let doc = new jsPDF();
   for (let i = 0; i < payloadObjectArr.length; i++) {
     const {
@@ -53,7 +50,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
     if (chartType === ChartType.TABLE) {
       pdfWidth = 300;
       pdfHeight = 400;
-      doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+      doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
       // doc.addPage([300, 297], "p");
       x = 5;
       y = 30;
@@ -81,7 +78,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightY,
         qWordBreak,
         lWordBreak,
-        payloadObjectArr[i].chart
+        payloadObjectArr[i].chart,
       );
       // const tableRows = tableChartDataGen();
       // autoTable(doc, { html: "#my-table" });
@@ -115,11 +112,12 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.chartOptionsData,
         chartOptionsPayload.questionChartData,
         chartOptionsPayload.bannerChartData,
-        chartOptionsPayload.transposed
+        chartOptionsPayload.transposed,
       );
+
       const chartRows = getChartRows(
         newSeriesData.series,
-        chartOptionsPayload
+        chartOptionsPayload,
       )[0]; //gaurav
       const seriesData = chartRows; //gaurav
       const output = PdfGenExport(seriesData);
@@ -132,37 +130,10 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         styles: { fontSize: 6 },
       });
     } else {
-      // debugger
-      //<ExportPdfCharts />
-      const chartOptionsPayload: any = {
-        questionData: payloadObjectArr[i].chart.questionData,
-        chartData: payloadObjectArr[i].chart.chartData,
-        baseCount: payloadObjectArr[i].chart.baseCount,
-        bannerQuestionData: payloadObjectArr[i].chart.bannerQuestionData,
-        chartOptionsData: payloadObjectArr[i].chart.chartOptions,
-        questionChartData: payloadObjectArr[i].chart.questionChartData,
-        bannerChartData: payloadObjectArr[i].chart.bannerChartData,
-        transposed: payloadObjectArr[i].chart.chartTranspose,
-      };
-
-      const newSeriesData = getChartOptions(
-        chartOptionsPayload.questionData,
-        chartOptionsPayload.chartData,
-        chartOptionsPayload.baseCount,
-        chartOptionsPayload.bannerQuestionData,
-        chartOptionsPayload.chartOptionsData,
-        chartOptionsPayload.questionChartData,
-        chartOptionsPayload.bannerChartData,
-        chartOptionsPayload.transposed
-      );
-
-      // console.log("newSeriesData.series", newSeriesData.series);
-      selectedCharts.push(newSeriesData.series);
-
       if (clientWidth >= 1300) {
         pdfWidth = 300;
         pdfHeight = 220;
-        doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+        doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
         x = 5;
         y = 30;
         w = 290;
@@ -181,7 +152,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         pdfWidth = 250;
         pdfWidth = 180;
         pdfHeight = 260;
-        doc = new jsPDF("p", "mm", [pdfWidth, pdfHeight]);
+        doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
         x = 5;
         y = 30;
         w = 170;
@@ -197,12 +168,12 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         lWordBreak = pdfWidth - 20;
         qWordBreak = 160;
       }
-      let source = document.getElementsByClassName("highcharts-root");
-      let svgSource = source[1];
+      let source = document.getElementsByClassName('highcharts-root');
+      let svgSource = source[0];
       let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
       clonedSource
-        .querySelectorAll(".highcharts-text-outline")
+        .querySelectorAll('.highcharts-text-outline')
         .forEach((node: any) => node.parentNode.removeChild(node));
 
       await setDefaultPdfPageProperties(
@@ -217,7 +188,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightY,
         qWordBreak,
         lWordBreak,
-        payloadObjectArr[i].chart
+        payloadObjectArr[i].chart,
       );
       await doc.svg(clonedSource, {
         x: x,
@@ -226,13 +197,12 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         height: h,
         loadExternalStyleSheets: true,
       });
-
-      doc.save(
-        exportPrefix +
-          payloadObjectArr[0]["chart"]["questionData"]?.labelText +
-          ".pdf"
-      );
     }
   }
-  // ExportPdfCharts(selectedCharts);
+
+  doc.save(
+    exportPrefix +
+      payloadObjectArr[0]['chart']['questionData']?.labelText +
+      '.pdf',
+  );
 };

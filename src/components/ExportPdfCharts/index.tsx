@@ -1,152 +1,121 @@
-import React, { useEffect } from "react";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
-import "./exportpdf.scss";
-import jsPDF from "jspdf";
-import { setDefaultPdfPageProperties } from "../../utils/pdf/DefaultPdfProps";
-import { getChartOptions } from "../../utils/ChartOptionFormatter";
-import { useSelector } from "react-redux";
-import { setPdfExport } from "../../redux/actions/exportActions";
-import store, { RootState } from "../../redux/store";
+import HighchartsReact from 'highcharts-react-official';
+import Highcharts from 'highcharts';
+import jsPDF from 'jspdf';
+import { setDefaultPdfPageProperties } from '../../utils/pdf/DefaultPdfProps';
+import store from '../../redux/store';
+import { ChartType } from '../../enums/ChartType';
+import { getChartRows } from '../../utils/table-option-util';
+import { PdfGenExport } from '../../utils/pdf/PdfGenExport';
+import autoTable from 'jspdf-autotable';
+import { projectName } from '../../constants/Variables';
+import { getPlotOptions } from '../../utils/ChartOptionFormatter';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 const ExportPdfCharts = (payloadObjectArr: any) => {
   const {
     export: { pdfExport },
   } = store.getState();
+  let clientWidth = document.body.clientWidth;
+
+  let pdfWidth,
+    pdfHeight,
+    x,
+    y,
+    w,
+    h,
+    baseX,
+    baseY,
+    sourceX,
+    sourceY,
+    logoX,
+    logoY,
+    copyRightX,
+    copyRightY,
+    qWordBreak,
+    lWordBreak;
 
   let obj: any;
-  let ReduxCharts: any = pdfExport.flatMap((x) => x);
+
   let chartsArray: any = [];
 
-  console.log("payloadObjectArr", payloadObjectArr);
-
   obj = {
-    title: {
-      text: "",
-    },
-    chart: {
-      type: "column",
-      style: {
-        fontFamily: '"Avenir", Arial',
+    chartOptions: {
+      title: {
+        text: '',
       },
-    },
-    legend: {
-      enabled: true,
-    },
-    tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat:
-        "<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>",
-    },
-    xAxis: {
-      type: "category",
-    },
-    yAxis: {
-      visible: false,
-      reversedStacks: false,
-    },
-    plotOptions: {
-      series: {
-        pointPadding: 0.04,
-        groupPadding: 0.05,
-        borderWidth: 0,
-        shadow: false,
-        dataLabels: {
-          enabled: true,
-          allowOverlap: true,
-          align: "top",
-          x: 0,
-          crop: false,
-          style: {
-            fontSize: "10px",
-            textOutline: false,
-            fontWeight: null,
-          },
+      chart: {
+        type: 'column',
+        style: {
+          fontFamily: '"Avenir", Arial',
         },
       },
-      bar: {
-        stacking: "normal",
+      legend: {
+        enabled: true,
+        reversed: false,
       },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:
+          '<span>{point.name}</span>: Count<b> {point.numberValue}, {point.percentageValue:.2f}%</b> of total <b>{point.baseCount}</b><br/>',
+      },
+      xAxis: {
+        type: 'category',
+      },
+      yAxis: {
+        visible: false,
+        reversedStacks: false,
+      },
+      plotOptions: {
+        series: {
+          pointPadding: 0.04,
+          groupPadding: 0.05,
+          borderWidth: 0,
+          shadow: false,
+          dataLabels: {
+            enabled: true,
+            // format: '{point.y:.1f}%',
+            // formatter: function (this: any) {
+            //   console.log(this);
+            //   // if (this.y > 100) {
+            //   //   return this.y + 'CB';
+            //   // }
+            //   return this.y;
+            // },
+            formatter: function (this: any, options: any) {
+              return ` ${parseFloat(this.y.toFixed(2))}${
+                ChartLabelType.PERCENTAGE ? '%' : ''
+              } <span class="significante-color">${
+                this.point.significantDiffernce
+                  ? this.point.significantDiffernce
+                  : ''
+              } </span>`;
+            },
+            allowOverlap: true,
+            rotation: -90,
+            align: 'top',
+            x: 0,
+            y: -6,
+            crop: false,
+            style: {
+              fontSize: '10px',
+              textOutline: false,
+              fontWeight: null,
+            },
+          },
+        },
+        // bar: {
+        //   stacking: 'normal',
+        // },
+      },
+      series: [],
     },
-    series: [],
   };
 
-  //   function createsvg(doc: any, elements: any, index: any) {
-  //     return new Promise((res, rej) => {
-  //       let clonedSource = elements[index].cloneNode(true) as HTMLElement;
-  //       doc.svg(clonedSource, {
-  //         x: 5,
-  //         y: 30,
-  //         width: 290,
-  //         height: 140,
-  //         loadExternalStyleSheets: true,
-  //       });
-  //       res(true);
-  //     });
-  //   }
-
-  // dispatch(setPdfExport(newSeriesData.series));
-
-  // obj.series = newSeriesData.series;
-
-  let sample = [
-    {
-      name: "Married/Living as married",
-      y: 40.67796610169492,
-      percentageValue: 40.67796610169492,
-      numberValue: 120,
-      baseCount: 295,
-    },
-    {
-      name: "Single (widowed, divorced/separated/never married)",
-      y: 58.30508474576271,
-      percentageValue: 58.30508474576271,
-      numberValue: 172,
-      baseCount: 295,
-    },
-    {
-      name: "Refused",
-      y: 1.0169491525423728,
-      percentageValue: 1.0169491525423728,
-      numberValue: 3,
-      baseCount: 295,
-    },
-  ];
-
-  if (ReduxCharts.length > 0) {
-    ReduxCharts.map((x: any, i: any) => {
-      let abcd = { ...obj };
-      abcd.series = [];
-      abcd?.series.push(ReduxCharts[i]);
-      chartsArray.push(abcd);
-    });
-  }
-
   async function print() {
-    // const elements: any = document.getElementsByClassName("highcharts-root"); // (2)
-
-    let clientWidth = document.body.clientWidth;
-
-    let pdfWidth,
-      pdfHeight,
-      x,
-      y,
-      w,
-      h,
-      baseX,
-      baseY,
-      sourceX,
-      sourceY,
-      logoX,
-      logoY,
-      copyRightX,
-      copyRightY,
-      qWordBreak,
-      lWordBreak;
-
     if (clientWidth >= 1300) {
       pdfWidth = 300;
       pdfHeight = 220;
+      // doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
       x = 5;
       y = 30;
       w = 290;
@@ -163,8 +132,8 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
       qWordBreak = 180;
     } else {
       pdfWidth = 250;
-      pdfWidth = 180;
-      pdfHeight = 260;
+      pdfHeight = 180;
+      // doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
       x = 5;
       y = 30;
       w = 170;
@@ -181,117 +150,100 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
       qWordBreak = 160;
     }
 
-    const doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+    let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
 
-    const elements: any = document.getElementsByClassName("highcharts-root"); // (2)
+    let source = document.getElementsByClassName('highcharts-root');
 
-    console.log("elements.length", elements.length);
+    for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
+      if (
+        pdfExport[sourceIndex]?.payloadData?.chart?.chartType != ChartType.TABLE
+      ) {
+        if (sourceIndex > 0) {
+          doc.addPage();
+        }
+        let clonedSource: any;
+        //if (source.length > 0) {
+        clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
+        await setDefaultPdfPageProperties(
+          doc,
+          baseX,
+          baseY,
+          sourceX,
+          sourceY,
+          logoX,
+          logoY,
+          copyRightX,
+          copyRightY,
+          qWordBreak,
+          lWordBreak,
+          pdfExport[sourceIndex]?.payloadData?.chart,
+          //pdfele?.payloadData?.chart,
+        );
+        await doc.svg(clonedSource, {
+          x: x,
+          y: y,
+          width: w,
+          height: h,
+          loadExternalStyleSheets: true,
+        });
+      } else {
+        if (sourceIndex > 0) {
+          doc.addPage();
+        }
 
-    for (let k = 0; k < elements.length; k++) {
-      //   console.log("obj", obj);
-
-      if (k > 0) {
-        doc.addPage();
+        await setDefaultPdfPageProperties(
+          doc,
+          baseX,
+          baseY,
+          sourceX,
+          sourceY,
+          logoX,
+          logoY,
+          copyRightX,
+          copyRightY,
+          qWordBreak,
+          lWordBreak,
+          pdfExport[sourceIndex]?.payloadData?.chart,
+        );
+        // debugger;
+        const chartRows = getChartRows(
+          pdfExport[sourceIndex]?.seriesData,
+          pdfExport[sourceIndex]?.payloadData?.chart,
+        )[0];
+        const seriesData = chartRows;
+        const output = PdfGenExport(seriesData);
+        autoTable(doc, {
+          body: output,
+          startY: 40,
+          styles: { fontSize: 6 },
+        });
       }
-      let clonedSource: any;
-
-      if (elements.length > 0) {
-        clonedSource = elements[k].cloneNode(true) as HTMLElement;
-      }
-
-      // await setDefaultPdfPageProperties(
-      //   doc,
-      //   baseX,
-      //   baseY,
-      //   sourceX,
-      //   sourceY,
-      //   logoX,
-      //   logoY,
-      //   copyRightX,
-      //   copyRightY,
-      //   qWordBreak,
-      //   lWordBreak,
-      //   payloadObjectArr[k].chart
-      // );
-
-      await doc.svg(clonedSource, {
-        x: 5,
-        y: 30,
-        width: 290,
-        height: 140,
-        loadExternalStyleSheets: true,
-      });
     }
-
-    // for (let k = 0; k < elements.length; k++) {
-    //     if (k > 0) {
-    //       doc.addPage();
-    //     }
-    //     let clonedSource = elements[k].cloneNode(true) as HTMLElement;
-
-    //     await doc.svg(clonedSource, {
-    //       x: 5,
-    //       y: 30,
-    //       width: 290,
-    //       height: 140,
-    //       loadExternalStyleSheets: true,
-    //     });
-    //   };
-
-    doc.save(`charts.pdf`); // (6)
+    doc.save(projectName + '.pdf');
   }
 
-  //   console.log(obj);
-
-  //   useEffect(() => {
-  //     debugger;
-  //     //@ts-ignore
-  //     let len = document.getElementById("hiddenContainer").length;
-  //     console.log(len);
-  //     // if (len > 0) {
-  //     //@ts-ignore
-  //     //   document.getElementById("hiddenContainer")?.innerHTML = (
-  //     //     <>
-  //     //       <div className="allpdfhighcharts">
-  //     //         <button onClick={() => print()}>Print</button>
-
-  //     //         {chartsArray?.map((chart: any) => (
-  //     //           <div className="pdfhighcharts">
-  //     //             <HighchartsReact
-  //     //               containerProps={{
-  //     //                 style: {
-  //     //                   height: "100%",
-  //     //                   overflow: "unset",
-  //     //                 },
-  //     //               }}
-  //     //               highcharts={Highcharts}
-  //     //               options={obj}
-  //     //               immutable
-  //     //             />
-  //     //           </div>
-  //     //         ))}
-  //     //       </div>
-  //     //     </>
-  //     //   );
-  //     // }
-  //   }, []);
+  pdfExport.forEach((pdfel: any) => {
+    const dataObject = changeChartType(
+      obj,
+      pdfel?.payloadData?.chart?.chartType,
+    );
+    console.log('dataObject', dataObject);
+    let newObj = { ...dataObject.chartOptions };
+    console.log(newObj);
+    newObj.series = [];
+    newObj?.series.push(...pdfel.seriesData);
+    chartsArray.push(newObj);
+  });
 
   return (
     <>
       <div className="allpdfhighcharts">
         <button onClick={() => print()}>Print</button>
-
-        {chartsArray?.map((chart: any, i: any) => (
+        {chartsArray?.map((chart: any, Index: number) => (
           <div className="pdfhighcharts hide-chart">
             <HighchartsReact
-              containerProps={{
-                style: {
-                  height: "100%",
-                  overflow: "unset",
-                },
-              }}
               highcharts={Highcharts}
-              options={chartsArray[i]}
+              options={chartsArray[Index]}
               immutable
             />
           </div>
@@ -302,3 +254,72 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
 };
 
 export default ExportPdfCharts;
+
+export const changeChartType = (chart: any, newChartType: ChartType) => {
+  //const { chart } = store.getState();
+  //const { dispatch } = store;
+  //console.log('chart', chart);
+  const chartDataClone = JSON.parse(JSON.stringify(chart));
+
+  chartDataClone.chartType = newChartType;
+
+  if (newChartType === ChartType.LINE) {
+    const lineSetportrait: any = 'portrait';
+    //dispatch(setChartType(ChartType.LINE));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions['chart'],
+        type: 'line',
+      },
+      //  ...getChartOptions(),
+    };
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    //dispatch(setChartData(chartDataClone));
+    return chartDataClone;
+    //console.log(chartDataClone);
+    //dispatch(setChartOrientation(lineSetportrait));
+  } else if (newChartType === ChartType.PIE) {
+    // dispatch(setChartType(ChartType.PIE));
+
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions['chart'],
+        type: 'pie',
+      },
+      //  ...getChartOptions(),
+    };
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    return chartDataClone;
+    //dispatch(setChartData(chartDataClone));
+  } else if (newChartType === ChartType.COLUMN) {
+    //dispatch(setChartType(ChartType.COLUMN));
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions['chart'],
+        type: 'column',
+      },
+      //...getChartOptions(),
+    };
+    chartDataClone['plotOptions'] = getPlotOptions(newChartType);
+    return chartDataClone;
+    //dispatch(setChartData(chartDataClone));
+  } else {
+    // dispatch(setChartType(ChartType.STACK));
+    chartDataClone.chartOptions = {
+      ...chartDataClone.chartOptions,
+      chart: {
+        ...chartDataClone.chartOptions['chart'],
+        type: 'column',
+      },
+      //...getChartOptions(),
+    };
+
+    chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
+    return chartDataClone;
+    //dispatch(setChartData(chartDataClone));
+  }
+};
