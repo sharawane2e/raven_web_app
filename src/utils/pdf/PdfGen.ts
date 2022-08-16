@@ -197,43 +197,41 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         lWordBreak = pdfWidth - 20;
         qWordBreak = 160;
       }
-      //     let source = document.getElementsByClassName("highcharts-root");
-      //     let svgSource = source[1];
-      //     let clonedSource = svgSource.cloneNode(true) as HTMLElement;
+      let source = document.getElementsByClassName("highcharts-root");
+      let svgSource = source[1];
+      let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
-      //     // clonedSource
-      //     //   .querySelectorAll(".highcharts-text-outline")
-      //     //   .forEach((node: any) => node.parentNode.removeChild(node));
+      clonedSource
+        .querySelectorAll(".highcharts-text-outline")
+        .forEach((node: any) => node.parentNode.removeChild(node));
 
-      //     await setDefaultPdfPageProperties(
-      //       doc,
-      //       baseX,
-      //       baseY,
-      //       sourceX,
-      //       sourceY,
-      //       logoX,
-      //       logoY,
-      //       copyRightX,
-      //       copyRightY,
-      //       qWordBreak,
-      //       lWordBreak,
-      //       payloadObjectArr[i].chart
-      //     );
-      //     await doc.svg(clonedSource, {
-      //       x: x,
-      //       y: y,
-      //       width: w,
-      //       height: h,
-      //       loadExternalStyleSheets: true,
-      //     });
-      //   }
-      // }
+      await setDefaultPdfPageProperties(
+        doc,
+        baseX,
+        baseY,
+        sourceX,
+        sourceY,
+        logoX,
+        logoY,
+        copyRightX,
+        copyRightY,
+        qWordBreak,
+        lWordBreak,
+        payloadObjectArr[i].chart
+      );
+      await doc.svg(clonedSource, {
+        x: x,
+        y: y,
+        width: w,
+        height: h,
+        loadExternalStyleSheets: true,
+      });
 
-      // doc.save(
-      //   exportPrefix +
-      //     payloadObjectArr[0]["chart"]["questionData"]?.labelText +
-      //     ".pdf"
-      // );
+      doc.save(
+        exportPrefix +
+          payloadObjectArr[0]["chart"]["questionData"]?.labelText +
+          ".pdf"
+      );
     }
   }
   // ExportPdfCharts(selectedCharts);

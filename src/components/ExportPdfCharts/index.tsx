@@ -14,17 +14,11 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
     export: { pdfExport },
   } = store.getState();
 
-  //const { dispatch } = store;
-
-  // console.log(
-  //   "payloadObjectArr",
-  //   typeof payloadObjectArr,
-  //   payloadObjectArr.length
-  // );
-
   let obj: any;
   let ReduxCharts: any = pdfExport.flatMap((x) => x);
   let chartsArray: any = [];
+
+  console.log("payloadObjectArr", payloadObjectArr);
 
   obj = {
     title: {
@@ -119,20 +113,14 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
     },
   ];
 
-  // obj.series.push(...pdfExport);
-  //   }
-
-  useEffect(() => {
+  if (ReduxCharts.length > 0) {
     ReduxCharts.map((x: any, i: any) => {
-      obj?.series.push(x);
-      console.log("x", x);
-      chartsArray.push(obj);
+      let abcd = { ...obj };
+      abcd.series = [];
+      abcd?.series.push(ReduxCharts[i]);
+      chartsArray.push(abcd);
     });
-  }, [ReduxCharts]);
-
-  console.log("chartsArray", chartsArray);
-  console.log("obj", obj);
-  console.log("pdfExport", pdfExport);
+  }
 
   async function print() {
     // const elements: any = document.getElementsByClassName("highcharts-root"); // (2)
@@ -210,6 +198,21 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
       if (elements.length > 0) {
         clonedSource = elements[k].cloneNode(true) as HTMLElement;
       }
+
+      // await setDefaultPdfPageProperties(
+      //   doc,
+      //   baseX,
+      //   baseY,
+      //   sourceX,
+      //   sourceY,
+      //   logoX,
+      //   logoY,
+      //   copyRightX,
+      //   copyRightY,
+      //   qWordBreak,
+      //   lWordBreak,
+      //   payloadObjectArr[k].chart
+      // );
 
       await doc.svg(clonedSource, {
         x: 5,
