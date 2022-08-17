@@ -15,7 +15,7 @@ import { ChartOrientation } from '../enums/ChartOrientation';
 import { getRankChartOptionsData } from './chart-option-util/rank';
 import { getMultiGridChartOptionsData } from './chart-option-util/multiGrid';
 import { IchartOptionsDto } from '../types/IChartOptionsDto';
-import { ChartLabelType } from '../enums/ChartLabelType';
+// import { ChartLabelType } from '../enums/ChartLabelType';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -27,7 +27,12 @@ export const getChartOptions = (
   questionChartData: any = store.getState().chart.questionChartData,
   bannerChartData: any = store.getState().chart.bannerChartData,
   transposed: boolean = store.getState().chart.chartTranspose,
+  chartLabelType = store.getState().chart.chartLabelType,
+  chartType = store.getState().chart.chartType,
+  significant = store.getState().chart.significant,
+  showMean = store.getState().chart.showMean,
 ): any => {
+  //debugger;
   const chart: IchartOptionsDto = {
     questionData,
     chartData,
@@ -37,11 +42,12 @@ export const getChartOptions = (
     questionChartData,
     bannerChartData,
     transposed,
-    chartLabelType: store.getState().chart.chartLabelType,
-    chartType: store.getState().chart.chartType,
-    significant: store.getState().chart.significant,
-    showMean: store.getState().chart.showMean,
+    chartLabelType,
+    chartType,
+    significant,
+    showMean,
   };
+
   // const questions = {
   //   selectedBannerQuestionId:
   //     store.getState().questions.selectedBannerQuestionId,
@@ -71,8 +77,6 @@ export const getChartOptions = (
 
 const getMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series = getMultiChartOptionsSeries(chart);
-  console.log(series);
-
   return {
     legend: {
       enabled: true,
@@ -84,8 +88,6 @@ const getMultiChartOptions = (chart: IchartOptionsDto): any => {
 
 const getSingleChartOptions = (chart: IchartOptionsDto): any => {
   const series = getSingleChartOptionsSeries(chart);
-  //console.log('series', series);
-
   return {
     legend: {
       enabled: true,

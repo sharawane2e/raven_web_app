@@ -217,6 +217,7 @@ const getSingleSeries = (chart: any) => {
     let plotValue;
     let percentageValue = (count / baseCount) * 100;
     let numberValue = count;
+
     if (chartLabelType === ChartLabelType.PERCENTAGE) {
       plotValue = (count / baseCount) * 100;
     } else {

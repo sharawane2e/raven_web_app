@@ -10,6 +10,7 @@ import autoTable from 'jspdf-autotable';
 import { projectName } from '../../constants/Variables';
 import { getPlotOptions } from '../../utils/ChartOptionFormatter';
 import { ChartLabelType } from '../../enums/ChartLabelType';
+import { ChartOrientation } from '../../enums/ChartOrientation';
 
 const ExportPdfCharts = (payloadObjectArr: any) => {
   const {
@@ -35,7 +36,6 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
     lWordBreak;
 
   let obj: any;
-
   let chartsArray: any = [];
 
   obj = {
@@ -73,14 +73,6 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
           shadow: false,
           dataLabels: {
             enabled: true,
-            // format: '{point.y:.1f}%',
-            // formatter: function (this: any) {
-            //   console.log(this);
-            //   // if (this.y > 100) {
-            //   //   return this.y + 'CB';
-            //   // }
-            //   return this.y;
-            // },
             formatter: function (this: any, options: any) {
               return ` ${parseFloat(this.y.toFixed(2))}${
                 ChartLabelType.PERCENTAGE ? '%' : ''
@@ -152,7 +144,9 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
 
     let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
 
-    let source = document.getElementsByClassName('highcharts-root');
+    let source = document.querySelectorAll(
+      '.allpdfhighcharts .highcharts-root',
+    );
 
     for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
       if (
@@ -162,7 +156,7 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
           doc.addPage();
         }
         let clonedSource: any;
-        //if (source.length > 0) {
+
         clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
         await setDefaultPdfPageProperties(
           doc,
@@ -177,8 +171,8 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
           qWordBreak,
           lWordBreak,
           pdfExport[sourceIndex]?.payloadData?.chart,
-          //pdfele?.payloadData?.chart,
         );
+
         await doc.svg(clonedSource, {
           x: x,
           y: y,
@@ -203,9 +197,8 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
           copyRightY,
           qWordBreak,
           lWordBreak,
-          pdfExport[sourceIndex]?.payloadData?.chart,
+          pdfExport[sourceIndex]?.payloadData,
         );
-        // debugger;
         const chartRows = getChartRows(
           pdfExport[sourceIndex]?.seriesData,
           pdfExport[sourceIndex]?.payloadData?.chart,
@@ -226,10 +219,9 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
     const dataObject = changeChartType(
       obj,
       pdfel?.payloadData?.chart?.chartType,
+      pdfel?.payloadData?.chart,
     );
-    console.log('dataObject', dataObject);
     let newObj = { ...dataObject.chartOptions };
-    console.log(newObj);
     newObj.series = [];
     newObj?.series.push(...pdfel.seriesData);
     chartsArray.push(newObj);
@@ -255,71 +247,61 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
 
 export default ExportPdfCharts;
 
-export const changeChartType = (chart: any, newChartType: ChartType) => {
-  //const { chart } = store.getState();
-  //const { dispatch } = store;
-  //console.log('chart', chart);
+export const changeChartType = (
+  chart: any,
+  newChartType: ChartType,
+  payloadobject: any,
+) => {
   const chartDataClone = JSON.parse(JSON.stringify(chart));
-
   chartDataClone.chartType = newChartType;
 
   if (newChartType === ChartType.LINE) {
     const lineSetportrait: any = 'portrait';
-    //dispatch(setChartType(ChartType.LINE));
-
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions['chart'],
         type: 'line',
+        inverted:
+          payloadobject?.chartOrientation === ChartOrientation.LANDSCAPE,
       },
-      //  ...getChartOptions(),
     };
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
-    //dispatch(setChartData(chartDataClone));
     return chartDataClone;
-    //console.log(chartDataClone);
-    //dispatch(setChartOrientation(lineSetportrait));
   } else if (newChartType === ChartType.PIE) {
-    // dispatch(setChartType(ChartType.PIE));
-
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions['chart'],
         type: 'pie',
       },
-      //  ...getChartOptions(),
     };
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     return chartDataClone;
-    //dispatch(setChartData(chartDataClone));
   } else if (newChartType === ChartType.COLUMN) {
-    //dispatch(setChartType(ChartType.COLUMN));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions['chart'],
         type: 'column',
+        inverted:
+          payloadobject?.chartOrientation === ChartOrientation.LANDSCAPE,
       },
-      //...getChartOptions(),
     };
     chartDataClone['plotOptions'] = getPlotOptions(newChartType);
     return chartDataClone;
-    //dispatch(setChartData(chartDataClone));
   } else {
-    // dispatch(setChartType(ChartType.STACK));
     chartDataClone.chartOptions = {
       ...chartDataClone.chartOptions,
       chart: {
         ...chartDataClone.chartOptions['chart'],
         type: 'column',
+        inverted:
+          payloadobject?.chartOrientation === ChartOrientation.LANDSCAPE,
       },
-      //...getChartOptions(),
     };
 
     chartDataClone.chartOptions['plotOptions'] = getPlotOptions(newChartType);
     return chartDataClone;
-    //dispatch(setChartData(chartDataClone));
   }
 };

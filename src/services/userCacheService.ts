@@ -212,7 +212,9 @@ export const handleExportChartCache = async (
   //generatePpt([...payloadArr]);
   //generatePdf([...payloadArr]);
   //ExportPdfCharts(payloadArr);
+
   calcData(payloadArr);
+
   dispatch(setFullScreenLoading(false));
 };
 
@@ -315,6 +317,10 @@ function calcData(payloadObjectArr: any) {
       questionChartData: payloadObjectArr[i].chart.questionChartData,
       bannerChartData: payloadObjectArr[i].chart.bannerChartData,
       transposed: payloadObjectArr[i].chart.chartTranspose,
+      chartLabelType: payloadObjectArr[i].chart.chartLabelType,
+      chartType: payloadObjectArr[i].chart.chartType,
+      significant: payloadObjectArr[i].chart.significant,
+      showMean: payloadObjectArr[i].chart.showMean,
     };
 
     const newSeriesData = getChartOptions(
@@ -326,9 +332,13 @@ function calcData(payloadObjectArr: any) {
       chartOptionsPayload.questionChartData,
       chartOptionsPayload.bannerChartData,
       chartOptionsPayload.transposed,
+      chartOptionsPayload.chartLabelType,
+      chartOptionsPayload.chartType,
+      chartOptionsPayload.significant,
+      chartOptionsPayload.showMean,
     );
-    // console.log(payloadObjectArr[i]);
-    const payloadData = payloadObjectArr[i];
+
+    const payloadData: any = payloadObjectArr[i];
     const seriesData = newSeriesData.series;
 
     chartsArray.push({ payloadData, seriesData });

@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Drawer,
-  Typography,
-} from '@material-ui/core';
+import { Box, Button, Drawer, Typography, Tooltip } from '@material-ui/core';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { ComponentType, useState, useEffect } from 'react';
@@ -28,7 +20,6 @@ import { ReactComponent as TransposeIcon } from '../../../../assets/svg/Transpos
 import { ReactComponent as TransferdataIcon } from '../../../../assets/svg/transfer_data.svg';
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
-import { Tooltip } from '@material-ui/core';
 import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
 import {
   resetUserCache,
@@ -42,7 +33,6 @@ import {
   handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,
-  // isChartInCache,
 } from '../../../../services/userCacheService';
 import {
   setSelectedBannerQuestionId,
@@ -75,12 +65,14 @@ import clsx from 'clsx';
 import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
 import { StaticText } from '../../../../constants/StaticText';
 import CustomPopup from '../../../widgets/CutsomPopup';
+import { ReactComponent as SignificantDiffIcon } from '../../../../assets/svg/signf-d.svg';
+import { significantText } from '../../../../constants/Variables';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
 }
 
-const UserCache: React.FC<UserCacheProps> = (props) => {
+const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   const { sidebar, chart, chapters, userCache, filters } = useSelector(
     (state: RootState) => state,
   );
@@ -118,11 +110,6 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         setSelectAll(false);
       }
     });
-
-    // if (isChartInCache().isChartDuplicate) {
-    //   setActiveCacheId(isChartInCache().duplicateCacheId);
-    //   // console.log(isChartInCache().duplicateCacheId)
-    // }
   });
 
   useEffect(() => {
@@ -203,9 +190,9 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
         dispatch(updateSignificant(_cacheQuestion[0]['significant']));
         dispatch(setshowMean(_cacheQuestion[0]['showMean']));
         dispatch(setChartData(chartData));
+        dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
         changeChartType(_cacheQuestion[0]['chartType']);
         dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
-        dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
         dispatch(setChartTranspose(false));
         if (_cacheQuestion[0]['chartTranspose']) {
           transposeChart();
@@ -435,6 +422,18 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
                               ) : (
                                 ''
                               )}
+                              {console.log(savedChart[index]?.significant)}
+                              {savedChart[index]?.significant ? (
+                                <Tooltip
+                                  title={significantText}
+                                  arrow
+                                  placement="top"
+                                >
+                                  <SignificantDiffIcon />
+                                </Tooltip>
+                              ) : (
+                                ''
+                              )}
                             </div>
                           </div>
                         </div>
@@ -524,4 +523,4 @@ const UserCache: React.FC<UserCacheProps> = (props) => {
   );
 };
 
-export default memo(UserCache);
+export default memo(UserCacheExport);

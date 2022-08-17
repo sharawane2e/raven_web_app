@@ -23,6 +23,7 @@ export interface ISavedChart {
   chartTranspose: boolean;
   isSelected: boolean;
   isActive: boolean;
+  significant: any;
 }
 
 export interface IUserCache {
