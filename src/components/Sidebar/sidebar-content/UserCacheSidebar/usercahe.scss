@@ -30,7 +30,7 @@
       }
     }
     .MuiSvgIcon-root {
-      color: #c3c3c3;
+      color:map-get($map: $bg-color, $key:"cache-color" );
     }
     &__no-data {
       display: flex;
@@ -40,8 +40,9 @@
     }
     &__select-all {
       display: flex;
-      padding-left: 8px;
-      padding-right: 8px;
+      // padding-left: 8px;
+      // padding-right: 8px;
+      padding: 5px 5px 5px 8px;
       justify-content: end;
       align-items: center;
   
@@ -212,6 +213,9 @@
     position: fixed;
     z-index: 9999;
     .loader--wrapper{
-      background: rgba(255 ,255, 255 , .9);
+      background: rgba($white, .9);
     }
+  }
+  .chart-content__control-menu{
+    background-color: map-get($map: $text-color, $key:'fade' ) !important;
   }

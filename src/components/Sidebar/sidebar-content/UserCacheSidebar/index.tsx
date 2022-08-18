@@ -37,7 +37,6 @@ import {
 } from '../../../../redux/actions/userCacheActions';
 import _ from 'lodash';
 import {
-  handelAddInUserCache,
   handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,
@@ -70,12 +69,16 @@ import { ChartType } from '../../../../enums/ChartType';
 import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import Loader from '../../../widgets/Loader/Index';
 import clsx from 'clsx';
-import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
+import {
+  setSelectedBannerID,
+  setSelectedChapterId,
+  setSelectedQuestionID,
+} from '../../../../redux/actions/chapterActions';
 import { StaticText } from '../../../../constants/StaticText';
 import CustomPopup from '../../../widgets/CutsomPopup';
 import { ReactComponent as SignificantDiffIcon } from '../../../../assets/svg/signf-d.svg';
 import { significantText } from '../../../../constants/Variables';
-import { Menu } from '@mui/material';
+import { Divider, Menu } from '@mui/material';
 import { ReactComponent as PdfIcon } from '../../../../assets/svg/pdf-icon.svg';
 import { ReactComponent as PptIcon } from '../../../../assets/svg/ppt-icon.svg';
 
@@ -198,8 +201,10 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
     });
+    // console.log('_cacheQuestion[0]', _cacheQuestion[0]);
 
-    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
+    dispatch(setSelectedQuestionID(_cacheQuestion[0]?.qId));
+    dispatch(setSelectedBannerID(_cacheQuestion[0]?.bannerQuestion));
     dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
     dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
     dispatch(setSelectedQuestionText(_cacheQuestion[0]['qId']));
@@ -233,14 +238,14 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     handleDeleteChartCache(deleteSavedChartsIds);
   };
 
-  const userCacheExport = (getsavedChart: any) => {
+  const userCacheExport = (getsavedChart: any, exportType: string) => {
     const exportSavedCharts = savedChart.filter(
       (chartElement: any) => chartElement.isSelected == true,
     );
     const exportSavedChartsIds: any = exportSavedCharts.map(
       (chartElement: any) => chartElement._id,
     );
-    handleExportChartCache(exportSavedChartsIds, getsavedChart);
+    handleExportChartCache(exportSavedChartsIds, getsavedChart, exportType);
   };
 
   const userChapterShow = (chartData: any) => {
@@ -442,7 +447,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                               ) : (
                                 ''
                               )}
-                              {console.log(savedChart[index]?.significant)}
+
                               {savedChart[index]?.significant ? (
                                 <Tooltip
                                   title={significantText}
@@ -521,8 +526,8 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                 horizontal: 'right',
               }}
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: 'bottom',
+                horizontal: 'center',
               }}
               //getContentAnchorEl={null}
               open={Boolean(anchorEl)}
@@ -536,36 +541,23 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
-                  userCacheExport(savedChart);
+                  userCacheExport(savedChart, 'pdfexport');
                 }}
               >
-                <PdfIcon />
-                Pdf Export
+                <PdfIcon className="mr-right" />
+                Pdf export
               </MenuItem>
+              <Divider sx={{ my: 0.5 }} />
               <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
-                  userCacheExport(savedChart);
+                  userCacheExport(savedChart, 'pptexport');
                 }}
               >
-                <PptIcon />
-                Ppt Export
+                <PptIcon className="mr-right" />
+                Ppt export
               </MenuItem>
             </Menu>
-            {/* <Button
-              disabled={butttonshow}
-              className={clsx({
-                'button--primary btn-line': true,
-                butttondisable: butttonshow ? true : false,
-              })}
-               className=`${butttonshow} ""button--primary btn-line""`
-              onClick={() => {
-                userCacheExport(savedChart);
-              }}
-            >
-              Export
-              <KeyboardArrowDownIcon sx={{ fill: '#fff' }} />
-            </Button> */}
           </div>
         </div>
       </Drawer>

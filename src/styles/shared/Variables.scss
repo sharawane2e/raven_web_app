@@ -38,7 +38,7 @@ $text-color: (
   "primary": #dfdfdf,
   "primary-dark": #000,
   "primary-fade": #dfdfdf,
-  "fade": #dfdfdf,
+  "fade": #f8f8f8,
   "danger": red,
   "border": #dee2e6,
   "link": #491d40,
@@ -58,6 +58,7 @@ $bg-color: (
   "success": #78bf63,
   "info": #f1b202,
   "silver-chalice": #adadad,
+  "cache-color": #c3c3c3,
 );
 
 $sidebar-width: 16.875rem; // 270px

@@ -40,6 +40,7 @@ const TableView: React.FC<TableProps> = (props) => {
   };
 
   const getChartData = getChartOptions();
+
   const filledSeries = fillEmptyDateSeries(
     chart.questionData.type,
     JSON.parse(JSON.stringify(getChartData.series)),
@@ -48,6 +49,7 @@ const TableView: React.FC<TableProps> = (props) => {
     chart.bannerQuestionData,
     chart.chartData,
   );
+
   const chartRows: any[] = getChartRows(filledSeries, chart)[0];
 
   return (

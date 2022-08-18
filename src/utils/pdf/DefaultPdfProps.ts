@@ -51,7 +51,9 @@ export const setDefaultPdfPageProperties = async (
 
   doc.setFontSize(10);
   const lText = doc.splitTextToSize(
-    charts?.chart?.questionData?.labelText || '',
+    charts?.chart?.questionData?.labelText ||
+      charts?.chart?.chart?.questionData?.labelText ||
+      '',
     lWordBreak,
   );
 

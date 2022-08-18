@@ -261,10 +261,10 @@ export const fillEmptyDateSeries = (
           } else {
             updatedData.push({
               name: labelName,
-              y: null,
-              percentageValue: null,
-              numberValue: null,
-              baseCount: null,
+              y: 0,
+              percentageValue: 0,
+              numberValue: 0,
+              baseCount: 0,
               significance: '',
               significantDiffernce: '',
             });

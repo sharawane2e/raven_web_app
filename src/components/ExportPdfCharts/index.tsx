@@ -11,29 +11,12 @@ import { projectName } from '../../constants/Variables';
 import { getPlotOptions } from '../../utils/ChartOptionFormatter';
 import { ChartLabelType } from '../../enums/ChartLabelType';
 import { ChartOrientation } from '../../enums/ChartOrientation';
+import { fillEmptyDateSeries } from '../../utils/chart-option-util/significanceDiff';
 
-const ExportPdfCharts = (payloadObjectArr: any) => {
+const ExportPdfCharts = () => {
   const {
     export: { pdfExport },
   } = store.getState();
-  let clientWidth = document.body.clientWidth;
-
-  let pdfWidth,
-    pdfHeight,
-    x,
-    y,
-    w,
-    h,
-    baseX,
-    baseY,
-    sourceX,
-    sourceY,
-    logoX,
-    logoY,
-    copyRightX,
-    copyRightY,
-    qWordBreak,
-    lWordBreak;
 
   let obj: any;
   let chartsArray: any = [];
@@ -48,6 +31,7 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
         style: {
           fontFamily: '"Avenir", Arial',
         },
+        animation: false,
       },
       legend: {
         enabled: true,
@@ -103,118 +87,6 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
     },
   };
 
-  async function print() {
-    if (clientWidth >= 1300) {
-      pdfWidth = 300;
-      pdfHeight = 220;
-      // doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
-      x = 5;
-      y = 30;
-      w = 290;
-      h = 140;
-      baseX = 12;
-      baseY = 180;
-      sourceX = 12;
-      sourceY = 185;
-      logoX = 10;
-      logoY = 195;
-      copyRightX = 40;
-      copyRightY = 203;
-      lWordBreak = pdfWidth - 20;
-      qWordBreak = 180;
-    } else {
-      pdfWidth = 250;
-      pdfHeight = 180;
-      // doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
-      x = 5;
-      y = 30;
-      w = 170;
-      h = 180;
-      baseX = 12;
-      baseY = 220;
-      sourceX = 12;
-      sourceY = 225;
-      logoX = 10;
-      logoY = 235;
-      copyRightX = 40;
-      copyRightY = 242;
-      lWordBreak = pdfWidth - 20;
-      qWordBreak = 160;
-    }
-
-    let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
-
-    let source = document.querySelectorAll(
-      '.allpdfhighcharts .highcharts-root',
-    );
-
-    for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
-      if (
-        pdfExport[sourceIndex]?.payloadData?.chart?.chartType != ChartType.TABLE
-      ) {
-        if (sourceIndex > 0) {
-          doc.addPage();
-        }
-        let clonedSource: any;
-
-        clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
-        await setDefaultPdfPageProperties(
-          doc,
-          baseX,
-          baseY,
-          sourceX,
-          sourceY,
-          logoX,
-          logoY,
-          copyRightX,
-          copyRightY,
-          qWordBreak,
-          lWordBreak,
-          pdfExport[sourceIndex]?.payloadData?.chart,
-        );
-
-        await doc.svg(clonedSource, {
-          x: x,
-          y: y,
-          width: w,
-          height: h,
-          loadExternalStyleSheets: true,
-        });
-      } else {
-        if (sourceIndex > 0) {
-          doc.addPage();
-        }
-
-        await setDefaultPdfPageProperties(
-          doc,
-          baseX,
-          baseY,
-          sourceX,
-          sourceY,
-          logoX,
-          logoY,
-          copyRightX,
-          copyRightY,
-          qWordBreak,
-          lWordBreak,
-          pdfExport[sourceIndex]?.payloadData,
-        );
-        const chartRows = getChartRows(
-          pdfExport[sourceIndex]?.seriesData,
-          pdfExport[sourceIndex]?.payloadData?.chart,
-        )[0];
-        const seriesData = chartRows;
-        const output = PdfGenExport(seriesData);
-        autoTable(doc, {
-          body: output,
-          startY: 40,
-          styles: { fontSize: 6 },
-        });
-      }
-    }
-    doc.save(projectName + '.pdf');
-  }
-
   pdfExport.forEach((pdfel: any) => {
     const dataObject = changeChartType(
       obj,
@@ -246,6 +118,153 @@ const ExportPdfCharts = (payloadObjectArr: any) => {
 };
 
 export default ExportPdfCharts;
+
+async function print() {
+  let clientWidth = document.body.clientWidth;
+  let pdfWidth,
+    pdfHeight,
+    x,
+    y,
+    w,
+    h,
+    baseX,
+    baseY,
+    sourceX,
+    sourceY,
+    logoX,
+    logoY,
+    copyRightX,
+    copyRightY,
+    qWordBreak,
+    lWordBreak;
+  const {
+    export: { pdfExport },
+  } = store.getState();
+
+  if (clientWidth >= 1300) {
+    pdfWidth = 300;
+    pdfHeight = 220;
+    x = 5;
+    y = 30;
+    w = 290;
+    h = 140;
+    baseX = 12;
+    baseY = 180;
+    sourceX = 12;
+    sourceY = 185;
+    logoX = 10;
+    logoY = 195;
+    copyRightX = 40;
+    copyRightY = 203;
+    lWordBreak = pdfWidth - 20;
+    qWordBreak = 180;
+  } else {
+    pdfWidth = 250;
+    pdfHeight = 180;
+    x = 5;
+    y = 30;
+    w = 170;
+    h = 180;
+    baseX = 12;
+    baseY = 220;
+    sourceX = 12;
+    sourceY = 225;
+    logoX = 10;
+    logoY = 235;
+    copyRightX = 40;
+    copyRightY = 242;
+    lWordBreak = pdfWidth - 20;
+    qWordBreak = 160;
+  }
+
+  let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
+
+  let source = document.querySelectorAll('.allpdfhighcharts .highcharts-root');
+
+  for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
+    if (
+      pdfExport[sourceIndex]?.payloadData?.chart?.chartType != ChartType.TABLE
+    ) {
+      if (sourceIndex > 0) {
+        doc.addPage();
+      }
+      let clonedSource: any;
+
+      clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
+      await setDefaultPdfPageProperties(
+        doc,
+        baseX,
+        baseY,
+        sourceX,
+        sourceY,
+        logoX,
+        logoY,
+        copyRightX,
+        copyRightY,
+        qWordBreak,
+        lWordBreak,
+        pdfExport[sourceIndex]?.payloadData?.chart,
+      );
+
+      await doc.svg(clonedSource, {
+        x: x,
+        y: y,
+        width: w,
+        height: h,
+        loadExternalStyleSheets: true,
+      });
+    } else {
+      if (sourceIndex > 0) {
+        doc.addPage();
+      }
+
+      await setDefaultPdfPageProperties(
+        doc,
+        baseX,
+        baseY,
+        sourceX,
+        sourceY,
+        logoX,
+        logoY,
+        copyRightX,
+        copyRightY,
+        qWordBreak,
+        lWordBreak,
+        pdfExport[sourceIndex]?.payloadData,
+      );
+      const filledSeries = fillEmptyDateSeries(
+        pdfExport[sourceIndex]?.payloadData?.chart?.questionData.type,
+        JSON.parse(JSON.stringify(pdfExport[sourceIndex]?.seriesData)),
+        pdfExport[sourceIndex]?.payloadData?.chart?.transposed,
+        pdfExport[sourceIndex]?.payloadData?.chart?.questionData,
+        pdfExport[sourceIndex]?.payloadData?.chart?.bannerQuestionData,
+        pdfExport[sourceIndex]?.payloadData?.chart?.chartData,
+      );
+      const chartRows = getChartRows(
+        filledSeries,
+        pdfExport[sourceIndex]?.payloadData?.chart,
+      )[0];
+
+      const seriesData = chartRows;
+      const output = PdfGenExport(seriesData, 'undefined');
+
+      autoTable(doc, {
+        body: output,
+        startY: 40,
+        styles: { fontSize: 6 },
+      });
+    }
+  }
+  doc.save(projectName + '.pdf');
+}
+
+export const exportPrint = async () => {
+  await Promise.all([ExportPdfCharts]).then(() =>
+    setTimeout(() => {
+      print();
+    }, 1000),
+  );
+};
 
 export const changeChartType = (
   chart: any,

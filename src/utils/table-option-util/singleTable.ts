@@ -100,13 +100,19 @@ const createChartRows = (
   chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
     const row: string[] = [];
     //serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
+
     row.push(dataObject.name);
     chartRows.push(row);
+
     //});
   });
   chartSeries.forEach((serie: any, serieIndex: number) => {
     serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
-      if (dataObject?.y != undefined) {
+      if (
+        dataObject.y != undefined &&
+        dataObject.y != null &&
+        !isNaN(dataObject.y)
+      ) {
         chartRows[dataObjectIndex].push(round(dataObject?.y, 2));
       } else {
         chartRows[dataObjectIndex].push(0);
@@ -144,8 +150,14 @@ const gridCreateChartRowsNets = (chartSeries: any, groupNetData: any[]) => {
   chartSeries[0]?.data.forEach((dataObject: any, serieIndex: number) => {
     const row: string[] = [];
     //serie.data.forEach((dataObject: any, dataObjectIndex: number) => {
-    row.push(dataObject.name);
-    chartRows.push(row);
+    if (
+      dataObject.y != undefined &&
+      dataObject.y != null &&
+      !isNaN(dataObject.y)
+    ) {
+      row.push(dataObject.name);
+      chartRows.push(row);
+    }
     //});
   });
 

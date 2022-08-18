@@ -18,9 +18,9 @@ import {
 } from './ChartService';
 import { getChartOptions } from '../utils/ChartOptionFormatter';
 import { QuestionType } from '../enums/QuestionType';
-import { useDispatch } from 'react-redux';
-import { generatePdf } from '../utils/pdf/PdfGen';
-import ExportPdfCharts from '../components/ExportPdfCharts';
+// import { useDispatch } from 'react-redux';
+// import { generatePdf } from '../utils/pdf/PdfGen';
+import ExportPdfCharts, { exportPrint } from '../components/ExportPdfCharts';
 import { setPdfExport } from '../redux/actions/exportActions';
 
 // export const isChartInCache = () => {
@@ -81,7 +81,8 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
         dispatch(setDialog(false));
         const updatedSavedChart = addNewKeysToUserCache(res.data);
         store.dispatch(resetUserCache(updatedSavedChart));
-
+        dispatch(setPdfExport([]));
+        dispatch(setuserCacheActive(false));
         Toaster.warn(res.message);
       } else {
         Toaster.error(res.message);
@@ -104,6 +105,7 @@ export const addNewKeysToUserCache = (savedChart: any) => {
 export const handleExportChartCache = async (
   cacheIdsArr: any,
   getsavedChart: any,
+  exportType: string,
 ) => {
   //export selected id's
   const filterExportData: any[] = [];
@@ -209,11 +211,12 @@ export const handleExportChartCache = async (
     payloadArr.push(payload);
   });
 
-  //generatePpt([...payloadArr]);
-  //generatePdf([...payloadArr]);
-  ExportPdfCharts(payloadArr);
-
-  calcData(payloadArr);
+  if (exportType === 'pptexport') {
+    generatePpt([...payloadArr]);
+  } else {
+    calcData(payloadArr);
+    exportPrint();
+  }
 
   dispatch(setFullScreenLoading(false));
 };
