@@ -211,7 +211,7 @@ export const handleExportChartCache = async (
 
   //generatePpt([...payloadArr]);
   //generatePdf([...payloadArr]);
-  //ExportPdfCharts(payloadArr);
+  ExportPdfCharts(payloadArr);
 
   calcData(payloadArr);
 

@@ -1,4 +1,11 @@
-import { Box, Button, Drawer, Typography, Tooltip } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Drawer,
+  Typography,
+  Tooltip,
+  MenuItem,
+} from '@material-ui/core';
 import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { ComponentType, useState, useEffect } from 'react';
@@ -21,6 +28,7 @@ import { ReactComponent as TransferdataIcon } from '../../../../assets/svg/trans
 import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
 import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
 import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   resetUserCache,
   setDialog,
@@ -67,6 +75,9 @@ import { StaticText } from '../../../../constants/StaticText';
 import CustomPopup from '../../../widgets/CutsomPopup';
 import { ReactComponent as SignificantDiffIcon } from '../../../../assets/svg/signf-d.svg';
 import { significantText } from '../../../../constants/Variables';
+import { Menu } from '@mui/material';
+import { ReactComponent as PdfIcon } from '../../../../assets/svg/pdf-icon.svg';
+import { ReactComponent as PptIcon } from '../../../../assets/svg/ppt-icon.svg';
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -82,8 +93,17 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   const [activeCacheId, setActiveCacheId] = useState<any>('');
   const { savedChart, cacheId } = userCache;
   const chartQuestionData = chart?.questionData;
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const dispatch = useDispatch();
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+  };
+
+  const opneMenu = (e: any) => {
+    setAnchorEl(e.currentTarget);
+  };
 
   const closeSidebar = () => {
     dispatch(toggleSidebarUserCache(false));
@@ -483,13 +503,69 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                 butttondisable: butttonshow ? true : false,
               })}
               //  className=`${butttonshow} ""button--primary btn-line""`
+              // onClick={() => {
+              //   userCacheExport(savedChart);
+              // }}
+              onClick={opneMenu}
+            >
+              Export
+              <KeyboardArrowDownIcon sx={{ fill: '#fff' }} />
+            </Button>
+
+            <Menu
+              anchorEl={anchorEl}
+              id="menu"
+              keepMounted
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              //getContentAnchorEl={null}
+              open={Boolean(anchorEl)}
+              onClose={closeMenu}
+              disableAutoFocusItem
+              PaperProps={{
+                elevation: 0,
+                className: 'chart-content__control-menu',
+              }}
+            >
+              <MenuItem
+                className="chart-content__menu-item"
+                onClick={() => {
+                  userCacheExport(savedChart);
+                }}
+              >
+                <PdfIcon />
+                Pdf Export
+              </MenuItem>
+              <MenuItem
+                className="chart-content__menu-item"
+                onClick={() => {
+                  userCacheExport(savedChart);
+                }}
+              >
+                <PptIcon />
+                Ppt Export
+              </MenuItem>
+            </Menu>
+            {/* <Button
+              disabled={butttonshow}
+              className={clsx({
+                'button--primary btn-line': true,
+                butttondisable: butttonshow ? true : false,
+              })}
+               className=`${butttonshow} ""button--primary btn-line""`
               onClick={() => {
                 userCacheExport(savedChart);
               }}
             >
               Export
-              {/* <KeyboardArrowDownIcon sx={{ fill: '#fff' }} /> */}
-            </Button>
+              <KeyboardArrowDownIcon sx={{ fill: '#fff' }} />
+            </Button> */}
           </div>
         </div>
       </Drawer>
