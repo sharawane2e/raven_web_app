@@ -2,6 +2,13 @@
   display: flex;
 
   &--container {
+    // &--left {
+    //   flex: 70%;
+    // }
+    // &--right {
+    //   flex: 30%;
+    //   background-color: #dfdfdf;
+    // }
     svg {
       height: 100%;
       width: 100%;
@@ -10,7 +17,7 @@
   .container {
     &--left {
       flex: 70%;
-      padding-left: 10px;
+      padding-left: 30px;
     }
     &--right {
       flex: 30%;
@@ -48,7 +55,7 @@
             content: " ";
             width: 0;
             height: 0;
-            border-top: 10px solid #0000ff9c;
+            border-top: 10px solid #0e4566;
             border-left: 10px solid transparent;
             position: absolute;
             left: -10px;
@@ -58,7 +65,7 @@
       }
 
       &--blue {
-        color: #0193d5;
+        color: #0e4566;
       }
     }
   }
@@ -71,18 +78,74 @@
 b {
   font-size: 20px;
 }
-h2 {
+.h2 {
   padding-left: 30px;
 }
 
+// .objectives {
+//   display: flex;
+
+//   .left-Area {
+//     flex: 70%;
+//     .leftContain {
+//       display: flex;
+//       margin-left: 5px;
+//       margin-right: 10px;
+//       p {
+//         padding-left: 10px;
+//         margin-top: 2px;
+//       }
+//       ul {
+//         li {
+//           list-style: none;
+//           & ::before {
+//             content: " ";
+//             width: 0;
+//             height: 0;
+//             border-top: 10px solid #0000ff9c;
+//             border-left: 10px solid transparent;
+//             position: absolute;
+//             left: 92px;
+//             margin-top: 7px;
+//           }
+//         }
+//       }
+//       .left-line {
+//         border-left: 1px solid lightgray;
+//         padding-right: 5px;
+//       }
+
+//       svg {
+//         width: 50px;
+//       }
+//     }
+//   }
+//   .right {
+//     height: 100vh;
+//     background-color: #dfdfdf;
+//     flex: 30%;
+//     svg {
+//       width: 93%;
+//       height: 530px;
+//       padding: 10px;
+//     }
+//   }
+// }
+// .makeStyles-root-1 {
+//   overflow: visible !important;
+//   //   height: 100vh;
+// }
+// .makeStyles-itemWrapper-3 {
+//   height: inherit !important;
+// }
 .carousal-section {
   width: 100%;
   .MuiGrid-container {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-bottom: 20px;
   }
   .MuiGrid-item {
@@ -91,6 +154,10 @@ h2 {
     padding-bottom: 20px;
     padding-left: 8px;
     padding-right: 8px;
+
+    //   &:first-child {
+    //     padding-left: 15px;
+    //   }
     &:last-child {
       border-right: none;
     }
@@ -108,15 +175,19 @@ h2 {
     text-align: center;
     padding: 20px 20px 10px 20px;
     & svg {
-      height: 80px;
+      height: 70px;
     }
   }
   .card-title {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 800;
     width: 100%;
     text-align: center;
     padding: 2px;
+    color: #0e4566;
+  }
+  .card-title-unbold {
+    font-weight: 500 !important;
   }
   .note-header {
     padding: 15px;
