@@ -1,8 +1,8 @@
 import './Methodology.scss';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online_survey.svg';
-import { ReactComponent as CalendarIcon } from '../../assets/svg/calendar_icon.svg';
+import { ReactComponent as OnlineSurveyIcon } from '../../assets/svg/online-survey.svg';
+import { ReactComponent as CalendarIcon } from '../../assets/svg/calendar.svg';
 import { ReactComponent as PopulationIcon } from '../../assets/svg/population.svg';
 import { ReactComponent as FolridaMapIcon } from '../../assets/svg/globe.svg';
 import IndustryTargetIcon from '../../assets/images/industry_target.png';
