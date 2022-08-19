@@ -1,6 +1,6 @@
-export const accessTokenKey = "healthcarestudy001_access_token";
+export const accessTokenKey = "nielseniq_access_token";
 
-export const projectName = "Diet and lifestyle Study";
+export const projectName = "Sports Fan Consumer Research";
 
 export const colorArr = [
   "#F1AD0F",
