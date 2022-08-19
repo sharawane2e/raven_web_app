@@ -71,12 +71,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const {
     questions,
     chart: { chartLoading, questionData, baseCount, chartType, significant },
-    chapters: {
-      allChapters,
-      selectedChapterId,
-      selectedQuestionID,
-      selectedBannerID,
-    },
+    chapters: { allChapters, selectedChapterId, selectedBannerID },
     userCache,
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
@@ -222,8 +217,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       open={questions.disableBannerQuestion ? false : OpenQuestionCross}
       onItemSelect={handelBannerQuestionChange}
       placeholder={StaticText.BANNER_LABEL}
-      valueKey={'qId'}
-      labelKey={'labelText'}
+      valueKey="qId"
+      labelKey="labelText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
       disabledPredicate={(value) => value === selectedBannerQuestionId}
@@ -323,8 +318,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}
-              valueKey={'qId' || chart?.questionData?.qId}
-              labelKey={'labelText' || chart?.questionData?.qId}
+              valueKey="qId"
+              labelKey="labelText"
               className="single_select_area Step-1"
               disabledPredicate={(value) => value === selectedQuestionId}
               MenuProps={{

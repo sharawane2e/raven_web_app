@@ -72,7 +72,7 @@ import clsx from 'clsx';
 import {
   setSelectedBannerID,
   setSelectedChapterId,
-  setSelectedQuestionID,
+  setSelectedChapterQuestionID,
 } from '../../../../redux/actions/chapterActions';
 import { StaticText } from '../../../../constants/StaticText';
 import CustomPopup from '../../../widgets/CutsomPopup';
@@ -201,13 +201,9 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
     });
-    // console.log('_cacheQuestion[0]', _cacheQuestion[0]);
-
-    dispatch(setSelectedQuestionID(_cacheQuestion[0]?.qId));
-    dispatch(setSelectedBannerID(_cacheQuestion[0]?.bannerQuestion));
     dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
     dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
-    dispatch(setSelectedQuestionText(_cacheQuestion[0]['qId']));
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
     fetchChartData()
       .then((chartData) => {
         userChapterShow(chartData);
