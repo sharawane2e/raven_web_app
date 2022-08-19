@@ -109,8 +109,21 @@ export const handleExportChartCache = async (
 ) => {
   //export selected id's
   const filterExportData: any[] = [];
+  const filterupdatedData: any[] = [];
   cacheIdsArr.forEach((ids: any) => {
     const filterData = _.filter(getsavedChart, function (o) {
+      if (o?.filter.length > 0) {
+        const dataFilter = o?.filter;
+        const arrayHashmap = dataFilter.reduce((obj: any, item: any) => {
+          obj[item.qId]
+            ? obj[item.qId].push(...item)
+            : (obj[item.id] = { ...item });
+
+          return obj;
+        }, {});
+        filterupdatedData.push(arrayHashmap);
+      }
+
       return o._id == ids;
     });
     filterExportData.push(...filterData);
@@ -121,20 +134,24 @@ export const handleExportChartCache = async (
   const promiseAllArr: any = [];
   dispatch(setFullScreenLoading(true));
   const newAppliedFilter: any[] = [];
-  filterExportData.forEach((el: any) => {
+  filterExportData.forEach((el: any, Index: number) => {
     if (el.filter.length > 0) {
-      newAppliedFilter.push({
-        qId: el.qId,
-        value: el.filter.map((el: any) => {
-          return el.code;
+      newAppliedFilter.push(
+        filterupdatedData.map((ele: any) => {
+          return {
+            qId: ele.undefined.qId,
+            value: el.filter.map((el: any) => {
+              return el.code;
+            }),
+          };
         }),
-      });
+      );
     }
 
     const body = {
       qId: el.qId,
       type: el.type,
-      filters: newAppliedFilter,
+      filters: newAppliedFilter[0],
       bannerQuestion: el.bannerQuestion,
       bannerType: el.bannerType ? el.bannerType : '',
     };
