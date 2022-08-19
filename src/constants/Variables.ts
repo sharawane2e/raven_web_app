@@ -1,6 +1,6 @@
-export const accessTokenKey = "ror2021_dashboard_access_tokenn";
+export const accessTokenKey = "healthcarestudy001_access_token";
 
-export const projectName = "Research on Research – 2021_10_29";
+export const projectName = "Diet and lifestyle Study";
 
 export const colorArr = [
   "#F1AD0F",

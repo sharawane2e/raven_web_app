@@ -2,13 +2,6 @@
   display: flex;
 
   &--container {
-    // &--left {
-    //   flex: 70%;
-    // }
-    // &--right {
-    //   flex: 30%;
-    //   background-color: #dfdfdf;
-    // }
     svg {
       height: 100%;
       width: 100%;
@@ -17,7 +10,10 @@
   .container {
     &--left {
       flex: 70%;
-      padding-left: 30px;
+      padding-left: 10px;
+      h2 {
+        margin-bottom: 2rem;
+      }
     }
     &--right {
       flex: 30%;
@@ -28,7 +24,7 @@
     display: flex;
     align-items: flex-start;
     svg {
-      margin-right: -6px;
+      margin-right: -22px;
       z-index: 1;
       flex-basis: 70px;
       flex-grow: 0;
@@ -52,10 +48,10 @@
         li {
           list-style: none;
           & ::before {
-            content: " ";
+            content: ' ';
             width: 0;
             height: 0;
-            border-top: 10px solid #0e4566;
+            border-top: 10px solid #0000ff9c;
             border-left: 10px solid transparent;
             position: absolute;
             left: -10px;
@@ -65,87 +61,33 @@
       }
 
       &--blue {
-        color: #0e4566;
+        color: #0193d5;
+        margin-left: 0 !important;
       }
     }
   }
 
   & * {
     box-sizing: border-box;
+    margin-left: 1rem;
   }
 }
 
 b {
   font-size: 20px;
 }
-.h2 {
+h2 {
   padding-left: 30px;
 }
 
-// .objectives {
-//   display: flex;
-
-//   .left-Area {
-//     flex: 70%;
-//     .leftContain {
-//       display: flex;
-//       margin-left: 5px;
-//       margin-right: 10px;
-//       p {
-//         padding-left: 10px;
-//         margin-top: 2px;
-//       }
-//       ul {
-//         li {
-//           list-style: none;
-//           & ::before {
-//             content: " ";
-//             width: 0;
-//             height: 0;
-//             border-top: 10px solid #0000ff9c;
-//             border-left: 10px solid transparent;
-//             position: absolute;
-//             left: 92px;
-//             margin-top: 7px;
-//           }
-//         }
-//       }
-//       .left-line {
-//         border-left: 1px solid lightgray;
-//         padding-right: 5px;
-//       }
-
-//       svg {
-//         width: 50px;
-//       }
-//     }
-//   }
-//   .right {
-//     height: 100vh;
-//     background-color: #dfdfdf;
-//     flex: 30%;
-//     svg {
-//       width: 93%;
-//       height: 530px;
-//       padding: 10px;
-//     }
-//   }
-// }
-// .makeStyles-root-1 {
-//   overflow: visible !important;
-//   //   height: 100vh;
-// }
-// .makeStyles-itemWrapper-3 {
-//   height: inherit !important;
-// }
 .carousal-section {
   width: 100%;
   .MuiGrid-container {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
     padding-bottom: 20px;
   }
   .MuiGrid-item {
@@ -154,10 +96,6 @@ b {
     padding-bottom: 20px;
     padding-left: 8px;
     padding-right: 8px;
-
-    //   &:first-child {
-    //     padding-left: 15px;
-    //   }
     &:last-child {
       border-right: none;
     }
@@ -175,19 +113,15 @@ b {
     text-align: center;
     padding: 20px 20px 10px 20px;
     & svg {
-      height: 70px;
+      height: 80px;
     }
   }
   .card-title {
     font-size: 14px;
-    font-weight: 800;
+    font-weight: bold;
     width: 100%;
     text-align: center;
     padding: 2px;
-    color: #0e4566;
-  }
-  .card-title-unbold {
-    font-weight: 500 !important;
   }
   .note-header {
     padding: 15px;
@@ -233,4 +167,57 @@ b {
 }
 .css-1vioaa7-MuiPaper-root {
   height: 210px;
+}
+
+.nation-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 4rem;
+}
+.nation-container__card {
+  border: solid 1px #acacac;
+  display: flex;
+  border-radius: 4px;
+  flex: 0 0 22.33%;
+  padding: 5px;
+  margin-right: 13px;
+  margin-bottom: 10px;
+  align-items: center;
+  &:nth-child(4) {
+    margin-right: 0px;
+  }
+  &:last-child {
+    margin-right: 0px;
+  }
+}
+.nation-container__left {
+  padding-right: 10px;
+  display: flex;
+}
+
+.nation-container__right b {
+  color: #0193d5;
+  font-size: 14px;
+}
+.nation-container__right p {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .nation-container__card {
+    flex: 0 0 44.33%;
+    &:nth-child(3) {
+      margin-right: 14px;
+    }
+    &:last-child {
+      margin-right: 14px;
+    }
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+  .nation-container__card {
+    flex: 0 0 21.33%;
+  }
 }
