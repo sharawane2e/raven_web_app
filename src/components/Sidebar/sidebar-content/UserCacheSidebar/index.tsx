@@ -69,11 +69,7 @@ import { ChartType } from '../../../../enums/ChartType';
 import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
 import Loader from '../../../widgets/Loader/Index';
 import clsx from 'clsx';
-import {
-  setSelectedBannerID,
-  setSelectedChapterId,
-  setSelectedChapterQuestionID,
-} from '../../../../redux/actions/chapterActions';
+import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
 import { StaticText } from '../../../../constants/StaticText';
 import CustomPopup from '../../../widgets/CutsomPopup';
 import { ReactComponent as SignificantDiffIcon } from '../../../../assets/svg/signf-d.svg';

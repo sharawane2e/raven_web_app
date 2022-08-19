@@ -8,7 +8,3 @@ export const setSelectedChapterId = createAction<string>(
 );
 
 export const setSelectedQuestion = createAction<any>('SET_SELECTED_QUESTION');
-export const setSelectedChapterQuestionID = createAction<any>(
-  'SET_SELECTED_QUESTION_CHAPTER_ID',
-);
-export const setSelectedBannerID = createAction<any>('SET_SELECTED_BANNERID');

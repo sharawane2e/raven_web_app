@@ -1,46 +1,46 @@
-import _ from "lodash";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ApiUrl from "../../enums/ApiUrl";
+import _ from 'lodash';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ApiUrl from '../../enums/ApiUrl';
 import {
   setChapters,
   setSelectedChapterId,
-} from "../../redux/actions/chapterActions";
-import { setSelectedQuestionId } from "../../redux/actions/questionAction";
-import { RootState } from "../../redux/store";
-import ApiRequest from "../../utils/ApiRequest";
+} from '../../redux/actions/chapterActions';
+import { setSelectedQuestionId } from '../../redux/actions/questionAction';
+import { RootState } from '../../redux/store';
+import ApiRequest from '../../utils/ApiRequest';
 import SelectUnstyled, {
   SelectUnstyledProps,
   selectUnstyledClasses,
-} from "@mui/base/SelectUnstyled";
+} from '@mui/base/SelectUnstyled';
 import OptionUnstyled, {
   optionUnstyledClasses,
-} from "@mui/base/OptionUnstyled";
-import { styled } from "@mui/system";
+} from '@mui/base/OptionUnstyled';
+import { styled } from '@mui/system';
 import {
   resetChart,
   setChartLabel,
   setChartType,
-} from "../../redux/actions/chartActions";
-import { getChartOptions } from "../../utils/ChartOptionFormatter";
-import Toaster from "../../utils/Toaster";
-import { ChartType } from "../../enums/ChartType";
-import { StaticText } from "../../constants/StaticText";
-import { ChartLabelType } from "../../enums/ChartLabelType";
+} from '../../redux/actions/chartActions';
+import { getChartOptions } from '../../utils/ChartOptionFormatter';
+import Toaster from '../../utils/Toaster';
+import { ChartType } from '../../enums/ChartType';
+import { StaticText } from '../../constants/StaticText';
+import { ChartLabelType } from '../../enums/ChartLabelType';
 
 interface ChapterProps {
-  variant?: "fullWidth" | "partialWidth";
+  variant?: 'fullWidth' | 'partialWidth';
 }
 
 const Chapter: React.FC<ChapterProps> = (props) => {
-  const [dropwDwonvalue, setDropdwonValue] = useState<any>("1");
+  const [dropwDwonvalue, setDropdwonValue] = useState<any>('1');
   const {
     questions,
     chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
   const dispatch = useDispatch();
 
-  const sortedChapterOrder = _.sortBy(allChapters, ["order"]);
+  const sortedChapterOrder = _.sortBy(allChapters, ['order']);
 
   useEffect(() => {
     fetchChaptersList();
@@ -56,9 +56,9 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   }, [selectedChapterId]);
 
   const fetchChaptersList = async () => {
-    const res = await ApiRequest.request(ApiUrl.CHAPTERS, "GET");
+    const res = await ApiRequest.request(ApiUrl.CHAPTERS, 'GET');
     if (res.success) {
-      dispatch(setSelectedChapterId("1"));
+      dispatch(setSelectedChapterId('1'));
       dispatch(setChapters(res.data));
     }
   };
@@ -67,13 +67,13 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     dispatch(setSelectedChapterId(chapterId));
     setDropdwonValue(chapterId);
     getChartOptions();
-    dispatch(setSelectedQuestionId(""));
+    //dispatch(setSelectedQuestionId(''));
     dispatch(setChartType(ChartType.COLUMN));
     dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
-    dispatch(resetChart([""]));
+    dispatch(resetChart(['']));
   };
 
-  const StyledButton = styled("button")(
+  const StyledButton = styled('button')(
     () => `
   &.${selectUnstyledClasses.expanded} {
       &::after {
@@ -85,7 +85,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
       position: absolute;
       right: 2px;
     }
-    `
+    `,
   );
 
   const StyledOption = styled(OptionUnstyled)(
@@ -94,11 +94,11 @@ const Chapter: React.FC<ChapterProps> = (props) => {
       background-color: #393939;
       color: #fff;
     }
-    `
+    `,
   );
 
   function CustomSelect(props: SelectUnstyledProps<number>) {
-    const components: SelectUnstyledProps<number>["components"] = {
+    const components: SelectUnstyledProps<number>['components'] = {
       Root: StyledButton,
       ...props.components,
     };

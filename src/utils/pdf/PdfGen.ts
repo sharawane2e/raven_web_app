@@ -117,9 +117,13 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
 
       const seriesData = chartRows; //gaurav
 
+      console.log(
+        ' payloadObjectArr[i]',
+        payloadObjectArr[i]?.chart.chartLabelType,
+      );
       const output = PdfGenExport(
         seriesData,
-        payloadObjectArr[i].chartLabelType,
+        payloadObjectArr[i]?.chart.chartLabelType,
       );
 
       autoTable(doc, {

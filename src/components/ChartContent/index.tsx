@@ -10,6 +10,7 @@ import {
   toggleBannerQuestionDisablity,
 } from '../../redux/actions/questionAction';
 import {
+  resetChart,
   setChartData,
   setChartLabel,
   setChartTranspose,
@@ -53,6 +54,7 @@ import {
   setUserCacheId,
 } from '../../redux/actions/userCacheActions';
 import ExportPdfCharts from '../ExportPdfCharts';
+import { noDataFound } from '../../redux/actions/sidebarAction';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -73,6 +75,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     chart: { chartLoading, questionData, baseCount, chartType, significant },
     chapters: { allChapters, selectedChapterId, selectedBannerID },
     userCache,
+    sidebar,
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -94,6 +97,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   useEffect(() => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
+    if (chart?.chartType === ChartType.TABLE && chart?.chartData.length === 0) {
+      dispatch(resetChart(['']));
+      dispatch(noDataFound(true));
+    } else {
+      dispatch(noDataFound(false));
+    }
   }, []);
 
   let updateQuestionList: any[] = [];
@@ -141,13 +150,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     }
   }, [questionData?.type]);
 
-  // useEffect(() => {
-  //   if (userCache?.cacheId) {
-  //     handleQuestionChange(selectedQuestionID);
-  //     handelBannerQuestionChange(selectedBannerID);
-  //   }
-  // }, [selectedQuestionID, selectedBannerID]);
-
   const handleQuestionChange = (value: string) => {
     dispatch(setuserCacheActive(false));
     dispatch(setUserCacheId(''));
@@ -158,6 +160,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
+        if (chartData.chartData.length == 0) {
+          dispatch(resetChart(['']));
+          dispatch(noDataFound(true));
+        } else {
+          dispatch(noDataFound(false));
+        }
         dispatch(setSelectedQuestion(chartData?.questionData?.labelText));
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
@@ -170,7 +178,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
-    console.log('value', value);
     dispatch(setuserCacheActive(false));
     dispatch(setUserCacheId(''));
     dispatch(setInCache(false));
@@ -366,7 +373,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         )}
 
         {/* <ChartTransposeControl /> */}
-        {chart?.questionData === null ? (
+        {chart?.questionData === null && !sidebar?.nodata ? (
           <div className="noQuestion--selected">
             <No_Question_Selected
             // className="cursor-pointer"
@@ -376,7 +383,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           ''
         )}
-        {chart?.chartData == [] ? (
+        {chart?.chartData.length === 0 &&
+        sidebar?.nodata &&
+        chart?.chartType != ChartType.TABLE ? (
           <div className="noQuestion--selected">
             <No_Data_Found />
           </div>
@@ -394,7 +403,14 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             ) : (
               ''
             )}
-            <TableView />
+            {chart?.chartData.length !== 0 && !sidebar?.nodata ? (
+              <TableView />
+            ) : (
+              <div className="noQuestion--selected">
+                <No_Data_Found />
+              </div>
+            )}
+            {/* <TableView /> */}
           </>
         ) : (
           <>
@@ -407,21 +423,18 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <Chart />
           </>
         )}
-        {chart?.questionData !== null ? (
-          <div className="chart-content-footer">
-            <div className="chart-content-footer--inr">
-              <div className="chart-content__base-count">
-                Sample Size: {baseCount}
-              </div>
-              <div className="chart-content__info">
-                Note: Sample size reflects selections from filter and cross-tab
-                menus, not in-legend selections.
-              </div>
+
+        <div className="chart-content-footer">
+          <div className="chart-content-footer--inr">
+            <div className="chart-content__base-count">
+              Sample Size: {baseCount}
+            </div>
+            <div className="chart-content__info">
+              Note: Sample size reflects selections from filter and cross-tab
+              menus, not in-legend selections.
             </div>
           </div>
-        ) : (
-          ''
-        )}
+        </div>
       </div>
 
       <ExportPdfCharts />

@@ -4,8 +4,6 @@ import {
   setChapters,
   setSelectedChapterId,
   setSelectedQuestion,
-  setSelectedChapterQuestionID,
-  setSelectedBannerID,
 } from '../actions/chapterActions';
 
 export interface IChapterState {
@@ -37,14 +35,6 @@ const chapterReducer = createReducer(initialState, (builder) => {
   builder.addCase(setSelectedQuestion, (state, action) => ({
     ...state,
     selectedQuestion: action.payload,
-  }));
-  builder.addCase(setSelectedBannerID, (state, action) => ({
-    ...state,
-    selectedBannerID: action.payload,
-  }));
-  builder.addCase(setSelectedChapterQuestionID, (state, action) => ({
-    ...state,
-    selectedQuestionChaID: action.payload,
   }));
 });
 

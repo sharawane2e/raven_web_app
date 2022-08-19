@@ -10,3 +10,5 @@ export const toggleSidebarMobile = createAction<boolean | undefined>(
 export const toggleSidebarUserCache = createAction<boolean | undefined>(
   'TOGGLE_USER_CACHE',
 );
+
+export const noDataFound = createAction<any>('NO_DATA_FOUND');

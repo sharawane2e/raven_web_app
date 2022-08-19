@@ -12,6 +12,7 @@ export const PdfGenExport = (seriesData: any, chartlabelType: string) => {
     const rowArr: any[] = [];
 
     tableRowArr.forEach((cellObject: any) => {
+      console.log('chartlabelType', chartlabelType);
       const laleType = chartlabelType === ChartLabelType.PERCENTAGE ? '%' : '';
       const cellObj = {
         content: cellObject.text + laleType,

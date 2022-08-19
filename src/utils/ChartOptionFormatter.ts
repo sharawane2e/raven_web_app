@@ -32,7 +32,6 @@ export const getChartOptions = (
   significant = store.getState().chart.significant,
   showMean = store.getState().chart.showMean,
 ): any => {
-  //debugger;
   const chart: IchartOptionsDto = {
     questionData,
     chartData,
@@ -47,11 +46,6 @@ export const getChartOptions = (
     significant,
     showMean,
   };
-
-  // const questions = {
-  //   selectedBannerQuestionId:
-  //     store.getState().questions.selectedBannerQuestionId,
-  // };
 
   if (questionData !== null) {
     switch (questionData.type) {
@@ -92,7 +86,6 @@ const getSingleChartOptions = (chart: IchartOptionsDto): any => {
     legend: {
       enabled: true,
     },
-    // plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
     series,
   };
@@ -110,12 +103,7 @@ const getRankChartOptions = (chart: IchartOptionsDto): any => {
   };
 };
 
-const getGridChartOptions = (
-  // questionData: IQuestion,
-  // chartData: any,
-  // baseCount: number
-  chart: IchartOptionsDto,
-): any => {
+const getGridChartOptions = (chart: IchartOptionsDto): any => {
   const series = [];
 
   const { showMean } = chart;
