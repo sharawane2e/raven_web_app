@@ -52,9 +52,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    @media (max-width: 768px) {
-      color: #dfdfdf;
-    }
+  
+    color: #dfdfdf;
   }
   .custom-table__mobile-sort {
     display: none;
@@ -276,3 +275,4 @@
   font-size: map-get($map: $text-size, $key: small);
   // padding: 10px;
 }
+
