@@ -6,7 +6,7 @@ import { ReactComponent as CalendarIcon } from "../../assets/svg/calendar_icon.s
 import { ReactComponent as TotalRBIcon } from "../../assets/svg/total_RB.svg";
 import { ReactComponent as PopulationIcon } from "../../assets/svg/population.svg";
 import { ReactComponent as FolridaMapIcon } from "../../assets/svg/florida_map.svg";
-import { ReactComponent as FolridaMap } from "../../assets/svg/floridaMapIcon.svg";
+import { ReactComponent as FolridaMap } from "../../assets/svg/map.svg";
 
 interface Props {}
 
