@@ -24,13 +24,6 @@ export const singleTable = (
 
   if (transposed) {
     if (bannerQuestionData?.isGroupNet) {
-      //need to find situation in a question and then fix it
-      // const { updatedMinMaxArr, updatedCount } = minMaxObjectNets(
-      //   chartRows,
-      //   questionData.groupNetData
-      // );
-      // count.push(...updatedCount);
-      // minMaxArr.push(...updatedMinMaxArr);
     } else {
       const { updatedMinMaxArr, updatedCount } = minMaxObject(chartRows);
       count.push(...updatedCount);
@@ -354,11 +347,6 @@ const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
         updatedChartRows[dataObjectIndex][chartObjectIndex + 1] = {
           ...updatedChartRows[dataObjectIndex][chartObjectIndex + 1],
           significantDiffernce: dataObject.significantDiffernce,
-          // text:
-          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].text +
-          //   `<span class="significante-color table-significante">- + ${dataObject.significantDiffernce}</span>`,
-          // minMax:
-          //   updatedChartRows[dataObjectIndex][chartObjectIndex + 1].minMax,
         };
       }
     });
