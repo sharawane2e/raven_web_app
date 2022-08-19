@@ -5,6 +5,7 @@ import { RootState } from '../../redux/store';
 import { memo, useEffect, Component } from 'react';
 import { colorArr } from '../../constants/Variables';
 import { isEqual } from 'lodash';
+import { QuestionType } from '../../enums/QuestionType';
 
 interface ChartProps extends RootState {}
 
@@ -43,6 +44,7 @@ class Chart extends Component<ChartProps, ChartState> {
   render() {
     // @ts-ignore
     const { chartOptions, questionData } = this.props.chart;
+
     return (
       <>
         {questionData !== null ? (

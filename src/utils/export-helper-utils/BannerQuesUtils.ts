@@ -1,58 +1,89 @@
-import { decimalPrecision } from "../../constants/Variables";
-import { IBaseQuestion, IQuestionOption } from "../../types/IBaseQuestion";
-import { round } from "../Utility";
-import store from "../../redux/store";
-import { ChartLabelType } from "../../enums/ChartLabelType";
-
+import _ from 'lodash';
+import store from '../../redux/store';
+import { getTablesignificantdifference } from '../chart-option-util/significanceDiff';
 
 export function bannerChartDataGen(
-  questionData: IBaseQuestion,
+  series: any,
+  questionData: any,
   chartData: any,
-  bannerQuestionData: any
+  bannerQuestionData: any,
+  chartTranspose: boolean,
 ) {
   const {
-    chart:{chartLabelType} 
-  }= store.getState();
-  const labels: Array<string> = questionData.options.map(
-    (label: IQuestionOption) => label.labelText
-  );
-  let seriesData: Array<Object> = [];
-  const chartDataComplete = chartData[0];
-  bannerQuestionData.options.forEach((scaleOption: IQuestionOption) => {
-    seriesData.push({
-      name: scaleOption.labelText,
-      labels,
-      values: questionData.options.map((option: IQuestionOption) => {
-        if (option.labelCode in chartDataComplete) {
-          const obj = chartDataComplete[option.labelCode] || [];
-          if (obj && obj.length > 0) {
-            const base = obj?.reduce(
-              (sum: number, option: any) => sum + option.count,
-              0
-            );
-            const subOptionData = obj.find(
-              (subObj: any) => subObj.labelCode === scaleOption.labelCode
-            );
-            if (!subOptionData) {
-              return 0;
-            }
-            if(chartLabelType===ChartLabelType.PERCENTAGE){
-              return subOptionData.count !== undefined
-              ? round(+((subOptionData.count / base) * 100), decimalPrecision)
-              : 0;
-            }
-            else{
-              return subOptionData.count !== undefined
-              ? subOptionData.count
-              : 0;
-            }
+    chart: { significant },
+  } = store.getState();
 
-           
+  // console.log("questionData", questionData);
+  // console.log("bannerQuestionData", bannerQuestionData);
+  // console.log("chartData", chartData);
+  // console.log("questionChartData", chartData);
+  const seriesData: any = [];
+
+  const updatedSeries = JSON.parse(JSON.stringify(series));
+
+  const seriesName: string[] = [];
+
+  if (!significant) {
+    if (chartTranspose) {
+      bannerQuestionData.options.forEach((optionObject: any) => {
+        seriesName.push(optionObject?.labelText);
+      });
+    } else {
+      questionData.options.forEach((optionObject: any) => {
+        //  if (chartData[0][optionObject?.labelCode]?.length) {
+        seriesName.push(optionObject?.labelText);
+        // }
+      });
+    }
+
+    updatedSeries.forEach((seriesObject: any, seriesIndex: number) => {
+      if (seriesObject.data.length != seriesName.length) {
+        const updatedData: any = [];
+        seriesName.forEach((labelName: string, labelIndex: number) => {
+          const isLabel = _.find(seriesObject.data, function (o) {
+            return o.name == labelName;
+          });
+          if (isLabel) {
+            updatedData.push(isLabel);
+          } else {
+            updatedData.push({
+              name: labelName,
+              y: 0,
+              percentageValue: 0,
+              numberValue: 0,
+              baseCount: 0,
+              significance: '',
+              significantDiffernce: '',
+            });
           }
-        }
-      }),
+        });
+        updatedSeries[seriesIndex].data = updatedData;
+      }
+    });
+  }
+
+  updatedSeries.forEach((seriesNewData: any) => {
+    let labels: any = [];
+    const values: number[] = [];
+    const baseCounts: number[] = [];
+    const percentageValues: number[] = [];
+    seriesNewData.data.forEach((seriesdata: any) => {
+      labels.push(seriesdata.name);
+      values.push(seriesdata.y);
+      baseCounts.push(seriesdata.baseCount);
+      percentageValues.push(seriesdata.percentageValue);
+    });
+    seriesData.push({
+      name: seriesNewData.name,
+      labels,
+      values,
+      baseCounts,
+      percentageValues,
     });
   });
+  if (significant) {
+    return getTablesignificantdifference(seriesData);
+  }
 
   return seriesData;
 }

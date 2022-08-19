@@ -22,15 +22,14 @@
   .multi-select__paper {
     .MuiButtonBase-root {
       padding: 0;
-      @media screen and (min-width: 320px) and (max-width: 1023px) {
-        min-height: 25px;
-      }
-   
     }
 
     .MuiTypography-root,
     .multi-select__placeholder {
       font-size: map-get($map: $text-size, $key: small);
+    }
+    .multi-select__checkbox {
+      margin: 3px 0 3px 0;
     }
     .MuiTypography-root {
       margin-left: 8px;
@@ -46,9 +45,6 @@
   }
   .custom-scrollbar__wrapper {
     padding: 10px;
-    @media screen and (min-width: 320px) and (max-width: 1023px) {
-      padding-top: 0 10px;
-    }
   }
 
   .MuiSelect-icon {
@@ -56,3 +52,6 @@
     top: 8px;
   }
 }
+// .MuiPaper-root.MuiDialog-paper.MuiDialog-paperWidthSm.MuiDialog-paperFullScreen {
+//   background-color: map-get($map: $bg-color, $key: "primary") !important;
+// }

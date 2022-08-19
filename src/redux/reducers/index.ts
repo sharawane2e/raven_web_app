@@ -7,6 +7,10 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import tourReducer from "./tourReducer";
 import sidebarReducer from "./sidebarReducer";
+import chapterReducer from "./chapterReducer";
+import standardDeviationReduce from "./standardDeviationReduce";
+import userCacheReducer from "./userCacheReducer";
+import exportReducer from "./exportReducer";
 
 const persistConfig = {
   key: "root",
@@ -15,11 +19,15 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  questions: questionReducer,
-  filters: filterReducer,
+  chapters: chapterReducer,
   chart: chartReducer,
-  tour: tourReducer,
+  export: exportReducer,
+  filters: filterReducer,
+  questions: questionReducer,
   sidebar: sidebarReducer,
+  standard: standardDeviationReduce,
+  tour: tourReducer,
+  userCache: userCacheReducer,
   user: persistReducer(persistConfig, userReducer),
 });
 

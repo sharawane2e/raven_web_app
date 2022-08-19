@@ -1,16 +1,16 @@
-import React, { ComponentType, useContext, useEffect, useState } from "react";
-import { TableDataContext } from "../../contexts/TableDataContext";
-import clsx from "clsx";
-import ITableColumn from "../../types/ITableColumn";
-import CustomScrollbar from "../CustomScrollbar";
-import CustomSkeleton from "../../skeletons/CustomSkeleton";
-import { SortOrder } from "../../types/UtilityTypes";
-import ReactPaginate from "react-paginate";
-import { MenuItem, Select } from "@material-ui/core";
-import InputField from "../widgets/InputFields";
-import SwapVertIcon from "@material-ui/icons/SwapVert";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import React, { ComponentType, useContext, useEffect, useState } from 'react';
+import { TableDataContext } from '../../contexts/TableDataContext';
+import clsx from 'clsx';
+import ITableColumn from '../../types/ITableColumn';
+import CustomScrollbar from '../CustomScrollbar';
+import CustomSkeleton from '../../skeletons/CustomSkeleton';
+import { SortOrder } from '../../types/UtilityTypes';
+import ReactPaginate from 'react-paginate';
+import { MenuItem, Select } from '@material-ui/core';
+import InputField from '../widgets/InputFields';
+import SwapVertIcon from '@material-ui/icons/SwapVert';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 export interface CustomTableProps {
   classes?: {
@@ -113,7 +113,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                     <span>{col.label}</span>
                     <span className="sort-icon-wrapper">
                       {sortBy === col.key ? (
-                        sortOrder === "asc" ? (
+                        sortOrder === 'asc' ? (
                           <ArrowDownwardIcon className="asc-icon" />
                         ) : (
                           <ArrowUpwardIcon className="desc-icon" />
@@ -137,7 +137,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
       <div className="rc-table">
         <div className="rc__header">
           {tableConfig.map((col, index) => {
-            const headClassName = col?.classes?.head || "";
+            const headClassName = col?.classes?.head || '';
 
             return (
               <div
@@ -155,7 +155,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                     className="sort-icon-wrapper"
                   >
                     {sortBy === col.key ? (
-                      sortOrder === "asc" ? (
+                      sortOrder === 'asc' ? (
                         <ArrowDownwardIcon className="asc-icon" />
                       ) : (
                         <ArrowUpwardIcon className="desc-icon" />
@@ -171,8 +171,8 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
         </div>
 
         <div
-          className={clsx("rc__body", {
-            [classes?.body || ""]: classes?.body,
+          className={clsx('rc__body', {
+            [classes?.body || '']: classes?.body,
           })}
         >
           <CustomScrollbar>
@@ -186,12 +186,12 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
                 {data.map((row, index) => (
                   <div key={index} className="rc__body-row">
                     {tableConfig.map((col, colIndex) => {
-                      const bodyClassName = col?.classes?.body || "";
+                      const bodyClassName = col?.classes?.body || '';
                       return (
                         <div
                           key={colIndex}
                           style={{ width: col.minWidth }}
-                          className={clsx("rc__body-cell", {
+                          className={clsx('rc__body-cell', {
                             flex_auto: col.minWidth,
                             [bodyClassName]: bodyClassName,
                           })}
@@ -215,7 +215,7 @@ const CustomTable: React.FC<CustomTableProps> = (props) => {
       {!disablePagination ? (
         <div className="custom-table__paginate-wrapper">
           <div>
-            Showing {minRecordsRange} to {maxRecordsRange} of {totalRecords}{" "}
+            Showing {minRecordsRange} to {maxRecordsRange} of {totalRecords}{' '}
             entries
           </div>
           <ReactPaginate

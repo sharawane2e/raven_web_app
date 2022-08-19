@@ -3,8 +3,11 @@
     background: map-get($map: $bg-color, $key: secondary);
     padding: 0px 10px;
     width: 100%;
+    align-items: center;
     @media (max-width: 1023px) {
-      padding: 5px 10px;
+      display: flex;
+      align-items: center;
+      padding: 0px 10px;
     }
   }
   .questioSelection {
@@ -17,8 +20,7 @@
     display: flex;
     align-items: center;
     padding: 0.4rem 0px;
-    //min-width: 550px;
-    @media (max-width: 960px) {
+    @media (max-width: 1200px) {
       display: none;
     }
   }
@@ -27,36 +29,34 @@
     justify-content: flex-end;
   }
 
-
   .chart-content__chart-wrapper {
-
-    width: 97.5%;
-    height: calc(100vh - 263px);
+    width: calc(100% - 24px);
+    height: calc(100vh - 285px);
     background: map-get($map: $bg-color, $key: "white");
     padding: 20px 15px;
     border: map-get($map: $bg-color, $key: "white");
     border-radius: 3px;
     box-sizing: border-box;
     margin: 8px 12px;
+    border: 1px solid $border-color;
     @media (max-width: 767px) {
       margin: 15px auto 15px auto;
       width: 95%;
+      height: calc(100vh - 280px);
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
-      margin: 15px 5px 10px 8px;
+      // margin: 15px 5px 10px 8px;
+    }
+    .highcharts-background {
+      fill: transparent;
     }
     @media (max-width: 767px) and (orientation: landscape) {
       height: calc(100vh - 10px);
     }
-
-   
-    .highcharts-background {
-      fill: transparent;
-    }
   }
 
   .chart-content__chart-wrapper-table {
-    background: map-get($map: $bg-color, $key: "primary");
+    background: map-get($map: $bg-color, $key: "secondary-dark");
   }
   .wave-button {
     height: 30px;
@@ -65,22 +65,36 @@
     margin: 3px;
     margin-bottom: 15px;
   }
+  .chart-content-footer {
+    display: flex;
+    width: calc(100% - -33px);
+    margin-left: -14px;
+    margin-top: 30px;
+    justify-content: space-between;
+    &--inr {
+      color: map-get($map: $text-color, $key: "partial-light");
+      width: 90%;
+      @media (max-width: 768px) {
+        padding-left: 20px;
+      }
+    }
+    @media (max-width: 768px) {
+      margin-left: -24px;
+      // margin-top: -27px;
+    }
+  }
 
   .chart-content__base-count {
     font-size: map-get($map: $text-size, $key: small);
-    color: map-get($map: $text-color, $key: primary);
-    margin-top: 23px;
-    margin-left: -13px;
-    // margin-top: 5px;
+    color: map-get($map: $text-color, $key: "base-color");
+    display: block;
   }
 
   .chart-content__info {
     font-size: map-get($map: $text-size, $key: xsmall);
     font-style: italic;
-    color: map-get($map: $text-color, $key: primary);
+    color: map-get($map: $text-color, $key: "base-color");
     margin-top: 1px;
-    margin-left: -13px;
-    // margin-top: 5px;
   }
   .title__Block {
     display: flex;
@@ -118,7 +132,9 @@
         display: none;
       }
     }
-   
+    @media (max-width: 768px) {
+      margin-left: 5px;
+    }
   }
 
   .button-group {
@@ -134,7 +150,6 @@
       padding-top: 2px;
     }
   }
-
 
   .menu-icon {
     width: 14px;
@@ -159,7 +174,6 @@
   }
 
   &.sidebar-open {
-   
     @media (min-width: 769px) {
       .menu-icon {
         div {
@@ -185,10 +199,7 @@
     .appbar__brand-logo {
       display: block;
     }
-
-  
   }
- 
   &__control-item:not(:last-child) {
     border-right: 2px solid map-get($map: $bg-color, $key: silver-chalice);
     border-radius: 1px;
@@ -206,14 +217,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    svg {
+      @media (max-width: 767px) {
+        width: 100%;
+        height: 350px;
+      }
+    }
+  }
+}
+.content-area.sidebar-open {
+  .chart-content {
+    .mr-button.MuiGrid-container {
+      padding: 0px 10px 0 0;
+    }
   }
 }
 .orientation-control {
   .active {
     &:not(.Mui-disabled) {
       svg {
+        fill: map-get($map: $bg-color, $key: accent);
         g {
-          stroke: map-get($map: $text-color, $key: accent);
+          fill: map-get($map: $bg-color, $key: accent);
         }
       }
     }
@@ -223,9 +248,9 @@
 .chart-option-tooltip {
   display: none;
 
-  @media (max-width: 960px) {
+  @media (max-width: 1200px) {
     display: block;
-    color: #fff;
+    color: $white;
   }
 }
 
@@ -238,8 +263,32 @@
 }
 .cursor-pointer {
   cursor: pointer;
-  @media screen and (min-width: 320px) and (max-width: 768px) {
+  @media (max-width: 767px) {
     width: 100%;
     height: 100%;
+  }
+}
+
+.mean-switch {
+  display: flex;
+  align-items: center;
+}
+
+.chart-items {
+  display: flex;
+}
+#Group_4227 {
+  cursor: pointer;
+}
+.icon-width {
+  .favourite-icon {
+    @media (max-width: 1023px) {
+      width: 20%;
+    }
+  }
+  .signDiff {
+    @media (max-width: 1023px) {
+      width: 20%;
+    }
   }
 }

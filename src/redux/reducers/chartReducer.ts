@@ -1,11 +1,11 @@
 import { createReducer } from "@reduxjs/toolkit";
+//import { StaticText } from '../../constants/StaticText';
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartOrientation } from "../../enums/ChartOrientation";
 import { ChartType } from "../../enums/ChartType";
-import { QuestionType } from "../../enums/QuestionType";
-
+//import { QuestionType } from '../../enums/QuestionType';
 import { IQuestion } from "../../types/IQuestion";
-import { changeChartOptions } from "../../utils/ChartOptionFormatter";
+//import { changeChartOptions } from '../../utils/ChartOptionFormatter';
 import {
   setChartData,
   setChartOrientation,
@@ -14,13 +14,21 @@ import {
   setChartTranspose,
   setChartFullScreen,
   setChartLoading,
+  resetChart,
+  setshowMean,
+  updateChartOptions,
+  updateSignificant,
+  setFullScreenLoading,
 } from "../actions/chartActions";
 
 export interface IChartState {
   chartLoading: boolean;
+  fullScreenLoading: boolean;
   questionData: IQuestion | null;
   // openQSelection:boolean;
   chartData: any[];
+  questionChartData: any[] | null;
+  bannerChartData: any[] | null;
   chartOrientation: ChartOrientation;
   chartType: ChartType;
   chartLabelType: ChartLabelType;
@@ -29,6 +37,8 @@ export interface IChartState {
   chartOptions: any;
   baseCount: number;
   bannerQuestionData: IQuestion | null;
+  showMean: boolean;
+  significant: boolean;
 }
 
 export const dataLabels = {
@@ -49,40 +59,64 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      format: "{point.y:.1f}%",
+      // format: '{point.y:.1f}%',
+      // formatter: function (this: any) {
+      //   console.log(this);
+      //   // if (this.y > 100) {
+      //   //   return this.y + 'CB';
+      //   // }
+      //   return this.y;
+      // },
+      formatter: function (this: any, options: any) {
+        return ` ${parseFloat(this.y.toFixed(2))}${
+          ChartLabelType.PERCENTAGE ? "%" : ""
+        } <span class="significante-color">${
+          this.point.significantDiffernce ? this.point.significantDiffernce : ""
+        } </span>`;
+      },
       allowOverlap: true,
       rotation: -90,
+      align: "top",
       x: 0,
-      y: -20,
+      y: -6,
       crop: false,
+      style: {
+        fontSize: "10px",
+        textOutline: false,
+        fontWeight: null,
+      },
     },
   },
 };
 
 const initialState: IChartState = {
   chartLoading: false,
+  fullScreenLoading: false,
   questionData: null,
   // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
+  questionChartData: null,
+  bannerChartData: null,
   chartOrientation: ChartOrientation.PORTRAIT,
   chartType: ChartType.COLUMN,
   chartLabelType: ChartLabelType.PERCENTAGE,
   chartTranspose: false,
   chartfullScreen: false,
+  significant: false,
   chartOptions: {
     title: {
       text: "",
     },
     chart: {
       type: "column",
-
       style: {
         fontFamily: `"Avenir", Arial`,
       },
+      //margin: [70, 0, 80, 0],
     },
     legend: {
-      enabled: false,
+      enabled: true,
       reversed: false,
     },
     tooltip: {
@@ -105,6 +139,7 @@ const initialState: IChartState = {
     ],
   },
   baseCount: 0,
+  showMean: false,
 };
 
 const chartReducer = createReducer(initialState, (builder) => {
@@ -157,6 +192,65 @@ const chartReducer = createReducer(initialState, (builder) => {
   builder.addCase(setChartLoading, (state, action) => ({
     ...state,
     chartLoading: action.payload,
+  }));
+  builder.addCase(setFullScreenLoading, (state, action) => ({
+    ...state,
+    fullScreenLoading: action.payload,
+  }));
+
+  builder.addCase(setshowMean, (state, action) => ({
+    ...state,
+    showMean: action.payload,
+  }));
+
+  builder.addCase(resetChart, (state, action) => ({
+    ...state,
+    questionData: null,
+    chartData: [],
+    chartOptions: {
+      title: {
+        text: "",
+      },
+      chart: {
+        type: "column",
+
+        style: {
+          fontFamily: `"Avenir", Arial`,
+        },
+      },
+      legend: {
+        enabled: false,
+        reversed: false,
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat:
+          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>",
+      },
+      xAxis: {
+        type: "category",
+      },
+      yAxis: {
+        visible: false,
+        reversedStacks: false,
+      },
+      plotOptions: defaultPlotOptions,
+      series: [
+        {
+          data: [],
+        },
+      ],
+    },
+    baseCount: 0,
+  }));
+
+  builder.addCase(updateChartOptions, (state, action) => ({
+    ...state,
+    chartOptions: { ...state.chartOptions, ...action.payload },
+  }));
+  builder.addCase(updateSignificant, (state, action) => ({
+    ...state,
+    significant: action.payload,
   }));
 });
 

@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setChartOrientation } from "../../redux/actions/chartActions";
 import store from "../../redux/store";
-import {
-  getChartOptions,
-  getPlotOptions,
-} from "../../utils/ChartOptionFormatter";
+import { getPlotOptions } from "../../utils/ChartOptionFormatter";
 import { setChartData } from "../../redux/actions/chartActions";
+import Toaster from "../../utils/Toaster";
+import { StaticText } from "../../constants/StaticText";
+import { ChartType } from "../../enums/ChartType";
 
 interface OrientationControlProps {}
 
@@ -19,16 +19,27 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     (state: RootState) => state.chart
   );
   const { chart } = store.getState();
-
   const dispatch: AppDispatch = useDispatch();
 
   const changeOrientation = (orientation: ChartOrientation) => {
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
-    chartDataClone.chartOptions["plotOptions"] = getPlotOptions();
+    //chartDataClone.chartOptions['plotOptions'] = getPlotOptions();
     dispatch(setChartData(chartDataClone));
   };
+
+  // const handlePieDisabled = () => {
+  //   let isOrientation = true;
+  //   if (chart?.chartType == ChartType.TABLE) {
+  //     isOrientation = false;
+  //   } else if (chart?.chartType == ChartType.LINE) {
+  //     isOrientation = false;
+  //   }
+
+  //   return isOrientation;
+  // };
+
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: "Portrait",
@@ -42,7 +53,10 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
       renderChild: () => <LandscapeIcon />,
       onClick: () => changeOrientation(ChartOrientation.LANDSCAPE),
       active: chartOrientation === ChartOrientation.LANDSCAPE,
-      disabled: questionData === null || (chart?.chartType == 5 ? true : false),
+      disabled:
+        questionData === null ||
+        (chart?.chartType == ChartType.TABLE ? true : false),
+      disableClick: () => Toaster.error(StaticText?.DISABLED_CHART_LAND),
     },
   ];
   //console.log("chartOrientation", chartOrientation);

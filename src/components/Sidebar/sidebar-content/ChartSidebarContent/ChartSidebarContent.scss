@@ -27,7 +27,6 @@
   }
   .chart-sidebar__filter-questions {
     @media (max-width: 767px) {
-      background: #070707;
       color: #dfdfdf;
     }
     em {
@@ -37,7 +36,6 @@
   .chart-sidebar__footer {
     padding: 15px;
     @media (max-width: 767px) {
-      background: #070707;
     }
     .MuiButton-label {
       color: map-get($map: $text-color, $key: primary);

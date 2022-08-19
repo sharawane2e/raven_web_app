@@ -1,8 +1,7 @@
 .home-screen {
   .home-screen__content {
-    // height: calc(100vh - 83px);
     height: calc(100vh - 83px);
-    background-color: map-get($map: $bg-color, $key: "secondary-shade");
+    background-color: map-get($map: $bg-color, $key: 'secondary-shade');
     img {
       max-width: 100%;
     }
@@ -12,17 +11,15 @@
   display: flex;
   justify-content: center;
   position: relative;
-  // max-height: 80vh;
   align-items: center;
-  // width: 80%;
   &:nth-child(2) {
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .MuiPaper-root {
-    max-width: 90%;
-    width: 80%;
+    max-width: 60%;
+    width: 60%;
     min-width: 80vw;
   }
 
@@ -39,12 +36,11 @@
 }
 
 .home-modal__content {
-  // height: 72vh;
   height: 70vh;
 }
 .dn {
   display: none;
 }
 .makeStyles-item-2 {
-  height: 60vh;
+  height: 70vh;
 }

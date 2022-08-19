@@ -9,7 +9,7 @@ export interface ButtonGroupConfig {
   disabled?: boolean;
   active?: boolean;
   tooltip?: string;
-  disableClick?:()=>void;
+  disableClick?: () => void;
 }
 
 export interface ButtonGroupProps {
@@ -34,7 +34,10 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
       )}
       <Grid item className="button-group__button-wrapper">
         {buttonConfig.map((button, index) => (
-          <div key={index} onClick={button.disabled===true?button.disableClick:undefined}>
+          <div
+            key={index}
+            onClick={button.disabled === true ? button.disableClick : undefined}
+          >
             <Tooltip title={button.tooltip || ""} arrow placement="top">
               <Button
                 variant="outlined"

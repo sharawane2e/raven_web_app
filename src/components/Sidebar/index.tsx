@@ -1,15 +1,15 @@
-import { ComponentType, useContext } from "react";
-import Drawer from "@material-ui/core/Drawer";
-import clsx from "clsx";
-import { SwipeableDrawer } from "@material-ui/core";
-import BrandLogo from "../BrandLogo";
-import { useHistory } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
+import { ComponentType, useContext } from 'react';
+import Drawer from '@material-ui/core/Drawer';
+import clsx from 'clsx';
+import { SwipeableDrawer } from '@material-ui/core';
+import BrandLogo from '../BrandLogo';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   toggleSidebar,
   toggleSidebarMobile,
-} from "../../redux/actions/sidebarAction";
-import { RootState } from "../../redux/store";
+} from '../../redux/actions/sidebarAction';
+import { RootState } from '../../redux/store';
 
 export interface SidebarProps {
   /**
@@ -27,7 +27,7 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
   //   useContext(SidebarContext);
 
   const { open, openMobileDrawer } = useSelector(
-    (state: RootState) => state.sidebar
+    (state: RootState) => state.sidebar,
   );
   const dispatch = useDispatch();
 
@@ -50,12 +50,12 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
     <div className="sidebar">
       <Drawer
         variant="permanent"
-        className={clsx("drawer drawer--desktop", {
-          "drawer--close": !open,
+        className={clsx('drawer drawer--desktop', {
+          'drawer--close': !open,
         })}
         classes={{
-          paper: clsx("drawer", {
-            "drawer--close": !open,
+          paper: clsx('drawer', {
+            'drawer--close': !open,
           }),
         }}
       >
@@ -68,13 +68,13 @@ const Sidebar: React.FC<SidebarProps> = (props) => {
         onClose={() => toggleMobileSidebar(false)}
         onOpen={() => toggleMobileSidebar(true)}
         classes={{
-          paper: "drawer",
+          paper: 'drawer',
         }}
       >
         <div className="sidebar__brand">
           <BrandLogo
             className="sidebar__brand-logo"
-            onClick={() => history.push("/home")}
+            onClick={() => history.push('/home')}
           />
         </div>
         {sidebarContent}

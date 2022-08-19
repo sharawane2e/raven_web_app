@@ -1,12 +1,23 @@
 import store from "../../redux/store";
-
 import jsPDF from "jspdf";
 import "svg2pdf.js";
 
-import { appliedFiltersText } from "../export-helper-utils/GeneralUtils";
-import { sourceText, copyRightText } from "../../constants/Variables";
-import { logoBase64String, primaryBarColor } from "../../constants/Variables";
+import {
+  appliedFiltersText,
+  meanStandardDeviation,
+} from "../export-helper-utils/GeneralUtils";
+import {
+  logoBase64String,
+  primaryBarColor,
+  copyRightText,
+  significantText,
+  significancecolor,
+} from "../../constants/Variables";
+
 import { hexToRgb } from "@material-ui/core";
+import { QuestionType } from "../../enums/QuestionType";
+import { ChartType } from "../../enums/ChartType";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 
 export const setDefaultPdfPageProperties = async (
   doc: jsPDF,
@@ -19,26 +30,37 @@ export const setDefaultPdfPageProperties = async (
   copyRightX: any,
   copyRightY: any,
   qWordBreak: any,
-  lWordBreak: any
+  lWordBreak: any,
+  chart: IchartOptionsDto
 ) => {
   const {
-    chart: { questionData, baseCount, bannerQuestionData },
+    chart: {
+      questionData,
+      baseCount,
+      bannerQuestionData,
+      significant,
+      chartType,
+    },
+    filters: { appliedFilters },
   } = store.getState();
 
-  // doc.addFont("Avenir", "Arial", "normal");
-
-  // doc.setFont("Avenir");
   doc.setFontSize(10);
   const lText = doc.splitTextToSize(questionData?.labelText || "", lWordBreak);
-
   doc.text(lText, 10, 5);
   doc.setFontSize(8);
   doc.setTextColor(64, 64, 64);
+
   const filterText = doc.splitTextToSize(
-    appliedFiltersText() || "",
+    appliedFiltersText(appliedFilters) || "",
     qWordBreak
   );
+
   doc.text(filterText, 10, 20);
+  doc.setTextColor(64, 64, 64);
+  if (questionData?.type === QuestionType.SINGLE && questionData?.isMean) {
+    doc.text(meanStandardDeviation(chart), 10, 25);
+  }
+
   doc.text("Sample set: " + baseCount || "", baseX, baseY);
   if (bannerQuestionData) {
     doc.text(
@@ -47,8 +69,20 @@ export const setDefaultPdfPageProperties = async (
       baseY + 5
     );
   }
-  // doc.text(sourceText || "", sourceX, sourceY);
-  // doc.setFontSize(6);
+
+  if (significant) {
+    if (chartType == ChartType.TABLE) {
+      doc.text(significantText, 300, 5);
+    } else {
+      doc.text(significantText, 150, 5);
+    }
+    doc.setFontSize(8);
+    doc.setTextColor(101, 110, 255);
+    doc.setDrawColor(0);
+    doc.setFillColor(hexToRgb(significancecolor));
+    doc.rect(295, 3, 3, 2, "F");
+  }
+
   doc.setTextColor(127, 127, 127);
   doc.text(copyRightText || "", copyRightX, copyRightY);
   doc.setDrawColor(0);

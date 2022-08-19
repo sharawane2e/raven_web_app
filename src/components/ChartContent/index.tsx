@@ -1,10 +1,7 @@
-import { useState, useContext, MouseEvent, useEffect } from 'react';
-import Breadcrum from '../widgets/Breadcrum';
+import { useState, MouseEvent, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { SidebarContext } from '../../contexts/SidebarContext';
-import { AppDispatch, RootState } from '../../redux/store';
+import { RootState } from '../../redux/store';
 import {
   fetchBannerQuestionList,
   fetchQuestionList,
@@ -14,7 +11,9 @@ import {
 } from '../../redux/actions/questionAction';
 import {
   setChartData,
+  setChartLabel,
   setChartTranspose,
+  setshowMean,
 } from '../../redux/actions/chartActions';
 import { changeChartType, fetchChartData } from '../../services/ChartService';
 import AppliedFilterList from '../AppliedFilterList';
@@ -29,17 +28,9 @@ import { ChartType } from '../../enums/ChartType';
 import { StaticText } from '../../constants/StaticText';
 import { Tooltip } from '@material-ui/core';
 import Toaster from '../../utils/Toaster';
-import { Menu, MenuItem, Chip } from '@material-ui/core';
+import { Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ChartOptionsControl from '../ChartOptionsControl';
-// import Tooltip from "@material-ui/Tooltip";
-import { showTourGuide } from '../../redux/actions/tourAction';
 import store from '../../redux/store';
-import TourPlayIcon from '@material-ui/icons/PlayArrow';
-import {
-  toggleSidebar,
-  toggleSidebarMobile,
-} from '../../redux/actions/sidebarAction';
 import ChartTransposeControl from '../ChartTransposeControl';
 import clsx from 'clsx';
 import LabelTypeControl from '../LabelTypeControl';
@@ -47,6 +38,20 @@ import ChartFullScreen from '../ChartFullScreen';
 import Loader from '../widgets/Loader/Index';
 import { ReactComponent as No_Question_Selected } from '../../assets/svg/No_Question_Selected.svg';
 import { ReactComponent as No_Data_Found } from '../../assets/svg/No_data_found.svg';
+import Chapter from '../Chapter';
+import _ from 'lodash';
+import IsMeanControl from '../IsMeanControl';
+import { ChartLabelType } from '../../enums/ChartLabelType';
+import { setSelectedQuestion } from '../../redux/actions/chapterActions';
+import StandardDeviation from '../StandardDeviation';
+import SignificantDiff from '../SignificantDiff';
+import { significantText } from '../../constants/Variables';
+import FavouriteControl from '../FavouriteControl';
+import {
+  setInCache,
+  setuserCacheActive,
+  setUserCacheId,
+} from '../../redux/actions/userCacheActions';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -64,15 +69,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const {
     questions,
-    chart: {
-      chartLoading,
-      questionData,
-      baseCount,
-      chartType,
-      chartData,
-      bannerQuestionData,
-    },
-    sidebar: { open },
+    chart: { chartLoading, questionData, baseCount, chartType, significant },
+    chapters: { allChapters, selectedChapterId },
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -83,13 +81,6 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     selectedBannerQuestionId,
   } = questions;
 
-  const toggleSidebarOpen = () => {
-    dispatch(toggleSidebar());
-  };
-  const toggleMobileSidebar = () => {
-    dispatch(toggleSidebarMobile());
-  };
-
   const closeMenu = () => {
     setAnchorEl(null);
   };
@@ -97,20 +88,29 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const opneMenu = (e: MouseEvent<Element>) => {
     setAnchorEl(e.currentTarget);
   };
-  const tourStart = (e: MouseEvent<Element>) => {
-    // alert("sss")
-    if (!open) {
-      dispatch(toggleSidebar(true));
-    }
-    setTimeout(() => {
-      dispatch(showTourGuide());
-    }, 300);
-  };
 
   useEffect(() => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
   }, []);
+
+  let updateQuestionList: any[] = [];
+  if (selectedChapterId && allChapters) {
+    const selectchapterObject = _.find(allChapters, function (o) {
+      return o.chapterId === selectedChapterId;
+    });
+    const sortedChapterOrder = _.sortBy(allChapters, ['order']);
+    sortedChapterOrder.forEach((chapterData: any, index) => {
+      if (chapterData['chapterId'] === selectchapterObject?.chapterId) {
+        for (let i = 0; i < chapterData?.QuestionsQIds.length; i++) {
+          for (let j = 0; j < questions?.questionList.length; j++) {
+            if (chapterData?.QuestionsQIds[i] == questions?.questionList[j].qId)
+              updateQuestionList.push(questions?.questionList[j]);
+          }
+        }
+      }
+    });
+  }
 
   useEffect(() => {
     if (
@@ -123,16 +123,33 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       dispatch(toggleBannerQuestionDisablity(true));
     } else {
       dispatch(toggleBannerQuestionDisablity(false));
+      if (chart?.questionData?.type === QuestionType?.NUMBER) {
+        dispatch(setChartLabel(ChartLabelType?.NUMBER));
+      } else {
+        dispatch(setChartLabel(ChartLabelType?.PERCENTAGE));
+      }
+    }
+    var el = document.getElementById('Group_4227');
+    if (el) {
+      el.addEventListener('click', selectQuestion, false);
+    }
+    //@ts-ignore
+    function selectQuestion() {
+      setOpenQSelection(true);
     }
   }, [questionData?.type]);
 
   const handleQuestionChange = (value: string) => {
+    dispatch(setuserCacheActive(false));
+    dispatch(setUserCacheId(''));
+    dispatch(setInCache(false));
+    dispatch(setshowMean(false));
     dispatch(setChartTranspose(false));
     dispatch(setSelectedQuestionId(value));
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        // dispatch(setChartOperations(defaultChartOperations))
+        dispatch(setSelectedQuestion(chartData?.questionData?.labelText));
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
           chartType === ChartType.PIE
@@ -144,12 +161,15 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   };
 
   const handelBannerQuestionChange = (value: string) => {
+    dispatch(setuserCacheActive(false));
+    dispatch(setUserCacheId(''));
+    dispatch(setInCache(false));
+    dispatch(setshowMean(false));
     dispatch(setChartTranspose(false));
     dispatch(setSelectedBannerQuestionId(value));
     fetchChartData(undefined, value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
-        // dispatch(setChartOperations(defaultChartOperations))
         if (!!value && chartType === ChartType.PIE) {
           changeChartType(ChartType.COLUMN);
         } else if (
@@ -191,7 +211,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       labelKey="labelText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
-      disabledPredicate={(value) => value === selectedQuestionId}
+      disabledPredicate={(value) => value === selectedBannerQuestionId}
       MenuProps={{
         classes: { paper: 'testing' },
       }}
@@ -203,18 +223,18 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   return (
     <div className="chart-content">
       <Grid container spacing={0} justify="space-between" className="mr-button">
-        <Grid item className="title__Block">
-          <Breadcrum pageTitle="Reports" />
+        <Grid item className="title__Block chapter--drop-dwon">
+          <Chapter />
         </Grid>
         <Grid item className="chart-content__control-wrapper">
-          {/* <ChartOptionsControl /> */}
           <div className="chart-content__control-item">
             <ChartTypeControl />
           </div>
           <div className="chart-content__control-item">
             <OrientationControl />
           </div>
-          <div className="chart-content__control-item">
+          <div className="chart-content__control-item chart-items">
+            <SignificantDiff />
             <ChartTransposeControl />
           </div>
           <div className="chart-content__control-item">
@@ -223,7 +243,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <div className="chart-content__control-item">
             <LabelTypeControl />
           </div>
-          <div className="chart-content__control-item">
+          <div className="chart-content__control-item chart-items">
+            <FavouriteControl />
             <ExportChart />
           </div>
         </Grid>
@@ -261,7 +282,8 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <MenuItem className="chart-content__menu-item">
             <OrientationControl />
           </MenuItem>
-          <MenuItem className="chart-content__menu-item">
+          <MenuItem className="chart-content__menu-item icon-width">
+            <SignificantDiff />
             <ChartTransposeControl />
           </MenuItem>
           <MenuItem className="chart-content__menu-item">
@@ -270,28 +292,26 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           <MenuItem className="chart-content__menu-item">
             <LabelTypeControl />
           </MenuItem>
-          <MenuItem className="chart-content__menu-item">
+          <MenuItem className="chart-content__menu-item icon-width">
+            <FavouriteControl />
             <ExportChart />
           </MenuItem>
         </Menu>
       </Grid>
       <AppliedFilterList />
-      {/* <Button className="button--primary wave-button" disabled>
-        <span>Select wave</span>
-        <ExpandMoreIcon />
-      </Button> */}
+
       <div className="questioSelection">
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
             <SingleSelect
-              options={questionList}
+              options={updateQuestionList}
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}
               valueKey="qId"
               labelKey="labelText"
               className="single_select_area Step-1"
-              disabledPredicate={(value) => value === selectedBannerQuestionId}
+              disabledPredicate={(value) => value === selectedQuestionId}
               MenuProps={{
                 classes: { paper: 'testing' },
               }}
@@ -300,8 +320,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               handleOpen={handleQSelectionOpen}
             />
           </Grid>
-          <Grid xs={4}>
-            {questions.disableBannerQuestion ? (
+          <Grid
+            xs={4}
+            className={`${questionData?.isMean ? 'mean-switch ' : ''}`}
+          >
+            {questionData?.isMean && questionData.type === QuestionType.GRID ? (
+              <IsMeanControl />
+            ) : questions.disableBannerQuestion ? (
               <Tooltip
                 title={StaticText.BANNER_SELECTION_EXCEPTION}
                 placement="bottom"
@@ -322,16 +347,20 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           'chart-wrapper--loading': chartLoading == true,
         })}
       >
-        {/* <ChartTransposeControl /> */}
-        {/* <ChartOptionsControl /> */}
+        {significant ? (
+          <div className="significant-lagend">
+            <span className="significant-hedding"> {significantText}</span>
+          </div>
+        ) : (
+          ''
+        )}
 
-        {/* {questionData?.type !== QuestionType.SINGLE || 
-        (questionData?.type === QuestionType.SINGLE || questionData?.type === QuestionType.MULTI) && bannerQuestionData ? <ChartOptionsControl /> : <></>} */}
+        {/* <ChartTransposeControl /> */}
         {chart?.questionData === null ? (
           <div className="noQuestion--selected">
             <No_Question_Selected
-              className="cursor-pointer"
-              onClick={handleQSelectionOpen}
+            // className="cursor-pointer"
+            // onClick={handleQSelectionOpen}
             />
           </div>
         ) : (
@@ -344,24 +373,45 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         ) : (
           ''
         )}
+
         {chartLoading ? (
           <Loader />
         ) : chartType === ChartType.TABLE ? (
-          <TableView />
+          <>
+            {chart?.questionData?.isMean &&
+            chart?.questionData?.type === QuestionType.SINGLE ? (
+              <StandardDeviation />
+            ) : (
+              ''
+            )}
+            <TableView />
+          </>
         ) : (
-          <Chart />
+          <>
+            {chart?.questionData?.isMean &&
+            chart?.questionData?.type === QuestionType.SINGLE ? (
+              <StandardDeviation />
+            ) : (
+              ''
+            )}
+            <Chart />
+          </>
         )}
-        <div className="chart-content__base-count">
-          Sample Size: {baseCount}
-          {/* executives across Global 2000 enterprises */}
-          {/* <br /> */}
-          {/* Source: HFS Pulse, H1 2021 */}
-          {/* Source: E2E Research, 2021 */}
-        </div>
-        <div className="chart-content__info">
-          Note: Sample size reflects selections from filter and cross-tab menus,
-          not in-legend selections.
-        </div>
+        {chart?.questionData !== null ? (
+          <div className="chart-content-footer">
+            <div className="chart-content-footer--inr">
+              <div className="chart-content__base-count">
+                Sample Size: {baseCount}
+              </div>
+              <div className="chart-content__info">
+                Note: Sample size reflects selections from filter and cross-tab
+                menus, not in-legend selections.
+              </div>
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

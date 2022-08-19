@@ -1,39 +1,45 @@
-@import "./shared/fonts.scss";
-@import "./shared/Variables.scss";
-@import "./shared/Mixins.scss";
-@import "./shared/Common.scss";
-@import "./shared/Theme.scss";
+@import './shared/fonts.scss';
+@import './shared/Variables.scss';
+@import './shared/Mixins.scss';
+@import './shared/Common.scss';
+@import './shared/Theme.scss';
 
 // Import Widget's scss
-@import "../components/widgets/Breadcrum/Breadcrum.scss";
-@import "../components/widgets/ProfileAvatar/ProfileAvatar.scss";
-@import "../components/widgets/UserAvatar/UserAvatar.scss";
-@import "../components/widgets/ConfirmationDialog/ConfimationDialog.scss";
-@import "../components/widgets/MultiSelect/MultiSelect.scss";
-@import "../components/widgets/SingleSelect/SingleSelect.scss";
-@import "../components/widgets/ButtonGroup/ButtonGroup.scss";
-@import "../components/widgets/Loader/Loader.scss";
+@import '../components/widgets/Breadcrum/Breadcrum.scss';
+@import '../components/widgets/ProfileAvatar/ProfileAvatar.scss';
+@import '../components/widgets/UserAvatar/UserAvatar.scss';
+@import '../components/widgets/ConfirmationDialog/ConfimationDialog.scss';
+@import '../components/widgets/MultiSelect/MultiSelect.scss';
+@import '../components/widgets/SingleSelect/SingleSelect.scss';
+@import '../components/widgets/ButtonGroup/ButtonGroup.scss';
+@import '../components/widgets/Loader/Loader.scss';
 
 // Import screen's scss
-@import "../screens/PublicFormScreen/PublicFormScreen.scss";
-@import "../screens/AdminPanelScreen/AdminPanelScreen.scss";
-@import "../screens/UserPanelScreen/UserPanelScreen.scss";
-@import "../screens/StaticHomeScreen/StaticHomeScreen.scss";
-@import "../screens/ChartScreen/ChartScreen.scss";
+@import '../screens/PublicFormScreen/PublicFormScreen.scss';
+@import '../screens/AdminPanelScreen/AdminPanelScreen.scss';
+@import '../screens/UserPanelScreen/UserPanelScreen.scss';
+@import '../screens/StaticHomeScreen/StaticHomeScreen.scss';
+@import '../screens/ChartScreen/ChartScreen.scss';
 
 // Import component's scss
-@import "../components/CustomTable/CustomTable.scss";
-@import "../components/PublicBanner/PublicBanner.scss";
-@import "../components/Sidebar/Sidebar.scss";
-@import "../components/Sidebar/sidebar-content/AdminSidebarContent/AdminSidebarContent.scss";
-@import "../components/Appbar/Appbar.scss";
-@import "../components/AddUser/AddUser.scss";
-@import "../components/ChangePassword/ChangePassword.scss";
-@import "../components/StaticDashboard/StaticDashboard.scss";
-@import "../components/UserTable/UserTable.scss";
-@import "../components//ChartContent/ChartContent.scss";
-@import "../components/AppliedFilterList/AppliedFilterList.scss";
-@import "../components/TableView/TableView.scss";
-@import "../components/Sidebar/sidebar-content/ChartSidebarContent/ChartSidebarContent.scss";
-@import "../components/CustomScrollbar/CustomScrollbar.scss";
+@import '../components/CustomTable/CustomTable.scss';
+@import '../components/PublicBanner/PublicBanner.scss';
+@import '../components/Sidebar/Sidebar.scss';
+@import '../components/Sidebar/sidebar-content/AdminSidebarContent/AdminSidebarContent.scss';
+@import '../components/Appbar/Appbar.scss';
+@import '../components/AddUser/AddUser.scss';
+@import '../components/ChangePassword/ChangePassword.scss';
+@import '../components/StaticDashboard/StaticDashboard.scss';
+@import '../components/UserTable/UserTable.scss';
+@import '../components//ChartContent/ChartContent.scss';
+@import '../components/AppliedFilterList/AppliedFilterList.scss';
+@import '../components/TableView/TableView.scss';
+@import '../components/Sidebar/sidebar-content/ChartSidebarContent/ChartSidebarContent.scss';
+@import '../components/CustomScrollbar/CustomScrollbar.scss';
+@import '../components/Chapter/Chapter.scss';
+@import '../components/IsMeanControl/ismean.scss';
+@import '../components/StandardDeviation/StandardDeviation.scss';
+@import '../components/Sidebar/sidebar-content/UserCacheSidebar/usercahe.scss';
+@import '../components/widgets/CutsomPopup/CustomPopup.scss';
+
 // @import "../components/tableView/TableView.scss"

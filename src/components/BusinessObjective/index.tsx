@@ -1,18 +1,18 @@
-import "./statisPage.scss";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import OnlineSurveyImg from "../../assets/images/online_surveyImg.png";
-import NjRtesidents from "../../assets/images/nj_rtesidents.png";
-import AdultsImg from "../../assets/images/adultsImg.png";
-import SurveyedImg from "../../assets/images/surveyed.png";
-import AddressImg from "../../assets/images/addressImg.png";
-import UpArrowImg from "../../assets/images/up.png";
-import DownArrowImg from "../../assets/images/down.png";
-import FinancialLogo from "../../assets/svg/Financial_Logo.svg";
+import './statisPage.scss';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import OnlineSurveyImg from '../../assets/images/online_surveyImg.png';
+import NjRtesidents from '../../assets/images/nj_rtesidents.png';
+import AdultsImg from '../../assets/images/adultsImg.png';
+import SurveyedImg from '../../assets/images/surveyed.png';
+import AddressImg from '../../assets/images/addressImg.png';
+import UpArrowImg from '../../assets/images/up.png';
+import DownArrowImg from '../../assets/images/down.png';
+import FinancialLogo from '../../assets/svg/Financial_Logo.svg';
 
-import CustomScrollbar from "../CustomScrollbar";
-import { Typography } from "@material-ui/core";
+import CustomScrollbar from '../CustomScrollbar';
+import { Typography } from '@material-ui/core';
 
 interface Props {}
 
@@ -82,7 +82,7 @@ const BusinessObjective = (props: Props) => {
                     <ul>
                       <li>
                         Understand how innovation and enterprise-wide
-                        performance management are viewed and planned for{" "}
+                        performance management are viewed and planned for{' '}
                       </li>
                       <li>
                         Understand the type and extent of changes to performance

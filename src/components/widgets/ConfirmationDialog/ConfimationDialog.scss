@@ -10,7 +10,7 @@
       width: 3.125rem;
     }
     div {
-      color: map-get($map: $text-color, $key: primary);
+      color: map-get($map: $text-color, $key: 'base-color');
       font-weight: 600;
     }
   }
