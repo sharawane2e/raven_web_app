@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="57" height="38" viewBox="0 0 57 38">
+  <defs>
+    <filter id="OTHER" x="0" y="4.5" width="57" height="28" filterUnits="userSpaceOnUse">
+      <feOffset dy="-1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feFlood flood-opacity="0.239"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Other-2" data-name="Other" transform="translate(-311.5 -194)">
+    <g id="Rectangle_2627" data-name="Rectangle 2627" transform="translate(312 194)" fill="#fff" stroke="#707070" stroke-width="1">
+      <rect width="56" height="38" rx="4" stroke="none"/>
+      <rect x="0.5" y="0.5" width="55" height="37" rx="3.5" fill="none"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 311.5, 194)" filter="url(#OTHER)">
+      <text id="OTHER-3" data-name="OTHER" transform="translate(4.5 24)" fill="#707070" font-size="14" font-family="NunitoSans-Bold, Nunito Sans" font-weight="700"><tspan x="0" y="0">TOTAL</tspan></text>
+    </g>
+  </g>
+</svg>

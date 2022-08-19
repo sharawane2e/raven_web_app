@@ -1,6 +1,6 @@
 import './Objectives.scss';
 import { ReactComponent as ResearchObjective } from '../../assets/svg/research_objective.svg';
-import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective.svg';
+import { ReactComponent as BusinessObjective } from '../../assets/svg/business_objective_final.svg';
 import { ReactComponent as Nationally } from '../../assets/svg/nationally.svg';
 import { ReactComponent as BrazilFlog } from '../../assets/svg/brazilFlag.svg';
 import { ReactComponent as ChinaIconFlag } from '../../assets/svg/chinaFlag.svg';
