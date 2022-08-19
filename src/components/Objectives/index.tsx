@@ -2,10 +2,10 @@ import "./Objectives.scss";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { ReactComponent as ResearchObjective } from "../../assets/svg/research_objective.svg";
-import { ReactComponent as BusinessObjective } from "../../assets/svg/business_objective.svg";
+import { ReactComponent as BusinessObjective } from "../../assets/svg/business_objective_final.svg";
 import { ReactComponent as SHFFinancial } from "../../assets/svg/SHF_Financial_Logo.svg";
 
-import { ReactComponent as OnlineSurveyIcon } from "../../assets/svg/online_survey.svg";
+import { ReactComponent as OnlineSurveyIcon } from "../../assets/svg/online-survey-final.svg";
 import { ReactComponent as CalendarIcon } from "../../assets/svg/calendar.svg";
 import { ReactComponent as TotalRBIcon } from "../../assets/svg/target.svg";
 import { ReactComponent as PopulationIcon } from "../../assets/svg/Industry_target.svg";
