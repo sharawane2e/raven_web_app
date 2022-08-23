@@ -74,6 +74,10 @@ const getMultiChartOptions = (chart: IchartOptionsDto): any => {
   return {
     legend: {
       enabled: true,
+      itemStyle: {
+        color: '#666666',
+        fontWeight: 'normal',
+      },
     },
     tooltip: { ...getToolTip() },
     series,
@@ -85,6 +89,10 @@ const getSingleChartOptions = (chart: IchartOptionsDto): any => {
   return {
     legend: {
       enabled: true,
+      itemStyle: {
+        color: '#666666',
+        fontWeight: 'normal',
+      },
     },
     tooltip: { ...getToolTip() },
     series,
@@ -97,6 +105,10 @@ const getRankChartOptions = (chart: IchartOptionsDto): any => {
   return {
     legend: {
       enabled: true,
+      itemStyle: {
+        color: '#666666',
+        fontWeight: 'normal',
+      },
     },
     tooltip: { ...getToolTip() },
     series,
@@ -118,6 +130,10 @@ const getGridChartOptions = (chart: IchartOptionsDto): any => {
   return {
     legend: {
       enabled: true,
+      itemStyle: {
+        color: '#666666',
+        fontWeight: 'normal',
+      },
     },
     plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
@@ -131,6 +147,10 @@ const getGridMultiChartOptions = (chart: IchartOptionsDto): any => {
   return {
     legend: {
       enabled: true,
+      itemStyle: {
+        color: '#666666',
+        fontWeight: 'normal',
+      },
     },
     tooltip: { ...getToolTip() },
     series,

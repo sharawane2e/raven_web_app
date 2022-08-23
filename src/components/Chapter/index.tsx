@@ -78,12 +78,16 @@ const Chapter: React.FC<ChapterProps> = (props) => {
   &.${selectUnstyledClasses.expanded} {
       &::after {
         content: '▴';
+        top: 7px;
+        font-size:18px;
       }
     }
     &::after {
       content: '▾';
       position: absolute;
       right: 2px;
+      top: 7px;
+      font-size:16px;
     }
     `,
   );
@@ -93,6 +97,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
     &.${optionUnstyledClasses.selected} {
       background-color: #393939;
       color: #fff;
+   
     }
     `,
   );
@@ -116,7 +121,7 @@ const Chapter: React.FC<ChapterProps> = (props) => {
           {sortedChapterOrder.map((chapter: any, index: number) => {
             return (
               <StyledOption key={index} value={chapter?.chapterId}>
-                {chapter?.labelText}
+                <div> {chapter?.labelText}</div>
               </StyledOption>
             );
           })}

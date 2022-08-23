@@ -144,7 +144,7 @@ async function print() {
   if (clientWidth >= 1300) {
     pdfWidth = 300;
     pdfHeight = 220;
-    x = 5;
+    x = 20;
     y = 30;
     w = 290;
     h = 140;
@@ -161,7 +161,7 @@ async function print() {
   } else {
     pdfWidth = 250;
     pdfHeight = 180;
-    x = 5;
+    x = 20;
     y = 30;
     w = 170;
     h = 180;
@@ -183,41 +183,11 @@ async function print() {
 
   for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
     if (
-      pdfExport[sourceIndex]?.payloadData?.chart?.chartType != ChartType.TABLE
+      pdfExport[sourceIndex]?.payloadData?.chart?.chartType == ChartType.TABLE
     ) {
       if (sourceIndex > 0) {
         doc.addPage();
       }
-      let clonedSource: any;
-
-      clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
-      await setDefaultPdfPageProperties(
-        doc,
-        baseX,
-        baseY,
-        sourceX,
-        sourceY,
-        logoX,
-        logoY,
-        copyRightX,
-        copyRightY,
-        qWordBreak,
-        lWordBreak,
-        pdfExport[sourceIndex]?.payloadData?.chart,
-      );
-
-      await doc.svg(clonedSource, {
-        x: x,
-        y: y,
-        width: w,
-        height: h,
-        loadExternalStyleSheets: true,
-      });
-    } else {
-      if (sourceIndex > 0) {
-        doc.addPage();
-      }
-
       await setDefaultPdfPageProperties(
         doc,
         baseX,
@@ -252,6 +222,35 @@ async function print() {
         body: output,
         startY: 40,
         styles: { fontSize: 6 },
+      });
+    } else {
+      if (sourceIndex > 0) {
+        doc.addPage();
+      }
+
+      let clonedSource: any;
+      clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
+      await setDefaultPdfPageProperties(
+        doc,
+        baseX,
+        baseY,
+        sourceX,
+        sourceY,
+        logoX,
+        logoY,
+        copyRightX,
+        copyRightY,
+        qWordBreak,
+        lWordBreak,
+        pdfExport[sourceIndex]?.payloadData,
+      );
+
+      await doc.svg(clonedSource, {
+        x: x,
+        y: y,
+        width: w,
+        height: h,
+        loadExternalStyleSheets: true,
       });
     }
   }

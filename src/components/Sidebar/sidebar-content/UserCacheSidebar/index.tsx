@@ -90,6 +90,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [butttonshow, setButtonShow] = useState(true);
   const [activeCacheId, setActiveCacheId] = useState<any>('');
+  const [activeShow, setActiveShow] = useState<any>('');
   const { savedChart, cacheId } = userCache;
   const chartQuestionData = chart?.questionData;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -171,8 +172,16 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     }
   };
 
-  const handleSingleSelect = (savedChartId: string, selectValue: boolean) => {
-    setActiveCacheId(savedChartId);
+  const handleSingleSelect = (
+    e: any,
+    savedChartId: string,
+    selectValue: boolean,
+  ) => {
+    if (e.target.checked) {
+      setActiveCacheId(savedChartId);
+    } else {
+      setActiveCacheId('');
+    }
     const _savedChart = JSON.parse(JSON.stringify(savedChart));
     _savedChart.forEach(function (singleCacheChart: any) {
       if (singleCacheChart._id === savedChartId) {
@@ -189,7 +198,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     qtext: any,
     qid: any,
   ) => {
-    setActiveCacheId(selectValue);
+    setActiveShow(cacheId);
     const questionTextId = qid + '-' + qtext;
     dispatch(setUserCacheId(cacheId));
     dispatch(setInCache(true));
@@ -200,12 +209,12 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
     dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
     dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
+    dispatch(setFilters(_cacheQuestion[0]['filter']));
+    dispatch(updateSignificant(_cacheQuestion[0]['significant']));
+    dispatch(setshowMean(_cacheQuestion[0]['showMean']));
     fetchChartData()
       .then((chartData) => {
         userChapterShow(chartData);
-        dispatch(setFilters(_cacheQuestion[0]['filter']));
-        dispatch(updateSignificant(_cacheQuestion[0]['significant']));
-        dispatch(setshowMean(_cacheQuestion[0]['showMean']));
         dispatch(setChartData(chartData));
         dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
         changeChartType(_cacheQuestion[0]['chartType']);
@@ -338,7 +347,9 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                   <div className="user-cache__sidebar" key={index}>
                     <div
                       className={`user-cache__cache-data ${
-                        activeCacheId == savedata?._id || savedata?.isSelected
+                        activeShow == savedata?._id ||
+                        activeCacheId == savedata?._id ||
+                        savedata?.isSelected
                           ? 'user-cache__cache-data--active-section'
                           : ''
                       }`}
@@ -346,7 +357,9 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                       <div
                         id={savedata?._id}
                         className={`user-cache__cache-data--cache-section ${
-                          activeCacheId == savedata?._id || savedata?.isSelected
+                          activeShow == savedata?._id ||
+                          activeCacheId == savedata?._id ||
+                          savedata?.isSelected
                             ? 'user-cache__cache-data--active-section'
                             : ''
                         }`}
@@ -466,8 +479,9 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                           className="user-cache-checkbox"
                           sx={{ p: 0, ml: '-4px' }}
                           checked={savedata?.isSelected}
-                          onChange={() => {
+                          onChange={(e) => {
                             handleSingleSelect(
+                              e,
                               savedata?._id,
                               !savedata?.isSelected,
                             );

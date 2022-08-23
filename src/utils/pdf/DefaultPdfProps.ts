@@ -44,6 +44,8 @@ export const setDefaultPdfPageProperties = async (
     filters: { appliedFilters },
   } = store.getState();
 
+  const appliedFiltersnew = chart?.filters;
+
   const charts: any = {
     chart,
     filters: { appliedFilters },
@@ -62,7 +64,9 @@ export const setDefaultPdfPageProperties = async (
   doc.setTextColor(64, 64, 64);
   const filterText = doc.splitTextToSize(
     // appliedFiltersText(chart?.filters?.appliedFilters) ||
-    appliedFiltersText(appliedFilters) || '',
+    appliedFiltersText(
+      appliedFiltersnew?.appliedFilters || appliedFilters || '',
+    ),
     qWordBreak,
   );
   doc.text(filterText, 10, 20);
