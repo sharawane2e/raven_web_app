@@ -64,6 +64,7 @@ const TableView: React.FC<TableProps> = (props) => {
                     maxValue: col.minMax == 'max' ? true : false,
                   })}
                 >
+                  {col.text}
                   {col.significantDiffernce ? (
                     <span className="significante-color table-significante">
                       - {col.significantDiffernce}

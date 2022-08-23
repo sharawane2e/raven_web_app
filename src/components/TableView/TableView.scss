@@ -168,7 +168,7 @@
 }
 
 .maxValue {
-  background: transparent;
+  background: tr;
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;

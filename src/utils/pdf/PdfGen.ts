@@ -103,7 +103,6 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.bannerChartData,
         chartOptionsPayload.transposed,
       );
-
       const filledSeries = fillEmptyDateSeries(
         chartOptionsPayload.questionData.type,
         JSON.parse(JSON.stringify(newSeriesData.series)),
