@@ -27,6 +27,7 @@ import CustomScrollbar from '../../../CustomScrollbar';
 import MultiSelect from '../../../widgets/MultiSelect';
 import { IFilter } from '../../../../types/IFilter';
 import { filter, values } from 'lodash';
+import { sort } from '../../../../utils/Utility';
 
 const ChartSidebarContent: React.FC = () => {
   const dispatch = useDispatch();
@@ -232,7 +233,7 @@ const ChartSidebarContent: React.FC = () => {
               <MultiSelect
                 key={filterIndex}
                 label={filterQuestion.labelText}
-                options={filterQuestion.options}
+                options={sort(filterQuestion.options,'order')}
                 value={filterQuestion.value}
                 onChange={(value: IQuestionOption) => {
                   handleFilterSelect(filterQuestion.qId, value);

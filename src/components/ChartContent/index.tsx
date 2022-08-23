@@ -52,6 +52,7 @@ import {
   setuserCacheActive,
   setUserCacheId,
 } from '../../redux/actions/userCacheActions';
+import { sort } from '../../utils/Utility';
 
 interface ChartContentProps {
   variant?: 'fullWidth' | 'partialWidth';
@@ -202,7 +203,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
 
   const bannerQuestion: JSX.Element = (
     <SingleSelect
-      options={[{ qId: '', labelText: 'None' }, ...bannerQuestionList]}
+      options={sort([{ qId: '', labelText: 'None',order:0 }, ...bannerQuestionList],'order')}
       value={selectedBannerQuestionId}
       open={questions.disableBannerQuestion ? false : OpenQuestionCross}
       onItemSelect={handelBannerQuestionChange}
@@ -304,7 +305,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <Grid container spacing={0}>
           <Grid xs={8} className="md-space-4">
             <SingleSelect
-              options={updateQuestionList}
+              options={sort(updateQuestionList,'order')}
               value={selectedQuestionId}
               onItemSelect={handleQuestionChange}
               placeholder={StaticText.QUESTION_LABEL}
