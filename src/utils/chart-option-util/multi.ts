@@ -1,9 +1,6 @@
 import _, { find, round } from 'lodash';
 import {
   colorArr,
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  dataUpdatedFormate,
   decimalPrecision,
   primaryBarColor,
 } from '../../constants/Variables';
@@ -13,6 +10,7 @@ import { QuestionType } from '../../enums/QuestionType';
 import store from '../../redux/store';
 import { IQuestionOption } from '../../types/IBaseQuestion';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { getPlotOptionsSeries } from '../ChartOptionFormatter';
 import { getMatchedfilter, getSum } from '../Utility';
 import { getsignificantdifference } from './significanceDiff';
 
@@ -29,6 +27,7 @@ export const getMultiChartOptionsSeries = (chart: IchartOptionsDto) => {
     significant,
     chartLabelType,
     chartType,
+    chartOrientation,
   } = chart;
 
   const selectedBannerQuestionId = bannerQuestionData?.qId;
@@ -57,10 +56,10 @@ export const getMultiChartOptionsSeries = (chart: IchartOptionsDto) => {
         baseCount,
         chartLabelType,
         chartType,
+        significant,
+        chartOrientation,
       ),
     );
-
-    //console.log(series);
   }
   if (significant) {
     const updatedSeries = getsignificantdifference(
@@ -75,9 +74,7 @@ export const getMultiChartOptionsSeries = (chart: IchartOptionsDto) => {
 
     series.push(...updatedSeries);
   }
-  // if (selectedBannerQuestionId) {
-  //   bannerChartDataGen(series, questionData, bannerQuestionData, transposed);
-  // }
+
   return series;
 };
 
@@ -87,6 +84,8 @@ const getChartMultiChartSeries = (
   baseCount: any,
   chartLabelType: any,
   chartType: any,
+  significant: any,
+  chartOrientation: any,
 ) => {
   const data: any[] = [];
   const series: any[] = [];
@@ -139,12 +138,12 @@ const getChartMultiChartSeries = (
     }
   }
 
-  let newDataLabels: any;
-  if (chartLabelType == ChartLabelType.PERCENTAGE) {
-    newDataLabels = dataLabelsFormate;
-  } else {
-    newDataLabels = dataLabelsNumberFormate;
-  }
+  const newDataLabels = getPlotOptionsSeries(
+    significant,
+    chartLabelType,
+    chartType,
+    chartOrientation,
+  );
 
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
@@ -189,6 +188,8 @@ const multiSingleBannerChart = (chart: IchartOptionsDto) => {
     chartLabelType,
     questionChartData,
     significant,
+    chartType,
+    chartOrientation,
   } = chart;
   const {
     questions: { bannerQuestionList },
@@ -258,7 +259,6 @@ const multiSingleBannerChart = (chart: IchartOptionsDto) => {
         if (count)
           data.push({
             name: quesOption.labelText,
-            // y: +count.toFixed(decimalPrecision),
             y: count !== null ? round(count, decimalPrecision) : 0,
             percentageValue,
             numberValue,
@@ -267,16 +267,12 @@ const multiSingleBannerChart = (chart: IchartOptionsDto) => {
         // }
       }
     }
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation,
+    );
 
     if (data.length)
       series.push({
@@ -304,6 +300,8 @@ const getSingleTransposeChartOptions = (chart: IchartOptionsDto) => {
     transposed,
     chartLabelType,
     significant,
+    chartType,
+    chartOrientation,
   } = chart;
 
   const series: any[] = [];
@@ -392,16 +390,12 @@ const getSingleTransposeChartOptions = (chart: IchartOptionsDto) => {
         },
       );
 
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        chartOrientation,
+      );
       series.push({
         name,
         color: colorArr[questionOptionIndex],
@@ -425,6 +419,8 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
     bannerChartData,
     chartLabelType,
     significant,
+    chartType,
+    chartOrientation,
   } = chart;
 
   const series: any[] = [];
@@ -467,16 +463,12 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
           });
         },
       );
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        chartOrientation,
+      );
       series.push({
         name,
         data,

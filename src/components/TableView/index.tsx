@@ -37,6 +37,7 @@ const TableView: React.FC<TableProps> = (props) => {
     chartType,
     significant,
     showMean,
+    chartOrientation: undefined,
   };
 
   const getChartData = getChartOptions();

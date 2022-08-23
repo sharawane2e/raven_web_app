@@ -1,4 +1,4 @@
-import { ChartLabelType } from "../enums/ChartLabelType";
+import { ChartLabelType } from '../enums/ChartLabelType';
 
 export interface IchartOptionsDto {
   questionData: any;
@@ -13,4 +13,5 @@ export interface IchartOptionsDto {
   chartType: number;
   significant: boolean;
   showMean: boolean;
+  chartOrientation: any;
 }

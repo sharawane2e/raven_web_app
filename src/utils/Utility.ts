@@ -117,9 +117,8 @@ export function getMedian(values: any, weightArray: any) {
 
 /*This function retun Alphabates A-Z and after Z Value*/
 export const indexToChar = (n: number) => {
-  console.log(n);
-  var ordA = 'a'.charCodeAt(0);
-  var ordZ = 'z'.charCodeAt(0);
+  var ordA = 'A'.charCodeAt(0);
+  var ordZ = 'Z'.charCodeAt(0);
   var len = ordZ - ordA + 1;
 
   var s = '';

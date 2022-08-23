@@ -15,6 +15,16 @@ import { ChartOrientation } from '../enums/ChartOrientation';
 import { getRankChartOptionsData } from './chart-option-util/rank';
 import { getMultiGridChartOptionsData } from './chart-option-util/multiGrid';
 import { IchartOptionsDto } from '../types/IChartOptionsDto';
+import {
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
+  dataUpdatedFormate,
+  dataUpdatedFormateUpdated,
+  LandScapeFormate,
+  normalFormatedata,
+  numberFormatedata,
+} from '../constants/Variables';
+import { ChartLabelType } from '../enums/ChartLabelType';
 // import { ChartLabelType } from '../enums/ChartLabelType';
 
 export const getChartOptions = (
@@ -31,6 +41,7 @@ export const getChartOptions = (
   chartType = store.getState().chart.chartType,
   significant = store.getState().chart.significant,
   showMean = store.getState().chart.showMean,
+  chartOrientation = store.getState().chart.chartOrientation,
 ): any => {
   const chart: IchartOptionsDto = {
     questionData,
@@ -45,6 +56,7 @@ export const getChartOptions = (
     chartType,
     significant,
     showMean,
+    chartOrientation,
   };
 
   if (questionData !== null) {
@@ -117,9 +129,7 @@ const getRankChartOptions = (chart: IchartOptionsDto): any => {
 
 const getGridChartOptions = (chart: IchartOptionsDto): any => {
   const series = [];
-
   const { showMean } = chart;
-
   if (showMean) {
     series.length = 0;
     series.push(...getGridMeanChartOptions(chart));
@@ -205,6 +215,7 @@ export const getPlotOptions = (
     plotOptions['column'] = {
       stacking: 'normal',
     };
+
     // plotOptions['series'].dataLabels.format = chartDataClone.showMean
     //   ? '{point.y:.1f}'
     //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
@@ -255,4 +266,43 @@ export const getPlotOptions = (
     delete plotOptions['series'].dataLabels.rotation;
   }
   return plotOptions;
+};
+
+export const getPlotOptionsSeries = (
+  significant: any,
+  chartLabelType: any,
+  chartType: any,
+  chartOrientation: any,
+) => {
+  const newchartOrientation =
+    store.getState().chart.chartOrientation || chartOrientation;
+
+  let newDataLabels;
+  if (significant) {
+    //newDataLabels = dataUpdatedFormate;
+  } else {
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = dataLabelsFormate;
+    } else {
+      newDataLabels = dataLabelsNumberFormate;
+    }
+  }
+  if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
+    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+      newDataLabels = normalFormatedata;
+    }
+  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+    if (significant) {
+      newDataLabels = dataUpdatedFormateUpdated;
+    } else {
+      newDataLabels = dataUpdatedFormate;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = normalFormatedata;
+      } else {
+        newDataLabels = numberFormatedata;
+      }
+    }
+  }
+
+  return newDataLabels;
 };

@@ -16,6 +16,7 @@ import {
 } from '../simplestatistics';
 import { getsignificantdifference } from './significanceDiff';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { getPlotOptionsSeries } from '../ChartOptionFormatter';
 
 export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
   const {
@@ -29,6 +30,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
   const categories = [];
   const series = [];
@@ -86,16 +88,12 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
           baseCount: base,
         });
       }
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        chartOrientation,
+      );
       series.push({
         name: scale.labelText,
         color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
@@ -134,6 +132,7 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
   const series = [];
   for (let i = 0; i < questionData.subGroups.length; i++) {
@@ -188,16 +187,12 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
         baseCount: baseCount,
       });
     }
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation,
+    );
     series.push({
       name: currentSubGroup.labelText,
       data,

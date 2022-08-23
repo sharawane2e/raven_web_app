@@ -93,6 +93,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartType: payloadObjectArr[i].chart.chartType,
       significant: payloadObjectArr[i].chart.significant,
       showMean: payloadObjectArr[i].chart.showMean,
+      chartOrientation: undefined,
     };
 
     const newSeriesData = {

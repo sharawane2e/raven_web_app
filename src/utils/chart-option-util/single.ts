@@ -17,6 +17,7 @@ import { ChartType } from '../../enums/ChartType';
 import { getsignificantdifference } from './significanceDiff';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
 import { dataLabels } from '../../redux/reducers/chartReducer';
+import { getPlotOptionsSeries } from '../ChartOptionFormatter';
 
 export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
   const {
@@ -30,11 +31,10 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
 
   const selectedBannerQuestionId = bannerQuestionData?.qId;
-
-  // const { selectedBannerQuestionId } = questions;
 
   const series: any[] = [];
   if (selectedBannerQuestionId) {
@@ -145,16 +145,13 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
               baseCount: localBase,
             });
         }
-        let newDataLabels;
-        if (significant) {
-          newDataLabels = dataUpdatedFormate;
-        } else {
-          if (chartLabelType == ChartLabelType.PERCENTAGE) {
-            newDataLabels = dataLabelsFormate;
-          } else {
-            newDataLabels = dataLabelsNumberFormate;
-          }
-        }
+
+        const newDataLabels = getPlotOptionsSeries(
+          significant,
+          chartLabelType,
+          chartType,
+          chartOrientation,
+        );
         if (data.length)
           series.push({
             name: bannerQuesOption?.labelText,
@@ -193,6 +190,7 @@ const getSingleSeries = (chart: any) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
   const series: any[] = [];
   const data: any[] = [];
@@ -232,17 +230,13 @@ const getSingleSeries = (chart: any) => {
         baseCount: baseCount,
       });
   }
-  let newDataLabels: any;
-  if (significant) {
-    newDataLabels = dataUpdatedFormate;
-  } else {
-    if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      newDataLabels = dataLabelsFormate;
-    } else {
-      newDataLabels = dataLabelsNumberFormate;
-    }
-  }
-  // debugger;
+
+  const newDataLabels = getPlotOptionsSeries(
+    significant,
+    chartLabelType,
+    chartType,
+    chartOrientation,
+  );
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
       const name = element.name;
@@ -294,6 +288,7 @@ const getSingleTransposeChartOptions = (
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
 
   const series: any[] = [];
@@ -382,16 +377,12 @@ const getSingleTransposeChartOptions = (
       });
     }
 
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation,
+    );
     series.push({
       name: quesOption?.labelText,
       color: index < colorArr.length ? colorArr[index] : undefined,
@@ -411,6 +402,8 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
     transposed,
     chartLabelType,
     significant,
+    chartType,
+    chartOrientation,
   } = chart;
   const series: any[] = [];
   const labelCodeArr: string[] = [];
@@ -474,16 +467,12 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
           });
         },
       );
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        chartOrientation,
+      );
       series.push({
         name,
         color: colorArr[questionOptionIndex],
