@@ -16,6 +16,7 @@ import {
 import { ChartType } from '../../enums/ChartType';
 import { getsignificantdifference } from './significanceDiff';
 import { IchartOptionsDto } from '../../types/IChartOptionsDto';
+import { getPlotOptionsSeries } from '../ChartOptionFormatter';
 
 export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
   const {
@@ -144,16 +145,12 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
               baseCount: localBase,
             });
         }
-        let newDataLabels;
-        if (significant) {
-          newDataLabels = dataUpdatedFormate;
-        } else {
-          if (chartLabelType == ChartLabelType.PERCENTAGE) {
-            newDataLabels = dataLabelsFormate;
-          } else {
-            newDataLabels = dataLabelsNumberFormate;
-          }
-        }
+        const newDataLabels = getPlotOptionsSeries(
+          significant,
+          chartLabelType,
+          chartType,
+          undefined,
+        );
         if (data.length)
           series.push({
             name: bannerQuesOption?.labelText,
@@ -230,16 +227,12 @@ const getSingleSeries = (chart: any) => {
         baseCount: baseCount,
       });
   }
-  let newDataLabels: any;
-  if (significant) {
-    newDataLabels = dataUpdatedFormate;
-  } else {
-    if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      newDataLabels = dataLabelsFormate;
-    } else {
-      newDataLabels = dataLabelsNumberFormate;
-    }
-  }
+  const newDataLabels = getPlotOptionsSeries(
+    significant,
+    chartLabelType,
+    chartType,
+    undefined,
+  );
   // debugger;
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
@@ -380,16 +373,12 @@ const getSingleTransposeChartOptions = (
       });
     }
 
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      undefined,
+    );
     series.push({
       name: quesOption?.labelText,
       color: index < colorArr.length ? colorArr[index] : undefined,
@@ -409,6 +398,7 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
     transposed,
     chartLabelType,
     significant,
+    chartType,
   } = chart;
   const series: any[] = [];
   const labelCodeArr: string[] = [];
@@ -472,16 +462,12 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
           });
         },
       );
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        undefined,
+      );
       series.push({
         name,
         color: colorArr[questionOptionIndex],
