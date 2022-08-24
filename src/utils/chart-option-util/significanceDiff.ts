@@ -30,7 +30,7 @@ export const getsignificantdifference = (
   );
 
   series.length = 0;
-  series.push(...filledSeries);
+  series.push(series);
 
   series.forEach((seriesObject: any) => {
     if (seriesObject.data.length > seriesName.length) {
