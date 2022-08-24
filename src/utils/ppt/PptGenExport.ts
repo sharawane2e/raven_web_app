@@ -1,6 +1,6 @@
 export const PptGenExport = (seriesData: any) => {
   const options = {
-    fill: "ffffff",
+    fill: 'ffffff',
     bold: false,
   };
 
@@ -12,17 +12,23 @@ export const PptGenExport = (seriesData: any) => {
     tableRowArr.forEach((cellObject: any) => {
       const cellObj = {
         text: cellObject.significantDiffernce
-          ? cellObject.text + "- " + cellObject.significantDiffernce
+          ? cellObject.text + '- ' + cellObject.significantDiffernce
           : cellObject.text,
         // text: cellObject.text,
         options: {
           ...options,
           fill:
-            cellObject.minMax == "min"
-              ? "fbd9d4"
-              : cellObject.minMax == "max"
-              ? "b8e08c"
-              : "ffffff",
+            cellObject.minMax == 'min'
+              ? 'ffffff'
+              : cellObject.minMax == 'max'
+              ? 'ffffff'
+              : 'ffffff',
+          bold:
+            cellObject.minMax == 'min'
+              ? true
+              : cellObject.minMax == 'max'
+              ? true
+              : false,
         },
       };
 
