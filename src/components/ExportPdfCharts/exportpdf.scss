@@ -1,11 +1,11 @@
 .allpdfhighcharts {
-  height: 530px;
-  overflow-y: auto;
-  position: absolute;
+   height: 830px;
+  overflow: scroll;
+  position: fixed;
   top: 191px;
-  left: 23%;
-  width: 1200px;
+  left: 0%;
+  width: 1600px;
   z-index: 999999999;
-  display: none;
-  
+  display: block;
+
 }

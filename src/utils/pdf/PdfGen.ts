@@ -58,13 +58,13 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
       w = 290;
       h = 140;
       baseX = 12;
-      baseY = 260;
+      baseY = 190;
       sourceX = 12;
-      sourceY = 265;
+      sourceY = 185;
       logoX = 10;
-      logoY = 275;
+      logoY = 204;
       copyRightX = 40;
-      copyRightY = 283;
+      copyRightY = 210.5;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
       await setDefaultPdfPageProperties(
@@ -141,13 +141,13 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         w = 290;
         h = 140;
         baseX = 12;
-        baseY = 180;
+        baseY = 190;
         sourceX = 12;
         sourceY = 185;
         logoX = 10;
-        logoY = 195;
+        logoY = 204;
         copyRightX = 40;
-        copyRightY = 203;
+        copyRightY = 210.5;
         lWordBreak = pdfWidth - 20;
         qWordBreak = 180;
       } else {

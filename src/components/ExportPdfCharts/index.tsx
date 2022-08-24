@@ -30,12 +30,19 @@ const ExportPdfCharts = () => {
         type: 'column',
         style: {
           fontFamily: '"Avenir", Arial',
+          fontSize: '18px',
         },
+        height: '900px',
         animation: false,
       },
       legend: {
         enabled: true,
         reversed: false,
+        itemStyle: {
+          color: '#666666',
+          fontWeight: 'normal',
+          fontSize: '20px',
+        },
       },
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
@@ -44,10 +51,22 @@ const ExportPdfCharts = () => {
       },
       xAxis: {
         type: 'category',
+        labels: {
+          style: {
+            fontFamily: '"Avenir", Arial',
+            fontSize: '18px',
+          },
+        },
       },
       yAxis: {
         visible: false,
         reversedStacks: false,
+        labels: {
+          style: {
+            fontFamily: '"Avenir", Arial',
+            fontSize: '18px',
+          },
+        },
       },
       plotOptions: {
         series: {
@@ -73,7 +92,7 @@ const ExportPdfCharts = () => {
             y: -6,
             crop: false,
             style: {
-              fontSize: '10px',
+              fontSize: '18px',
               textOutline: false,
               fontWeight: null,
             },
@@ -141,17 +160,15 @@ async function print() {
   const {
     export: { pdfExport },
   } = store.getState();
-  if (clientWidth >= 1300) {
-    pdfWidth = 300;
-    pdfHeight = 220;
-  } else {
-    pdfWidth = 250;
-    pdfHeight = 260;
-  }
-
-  let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
-
   let source = document.querySelectorAll('.allpdfhighcharts .highcharts-root');
+
+  let portraitland: any;
+  pdfWidth = 300;
+  pdfHeight = 220;
+  if (clientWidth >= 320) {
+    portraitland = 'l';
+  }
+  let doc = new jsPDF(portraitland, 'mm', [pdfWidth, pdfHeight]);
 
   for (let sourceIndex = 0; sourceIndex < source.length; sourceIndex++) {
     if (
@@ -161,38 +178,22 @@ async function print() {
         doc.addPage();
       }
       pdfWidth = 300;
-      pdfHeight = 400;
-      //doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
-      // doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
-      // doc.addPage([300, 297], "p");
+      pdfHeight = 500;
       x = 5;
       y = 30;
       w = 290;
       h = 140;
       baseX = 12;
-      baseY = 260;
+      baseY = 190;
       sourceX = 12;
-      sourceY = 265;
+      sourceY = 185;
       logoX = 10;
-      logoY = 275;
+      logoY = 204;
       copyRightX = 40;
-      copyRightY = 283;
+      copyRightY = 210.5;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
-      await setDefaultPdfPageProperties(
-        doc,
-        baseX,
-        baseY,
-        sourceX,
-        sourceY,
-        logoX,
-        logoY,
-        copyRightX,
-        copyRightY,
-        qWordBreak,
-        lWordBreak,
-        pdfExport[sourceIndex]?.payloadData,
-      );
+
       const filledSeries = fillEmptyDateSeries(
         pdfExport[sourceIndex]?.payloadData?.chart?.questionData.type,
         JSON.parse(JSON.stringify(pdfExport[sourceIndex]?.seriesData)),
@@ -208,50 +209,44 @@ async function print() {
 
       const seriesData = chartRows;
       const output = PdfGenExport(seriesData, 'undefined');
-
+      await setDefaultPdfPageProperties(
+        doc,
+        baseX,
+        baseY,
+        sourceX,
+        sourceY,
+        logoX,
+        logoY,
+        copyRightX,
+        copyRightY,
+        qWordBreak,
+        lWordBreak,
+        pdfExport[sourceIndex]?.payloadData,
+      );
       autoTable(doc, {
         body: output,
         startY: 40,
-        styles: { fontSize: 6 },
+        styles: { fontSize: 10 },
       });
     } else {
       if (sourceIndex > 0) {
         doc.addPage();
       }
-      if (clientWidth >= 1300) {
-        pdfWidth = 300;
-        pdfHeight = 220;
+      if (clientWidth >= 320) {
         x = 5;
         y = 30;
         w = 290;
         h = 140;
         baseX = 12;
-        baseY = 180;
+        baseY = 190;
         sourceX = 12;
         sourceY = 185;
         logoX = 10;
-        logoY = 195;
+        logoY = 204;
         copyRightX = 40;
-        copyRightY = 203;
+        copyRightY = 210.5;
         lWordBreak = pdfWidth - 20;
         qWordBreak = 180;
-      } else {
-        pdfWidth = 250;
-        pdfHeight = 180;
-        x = 20;
-        y = 30;
-        w = 170;
-        h = 180;
-        baseX = 12;
-        baseY = 220;
-        sourceX = 12;
-        sourceY = 225;
-        logoX = 10;
-        logoY = 235;
-        copyRightX = 40;
-        copyRightY = 242;
-        lWordBreak = pdfWidth - 20;
-        qWordBreak = 160;
       }
       let clonedSource: any;
       clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;

@@ -70,7 +70,7 @@ export const setDefaultPdfPageProperties = async (
     qWordBreak,
   );
   doc.text(filterText, 10, 20);
-  doc.setTextColor(64, 64, 64);
+  // doc.setTextColor(64, 64, 64);
 
   if (
     charts?.chart?.questionData?.type === QuestionType.SINGLE &&
@@ -92,6 +92,14 @@ export const setDefaultPdfPageProperties = async (
       baseY + 5,
     );
   }
+  if (charts?.chart?.chart?.bannerQuestionData) {
+    doc.text(
+      'Cross tabulated:  ' +
+        charts?.chart?.chart?.bannerQuestionData?.labelText || '',
+      baseX,
+      baseY + 5,
+    );
+  }
   if (charts?.chart?.significant) {
     if (charts?.chart?.chartType == ChartType.TABLE) {
       doc.text(significantText, 300, 5);
@@ -99,16 +107,16 @@ export const setDefaultPdfPageProperties = async (
       doc.text(significantText, 150, 5);
     }
     doc.setFontSize(8);
-    doc.setTextColor(101, 110, 255);
+    // doc.setTextColor(101, 110, 255);
     doc.setDrawColor(0);
     doc.setFillColor(hexToRgb(significancecolor));
     doc.rect(295, 3, 3, 2, 'F');
   }
-  doc.setTextColor(127, 127, 127);
+  // doc.setTextColor(127, 127, 127);
   doc.text(copyRightText || '', copyRightX, copyRightY);
   doc.setDrawColor(0);
   doc.setFillColor(hexToRgb(primaryBarColor));
   doc.rect(5, 0, 3, 12, 'F');
 
-  doc.addImage(logoBase64String, 'JPEG', logoX, logoY, 25, 12);
+  doc.addImage(logoBase64String, 'JPEG', logoX, logoY, 27, 10);
 };
