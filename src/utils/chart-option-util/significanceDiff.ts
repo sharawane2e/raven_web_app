@@ -30,7 +30,7 @@ export const getsignificantdifference = (
   );
 
   series.length = 0;
-  series.push(series);
+  series.push(...filledSeries);
 
   series.forEach((seriesObject: any) => {
     if (seriesObject.data.length > seriesName.length) {
@@ -217,10 +217,10 @@ export const fillEmptyDateSeries = (
           } else {
             updatedData.push({
               name: labelName,
-              y: 0,
-              percentageValue: 0,
-              numberValue: 0,
-              baseCount: 0,
+              y: null,
+              percentageValue: null,
+              numberValue: null,
+              baseCount: null,
               significance: '',
               significantDiffernce: '',
             });

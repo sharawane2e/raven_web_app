@@ -102,6 +102,7 @@ font-weight: normal;
       overflow: hidden;
       text-overflow: ellipsis;
       margin-right: 15px;
+      color: #5e5d5d;
     }
     &__chart-question {
       flex-basis: 87.666667%;
@@ -128,6 +129,7 @@ font-weight: normal;
     &__date {
       margin-right: 10px;
       font-size: map-get($map: $text-size, $key: small);
+      color: #bebebe;
     }
     &__colection-icon {
       display: flex;
@@ -196,7 +198,7 @@ font-weight: normal;
     }
   
     .user-cache__chart-headding,.user-cache__collectdata {
-      color: map-get($map: $text-color, $key: "primary-dark");
+      color: map-get($map:$bg-color, $key: "secondary-dark");
     }
   }
 

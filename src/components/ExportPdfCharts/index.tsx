@@ -121,6 +121,7 @@ export default ExportPdfCharts;
 
 async function print() {
   let clientWidth = document.body.clientWidth;
+  //let doc = new jsPDF();
   let pdfWidth,
     pdfHeight,
     x,
@@ -140,41 +141,12 @@ async function print() {
   const {
     export: { pdfExport },
   } = store.getState();
-
   if (clientWidth >= 1300) {
     pdfWidth = 300;
     pdfHeight = 220;
-    x = 20;
-    y = 30;
-    w = 290;
-    h = 140;
-    baseX = 12;
-    baseY = 180;
-    sourceX = 12;
-    sourceY = 185;
-    logoX = 10;
-    logoY = 195;
-    copyRightX = 40;
-    copyRightY = 203;
-    lWordBreak = pdfWidth - 20;
-    qWordBreak = 180;
   } else {
     pdfWidth = 250;
-    pdfHeight = 180;
-    x = 20;
-    y = 30;
-    w = 170;
-    h = 180;
-    baseX = 12;
-    baseY = 220;
-    sourceX = 12;
-    sourceY = 225;
-    logoX = 10;
-    logoY = 235;
-    copyRightX = 40;
-    copyRightY = 242;
-    lWordBreak = pdfWidth - 20;
-    qWordBreak = 160;
+    pdfHeight = 260;
   }
 
   let doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
@@ -188,6 +160,25 @@ async function print() {
       if (sourceIndex > 0) {
         doc.addPage();
       }
+      pdfWidth = 300;
+      pdfHeight = 400;
+      //doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
+      // doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
+      // doc.addPage([300, 297], "p");
+      x = 5;
+      y = 30;
+      w = 290;
+      h = 140;
+      baseX = 12;
+      baseY = 260;
+      sourceX = 12;
+      sourceY = 265;
+      logoX = 10;
+      logoY = 275;
+      copyRightX = 40;
+      copyRightY = 283;
+      lWordBreak = pdfWidth - 20;
+      qWordBreak = 180;
       await setDefaultPdfPageProperties(
         doc,
         baseX,
@@ -227,7 +218,41 @@ async function print() {
       if (sourceIndex > 0) {
         doc.addPage();
       }
-
+      if (clientWidth >= 1300) {
+        pdfWidth = 300;
+        pdfHeight = 220;
+        x = 5;
+        y = 30;
+        w = 290;
+        h = 140;
+        baseX = 12;
+        baseY = 180;
+        sourceX = 12;
+        sourceY = 185;
+        logoX = 10;
+        logoY = 195;
+        copyRightX = 40;
+        copyRightY = 203;
+        lWordBreak = pdfWidth - 20;
+        qWordBreak = 180;
+      } else {
+        pdfWidth = 250;
+        pdfHeight = 180;
+        x = 20;
+        y = 30;
+        w = 170;
+        h = 180;
+        baseX = 12;
+        baseY = 220;
+        sourceX = 12;
+        sourceY = 225;
+        logoX = 10;
+        logoY = 235;
+        copyRightX = 40;
+        copyRightY = 242;
+        lWordBreak = pdfWidth - 20;
+        qWordBreak = 160;
+      }
       let clonedSource: any;
       clonedSource = source[sourceIndex].cloneNode(true) as HTMLElement;
       await setDefaultPdfPageProperties(
@@ -254,6 +279,7 @@ async function print() {
       });
     }
   }
+
   doc.save(projectName + '.pdf');
 }
 

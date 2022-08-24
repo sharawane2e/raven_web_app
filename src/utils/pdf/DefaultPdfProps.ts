@@ -79,8 +79,13 @@ export const setDefaultPdfPageProperties = async (
     doc.text(meanStandardDeviation(chart), 10, 25);
   }
 
-  doc.text('Sample set: ' + chart?.baseCount || '', baseX, baseY);
-  if (charts?.chart?.bannerQuestionData) {
+  const basecountData =
+    chart?.chart?.baseCount == undefined
+      ? chart?.baseCount
+      : chart?.chart?.baseCount;
+
+  doc.text('Sample set: ' + basecountData || '', baseX, baseY);
+  if (charts?.chart.bannerQuestionData) {
     doc.text(
       'Cross tabulated:  ' + chart?.bannerQuestionData?.labelText || '',
       baseX,

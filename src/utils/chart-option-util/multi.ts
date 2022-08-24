@@ -251,9 +251,6 @@ const multiSingleBannerChart = (chart: IchartOptionsDto) => {
           count = label.count;
         }
 
-        //  console.log(label);
-
-        //if (label) {
         let percentageValue = (label?.count / localBase) * 100;
         let numberValue = label?.count;
         if (count)
@@ -264,7 +261,6 @@ const multiSingleBannerChart = (chart: IchartOptionsDto) => {
             numberValue,
             baseCount: localBase,
           });
-        // }
       }
     }
     const newDataLabels = getPlotOptionsSeries(
