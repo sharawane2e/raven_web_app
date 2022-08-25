@@ -116,15 +116,35 @@ export function getMedian(values: any, weightArray: any) {
 }
 
 /*This function retun Alphabates A-Z and after Z Value*/
-export const indexToChar = (n: number) => {
-  var ordA = "a".charCodeAt(0);
-  var ordZ = "z".charCodeAt(0);
-  var len = ordZ - ordA + 1;
+// export const indexToChar = (n: number) => {
+//   var ordA = "a".charCodeAt(0);
+//   var ordZ = "z".charCodeAt(0);
+//   var len = ordZ - ordA + 1;
 
+//   var s = "";
+//   while (n >= 0) {
+//     s = String.fromCharCode((n % len) + ordA) + s;
+//     n = Math.floor(n / len) - 1;
+//   }
+//   return s.toUpperCase();
+// };
+export const indexToChar = (n: number) => {
+  var ordA = "A".charCodeAt(0);
+  var ordZ = "Z".charCodeAt(0);
+  var len = ordZ - ordA + 1;
   var s = "";
+  var loopIndex = 0;
   while (n >= 0) {
-    s = String.fromCharCode((n % len) + ordA) + s;
+    if (loopIndex === 0) {
+      s = s + String.fromCharCode((n % len) + ordA);
+    } else {
+      s = s + ((n % len) + 1);
+    }
+
     n = Math.floor(n / len) - 1;
+    loopIndex++;
+    console.log(s);
+    console.log(n);
   }
   return s.toUpperCase();
 };
