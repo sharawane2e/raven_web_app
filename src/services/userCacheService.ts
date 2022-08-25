@@ -248,7 +248,7 @@ export const handelAddInUserCache = (
     qText:
       chartQuestionData?.type === QuestionType.RANK
         ? chartQuestionData?.labelText
-        : chartQuestionData?.questionText,
+        : chartQuestionData?.questionText || chartQuestionData?.labelText,
     qId: chartQuestionData?.qId,
     type: chartQuestionData?.type,
     bannerType: chart?.bannerQuestionData?.type

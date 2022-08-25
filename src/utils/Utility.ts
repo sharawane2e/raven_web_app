@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { cumulativeStdNormalProbability } from 'simple-statistics';
 import {
   decimalPrecision,
   decimalPrecision2,
@@ -120,11 +119,17 @@ export const indexToChar = (n: number) => {
   var ordA = 'A'.charCodeAt(0);
   var ordZ = 'Z'.charCodeAt(0);
   var len = ordZ - ordA + 1;
-
   var s = '';
+  var loopIndex = 0;
   while (n >= 0) {
-    s = String.fromCharCode((n % len) + ordA) + s;
+    if (loopIndex === 0) {
+      s = s + String.fromCharCode((n % len) + ordA);
+    } else {
+      s = s + ((n % len) + 1);
+    }
+
     n = Math.floor(n / len) - 1;
+    loopIndex++;
   }
   return s.toUpperCase();
 };

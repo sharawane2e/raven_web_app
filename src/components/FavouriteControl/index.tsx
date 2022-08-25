@@ -2,20 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
 import { ReactComponent as FavouriteIcon } from '../../assets/svg/wishlist.svg';
-// import ApiUrl from '../../enums/ApiUrl';
-// import ApiRequest from '../../utils/ApiRequest';
 import Toaster from '../../utils/Toaster';
 import { StaticText } from '../../constants/StaticText';
 import {
-  resetUserCache,
   setDialog,
   setuserCacheActive,
 } from '../../redux/actions/userCacheActions';
-import {
-  handelAddInUserCache,
-  // isChartInCache,
-} from '../../services/userCacheService';
-// import { QuestionType } from '../../enums/QuestionType';
+import { handelAddInUserCache } from '../../services/userCacheService';
 
 const FavouriteControl: React.FC = () => {
   const { filters, chart, userCache } = useSelector(
@@ -33,14 +26,12 @@ const FavouriteControl: React.FC = () => {
     } else {
       handelAddInUserCache(chart, chartQuestionData, filters);
     }
-    //. handelAddInUserCache(chart, chartQuestionData, filters);
   };
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: 'User Cache',
       renderChild: () => <FavouriteIcon />,
-      //onClick: handleAddChartCache,
       onClick: handleAddChartCache,
       // onClick: isChartInCache().isChartDuplicate
       // ? () => handleDeleteChartCache([isChartInCache().duplicateCacheId])

@@ -30,7 +30,7 @@ const ExportPdfCharts = () => {
         type: 'column',
         style: {
           fontFamily: '"Avenir", Arial',
-          fontSize: '18px',
+          fontSize: '16px',
         },
         height: '900px',
         animation: false,
@@ -54,7 +54,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: '18px',
+            fontSize: '16px',
           },
         },
       },
@@ -64,7 +64,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: '18px',
+            fontSize: '16px',
           },
         },
       },
@@ -92,7 +92,7 @@ const ExportPdfCharts = () => {
             y: -6,
             crop: false,
             style: {
-              fontSize: '18px',
+              fontSize: '16px',
               textOutline: false,
               fontWeight: null,
             },
@@ -226,7 +226,7 @@ async function print() {
       autoTable(doc, {
         body: output,
         startY: 40,
-        styles: { fontSize: 10 },
+        styles: { fontSize: 9 },
       });
     } else {
       if (sourceIndex > 0) {

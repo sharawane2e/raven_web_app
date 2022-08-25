@@ -16,7 +16,7 @@ import { IQuestion } from '../types/IQuestion';
 import { QuestionType } from '../enums/QuestionType';
 import _, { find } from 'lodash';
 import { ChartLabelType } from '../enums/ChartLabelType';
-import { ChartOrientation } from '../enums/ChartOrientation';
+// import { ChartOrientation } from '../enums/ChartOrientation';
 
 export const fetchChartData = async (
   qId?: string,
@@ -126,11 +126,11 @@ export const fetchChartData = async (
     dispatch(setChartLabel(ChartLabelType.PERCENTAGE));
   }
 
-  if (chartData.chartOrientation == ChartOrientation.LANDSCAPE) {
-    dispatch(setChartLabel(ChartOrientation.LANDSCAPE));
-  } else {
-    dispatch(setChartOrientation(ChartOrientation.PORTRAIT));
-  }
+  // if (chartData.chartOrientation == ChartOrientation.LANDSCAPE) {
+  //   dispatch(setChartLabel(ChartOrientation.LANDSCAPE));
+  // } else {
+  //   dispatch(setChartOrientation(ChartOrientation.PORTRAIT));
+  // }
 
   return chartData;
 };

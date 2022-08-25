@@ -4,7 +4,7 @@
     &__sidebar {
       position: relative;
       width: 100%;
-font-weight: normal;
+      font-weight: normal;
     }
     .MuiDrawer-paper {
       width: 24rem;
@@ -68,13 +68,13 @@ font-weight: normal;
         max-width: 90.666667%;
         align-items: center;
         &:hover .user-cache__chart-icon {
-          border-color: map-get($map: $bg-color, $key: secondary);
+          border-color: map-get($map: $text-color, $key: "primary-dark");
         }
         &:hover .chart-hover-filed path {
           fill: map-get($map: $bg-color, $key: 'accent');
         }
         &:hover .user-cache__chart-headding {
-          color: map-get($map: $bg-color, $key: secondary);
+          color: map-get($map: $text-color, $key: "primary-dark");
         }
       }
     }
@@ -86,13 +86,14 @@ font-weight: normal;
       }
     }
     &__chart-icon {
-      border: 1px solid $hedding-color;
+      border: 1px solid #8f8d8d;
       border-radius: 50%;
       display: flex;
       align-items: center;
       width: 30px;
       height: 30px;
       justify-content: center;
+      opacity: 0.8;
     }
     &__chart-headding {
       flex-wrap: wrap;
@@ -102,7 +103,7 @@ font-weight: normal;
       overflow: hidden;
       text-overflow: ellipsis;
       margin-right: 15px;
-      color: #5e5d5d;
+      color: #3d3d3d;
     }
     &__chart-question {
       flex-basis: 87.666667%;

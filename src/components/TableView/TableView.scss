@@ -21,12 +21,12 @@
   font-size: 1rem;
   margin: 0.5rem;
   line-height: 1.5;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid $table-border-color;
 }
 .table-chart {
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid $table-border-color;
   .table-chart__row {
-    border: 1px solid #e5e5e5;
+    border: 1px solid $table-border-color;
     border-top: none;
   }
 }
@@ -41,7 +41,7 @@
 }
 .Table-row {
   width: 100%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid $table-border-color;
   border-top: none;
   color: $white;
   // color: map-get($map: $text-color, $key: 'primary-dark');
@@ -87,6 +87,7 @@
   word-break: break-all;
   padding: 0.5em;
   word-break: break-word;
+  align-items: top;
 }
 
 .Table-row .Table-row-item:nth-of-type(1) {
@@ -125,19 +126,19 @@
     text-overflow: ellipsis;
   }
   .pl-thead {
-    color: #979797;
+    color: $light-Table-color;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 11px;
     margin: 15px 0;
     &.tall {
-      background-color: #263338;
+      background-color: $light-tal-color;
       margin: 0;
       padding: 5px 0;
       color: rgba(255, 255, 255, 0.7);
       text-transform: initial;
       .col {
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        border-right: 1px solid $bg-white-color;
         text-align: center;
         align-self: stretch;
         &:last-child {
@@ -155,7 +156,7 @@
       background-color: $white;
       padding-top: 7px;
       padding-bottom: 7px;
-      color: #979797;
+      color: $light-Table-color;
       font-size: 11px;
     }
     &.scroll {
@@ -166,19 +167,17 @@
 }
 
 .maxValue {
-  background: #b8e08c;
+  background: $max-color;
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;
-  align-items: center;
   padding: 0.5em;
 }
 .minValue {
-  background-color: #ffb3a7;
+  background-color: $min-color;
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;
-  align-items: center;
   padding: 0.5em;
 }
 .Set-mr-top {

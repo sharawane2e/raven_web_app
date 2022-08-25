@@ -5,7 +5,6 @@ import { IQuestion } from '../types/IQuestion';
 import _, { omit } from 'lodash';
 import { getNumberChartOption } from '../services/ChartNumberService';
 import { getSingleChartOptionsSeries } from './chart-option-util/single';
-
 import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
@@ -20,12 +19,10 @@ import {
   dataLabelsNumberFormate,
   dataUpdatedFormate,
   dataUpdatedFormateUpdated,
-  LandScapeFormate,
   normalFormatedata,
   numberFormatedata,
 } from '../constants/Variables';
 import { ChartLabelType } from '../enums/ChartLabelType';
-// import { ChartLabelType } from '../enums/ChartLabelType';
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
