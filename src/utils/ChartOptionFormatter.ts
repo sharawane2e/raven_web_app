@@ -15,6 +15,15 @@ import { ChartOrientation } from "../enums/ChartOrientation";
 import { getRankChartOptionsData } from "./chart-option-util/rank";
 import { getMultiGridChartOptionsData } from "./chart-option-util/multiGrid";
 import { IchartOptionsDto } from "../types/IChartOptionsDto";
+import { ChartLabelType } from "../enums/ChartLabelType";
+import {
+  dataLabelsFormate,
+  dataLabelsNumberFormate,
+  dataUpdatedFormate,
+  // dataUpdatedFormateUpdated,
+  // normalFormatedata,
+  // numberFormatedata,
+} from "../constants/Variables";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -41,10 +50,6 @@ export const getChartOptions = (
     significant: store.getState().chart.significant,
     showMean: store.getState().chart.showMean,
   };
-  // const questions = {
-  //   selectedBannerQuestionId:
-  //     store.getState().questions.selectedBannerQuestionId,
-  // };
 
   if (questionData !== null) {
     switch (questionData.type) {
@@ -68,13 +73,19 @@ export const getChartOptions = (
   }
 };
 
+const itemStyleDefault = {
+  enabled: true,
+  itemStyle: {
+    color: "#666666",
+    fontWeight: "normal",
+  },
+};
+
 const getMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series = getMultiChartOptionsSeries(chart);
-  console.log(series);
-
   return {
     legend: {
-      enabled: true,
+      ...itemStyleDefault,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -83,11 +94,10 @@ const getMultiChartOptions = (chart: IchartOptionsDto): any => {
 
 const getSingleChartOptions = (chart: IchartOptionsDto): any => {
   const series = getSingleChartOptionsSeries(chart);
-  //console.log('series', series);
 
   return {
     legend: {
-      enabled: true,
+      ...itemStyleDefault,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -99,23 +109,16 @@ const getRankChartOptions = (chart: IchartOptionsDto): any => {
   series.push(...getRankChartOptionsData(chart));
   return {
     legend: {
-      enabled: true,
+      ...itemStyleDefault,
     },
     tooltip: { ...getToolTip() },
     series,
   };
 };
 
-const getGridChartOptions = (
-  // questionData: IQuestion,
-  // chartData: any,
-  // baseCount: number
-  chart: IchartOptionsDto
-): any => {
+const getGridChartOptions = (chart: IchartOptionsDto): any => {
   const series = [];
-
   const { showMean } = chart;
-
   if (showMean) {
     series.length = 0;
     series.push(...getGridMeanChartOptions(chart));
@@ -125,7 +128,7 @@ const getGridChartOptions = (
   }
   return {
     legend: {
-      enabled: true,
+      ...itemStyleDefault,
     },
     plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
@@ -138,7 +141,7 @@ const getGridMultiChartOptions = (chart: IchartOptionsDto): any => {
   series.push(...getMultiGridChartOptionsData(chart));
   return {
     legend: {
-      enabled: true,
+      ...itemStyleDefault,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -243,4 +246,43 @@ export const getPlotOptions = (
     delete plotOptions["series"].dataLabels.rotation;
   }
   return plotOptions;
+};
+
+export const getPlotOptionsSeries = (
+  significant: any,
+  chartLabelType: any,
+  chartType: any,
+  chartOrientation: any
+) => {
+  const newchartOrientation =
+    store.getState().chart.chartOrientation || chartOrientation;
+
+  let newDataLabels;
+  if (significant) {
+    //newDataLabels = dataUpdatedFormate;
+  } else {
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = dataLabelsFormate;
+    } else {
+      newDataLabels = dataLabelsNumberFormate;
+    }
+  }
+  if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
+    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+      // newDataLabels = normalFormatedata;
+    }
+  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+    if (significant) {
+      //newDataLabels = dataUpdatedFormateUpdated;
+    } else {
+      newDataLabels = dataUpdatedFormate;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        // newDataLabels = normalFormatedata;
+      } else {
+        //  newDataLabels = numberFormatedata;
+      }
+    }
+  }
+
+  return newDataLabels;
 };

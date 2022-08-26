@@ -27,7 +27,7 @@
   border-top: 1px solid #e5e5e5;
   .table-chart__row {
     border: 1px solid #e5e5e5;
-   // border-top: none;
+    // border-top: none;
   }
 }
 
@@ -174,7 +174,6 @@
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;
-  align-items: center;
   padding: 0.5em;
 }
 .minValue {
@@ -182,7 +181,6 @@
   font-weight: 600;
   color: map-get($map: $text-color, $key: "primary-dark");
   display: flex;
-  //align-items: center;
   padding: 0.5em;
 }
 .Set-mr-top {
@@ -235,4 +233,9 @@
   position: absolute;
   right: 33px;
   top: 10px;
+}
+.fullscreen--dialog {
+  .tableView {
+    margin-top: 50px;
+  }
 }

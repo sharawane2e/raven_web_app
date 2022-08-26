@@ -20,7 +20,7 @@
   .chart-content__control-wrapper {
     display: flex;
     align-items: center;
-    padding: .5rem 0px .1rem 0px;
+    padding: 0.5rem 0px 0.1rem 0px;
     @media (max-width: 1200px) {
       display: none;
     }
@@ -45,9 +45,7 @@
       width: 95%;
       height: calc(100vh - 280px);
     }
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
-      // margin: 15px 5px 10px 8px;
-    }
+
     .highcharts-background {
       fill: transparent;
     }
@@ -56,9 +54,6 @@
     }
   }
 
-  //.chart-content__chart-wrapper-table {
-   // background: map-get($map: $bg-color, $key: "secondary-dark");
-  //}
   .wave-button {
     height: 30px;
     font-size: map-get($map: $text-size, $key: xsmall);
@@ -69,8 +64,8 @@
   .chart-content-footer {
     display: flex;
     width: calc(100% - -33px);
-    margin-left: -14px;
-    margin-top: 30px;
+    margin-left: -15px;
+    margin-top: 28px;
     justify-content: space-between;
     &--inr {
       color: map-get($map: $text-color, $key: "partial-light");
@@ -81,7 +76,6 @@
     }
     @media (max-width: 768px) {
       margin-left: -24px;
-      // margin-top: -27px;
     }
   }
 
@@ -297,10 +291,10 @@
     }
   }
 }
-#no__quesion{
+#no__quesion {
   cursor: pointer;
 }
-.appbar__logo-wrapper{
+.appbar__logo-wrapper {
   display: flex;
   align-items: flex-end;
 }
