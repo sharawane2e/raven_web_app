@@ -5,7 +5,6 @@ import { IQuestion } from "../types/IQuestion";
 import _, { omit } from "lodash";
 import { getNumberChartOption } from "../services/ChartNumberService";
 import { getSingleChartOptionsSeries } from "./chart-option-util/single";
-
 import {
   getGridChartoptionSeries,
   getGridMeanChartOptions,
@@ -16,14 +15,7 @@ import { getRankChartOptionsData } from "./chart-option-util/rank";
 import { getMultiGridChartOptionsData } from "./chart-option-util/multiGrid";
 import { IchartOptionsDto } from "../types/IChartOptionsDto";
 import { ChartLabelType } from "../enums/ChartLabelType";
-import {
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  dataUpdatedFormate,
-  // dataUpdatedFormateUpdated,
-  // normalFormatedata,
-  // numberFormatedata,
-} from "../constants/Variables";
+import { updatedLabels } from "../constants/dataLabels";
 
 export const getChartOptions = (
   questionData: IQuestion | null = store.getState().chart.questionData,
@@ -34,7 +26,12 @@ export const getChartOptions = (
   chartOptionsData: any = store.getState().chart.chartOptions,
   questionChartData: any = store.getState().chart.questionChartData,
   bannerChartData: any = store.getState().chart.bannerChartData,
-  transposed: boolean = store.getState().chart.chartTranspose
+  transposed: boolean = store.getState().chart.chartTranspose,
+  chartLabelType = store.getState().chart.chartLabelType,
+  chartType = store.getState().chart.chartType,
+  significant = store.getState().chart.significant,
+  showMean = store.getState().chart.showMean,
+  chartOrientation = store.getState().chart.chartOrientation
 ): any => {
   const chart: IchartOptionsDto = {
     questionData,
@@ -45,10 +42,11 @@ export const getChartOptions = (
     questionChartData,
     bannerChartData,
     transposed,
-    chartLabelType: store.getState().chart.chartLabelType,
-    chartType: store.getState().chart.chartType,
-    significant: store.getState().chart.significant,
-    showMean: store.getState().chart.showMean,
+    chartLabelType,
+    chartType,
+    significant,
+    showMean,
+    chartOrientation,
   };
 
   if (questionData !== null) {
@@ -73,7 +71,7 @@ export const getChartOptions = (
   }
 };
 
-const itemStyleDefault = {
+const defaultitemStyle = {
   enabled: true,
   itemStyle: {
     color: "#666666",
@@ -85,7 +83,7 @@ const getMultiChartOptions = (chart: IchartOptionsDto): any => {
   const series = getMultiChartOptionsSeries(chart);
   return {
     legend: {
-      ...itemStyleDefault,
+      ...defaultitemStyle,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -94,10 +92,9 @@ const getMultiChartOptions = (chart: IchartOptionsDto): any => {
 
 const getSingleChartOptions = (chart: IchartOptionsDto): any => {
   const series = getSingleChartOptionsSeries(chart);
-
   return {
     legend: {
-      ...itemStyleDefault,
+      ...defaultitemStyle,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -109,7 +106,7 @@ const getRankChartOptions = (chart: IchartOptionsDto): any => {
   series.push(...getRankChartOptionsData(chart));
   return {
     legend: {
-      ...itemStyleDefault,
+      ...defaultitemStyle,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -128,7 +125,7 @@ const getGridChartOptions = (chart: IchartOptionsDto): any => {
   }
   return {
     legend: {
-      ...itemStyleDefault,
+      ...defaultitemStyle,
     },
     plotOptions: getPlotOptions(),
     tooltip: { ...getToolTip() },
@@ -141,7 +138,7 @@ const getGridMultiChartOptions = (chart: IchartOptionsDto): any => {
   series.push(...getMultiGridChartOptionsData(chart));
   return {
     legend: {
-      ...itemStyleDefault,
+      ...defaultitemStyle,
     },
     tooltip: { ...getToolTip() },
     series,
@@ -196,51 +193,20 @@ export const getPlotOptions = (
     plotOptions["column"] = {
       stacking: "normal",
     };
-    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
-    //   ? '{point.y:.1f}'
-    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-    //   ? '{point.y:.1f}%'
-    //   : '{point.y:.0f}';
-    // plotOptions['series'].dataLabels.y = undefined;
-    // plotOptions['series'].dataLabels.rotation = 0;
   } else if (chartType === ChartType.COLUMN) {
     plotOptions["bar"] = {
       stacking: "normal",
     };
-    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
-    //   ? '{point.y:.1f}'
-    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-    //   ? '{point.y:.1f}%'
-    //   : '{point.y:.0f}';
-    if (chartDataClone.chartOrientation === ChartOrientation.PORTRAIT) {
-      // plotOptions['series'].dataLabels.y = 0;
-      // plotOptions['series'].dataLabels.rotation = -90;
-    } else {
-      // plotOptions['series'].dataLabels.y = undefined;
-      // plotOptions['series'].dataLabels.rotation = 0;
-    }
   } else if (chartType === ChartType.PIE) {
     plotOptions["pie"] = {
       allowPointSelect: false,
       cursor: "pointer",
     };
-    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
-    //   ? '<b>{point.name}</b>: {point.y:.1f}'
-    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-    //   ? '<b>{point.name}</b>: {point.percentage:.1f}%'
-    //   : '<b>{point.name}</b>: {point.y:.0f}';
-    // delete plotOptions['series'].dataLabels.y;
-    // delete plotOptions['series'].dataLabels.rotation;
   } else if (chartType === ChartType.LINE) {
     plotOptions["line"] = {
       allowPointSelect: false,
       cursor: "pointer",
     };
-    // plotOptions['series'].dataLabels.format = chartDataClone.showMean
-    //   ? '{point.y:.1f}'
-    //   : chartDataClone.chartLabelType === ChartLabelType.PERCENTAGE
-    //   ? '{point.y:.1f}%'
-    //   : '{point.y:.0f}';
   } else {
     delete plotOptions["series"].dataLabels.y;
     delete plotOptions["series"].dataLabels.rotation;
@@ -259,27 +225,27 @@ export const getPlotOptionsSeries = (
 
   let newDataLabels;
   if (significant) {
-    //newDataLabels = dataUpdatedFormate;
+    newDataLabels = updatedLabels?.dataUpdatedFormate;
   } else {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      newDataLabels = dataLabelsFormate;
+      newDataLabels = updatedLabels?.dataLabelsFormate;
     } else {
-      newDataLabels = dataLabelsNumberFormate;
+      newDataLabels = updatedLabels?.dataLabelsNumberFormate;
     }
   }
   if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
     if (newchartOrientation == ChartOrientation.LANDSCAPE) {
-      // newDataLabels = normalFormatedata;
+      newDataLabels = updatedLabels?.normalFormatedata;
     }
   } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
     if (significant) {
-      //newDataLabels = dataUpdatedFormateUpdated;
+      newDataLabels = updatedLabels?.dataUpdatedFormateUpdated;
     } else {
-      newDataLabels = dataUpdatedFormate;
+      newDataLabels = updatedLabels?.dataUpdatedFormate;
       if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        // newDataLabels = normalFormatedata;
+        newDataLabels = updatedLabels?.normalFormatedata;
       } else {
-        //  newDataLabels = numberFormatedata;
+        newDataLabels = updatedLabels?.numberFormatedata;
       }
     }
   }

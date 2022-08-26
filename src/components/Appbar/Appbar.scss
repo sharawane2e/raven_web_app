@@ -30,7 +30,6 @@
     }
   }
   .appbar__cache-btn {
-  
     padding: 7px !important;
     margin-right: 0 !important;
   }
@@ -116,6 +115,8 @@
         width: 80%;
         display: flex;
         align-items: center;
+        margin-bottom: 11px;
+        margin-top: 7px;
         #logo-primary-contrast {
           path {
             fill: $white;
@@ -291,6 +292,6 @@
   flex-shrink: 0;
   user-select: none;
 }
-#NielsenIQ-Logo{
+#NielsenIQ-Logo {
   width: 66%;
 }

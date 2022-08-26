@@ -1,84 +1,39 @@
-import _ from 'lodash';
-import store from '../redux/store';
-import ApiRequest from '../utils/ApiRequest';
+import _ from "lodash";
+import store from "../redux/store";
+import ApiRequest from "../utils/ApiRequest";
 import {
   resetUserCache,
   setDialog,
   setuserCacheActive,
-} from '../redux/actions/userCacheActions';
-import ApiUrl from '../enums/ApiUrl';
-import Toaster from '../utils/Toaster';
-import { setFullScreenLoading } from '../redux/actions/chartActions';
-import { generatePpt } from '../utils/ppt/PptGen';
-import { IChartState } from '../redux/reducers/chartReducer';
+} from "../redux/actions/userCacheActions";
+import ApiUrl from "../enums/ApiUrl";
+import Toaster from "../utils/Toaster";
+import { setFullScreenLoading } from "../redux/actions/chartActions";
+import { generatePpt } from "../utils/ppt/PptGen";
+import { IChartState } from "../redux/reducers/chartReducer";
 import {
   computeBaseCount,
   formatChartDataWithBaseCount,
   removeEmptyDataLengends,
-} from './ChartService';
-import { getChartOptions } from '../utils/ChartOptionFormatter';
-import { QuestionType } from '../enums/QuestionType';
-import { useDispatch } from 'react-redux';
-
-// export const isChartInCache = () => {
-//   let isChartDuplicate = false;
-//   let duplicateCacheIndex = -1;
-
-//   const {
-//     userCache: { savedChart },
-//     chart,
-//     filters,
-//   } = store.getState();
-
-//   const _savedChart = JSON.parse(JSON.stringify(savedChart));
-//   const _chart = {
-//     qText: chart.questionData?.questionText,
-//     qId: chart.questionData?.qId,
-//     type: chart.questionData?.type,
-//     filter: filters.filters,
-//     bannerQuestion:
-//       chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
-//     chartType: chart.chartType,
-//     chartLabelType: chart.chartLabelType,
-//     chartOrientation: chart.chartOrientation,
-//     chartTranspose: chart.chartTranspose,
-//   };
-
-//   _savedChart.forEach(function (element: any) {
-//     delete element.date;
-//     delete element._id;
-//     delete element.isSelected; // if question is checked
-//     delete element.isActive; // if question and other filters are visible on screen
-//   });
-
-//   _savedChart.forEach(function (element: any, index: number) {
-//     const checkEquality = _.isEqual(element, _chart);
-
-//     if (checkEquality == true) {
-//       isChartDuplicate = true;
-//       duplicateCacheIndex = index;
-//     }
-//   });
-//   return {
-//     isChartDuplicate,
-//     duplicateCacheId: isChartDuplicate
-//       ? savedChart[duplicateCacheIndex]._id
-//       : null,
-//   };
-// };
+} from "./ChartService";
+import { getChartOptions } from "../utils/ChartOptionFormatter";
+import { QuestionType } from "../enums/QuestionType";
+// import ExportPdfCharts, { exportPrint } from "../components/ExportPdfCharts";
+import { setPdfExport } from "../redux/actions/exportActions";
 
 export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
     _ids: [...cacheIdsArr],
   };
   const { dispatch } = store;
-  ApiRequest.request(ApiUrl.DELETE_CHART, 'DELETE', body)
+  ApiRequest.request(ApiUrl.DELETE_CHART, "DELETE", body)
     .then((res) => {
       if (res.success) {
         dispatch(setDialog(false));
         const updatedSavedChart = addNewKeysToUserCache(res.data);
         store.dispatch(resetUserCache(updatedSavedChart));
-
+        dispatch(setPdfExport([]));
+        dispatch(setuserCacheActive(false));
         Toaster.warn(res.message);
       } else {
         Toaster.error(res.message);
@@ -101,11 +56,25 @@ export const addNewKeysToUserCache = (savedChart: any) => {
 export const handleExportChartCache = async (
   cacheIdsArr: any,
   getsavedChart: any,
+  exportType: string
 ) => {
   //export selected id's
   const filterExportData: any[] = [];
+  const filterupdatedData: any[] = [];
   cacheIdsArr.forEach((ids: any) => {
     const filterData = _.filter(getsavedChart, function (o) {
+      if (o?.filter.length > 0) {
+        const dataFilter = o?.filter;
+        const arrayHashmap = dataFilter.reduce((obj: any, item: any) => {
+          obj[item.qId]
+            ? obj[item.qId].push(...item)
+            : (obj[item.id] = { ...item });
+
+          return obj;
+        }, {});
+        filterupdatedData.push(arrayHashmap);
+      }
+
       return o._id == ids;
     });
     filterExportData.push(...filterData);
@@ -116,24 +85,28 @@ export const handleExportChartCache = async (
   const promiseAllArr: any = [];
   dispatch(setFullScreenLoading(true));
   const newAppliedFilter: any[] = [];
-  filterExportData.forEach((el: any) => {
+  filterExportData.forEach((el: any, Index: number) => {
     if (el.filter.length > 0) {
-      newAppliedFilter.push({
-        qId: el.qId,
-        value: el.filter.map((el: any) => {
-          return el.code;
-        }),
-      });
+      newAppliedFilter.push(
+        filterupdatedData.map((ele: any) => {
+          return {
+            qId: ele.undefined.qId,
+            value: el.filter.map((el: any) => {
+              return el.code;
+            }),
+          };
+        })
+      );
     }
 
     const body = {
       qId: el.qId,
       type: el.type,
-      filters: newAppliedFilter,
+      filters: newAppliedFilter[0],
       bannerQuestion: el.bannerQuestion,
-      bannerType: el.bannerType ? el.bannerType : '',
+      bannerType: el.bannerType ? el.bannerType : "",
     };
-    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, 'POST', body));
+    promiseAllArr.push(ApiRequest.request(ApiUrl.CHART, "POST", body));
   });
   const apiResponse: any[] = await Promise.all(promiseAllArr);
   const updatedApiResponse: any[] = [];
@@ -144,18 +117,18 @@ export const handleExportChartCache = async (
       chartData.chartData = formatChartDataWithBaseCount(
         response.data.chartData,
         response.data.questionData,
-        response.data.baseCount,
+        response.data.baseCount
       );
       chartData.questionChartData = response.data.questionChartData;
       chartData.bannerChartData = response.data.bannerChartData;
       chartData.baseCount = computeBaseCount(
         response.data.baseCount,
-        response.data.questionData,
+        response.data.questionData
       );
       const formatedQData = removeEmptyDataLengends(
         response.data.chartData,
         response.data.questionData,
-        response.data.bannerQuestionData,
+        response.data.bannerQuestionData
       );
 
       chartData.questionData = formatedQData[0];
@@ -170,7 +143,7 @@ export const handleExportChartCache = async (
           response.data.bannerQuestionData,
           response.data.chartOptionsData,
           response.data.questionChartData,
-          response.data.bannerChartData,
+          response.data.bannerChartData
         ),
       };
     }
@@ -206,30 +179,36 @@ export const handleExportChartCache = async (
     payloadArr.push(payload);
   });
 
-  generatePpt([...payloadArr]);
+  if (exportType === "pptexport") {
+    generatePpt([...payloadArr]);
+  } else {
+    calcData(payloadArr);
+    //exportPrint();
+  }
+
   dispatch(setFullScreenLoading(false));
 };
 
 export const handelAddInUserCache = (
   chart: any,
   chartQuestionData: any,
-  filters: any,
+  filters: any
 ) => {
   const { dispatch } = store;
   const userCachebody = {
     qText:
       chartQuestionData?.type === QuestionType.RANK
         ? chartQuestionData?.labelText
-        : chartQuestionData?.questionText,
+        : chartQuestionData?.questionText || chartQuestionData?.labelText,
     qId: chartQuestionData?.qId,
     type: chartQuestionData?.type,
     bannerType: chart?.bannerQuestionData?.type
       ? chart?.bannerQuestionData?.type
-      : '',
+      : "",
     date: new Date(),
     filter: filters?.appliedFilters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData?.qId,
     chartType: chart?.chartType,
     chartLabelType: chart?.chartLabelType,
     chartOrientation: chart?.chartOrientation,
@@ -238,7 +217,7 @@ export const handelAddInUserCache = (
     showMean: chart?.showMean,
   };
 
-  ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCachebody)
+  ApiRequest.request(ApiUrl.SAVE_CHART, "POST", userCachebody)
     .then((res) => {
       if (res.success) {
         dispatch(resetUserCache(res.data));
@@ -255,7 +234,7 @@ export const handelUpdatedUserCache = (
   chart: any,
   chartQuestionData: any,
   filters: any,
-  cacheId: any,
+  cacheId: any
 ) => {
   const { dispatch } = store;
   const userCacheUpdatedbody = {
@@ -267,11 +246,11 @@ export const handelUpdatedUserCache = (
     type: chartQuestionData?.type,
     bannerType: chart?.bannerQuestionData?.type
       ? chart?.bannerQuestionData?.type
-      : '',
+      : "",
     date: new Date(),
     filter: filters?.appliedFilters,
     bannerQuestion:
-      chart?.bannerQuestionData == null ? '' : chart?.bannerQuestionData?.qId,
+      chart?.bannerQuestionData == null ? "" : chart?.bannerQuestionData?.qId,
     chartType: chart?.chartType,
     chartLabelType: chart?.chartLabelType,
     chartOrientation: chart?.chartOrientation,
@@ -281,7 +260,7 @@ export const handelUpdatedUserCache = (
     id: cacheId,
   };
 
-  ApiRequest.request(ApiUrl.SAVE_CHART, 'POST', userCacheUpdatedbody)
+  ApiRequest.request(ApiUrl.SAVE_CHART, "POST", userCacheUpdatedbody)
     .then((res) => {
       if (res.success) {
         dispatch(setDialog(false));
@@ -294,3 +273,47 @@ export const handelUpdatedUserCache = (
     })
     .catch((error) => console.log(error));
 };
+
+function calcData(payloadObjectArr: any) {
+  const { dispatch } = store;
+  let chartsArray: Array<any> = [];
+
+  for (let i = 0; i < payloadObjectArr.length; i++) {
+    const chartOptionsPayload: any = {
+      questionData: payloadObjectArr[i].chart.questionData,
+      chartData: payloadObjectArr[i].chart.chartData,
+      baseCount: payloadObjectArr[i].chart.baseCount,
+      bannerQuestionData: payloadObjectArr[i].chart.bannerQuestionData,
+      chartOptionsData: payloadObjectArr[i].chart.chartOptions,
+      questionChartData: payloadObjectArr[i].chart.questionChartData,
+      bannerChartData: payloadObjectArr[i].chart.bannerChartData,
+      transposed: payloadObjectArr[i].chart.chartTranspose,
+      chartLabelType: payloadObjectArr[i].chart.chartLabelType,
+      chartType: payloadObjectArr[i].chart.chartType,
+      significant: payloadObjectArr[i].chart.significant,
+      showMean: payloadObjectArr[i].chart.showMean,
+    };
+
+    const newSeriesData = getChartOptions(
+      chartOptionsPayload.questionData,
+      chartOptionsPayload.chartData,
+      chartOptionsPayload.baseCount,
+      chartOptionsPayload.bannerQuestionData,
+      chartOptionsPayload.chartOptionsData,
+      chartOptionsPayload.questionChartData,
+      chartOptionsPayload.bannerChartData,
+      chartOptionsPayload.transposed,
+      chartOptionsPayload.chartLabelType,
+      chartOptionsPayload.chartType,
+      chartOptionsPayload.significant,
+      chartOptionsPayload.showMean
+    );
+
+    const payloadData: any = payloadObjectArr[i];
+    const seriesData = newSeriesData.series;
+
+    chartsArray.push({ payloadData, seriesData });
+  }
+
+  dispatch(setPdfExport(chartsArray));
+}

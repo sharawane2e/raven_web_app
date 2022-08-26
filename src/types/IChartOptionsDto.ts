@@ -13,4 +13,5 @@ export interface IchartOptionsDto {
   chartType: number;
   significant: boolean;
   showMean: boolean;
+  chartOrientation: any;
 }
