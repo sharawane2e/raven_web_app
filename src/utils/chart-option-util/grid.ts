@@ -1,22 +1,18 @@
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { getMatchedfilter, getmatchedFind, round } from '../Utility';
-import {
-  colorArr,
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  dataUpdatedFormate,
-  decimalPrecision2,
-  showMeanFormate,
-} from '../../constants/Variables';
-import { StaticText } from '../../constants/StaticText';
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { getMatchedfilter, getmatchedFind, round } from "../Utility";
+import { colorArr, decimalPrecision2 } from "../../constants/Variables";
+import { StaticText } from "../../constants/StaticText";
 import {
   getsampleStandardDeviation,
   getStandarderrorFunction,
-} from '../simplestatistics';
-import { getsignificantdifference } from './significanceDiff';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { getPlotOptionsSeries } from '../ChartOptionFormatter';
+} from "../simplestatistics";
+import { getsignificantdifference } from "./significanceDiff";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { getPlotOptionsSeries } from "../ChartOptionFormatter";
+import { updatedLabels } from "../../constants/dataLabels";
+import { ChartType } from "../../enums/ChartType";
+import { ChartOrientation } from "../../enums/ChartOrientation";
 
 export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
   const {
@@ -39,7 +35,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
     series.push(...getGridTransposeChartOptions(chart));
   } else {
     const subGroups = questionData.subGroups.filter((subGroup: any) => {
-      const subGroupData = getmatchedFind(chartData, '_id', subGroup.qId);
+      const subGroupData = getmatchedFind(chartData, "_id", subGroup.qId);
       if (subGroupData && subGroupData.options.length) return true;
       return false;
     });
@@ -58,11 +54,11 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
         const subGroup = subGroups[subGroupIndex];
         categories.push(subGroup.labelText);
 
-        const optionData = getmatchedFind(chartData, '_id', subGroup.qId);
+        const optionData = getmatchedFind(chartData, "_id", subGroup.qId);
         const labels = getMatchedfilter(
           optionData.options,
-          'option',
-          scale.labelCode,
+          "option",
+          scale.labelCode
         );
 
         const count = _.sumBy(labels, function (o) {
@@ -92,7 +88,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
         significant,
         chartLabelType,
         chartType,
-        chartOrientation,
+        chartOrientation
       );
       series.push({
         name: scale.labelText,
@@ -112,7 +108,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
       undefined,
       series,
       chartLabelType,
-      transposed,
+      transposed
     );
     series.length = 0;
     series.push(...updatedSeries);
@@ -155,14 +151,14 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
             if (chartOption.option == scale.labelCode) {
               baseCount += chartOption.count;
             }
-          },
+          }
         );
 
         if (chartDataObject._id == questionData.subGroups[i].qId) {
           const countObject = getMatchedfilter(
             chartDataObject.options,
-            'option',
-            scale.labelCode,
+            "option",
+            scale.labelCode
           );
 
           count = _.sumBy(countObject, function (o) {
@@ -191,7 +187,7 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
       significant,
       chartLabelType,
       chartType,
-      chartOrientation,
+      chartOrientation
     );
     series.push({
       name: currentSubGroup.labelText,
@@ -217,11 +213,13 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
 
   const data: any[] = [];
   const standardDeviation: any[] = [];
   const standardError: any[] = [];
+  let newDataLabels;
 
   for (
     let optionIndex = 0;
@@ -229,13 +227,13 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
     optionIndex++
   ) {
     const option = questionData.subGroups[optionIndex];
-    const optionData = getmatchedFind(chartData, '_id', option.qId);
+    const optionData = getmatchedFind(chartData, "_id", option.qId);
 
     const filteredOptions = _.remove(
       [...optionData.options],
       function (n: any) {
         return !Array.isArray(n.option);
-      },
+      }
     ); //removing array options which come with subgroups
 
     const totalSelections = _.sumBy(filteredOptions, function (o: any) {
@@ -250,13 +248,13 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
 
     const getSampleDeviationValues = getsampleStandardDeviation(
       valuesArr,
-      decimalPrecision2,
+      decimalPrecision2
     );
 
     const getStandarderror = getStandarderrorFunction(
       Number(getSampleDeviationValues),
       baseCount,
-      decimalPrecision2,
+      decimalPrecision2
     );
 
     const plotValue = totalSelections / baseCount;
@@ -283,8 +281,18 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
   }
 
   const series: any[] = [];
-  const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(',');
+  const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(",");
   const seriesData = [data, standardDeviation, standardError];
+
+  if (chartType === ChartType.STACK) {
+    newDataLabels = updatedLabels?.numberFormatedata;
+  } else {
+    if (chartOrientation == ChartOrientation.LANDSCAPE) {
+      newDataLabels = updatedLabels?.showMeanFormateLand;
+    } else {
+      newDataLabels = updatedLabels?.showMeanFormate;
+    }
+  }
 
   for (let i = 0; i < 3; i++) {
     series.push({
@@ -292,7 +300,7 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
       color: colorArr[i],
       data: seriesData[i],
       dataLabels: {
-        ...showMeanFormate,
+        ...newDataLabels,
       },
     });
   }
@@ -325,13 +333,12 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
           },
         ],
         dataLabels: {
-          ...dataLabelsNumberFormate,
+          ...newDataLabels,
         },
       });
     }
 
     series.length = 0;
-
     series.push(...transposeSeries);
   }
 

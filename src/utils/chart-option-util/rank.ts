@@ -1,16 +1,11 @@
-import { IQuestion } from '../../types/IQuestion';
-import _, { find } from 'lodash';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartType } from '../../enums/ChartType';
-import { round } from '../Utility';
-import {
-  colorArr,
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  decimalPrecision,
-} from '../../constants/Variables';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { getPlotOptionsSeries } from '../ChartOptionFormatter';
+import { IQuestion } from "../../types/IQuestion";
+import _, { find } from "lodash";
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartType } from "../../enums/ChartType";
+import { round } from "../Utility";
+import { colorArr, decimalPrecision } from "../../constants/Variables";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { getPlotOptionsSeries } from "../ChartOptionFormatter";
 
 export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
   const {
@@ -39,8 +34,8 @@ export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
         chartLabelType,
         chartType,
         significant,
-        chartOrientation,
-      ),
+        chartOrientation
+      )
     );
   } else {
     series.push(
@@ -51,8 +46,8 @@ export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
         chartLabelType,
         chartType,
         significant,
-        chartOrientation,
-      ),
+        chartOrientation
+      )
     );
   }
 
@@ -66,13 +61,13 @@ const rankChartOptionData = (
   chartLabelType: any,
   chartType: any,
   significant: any,
-  chartOrientation: any,
+  chartOrientation: any
 ) => {
   const categories = [];
   const series: any[] = [];
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
     const subGroupData = chartData.find(
-      (data: any) => data._id === subGroup.qId,
+      (data: any) => data._id === subGroup.qId
     );
     if (subGroupData && subGroupData.options.length) return true;
     return false;
@@ -99,7 +94,7 @@ const rankChartOptionData = (
 
       if (optionData) {
         label = optionData.options.find(
-          (option: any) => option.option === scale.labelCode,
+          (option: any) => option.option === scale.labelCode
         );
 
         if (label) {
@@ -114,7 +109,7 @@ const rankChartOptionData = (
           option: scale.labelCode,
         });
         if (chartOptionObject.length) {
-          newBaseCount = newBaseCount + chartOptionObject[0]['count'];
+          newBaseCount = newBaseCount + chartOptionObject[0]["count"];
         }
       });
 
@@ -151,7 +146,7 @@ const rankChartOptionData = (
       significant,
       chartLabelType,
       chartType,
-      chartOrientation,
+      chartOrientation
     );
     if (data.length)
       series.push({
@@ -173,12 +168,12 @@ const rankChartTransposeOptionData = (
   chartLabelType: any,
   chartType: any,
   significant: any,
-  chartOrientation: any,
+  chartOrientation: any
 ) => {
   const series: any[] = [];
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
     const subGroupData = chartData.find(
-      (data: any) => data._id === subGroup.qId,
+      (data: any) => data._id === subGroup.qId
     );
     if (subGroupData && subGroupData.options.length) return true;
     return false;
@@ -188,13 +183,13 @@ const rankChartTransposeOptionData = (
     const data: any[] = [];
     questionData.scale.forEach((scale: any, scaleIndex: number) => {
       const optionData = chartData.find(
-        (c: any) => c._id === subGroupLabel.qId,
+        (c: any) => c._id === subGroupLabel.qId
       );
       let count = 0;
       let label: any;
       if (optionData) {
         label = optionData.options.find(
-          (option: any) => option?.option === scale?.labelCode,
+          (option: any) => option?.option === scale?.labelCode
         );
       }
       if (label) {
@@ -207,7 +202,7 @@ const rankChartTransposeOptionData = (
           option: scale.labelCode,
         });
         if (chartOptionObject.length) {
-          newBaseCount = newBaseCount + chartOptionObject[0]['count'];
+          newBaseCount = newBaseCount + chartOptionObject[0]["count"];
         }
       });
 
@@ -231,7 +226,7 @@ const rankChartTransposeOptionData = (
       significant,
       chartLabelType,
       chartType,
-      chartOrientation,
+      chartOrientation
     );
     if (data.length) {
       series.push({

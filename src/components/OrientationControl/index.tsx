@@ -1,22 +1,22 @@
-import ButtonGroup, { ButtonGroupConfig } from '../widgets/ButtonGroup';
-import { ReactComponent as PortraitIcon } from '../../assets/svg/portrait-icon.svg';
-import { ReactComponent as LandscapeIcon } from '../../assets/svg/landscape-icon.svg';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../redux/store';
-import { setChartOrientation } from '../../redux/actions/chartActions';
-import store from '../../redux/store';
-import { getPlotOptions } from '../../utils/ChartOptionFormatter';
-import { setChartData } from '../../redux/actions/chartActions';
-import Toaster from '../../utils/Toaster';
-import { StaticText } from '../../constants/StaticText';
-import { ChartType } from '../../enums/ChartType';
+import ButtonGroup, { ButtonGroupConfig } from "../widgets/ButtonGroup";
+import { ReactComponent as PortraitIcon } from "../../assets/svg/portrait-icon.svg";
+import { ReactComponent as LandscapeIcon } from "../../assets/svg/landscape-icon.svg";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store";
+import { setChartOrientation } from "../../redux/actions/chartActions";
+import store from "../../redux/store";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
+import { setChartData } from "../../redux/actions/chartActions";
+import Toaster from "../../utils/Toaster";
+import { StaticText } from "../../constants/StaticText";
+import { ChartType } from "../../enums/ChartType";
 
 interface OrientationControlProps {}
 
 const OrientationControl: React.FC<OrientationControlProps> = () => {
   const { chartOrientation, questionData } = useSelector(
-    (state: RootState) => state.chart,
+    (state: RootState) => state.chart
   );
   const { chart } = store.getState();
   const dispatch: AppDispatch = useDispatch();
@@ -25,6 +25,12 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
+    dispatch(setChartData(chartDataClone));
+    dispatch(setChartOrientation(orientation));
+    chartDataClone.chartOptions = {
+      ...chart.chartOptions,
+      ...getChartOptions(),
+    };
     dispatch(setChartData(chartDataClone));
   };
 
@@ -41,14 +47,14 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
-      tooltip: 'Portrait',
+      tooltip: "Portrait",
       renderChild: () => <PortraitIcon />,
       onClick: () => changeOrientation(ChartOrientation.PORTRAIT),
       active: chartOrientation === ChartOrientation.PORTRAIT,
       disabled: questionData === null,
     },
     {
-      tooltip: 'Landscape',
+      tooltip: "Landscape",
       renderChild: () => <LandscapeIcon />,
       onClick: () => changeOrientation(ChartOrientation.LANDSCAPE),
       active: chartOrientation === ChartOrientation.LANDSCAPE,
