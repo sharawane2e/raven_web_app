@@ -235,7 +235,11 @@ export const getPlotOptionsSeries = (
   }
   if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
     if (newchartOrientation == ChartOrientation.LANDSCAPE) {
-      newDataLabels = updatedLabels?.normalFormatedata;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = updatedLabels?.normalFormatedata;
+      } else {
+        newDataLabels = updatedLabels?.normalFormatedataNumer;
+      }
     }
   } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
     if (significant) {
@@ -243,7 +247,7 @@ export const getPlotOptionsSeries = (
     } else {
       newDataLabels = updatedLabels?.dataUpdatedFormate;
       if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = updatedLabels?.normalFormatedata;
+        newDataLabels = updatedLabels?.normalFormatedataLandScape;
       } else {
         newDataLabels = updatedLabels?.numberFormatedata;
       }

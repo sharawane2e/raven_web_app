@@ -364,13 +364,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           "chart-wrapper--loading": chartLoading == true,
         })}
       >
-        {significant ? (
+        {/* {significant ? (
           <div className="significant-lagend">
             <span className="significant-hedding"> {significantText}</span>
           </div>
         ) : (
           ""
-        )}
+        )} */}
 
         {/* <ChartTransposeControl /> */}
         {chart?.questionData === null && !sidebar?.nodata ? (

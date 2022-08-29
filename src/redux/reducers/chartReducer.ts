@@ -62,9 +62,9 @@ export const defaultPlotOptions = {
       formatter: function (this: any, options: any) {
         return ` ${parseFloat(this.y.toFixed(2))}${
           ChartLabelType.PERCENTAGE ? "%" : ""
-        } <span class="significante-color">${
+        } ${
           this.point.significantDiffernce ? this.point.significantDiffernce : ""
-        } </span>`;
+        }`;
       },
       allowOverlap: true,
       rotation: -90,
@@ -72,10 +72,17 @@ export const defaultPlotOptions = {
       x: 0,
       y: -6,
       crop: false,
+      // inside: false,
       style: {
         fontSize: "10px",
         textOutline: false,
         fontWeight: "unset",
+        // "text-align": "center",
+        // "word-break": "break-all",
+        // width: "20px",
+        // " white-space": "nowrap",
+        // overflow: "hidden",
+        // "text-overflow": "ellipsis",
       },
     },
   },
