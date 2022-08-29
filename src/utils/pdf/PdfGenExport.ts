@@ -1,6 +1,8 @@
-export const PdfGenExport = (seriesData: any) => {
+import { ChartLabelType } from "../../enums/ChartLabelType";
+
+export const PdfGenExport = (seriesData: any, chartlabelType: string) => {
   const options = {
-    fillColor: 'ffffff',
+    fillColor: "ffffff",
     bold: false,
   };
 
@@ -10,20 +12,22 @@ export const PdfGenExport = (seriesData: any) => {
     const rowArr: any[] = [];
 
     tableRowArr.forEach((cellObject: any) => {
+      console.log("chartlabelType", chartlabelType);
+      const laleType = chartlabelType === ChartLabelType.PERCENTAGE ? "%" : "";
       const cellObj = {
-        content: cellObject.text,
+        content: cellObject.text + laleType,
         styles: {
           ...options,
           fillColor:
-            cellObject.minMax == 'min'
-              ? 'b8e08c'
-              : cellObject.minMax == 'max'
-              ? 'fbd9d4'
-              : 'ffffff',
+            cellObject.minMax == "min"
+              ? "fbd9d4"
+              : cellObject.minMax == "max"
+              ? "b8e08c"
+              : "ffffff",
           bold:
-            cellObject.minMax == 'min'
+            cellObject.minMax == "min"
               ? true
-              : cellObject.minMax == 'max'
+              : cellObject.minMax == "max"
               ? true
               : false,
         },

@@ -3,13 +3,9 @@ import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { ChartType } from "../../enums/ChartType";
 import { round } from "../Utility";
-import {
-  colorArr,
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  decimalPrecision,
-} from "../../constants/Variables";
+import { colorArr, decimalPrecision } from "../../constants/Variables";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { getPlotOptionsSeries } from "../ChartOptionFormatter";
 
 export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
   const {
@@ -24,6 +20,7 @@ export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
     significant,
     chartLabelType,
     chartType,
+    chartOrientation,
   } = chart;
 
   const series: any[] = [];
@@ -35,7 +32,9 @@ export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
         chartData,
         baseCount,
         chartLabelType,
-        chartType
+        chartType,
+        significant,
+        chartOrientation
       )
     );
   } else {
@@ -45,7 +44,9 @@ export const getRankChartOptionsData = (chart: IchartOptionsDto) => {
         chartData,
         baseCount,
         chartLabelType,
-        chartType
+        chartType,
+        significant,
+        chartOrientation
       )
     );
   }
@@ -58,7 +59,9 @@ const rankChartOptionData = (
   chartData: any,
   baseCount: number,
   chartLabelType: any,
-  chartType: any
+  chartType: any,
+  significant: any,
+  chartOrientation: any
 ) => {
   const categories = [];
   const series: any[] = [];
@@ -139,12 +142,12 @@ const rankChartOptionData = (
 
       // }
     }
-    let newDataLabels: any;
-    if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      newDataLabels = dataLabelsFormate;
-    } else {
-      newDataLabels = dataLabelsNumberFormate;
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation
+    );
     if (data.length)
       series.push({
         name: scale.labelText,
@@ -163,7 +166,9 @@ const rankChartTransposeOptionData = (
   chartData: any,
   baseCount: number,
   chartLabelType: any,
-  chartType: any
+  chartType: any,
+  significant: any,
+  chartOrientation: any
 ) => {
   const series: any[] = [];
   const subGroups = questionData.subGroups.filter((subGroup: any) => {
@@ -217,12 +222,12 @@ const rankChartTransposeOptionData = (
         baseCount: newBaseCount,
       });
     });
-    let newDataLabels: any;
-    if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      newDataLabels = dataLabelsFormate;
-    } else {
-      newDataLabels = dataLabelsNumberFormate;
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation
+    );
     if (data.length) {
       series.push({
         name: subGroupLabel.labelText,

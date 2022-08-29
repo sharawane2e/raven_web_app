@@ -8,6 +8,7 @@ import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
 import { getChartOptions } from "../ChartOptionFormatter";
 import { PdfGenExport } from "./PdfGenExport";
 import { getChartRows } from "../table-option-util";
+import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 
 export const generatePdf = async (payloadObjectArr: any[]) => {
   let doc = new jsPDF();
@@ -57,13 +58,13 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
       w = 290;
       h = 140;
       baseX = 12;
-      baseY = 260;
+      baseY = 190;
       sourceX = 12;
-      sourceY = 265;
+      sourceY = 185;
       logoX = 10;
-      logoY = 275;
+      logoY = 204;
       copyRightX = 40;
-      copyRightY = 283;
+      copyRightY = 210.5;
       lWordBreak = pdfWidth - 20;
       qWordBreak = 180;
       await setDefaultPdfPageProperties(
@@ -80,19 +81,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         lWordBreak,
         payloadObjectArr[i].chart
       );
-      // const tableRows = tableChartDataGen();
-      // autoTable(doc, { html: "#my-table" });
 
-      // const [maxValue, minValue] = tableRows?.minmax[0];
-      // let scaleLength: any = "";
-      // if (questionData?.groupNetData) {
-      //   scaleLength = questionData?.groupNetData.length;
-      // }
-      // let removeSubGrop: any;
-      // if (chartTranspose) {
-      //   removeSubGrop = tableRows.rows.length - scaleLength - 1;
-      // }
-      // var output: any = [];
       const chartOptionsPayload: any = {
         questionData: payloadObjectArr[i].chart.questionData,
         chartData: payloadObjectArr[i].chart.chartData,
@@ -114,17 +103,31 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.bannerChartData,
         chartOptionsPayload.transposed
       );
-      const chartRows = getChartRows(
-        newSeriesData.series,
-        chartOptionsPayload
-      )[0]; //gaurav
+
+      const filledSeries = fillEmptyDateSeries(
+        chartOptionsPayload.questionData.type,
+        JSON.parse(JSON.stringify(newSeriesData.series)),
+        chartOptionsPayload.transposed,
+        chartOptionsPayload.questionData,
+        chartOptionsPayload.bannerQuestionData,
+        chartOptionsPayload.chartData
+      );
+
+      const chartRows = getChartRows(filledSeries, chartOptionsPayload)[0]; //gaurav
+
       const seriesData = chartRows; //gaurav
-      const output = PdfGenExport(seriesData);
+
+      console.log(
+        " payloadObjectArr[i]",
+        payloadObjectArr[i]?.chart.chartLabelType
+      );
+      const output = PdfGenExport(
+        seriesData,
+        payloadObjectArr[i]?.chart.chartLabelType
+      );
 
       autoTable(doc, {
-        // head: [row[0]],
         body: output,
-        //body: [...tableRow?.rows],
         startY: 40,
         styles: { fontSize: 6 },
       });
@@ -138,13 +141,13 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         w = 290;
         h = 140;
         baseX = 12;
-        baseY = 180;
+        baseY = 190;
         sourceX = 12;
         sourceY = 185;
         logoX = 10;
-        logoY = 195;
+        logoY = 204;
         copyRightX = 40;
-        copyRightY = 203;
+        copyRightY = 210.5;
         lWordBreak = pdfWidth - 20;
         qWordBreak = 180;
       } else {

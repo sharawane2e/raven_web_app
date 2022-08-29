@@ -91,11 +91,14 @@ html {
 }
 
 .significante-color {
-  fill: $significantChart;
+  // fill: $significantChart;
 }
-.mt{
+.mt {
   margin-top: 10px !important;
   font-style: normal !important;
   font-size: 10px !important;
+}
 
+.mr-right {
+  margin-right: 10px;
 }

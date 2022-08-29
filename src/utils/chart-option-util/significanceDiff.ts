@@ -165,6 +165,7 @@ const significantDifference = (
   const testStatistic =
     (B1 - B4) /
     Math.sqrt(poledSampleData * (1 - poledSampleData) * (1 / B2 + 1 / B5));
+
   const result = 2 * (1 - getCumulativeStdNormalProbability(testStatistic));
 
   if (result < 0.05) {

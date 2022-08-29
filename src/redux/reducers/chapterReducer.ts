@@ -1,21 +1,25 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { IChapter } from '../../types/IChapter';
+import { createReducer } from "@reduxjs/toolkit";
+import { IChapter } from "../../types/IChapter";
 import {
   setChapters,
   setSelectedChapterId,
   setSelectedQuestion,
-} from '../actions/chapterActions';
+} from "../actions/chapterActions";
 
 export interface IChapterState {
   selectedChapterId: string;
   allChapters: IChapter[] | null;
   selectedQuestion: any;
+  selectedQuestionChaID: any;
+  selectedBannerID: any;
 }
 
 let initialState: IChapterState = {
-  selectedChapterId: '',
+  selectedChapterId: "",
   allChapters: null,
   selectedQuestion: null,
+  selectedQuestionChaID: null,
+  selectedBannerID: null,
 };
 
 const chapterReducer = createReducer(initialState, (builder) => {

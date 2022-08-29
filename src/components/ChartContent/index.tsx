@@ -10,6 +10,7 @@ import {
   toggleBannerQuestionDisablity,
 } from "../../redux/actions/questionAction";
 import {
+  resetChart,
   setChartData,
   setChartLabel,
   setChartTranspose,
@@ -38,7 +39,6 @@ import ChartFullScreen from "../ChartFullScreen";
 import Loader from "../widgets/Loader/Index";
 import { ReactComponent as No_Question_Selected } from "../../assets/svg/No_Question_Selected.svg";
 import { ReactComponent as No_Data_Found } from "../../assets/svg/No_data_found.svg";
-import { ReactComponent as Raven_logo } from "../../assets/svg/raven_logo.svg";
 import Chapter from "../Chapter";
 import _ from "lodash";
 import IsMeanControl from "../IsMeanControl";
@@ -53,6 +53,8 @@ import {
   setuserCacheActive,
   setUserCacheId,
 } from "../../redux/actions/userCacheActions";
+import ExportPdfCharts from "../ExportPdfCharts";
+import { noDataFound } from "../../redux/actions/sidebarAction";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -71,7 +73,9 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   const {
     questions,
     chart: { chartLoading, questionData, baseCount, chartType, significant },
-    chapters: { allChapters, selectedChapterId },
+    chapters: { allChapters, selectedChapterId, selectedBannerID },
+    userCache,
+    sidebar,
   } = useSelector((state: RootState) => state);
   const { chart } = store.getState();
   //const dispatch: AppDispatch = useDispatch();
@@ -93,6 +97,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
   useEffect(() => {
     dispatch(fetchQuestionList());
     dispatch(fetchBannerQuestionList());
+    if (chart?.chartType === ChartType.TABLE && chart?.chartData.length === 0) {
+      dispatch(resetChart([""]));
+      dispatch(noDataFound(true));
+    } else {
+      dispatch(noDataFound(false));
+    }
   }, []);
 
   let updateQuestionList: any[] = [];
@@ -130,7 +140,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         dispatch(setChartLabel(ChartLabelType?.PERCENTAGE));
       }
     }
-    var el = document.getElementById("no__quesion");
+    var el = document.getElementById("Group_4227");
     if (el) {
       el.addEventListener("click", selectQuestion, false);
     }
@@ -150,6 +160,12 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
     fetchChartData(value)
       .then((chartData) => {
         dispatch(setChartData(chartData));
+        if (chartData.chartData.length == 0) {
+          dispatch(resetChart([""]));
+          dispatch(noDataFound(true));
+        } else {
+          dispatch(noDataFound(false));
+        }
         dispatch(setSelectedQuestion(chartData?.questionData?.labelText));
         if (
           chartData.questionData?.type !== QuestionType.SINGLE &&
@@ -212,7 +228,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
       labelKey="labelText"
       className="Step-2"
       disabled={questions.disableBannerQuestion}
-      disabledPredicate={(value) => value === selectedBannerQuestionId}
+      disabledPredicate={(value) => value === selectedQuestionId}
       MenuProps={{
         classes: { paper: "testing" },
       }}
@@ -312,7 +328,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
               valueKey="qId"
               labelKey="labelText"
               className="single_select_area Step-1"
-              disabledPredicate={(value) => value === selectedQuestionId}
+              disabledPredicate={(value) => value === selectedBannerQuestionId}
               MenuProps={{
                 classes: { paper: "testing" },
               }}
@@ -348,23 +364,25 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
           "chart-wrapper--loading": chartLoading == true,
         })}
       >
-        {significant ? (
+        {/* {significant ? (
           <div className="significant-lagend">
             <span className="significant-hedding"> {significantText}</span>
           </div>
         ) : (
           ""
-        )}
+        )} */}
 
         {/* <ChartTransposeControl /> */}
-        {chart?.questionData === null ? (
+        {chart?.questionData === null && !sidebar?.nodata ? (
           <div className="noQuestion--selected">
             <No_Question_Selected />
           </div>
         ) : (
           ""
         )}
-        {chart?.chartData == [] ? (
+        {chart?.chartData.length === 0 &&
+        sidebar?.nodata &&
+        chart?.chartType != ChartType.TABLE ? (
           <div className="noQuestion--selected">
             <No_Data_Found />
           </div>
@@ -382,7 +400,13 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             ) : (
               ""
             )}
-            <TableView />
+            {chart?.chartData.length !== 0 && !sidebar?.nodata ? (
+              <TableView />
+            ) : (
+              <div className="noQuestion--selected">
+                <No_Data_Found />
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -395,40 +419,21 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
             <Chart />
           </>
         )}
-        {/* {chart?.questionData !== null ? ( */}
+
         <div className="chart-content-footer">
           <div className="chart-content-footer--inr">
             <div className="chart-content__base-count">
-              Base: All respondents = {baseCount}
-              {/*<div>
-                  Products tested at the 95% confidence level –ABCDE (between
-                  sub-groups 95% - green)/ 90% confidence level _abcde
-                </div>
-                <div>
-                  How well do you like this product overall taking into
-                  consideration everything about it including Appearance, Texture
-                  & flavor of the sample?
-                </div>
-                <div>
-                  *I dislike it extremely .. 2 .. 3 .. 4 .. 5 .. 6 .. 7 .. 8 .. I
-                  like it extremely
-                </div>*/}
+              Sample Size: {baseCount}
             </div>
-
             <div className="chart-content__info">
               Note: Sample size reflects selections from filter and cross-tab
               menus, not in-legend selections.
             </div>
-            <div className="chart-content__info mrTop">
-              Copyright © 2022, NielsenIQ BASES Design and Developed by E2E
-              Research Services Pvt. Ltd.
-            </div>
-          </div>
-          <div className="appbar__logo-wrapper">
-            <Raven_logo />
           </div>
         </div>
       </div>
+
+      <ExportPdfCharts />
     </div>
   );
 };

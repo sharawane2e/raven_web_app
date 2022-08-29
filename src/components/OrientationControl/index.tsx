@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { setChartOrientation } from "../../redux/actions/chartActions";
 import store from "../../redux/store";
-import { getPlotOptions } from "../../utils/ChartOptionFormatter";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
 import { setChartData } from "../../redux/actions/chartActions";
 import Toaster from "../../utils/Toaster";
 import { StaticText } from "../../constants/StaticText";
@@ -25,7 +25,12 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     dispatch(setChartOrientation(orientation));
     const { chart } = store.getState();
     const chartDataClone = JSON.parse(JSON.stringify(chart));
-    //chartDataClone.chartOptions['plotOptions'] = getPlotOptions();
+    dispatch(setChartData(chartDataClone));
+    dispatch(setChartOrientation(orientation));
+    chartDataClone.chartOptions = {
+      ...chart.chartOptions,
+      ...getChartOptions(),
+    };
     dispatch(setChartData(chartDataClone));
   };
 
@@ -59,10 +64,8 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
       disableClick: () => Toaster.error(StaticText?.DISABLED_CHART_LAND),
     },
   ];
-  //console.log("chartOrientation", chartOrientation);
   return (
     <ButtonGroup
-      // groupTitle="Orientation"
       groupTitle=""
       buttonConfig={buttonConfig}
       className="Step-5 orientation-control"

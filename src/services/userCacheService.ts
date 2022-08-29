@@ -18,7 +18,7 @@ import {
 } from "./ChartService";
 import { getChartOptions } from "../utils/ChartOptionFormatter";
 import { QuestionType } from "../enums/QuestionType";
-// import ExportPdfCharts, { exportPrint } from "../components/ExportPdfCharts";
+import ExportPdfCharts, { exportPrint } from "../components/ExportPdfCharts";
 import { setPdfExport } from "../redux/actions/exportActions";
 
 export const handleDeleteChartCache = (cacheIdsArr: any) => {
@@ -183,7 +183,7 @@ export const handleExportChartCache = async (
     generatePpt([...payloadArr]);
   } else {
     calcData(payloadArr);
-    //exportPrint();
+    exportPrint();
   }
 
   dispatch(setFullScreenLoading(false));

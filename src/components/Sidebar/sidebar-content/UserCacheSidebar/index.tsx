@@ -514,14 +514,13 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                 butttondisable: butttonshow ? true : false,
               })}
               //  className=`${butttonshow} ""button--primary btn-line""`
-              onClick={() => {
-                userCacheExport(savedChart, "pptexport");
-              }}
-
-              //  onClick={opneMenu}
+              // onClick={() => {
+              //   userCacheExport(savedChart);
+              // }}
+              onClick={opneMenu}
             >
               Export
-              {/* <KeyboardArrowDownIcon sx={{ fill: "#fff" }} /> */}
+              <KeyboardArrowDownIcon sx={{ fill: "#fff" }} />
             </Button>
 
             <Menu
@@ -545,17 +544,17 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                 className: "chart-content__control-menu",
               }}
             >
-              {/* <MenuItem
+              <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
-                  userCacheExport(savedChart, 'pdfexport');
+                  userCacheExport(savedChart, "pdfexport");
                 }}
               >
                 <PdfIcon className="mr-right" />
                 Pdf export
               </MenuItem>
-              <Divider sx={{ my: 0.5 }} /> */}
-              {/* <MenuItem
+              <Divider sx={{ my: 0.5 }} />
+              <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
                   userCacheExport(savedChart, "pptexport");
@@ -563,7 +562,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               >
                 <PptIcon className="mr-right" />
                 Ppt export
-              </MenuItem> */}
+              </MenuItem>
             </Menu>
           </div>
         </div>
