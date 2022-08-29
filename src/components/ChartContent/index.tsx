@@ -55,6 +55,7 @@ import {
 } from "../../redux/actions/userCacheActions";
 import ExportPdfCharts from "../ExportPdfCharts";
 import { noDataFound } from "../../redux/actions/sidebarAction";
+import { ReactComponent as Raven_logo } from "../../assets/svg/raven_logo.svg";
 
 interface ChartContentProps {
   variant?: "fullWidth" | "partialWidth";
@@ -423,12 +424,19 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         <div className="chart-content-footer">
           <div className="chart-content-footer--inr">
             <div className="chart-content__base-count">
-              Sample Size: {baseCount}
+              Base: All respondents = {baseCount}
             </div>
             <div className="chart-content__info">
               Note: Sample size reflects selections from filter and cross-tab
               menus, not in-legend selections.
             </div>
+            <div className="chart-content__info mrTop">
+              Copyright © 2022, NielsenIQ BASES Design and Developed by E2E
+              Research Services Pvt. Ltd.
+            </div>
+          </div>
+          <div className="appbar__logo-wrapper">
+            <Raven_logo />
           </div>
         </div>
       </div>
