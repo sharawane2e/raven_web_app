@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/nielseniq/test1911271001/static/css/main.fc2482d9.chunk.css",
-    "main.js": "/nielseniq/test1911271001/static/js/main.cb5a7757.chunk.js",
-    "main.js.map": "/nielseniq/test1911271001/static/js/main.cb5a7757.chunk.js.map",
+    "main.js": "/nielseniq/test1911271001/static/js/main.fbc0cc2b.chunk.js",
+    "main.js.map": "/nielseniq/test1911271001/static/js/main.fbc0cc2b.chunk.js.map",
     "runtime-main.js": "/nielseniq/test1911271001/static/js/runtime-main.635340db.js",
     "runtime-main.js.map": "/nielseniq/test1911271001/static/js/runtime-main.635340db.js.map",
     "static/css/2.029a9c87.chunk.css": "/nielseniq/test1911271001/static/css/2.029a9c87.chunk.css",
@@ -63,6 +63,6 @@
     "static/css/2.029a9c87.chunk.css",
     "static/js/2.a4f37eff.chunk.js",
     "static/css/main.fc2482d9.chunk.css",
-    "static/js/main.cb5a7757.chunk.js"
+    "static/js/main.fbc0cc2b.chunk.js"
   ]
 }

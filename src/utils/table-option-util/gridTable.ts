@@ -1,10 +1,10 @@
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { round } from '../Utility';
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { round } from "../Utility";
 
 export const gridTable = (
   chartSeries: any,
-  chartOptionsPayload: IchartOptionsDto,
+  chartOptionsPayload: IchartOptionsDto
 ) => {
   const {
     chartLabelType,
@@ -21,7 +21,7 @@ export const gridTable = (
     chartRows.push(...createChartRows(chartSeries, questionData));
     const { updatedMinMaxArr, updatedCount } = MeanMinMaxObject(
       chartRows,
-      questionData.groupNetData,
+      questionData.groupNetData
     );
     count.push(...updatedCount);
     minMaxArr.push(...updatedMinMaxArr);
@@ -30,7 +30,7 @@ export const gridTable = (
       chartRows.push(...createChartRows(chartSeries, questionData));
       const { updatedMinMaxArr, updatedCount } = minMaxObject(
         chartRows,
-        questionData,
+        questionData
       );
 
       count.push(...updatedCount);
@@ -40,7 +40,7 @@ export const gridTable = (
 
       const { updatedMinMaxArr, updatedCount } = gridMinMaxObjectNets(
         chartRows,
-        questionData.groupNetData,
+        questionData.groupNetData
       );
       count.push(...updatedCount);
       minMaxArr.push(...updatedMinMaxArr);
@@ -61,7 +61,7 @@ export const gridTable = (
   if (chartOptionsPayload.significant) {
     const updatedMergedChartRows = tableDataSignificance(
       mergedChartRows,
-      chartSeries,
+      chartSeries
     );
     mergedChartRows.length = 0;
     mergedChartRows.push(...updatedMergedChartRows);
@@ -107,7 +107,10 @@ const createChartRows = (chartSeries: any, questionData: any) => {
     let tableDataSum: number = 0;
 
     charRow.forEach((tableDate: any, tableDateIndex: number) => {
-      if (tableDateIndex != 0 && !questionData?.isGroupNet) {
+      if (
+        (tableDateIndex != 0 && !questionData?.isGroupNet) ||
+        (tableDateIndex != 0 && questionData.isMean)
+      ) {
         //because the first column is text
         tableDataSum += tableDate;
       }
@@ -169,7 +172,7 @@ const roundOffCount = (count: any[]) => {
 const maxMinChartRows = (
   chartRows: any,
   chartLabelType: ChartLabelType,
-  minMaxArr: any[],
+  minMaxArr: any[]
 ) => {
   const mergedChartRows: any[] = [];
   for (let i = 0; i < chartRows.length; i++) {
@@ -179,15 +182,15 @@ const maxMinChartRows = (
       row.push({ text: chartRows[i][j], minMax: false });
       if (j > 0) {
         if (chartLabelType === ChartLabelType.PERCENTAGE) {
-          row[j]['text'] = row[j]['text'] + '%';
+          row[j]["text"] = row[j]["text"] + "%";
         }
       }
       if (j > 0 && j < chartRows[i].length - 1) {
-        if (chartRows[i][j] == minMaxArr[j - 1]['min']) {
-          row[j]['minMax'] = 'min';
+        if (chartRows[i][j] == minMaxArr[j - 1]["min"]) {
+          row[j]["minMax"] = "min";
         }
-        if (chartRows[i][j] == minMaxArr[j - 1]['max']) {
-          row[j]['minMax'] = 'max';
+        if (chartRows[i][j] == minMaxArr[j - 1]["max"]) {
+          row[j]["minMax"] = "max";
         }
       }
     }
@@ -199,12 +202,12 @@ const maxMinChartRows = (
 };
 const addHeaders = (chartSeries: any, mergedChartRows: any[]) => {
   const headerRow: any[] = [];
-  headerRow.push({ text: '', minMax: false });
+  headerRow.push({ text: "", minMax: false });
 
   chartSeries.forEach((dataObject: any) => {
     headerRow.push({ text: dataObject.name, minMax: false });
   });
-  headerRow.push({ text: 'Total', minMax: false });
+  headerRow.push({ text: "Total", minMax: false });
   mergedChartRows.unshift(headerRow);
 
   return mergedChartRows;
@@ -212,16 +215,16 @@ const addHeaders = (chartSeries: any, mergedChartRows: any[]) => {
 
 const addGrandTotal = (count: any[], chartLabelType: ChartLabelType) => {
   const grandTotalRow: any[] = [];
-  grandTotalRow.push({ text: 'Total', minMax: false });
+  grandTotalRow.push({ text: "Total", minMax: false });
   count.forEach((countValue: number) => {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
-      grandTotalRow.push({ text: countValue + '%', minMax: false });
+      grandTotalRow.push({ text: countValue + "%", minMax: false });
     } else {
       grandTotalRow.push({ text: countValue, minMax: false });
     }
   });
 
-  grandTotalRow.push({ text: '', minMax: false });
+  grandTotalRow.push({ text: "", minMax: false });
 
   return grandTotalRow;
 };
@@ -247,12 +250,12 @@ const minMaxObject = (chartRows: any[], questionData: any) => {
           };
         }
 
-        if (updatedMinMaxArr[j - 1]['min'] >= chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['min'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["min"] >= chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["min"] = chartRows[i][j];
         }
 
-        if (updatedMinMaxArr[j - 1]['max'] < chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['max'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["max"] < chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["max"] = chartRows[i][j];
         }
 
         //for min max
@@ -279,12 +282,12 @@ const MeanMinMaxObject = (chartRows: any[], groupNetData: any[]) => {
           };
         }
 
-        if (updatedMinMaxArr[j - 1]['min'] >= chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['min'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["min"] >= chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["min"] = chartRows[i][j];
         }
 
-        if (updatedMinMaxArr[j - 1]['max'] < chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['max'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["max"] < chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["max"] = chartRows[i][j];
         }
 
         //for min max
@@ -313,12 +316,12 @@ const gridMinMaxObjectNets = (chartRows: any[], groupNetData: any[]) => {
           };
         }
 
-        if (updatedMinMaxArr[j - 1]['min'] >= chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['min'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["min"] >= chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["min"] = chartRows[i][j];
         }
 
-        if (updatedMinMaxArr[j - 1]['max'] < chartRows[i][j]) {
-          updatedMinMaxArr[j - 1]['max'] = chartRows[i][j];
+        if (updatedMinMaxArr[j - 1]["max"] < chartRows[i][j]) {
+          updatedMinMaxArr[j - 1]["max"] = chartRows[i][j];
         }
 
         //for min max
@@ -333,7 +336,7 @@ const tableDataSignificance = (chartRows: any[], chartSeries: any) => {
   const updatedChartRows = JSON.parse(JSON.stringify(chartRows));
   chartSeries.forEach((chartObject: any, chartObjectIndex: number) => {
     chartObject.data.forEach((dataObject: any, dataObjectIndex: number) => {
-      if (dataObject.significantDiffernce != '') {
+      if (dataObject.significantDiffernce != "") {
         updatedChartRows[dataObjectIndex][chartObjectIndex + 1] = {
           ...updatedChartRows[dataObjectIndex][chartObjectIndex + 1],
           significantDiffernce: dataObject.significantDiffernce,
