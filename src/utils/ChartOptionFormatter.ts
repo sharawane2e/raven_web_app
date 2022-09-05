@@ -240,6 +240,12 @@ export const getPlotOptionsSeries = (
       } else {
         newDataLabels = updatedLabels?.normalFormatedataNumer;
       }
+    } else {
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        newDataLabels = updatedLabels?.dataLabelsFormate;
+      } else {
+        newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+      }
     }
   } else if (chartType === ChartType.STACK) {
     if (significant) {
