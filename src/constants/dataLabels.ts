@@ -4,10 +4,6 @@ export const updatedLabels = {
     rotation: -90,
     // y: 0,
   },
-  datalabledefault: {
-    format: "{point.y:.1f}%",
-    rotation: -90,
-  },
   dataLabelsNumberFormate: {
     format: "{point.y:.0f}",
     rotation: -90,
