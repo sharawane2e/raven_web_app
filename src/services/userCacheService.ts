@@ -20,6 +20,7 @@ import { getChartOptions } from "../utils/ChartOptionFormatter";
 import { QuestionType } from "../enums/QuestionType";
 import ExportPdfCharts, { exportPrint } from "../components/ExportPdfCharts";
 import { setPdfExport } from "../redux/actions/exportActions";
+import { toggleSidebarUserCache } from "../redux/actions/sidebarAction";
 
 export const handleDeleteChartCache = (cacheIdsArr: any) => {
   const body = {
@@ -34,6 +35,7 @@ export const handleDeleteChartCache = (cacheIdsArr: any) => {
         store.dispatch(resetUserCache(updatedSavedChart));
         dispatch(setPdfExport([]));
         dispatch(setuserCacheActive(false));
+        dispatch(toggleSidebarUserCache(true));
         Toaster.warn(res.message);
       } else {
         Toaster.error(res.message);
@@ -134,6 +136,10 @@ export const handleExportChartCache = async (
       chartData.questionData = formatedQData[0];
       chartData.bannerQuestionData = formatedQData[1];
 
+      const signifiacnet = getsavedChart.map((saveChart: any) => {
+        return saveChart?.significant;
+      });
+
       chartData.chartOptions = {
         ...response.chartOptions,
         ...getChartOptions(
@@ -143,7 +149,13 @@ export const handleExportChartCache = async (
           response.data.bannerQuestionData,
           response.data.chartOptionsData,
           response.data.questionChartData,
-          response.data.bannerChartData
+          response.data.bannerChartData,
+          response.data.transposed,
+          response.data.chartLabelType,
+          response.data.chartType,
+          ...signifiacnet,
+          response.data.showMean,
+          response.data.chartOrientation
         ),
       };
     }

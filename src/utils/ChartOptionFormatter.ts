@@ -72,7 +72,7 @@ export const getChartOptions = (
 };
 
 const defaultitemStyle = {
-  enabled: true,
+  enabled: false,
   itemStyle: {
     color: "#666666",
     fontWeight: "normal",
@@ -241,16 +241,22 @@ export const getPlotOptionsSeries = (
         newDataLabels = updatedLabels?.normalFormatedataNumer;
       }
     }
-  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+  } else if (chartType === ChartType.STACK) {
     if (significant) {
       newDataLabels = updatedLabels?.dataUpdatedFormateUpdated;
     } else {
-      newDataLabels = updatedLabels?.dataUpdatedFormate;
+      // newDataLabels = updatedLabels?.dataUpdatedFormate;
       if (chartLabelType == ChartLabelType.PERCENTAGE) {
         newDataLabels = updatedLabels?.normalFormatedataLandScape;
       } else {
         newDataLabels = updatedLabels?.numberFormatedata;
       }
+    }
+  } else if (chartType === ChartType.PIE) {
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = updatedLabels?.dataUpdatePiePerCentage;
+    } else {
+      newDataLabels = updatedLabels?.dataUpdatePieNumber;
     }
   }
 

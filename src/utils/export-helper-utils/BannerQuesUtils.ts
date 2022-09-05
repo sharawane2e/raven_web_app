@@ -1,13 +1,13 @@
-import _ from 'lodash';
-import store from '../../redux/store';
-import { getTablesignificantdifference } from '../chart-option-util/significanceDiff';
+import _ from "lodash";
+import store from "../../redux/store";
+import { getTablesignificantdifference } from "../chart-option-util/significanceDiff";
 
 export function bannerChartDataGen(
   series: any,
   questionData: any,
   chartData: any,
   bannerQuestionData: any,
-  chartTranspose: boolean,
+  chartTranspose: boolean
 ) {
   const {
     chart: { significant },
@@ -52,8 +52,8 @@ export function bannerChartDataGen(
               percentageValue: 0,
               numberValue: 0,
               baseCount: 0,
-              significance: '',
-              significantDiffernce: '',
+              significance: "",
+              significantDiffernce: "",
             });
           }
         });
@@ -81,6 +81,7 @@ export function bannerChartDataGen(
       percentageValues,
     });
   });
+
   if (significant) {
     return getTablesignificantdifference(seriesData);
   }

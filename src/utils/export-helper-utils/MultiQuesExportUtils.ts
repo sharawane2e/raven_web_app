@@ -17,12 +17,16 @@ export function MultiQuesExportUtils(
     });
   });
 
-  series.forEach((seriesObject: any) => {
+  series.forEach((seriesObject: any, index: number) => {
     const name = seriesObject.name;
     const labels: string[] = [];
     const values: number[] = [];
+
     const currentLabelsArr = seriesObject.data.map(
       (dataObject: any) => dataObject.name
+    );
+    const signData = seriesObject.data.map(
+      (dataObject: any) => dataObject.significantDiffernce
     );
 
     allLabelsArr.forEach((labelName: string) => {
@@ -44,6 +48,7 @@ export function MultiQuesExportUtils(
       name,
       labels,
       values,
+      signData,
     });
   });
 

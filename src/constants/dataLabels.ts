@@ -48,16 +48,35 @@ export const updatedLabels = {
     rotation: 0,
     align: "center",
     y: 0,
-    //x: 15,
   },
   numberFormatedata: {
-    format: "{point.y:.0f}",
     rotation: 0,
     align: "center",
     y: 0,
   },
   dataUpdatedFormateUpdated: {
     enabled: true,
+    rotation: 0,
+    align: "center",
+    y: 0,
+  },
+  dataUpdatePiePerCentage: {
+    enabled: true,
+    format:
+      "<span style='font-weight:bold'>{point.name}</span>: {point.percentageValue:.1f}%",
+    rotation: 0,
+    align: "center",
+    y: 0,
+    style: {
+      fontSize: "10px",
+      textOutline: false,
+      fontWeight: null,
+    },
+  },
+  dataUpdatePieNumber: {
+    enabled: true,
+    format:
+      "<span style='font-weight:bold'>{point.name}</span>: {point.numberValue:.0f}",
     rotation: 0,
     align: "center",
     y: 0,

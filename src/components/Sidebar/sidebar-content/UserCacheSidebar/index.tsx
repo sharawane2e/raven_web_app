@@ -228,7 +228,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   };
 
   const userCacheDelete = () => {
-    dispatch(toggleSidebarUserCache(true));
+   
     const deleteSavedCharts = savedChart.filter(
       (chartElement) => chartElement.isSelected == true,
     );

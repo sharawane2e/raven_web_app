@@ -23,7 +23,7 @@ import _, { slice } from "lodash";
 import { setDefaultSlideProperties } from "./DefaultPptProps";
 import { getChartOptions } from "../ChartOptionFormatter";
 import { newChartDataGen } from "../export-helper-utils/newExportChartDataGen";
-import { PptGenExport } from "./PptGenExport";
+import { PptGenExport, PptGenExportSignificane } from "./PptGenExport";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
 import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 import { getChartRows } from "../table-option-util";
@@ -97,6 +97,8 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       chartOrientation: undefined,
     };
 
+    //  console.log(chartOptionsPayload);
+
     const newSeriesData = {
       ...getChartOptions(
         chartOptionsPayload.questionData,
@@ -106,7 +108,12 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.chartOptionsData,
         chartOptionsPayload.questionChartData,
         chartOptionsPayload.bannerChartData,
-        chartOptionsPayload.transposed
+        chartOptionsPayload.transposed,
+        chartOptionsPayload.chartLabelType,
+        chartOptionsPayload.chartType,
+        chartOptionsPayload.significant,
+        chartOptionsPayload.showMean,
+        chartOptionsPayload.chartOrientation
       ),
     };
 
@@ -131,7 +138,23 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         seriesData,
         chartOrientation
       );
-      console.log(seriesData);
+
+      /*This code use for ppt export signficance with table  */
+      if (payloadObjectArr[i].chart.significant) {
+        let slide1 = pptxGenJsObj.addSlide({ masterName: `slide_${i}` });
+        const filledSeries = fillEmptyDateSeries(
+          chartOptionsPayload.questionData.type,
+          JSON.parse(JSON.stringify(newSeriesData.series)),
+          chartOptionsPayload.transposed,
+          chartOptionsPayload.questionData,
+          chartOptionsPayload.bannerQuestionData,
+          chartOptionsPayload.chartData
+        );
+        const chartRows = getChartRows(filledSeries, chartOptionsPayload)[0];
+        const output = PptGenExportSignificane(chartRows);
+        slide1.addTable(output, { ...tableConfig });
+      }
+      /*End */
 
       slide.addChart(pptChartType, seriesData, {
         ...chartConfig,

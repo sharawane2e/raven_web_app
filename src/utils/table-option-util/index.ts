@@ -1,15 +1,15 @@
-import { QuestionType } from '../../enums/QuestionType';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { gridTable } from './gridTable';
-import { multiGridTable } from './multiGridTable';
-import { multiTable } from './multiTable';
-import { numberTable } from './numberTabel';
-import { singleTable } from './singleTable';
-import { rankTable } from './rankTable';
+import { QuestionType } from "../../enums/QuestionType";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { gridTable } from "./gridTable";
+import { multiGridTable } from "./multiGridTable";
+import { multiTable } from "./multiTable";
+import { numberTable } from "./numberTabel";
+import { singleTable } from "./singleTable";
+import { rankTable } from "./rankTable";
 
 export const getChartRows = (
   chartSeries: any,
-  chartOptionsPayload: IchartOptionsDto,
+  chartOptionsPayload: IchartOptionsDto
 ) => {
   const chartRows: any[] = [];
   if (chartOptionsPayload.questionData.type == QuestionType.GRID) {

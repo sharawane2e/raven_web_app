@@ -6,8 +6,8 @@ import {
   dataLabelFontSize,
   dataLabelColor,
   chartAxisColor,
-} from '../constants/Variables';
-import pptxgen from 'pptxgenjs';
+} from "../constants/Variables";
+import pptxgen from "pptxgenjs";
 
 export const chartConfig: pptxgen.IChartOpts = {
   x: 0.3,
@@ -30,15 +30,15 @@ export const chartConfig: pptxgen.IChartOpts = {
   showLegend: false,
   showTitle: false,
   showPercent: false,
-  displayBlanksAs: 'gap',
-  legendPos: 'b',
-  dataBorder: { pt: 0.5, color: '0000ffff' },
+  displayBlanksAs: "gap",
+  legendPos: "b",
+  dataBorder: { pt: 0.5, color: "0000ffff" },
   valAxisHidden: true,
-  catGridLine: { style: 'none' },
-  valGridLine: { style: 'none' },
+  catGridLine: { style: "none" },
+  valGridLine: { style: "none" },
   dataLabelColor: dataLabelColor,
-  dataLabelFormatCode: '#,###;;;$',
-  valLabelFormatCode: '#,###;;;$',
+  dataLabelFormatCode: "#,###;;;$",
+  valLabelFormatCode: "#,###;;;$",
 };
 
 export const tableConfig: pptxgen.TableProps = {
@@ -47,7 +47,7 @@ export const tableConfig: pptxgen.TableProps = {
   //h: 3.3,
   w: 9.4,
   // rowH: 2,
-  border: { pt: 0.4, type: 'solid', color: 'E6E6E6' },
+  border: { pt: 0.4, type: "solid", color: "E6E6E6" },
   fontSize: 6,
   autoPage: true,
   autoPageHeaderRows: 1,
