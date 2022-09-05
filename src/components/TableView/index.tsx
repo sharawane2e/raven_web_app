@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { Scrollbars } from 'react-custom-scrollbars';
-import clsx from 'clsx';
-import { getChartOptions } from '../../utils/ChartOptionFormatter';
-import { IchartOptionsDto } from '../../types/IChartOptionsDto';
-import { fillEmptyDateSeries } from '../../utils/chart-option-util/significanceDiff';
-import { getChartRows } from '../../utils/table-option-util';
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { Scrollbars } from "react-custom-scrollbars";
+import clsx from "clsx";
+import { getChartOptions } from "../../utils/ChartOptionFormatter";
+import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { fillEmptyDateSeries } from "../../utils/chart-option-util/significanceDiff";
+import { getChartRows } from "../../utils/table-option-util";
 
 interface TableProps {}
 
@@ -37,17 +37,20 @@ const TableView: React.FC<TableProps> = (props) => {
     chartType,
     significant,
     showMean,
+    chartOrientation: undefined,
   };
 
   const getChartData = getChartOptions();
+
   const filledSeries = fillEmptyDateSeries(
     chart.questionData.type,
     JSON.parse(JSON.stringify(getChartData.series)),
     chart.transposed,
     chart.questionData,
     chart.bannerQuestionData,
-    chart.chartData,
+    chart.chartData
   );
+
   const chartRows: any[] = getChartRows(filledSeries, chart)[0];
 
   return (
@@ -59,15 +62,15 @@ const TableView: React.FC<TableProps> = (props) => {
               {row.map((col: any, colIndex: number) => (
                 <div
                   className={clsx({
-                    'Table-row-item': true,
-                    minValue: col.minMax == 'min' ? true : false,
-                    maxValue: col.minMax == 'max' ? true : false,
+                    "Table-row-item": true,
+                    minValue: col.minMax == "min" ? true : false,
+                    maxValue: col.minMax == "max" ? true : false,
                   })}
                 >
-                  {col.text}{' '}
+                  {col.text}{" "}
                   {col.significantDiffernce ? (
                     <span className="significante-color table-significante">
-                      - {col.significantDiffernce}
+                      {col.significantDiffernce}
                     </span>
                   ) : null}
                 </div>

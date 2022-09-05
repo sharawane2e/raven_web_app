@@ -16,18 +16,16 @@
   width: 160px;
   margin-top: -50px;
   margin-left: -70px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
   padding: 10px;
   box-sizing: border-box;
 }
 @keyframes loading {
   0% {
-    background-color: #323c4e;
+    background-color: #723c82;
   }
 
   30% {
-    background-color: #f1ad0f;
+    background-color: #f47c3c;
   }
   50% {
     height: 100px;
@@ -35,11 +33,11 @@
   }
 
   80% {
-    background-color: #f1ad0f;
+    background-color: #f47c3c;
   }
 
   100% {
-    background-color: #323c4e;
+    background-color: #723c82;
   }
 }
 

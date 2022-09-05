@@ -47,7 +47,7 @@ export const dataLabels = {
   style: {
     fontSize: "10px",
     textOutline: false,
-    fontWeight: null,
+    fontWeight: "unset",
   },
 };
 
@@ -59,32 +59,24 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      format: "{point.y:.1f}%",
-      // formatter: function (this: any) {
-      //   console.log(this);
-      //   // if (this.y > 100) {
-      //   //   return this.y + 'CB';
-      //   // }
-      //   return this.y;
-      // },
-      // formatter: function (this: any, options: any) {
-      //   return ` ${parseFloat(this.y.toFixed(2))}${
-      //     ChartLabelType.PERCENTAGE ? "%" : ""
-      //   } <span class="significante-color">${
-      //     this.point.significantDiffernce ? this.point.significantDiffernce : ""
-      //   } </span>`;
-      // },
+      formatter: function (this: any, options: any) {
+        return ` ${parseFloat(this.y.toFixed(2))}${
+          ChartLabelType.PERCENTAGE ? "%" : ""
+        } ${
+          this.point.significantDiffernce ? this.point.significantDiffernce : ""
+        }`;
+      },
       allowOverlap: true,
       rotation: -90,
-      //align: "top",
+      align: "top",
       x: 0,
-      y: -20,
+      y: -6,
       crop: false,
-      // style: {
-      //   fontSize: "10px",
-      //   textOutline: false,
-      //   fontWeight: null,
-      // },
+      style: {
+        fontSize: "10px",
+        textOutline: false,
+        fontWeight: "unset",
+      },
     },
   },
 };
@@ -93,7 +85,6 @@ const initialState: IChartState = {
   chartLoading: false,
   fullScreenLoading: false,
   questionData: null,
-  // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
   questionChartData: null,
@@ -111,14 +102,15 @@ const initialState: IChartState = {
     chart: {
       type: "column",
       style: {
-        fontFamily: `"Avenir", Arial`,
+        fontFamily: `Arial, Helvetica, sans-serif`,
       },
       //margin: [70, 0, 80, 0],
     },
     legend: {
-      enabled: true,
+      enabled: false,
       reversed: false,
     },
+
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
       pointFormat:
@@ -132,6 +124,7 @@ const initialState: IChartState = {
       reversedStacks: false,
     },
     plotOptions: defaultPlotOptions,
+
     series: [
       {
         data: [],
@@ -161,16 +154,9 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
-    // const type = state.questionData?.type;
-    // let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
-
-    // if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
-    //   chartOptions = changeChartOptions(chartOptions, action.payload);
-    // }
     return {
       ...state,
       chartType: action.payload,
-      // chartOptions,
     };
   });
 
@@ -215,7 +201,8 @@ const chartReducer = createReducer(initialState, (builder) => {
         type: "column",
 
         style: {
-          fontFamily: `"Avenir", Arial`,
+          fontWeight: "normal",
+          fontFamily: `Arial, Helvetica, sans-serif`,
         },
       },
       legend: {

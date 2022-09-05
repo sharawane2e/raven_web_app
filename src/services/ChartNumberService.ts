@@ -1,16 +1,15 @@
-import store from "../redux/store";
 import { IQuestion } from "../types/IQuestion";
-import {
-  colorArr,
-  dataLabelsNumberFormate,
-  primaryBarColor,
-} from "../constants/Variables";
+import { colorArr, primaryBarColor } from "../constants/Variables";
 import { getNumberPlotOptions, getToolTip } from "../utils/NumberPlotOptions";
 import { ChartType } from "../enums/ChartType";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { getmean, getmedian, getmin, getmax } from "../utils/simplestatistics";
 import { getMedian } from "../utils/Utility";
 import { IchartOptionsDto } from "../types/IChartOptionsDto";
+import { updatedLabels } from "../constants/dataLabels";
+import { ChartLabelType } from "../enums/ChartLabelType";
+import store from "../redux/store";
+import { ChartOrientation } from "../enums/ChartOrientation";
 
 export const getNumberChartOption = (chart: IchartOptionsDto) => {
   const {
@@ -38,12 +37,22 @@ export const getNumberChartOption = (chart: IchartOptionsDto) => {
         chartData,
         baseCount,
         bannerQuestionData,
-        transposed
+        transposed,
+        significant,
+        chartLabelType,
+        chartType
       )
     );
   } else {
     series.push(
-      ...getNumberChartData(questionData, chartData, baseCount, chartType)
+      ...getNumberChartData(
+        questionData,
+        chartData,
+        baseCount,
+        chartType,
+        significant,
+        chartLabelType
+      )
     );
   }
 
@@ -61,10 +70,13 @@ const getNumberChartData = (
   questionData: IQuestion,
   chartData: any[],
   baseCount: number,
-  chartType: any
+  chartType: any,
+  significant: any,
+  chartLabelType: any
 ) => {
   const series: any[] = [];
   const data: any[] = [];
+  const newchartOrientation = store.getState().chart.chartOrientation;
 
   let values: any;
   let weightedValueSum: any;
@@ -92,6 +104,25 @@ const getNumberChartData = (
     });
   });
 
+  let newDataLabels: any;
+  if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
+    newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+      newDataLabels = updatedLabels?.numberFormatedata;
+    }
+  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+    if (significant) {
+      newDataLabels = updatedLabels?.dataUpdatedFormateUpdated;
+    } else {
+      newDataLabels = updatedLabels?.dataUpdatedFormate;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        //newDataLabels = updatedLabels?.normalFormatedata;
+      } else {
+        newDataLabels = updatedLabels?.numberFormatedata;
+      }
+    }
+  }
+
   if (chartType === ChartType.STACK) {
     data.map((element: any, index: number) => {
       const name = element.name;
@@ -103,11 +134,12 @@ const getNumberChartData = (
           baseCount: element.baseCount,
         },
       ];
+
       series.push({
         name,
         color,
         data,
-        dataLabels: { ...dataLabelsNumberFormate },
+        dataLabels: { ...newDataLabels },
       });
     });
   } else {
@@ -115,7 +147,7 @@ const getNumberChartData = (
       color: primaryBarColor,
       name: questionData?.labelText,
       data,
-      dataLabels: { ...dataLabelsNumberFormate },
+      dataLabels: { ...newDataLabels },
     });
   }
 
@@ -127,10 +159,14 @@ const bannerNumberChart = (
   chartData: any,
   baseCount: any,
   bannerQuestionData: any,
-  transposed: any
+  transposed: any,
+  significant: any,
+  chartLabelType: any,
+  chartType: any
 ) => {
   const series: any[] = [];
   const meanMaxArr: any = {};
+  const newchartOrientation = store.getState().chart.chartOrientation;
 
   const subGroups = questionData.options.filter((option: IQuestionOption) => {
     const subGroup = [option.labelCode];
@@ -139,6 +175,25 @@ const bannerNumberChart = (
   });
 
   let optionData = chartData[0];
+
+  let newDataLabels: any;
+  if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
+    newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+      newDataLabels = updatedLabels?.normalFormatedata;
+    }
+  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+    if (significant) {
+      newDataLabels = updatedLabels?.dataUpdatedFormateUpdated;
+    } else {
+      newDataLabels = updatedLabels?.dataUpdatedFormate;
+      if (chartLabelType == ChartLabelType.PERCENTAGE) {
+        //newDataLabels = updatedLabels?.normalFormatedata;
+      } else {
+        newDataLabels = updatedLabels?.numberFormatedata;
+      }
+    }
+  }
 
   for (let key in optionData) {
     if (optionData[key].length == 0) {
@@ -182,7 +237,7 @@ const bannerNumberChart = (
         name: bannerQuesOption?.labelText,
         data,
         dataLabels: {
-          ...dataLabelsNumberFormate,
+          ...newDataLabels,
         },
       });
   }
@@ -207,7 +262,7 @@ const bannerNumberChart = (
           name: seriesName,
           data,
           dataLabels: {
-            ...dataLabelsNumberFormate,
+            ...newDataLabels,
           },
         });
     }

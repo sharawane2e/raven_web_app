@@ -1,14 +1,7 @@
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { getMatchedfilter, getmatchedFind, round } from "../Utility";
-import {
-  colorArr,
-  dataLabelsFormate,
-  dataLabelsNumberFormate,
-  dataUpdatedFormate,
-  decimalPrecision2,
-  showMeanFormate,
-} from "../../constants/Variables";
+import { colorArr, decimalPrecision2 } from "../../constants/Variables";
 import { StaticText } from "../../constants/StaticText";
 import {
   getsampleStandardDeviation,
@@ -16,6 +9,10 @@ import {
 } from "../simplestatistics";
 import { getsignificantdifference } from "./significanceDiff";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
+import { getPlotOptionsSeries } from "../ChartOptionFormatter";
+import { updatedLabels } from "../../constants/dataLabels";
+import { ChartType } from "../../enums/ChartType";
+import { ChartOrientation } from "../../enums/ChartOrientation";
 
 export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
   const {
@@ -29,6 +26,7 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
   const categories = [];
   const series = [];
@@ -86,16 +84,12 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
           baseCount: base,
         });
       }
-      let newDataLabels;
-      if (significant) {
-        newDataLabels = dataUpdatedFormate;
-      } else {
-        if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          newDataLabels = dataLabelsFormate;
-        } else {
-          newDataLabels = dataLabelsNumberFormate;
-        }
-      }
+      const newDataLabels = getPlotOptionsSeries(
+        significant,
+        chartLabelType,
+        chartType,
+        chartOrientation
+      );
       series.push({
         name: scale.labelText,
         color: colorArr[scaleIndex < colorArr.length ? scaleIndex : 0],
@@ -134,6 +128,7 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
   const series = [];
   for (let i = 0; i < questionData.subGroups.length; i++) {
@@ -188,16 +183,12 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
         baseCount: baseCount,
       });
     }
-    let newDataLabels;
-    if (significant) {
-      newDataLabels = dataUpdatedFormate;
-    } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = dataLabelsFormate;
-      } else {
-        newDataLabels = dataLabelsNumberFormate;
-      }
-    }
+    const newDataLabels = getPlotOptionsSeries(
+      significant,
+      chartLabelType,
+      chartType,
+      chartOrientation
+    );
     series.push({
       name: currentSubGroup.labelText,
       data,
@@ -222,11 +213,13 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
     chartLabelType,
     chartType,
     significant,
+    chartOrientation,
   } = chart;
 
   const data: any[] = [];
   const standardDeviation: any[] = [];
   const standardError: any[] = [];
+  let newDataLabels;
 
   for (
     let optionIndex = 0;
@@ -291,13 +284,23 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
   const seriesLabels = StaticText.GRID_MEAN_SD_SE.split(",");
   const seriesData = [data, standardDeviation, standardError];
 
+  if (chartType === ChartType.STACK) {
+    newDataLabels = updatedLabels?.numberFormatedata;
+  } else {
+    if (chartOrientation == ChartOrientation.LANDSCAPE) {
+      newDataLabels = updatedLabels?.showMeanFormateLand;
+    } else {
+      newDataLabels = updatedLabels?.showMeanFormate;
+    }
+  }
+
   for (let i = 0; i < 3; i++) {
     series.push({
       name: seriesLabels[i],
       color: colorArr[i],
       data: seriesData[i],
       dataLabels: {
-        ...showMeanFormate,
+        ...newDataLabels,
       },
     });
   }
@@ -330,13 +333,12 @@ export const getGridMeanChartOptions = (chart: IchartOptionsDto): any => {
           },
         ],
         dataLabels: {
-          ...dataLabelsNumberFormate,
+          ...newDataLabels,
         },
       });
     }
 
     series.length = 0;
-
     series.push(...transposeSeries);
   }
 
