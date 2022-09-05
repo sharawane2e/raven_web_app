@@ -59,7 +59,7 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      // format: '{point.y:.1f}%',
+      format: "{point.y:.1f}%",
       // formatter: function (this: any) {
       //   console.log(this);
       //   // if (this.y > 100) {
@@ -67,24 +67,24 @@ export const defaultPlotOptions = {
       //   // }
       //   return this.y;
       // },
-      formatter: function (this: any, options: any) {
-        return ` ${parseFloat(this.y.toFixed(2))}${
-          ChartLabelType.PERCENTAGE ? "%" : ""
-        } <span class="significante-color">${
-          this.point.significantDiffernce ? this.point.significantDiffernce : ""
-        } </span>`;
-      },
+      // formatter: function (this: any, options: any) {
+      //   return ` ${parseFloat(this.y.toFixed(2))}${
+      //     ChartLabelType.PERCENTAGE ? "%" : ""
+      //   } <span class="significante-color">${
+      //     this.point.significantDiffernce ? this.point.significantDiffernce : ""
+      //   } </span>`;
+      // },
       allowOverlap: true,
       rotation: -90,
-      align: "top",
+      //align: "top",
       x: 0,
-      y: -6,
+      y: -20,
       crop: false,
-      style: {
-        fontSize: "10px",
-        textOutline: false,
-        fontWeight: null,
-      },
+      // style: {
+      //   fontSize: "10px",
+      //   textOutline: false,
+      //   fontWeight: null,
+      // },
     },
   },
 };
