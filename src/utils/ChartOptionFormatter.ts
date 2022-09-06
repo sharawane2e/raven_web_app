@@ -72,7 +72,7 @@ export const getChartOptions = (
 };
 
 const defaultitemStyle = {
-  enabled: true,
+  enabled: false,
   itemStyle: {
     color: "#666666",
     fontWeight: "normal",
@@ -234,23 +234,43 @@ export const getPlotOptionsSeries = (
     }
   }
   if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
-    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = updatedLabels?.normalFormatedata;
+    if (significant) {
+      if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+        newDataLabels = updatedLabels?.dataUpdatedFormateLandscpae;
       } else {
-        newDataLabels = updatedLabels?.normalFormatedataNumer;
+        newDataLabels = updatedLabels?.dataUpdatedFormate;
+      }
+    } else {
+      if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = updatedLabels?.normalFormatedata;
+        } else {
+          newDataLabels = updatedLabels?.normalFormatedataNumer;
+        }
+      } else {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = updatedLabels?.dataLabelsFormate;
+        } else {
+          newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+        }
       }
     }
-  } else if (chartType === ChartType.STACK || chartType === ChartType.PIE) {
+  } else if (chartType === ChartType.STACK) {
     if (significant) {
       newDataLabels = updatedLabels?.dataUpdatedFormateUpdated;
     } else {
-      newDataLabels = updatedLabels?.dataUpdatedFormate;
+      // newDataLabels = updatedLabels?.dataUpdatedFormate;
       if (chartLabelType == ChartLabelType.PERCENTAGE) {
         newDataLabels = updatedLabels?.normalFormatedataLandScape;
       } else {
         newDataLabels = updatedLabels?.numberFormatedata;
       }
+    }
+  } else if (chartType === ChartType.PIE) {
+    if (chartLabelType == ChartLabelType.PERCENTAGE) {
+      newDataLabels = updatedLabels?.dataUpdatePiePerCentage;
+    } else {
+      newDataLabels = updatedLabels?.dataUpdatePieNumber;
     }
   }
 

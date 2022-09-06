@@ -1,16 +1,13 @@
 import store from "../redux/store";
 import { IQuestion } from "../types/IQuestion";
-import {
-  colorArr,
-  dataLabelsNumberFormate,
-  primaryBarColor,
-} from "../constants/Variables";
+import { colorArr, primaryBarColor } from "../constants/Variables";
 import { getNumberPlotOptions, getToolTip } from "../utils/NumberPlotOptions";
 import { ChartType } from "../enums/ChartType";
 import { IQuestionOption } from "../types/IBaseQuestion";
 import { getmean, getmedian, getmin, getmax } from "../utils/simplestatistics";
 import { getMedian } from "../utils/Utility";
 import { IchartOptionsDto } from "../types/IChartOptionsDto";
+import { updatedLabels } from "../constants/dataLabels";
 
 export const getNumberChartOption = (chart: IchartOptionsDto) => {
   const {
@@ -107,7 +104,7 @@ const getNumberChartData = (
         name,
         color,
         data,
-        dataLabels: { ...dataLabelsNumberFormate },
+        dataLabels: { ...updatedLabels?.dataLabelsNumberFormate },
       });
     });
   } else {
@@ -115,7 +112,7 @@ const getNumberChartData = (
       color: primaryBarColor,
       name: questionData?.labelText,
       data,
-      dataLabels: { ...dataLabelsNumberFormate },
+      dataLabels: { ...updatedLabels?.dataLabelsNumberFormate },
     });
   }
 
@@ -182,7 +179,7 @@ const bannerNumberChart = (
         name: bannerQuesOption?.labelText,
         data,
         dataLabels: {
-          ...dataLabelsNumberFormate,
+          ...updatedLabels?.dataLabelsNumberFormate,
         },
       });
   }
@@ -207,7 +204,7 @@ const bannerNumberChart = (
           name: seriesName,
           data,
           dataLabels: {
-            ...dataLabelsNumberFormate,
+            ...updatedLabels?.dataLabelsNumberFormate,
           },
         });
     }

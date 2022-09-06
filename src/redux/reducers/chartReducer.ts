@@ -1,8 +1,11 @@
-import { createReducer } from '@reduxjs/toolkit';
-import { ChartLabelType } from '../../enums/ChartLabelType';
-import { ChartOrientation } from '../../enums/ChartOrientation';
-import { ChartType } from '../../enums/ChartType';
-import { IQuestion } from '../../types/IQuestion';
+import { createReducer } from "@reduxjs/toolkit";
+//import { StaticText } from '../../constants/StaticText';
+import { ChartLabelType } from "../../enums/ChartLabelType";
+import { ChartOrientation } from "../../enums/ChartOrientation";
+import { ChartType } from "../../enums/ChartType";
+//import { QuestionType } from '../../enums/QuestionType';
+import { IQuestion } from "../../types/IQuestion";
+//import { changeChartOptions } from '../../utils/ChartOptionFormatter';
 import {
   setChartData,
   setChartOrientation,
@@ -16,7 +19,7 @@ import {
   updateChartOptions,
   updateSignificant,
   setFullScreenLoading,
-} from '../actions/chartActions';
+} from "../actions/chartActions";
 
 export interface IChartState {
   chartLoading: boolean;
@@ -42,9 +45,9 @@ export const dataLabels = {
   enabled: true,
   // format: "{point.y:.1f}%",
   style: {
-    fontSize: '10px',
+    fontSize: "10px",
     textOutline: false,
-    fontWeight: null,
+    fontWeight: "unset",
   },
 };
 
@@ -56,31 +59,23 @@ export const defaultPlotOptions = {
     shadow: false,
     dataLabels: {
       enabled: true,
-      // format: '{point.y:.1f}%',
-      // formatter: function (this: any) {
-      //   console.log(this);
-      //   // if (this.y > 100) {
-      //   //   return this.y + 'CB';
-      //   // }
-      //   return this.y;
-      // },
       formatter: function (this: any, options: any) {
         return ` ${parseFloat(this.y.toFixed(2))}${
-          ChartLabelType.PERCENTAGE ? '%' : ''
-        } <span class="significante-color">${
-          this.point.significantDiffernce ? this.point.significantDiffernce : ''
-        } </span>`;
+          ChartLabelType.PERCENTAGE ? "%" : ""
+        } ${
+          this.point.significantDiffernce ? this.point.significantDiffernce : ""
+        }`;
       },
       allowOverlap: true,
       rotation: -90,
-      align: 'top',
+      align: "top",
       x: 0,
       y: -6,
       crop: false,
       style: {
-        fontSize: '10px',
+        fontSize: "10px",
         textOutline: false,
-        fontWeight: null,
+        fontWeight: "unset",
       },
     },
   },
@@ -90,7 +85,6 @@ const initialState: IChartState = {
   chartLoading: false,
   fullScreenLoading: false,
   questionData: null,
-  // openQSelection:false,
   bannerQuestionData: null,
   chartData: [],
   questionChartData: null,
@@ -103,32 +97,34 @@ const initialState: IChartState = {
   significant: false,
   chartOptions: {
     title: {
-      text: '',
+      text: "",
     },
     chart: {
-      type: 'column',
+      type: "column",
       style: {
-        fontFamily: `"Avenir", Arial`,
+        fontFamily: `Arial, Helvetica, sans-serif`,
       },
       //margin: [70, 0, 80, 0],
     },
     legend: {
-      enabled: true,
+      enabled: false,
       reversed: false,
     },
+
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
       pointFormat:
-        '<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
+        "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>",
     },
     xAxis: {
-      type: 'category',
+      type: "category",
     },
     yAxis: {
       visible: false,
       reversedStacks: false,
     },
     plotOptions: defaultPlotOptions,
+
     series: [
       {
         data: [],
@@ -158,16 +154,9 @@ const chartReducer = createReducer(initialState, (builder) => {
   }));
 
   builder.addCase(setChartType, (state, action) => {
-    // const type = state.questionData?.type;
-    // let chartOptions = JSON.parse(JSON.stringify(state.chartOptions));
-
-    // if (type === QuestionType.SINGLE || type === QuestionType.MULTI) {
-    //   chartOptions = changeChartOptions(chartOptions, action.payload);
-    // }
     return {
       ...state,
       chartType: action.payload,
-      // chartOptions,
     };
   });
 
@@ -206,13 +195,14 @@ const chartReducer = createReducer(initialState, (builder) => {
     chartData: [],
     chartOptions: {
       title: {
-        text: '',
+        text: "",
       },
       chart: {
-        type: 'column',
+        type: "column",
 
         style: {
-          fontFamily: `"Avenir", Arial`,
+          fontWeight: "normal",
+          fontFamily: `Arial, Helvetica, sans-serif`,
         },
       },
       legend: {
@@ -222,10 +212,10 @@ const chartReducer = createReducer(initialState, (builder) => {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
         pointFormat:
-          '<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>',
+          "<span>{point.name}</span>: <b>{point.y:.2f}%</b> of total <b>{point.baseCount}</b><br/>",
       },
       xAxis: {
-        type: 'category',
+        type: "category",
       },
       yAxis: {
         visible: false,

@@ -1,6 +1,6 @@
 import { QuestionType } from "../../enums/QuestionType";
 import { IQuestionOption } from "../../types/IBaseQuestion";
-import { IQuestion } from "../../types/IQuestion";
+// import { IQuestion } from "../../types/IQuestion";
 import _, { find } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
 import { getMatchedfilter, getmatchedFind, getSum } from "../Utility";

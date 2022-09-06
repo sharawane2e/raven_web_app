@@ -212,13 +212,13 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     dispatch(setFilters(_cacheQuestion[0]["filter"]));
     dispatch(updateSignificant(_cacheQuestion[0]["significant"]));
     dispatch(setshowMean(_cacheQuestion[0]["showMean"]));
+    dispatch(setChartLabel(_cacheQuestion[0]["chartLabelType"]));
+    dispatch(setChartOrientation(_cacheQuestion[0]["chartOrientation"]));
     fetchChartData()
       .then((chartData) => {
         userChapterShow(chartData);
         dispatch(setChartData(chartData));
-        dispatch(setChartLabel(_cacheQuestion[0]["chartLabelType"]));
         changeChartType(_cacheQuestion[0]["chartType"]);
-        dispatch(setChartOrientation(_cacheQuestion[0]["chartOrientation"]));
         dispatch(setChartTranspose(false));
         if (_cacheQuestion[0]["chartTranspose"]) {
           transposeChart();

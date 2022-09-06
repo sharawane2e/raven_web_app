@@ -141,7 +141,7 @@ const ChartContent: React.FC<ChartContentProps> = (props) => {
         dispatch(setChartLabel(ChartLabelType?.PERCENTAGE));
       }
     }
-    var el = document.getElementById("Group_4227");
+    let el = document.getElementById("Path_13295");
     if (el) {
       el.addEventListener("click", selectQuestion, false);
     }
