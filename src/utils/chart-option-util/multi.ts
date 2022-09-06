@@ -118,14 +118,14 @@ const getChartMultiChartSeries = (
         return o.labelCode === option.labelCode;
       });
       if (seriesObject?.labelCode.split("_")[0] == "N") {
-        data.push({
-          name: option.labelText,
-          y: plotValue,
-          percentageValue,
-          numberValue,
-          baseCount: baseCount,
-          color: "#f1ad0f",
-        });
+        // data.push({
+        //   name: option.labelText,
+        //   y: plotValue,
+        //   percentageValue,
+        //   numberValue,
+        //   baseCount: baseCount,
+        //   color: "#f1ad0f",
+        // });
       } else {
         data.push({
           name: option.labelText,

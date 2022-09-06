@@ -106,7 +106,12 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.chartOptionsData,
         chartOptionsPayload.questionChartData,
         chartOptionsPayload.bannerChartData,
-        chartOptionsPayload.transposed
+        chartOptionsPayload.transposed,
+        chartOptionsPayload.chartLabelType,
+        chartOptionsPayload.chartType,
+        chartOptionsPayload.significant,
+        chartOptionsPayload.showMean,
+        chartOptionsPayload.chartOrientation
       ),
     };
 
