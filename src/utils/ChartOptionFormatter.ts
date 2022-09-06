@@ -234,17 +234,25 @@ export const getPlotOptionsSeries = (
     }
   }
   if (chartType === ChartType.COLUMN || chartType === ChartType.LINE) {
-    if (newchartOrientation == ChartOrientation.LANDSCAPE) {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = updatedLabels?.normalFormatedata;
+    if (significant) {
+      if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+        newDataLabels = updatedLabels?.dataUpdatedFormateLandscpae;
       } else {
-        newDataLabels = updatedLabels?.normalFormatedataNumer;
+        newDataLabels = updatedLabels?.dataUpdatedFormate;
       }
     } else {
-      if (chartLabelType == ChartLabelType.PERCENTAGE) {
-        newDataLabels = updatedLabels?.dataLabelsFormate;
+      if (newchartOrientation == ChartOrientation.LANDSCAPE) {
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = updatedLabels?.normalFormatedata;
+        } else {
+          newDataLabels = updatedLabels?.normalFormatedataNumer;
+        }
       } else {
-        newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+        if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          newDataLabels = updatedLabels?.dataLabelsFormate;
+        } else {
+          newDataLabels = updatedLabels?.dataLabelsNumberFormate;
+        }
       }
     }
   } else if (chartType === ChartType.STACK) {

@@ -5,47 +5,47 @@ import {
   Typography,
   Tooltip,
   MenuItem,
-} from '@material-ui/core';
-import { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { ComponentType, useState, useEffect } from 'react';
-import store, { RootState } from '../../../../redux/store';
-import CustomScrollbar from '../../../CustomScrollbar';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import CloseIcon from '@mui/icons-material/Close';
-import { toggleSidebarUserCache } from '../../../../redux/actions/sidebarAction';
-import { ReactComponent as ColumnChartIcon } from '../../../../assets/svg/column-chart-icon.svg';
-import { ReactComponent as StackChartIcon } from '../../../../assets/svg/stack-chart-icon.svg';
-import { ReactComponent as TableIcon } from '../../../../assets/svg/table-icon.svg';
-import { ReactComponent as PieChartIcon } from '../../../../assets/svg/pie-chart.svg';
-import { ReactComponent as LineChartIcon } from '../../../../assets/svg/line_chart.svg';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { ReactComponent as NumberIcon } from '../../../../assets/svg/Number.svg';
-import { ReactComponent as PercentageIcon } from '../../../../assets/svg/Percentage.svg';
-import { ReactComponent as TransposeIcon } from '../../../../assets/svg/Transpose.svg';
-import { ReactComponent as TransferdataIcon } from '../../../../assets/svg/transfer_data.svg';
-import CircleCheckedFilled from '@material-ui/icons/CheckCircle';
-import CircleUnchecked from '@material-ui/icons/RadioButtonUnchecked';
-import CustomSkeleton from '../../../../skeletons/CustomSkeleton';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+} from "@material-ui/core";
+import { memo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { ComponentType, useState, useEffect } from "react";
+import store, { RootState } from "../../../../redux/store";
+import CustomScrollbar from "../../../CustomScrollbar";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import CloseIcon from "@mui/icons-material/Close";
+import { toggleSidebarUserCache } from "../../../../redux/actions/sidebarAction";
+import { ReactComponent as ColumnChartIcon } from "../../../../assets/svg/column-chart-icon.svg";
+import { ReactComponent as StackChartIcon } from "../../../../assets/svg/stack-chart-icon.svg";
+import { ReactComponent as TableIcon } from "../../../../assets/svg/table-icon.svg";
+import { ReactComponent as PieChartIcon } from "../../../../assets/svg/pie-chart.svg";
+import { ReactComponent as LineChartIcon } from "../../../../assets/svg/line_chart.svg";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { ReactComponent as NumberIcon } from "../../../../assets/svg/Number.svg";
+import { ReactComponent as PercentageIcon } from "../../../../assets/svg/Percentage.svg";
+import { ReactComponent as TransposeIcon } from "../../../../assets/svg/Transpose.svg";
+import { ReactComponent as TransferdataIcon } from "../../../../assets/svg/transfer_data.svg";
+import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
+import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
+import CustomSkeleton from "../../../../skeletons/CustomSkeleton";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {
   resetUserCache,
   setDialog,
   setInCache,
   setUserCacheId,
-} from '../../../../redux/actions/userCacheActions';
-import _ from 'lodash';
+} from "../../../../redux/actions/userCacheActions";
+import _ from "lodash";
 import {
   handelUpdatedUserCache,
   handleDeleteChartCache,
   handleExportChartCache,
-} from '../../../../services/userCacheService';
+} from "../../../../services/userCacheService";
 import {
   setSelectedBannerQuestionId,
   setSelectedQuestionId,
   setSelectedQuestionText,
-} from '../../../../redux/actions/questionAction';
+} from "../../../../redux/actions/questionAction";
 
 import {
   setChartData,
@@ -54,29 +54,29 @@ import {
   setChartTranspose,
   setshowMean,
   updateSignificant,
-} from '../../../../redux/actions/chartActions';
+} from "../../../../redux/actions/chartActions";
 
 import {
   changeChartType,
   fetchChartData,
   transposeChart,
-} from '../../../../services/ChartService';
+} from "../../../../services/ChartService";
 import {
   setAppliedFilters,
   setFilters,
-} from '../../../../redux/actions/filterActions';
-import { ChartType } from '../../../../enums/ChartType';
-import UserCacheSekeleton from '../../../../skeletons/UserCacheSekeleton';
-import Loader from '../../../widgets/Loader/Index';
-import clsx from 'clsx';
-import { setSelectedChapterId } from '../../../../redux/actions/chapterActions';
-import { StaticText } from '../../../../constants/StaticText';
-import CustomPopup from '../../../widgets/CutsomPopup';
-import { ReactComponent as SignificantDiffIcon } from '../../../../assets/svg/signf-d.svg';
-import { significantText } from '../../../../constants/Variables';
-import { Divider, Menu } from '@mui/material';
-import { ReactComponent as PdfIcon } from '../../../../assets/svg/pdf-icon.svg';
-import { ReactComponent as PptIcon } from '../../../../assets/svg/ppt-icon.svg';
+} from "../../../../redux/actions/filterActions";
+import { ChartType } from "../../../../enums/ChartType";
+import UserCacheSekeleton from "../../../../skeletons/UserCacheSekeleton";
+import Loader from "../../../widgets/Loader/Index";
+import clsx from "clsx";
+import { setSelectedChapterId } from "../../../../redux/actions/chapterActions";
+import { StaticText } from "../../../../constants/StaticText";
+import CustomPopup from "../../../widgets/CutsomPopup";
+import { ReactComponent as SignificantDiffIcon } from "../../../../assets/svg/signf-d.svg";
+import { significantText } from "../../../../constants/Variables";
+import { Divider, Menu } from "@mui/material";
+import { ReactComponent as PdfIcon } from "../../../../assets/svg/pdf-icon.svg";
+import { ReactComponent as PptIcon } from "../../../../assets/svg/ppt-icon.svg";
 
 export interface UserCacheProps {
   loaderSkeleton?: ComponentType;
@@ -84,13 +84,13 @@ export interface UserCacheProps {
 
 const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   const { sidebar, chart, chapters, userCache, filters } = useSelector(
-    (state: RootState) => state,
+    (state: RootState) => state
   );
   const [selectAll, setSelectAll] = useState<boolean>(false);
   const [selectAllSelf, setSelectAllSelf] = useState<number>(0);
   const [butttonshow, setButtonShow] = useState(true);
-  const [activeCacheId, setActiveCacheId] = useState<any>('');
-  const [activeShow, setActiveShow] = useState<any>('');
+  const [activeCacheId, setActiveCacheId] = useState<any>("");
+  const [activeShow, setActiveShow] = useState<any>("");
   const { savedChart, cacheId } = userCache;
   const chartQuestionData = chart?.questionData;
   const [anchorEl, setAnchorEl] = useState(null);
@@ -175,12 +175,12 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   const handleSingleSelect = (
     e: any,
     savedChartId: string,
-    selectValue: boolean,
+    selectValue: boolean
   ) => {
     if (e.target.checked) {
       setActiveCacheId(savedChartId);
     } else {
-      setActiveCacheId('');
+      setActiveCacheId("");
     }
     const _savedChart = JSON.parse(JSON.stringify(savedChart));
     _savedChart.forEach(function (singleCacheChart: any) {
@@ -196,31 +196,31 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
     event: any,
     selectValue: boolean,
     qtext: any,
-    qid: any,
+    qid: any
   ) => {
     setActiveShow(cacheId);
-    const questionTextId = qid + '-' + qtext;
+    const questionTextId = qid + "-" + qtext;
     dispatch(setUserCacheId(cacheId));
     dispatch(setInCache(true));
     dispatch(setSelectedQuestionText(questionTextId));
     const _cacheQuestion: any = savedChart.filter((userCacheinfo: any) => {
       return userCacheinfo?._id === cacheId;
     });
-    dispatch(setAppliedFilters(_cacheQuestion[0]['filter']));
-    dispatch(setSelectedQuestionId(_cacheQuestion[0]['qId']));
-    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]['bannerQuestion']));
-    dispatch(setFilters(_cacheQuestion[0]['filter']));
-    dispatch(updateSignificant(_cacheQuestion[0]['significant']));
-    dispatch(setshowMean(_cacheQuestion[0]['showMean']));
+    dispatch(setAppliedFilters(_cacheQuestion[0]["filter"]));
+    dispatch(setSelectedQuestionId(_cacheQuestion[0]["qId"]));
+    dispatch(setSelectedBannerQuestionId(_cacheQuestion[0]["bannerQuestion"]));
+    dispatch(setFilters(_cacheQuestion[0]["filter"]));
+    dispatch(updateSignificant(_cacheQuestion[0]["significant"]));
+    dispatch(setshowMean(_cacheQuestion[0]["showMean"]));
+    dispatch(setChartOrientation(_cacheQuestion[0]["chartOrientation"]));
     fetchChartData()
       .then((chartData) => {
         userChapterShow(chartData);
         dispatch(setChartData(chartData));
-        dispatch(setChartLabel(_cacheQuestion[0]['chartLabelType']));
-        changeChartType(_cacheQuestion[0]['chartType']);
-        dispatch(setChartOrientation(_cacheQuestion[0]['chartOrientation']));
+        dispatch(setChartLabel(_cacheQuestion[0]["chartLabelType"]));
+        changeChartType(_cacheQuestion[0]["chartType"]);
         dispatch(setChartTranspose(false));
-        if (_cacheQuestion[0]['chartTranspose']) {
+        if (_cacheQuestion[0]["chartTranspose"]) {
           transposeChart();
         }
       })
@@ -228,12 +228,11 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
   };
 
   const userCacheDelete = () => {
-   
     const deleteSavedCharts = savedChart.filter(
-      (chartElement) => chartElement.isSelected == true,
+      (chartElement) => chartElement.isSelected == true
     );
     const deleteSavedChartsIds = deleteSavedCharts.map(
-      (chartElement) => chartElement._id,
+      (chartElement) => chartElement._id
     );
 
     handleDeleteChartCache(deleteSavedChartsIds);
@@ -241,10 +240,10 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
 
   const userCacheExport = (getsavedChart: any, exportType: string) => {
     const exportSavedCharts = savedChart.filter(
-      (chartElement: any) => chartElement.isSelected == true,
+      (chartElement: any) => chartElement.isSelected == true
     );
     const exportSavedChartsIds: any = exportSavedCharts.map(
-      (chartElement: any) => chartElement._id,
+      (chartElement: any) => chartElement._id
     );
     handleExportChartCache(exportSavedChartsIds, getsavedChart, exportType);
   };
@@ -255,7 +254,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
       const getSelectedQuestionID: boolean = getchapter.QuestionsQIds.some(
         (el: any) => {
           return el === chapterQuestionid;
-        },
+        }
       );
       if (getSelectedQuestionID) {
         dispatch(setSelectedChapterId(getchapter?.chapterId));
@@ -297,7 +296,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
             className="user-cache__select-all"
           >
             {savedChart.length === 0 ? (
-              ''
+              ""
             ) : (
               <FormControlLabel
                 control={
@@ -311,7 +310,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                     onChange={(e) => {
                       handleSelectAll(!selectAll, e);
                     }}
-                    sx={{ color: '#fff' }}
+                    sx={{ color: "#fff" }}
                     checked={selectAll}
                   />
                 }
@@ -321,7 +320,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
 
             <CloseIcon
               onClick={closeSidebar}
-              sx={{ color: '#fff', cursor: 'pointer' }}
+              sx={{ color: "#fff", cursor: "pointer" }}
             />
           </Typography>
           <div className="user-cache__bottom-line"></div>
@@ -342,7 +341,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
             ) : (
               savedChart.map((savedata: any, index: any) => {
                 let cacheDate = new Date(savedata?.date);
-                const curentDate = cacheDate.toLocaleString('en-us');
+                const curentDate = cacheDate.toLocaleString("en-us");
                 return (
                   <div className="user-cache__sidebar" key={index}>
                     <div
@@ -350,8 +349,8 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                         activeShow == savedata?._id ||
                         activeCacheId == savedata?._id ||
                         savedata?.isSelected
-                          ? 'user-cache__cache-data--active-section'
-                          : ''
+                          ? "user-cache__cache-data--active-section"
+                          : ""
                       }`}
                     >
                       <div
@@ -360,8 +359,8 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                           activeShow == savedata?._id ||
                           activeCacheId == savedata?._id ||
                           savedata?.isSelected
-                            ? 'user-cache__cache-data--active-section'
-                            : ''
+                            ? "user-cache__cache-data--active-section"
+                            : ""
                         }`}
                         onClick={(event) =>
                           cacheShow(
@@ -369,7 +368,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                             event,
                             savedata?.isSelected,
                             savedata?.qText,
-                            savedata?.qId,
+                            savedata?.qId
                           )
                         }
                       >
@@ -391,18 +390,18 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                           </Tooltip>
                           <div className="user-cache__collectdata">
                             <Tooltip
-                              title={curentDate.split(',')[0]}
+                              title={curentDate.split(",")[0]}
                               arrow
                               placement="top"
                             >
                               <div className="user-cache__date">
-                                {curentDate.split(',')[0]}
+                                {curentDate.split(",")[0]}
                               </div>
                             </Tooltip>
                             <div className="user-cache__colection-icon">
                               {savedChart[index]?.filter.length > 0 ? (
                                 <Tooltip
-                                  title={'Filters'}
+                                  title={"Filters"}
                                   arrow
                                   placement="top"
                                 >
@@ -412,36 +411,36 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                                   />
                                 </Tooltip>
                               ) : (
-                                ''
+                                ""
                               )}
                               {savedChart[index]?.chartLabelType ===
-                              'percentage' ? (
+                              "percentage" ? (
                                 <Tooltip
-                                  title={'Percentage'}
+                                  title={"Percentage"}
                                   arrow
                                   placement="top"
                                 >
                                   <PercentageIcon />
                                 </Tooltip>
                               ) : (
-                                <Tooltip title={'Number'} arrow placement="top">
+                                <Tooltip title={"Number"} arrow placement="top">
                                   <NumberIcon id={savedata?.qId} />
                                 </Tooltip>
                               )}
                               {savedChart[index]?.chartTranspose ? (
                                 <Tooltip
-                                  title={'Transpose'}
+                                  title={"Transpose"}
                                   arrow
                                   placement="top"
                                 >
                                   <TransposeIcon id={savedata?.qId} />
                                 </Tooltip>
                               ) : (
-                                ''
+                                ""
                               )}
 
-                              {savedChart[index]?.qId !== '' &&
-                              savedChart[index]?.bannerQuestion !== '' ? (
+                              {savedChart[index]?.qId !== "" &&
+                              savedChart[index]?.bannerQuestion !== "" ? (
                                 <Tooltip
                                   title={savedChart[index]?.bannerQuestion}
                                   arrow
@@ -450,7 +449,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                                   <TransferdataIcon className="transferdata-icon" />
                                 </Tooltip>
                               ) : (
-                                ''
+                                ""
                               )}
 
                               {savedChart[index]?.significant ? (
@@ -462,7 +461,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                                   <SignificantDiffIcon />
                                 </Tooltip>
                               ) : (
-                                ''
+                                ""
                               )}
                             </div>
                           </div>
@@ -477,13 +476,13 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
                           name={index}
                           value={savedata?._id}
                           className="user-cache-checkbox"
-                          sx={{ p: 0, ml: '-4px' }}
+                          sx={{ p: 0, ml: "-4px" }}
                           checked={savedata?.isSelected}
                           onChange={(e) => {
                             handleSingleSelect(
                               e,
                               savedata?._id,
-                              !savedata?.isSelected,
+                              !savedata?.isSelected
                             );
                           }}
                         />
@@ -510,7 +509,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
             <Button
               disabled={butttonshow}
               className={clsx({
-                'button--primary btn-line': true,
+                "button--primary btn-line": true,
                 butttondisable: butttonshow ? true : false,
               })}
               //  className=`${butttonshow} ""button--primary btn-line""`
@@ -520,7 +519,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               onClick={opneMenu}
             >
               Export
-              <KeyboardArrowDownIcon sx={{ fill: '#fff' }} />
+              <KeyboardArrowDownIcon sx={{ fill: "#fff" }} />
             </Button>
 
             <Menu
@@ -528,12 +527,12 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               id="menu"
               keepMounted
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
+                vertical: "bottom",
+                horizontal: "right",
               }}
               transformOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
+                vertical: "bottom",
+                horizontal: "center",
               }}
               //getContentAnchorEl={null}
               open={Boolean(anchorEl)}
@@ -541,13 +540,13 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               disableAutoFocusItem
               PaperProps={{
                 elevation: 0,
-                className: 'chart-content__control-menu',
+                className: "chart-content__control-menu",
               }}
             >
               <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
-                  userCacheExport(savedChart, 'pdfexport');
+                  userCacheExport(savedChart, "pdfexport");
                 }}
               >
                 <PdfIcon className="mr-right" />
@@ -557,7 +556,7 @@ const UserCacheExport: React.FC<UserCacheProps> = (props) => {
               <MenuItem
                 className="chart-content__menu-item"
                 onClick={() => {
-                  userCacheExport(savedChart, 'pptexport');
+                  userCacheExport(savedChart, "pptexport");
                 }}
               >
                 <PptIcon className="mr-right" />

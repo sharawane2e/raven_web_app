@@ -14,6 +14,11 @@ export const updatedLabels = {
     rotation: -90,
     y: 0,
   },
+  dataUpdatedFormateLandscpae: {
+    enabled: true,
+    rotation: 0,
+    y: 0,
+  },
   showMeanFormate: {
     format: "{point.y:.1f}",
     rotation: -90,
