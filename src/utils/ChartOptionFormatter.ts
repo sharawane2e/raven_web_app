@@ -72,7 +72,7 @@ export const getChartOptions = (
 };
 
 const defaultitemStyle = {
-  enabled: false,
+  enabled: true,
   itemStyle: {
     color: "#666666",
     fontWeight: "normal",
@@ -225,7 +225,7 @@ export const getPlotOptionsSeries = (
 
   let newDataLabels;
   if (significant) {
-    newDataLabels = updatedLabels?.dataUpdatedFormate;
+    // newDataLabels = updatedLabels?.dataUpdatedFormate;
   } else {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
       newDataLabels = updatedLabels?.dataLabelsFormate;
@@ -241,8 +241,10 @@ export const getPlotOptionsSeries = (
         newDataLabels = updatedLabels?.dataUpdatedFormate;
       }
     } else {
+      console.log("newchartOrientation", newchartOrientation);
       if (newchartOrientation == ChartOrientation.LANDSCAPE) {
         if (chartLabelType == ChartLabelType.PERCENTAGE) {
+          console.log("if part");
           newDataLabels = updatedLabels?.normalFormatedata;
         } else {
           newDataLabels = updatedLabels?.normalFormatedataNumer;
