@@ -88,7 +88,7 @@ const ExportPdfCharts = () => {
             allowOverlap: true,
             rotation: -90,
             align: "top",
-            x: 25,
+            x: 0,
             y: -6,
             crop: false,
             style: {
@@ -98,9 +98,6 @@ const ExportPdfCharts = () => {
             },
           },
         },
-        // bar: {
-        //   stacking: 'normal',
-        // },
       },
       series: [],
     },

@@ -201,19 +201,21 @@ const getChartSettings = (
   const chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
 
-    showLegend: legednshow,
+    //showLegend: legednshow,
+    showLegend: true,
+
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
         ? "##.##%;;;"
         : showMean
         ? "##.##"
         : "####",
-    valLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
-        : showMean
-        ? "##.##"
-        : "####",
+    // valLabelFormatCode:
+    //   chartLabelType === ChartLabelType.PERCENTAGE
+    //     ? "##.##%;;;"
+    //     : showMean
+    //     ? "##.##"
+    //     : "####",
   };
 
   return chartSettings;

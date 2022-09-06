@@ -304,6 +304,7 @@ function calcData(payloadObjectArr: any) {
       chartType: payloadObjectArr[i].chart.chartType,
       significant: payloadObjectArr[i].chart.significant,
       showMean: payloadObjectArr[i].chart.showMean,
+      chartOrientation: payloadObjectArr[i].chart.chartOrientation,
     };
 
     const newSeriesData = getChartOptions(
@@ -318,7 +319,8 @@ function calcData(payloadObjectArr: any) {
       chartOptionsPayload.chartLabelType,
       chartOptionsPayload.chartType,
       chartOptionsPayload.significant,
-      chartOptionsPayload.showMean
+      chartOptionsPayload.showMean,
+      chartOptionsPayload.chartOrientation
     );
 
     const payloadData: any = payloadObjectArr[i];

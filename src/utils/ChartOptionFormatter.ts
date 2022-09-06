@@ -48,6 +48,7 @@ export const getChartOptions = (
     showMean,
     chartOrientation,
   };
+  //console.log("chart", chart.chartOrientation);
 
   if (questionData !== null) {
     switch (questionData.type) {
@@ -72,7 +73,7 @@ export const getChartOptions = (
 };
 
 const defaultitemStyle = {
-  enabled: false,
+  enabled: true,
   itemStyle: {
     color: "#666666",
     fontWeight: "normal",
@@ -220,8 +221,10 @@ export const getPlotOptionsSeries = (
   chartType: any,
   chartOrientation: any
 ) => {
-  const newchartOrientation =
-    store.getState().chart.chartOrientation || chartOrientation;
+  const newchartOrientation = chartOrientation
+    ? chartOrientation
+    : store.getState().chart.chartOrientation;
+  //store.getState().chart.chartOrientation || chartOrientation;
 
   let newDataLabels;
   if (significant) {
