@@ -19,7 +19,7 @@
   right: 10px;
   width: 12px;
   height: 12px;
-  color: #5e5e5e;
+  color: map-get($map: $text-color, $key: "dark-gray");
 }
 
 .cross--btn {

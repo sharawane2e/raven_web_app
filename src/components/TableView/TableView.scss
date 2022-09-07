@@ -21,12 +21,12 @@
   font-size: 1rem;
   margin: 0.5rem;
   line-height: 1.5;
-  border-top: 1px solid $table-border-color;
+  border-top: 1px solid map-get($map: $text-color, $key: "table--border-color");
 }
 .table-chart {
-  border-top: 1px solid $table-border-color;
+  border-top: 1px solid map-get($map: $text-color, $key: "table--border-color");
   .table-chart__row {
-    border: 1px solid $table-border-color;
+    border: 1px solid map-get($map: $text-color, $key: "table--border-color");
     border-top: none;
   }
 }
@@ -41,9 +41,9 @@
 }
 .Table-row {
   width: 100%;
-  border: 1px solid $table-border-color;
+  border: 1px solid map-get($map: $text-color, $key: "table--border-color");
   border-top: none;
-  color: $white;
+  color: map-get($map: $text-color, $key: "light");
   // color: map-get($map: $text-color, $key: 'primary-dark');
   &:nth-child(odd):not(:first-child) {
     background-color: map-get($map: $bg-color, $key: secondary-light);
@@ -126,13 +126,13 @@
     text-overflow: ellipsis;
   }
   .pl-thead {
-    color: $light-Table-color;
+    color: map-get($map: $text-color, $key: "cell-color");
     font-weight: bold;
     text-transform: uppercase;
     font-size: 11px;
     margin: 15px 0;
     &.tall {
-      background-color: $light-tal-color;
+      background-color: map-get($map: $bg-color, $key: "row-color");
       margin: 0;
       padding: 5px 0;
       color: rgba(255, 255, 255, 0.7);
@@ -146,17 +146,17 @@
         }
         .large {
           font-size: 21px;
-          color: $white;
+          color: map-get($map: $text-color, $key: "light");
         }
       }
     }
   }
   .pl-tbody {
     .row {
-      background-color: $white;
+      background-color: map-get($map: $text-color, $key: "light");
       padding-top: 7px;
       padding-bottom: 7px;
-      color: $light-Table-color;
+      color: map-get($map: $text-color, $key: "cell-color");
       font-size: 11px;
     }
     &.scroll {
@@ -193,11 +193,10 @@
 
 .table-significante {
   padding-left: 5px;
-  //color: $significantTable;
+
   font-weight: normal;
 }
 .significant-lagend {
-  color: $significantTable;
   text-align: right;
   margin: 0 0.5rem;
   width: 13%;
@@ -218,7 +217,6 @@
       content: "";
       width: 10px;
       height: 10px;
-      background: $significantTable;
       position: absolute;
       left: -13px;
       top: 4px;

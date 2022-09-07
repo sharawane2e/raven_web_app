@@ -30,19 +30,18 @@
     }
   }
   .appbar__cache-btn {
-  
     padding: 7px !important;
     margin-right: 0 !important;
   }
   .user-active {
-    background: $white !important;
-    color: $black !important;
+    background: map-get($map: $text-color, $key: "light") !important;
+    color: map-get($map: $text-color, $key: "primary-dark") !important;
     z-index: 999;
     svg {
-      fill: $black !important;
+      fill: map-get($map: $text-color, $key: "primary-dark") !important;
     }
     .tourText {
-      color: $black;
+      color: map-get($map: $text-color, $key: "primary-dark");
     }
   }
   .cache-icon {
@@ -51,7 +50,7 @@
   .badge-icon {
     span {
       background-color: map-get($map: $bg-color, $key: "accent") !important;
-      color: $white;
+      color: map-get($map: $text-color, $key: "light");
       z-index: 1000;
     }
   }
@@ -118,12 +117,12 @@
         align-items: center;
         #logo-primary-contrast {
           path {
-            fill: $white;
+            fill: map-get($map: $text-color, $key: "light");
           }
         }
         #logo {
           #Path_13556 {
-            fill: $white;
+            fill: map-get($map: $text-color, $key: "light");
           }
         }
         @media (max-width: 767px) {
@@ -136,7 +135,7 @@
       cursor: pointer;
       display: flex;
       width: 7%;
-      color: $white !important;
+      color: map-get($map: $text-color, $key: "light") !important;
       @media (max-width: 767px) {
         padding-top: 12px;
       }

@@ -38,7 +38,7 @@
     border-radius: 3px;
     box-sizing: border-box;
     margin: 8px 12px;
-    border: 1px solid $border-color;
+    border: 1px solid map-get($map: $text-color, $key: "border-color");
     @media (max-width: 767px) {
       margin: 15px auto 15px auto;
       width: 95%;
@@ -124,8 +124,8 @@
         font-size: map-get($map: $text-size, $key: xsmall);
       }
       &:hover {
-        color: #fff;
-        background: #f47c3c;
+        color: map-get($map: $text-color, $key: "light");
+        background: map-get($map: $text-color, $key: "orange-color");
       }
 
       @media (max-width: 786px) {
@@ -254,7 +254,7 @@
 
   @media (max-width: 1200px) {
     display: block;
-    color: $white;
+    color: map-get($map: $text-color, $key: "light");
   }
 }
 

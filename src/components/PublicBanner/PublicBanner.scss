@@ -1,7 +1,4 @@
 .public-banner {
-  //height: 70vh;
-  //background: map-get($map: $bg-color, $key: accent) url(../../assets/svg/shape.png)  no-repeat;
-  //background-position: bottom left;
   display: flex;
   align-items: center;
   position: relative;
@@ -21,9 +18,6 @@
       line-height: 5rem;
       font-weight: 700;
       margin-bottom: 0px;
-      .brandColor {
-        color: $brand-color;
-      }
     }
     .public-banner__title__logstext {
       font-size: map-get($map: $text-size, $key: large);

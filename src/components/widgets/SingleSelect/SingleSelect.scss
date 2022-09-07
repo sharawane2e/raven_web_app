@@ -41,7 +41,7 @@
     }
   }
   .selected-value {
-    background-color: #e3e3e3;
+    background-color: map-get($map: $text-color, $key: "select");
     @media (max-width: 768px) {
       background-color: unset;
     }

@@ -75,14 +75,14 @@ html {
   margin-right: 12px;
 }
 .btn-login-color {
-  background-color: $brand-color !important;
+  background-color: map-get($map: $bg-color, $key: "accent") !important;
 }
 .home-modal__content,
 .home-modal__footer {
-  background-color: $black;
+  background-color: map-get($map: $text-color, $key: "primary-dark");
 }
 .home-modal__footer {
-  border-top: 1px solid $black !important;
+  border-top: 1px solid map-get($map: $text-color, $key: "primary-dark") !important;
   margin-bottom: 0 !important;
   padding-bottom: 0.9375rem !important;
 }
@@ -91,8 +91,4 @@ html {
   align-items: center;
   justify-content: center;
   margin-top: 240px;
-}
-
-.significante-color {
-  ///fill: $significantChart;
 }

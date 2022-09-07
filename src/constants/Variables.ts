@@ -33,21 +33,6 @@ export const colorArr = [
   "#F1AD0F",
   "#E29E00",
 ];
-export const barPptColor = [
-  "F1AD0F",
-  "323C4E",
-  "47769E",
-  "7A94B0",
-  "A3ABAE",
-  "CCCCCC",
-  "ECECEC",
-  "F5D491",
-  "F9B9B7",
-  "F06C9B",
-  "96C9DC",
-  "61A0AF",
-  "2A4C65",
-];
 
 export const significantText = "significant difference";
 

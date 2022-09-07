@@ -1,7 +1,7 @@
 // Input Field
 .input-field__label {
   //color: map-get($map: $text-color, $key: primary);
-  color: map-get($map: $text-color, $key:"partial-light" );
+  color: map-get($map: $text-color, $key: "partial-light");
   display: flex;
   align-items: center;
 
@@ -18,7 +18,7 @@
 .input-field__endontment-icon {
   cursor: pointer;
   font-size: map-get($map: $text-size, $key: regular);
-  color: map-get($map: $text-color, $key: 'primary');
+  color: map-get($map: $text-color, $key: "primary");
   opacity: 0.8;
 }
 .MuiFormControl-root {
@@ -58,7 +58,7 @@
   &.button--primary {
     background-color: map-get($map: $bg-color, $key: accent);
     color: map-get($map: $text-color, $key: light);
-    border: 1px solid map-get($map: $text-color, $key:"accent" );
+    border: 1px solid map-get($map: $text-color, $key: "accent");
     &:hover {
       background-color: map-get($map: $bg-color, $key: accent);
       color: map-get($map: $text-color, $key: light);
@@ -136,14 +136,14 @@
   margin: 3px;
   svg {
     width: map-get($map: $text-size, $key: regular);
-    color: $filter-text-color;
+    color: map-get($map: $text-color, $key: "filter-color");
   }
 }
 
 .highcharts-data-label {
   text {
     // fill: white !important;
-    font-family: 'Nunito Sans', sans-serif !important;
+    font-family: "Nunito Sans", sans-serif !important;
     font-weight: normal !important;
   }
 }

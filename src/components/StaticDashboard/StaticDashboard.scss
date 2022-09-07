@@ -34,7 +34,7 @@
     padding-right: 20px;
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
-    color: #fff;
+    color: map-get($map: $text-color, $key: "light");
     @media (max-width: 767px) {
       font-size: 1.2rem;
     }
@@ -72,9 +72,7 @@
 .carousel__slide.carousel__slide--visible {
   padding-bottom: 0px;
 }
-// .carousel__slider--horizontal {
-//   height: 85vh;
-// }
+
 .carousel {
   position: relative;
 }
@@ -86,50 +84,18 @@
   margin: auto;
   text-align: center;
 }
-// .nav_button {
-//   width: 10px;
-//   height: 12px;
-//   background: #999;
-//   border-radius: 50%;
-//   overflow: hidden;
-//   margin: 2px;
-//   border: 0px;
-// }
-
-// .nav_button[disabled] {
-//   opacity: 0.6;
-// }
-
-// .swiper-wrapper {
-//   background-color: #dfdfdf;
-// }
 
 .swiper-slide {
   align-self: center;
 }
 
 .dot-group {
-  // position: absolute;
-  // bottom: 90px;
-  // left: 50%;
-  // transform: translateX(-50%);
-
   position: sticky;
   bottom: 0px;
   left: 0px;
   right: 0px;
   margin: auto;
   text-align: center;
-}
-
-.carousel__dot {
-  width: 10px;
-  height: 12px;
-  background: #999;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 2px;
-  border: 0px;
 }
 
 .carousel__dot--selected {
@@ -139,6 +105,6 @@
 .wid100 {
   width: 100%;
 }
-.TextEtalic{
+.TextEtalic {
   font-style: italic;
 }

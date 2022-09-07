@@ -40,8 +40,19 @@ $text-color: (
   "primary-fade": #dfdfdf,
   "fade": #f8f8f8,
   "danger": red,
+  "orange-color": #f47c3c,
   "border": #dee2e6,
   "link": #491d40,
+  "select": #e3e3e3,
+  "dark-gray": #5e5e5e,
+  "icon-color": #8f8d8d,
+  "hedding-color": #3d3d3d,
+  "date-color": #bebebe,
+  "filter-color": #343434,
+  "border-color": #e1e3e7,
+  "box-color": #c9c9c9,
+  "table--border-color": #e5e5e5,
+  "cell-color": #e5e5e5,
 );
 
 $bg-color: (
@@ -59,34 +70,20 @@ $bg-color: (
   "info": #f1b202,
   "silver-chalice": #adadad,
   "cache-color": #c3c3c3,
+  "loader-color": #323c4e,
+  "row-color": #263338,
 );
 
 $sidebar-width: 16.875rem; // 270px
-$black: #000;
-$white: #fff;
-$box-color: #c9c9c9;
-$filter-text-color: #343434;
-$brand-color: #f1ad0f;
-$border-color: #e1e3e7;
-$hedding-color: #dfdfdf;
-$light-blue-color: #1e1e1e;
-$light-Table-color: #979797;
-$light-tal-color: #263338;
-$table-border-color: #e5e5e5;
+
 $min-color: #ffb3a7;
 $max-color: #b8e08c;
 $drop-down-color: rgba(30, 30, 30, 0.2);
 $drop-button-color: rgba(30, 30, 30, 0.8);
-$bg-white-color: rgba(255, 255, 255,0.2);
-
-/*significant color*/
-$significantChart:#000fff;
-$significantTable:#656eff;
-
+$bg-white-color: rgba(255, 255, 255, 0.2);
 
 $breakpoints: (
-  //https://css-tricks.com/approaches-media-queries-sass/ //My (Eduardo Bouças’s) technique
   phone: 640px,
   tablet: 768px,
-  desktop: 1024px
+  desktop: 1024px,
 );

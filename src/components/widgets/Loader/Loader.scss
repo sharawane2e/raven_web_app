@@ -1,7 +1,7 @@
 .loader--wrapper {
   height: 100%;
   width: 100%;
-  background: $white;
+  background: map-get($map: $text-color, $key: "light");
   position: absolute;
   left: 0;
   top: 0;
@@ -21,11 +21,11 @@
 }
 @keyframes loading {
   0% {
-    background-color: #323c4e;
+    background-color: map-get($map: $bg-color, $key: "loader-color");
   }
 
   30% {
-    background-color: #f1ad0f;
+    background-color: map-get($map: $bg-color, $key: "accent");
   }
   50% {
     height: 100px;
@@ -33,18 +33,18 @@
   }
 
   80% {
-    background-color: #f1ad0f;
+    background-color: map-get($map: $bg-color, $key: "accent");
   }
 
   100% {
-    background-color: #323c4e;
+    background-color: map-get($map: $bg-color, $key: "loader-color");
   }
 }
 
 @mixin inner() {
   height: 10px;
   width: 30px;
-  background-color: map-get($map: $bg-color, $key: 'info');
+  background-color: map-get($map: $bg-color, $key: "info");
   display: inline-block;
   margin-top: 90px;
   -webkit-animation: loading 2.5s infinite;

@@ -1,6 +1,6 @@
 .public-form-screen {
   position: relative;
-  background: url('../../assets/images/login_bg.png');
+  background: url("../../assets/images/login_bg.png");
   background-size: 100% 100%;
 
   @media only screen and (max-width: 960px) {
@@ -29,18 +29,16 @@
   .public-form {
     height: 100vh;
     display: flex;
-
     justify-content: center;
     align-items: center;
-
     .public-form__form {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       width: 90%;
       padding: 30px 40px 80px 40px;
-      background: map-get($map: $bg-color, $key: 'secondary');
-      border: 1px solid map-get($map: $bg-color, $key: #000);
+      background: map-get($map: $bg-color, $key: "secondary");
+      border: 1px solid map-get($map: $text-color, $key: "primary-dark");
       margin-right: 90px;
       .MuiInputBase-root {
         background: map-get($map: $bg-color, $key: secondary-shade);
@@ -62,7 +60,7 @@
       font-weight: bold;
       margin-top: 1rem;
       margin-bottom: 1.75rem; //40px;
-      color: $hedding-color;
+      color: map-get($map: $text-color, $key: "partial-light");
     }
     .forgot-password-hedding {
       font-size: 1.75rem;
@@ -75,7 +73,7 @@
   }
 
   .public-form__link {
-    color: map-get($map: $text-color, $key:"partial-light" );
+    color: map-get($map: $text-color, $key: "partial-light");
     margin-top: 30px;
     text-decoration: none;
   }

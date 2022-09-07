@@ -1,7 +1,7 @@
 .user-avatar {
-  border: 1px solid $white;
+  border: 1px solid map-get($map: $text-color, $key: "light");
   span {
-    color: $white;
+    color: map-get($map: $text-color, $key: "light");
   }
   .active {
     background-color: map-get($map: $bg-color, $key: success);

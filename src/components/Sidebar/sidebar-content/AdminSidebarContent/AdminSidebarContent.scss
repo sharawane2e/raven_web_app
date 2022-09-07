@@ -24,17 +24,13 @@
     }
 
     &.active-link {
-      background-color: map-get($map: $bg-color, $key: 'accent');
+      background-color: map-get($map: $bg-color, $key: "accent");
       span {
         color: map-get($map: $text-color, $key: light);
       }
       svg path {
         fill: map-get($map: $text-color, $key: light);
       }
-    }
-
-    &:hover {
-      //background-color: map-get($map: $bg-color, $key: 'accent');
     }
   }
 }

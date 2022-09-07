@@ -27,7 +27,7 @@
   }
   .chart-sidebar__filter-questions {
     @media (max-width: 767px) {
-      color: #dfdfdf;
+      color: map-get($map: $text-color, $key: "partial-light");
     }
     em {
       font-style: initial;
@@ -39,7 +39,6 @@
     }
     .MuiButton-label {
       color: map-get($map: $text-color, $key: primary);
-      color: #fff;
     }
     .button--primary {
       color: map-get($map: $text-color, $key: light);
