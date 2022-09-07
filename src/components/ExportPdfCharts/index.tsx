@@ -27,21 +27,24 @@ const ExportPdfCharts = () => {
         text: "",
       },
       chart: {
+        renderTo: "container",
         type: "column",
         style: {
           fontFamily: '"Avenir", Arial',
           fontSize: "16px",
         },
+        //margin: [70, 0, 280, 0],
+        padding: [20, 20, 20, 20],
         height: "900px",
-        animation: false,
       },
       legend: {
         enabled: true,
+        // itemWidth: 150,
         reversed: false,
         itemStyle: {
           color: "#666666",
           fontWeight: "normal",
-          fontSize: "20px",
+          fontSize: "11px",
         },
       },
       tooltip: {
@@ -76,6 +79,9 @@ const ExportPdfCharts = () => {
           shadow: false,
           dataLabels: {
             enabled: true,
+
+            overflow: "none",
+            // enabled: true,
             formatter: function (this: any, options: any) {
               return ` ${parseFloat(this.y.toFixed(2))}${
                 ChartLabelType.PERCENTAGE ? "%" : ""
@@ -92,9 +98,10 @@ const ExportPdfCharts = () => {
             y: -6,
             crop: false,
             style: {
-              fontSize: "16px",
+              fontSize: "8px",
               textOutline: false,
-              fontWeight: null,
+              fontWeight: "normal",
+              width: "100%",
             },
           },
         },
@@ -118,10 +125,13 @@ const ExportPdfCharts = () => {
   return (
     <>
       <div className="allpdfhighcharts">
-        <button onClick={() => print()}>Print</button>
+        {/* <button onClick={() => print()}>Print</button> */}
         {chartsArray?.map((chart: any, Index: number) => (
           <div className="pdfhighcharts hide-chart">
             <HighchartsReact
+              containerProps={{
+                style: { height: "100%", overflow: "unset" },
+              }}
               highcharts={Highcharts}
               options={chartsArray[Index]}
               immutable

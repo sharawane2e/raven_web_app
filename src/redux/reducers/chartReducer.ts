@@ -109,6 +109,7 @@ const initialState: IChartState = {
     legend: {
       enabled: false,
       reversed: false,
+      itemWidth: 150,
     },
 
     tooltip: {

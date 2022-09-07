@@ -44,6 +44,7 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
 
   //   return isOrientation;
   // };
+  //console.log("handlePieDisabled", handlePieDisabled);
 
   const buttonConfig: ButtonGroupConfig[] = [
     {
@@ -60,7 +61,8 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
       active: chartOrientation === ChartOrientation.LANDSCAPE,
       disabled:
         questionData === null ||
-        (chart?.chartType == ChartType.TABLE ? true : false),
+        (chart?.chartType == ChartType.TABLE ? true : false) ||
+        (chart?.chartType == ChartType.LINE ? true : false),
       disableClick: () => Toaster.error(StaticText?.DISABLED_CHART_LAND),
     },
   ];
