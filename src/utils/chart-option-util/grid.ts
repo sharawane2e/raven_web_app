@@ -73,16 +73,17 @@ export const getGridChartoptionSeries = (chart: IchartOptionsDto) => {
         numberValue = round(count, 0);
         percentageValue = (count / base) * 100;
         // debugger;
-        data.push({
-          name: subGroup.labelText,
-          y:
-            chartLabelType === ChartLabelType.PERCENTAGE
-              ? percentageValue
-              : numberValue,
-          percentageValue,
-          numberValue,
-          baseCount: base,
-        });
+        if (numberValue)
+          data.push({
+            name: subGroup.labelText,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
+            percentageValue,
+            numberValue,
+            baseCount: base,
+          });
       }
       const newDataLabels = getPlotOptionsSeries(
         significant,
@@ -171,17 +172,17 @@ const getGridTransposeChartOptions = (chart: IchartOptionsDto) => {
       let numberValue;
       numberValue = round(count, 0);
       percentageValue = (count / baseCount) * 100;
-
-      data.push({
-        name: scale.labelText,
-        y:
-          chartLabelType === ChartLabelType.PERCENTAGE
-            ? percentageValue
-            : numberValue,
-        percentageValue,
-        numberValue,
-        baseCount: baseCount,
-      });
+      if (numberValue)
+        data.push({
+          name: scale.labelText,
+          y:
+            chartLabelType === ChartLabelType.PERCENTAGE
+              ? percentageValue
+              : numberValue,
+          percentageValue,
+          numberValue,
+          baseCount: baseCount,
+        });
     }
     const newDataLabels = getPlotOptionsSeries(
       significant,

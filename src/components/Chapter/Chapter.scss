@@ -8,7 +8,7 @@
     min-width: 300px;
     width: 300px;
     background: rgba(255, 255, 255, 0.78);
-    color: map-get($map: $text-color, $key: "light");
+    //color: map-get($map: $text-color, $key: "light");
     border: 1px solid $drop-button-color;
     padding: 10px;
     text-align: left;

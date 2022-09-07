@@ -52,6 +52,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: map-get($map: $text-color, $key: "partial-light");
     @media (max-width: 768px) {
       color: map-get($map: $text-color, $key: "partial-light");
     }

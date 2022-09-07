@@ -188,13 +188,14 @@ const multiGridChartTransposeOptionData = (
       } else {
         plotValue = count;
       }
-      data.push({
-        name: scale.labelText,
-        y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
-        percentageValue,
-        numberValue,
-        baseCount: newBaseCount,
-      });
+      if (numberValue)
+        data.push({
+          name: scale.labelText,
+          y: plotValue > 0 ? round(plotValue, decimalPrecision) : null,
+          percentageValue,
+          numberValue,
+          baseCount: newBaseCount,
+        });
     });
     const newDataLabels = getPlotOptionsSeries(
       undefined,
