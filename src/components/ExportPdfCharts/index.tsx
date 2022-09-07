@@ -118,6 +118,7 @@ const ExportPdfCharts = () => {
     );
     let newObj = { ...dataObject.chartOptions };
     newObj.series = [];
+
     newObj?.series.push(...pdfel.seriesData);
     chartsArray.push(newObj);
   });
