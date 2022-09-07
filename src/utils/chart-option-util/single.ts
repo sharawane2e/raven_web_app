@@ -1,14 +1,16 @@
 import { QuestionType } from "../../enums/QuestionType";
 import { IQuestionOption } from "../../types/IBaseQuestion";
-// import { IQuestion } from "../../types/IQuestion";
-import _, { find } from "lodash";
+import { IQuestion } from "../../types/IQuestion";
+import _, { find, round } from "lodash";
 import { ChartLabelType } from "../../enums/ChartLabelType";
+
 import { getMatchedfilter, getmatchedFind, getSum } from "../Utility";
 import { colorArr, primaryBarColor } from "../../constants/Variables";
+
 import { ChartType } from "../../enums/ChartType";
 import { getsignificantdifference } from "./significanceDiff";
 import { IchartOptionsDto } from "../../types/IChartOptionsDto";
-// import { dataLabels } from "../../redux/reducers/chartReducer";
+import { dataLabels } from "../../redux/reducers/chartReducer";
 import { getPlotOptionsSeries } from "../ChartOptionFormatter";
 
 export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
@@ -125,17 +127,34 @@ export const getSingleChartOptionsSeries = (chart: IchartOptionsDto) => {
           numberValue = count;
           percentageValue = (count / localBase) * 100;
 
-          if (numberValue > 0)
+          if (chartType === ChartType.LINE) {
             data.push({
               name: quesOption.labelText,
               y:
                 chartLabelType === ChartLabelType.PERCENTAGE
                   ? percentageValue
-                  : numberValue,
+                    ? percentageValue
+                    : 0
+                  : numberValue
+                  ? numberValue
+                  : 0,
               percentageValue,
               numberValue,
               baseCount: localBase,
             });
+          } else {
+            if (numberValue > 0)
+              data.push({
+                name: quesOption.labelText,
+                y:
+                  chartLabelType === ChartLabelType.PERCENTAGE
+                    ? percentageValue
+                    : numberValue,
+                percentageValue,
+                numberValue,
+                baseCount: localBase,
+              });
+          }
         }
 
         const newDataLabels = getPlotOptionsSeries(
@@ -361,17 +380,35 @@ const getSingleTransposeChartOptions = (
 
       let percentageValue = (count / localBase) * 100;
       let numberValue = count;
-      if (numberValue > 0)
+
+      if (chartType === ChartType.LINE) {
         data.push({
-          name: bannerQuesOption?.labelText,
+          name: quesOption.labelText,
           y:
             chartLabelType === ChartLabelType.PERCENTAGE
               ? percentageValue
-              : numberValue,
+                ? percentageValue
+                : 0
+              : numberValue
+              ? numberValue
+              : 0,
           percentageValue,
           numberValue,
           baseCount: localBase,
         });
+      } else {
+        if (numberValue > 0)
+          data.push({
+            name: bannerQuesOption?.labelText,
+            y:
+              chartLabelType === ChartLabelType.PERCENTAGE
+                ? percentageValue
+                : numberValue,
+            percentageValue,
+            numberValue,
+            baseCount: localBase,
+          });
+      }
     }
 
     const newDataLabels = getPlotOptionsSeries(
@@ -380,14 +417,15 @@ const getSingleTransposeChartOptions = (
       chartType,
       chartOrientation
     );
-    series.push({
-      name: quesOption?.labelText,
-      color: index < colorArr.length ? colorArr[index] : undefined,
-      data,
-      dataLabels: {
-        ...newDataLabels,
-      },
-    });
+    if (data)
+      series.push({
+        name: quesOption?.labelText,
+        color: index < colorArr.length ? colorArr[index] : undefined,
+        data,
+        dataLabels: {
+          ...newDataLabels,
+        },
+      });
   }
   return series;
 };
