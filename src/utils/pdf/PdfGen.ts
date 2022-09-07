@@ -1,14 +1,14 @@
-import store from '../../redux/store';
-import { ChartType } from '../../enums/ChartType';
-import jsPDF from 'jspdf';
-import 'svg2pdf.js';
-import autoTable from 'jspdf-autotable';
-import { exportPrefix } from '../../constants/Variables';
-import { setDefaultPdfPageProperties } from '../pdf/DefaultPdfProps';
-import { getChartOptions } from '../ChartOptionFormatter';
-import { PdfGenExport } from './PdfGenExport';
-import { getChartRows } from '../table-option-util';
-import { fillEmptyDateSeries } from '../chart-option-util/significanceDiff';
+import store from "../../redux/store";
+import { ChartType } from "../../enums/ChartType";
+import jsPDF from "jspdf";
+import "svg2pdf.js";
+import autoTable from "jspdf-autotable";
+import { exportPrefix } from "../../constants/Variables";
+import { setDefaultPdfPageProperties } from "../pdf/DefaultPdfProps";
+import { getChartOptions } from "../ChartOptionFormatter";
+import { PdfGenExport } from "./PdfGenExport";
+import { getChartRows } from "../table-option-util";
+import { fillEmptyDateSeries } from "../chart-option-util/significanceDiff";
 
 export const generatePdf = async (payloadObjectArr: any[]) => {
   let doc = new jsPDF();
@@ -51,7 +51,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
     if (chartType === ChartType.TABLE) {
       pdfWidth = 300;
       pdfHeight = 400;
-      doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
+      doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
       // doc.addPage([300, 297], "p");
       x = 5;
       y = 30;
@@ -79,7 +79,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightY,
         qWordBreak,
         lWordBreak,
-        payloadObjectArr[i].chart,
+        payloadObjectArr[i].chart
       );
 
       const chartOptionsPayload: any = {
@@ -101,7 +101,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.chartOptionsData,
         chartOptionsPayload.questionChartData,
         chartOptionsPayload.bannerChartData,
-        chartOptionsPayload.transposed,
+        chartOptionsPayload.transposed
       );
 
       const filledSeries = fillEmptyDateSeries(
@@ -110,20 +110,16 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         chartOptionsPayload.transposed,
         chartOptionsPayload.questionData,
         chartOptionsPayload.bannerQuestionData,
-        chartOptionsPayload.chartData,
+        chartOptionsPayload.chartData
       );
 
       const chartRows = getChartRows(filledSeries, chartOptionsPayload)[0]; //gaurav
 
       const seriesData = chartRows; //gaurav
 
-      console.log(
-        ' payloadObjectArr[i]',
-        payloadObjectArr[i]?.chart.chartLabelType,
-      );
       const output = PdfGenExport(
         seriesData,
-        payloadObjectArr[i]?.chart.chartLabelType,
+        payloadObjectArr[i]?.chart.chartLabelType
       );
 
       autoTable(doc, {
@@ -135,7 +131,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
       if (clientWidth >= 1300) {
         pdfWidth = 300;
         pdfHeight = 220;
-        doc = new jsPDF('l', 'mm', [pdfWidth, pdfHeight]);
+        doc = new jsPDF("l", "mm", [pdfWidth, pdfHeight]);
         x = 5;
         y = 30;
         w = 290;
@@ -154,7 +150,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         pdfWidth = 250;
         pdfWidth = 180;
         pdfHeight = 260;
-        doc = new jsPDF('p', 'mm', [pdfWidth, pdfHeight]);
+        doc = new jsPDF("p", "mm", [pdfWidth, pdfHeight]);
         x = 5;
         y = 30;
         w = 170;
@@ -170,12 +166,12 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         lWordBreak = pdfWidth - 20;
         qWordBreak = 160;
       }
-      let source = document.getElementsByClassName('highcharts-root');
+      let source = document.getElementsByClassName("highcharts-root");
       let svgSource = source[0];
       let clonedSource = svgSource.cloneNode(true) as HTMLElement;
 
       clonedSource
-        .querySelectorAll('.highcharts-text-outline')
+        .querySelectorAll(".highcharts-text-outline")
         .forEach((node: any) => node.parentNode.removeChild(node));
 
       await setDefaultPdfPageProperties(
@@ -190,7 +186,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
         copyRightY,
         qWordBreak,
         lWordBreak,
-        payloadObjectArr[i].chart,
+        payloadObjectArr[i].chart
       );
       await doc.svg(clonedSource, {
         x: x,
@@ -204,7 +200,7 @@ export const generatePdf = async (payloadObjectArr: any[]) => {
 
   doc.save(
     exportPrefix +
-      payloadObjectArr[0]['chart']['questionData']?.labelText +
-      '.pdf',
+      payloadObjectArr[0]["chart"]["questionData"]?.labelText +
+      ".pdf"
   );
 };

@@ -48,6 +48,7 @@ export const getChartOptions = (
     showMean,
     chartOrientation,
   };
+  //console.log("chart", chart.chartOrientation);
 
   if (questionData !== null) {
     switch (questionData.type) {
@@ -220,12 +221,14 @@ export const getPlotOptionsSeries = (
   chartType: any,
   chartOrientation: any
 ) => {
-  const newchartOrientation =
-    store.getState().chart.chartOrientation || chartOrientation;
+  const newchartOrientation = chartOrientation
+    ? chartOrientation
+    : store.getState().chart.chartOrientation;
+  //store.getState().chart.chartOrientation || chartOrientation;
 
   let newDataLabels;
   if (significant) {
-    // newDataLabels = updatedLabels?.dataUpdatedFormate;
+    newDataLabels = updatedLabels?.dataUpdatedFormate;
   } else {
     if (chartLabelType == ChartLabelType.PERCENTAGE) {
       newDataLabels = updatedLabels?.dataLabelsFormate;
@@ -241,10 +244,8 @@ export const getPlotOptionsSeries = (
         newDataLabels = updatedLabels?.dataUpdatedFormate;
       }
     } else {
-      console.log("newchartOrientation", newchartOrientation);
       if (newchartOrientation == ChartOrientation.LANDSCAPE) {
         if (chartLabelType == ChartLabelType.PERCENTAGE) {
-          console.log("if part");
           newDataLabels = updatedLabels?.normalFormatedata;
         } else {
           newDataLabels = updatedLabels?.normalFormatedataNumer;

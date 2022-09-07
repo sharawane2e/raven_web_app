@@ -197,7 +197,7 @@ const getChartSettings = (
 ) => {
   let legednshow = false;
   if (chartType === ChartType.COLUMN && questionType == QuestionType.SINGLE) {
-    legednshow = false;
+    legednshow = true;
   } else {
     legednshow = true;
   }
