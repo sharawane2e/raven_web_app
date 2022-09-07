@@ -124,7 +124,7 @@ const getChartMultiChartSeries = (
         //   percentageValue,
         //   numberValue,
         //   baseCount: baseCount,
-        //   color: "#f1ad0f",
+        //   color: '#f1ad0f',
         // });
       } else {
         data.push({
@@ -373,16 +373,17 @@ const getSingleTransposeChartOptions = (chart: IchartOptionsDto) => {
 
           const percentageValue = (numberValue / baseCount) * 100;
 
-          data.push({
-            name,
-            y:
-              chartLabelType === ChartLabelType.PERCENTAGE
-                ? percentageValue
-                : numberValue,
-            percentageValue,
-            numberValue,
-            baseCount,
-          });
+          if (numberValue)
+            data.push({
+              name,
+              y:
+                chartLabelType === ChartLabelType.PERCENTAGE
+                  ? percentageValue
+                  : numberValue,
+              percentageValue,
+              numberValue,
+              baseCount,
+            });
         }
       );
 
@@ -450,13 +451,14 @@ const getMultiTransposeChartOptions = (chart: IchartOptionsDto) => {
               ? percentageValue
               : numberValue;
 
-          data.push({
-            name,
-            y,
-            percentageValue,
-            numberValue,
-            baseCount,
-          });
+          if (numberValue)
+            data.push({
+              name,
+              y,
+              percentageValue,
+              numberValue,
+              baseCount,
+            });
         }
       );
       const newDataLabels = getPlotOptionsSeries(
