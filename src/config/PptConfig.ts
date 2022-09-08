@@ -48,7 +48,7 @@ export const tableConfig: pptxgen.TableProps = {
   w: 9.4,
   // rowH: 2,
   border: { pt: 0.4, type: "solid", color: "E6E6E6" },
-  fontSize: 6,
+  fontSize: 2,
   autoPage: true,
   autoPageHeaderRows: 1,
   autoPageLineWeight: 10,

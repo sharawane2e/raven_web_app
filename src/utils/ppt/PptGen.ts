@@ -5,6 +5,7 @@ import {
   exportPrefix,
   significantText,
   projectName as projectFileName,
+  primaryBarColor,
 } from "../../constants/Variables";
 import {
   appliedFiltersText,
@@ -78,7 +79,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
     setDefaultSlideProperties(pptxGenJsObj, slideConfig, `slide_${i}`);
 
     let slide = pptxGenJsObj.addSlide({ masterName: `slide_${i}` });
-
     let seriesData: any[] = [];
     // debugger;
     const chartOptionsPayload: IchartOptionsDto = {
@@ -96,8 +96,6 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       showMean: payloadObjectArr[i].chart.showMean,
       chartOrientation: undefined,
     };
-
-    //  console.log(chartOptionsPayload);
 
     const newSeriesData = {
       ...getChartOptions(
@@ -132,13 +130,13 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       slide.addTable(output, { ...tableConfig });
     } else {
       seriesData = newChartDataGen(newSeriesData, chartOptionsPayload);
+
       const { pptChartType, chartColors } = slideChartConfig(
         chartType,
         pptxGenJsObj,
         seriesData,
         chartOrientation
       );
-
       /*This code use for ppt export signficance with table  */
       if (payloadObjectArr[i].chart.significant) {
         let slide1 = pptxGenJsObj.addSlide({ masterName: `slide_${i}` });
@@ -197,25 +195,28 @@ const getChartSettings = (
 ) => {
   let legednshow = false;
   if (chartType === ChartType.COLUMN && questionType == QuestionType.SINGLE) {
-    legednshow = true;
+    legednshow = false;
   } else {
     legednshow = true;
   }
   const chartSettings: pptxgen.IChartOpts = {
     //show or hide legend
-    showLegend: legednshow,
+
+    //showLegend: legednshow,
+    showLegend: true,
+
     dataLabelFormatCode:
       chartLabelType === ChartLabelType.PERCENTAGE
         ? "##.##%;;;"
         : showMean
         ? "##.##"
         : "####",
-    valLabelFormatCode:
-      chartLabelType === ChartLabelType.PERCENTAGE
-        ? "##.##%;;;"
-        : showMean
-        ? "##.##"
-        : "####",
+    // valLabelFormatCode:
+    //   chartLabelType === ChartLabelType.PERCENTAGE
+    //     ? "##.##%;;;"
+    //     : showMean
+    //     ? "##.##"
+    //     : "####",
   };
 
   return chartSettings;
@@ -237,24 +238,19 @@ const slideChartConfig = (
     chartColors = [...colorArr];
     pptChartType = pptxGenJsObj.ChartType.pie;
   } else {
-    if (seriesData.length > 1) {
-      chartColors = slice(colorArr, 0, seriesData.length);
-    } else {
-      const colorArray: string[] = [];
-      seriesData[0]?.labels.forEach(function (labelText: any) {
-        // const seriesObject = _.find(questionData?.options, function (o) {
-        //   return o.labelText === labelText;
-        // });
-        colorArray.push(primaryBarPPt);
-        // if (seriesObject?.labelCode.split('_')[0] == 'N') {
-        //   colorArray.push('f1ad0f');
-        // } else {
-        //   colorArray.push(primaryBarPPt);
-        // }
-      });
-
-      chartColors = colorArray;
-    }
+    // if (seriesData.length > 1) {
+    // chartColors = slice(colorArr, 0, seriesData.length);
+    chartColors =
+      seriesData.length > 1
+        ? slice(colorArr, 0, seriesData.length)
+        : [primaryBarColor];
+    //} else {
+    // const colorArray: string[] = [];
+    // seriesData[0]?.labels.forEach(function (labelText: any) {
+    //   colorArray.push(primaryBarPPt);
+    // });
+    //chartColors = colorArray;
+    // }
 
     pptChartType = pptxGenJsObj.ChartType.bar;
     if (chartOrientation === ChartOrientation.LANDSCAPE) {
@@ -270,13 +266,6 @@ const slideChartConfig = (
       }
     }
   }
-
-  // if (chartLabelType === ChartLabelType.PERCENTAGE) {
-  //   seriesData.forEach((row: any, index) => {
-  //     row.values = row.values.map((value: number) => value / 100);
-  //     seriesData[index] = row;
-  //   });
-  // }
 
   return { pptChartType, chartColors };
 };
