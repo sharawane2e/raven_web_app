@@ -31,7 +31,7 @@ const ExportPdfCharts = () => {
         type: "column",
         style: {
           fontFamily: '"Avenir", Arial',
-          fontSize: "16px",
+          fontSize: "15px",
         },
         //margin: [70, 0, 280, 0],
         padding: [20, 20, 20, 20],
@@ -44,7 +44,7 @@ const ExportPdfCharts = () => {
         itemStyle: {
           color: "#666666",
           fontWeight: "normal",
-          fontSize: "11px",
+          fontSize: "14px",
         },
       },
       tooltip: {
@@ -57,7 +57,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: "16px",
+            fontSize: "15px",
           },
         },
       },
@@ -67,7 +67,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: "16px",
+            fontSize: "15px",
           },
         },
       },
