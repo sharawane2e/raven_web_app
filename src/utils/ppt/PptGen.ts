@@ -6,6 +6,7 @@ import {
   significantText,
   projectName as projectFileName,
   pptExportSignificance,
+  primaryBarColor,
 } from "../../constants/Variables";
 import {
   appliedFiltersText,
@@ -130,6 +131,7 @@ export const generatePpt = async (payloadObjectArr: any[]) => {
       slide.addTable(output, { ...tableConfig });
     } else {
       seriesData = newChartDataGen(newSeriesData, chartOptionsPayload);
+
       const { pptChartType, chartColors } = slideChartConfig(
         chartType,
         pptxGenJsObj,
@@ -194,7 +196,7 @@ const getChartSettings = (
 ) => {
   let legednshow = false;
   if (chartType === ChartType.COLUMN && questionType == QuestionType.SINGLE) {
-    legednshow = true;
+    legednshow = false;
   } else {
     legednshow = true;
   }
@@ -237,16 +239,19 @@ const slideChartConfig = (
     chartColors = [...colorArr];
     pptChartType = pptxGenJsObj.ChartType.pie;
   } else {
-    if (seriesData.length > 1) {
-      chartColors = slice(colorArr, 0, seriesData.length);
-    } else {
-      const colorArray: string[] = [];
-      seriesData[0]?.labels.forEach(function (labelText: any) {
-        colorArray.push(primaryBarPPt);
-      });
-
-      chartColors = colorArray;
-    }
+    // if (seriesData.length > 1) {
+    // chartColors = slice(colorArr, 0, seriesData.length);
+    chartColors =
+      seriesData.length > 1
+        ? slice(colorArr, 0, seriesData.length)
+        : [primaryBarColor];
+    //} else {
+    // const colorArray: string[] = [];
+    // seriesData[0]?.labels.forEach(function (labelText: any) {
+    //   colorArray.push(primaryBarPPt);
+    // });
+    //chartColors = colorArray;
+    // }
 
     pptChartType = pptxGenJsObj.ChartType.bar;
     if (chartOrientation === ChartOrientation.LANDSCAPE) {
