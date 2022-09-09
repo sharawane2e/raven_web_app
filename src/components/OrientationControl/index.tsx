@@ -34,18 +34,6 @@ const OrientationControl: React.FC<OrientationControlProps> = () => {
     dispatch(setChartData(chartDataClone));
   };
 
-  // const handlePieDisabled = () => {
-  //   let isOrientation = true;
-  //   if (chart?.chartType == ChartType.TABLE) {
-  //     isOrientation = false;
-  //   } else if (chart?.chartType == ChartType.LINE) {
-  //     isOrientation = false;
-  //   }
-
-  //   return isOrientation;
-  // };
-  //console.log("handlePieDisabled", handlePieDisabled);
-
   const buttonConfig: ButtonGroupConfig[] = [
     {
       tooltip: "Portrait",
