@@ -100,18 +100,18 @@ export const setDefaultPdfPageProperties = async (
       baseY + 5
     );
   }
-  if (charts?.chart?.significant) {
-    if (charts?.chart?.chartType == ChartType.TABLE) {
-      doc.text(significantText, 300, 5);
-    } else {
-      doc.text(significantText, 150, 5);
-    }
-    doc.setFontSize(8);
-    // doc.setTextColor(101, 110, 255);
-    doc.setDrawColor(0);
-    doc.setFillColor(hexToRgb(significancecolor));
-    doc.rect(295, 3, 3, 2, "F");
-  }
+  // if (charts?.chart?.significant) {
+  //   if (charts?.chart?.chartType == ChartType.TABLE) {
+  //     doc.text(significantText, 300, 5);
+  //   } else {
+  //     doc.text(significantText, 150, 5);
+  //   }
+  //   doc.setFontSize(8);
+  //   // doc.setTextColor(101, 110, 255);
+  //   doc.setDrawColor(0);
+  //   doc.setFillColor(hexToRgb(significancecolor));
+  //   doc.rect(295, 3, 3, 2, "F");
+  // }
   // doc.setTextColor(127, 127, 127);
   doc.text(copyRightText || "", copyRightX, copyRightY);
   doc.setDrawColor(0);

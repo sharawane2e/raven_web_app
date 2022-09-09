@@ -31,11 +31,11 @@ const ExportPdfCharts = () => {
         type: "column",
         style: {
           fontFamily: '"Avenir", Arial',
-          fontSize: "15px",
+          fontSize: "13px",
         },
         //margin: [70, 0, 280, 0],
         padding: [20, 20, 20, 20],
-        height: "900px",
+        height: "500px",
       },
       legend: {
         enabled: true,
@@ -44,7 +44,7 @@ const ExportPdfCharts = () => {
         itemStyle: {
           color: "#666666",
           fontWeight: "normal",
-          fontSize: "14px",
+          fontSize: "13px",
         },
       },
       tooltip: {
@@ -57,7 +57,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: "15px",
+            fontSize: "13px",
           },
         },
       },
@@ -67,7 +67,7 @@ const ExportPdfCharts = () => {
         labels: {
           style: {
             fontFamily: '"Avenir", Arial',
-            fontSize: "15px",
+            fontSize: "13px",
           },
         },
       },
@@ -79,7 +79,6 @@ const ExportPdfCharts = () => {
           shadow: false,
           dataLabels: {
             enabled: true,
-
             overflow: "none",
             // enabled: true,
             formatter: function (this: any, options: any) {
@@ -95,7 +94,7 @@ const ExportPdfCharts = () => {
             rotation: -90,
             align: "top",
             x: 0,
-            y: -6,
+            y: 0,
             crop: false,
             style: {
               fontSize: "8px",
@@ -242,7 +241,7 @@ async function print() {
       }
       if (clientWidth >= 320) {
         x = 5;
-        y = 30;
+        y = 40;
         w = 290;
         h = 140;
         baseX = 12;
